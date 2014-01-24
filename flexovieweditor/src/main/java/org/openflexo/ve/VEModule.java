@@ -19,25 +19,18 @@
  */
 package org.openflexo.ve;
 
-import java.awt.Dimension;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.swing.JComponent;
 
 import org.openflexo.ApplicationContext;
 import org.openflexo.components.ProgressWindow;
-import org.openflexo.fge.Drawing;
-import org.openflexo.fge.view.DrawingView;
-import org.openflexo.foundation.InspectorGroup;
-import org.openflexo.foundation.Inspectors;
+import org.openflexo.fge.swing.JDianaInteractiveEditor;
+import org.openflexo.fge.swing.view.JDrawingView;
+import org.openflexo.foundation.FlexoObject;
 import org.openflexo.icon.VEIconLibrary;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.module.FlexoModule;
 import org.openflexo.module.Module;
-import org.openflexo.module.external.ExternalVEModule;
 import org.openflexo.ve.controller.VEController;
-import org.openflexo.ve.diagram.DiagramController;
 import org.openflexo.view.controller.FlexoController;
 
 /**
@@ -45,33 +38,29 @@ import org.openflexo.view.controller.FlexoController;
  * 
  * @author yourname
  */
-public class VEModule extends FlexoModule implements ExternalVEModule {
+public class VEModule extends FlexoModule<VEModule> {
 	private static final Logger logger = Logger.getLogger(VEModule.class.getPackage().getName());
 
 	public static final String VE_MODULE_SHORT_NAME = "VE";
-
 	public static final String VE_MODULE_NAME = "ve_module_name";
 
-	public static class ViewEditor extends Module {
+	public static final ViewEditor VE = new ViewEditor();
 
+	public static class ViewEditor extends Module<VEModule> {
 		public ViewEditor() {
-			super(VE_MODULE_NAME, VE_MODULE_SHORT_NAME, "org.openflexo.ve.VEModule", "modules/flexovieweditor", "10008", "ve",
-					VEIconLibrary.VE_SMALL_ICON, VEIconLibrary.VE_MEDIUM_ICON, VEIconLibrary.VE_MEDIUM_ICON_WITH_HOVER,
+			super(VE_MODULE_NAME, VE_MODULE_SHORT_NAME, VEModule.class, VEPreferences.class, "modules/flexoviewpointmodeller", "10008",
+					"ve", VEIconLibrary.VE_SMALL_ICON, VEIconLibrary.VE_MEDIUM_ICON, VEIconLibrary.VE_MEDIUM_ICON_WITH_HOVER,
 					VEIconLibrary.VE_BIG_ICON, true);
 		}
-
 	}
 
-	private static final InspectorGroup[] inspectorGroups = new InspectorGroup[] { Inspectors.VE };
-
-	private DrawingController<? extends Drawing<? extends FlexoModelObject>> screenshotController;
-	private DrawingView<? extends Drawing<? extends FlexoModelObject>> screenshot = null;
+	private JDianaInteractiveEditor<?> screenshotController;
+	private JDrawingView<?> screenshot = null;
 	private boolean drawWorkingArea;
-	private FlexoModelObject screenshotObject;
+	private FlexoObject screenshotObject;
 
 	public VEModule(ApplicationContext applicationContext) throws Exception {
 		super(applicationContext);
-		VEPreferences.init();
 		ProgressWindow.setProgressInstance(FlexoLocalization.localizedForKey("build_editor"));
 	}
 
@@ -81,13 +70,8 @@ public class VEModule extends FlexoModule implements ExternalVEModule {
 	}
 
 	@Override
-	public Module getModule() {
-		return Module.VE_MODULE;
-	}
-
-	@Override
-	public InspectorGroup[] getInspectorGroups() {
-		return inspectorGroups;
+	public ViewEditor getModule() {
+		return VE;
 	}
 
 	public VEController getVEController() {
@@ -95,8 +79,12 @@ public class VEModule extends FlexoModule implements ExternalVEModule {
 	}
 
 	@Override
+	public VEPreferences getPreferences() {
+		return (VEPreferences) super.getPreferences();
+	}
+
 	public float getScreenshotQuality() {
-		float reply = Float.valueOf(VEPreferences.getScreenshotQuality()) / 100f;
+		float reply = getPreferences().getScreenshotQuality();
 		if (reply > 1) {
 			return 1f;
 		}
@@ -106,7 +94,7 @@ public class VEModule extends FlexoModule implements ExternalVEModule {
 		return reply;
 	}
 
-	@Override
+	/*@Override
 	public JComponent createScreenshotForDiagram(DiagramResource diagramResource) {
 		Diagram target = diagramResource.getDiagram();
 		if (target == null) {
@@ -135,14 +123,13 @@ public class VEModule extends FlexoModule implements ExternalVEModule {
 		target.resetIgnoreNotifications();
 
 		return screenshot;
-	}
+	}*/
 
-	@Override
 	public void finalizeScreenshotGeneration() {
 		if (screenshot != null) {
-			screenshotObject.setIgnoreNotifications();
-			screenshot.getDrawingGraphicalRepresentation().setDrawWorkingArea(drawWorkingArea);
-			screenshotObject.resetIgnoreNotifications();
+			// screenshotObject.setIgnoreNotifications();
+			screenshot.getDrawing().getRoot().setDrawWorkingArea(drawWorkingArea);
+			// screenshotObject.resetIgnoreNotifications();
 			screenshotController.delete();
 			if (screenshot.getParent() != null) {
 				screenshot.getParent().remove(screenshot);
