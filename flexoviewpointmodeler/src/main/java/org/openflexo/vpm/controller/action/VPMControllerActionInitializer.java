@@ -66,22 +66,6 @@ public class VPMControllerActionInitializer extends ControllerActionInitializer 
 		new DuplicateEditionPatternInitializer(this);
 		new ShowFMLRepresentationInitializer(this);
 
-		// ExampleDiagram edition
-		new CreateDiagramSpecificationInitializer(this);
-		new DeleteDiagramSpecificationInitializer(this);
-		new CreateExampleDiagramInitializer(this);
-		new DeleteExampleDiagramInitializer(this);
-		new PushToPaletteInitializer(this);
-		new DeclareShapeInEditionPatternInitializer(this);
-		new DeclareConnectorInEditionPatternInitializer(this);
-		new DeleteExampleDiagramElementsInitializer(this);
-
-		// DiagramPalette edition
-		new CreateDiagramPaletteInitializer(this);
-		new DeleteDiagramPaletteInitializer(this);
-		new AddDiagramPaletteElementInitializer(this);
-		new DeleteDiagramPaletteElementInitializer(this);
-
 		// Misc
 		new ConvertViewPoint1ActionInitializer(this);
 

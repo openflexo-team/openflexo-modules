@@ -27,10 +27,9 @@ import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
 import org.openflexo.foundation.resource.ResourceLoadingCancelledException;
-import org.openflexo.foundation.rm.ResourceDependencyLoopException;
-import org.openflexo.foundation.rm.ViewPointResource;
 import org.openflexo.foundation.viewpoint.ViewPoint;
 import org.openflexo.foundation.viewpoint.action.ConvertViewPoint1Action;
+import org.openflexo.foundation.viewpoint.rm.ViewPointResource;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
@@ -69,9 +68,6 @@ public class ConvertViewPoint1ActionInitializer extends ActionInitializer<Conver
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (ResourceLoadingCancelledException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (ResourceDependencyLoopException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (FlexoException e1) {

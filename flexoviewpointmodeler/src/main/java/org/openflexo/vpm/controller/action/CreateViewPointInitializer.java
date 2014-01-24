@@ -29,13 +29,14 @@ import org.openflexo.foundation.action.FlexoActionInitializer;
 import org.openflexo.foundation.resource.RepositoryFolder;
 import org.openflexo.foundation.viewpoint.ViewPointObject;
 import org.openflexo.foundation.viewpoint.action.CreateViewPoint;
+import org.openflexo.foundation.viewpoint.rm.ViewPointResource;
 import org.openflexo.icon.VPMIconLibrary;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.vpm.VPMCst;
 import org.openflexo.vpm.controller.VPMController;
 
-public class CreateViewPointInitializer extends ActionInitializer<CreateViewPoint, RepositoryFolder, ViewPointObject> {
+public class CreateViewPointInitializer extends ActionInitializer<CreateViewPoint, RepositoryFolder<ViewPointResource>, ViewPointObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 

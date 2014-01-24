@@ -27,19 +27,15 @@ package org.openflexo.vpm.controller;
  */
 import java.util.logging.Logger;
 
-import org.openflexo.fge.swing.control.SwingToolFactory;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.validation.ValidationModel;
-import org.openflexo.foundation.view.diagram.viewpoint.DiagramPalette;
-import org.openflexo.foundation.view.diagram.viewpoint.ExampleDiagram;
 import org.openflexo.foundation.viewpoint.EditionPattern;
 import org.openflexo.foundation.viewpoint.EditionPatternObject;
 import org.openflexo.foundation.viewpoint.ViewPoint;
 import org.openflexo.foundation.viewpoint.ViewPointLibrary;
 import org.openflexo.foundation.viewpoint.ViewPointObject;
 import org.openflexo.foundation.viewpoint.VirtualModel;
-import org.openflexo.inspector.InspectableObject;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.module.FlexoModule;
 import org.openflexo.selection.SelectionManager;
@@ -64,18 +60,6 @@ public class VPMController extends FlexoController {
 	public ViewPointPerspective VIEW_POINT_PERSPECTIVE;
 	public InformationSpacePerspective INFORMATION_SPACE_PERSPECTIVE;
 
-	private SwingToolFactory toolFactory;
-
-	@Override
-	public boolean useNewInspectorScheme() {
-		return true;
-	}
-
-	@Override
-	public boolean useOldInspectorScheme() {
-		return false;
-	}
-
 	/**
 	 * Default constructor
 	 */
@@ -83,13 +67,8 @@ public class VPMController extends FlexoController {
 		super(module);
 	}
 
-	public SwingToolFactory getToolFactory() {
-		return toolFactory;
-	}
-
 	@Override
 	protected void initializePerspectives() {
-		toolFactory = new SwingToolFactory(getFlexoFrame());
 		addToPerspectives(VIEW_POINT_PERSPECTIVE = new ViewPointPerspective(this));
 		addToPerspectives(INFORMATION_SPACE_PERSPECTIVE = new InformationSpacePerspective(this));
 	}

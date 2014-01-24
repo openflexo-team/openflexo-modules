@@ -24,11 +24,13 @@ import java.io.File;
 import org.openflexo.toolbox.FileResource;
 
 /**
- * Constants used by the CalcEditor module.
+ * Constants used by the Diagram TA UI
  * 
  * @author yourname
  */
 public class VPMCst {
+
+	public static final int PALETTE_DOC_SPLIT_LOCATION = 300;
 
 	public static String CED_MODULE_VERSION = "0.0.1";
 
@@ -48,25 +50,17 @@ public class VPMCst {
 
 	public static int DEFAULT_MAINFRAME_HEIGHT = 600;
 
-	public static final int PALETTE_DOC_SPLIT_LOCATION = 300;
-
 	// General components
 	public static File VIEWPOINT_VIEW_FIB = new FileResource("Fib/ViewPointView.fib");
 	public static File STANDARD_EDITION_PATTERN_VIEW_FIB = new FileResource("Fib/StandardEditionPatternView.fib");
-	public static File DIAGRAM_EDITION_PATTERN_VIEW_FIB = new FileResource("Fib/DiagramEditionPatternView.fib");
 	public static File VIRTUAL_MODEL_VIEW_FIB = new FileResource("Fib/VirtualModelView.fib");
-	public static File DIAGRAM_SPECIFICATION_VIEW_FIB = new FileResource("Fib/DiagramSpecificationView.fib");
 
 	// ViewPoint edition
 	public static File CREATE_MODEL_SLOT_DIALOG_FIB = new FileResource("Fib/Dialog/CreateModelSlotDialog.fib");
 	public static File CREATE_PATTERN_ROLE_DIALOG_FIB = new FileResource("Fib/Dialog/CreatePatternRoleDialog.fib");
 	public static File CREATE_EDITION_ACTION_DIALOG_FIB = new FileResource("Fib/Dialog/CreateEditionActionDialog.fib");
-	public static File CREATE_EXAMPLE_DIAGRAM_DIALOG_FIB = new FileResource("Fib/Dialog/CreateExampleDrawingDialog.fib");
-	public static File CREATE_PALETTE_DIALOG_FIB = new FileResource("Fib/Dialog/CreatePaletteDialog.fib");
 	public static File CREATE_VIEW_POINT_DIALOG_FIB = new FileResource("Fib/Dialog/CreateViewPointDialog.fib");
 	public static File CREATE_VIRTUAL_MODEL_DIALOG_FIB = new FileResource("Fib/Dialog/CreateVirtualModelDialog.fib");
-	public static File CREATE_DIAGRAM_SPECIFICATION_DIALOG_FIB = new FileResource("Fib/Dialog/CreateDiagramSpecificationDialog.fib");
-	public static File PUSH_TO_PALETTE_DIALOG_FIB = new FileResource("Fib/Dialog/PushToPaletteDialog.fib");
 	public static File SHOW_FML_REPRESENTATION_DIALOG_FIB = new FileResource("Fib/Dialog/ShowFMLRepresentationDialog.fib");
 
 }
