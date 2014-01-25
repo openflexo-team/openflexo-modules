@@ -27,8 +27,8 @@ package org.openflexo.vpm.view.menu;
  */
 import java.util.logging.Logger;
 
-import org.openflexo.module.Module;
 import org.openflexo.view.menu.WindowMenu;
+import org.openflexo.vpm.VPMModule;
 import org.openflexo.vpm.controller.VPMController;
 
 /**
@@ -45,7 +45,7 @@ public class VPMWindowMenu extends WindowMenu {
 	// =========================
 	// ==========================================================================
 
-	protected VPMController _xxxController;
+	protected VPMController vpmController;
 
 	// ==========================================================================
 	// ============================= Constructor
@@ -53,12 +53,12 @@ public class VPMWindowMenu extends WindowMenu {
 	// ==========================================================================
 
 	public VPMWindowMenu(VPMController controller) {
-		super(controller, Module.XXX_MODULE);
-		_xxxController = controller;
+		super(controller, VPMModule.VPM);
+		vpmController = controller;
 		// Put your actions here
 	}
 
 	public VPMController getXXXController() {
-		return _xxxController;
+		return vpmController;
 	}
 }

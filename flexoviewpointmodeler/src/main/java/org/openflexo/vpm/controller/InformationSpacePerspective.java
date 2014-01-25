@@ -48,7 +48,7 @@ public class InformationSpacePerspective extends FlexoPerspective {
 
 	private final JLabel infoLabel;
 
-	private FIBInformationSpaceBrowser informationSpaceBrowser;
+	private final FIBInformationSpaceBrowser informationSpaceBrowser;
 
 	/**
 	 * @param controller
@@ -136,7 +136,7 @@ public class InformationSpacePerspective extends FlexoPerspective {
 			return ((IFlexoOntologyObject) object).getName();
 		}
 		if (object != null) {
-			return object.getFullyQualifiedName();
+			return object.toString();
 		}
 		logger.warning("Unexpected null object here");
 		return null;

@@ -74,7 +74,7 @@ public class VPMFIBController extends FlexoFIBController {
 					getEditor());
 			addEditionPattern.switchNewlyCreatedEditionPattern = false;
 			addEditionPattern.doAction();
-			addEditionPattern.getNewEditionPattern().setParentEditionPattern(editionPattern);
+			addEditionPattern.getNewEditionPattern().addToParentEditionPatterns(editionPattern);
 			return addEditionPattern.getNewEditionPattern();
 		}
 		logger.warning("Unexpected null edition pattern");

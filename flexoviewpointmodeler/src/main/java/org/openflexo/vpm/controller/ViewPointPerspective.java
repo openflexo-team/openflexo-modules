@@ -28,12 +28,7 @@ import javax.swing.JPanel;
 
 import org.openflexo.FlexoCst;
 import org.openflexo.components.widget.FIBViewPointLibraryBrowser;
-import org.openflexo.fge.swing.control.tools.JDianaInspectors;
-import org.openflexo.fge.swing.control.tools.JDianaScaleSelector;
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.foundation.view.diagram.viewpoint.DiagramPalette;
-import org.openflexo.foundation.view.diagram.viewpoint.DiagramSpecification;
-import org.openflexo.foundation.view.diagram.viewpoint.ExampleDiagram;
 import org.openflexo.foundation.viewpoint.EditionPattern;
 import org.openflexo.foundation.viewpoint.EditionPatternObject;
 import org.openflexo.foundation.viewpoint.ViewPoint;
@@ -45,12 +40,6 @@ import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.controller.model.FlexoPerspective;
-import org.openflexo.vpm.diagrampalette.DiagramPaletteEditor;
-import org.openflexo.vpm.diagrampalette.DiagramPaletteModuleView;
-import org.openflexo.vpm.examplediagram.ExampleDiagramEditor;
-import org.openflexo.vpm.examplediagram.ExampleDiagramModuleView;
-import org.openflexo.vpm.view.DiagramEditionPatternView;
-import org.openflexo.vpm.view.DiagramSpecificationView;
 import org.openflexo.vpm.view.StandardEditionPatternView;
 import org.openflexo.vpm.view.ViewPointView;
 import org.openflexo.vpm.view.VirtualModelView;
@@ -66,9 +55,6 @@ public class ViewPointPerspective extends FlexoPerspective {
 	private final JPanel EMPTY_RIGHT_VIEW = new JPanel();
 
 	private FIBViewPointLibraryBrowser viewPointLibraryBrowser = null;
-
-	private JDianaInspectors inspectors;
-	private JDianaScaleSelector scaleSelector;
 
 	private JPanel toolsPanel;
 
@@ -88,29 +74,18 @@ public class ViewPointPerspective extends FlexoPerspective {
 
 		setTopLeftView(viewPointLibraryBrowser);
 
-		scaleSelector = controller.getToolFactory().makeDianaScaleSelector(null);
-		inspectors = controller.getToolFactory().makeDianaInspectors();
-
-		inspectors.getForegroundStyleInspector().setLocation(1000, 100);
-		inspectors.getTextStyleInspector().setLocation(1000, 300);
-		inspectors.getShadowStyleInspector().setLocation(1000, 400);
-		inspectors.getBackgroundStyleInspector().setLocation(1000, 500);
-		inspectors.getShapeInspector().setLocation(1000, 600);
-		inspectors.getConnectorInspector().setLocation(1000, 700);
-		inspectors.getLocationSizeInspector().setLocation(1000, 50);
-
 		infoLabel = new JLabel("ViewPoint perspective");
 		infoLabel.setFont(FlexoCst.SMALL_FONT);
 		setFooter(infoLabel);
 	}
 
-	@Override
+	/*@Override
 	public JComponent getHeader() {
 		if (_controller.getCurrentModuleView() instanceof ExampleDiagramModuleView) {
 			return scaleSelector.getComponent();
 		}
 		return null;
-	}
+	}*/
 
 	public ModuleView<?> getCurrentModuleView() {
 		return _controller.getCurrentModuleView();
@@ -130,7 +105,7 @@ public class ViewPointPerspective extends FlexoPerspective {
 		// setBottomLeftView(virtualModelBrowser);
 	}
 
-	public void focusOnPalette(DiagramPalette palette) {
+	/*public void focusOnPalette(DiagramPalette palette) {
 		logger.info("focusOnPalette " + palette);
 		// diagramPaletteBrowser.setRootObject(palette);
 		// setBottomLeftView(diagramPaletteBrowser);
@@ -140,7 +115,7 @@ public class ViewPointPerspective extends FlexoPerspective {
 		logger.info("focusOnExampleDiagram " + exampleDiagram);
 		// exampleDiagramBrowser.setRootObject(exampleDiagram);
 		// setBottomLeftView(exampleDiagramBrowser);
-	}
+	}*/
 
 	public void hideBottomBrowser() {
 		setBottomLeftView(null);
@@ -172,7 +147,7 @@ public class ViewPointPerspective extends FlexoPerspective {
 
 	@Override
 	public boolean hasModuleViewForObject(FlexoObject object) {
-		return object instanceof DiagramPalette || object instanceof ExampleDiagram || object instanceof ViewPoint
+		return /*object instanceof DiagramPalette || object instanceof ExampleDiagram ||*/object instanceof ViewPoint
 				|| object instanceof EditionPattern;
 	}
 
@@ -187,36 +162,36 @@ public class ViewPointPerspective extends FlexoPerspective {
 		if (object instanceof EditionPattern) {
 			EditionPattern ep = (EditionPattern) object;
 			if (ep instanceof VirtualModel) {
-				if (ep instanceof DiagramSpecification) {
+				/*if (ep instanceof DiagramSpecification) {
 					return new DiagramSpecificationView(ep, (VPMController) controller);
-				} else {
-					return new VirtualModelView(ep, (VPMController) controller);
-				}
+				} else {*/
+				return new VirtualModelView(ep, (VPMController) controller);
+				// }
 			} else {
-				if (ep.getVirtualModel() instanceof DiagramSpecification) {
+				/*if (ep.getVirtualModel() instanceof DiagramSpecification) {
 					return new DiagramEditionPatternView(ep, (VPMController) controller);
-				} else {
-					return new StandardEditionPatternView(ep, (VPMController) controller);
-				}
+				} else {*/
+				return new StandardEditionPatternView(ep, (VPMController) controller);
+				// }
 			}
 
 		}
-		if (object instanceof DiagramPalette) {
+		/*if (object instanceof DiagramPalette) {
 			return new DiagramPaletteEditor(_controller, (DiagramPalette) object, false).getModuleView();
 		}
 		if (object instanceof ExampleDiagram) {
 			return new ExampleDiagramEditor(_controller, (ExampleDiagram) object, false).getModuleView();
-		}
+		}*/
 		return null;
 	}
 
 	@Override
 	public JComponent getTopRightView() {
-		if (getCurrentModuleView() instanceof DiagramPaletteModuleView) {
+		/*if (getCurrentModuleView() instanceof DiagramPaletteModuleView) {
 			return ((DiagramPaletteModuleView) getCurrentModuleView()).getController().getPaletteView();
 		} else if (getCurrentModuleView() instanceof ExampleDiagramModuleView) {
 			return ((ExampleDiagramModuleView) getCurrentModuleView()).getController().getPaletteView();
-		}
+		}*/
 		return EMPTY_RIGHT_VIEW;
 	}
 
@@ -230,17 +205,17 @@ public class ViewPointPerspective extends FlexoPerspective {
 		if (object instanceof VirtualModel) {
 			return ((VirtualModel) object).getName();
 		}
-		if (object instanceof DiagramPalette) {
+		/*if (object instanceof DiagramPalette) {
 			return ((DiagramPalette) object).getName() + " (" + FlexoLocalization.localizedForKey("palette") + ")";
 		}
 		if (object instanceof ExampleDiagram) {
 			return ((ExampleDiagram) object).getName() + " (" + FlexoLocalization.localizedForKey("example_diagram") + ")";
-		}
+		}*/
 		if (object instanceof EditionPattern) {
 			return ((EditionPattern) object).getName();
 		}
 		if (object != null) {
-			return object.getFullyQualifiedName();
+			return object.toString();
 		}
 		return "null";
 	}

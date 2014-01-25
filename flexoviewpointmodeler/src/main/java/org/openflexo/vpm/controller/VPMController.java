@@ -99,9 +99,7 @@ public class VPMController extends FlexoController {
 	@Override
 	public void initInspectors() {
 		super.initInspectors();
-		if (useNewInspectorScheme()) {
-			loadInspectorGroup("IFlexoOntology");
-		}
+		loadInspectorGroup("IFlexoOntology");
 
 	}
 
@@ -152,11 +150,12 @@ public class VPMController extends FlexoController {
 					if (ontology.getClasses().size() > 0) {
 						getSelectionManager().setSelectedObject(ontology.getClasses().firstElement());
 					}
-					}*/else if (object instanceof ExampleDiagram) {
+					}*/
+				/*else if (object instanceof ExampleDiagram) {
 					VIEW_POINT_PERSPECTIVE.focusOnExampleDiagram((ExampleDiagram) object);
 				} else if (object instanceof DiagramPalette) {
 					VIEW_POINT_PERSPECTIVE.focusOnPalette((DiagramPalette) object);
-				} else if (object instanceof ViewPoint) {
+				}*/else if (object instanceof ViewPoint) {
 					ViewPoint viewPoint = (ViewPoint) object;
 					VIEW_POINT_PERSPECTIVE.focusOnViewPoint(viewPoint);
 				} else if (object instanceof VirtualModel) {
@@ -165,7 +164,7 @@ public class VPMController extends FlexoController {
 				} else if (object instanceof EditionPattern) {
 					EditionPattern pattern = (EditionPattern) object;
 					if (pattern.getEditionSchemes().size() > 0) {
-						getSelectionManager().setSelectedObject(pattern.getEditionSchemes().firstElement());
+						getSelectionManager().setSelectedObject(pattern.getEditionSchemes().get(0));
 					}
 				} else if (object instanceof EditionPatternObject) {
 					if (getCurrentModuleView() instanceof EditionPatternView) {
@@ -184,12 +183,6 @@ public class VPMController extends FlexoController {
 	// ================================================
 
 	@Override
-	public boolean handleException(InspectableObject inspectable, String propertyName, Object value, Throwable exception) {
-		// TODO: Handles here exceptions that may be thrown through the inspector
-		return super.handleException(inspectable, propertyName, value, exception);
-	}
-
-	@Override
 	public String getWindowTitleforObject(FlexoObject object) {
 		// System.out.println("getWindowTitleforObject() "+object+" perspective="+getCurrentPerspective());
 		if (object instanceof ViewPointLibrary) {
@@ -204,7 +197,7 @@ public class VPMController extends FlexoController {
 		if (getCurrentPerspective() == INFORMATION_SPACE_PERSPECTIVE) {
 			return INFORMATION_SPACE_PERSPECTIVE.getWindowTitleforObject(object);
 		}
-		return object.getFullyQualifiedName();
+		return object.toString();
 	}
 
 	public ViewPoint getCurrentViewPoint() {
