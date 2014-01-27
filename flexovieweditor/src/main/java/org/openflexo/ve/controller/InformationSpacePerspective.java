@@ -44,7 +44,7 @@ public class InformationSpacePerspective extends FlexoPerspective {
 
 	private final JLabel infoLabel;
 
-	private FIBInformationSpaceBrowser informationSpaceBrowser;
+	private final FIBInformationSpaceBrowser informationSpaceBrowser;
 
 	/**
 	 * @param controller
@@ -125,7 +125,7 @@ public class InformationSpacePerspective extends FlexoPerspective {
 		if (object instanceof IFlexoOntologyObject) {
 			return ((IFlexoOntologyObject) object).getName();
 		}
-		return object.getFullyQualifiedName();
+		return object.toString();
 	}
 
 }

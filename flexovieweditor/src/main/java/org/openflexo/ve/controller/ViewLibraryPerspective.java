@@ -21,7 +21,6 @@ package org.openflexo.ve.controller;
 
 import java.awt.Dimension;
 import java.util.Hashtable;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
@@ -31,22 +30,20 @@ import javax.swing.JPanel;
 
 import org.openflexo.FlexoCst;
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.foundation.FlexoProjectObject;
 import org.openflexo.foundation.FlexoProject;
+import org.openflexo.foundation.FlexoProjectObject;
 import org.openflexo.foundation.view.View;
 import org.openflexo.foundation.view.ViewLibrary;
 import org.openflexo.foundation.view.VirtualModelInstance;
-import org.openflexo.foundation.view.diagram.model.Diagram;
 import org.openflexo.icon.VEIconLibrary;
 import org.openflexo.inspector.FIBInspectorPanel;
 import org.openflexo.localization.FlexoLocalization;
-import org.openflexo.ve.diagram.DiagramController;
-import org.openflexo.ve.diagram.DiagramModuleView;
 import org.openflexo.ve.view.ViewModuleView;
 import org.openflexo.ve.view.VirtualModelInstanceView;
 import org.openflexo.ve.widget.FIBViewLibraryBrowser;
 import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.FlexoController;
+import org.openflexo.view.controller.TechnologyAdapterControllerService;
 import org.openflexo.view.controller.model.FlexoPerspective;
 
 public class ViewLibraryPerspective extends FlexoPerspective {
@@ -57,7 +54,7 @@ public class ViewLibraryPerspective extends FlexoPerspective {
 
 	private final FIBViewLibraryBrowser viewLibraryBrowser;
 
-	private final Map<Diagram, DiagramController> _controllers;
+	// private final Map<Diagram, DiagramController> _controllers;
 
 	private final JLabel infoLabel;
 
@@ -65,7 +62,7 @@ public class ViewLibraryPerspective extends FlexoPerspective {
 
 	private final FIBInspectorPanel inspectorPanel;
 
-	private JComponent bottomRightDummy;
+	private final JComponent bottomRightDummy;
 
 	/**
 	 * @param controller
@@ -82,7 +79,7 @@ public class ViewLibraryPerspective extends FlexoPerspective {
 
 		EMPTY_RIGHT_VIEW.setPreferredSize(new Dimension(300, 300));
 		_controller = controller;
-		_controllers = new Hashtable<Diagram, DiagramController>();
+		// _controllers = new Hashtable<Diagram, DiagramController>();
 		bottomRightDummy = new JPanel();
 
 		infoLabel = new JLabel("Diagram perspective");
@@ -92,7 +89,7 @@ public class ViewLibraryPerspective extends FlexoPerspective {
 		inspectorPanel = new FIBInspectorPanel(controller.getModuleInspectorController());
 	}
 
-	public void focusOnDiagram(Diagram aDiagram) {
+	/*public void focusOnD(Diagram aDiagram) {
 		logger.info("focusOnDiagram " + aDiagram);
 		// calcBrowser.deleteBrowserListener(_browserView);
 		// calcBrowser.setRepresentedObject(viewPoint);
@@ -101,25 +98,25 @@ public class ViewLibraryPerspective extends FlexoPerspective {
 
 		// viewBrowser.setRootObject(viewPoint);
 		// setBottomLeftView(viewBrowser);
-	}
+	}*/
 
 	@Override
 	public JComponent getTopRightView() {
-		if (getCurrentDiagramModuleView() != null) {
+		/*if (getCurrentDiagramModuleView() != null) {
 			return getCurrentDiagramModuleView().getController().getPaletteView();
-		} else {
-			return EMPTY_RIGHT_VIEW;
-		}
+		} else {*/
+		return EMPTY_RIGHT_VIEW;
+		// }
 	}
 
 	@Override
 	public JComponent getBottomRightView() {
-		if (getCurrentDiagramModuleView() != null) {
+		/*if (getCurrentDiagramModuleView() != null) {
 			// if (_controller != null && _controller.getCurrentModuleView() != null) {
 			return inspectorPanel;
-		} else {
-			return bottomRightDummy;
-		}
+		} else {*/
+		return bottomRightDummy;
+		// }
 	}
 
 	/**
@@ -146,7 +143,12 @@ public class ViewLibraryPerspective extends FlexoPerspective {
 
 	@Override
 	public boolean hasModuleViewForObject(FlexoObject object) {
-		return object instanceof Diagram || object instanceof VirtualModelInstance || object instanceof View;
+		boolean returned = /*object instanceof Diagram ||*/ object instanceof VirtualModelInstance || object instanceof View;
+		if (returned == true) {
+			return true;
+		}
+		TechnologyAdapterControllerService tacService = _controller.getApplicationContext().getTechnologyAdapterControllerService();
+		return tacService.
 	}
 
 	@Override

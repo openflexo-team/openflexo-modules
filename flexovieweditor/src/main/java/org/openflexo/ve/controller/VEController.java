@@ -27,11 +27,9 @@ package org.openflexo.ve.controller;
  */
 import java.util.logging.Logger;
 
-import org.openflexo.fge.GraphicalRepresentation;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
-import org.openflexo.inspector.InspectableObject;
 import org.openflexo.module.FlexoModule;
 import org.openflexo.selection.SelectionManager;
 import org.openflexo.ve.controller.action.VEControllerActionInitializer;
@@ -54,16 +52,6 @@ public class VEController extends FlexoController {
 	public ViewLibraryPerspective VIEW_LIBRARY_PERSPECTIVE;
 
 	public InformationSpacePerspective INFORMATION_SPACE_PERSPECTIVE;
-
-	@Override
-	public boolean useNewInspectorScheme() {
-		return true;
-	}
-
-	@Override
-	public boolean useOldInspectorScheme() {
-		return false;
-	}
 
 	/**
 	 * Default constructor
@@ -102,10 +90,10 @@ public class VEController extends FlexoController {
 	public void updateEditor(FlexoEditor from, FlexoEditor to) {
 		super.updateEditor(from, to);
 		FlexoProject project = to != null ? to.getProject() : null;
-		if (project != null) {
+		/*if (project != null) {
 			project.getStringEncoder()._addConverter(GraphicalRepresentation.POINT_CONVERTER);
 			project.getStringEncoder()._addConverter(GraphicalRepresentation.RECT_POLYLIN_CONVERTER);
-		}
+		}*/
 		VIEW_LIBRARY_PERSPECTIVE.setProject(project);
 		// ONTOLOGY_PERSPECTIVE.setProject(project);
 	}
@@ -121,21 +109,12 @@ public class VEController extends FlexoController {
 	@Override
 	public void initInspectors() {
 		super.initInspectors();
-		if (useNewInspectorScheme()) {
-			loadInspectorGroup("Ontology");
-		}
-
+		loadInspectorGroup("Ontology");
 	}
 
 	@Override
 	protected FlexoMainPane createMainPane() {
 		return new VEMainPane(this);
-	}
-
-	@Override
-	public boolean handleException(InspectableObject inspectable, String propertyName, Object value, Throwable exception) {
-		// TODO: Handles here exceptions that may be thrown through the inspector
-		return super.handleException(inspectable, propertyName, value, exception);
 	}
 
 	@Override
@@ -146,7 +125,7 @@ public class VEController extends FlexoController {
 		/*if (getCurrentPerspective() == ONTOLOGY_PERSPECTIVE) {
 			return ONTOLOGY_PERSPECTIVE.getWindowTitleforObject(object);
 		}*/
-		return object.getFullyQualifiedName();
+		return object.toString();
 	}
 
 }

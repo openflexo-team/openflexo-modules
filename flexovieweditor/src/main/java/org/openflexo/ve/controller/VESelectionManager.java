@@ -19,22 +19,12 @@
  */
 package org.openflexo.ve.controller;
 
-import java.awt.Point;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.JComponent;
-
-import org.openflexo.fge.GraphicalRepresentation;
-import org.openflexo.fge.controller.DrawingController;
-import org.openflexo.fge.geom.FGEPoint;
-import org.openflexo.fge.view.DrawingView;
-import org.openflexo.foundation.FlexoModelObject;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.selection.PastingGraphicalContext;
 import org.openflexo.selection.SelectionManager;
-import org.openflexo.ve.diagram.DiagramModuleView;
-import org.openflexo.ve.diagram.DiagramView;
 import org.openflexo.view.menu.FlexoMenuBar;
 
 /**
@@ -82,8 +72,9 @@ public class VESelectionManager extends SelectionManager {
 	}
 
 	@Override
-	public FlexoModelObject getPasteContext() {
-		if (getVEController().getCurrentModuleView() instanceof DiagramModuleView) {
+	public FlexoObject getPasteContext() {
+		// TODO
+		/*if (getVEController().getCurrentModuleView() instanceof DiagramModuleView) {
 			DiagramView v = ((DiagramModuleView) getVEController().getCurrentModuleView()).getController().getDrawingView();
 			GraphicalRepresentation gr = v.getController().getLastSelectedNode();
 			if (gr != null && gr.getDrawable() instanceof FlexoModelObject) {
@@ -92,14 +83,14 @@ public class VESelectionManager extends SelectionManager {
 				return (FlexoModelObject) ((DrawingView<?>) getVEController().getCurrentModuleView()).getDrawingGraphicalRepresentation()
 						.getDrawable();
 			}
-		}
+		}*/
 		return null;
 	}
 
 	@Override
 	public PastingGraphicalContext getPastingGraphicalContext() {
 		PastingGraphicalContext pgc = new PastingGraphicalContext();
-		if (getVEController().getCurrentModuleView() instanceof DiagramModuleView) {
+		/*if (getVEController().getCurrentModuleView() instanceof DiagramModuleView) {
 			DiagramView v = ((DiagramModuleView) getVEController().getCurrentModuleView()).getController().getDrawingView();
 			DrawingController controller = v.getController();
 			GraphicalRepresentation target = controller.getLastSelectedNode();
@@ -115,7 +106,7 @@ public class VESelectionManager extends SelectionManager {
 				pgc.precisePastingLocation = new FGEPoint(0, 0);
 				pgc.pastingLocation = new Point(0, 0);
 			}
-		}
+		}*/
 		return pgc;
 	}
 

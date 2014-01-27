@@ -40,15 +40,12 @@ import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.controller.model.FlexoPerspective;
-import org.openflexo.vpm.view.StandardEditionPatternView;
-import org.openflexo.vpm.view.ViewPointView;
-import org.openflexo.vpm.view.VirtualModelView;
 
 public class ViewPointPerspective extends FlexoPerspective {
 
 	protected static final Logger logger = Logger.getLogger(ViewPointPerspective.class.getPackage().getName());
 
-	private final VPMController _controller;
+	// private final VPMController _controller;
 
 	private final JLabel infoLabel;
 
@@ -63,7 +60,7 @@ public class ViewPointPerspective extends FlexoPerspective {
 	 */
 	public ViewPointPerspective(VPMController controller) {
 		super("viewpoint_perspective");
-		_controller = controller;
+		// _controller = controller;
 
 		viewPointLibraryBrowser = new FIBViewPointLibraryBrowser(controller.getViewPointLibrary(), controller);
 
@@ -87,8 +84,8 @@ public class ViewPointPerspective extends FlexoPerspective {
 		return null;
 	}*/
 
-	public ModuleView<?> getCurrentModuleView() {
-		return _controller.getCurrentModuleView();
+	public ModuleView<?> getCurrentModuleView(FlexoController controller) {
+		return controller.getCurrentModuleView();
 	}
 
 	public void focusOnViewPoint(ViewPoint viewPoint) {
@@ -132,8 +129,8 @@ public class ViewPointPerspective extends FlexoPerspective {
 	}
 
 	@Override
-	public FlexoObject getDefaultObject(FlexoObject proposedObject) {
-		if (hasModuleViewForObject(proposedObject)) {
+	public FlexoObject getDefaultObject(FlexoObject proposedObject, FlexoController controller) {
+		if (hasModuleViewForObject(proposedObject, controller)) {
 			return proposedObject;
 		}
 		if (proposedObject instanceof EditionPatternObject) {
@@ -146,7 +143,7 @@ public class ViewPointPerspective extends FlexoPerspective {
 	}
 
 	@Override
-	public boolean hasModuleViewForObject(FlexoObject object) {
+	public boolean hasModuleViewForObject(FlexoObject object, FlexoController controller) {
 		return /*object instanceof DiagramPalette || object instanceof ExampleDiagram ||*/object instanceof ViewPoint
 				|| object instanceof EditionPattern;
 	}
@@ -156,26 +153,26 @@ public class ViewPointPerspective extends FlexoPerspective {
 		if (object.isDeleted()) {
 			return null;
 		}
-		if (object instanceof ViewPoint) {
-			return new ViewPointView((ViewPoint) object, (VPMController) controller);
+		/*if (object instanceof ViewPoint) {
+			return new ViewPointView((ViewPoint) object, controller);
 		}
 		if (object instanceof EditionPattern) {
 			EditionPattern ep = (EditionPattern) object;
 			if (ep instanceof VirtualModel) {
-				/*if (ep instanceof DiagramSpecification) {
-					return new DiagramSpecificationView(ep, (VPMController) controller);
-				} else {*/
+				//if (ep instanceof DiagramSpecification) {
+				//	return new DiagramSpecificationView(ep, (VPMController) controller);
+				//} else {
 				return new VirtualModelView(ep, (VPMController) controller);
 				// }
 			} else {
-				/*if (ep.getVirtualModel() instanceof DiagramSpecification) {
-					return new DiagramEditionPatternView(ep, (VPMController) controller);
-				} else {*/
+				// if (ep.getVirtualModel() instanceof DiagramSpecification) {
+				//	return new DiagramEditionPatternView(ep, (VPMController) controller);
+				// } else {
 				return new StandardEditionPatternView(ep, (VPMController) controller);
 				// }
 			}
 
-		}
+		}*/
 		/*if (object instanceof DiagramPalette) {
 			return new DiagramPaletteEditor(_controller, (DiagramPalette) object, false).getModuleView();
 		}
@@ -195,7 +192,7 @@ public class ViewPointPerspective extends FlexoPerspective {
 		return EMPTY_RIGHT_VIEW;
 	}
 
-	public String getWindowTitleforObject(FlexoObject object) {
+	public String getWindowTitleforObject(FlexoObject object, FlexoController controller) {
 		if (object instanceof ViewPointLibrary) {
 			return FlexoLocalization.localizedForKey("view_point_library");
 		}
@@ -221,7 +218,7 @@ public class ViewPointPerspective extends FlexoPerspective {
 	}
 
 	@Override
-	public void objectWasClicked(Object object) {
+	public void objectWasClicked(Object object, FlexoController controller) {
 		// logger.info("ViewPointPerspective: object was clicked: " + object);
 		if (object == null) {
 			return;
@@ -287,15 +284,15 @@ public class ViewPointPerspective extends FlexoPerspective {
 	}
 
 	@Override
-	public void objectWasRightClicked(Object object) {
+	public void objectWasRightClicked(Object object, FlexoController controller) {
 		// logger.info("ViewPointPerspective: object was right-clicked: " + object);
 	}
 
 	@Override
-	public void objectWasDoubleClicked(Object object) {
+	public void objectWasDoubleClicked(Object object, FlexoController controller) {
 		// logger.info("ViewPointPerspective: object was double-clicked: " + object);
 		if (object instanceof EditionPatternObject) {
-			_controller.selectAndFocusObject((EditionPatternObject) object);
+			controller.selectAndFocusObject((EditionPatternObject) object);
 		}
 	}
 

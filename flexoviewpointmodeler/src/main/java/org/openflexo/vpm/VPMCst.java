@@ -50,11 +50,6 @@ public class VPMCst {
 
 	public static int DEFAULT_MAINFRAME_HEIGHT = 600;
 
-	// General components
-	public static File VIEWPOINT_VIEW_FIB = new FileResource("Fib/ViewPointView.fib");
-	public static File STANDARD_EDITION_PATTERN_VIEW_FIB = new FileResource("Fib/StandardEditionPatternView.fib");
-	public static File VIRTUAL_MODEL_VIEW_FIB = new FileResource("Fib/VirtualModelView.fib");
-
 	// ViewPoint edition
 	public static File CREATE_MODEL_SLOT_DIALOG_FIB = new FileResource("Fib/Dialog/CreateModelSlotDialog.fib");
 	public static File CREATE_PATTERN_ROLE_DIALOG_FIB = new FileResource("Fib/Dialog/CreatePatternRoleDialog.fib");

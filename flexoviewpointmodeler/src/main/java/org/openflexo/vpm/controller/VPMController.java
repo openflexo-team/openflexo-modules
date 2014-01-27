@@ -45,7 +45,6 @@ import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.menu.FlexoMenuBar;
 import org.openflexo.vpm.controller.action.VPMControllerActionInitializer;
 import org.openflexo.vpm.view.EditionPatternView;
-import org.openflexo.vpm.view.VPMMainPane;
 import org.openflexo.vpm.view.menu.VPMMenuBar;
 
 /**
@@ -105,7 +104,7 @@ public class VPMController extends FlexoController {
 
 	@Override
 	protected FlexoMainPane createMainPane() {
-		return new VPMMainPane(this);
+		return new FlexoMainPane(this);
 	}
 
 	/**
@@ -192,10 +191,10 @@ public class VPMController extends FlexoController {
 			return FlexoLocalization.localizedForKey("ontology_library");
 		}*/
 		if (getCurrentPerspective() == VIEW_POINT_PERSPECTIVE) {
-			return VIEW_POINT_PERSPECTIVE.getWindowTitleforObject(object);
+			return VIEW_POINT_PERSPECTIVE.getWindowTitleforObject(object, this);
 		}
 		if (getCurrentPerspective() == INFORMATION_SPACE_PERSPECTIVE) {
-			return INFORMATION_SPACE_PERSPECTIVE.getWindowTitleforObject(object);
+			return INFORMATION_SPACE_PERSPECTIVE.getWindowTitleforObject(object, this);
 		}
 		return object.toString();
 	}

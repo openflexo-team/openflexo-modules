@@ -42,7 +42,7 @@ public class InformationSpacePerspective extends FlexoPerspective {
 
 	static final Logger logger = Logger.getLogger(InformationSpacePerspective.class.getPackage().getName());
 
-	private final VPMController _controller;
+	// private final VPMController _controller;
 
 	// private final FIBOntologyLibraryBrowser ontologyLibraryBrowser;
 
@@ -54,9 +54,9 @@ public class InformationSpacePerspective extends FlexoPerspective {
 	 * @param controller
 	 * @param name
 	 */
-	public InformationSpacePerspective(VPMController controller) {
+	public InformationSpacePerspective(FlexoController controller/*VPMController controller*/) {
 		super("information_space_perspective");
-		_controller = controller;
+		// _controller = controller;
 
 		informationSpaceBrowser = new FIBInformationSpaceBrowser(controller.getApplicationContext().getInformationSpace(), controller);
 
@@ -90,8 +90,8 @@ public class InformationSpacePerspective extends FlexoPerspective {
 	}
 
 	@Override
-	public FlexoObject getDefaultObject(FlexoObject proposedObject) {
-		if (hasModuleViewForObject(proposedObject)) {
+	public FlexoObject getDefaultObject(FlexoObject proposedObject, FlexoController controller) {
+		if (hasModuleViewForObject(proposedObject, controller)) {
 			return proposedObject;
 		}
 		// return _controller.getBaseOntologyLibrary();
@@ -99,12 +99,12 @@ public class InformationSpacePerspective extends FlexoPerspective {
 	}
 
 	@Override
-	public boolean hasModuleViewForObject(FlexoObject object) {
+	public boolean hasModuleViewForObject(FlexoObject object, FlexoController controller) {
 		if (object instanceof TechnologyObject) {
 			TechnologyAdapter ta = ((TechnologyObject) object).getTechnologyAdapter();
-			TechnologyAdapterController<?> tac = _controller.getApplicationContext().getTechnologyAdapterControllerService()
+			TechnologyAdapterController<?> tac = controller.getApplicationContext().getTechnologyAdapterControllerService()
 					.getTechnologyAdapterController(ta);
-			return tac.hasModuleViewForObject((TechnologyObject) object);
+			return tac.hasModuleViewForObject((TechnologyObject) object, controller);
 		}
 		return false;
 	}
@@ -112,12 +112,17 @@ public class InformationSpacePerspective extends FlexoPerspective {
 	@Override
 	public ModuleView<?> createModuleViewForObject(FlexoObject object, FlexoController controller) {
 		if (object instanceof TechnologyObject) {
-			TechnologyAdapter ta = ((TechnologyObject) object).getTechnologyAdapter();
-			TechnologyAdapterController<?> tac = _controller.getApplicationContext().getTechnologyAdapterControllerService()
-					.getTechnologyAdapterController(ta);
-			return tac.createModuleViewForObject(object, _controller, this);
+			return createModuleViewForTechnologyObject((TechnologyObject<?>) object, controller);
 		}
 		return new EmptyPanel<FlexoObject>(controller, this, object);
+	}
+
+	public <TA extends TechnologyAdapter> ModuleView<?> createModuleViewForTechnologyObject(TechnologyObject<TA> object,
+			FlexoController controller) {
+		TA ta = object.getTechnologyAdapter();
+		TechnologyAdapterController<TA> tac = controller.getApplicationContext().getTechnologyAdapterControllerService()
+				.getTechnologyAdapterController(ta);
+		return tac.createModuleViewForObject(object, controller, this);
 	}
 
 	@Override
@@ -125,12 +130,12 @@ public class InformationSpacePerspective extends FlexoPerspective {
 		return infoLabel;
 	}
 
-	public String getWindowTitleforObject(FlexoObject object) {
+	public String getWindowTitleforObject(FlexoObject object, FlexoController controller) {
 		if (object instanceof TechnologyObject) {
 			TechnologyAdapter ta = ((TechnologyObject) object).getTechnologyAdapter();
-			TechnologyAdapterController<?> tac = _controller.getApplicationContext().getTechnologyAdapterControllerService()
+			TechnologyAdapterController<?> tac = controller.getApplicationContext().getTechnologyAdapterControllerService()
 					.getTechnologyAdapterController(ta);
-			return tac.getWindowTitleforObject((TechnologyObject) object);
+			return tac.getWindowTitleforObject((TechnologyObject) object, controller);
 		}
 		if (object instanceof IFlexoOntologyObject) {
 			return ((IFlexoOntologyObject) object).getName();
