@@ -27,6 +27,8 @@ package org.openflexo.vpm.controller;
  */
 import java.util.logging.Logger;
 
+import javax.swing.SwingUtilities;
+
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.validation.ValidationModel;
@@ -64,12 +66,21 @@ public class VPMController extends FlexoController {
 	 */
 	public VPMController(FlexoModule module) {
 		super(module);
+
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				setCurrentEditedObjectAsModuleView(getApplicationContext().getViewPointLibrary(), VIEW_POINT_PERSPECTIVE);
+			}
+		});
 	}
 
 	@Override
 	protected void initializePerspectives() {
 		addToPerspectives(VIEW_POINT_PERSPECTIVE = new ViewPointPerspective(this));
 		addToPerspectives(INFORMATION_SPACE_PERSPECTIVE = new InformationSpacePerspective(this));
+
 	}
 
 	@Override

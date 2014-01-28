@@ -28,7 +28,7 @@ package org.openflexo.vpm.view.menu;
 import java.util.logging.Logger;
 
 import org.openflexo.view.menu.WindowMenu;
-import org.openflexo.vpm.VPMModule;
+import org.openflexo.vpm.ViewPointModeller;
 import org.openflexo.vpm.controller.VPMController;
 
 /**
@@ -53,7 +53,7 @@ public class VPMWindowMenu extends WindowMenu {
 	// ==========================================================================
 
 	public VPMWindowMenu(VPMController controller) {
-		super(controller, VPMModule.VPM);
+		super(controller, ViewPointModeller.INSTANCE);
 		vpmController = controller;
 		// Put your actions here
 	}

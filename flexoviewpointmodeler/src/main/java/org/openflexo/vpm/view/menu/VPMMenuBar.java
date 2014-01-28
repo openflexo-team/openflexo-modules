@@ -31,7 +31,7 @@ import org.openflexo.view.menu.EditMenu;
 import org.openflexo.view.menu.FlexoMenuBar;
 import org.openflexo.view.menu.ToolsMenu;
 import org.openflexo.view.menu.WindowMenu;
-import org.openflexo.vpm.VPMModule;
+import org.openflexo.vpm.ViewPointModeller;
 import org.openflexo.vpm.controller.VPMController;
 
 /**
@@ -46,7 +46,7 @@ public class VPMMenuBar extends FlexoMenuBar {
 	private VPMToolsMenu _toolsMenu;
 
 	public VPMMenuBar(VPMController controller) {
-		super(controller, VPMModule.VPM);
+		super(controller, ViewPointModeller.INSTANCE);
 	}
 
 	/**

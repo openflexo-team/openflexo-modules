@@ -26,10 +26,8 @@ import org.openflexo.components.ProgressWindow;
 import org.openflexo.fge.swing.JDianaInteractiveEditor;
 import org.openflexo.fge.swing.view.JDrawingView;
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.icon.VPMIconLibrary;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.module.FlexoModule;
-import org.openflexo.module.Module;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.vpm.controller.VPMController;
 
@@ -45,15 +43,11 @@ public class VPMModule extends FlexoModule<VPMModule> {
 	public static final String VPM_MODULE_SHORT_NAME = "VPM";
 	public static final String VPM_MODULE_NAME = "vpm_module_name";
 
-	public static final ViewPointModeller VPM = new ViewPointModeller();
+	// public static final ViewPointModeller VPM;
 
-	public static class ViewPointModeller extends Module<VPMModule> {
-		public ViewPointModeller() {
-			super(VPM_MODULE_NAME, VPM_MODULE_SHORT_NAME, VPMModule.class, VPMPreferences.class, "modules/flexoviewpointmodeller", "10009",
-					"vpm", VPMIconLibrary.VPM_SMALL_ICON, VPMIconLibrary.VPM_MEDIUM_ICON, VPMIconLibrary.VPM_MEDIUM_ICON_WITH_HOVER,
-					VPMIconLibrary.VPM_BIG_ICON, false);
-		}
-	}
+	/*static {
+		VPM = new ViewPointModeller();
+	}*/
 
 	private JDianaInteractiveEditor<?> screenshotController;
 	private JDrawingView<?> screenshot = null;
@@ -84,7 +78,7 @@ public class VPMModule extends FlexoModule<VPMModule> {
 
 	@Override
 	public ViewPointModeller getModule() {
-		return VPM;
+		return ViewPointModeller.INSTANCE;
 	}
 
 	public VPMController getVPMController() {
