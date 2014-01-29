@@ -22,15 +22,31 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.openflexo</groupId>
+			<artifactId>flexo-ui</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.openflexo</groupId>
 			<artifactId>diana-swing</artifactId>
 		</dependency>
  		<dependency>
 			<groupId>org.openflexo</groupId>
-			<artifactId>fib-swing</artifactId>
+			<artifactId>gina-swing</artifactId>
 		</dependency>
  		<dependency>
 			<groupId>org.openflexo</groupId>
-			<artifactId>fib-swing-editor</artifactId>
+			<artifactId>gina-swing-editor</artifactId>
+		</dependency>
+ 		<dependency>
+			<groupId>org.openflexo</groupId>
+			<artifactId>flexo-foundation</artifactId>
+			<classifier>tests</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.openflexo</groupId>
+			<artifactId>flexo-ui</artifactId>
+			<classifier>tests</classifier>
+			<scope>test</scope>
 		</dependency>
        <dependency>
                 <groupId>org.dockingframes</groupId>
