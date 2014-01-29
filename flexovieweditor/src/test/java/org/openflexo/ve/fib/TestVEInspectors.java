@@ -2,9 +2,9 @@ package org.openflexo.ve.fib;
 
 import java.io.File;
 
-import org.openflexo.fib.utils.FIBTestCase;
+import org.openflexo.fib.utils.GenericFIBInspectorTestCase;
 
-public class TestVEInspectors extends FIBTestCase {
+public class TestVEInspectors extends GenericFIBInspectorTestCase {
 
 	public static void main(String[] args) {
 		System.out.println(generateInspectorTestCaseClass(new File(System.getProperty("user.dir") + "/src/main/resources/Inspectors/VE"),
