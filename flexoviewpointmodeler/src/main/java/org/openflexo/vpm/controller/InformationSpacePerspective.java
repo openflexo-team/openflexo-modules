@@ -42,10 +42,6 @@ public class InformationSpacePerspective extends FlexoPerspective {
 
 	static final Logger logger = Logger.getLogger(InformationSpacePerspective.class.getPackage().getName());
 
-	// private final VPMController _controller;
-
-	// private final FIBOntologyLibraryBrowser ontologyLibraryBrowser;
-
 	private final JLabel infoLabel;
 
 	private final FIBInformationSpaceBrowser informationSpaceBrowser;
@@ -56,27 +52,13 @@ public class InformationSpacePerspective extends FlexoPerspective {
 	 */
 	public InformationSpacePerspective(FlexoController controller/*VPMController controller*/) {
 		super("information_space_perspective");
-		// _controller = controller;
 
 		informationSpaceBrowser = new FIBInformationSpaceBrowser(controller.getApplicationContext().getInformationSpace(), controller);
 
-		/*_browser = new CalcLibraryBrowser(controller);
-		_browserView = new CEDBrowserView(_browser, _controller, SelectionPolicy.ParticipateToSelection) {
-			@Override
-			public void treeDoubleClick(FlexoModelObject object) {
-				super.treeDoubleClick(object);
-				if (object instanceof ViewPoint) {
-					focusOnViewPoint((ViewPoint) object);
-					// System.out.println(((OntologyCalc)object).getXMLRepresentation());
-				}
-			}
-		};*/
 		setTopLeftView(informationSpaceBrowser);
 
-		// ontologyLibraryBrowser = new FIBOntologyLibraryBrowser(controller.getBaseOntologyLibrary(), controller);
 		infoLabel = new JLabel("Information space perspective");
 		infoLabel.setFont(FlexoCst.SMALL_FONT);
-		// setTopLeftView(ontologyLibraryBrowser);
 	}
 
 	/**

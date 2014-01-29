@@ -19,6 +19,8 @@
  */
 package org.openflexo.ve.controller;
 
+import java.util.logging.Logger;
+
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -38,9 +40,7 @@ import org.openflexo.view.controller.model.FlexoPerspective;
 
 public class InformationSpacePerspective extends FlexoPerspective {
 
-	private final VEController _controller;
-
-	// private final FIBOntologyLibraryBrowser ontologyLibraryBrowser;
+	static final Logger logger = Logger.getLogger(InformationSpacePerspective.class.getPackage().getName());
 
 	private final JLabel infoLabel;
 
@@ -50,29 +50,15 @@ public class InformationSpacePerspective extends FlexoPerspective {
 	 * @param controller
 	 * @param name
 	 */
-	public InformationSpacePerspective(VEController controller) {
+	public InformationSpacePerspective(FlexoController controller/*VPMController controller*/) {
 		super("information_space_perspective");
-		_controller = controller;
 
 		informationSpaceBrowser = new FIBInformationSpaceBrowser(controller.getApplicationContext().getInformationSpace(), controller);
 
-		/*_browser = new CalcLibraryBrowser(controller);
-		_browserView = new CEDBrowserView(_browser, _controller, SelectionPolicy.ParticipateToSelection) {
-			@Override
-			public void treeDoubleClick(FlexoModelObject object) {
-				super.treeDoubleClick(object);
-				if (object instanceof ViewPoint) {
-					focusOnViewPoint((ViewPoint) object);
-					// System.out.println(((OntologyCalc)object).getXMLRepresentation());
-				}
-			}
-		};*/
 		setTopLeftView(informationSpaceBrowser);
 
-		// ontologyLibraryBrowser = new FIBOntologyLibraryBrowser(controller.getBaseOntologyLibrary(), controller);
 		infoLabel = new JLabel("Information space perspective");
 		infoLabel.setFont(FlexoCst.SMALL_FONT);
-		// setTopLeftView(ontologyLibraryBrowser);
 	}
 
 	/**
@@ -86,8 +72,8 @@ public class InformationSpacePerspective extends FlexoPerspective {
 	}
 
 	@Override
-	public FlexoObject getDefaultObject(FlexoObject proposedObject) {
-		if (hasModuleViewForObject(proposedObject)) {
+	public FlexoObject getDefaultObject(FlexoObject proposedObject, FlexoController controller) {
+		if (hasModuleViewForObject(proposedObject, controller)) {
 			return proposedObject;
 		}
 		// return _controller.getBaseOntologyLibrary();
@@ -95,25 +81,30 @@ public class InformationSpacePerspective extends FlexoPerspective {
 	}
 
 	@Override
-	public boolean hasModuleViewForObject(FlexoObject object) {
+	public boolean hasModuleViewForObject(FlexoObject object, FlexoController controller) {
 		if (object instanceof TechnologyObject) {
 			TechnologyAdapter ta = ((TechnologyObject) object).getTechnologyAdapter();
-			TechnologyAdapterController<?> tac = _controller.getApplicationContext().getTechnologyAdapterControllerService()
+			TechnologyAdapterController<?> tac = controller.getApplicationContext().getTechnologyAdapterControllerService()
 					.getTechnologyAdapterController(ta);
-			return tac.hasModuleViewForObject((TechnologyObject) object);
+			return tac.hasModuleViewForObject((TechnologyObject) object, controller);
 		}
 		return false;
 	}
 
 	@Override
 	public ModuleView<?> createModuleViewForObject(FlexoObject object, FlexoController controller) {
-		if (object instanceof TechnologyObject && object instanceof FlexoObject) {
-			TechnologyAdapter ta = ((TechnologyObject) object).getTechnologyAdapter();
-			TechnologyAdapterController<?> tac = _controller.getApplicationContext().getTechnologyAdapterControllerService()
-					.getTechnologyAdapterController(ta);
-			return tac.createModuleViewForObject(object, _controller, this);
+		if (object instanceof TechnologyObject) {
+			return createModuleViewForTechnologyObject((TechnologyObject<?>) object, controller);
 		}
 		return new EmptyPanel<FlexoObject>(controller, this, object);
+	}
+
+	public <TA extends TechnologyAdapter> ModuleView<?> createModuleViewForTechnologyObject(TechnologyObject<TA> object,
+			FlexoController controller) {
+		TA ta = object.getTechnologyAdapter();
+		TechnologyAdapterController<TA> tac = controller.getApplicationContext().getTechnologyAdapterControllerService()
+				.getTechnologyAdapterController(ta);
+		return tac.createModuleViewForObject(object, controller, this);
 	}
 
 	@Override
@@ -121,11 +112,21 @@ public class InformationSpacePerspective extends FlexoPerspective {
 		return infoLabel;
 	}
 
-	public String getWindowTitleforObject(FlexoObject object) {
+	public String getWindowTitleforObject(FlexoObject object, FlexoController controller) {
+		if (object instanceof TechnologyObject) {
+			TechnologyAdapter ta = ((TechnologyObject) object).getTechnologyAdapter();
+			TechnologyAdapterController<?> tac = controller.getApplicationContext().getTechnologyAdapterControllerService()
+					.getTechnologyAdapterController(ta);
+			return tac.getWindowTitleforObject((TechnologyObject) object, controller);
+		}
 		if (object instanceof IFlexoOntologyObject) {
 			return ((IFlexoOntologyObject) object).getName();
 		}
-		return object.toString();
+		if (object != null) {
+			return object.toString();
+		}
+		logger.warning("Unexpected null object here");
+		return null;
 	}
 
 }
