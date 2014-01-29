@@ -29,6 +29,7 @@
 	<modules>
 		<module>flexovieweditor</module>
 		<module>flexoviewpointmodeler</module>
+		<module>freemodellingeditor</module>
    </modules>
 	<dependencyManagement>
 		<dependencies>
