@@ -146,6 +146,7 @@ public class VPMController extends FlexoController {
 			if (object instanceof EditionPatternObject) {
 				setCurrentEditedObjectAsModuleView(((EditionPatternObject) object).getEditionPattern());
 			} else {
+				logger.info("setCurrentEditedObjectAsModuleView with " + object);
 				setCurrentEditedObjectAsModuleView(object);
 			}
 			if (getCurrentPerspective() == VIEW_POINT_PERSPECTIVE) {

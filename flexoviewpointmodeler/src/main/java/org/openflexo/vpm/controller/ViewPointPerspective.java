@@ -40,6 +40,9 @@ import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.controller.model.FlexoPerspective;
+import org.openflexo.vpm.view.StandardEditionPatternView;
+import org.openflexo.vpm.view.ViewPointView;
+import org.openflexo.vpm.view.VirtualModelView;
 
 public class ViewPointPerspective extends FlexoPerspective {
 
@@ -153,26 +156,26 @@ public class ViewPointPerspective extends FlexoPerspective {
 		if (object.isDeleted()) {
 			return null;
 		}
-		/*if (object instanceof ViewPoint) {
-			return new ViewPointView((ViewPoint) object, controller);
+		if (object instanceof ViewPoint) {
+			return new ViewPointView((ViewPoint) object, controller, this);
 		}
 		if (object instanceof EditionPattern) {
 			EditionPattern ep = (EditionPattern) object;
 			if (ep instanceof VirtualModel) {
-				//if (ep instanceof DiagramSpecification) {
-				//	return new DiagramSpecificationView(ep, (VPMController) controller);
-				//} else {
-				return new VirtualModelView(ep, (VPMController) controller);
+				// if (ep instanceof DiagramSpecification) {
+				// return new DiagramSpecificationView(ep, (VPMController) controller);
+				// } else {
+				return new VirtualModelView(ep, controller, this);
 				// }
 			} else {
 				// if (ep.getVirtualModel() instanceof DiagramSpecification) {
-				//	return new DiagramEditionPatternView(ep, (VPMController) controller);
+				// return new DiagramEditionPatternView(ep, (VPMController) controller);
 				// } else {
-				return new StandardEditionPatternView(ep, (VPMController) controller);
+				return new StandardEditionPatternView(ep, controller, this);
 				// }
 			}
 
-		}*/
+		}
 		/*if (object instanceof DiagramPalette) {
 			return new DiagramPaletteEditor(_controller, (DiagramPalette) object, false).getModuleView();
 		}
