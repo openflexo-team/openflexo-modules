@@ -52,9 +52,9 @@ public class AddEditionPatternInitializer extends ActionInitializer {
 		return new FlexoActionInitializer<AddEditionPattern>() {
 			@Override
 			public boolean run(EventObject e, AddEditionPattern action) {
-				action.setNewEditionPatternName(FlexoController.askForString(FlexoLocalization
+				action.setNewFlexoConceptName(FlexoController.askForString(FlexoLocalization
 						.localizedForKey("name_for_new_edition_pattern")));
-				return action.getNewEditionPatternName() != null;
+				return action.getNewFlexoConceptName() != null;
 			}
 		};
 	}
@@ -65,7 +65,7 @@ public class AddEditionPatternInitializer extends ActionInitializer {
 			@Override
 			public boolean run(EventObject e, AddEditionPattern action) {
 				if (action.switchNewlyCreatedEditionPattern) {
-					((VPMController) getController()).setCurrentEditedObjectAsModuleView(action.getNewEditionPattern());
+					((VPMController) getController()).setCurrentEditedObjectAsModuleView(action.getNewFlexoConcept());
 				}
 				return true;
 			}

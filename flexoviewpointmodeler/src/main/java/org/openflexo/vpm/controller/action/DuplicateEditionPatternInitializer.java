@@ -64,7 +64,7 @@ public class DuplicateEditionPatternInitializer extends ActionInitializer<Duplic
 		return new FlexoActionFinalizer<DuplicateEditionPattern>() {
 			@Override
 			public boolean run(EventObject e, DuplicateEditionPattern action) {
-				((VPMController) getController()).selectAndFocusObject(action.newEditionPattern);
+				((VPMController) getController()).selectAndFocusObject(action.getNewEditionPattern());
 				return true;
 			}
 		};
