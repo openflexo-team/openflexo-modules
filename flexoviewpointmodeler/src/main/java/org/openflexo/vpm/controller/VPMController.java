@@ -32,7 +32,7 @@ import javax.swing.SwingUtilities;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.validation.ValidationModel;
-import org.openflexo.foundation.viewpoint.EditionPattern;
+import org.openflexo.foundation.viewpoint.FlexoConcept;
 import org.openflexo.foundation.viewpoint.EditionPatternObject;
 import org.openflexo.foundation.viewpoint.ViewPoint;
 import org.openflexo.foundation.viewpoint.ViewPointLibrary;
@@ -144,7 +144,7 @@ public class VPMController extends FlexoController {
 		if (object != null) {
 			logger.info("selectAndFocusObject " + object + "of " + object.getClass().getSimpleName());
 			if (object instanceof EditionPatternObject) {
-				setCurrentEditedObjectAsModuleView(((EditionPatternObject) object).getEditionPattern());
+				setCurrentEditedObjectAsModuleView(((EditionPatternObject) object).getFlexoConcept());
 			} else {
 				logger.info("setCurrentEditedObjectAsModuleView with " + object);
 				setCurrentEditedObjectAsModuleView(object);
@@ -172,8 +172,8 @@ public class VPMController extends FlexoController {
 				} else if (object instanceof VirtualModel) {
 					VirtualModel virtualModel = (VirtualModel) object;
 					VIEW_POINT_PERSPECTIVE.focusOnVirtualModel(virtualModel);
-				} else if (object instanceof EditionPattern) {
-					EditionPattern pattern = (EditionPattern) object;
+				} else if (object instanceof FlexoConcept) {
+					FlexoConcept pattern = (FlexoConcept) object;
 					if (pattern.getEditionSchemes().size() > 0) {
 						getSelectionManager().setSelectedObject(pattern.getEditionSchemes().get(0));
 					}

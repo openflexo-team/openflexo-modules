@@ -26,7 +26,7 @@ import javax.swing.Icon;
 
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
-import org.openflexo.foundation.viewpoint.EditionPattern;
+import org.openflexo.foundation.viewpoint.FlexoConcept;
 import org.openflexo.foundation.viewpoint.ViewPointObject;
 import org.openflexo.foundation.viewpoint.action.DuplicateEditionPattern;
 import org.openflexo.icon.VPMIconLibrary;
@@ -36,7 +36,7 @@ import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.vpm.controller.VPMController;
 
-public class DuplicateEditionPatternInitializer extends ActionInitializer<DuplicateEditionPattern, EditionPattern, ViewPointObject> {
+public class DuplicateEditionPatternInitializer extends ActionInitializer<DuplicateEditionPattern, FlexoConcept, ViewPointObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
@@ -64,7 +64,7 @@ public class DuplicateEditionPatternInitializer extends ActionInitializer<Duplic
 		return new FlexoActionFinalizer<DuplicateEditionPattern>() {
 			@Override
 			public boolean run(EventObject e, DuplicateEditionPattern action) {
-				((VPMController) getController()).selectAndFocusObject(action.getNewEditionPattern());
+				((VPMController) getController()).selectAndFocusObject(action.getNewFlexoConcept());
 				return true;
 			}
 		};

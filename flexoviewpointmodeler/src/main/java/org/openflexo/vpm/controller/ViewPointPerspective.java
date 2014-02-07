@@ -29,7 +29,7 @@ import javax.swing.JPanel;
 import org.openflexo.FlexoCst;
 import org.openflexo.components.widget.FIBViewPointLibraryBrowser;
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.foundation.viewpoint.EditionPattern;
+import org.openflexo.foundation.viewpoint.FlexoConcept;
 import org.openflexo.foundation.viewpoint.EditionPatternObject;
 import org.openflexo.foundation.viewpoint.ViewPoint;
 import org.openflexo.foundation.viewpoint.ViewPointLibrary;
@@ -137,7 +137,7 @@ public class ViewPointPerspective extends FlexoPerspective {
 			return proposedObject;
 		}
 		if (proposedObject instanceof EditionPatternObject) {
-			return ((EditionPatternObject) proposedObject).getEditionPattern();
+			return ((EditionPatternObject) proposedObject).getFlexoConcept();
 		}
 		if (proposedObject instanceof ViewPointObject) {
 			return ((ViewPointObject) proposedObject).getViewPoint();
@@ -148,7 +148,7 @@ public class ViewPointPerspective extends FlexoPerspective {
 	@Override
 	public boolean hasModuleViewForObject(FlexoObject object, FlexoController controller) {
 		return /*object instanceof DiagramPalette || object instanceof ExampleDiagram ||*/object instanceof ViewPoint
-				|| object instanceof EditionPattern;
+				|| object instanceof FlexoConcept;
 	}
 
 	@Override
@@ -159,8 +159,8 @@ public class ViewPointPerspective extends FlexoPerspective {
 		if (object instanceof ViewPoint) {
 			return new ViewPointView((ViewPoint) object, controller, this);
 		}
-		if (object instanceof EditionPattern) {
-			EditionPattern ep = (EditionPattern) object;
+		if (object instanceof FlexoConcept) {
+			FlexoConcept ep = (FlexoConcept) object;
 			if (ep instanceof VirtualModel) {
 				// if (ep instanceof DiagramSpecification) {
 				// return new DiagramSpecificationView(ep, (VPMController) controller);
@@ -211,8 +211,8 @@ public class ViewPointPerspective extends FlexoPerspective {
 		if (object instanceof ExampleDiagram) {
 			return ((ExampleDiagram) object).getName() + " (" + FlexoLocalization.localizedForKey("example_diagram") + ")";
 		}*/
-		if (object instanceof EditionPattern) {
-			return ((EditionPattern) object).getName();
+		if (object instanceof FlexoConcept) {
+			return ((FlexoConcept) object).getName();
 		}
 		if (object != null) {
 			return object.toString();

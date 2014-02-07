@@ -96,7 +96,7 @@ public class TestVPMInspectors extends GenericFIBInspectorTestCase {
 	}
 
 	public void testEditionPatternInspector() {
-		validateFIB("Inspectors/VPM/EditionPattern.inspector");
+		validateFIB("Inspectors/VPM/FlexoConcept.inspector");
 	}
 
 	public void testEditionPatternInstanceParameterInspector() {

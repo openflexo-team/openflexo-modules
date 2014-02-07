@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 import javax.swing.Icon;
 
 import org.openflexo.foundation.action.FlexoActionInitializer;
-import org.openflexo.foundation.viewpoint.EditionPattern;
+import org.openflexo.foundation.viewpoint.FlexoConcept;
 import org.openflexo.foundation.viewpoint.ViewPointObject;
 import org.openflexo.foundation.viewpoint.action.DeleteEditionPattern;
 import org.openflexo.icon.IconLibrary;
@@ -34,7 +34,7 @@ import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
 
-public class DeleteEditionPatternInitializer extends ActionInitializer<DeleteEditionPattern, EditionPattern, ViewPointObject> {
+public class DeleteEditionPatternInitializer extends ActionInitializer<DeleteEditionPattern, FlexoConcept, ViewPointObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 

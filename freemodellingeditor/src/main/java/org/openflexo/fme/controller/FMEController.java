@@ -34,7 +34,7 @@ import org.openflexo.fme.view.menu.FMEMenuBar;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.validation.ValidationModel;
-import org.openflexo.foundation.viewpoint.EditionPattern;
+import org.openflexo.foundation.viewpoint.FlexoConcept;
 import org.openflexo.foundation.viewpoint.EditionPatternObject;
 import org.openflexo.foundation.viewpoint.ViewPoint;
 import org.openflexo.foundation.viewpoint.ViewPointLibrary;
@@ -141,7 +141,7 @@ public class FMEController extends FlexoController {
 		if (object != null) {
 			logger.info("selectAndFocusObject " + object + "of " + object.getClass().getSimpleName());
 			if (object instanceof EditionPatternObject) {
-				setCurrentEditedObjectAsModuleView(((EditionPatternObject) object).getEditionPattern());
+				setCurrentEditedObjectAsModuleView(((EditionPatternObject) object).getFlexoConcept());
 			} else {
 				setCurrentEditedObjectAsModuleView(object);
 			}
@@ -168,8 +168,8 @@ public class FMEController extends FlexoController {
 				} else if (object instanceof VirtualModel) {
 					VirtualModel virtualModel = (VirtualModel) object;
 					FREE_MODELLING_PERSPECTIVE.focusOnVirtualModel(virtualModel);
-				} else if (object instanceof EditionPattern) {
-					EditionPattern pattern = (EditionPattern) object;
+				} else if (object instanceof FlexoConcept) {
+					FlexoConcept pattern = (FlexoConcept) object;
 					if (pattern.getEditionSchemes().size() > 0) {
 						getSelectionManager().setSelectedObject(pattern.getEditionSchemes().get(0));
 					}
