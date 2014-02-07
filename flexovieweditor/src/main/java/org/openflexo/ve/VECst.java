@@ -19,9 +19,6 @@
  */
 package org.openflexo.ve;
 
-import java.io.File;
-
-import org.openflexo.toolbox.FileResource;
 
 /**
  * Constants used by the ViewEditor module.
@@ -43,26 +40,5 @@ public class VECst {
 	public static final int DEFAULT_MAINFRAME_HEIGHT = 600;
 
 	public static final int PALETTE_DOC_SPLIT_LOCATION = 300;
-
-	// General
-	public static File ONTOLOGY_VIEW_FIB = new FileResource("Fib/OntologyView.fib");
-	public static File VIRTUAL_MODEL_INSTANCE_VIEW_FIB = new FileResource("Fib/VirtualModelInstanceView.fib");
-
-	// View/VirtualModelInstance edition
-	public static File CREATE_VIEW_DIALOG_FIB = new FileResource("Fib/Dialog/CreateViewDialog.fib");
-	public static File CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB = new FileResource("Fib/Dialog/CreateVirtualModelInstanceDialog.fib");
-	public static File CONFIGURE_FREE_MODEL_SLOT_INSTANCE_DIALOG_FIB = new FileResource(
-			"Fib/Dialog/ConfigureFreeModelSlotInstanceDialog.fib");
-	public static File CONFIGURE_TYPE_AWARE_MODEL_SLOT_INSTANCE_DIALOG_FIB = new FileResource(
-			"Fib/Dialog/ConfigureTypeAwareModelSlotInstanceDialog.fib");
-	public static File CONFIGURE_VIRTUAL_MODEL_SLOT_INSTANCE_DIALOG_FIB = new FileResource(
-			"Fib/Dialog/ConfigureVirtualModelSlotInstanceDialog.fib");
-
-	// Diagram edition
-	public static File CREATE_DIAGRAM_DIALOG_FIB = new FileResource("Fib/Dialog/CreateDiagramDialog.fib");
-	public static File CHOOSE_AND_CONFIGURE_CREATION_SCHEME_DIALOG_FIB = new FileResource(
-			"Fib/Dialog/ChooseAndConfigureCreationSchemeDialog.fib");
-	public static File DELETE_DIAGRAM_ELEMENTS_DIALOG_FIB = new FileResource("Fib/Dialog/DeleteDiagramElementsDialog.fib");
-	public static File REINDEX_DIAGRAM_ELEMENTS_DIALOG_FIB = new FileResource("Fib/Dialog/ReindexDiagramElementsDialog.fib");
 
 }

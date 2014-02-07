@@ -20,7 +20,6 @@
 package org.openflexo.ve.controller;
 
 import java.awt.Dimension;
-import java.util.Hashtable;
 import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
@@ -32,6 +31,8 @@ import org.openflexo.FlexoCst;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.FlexoProjectObject;
+import org.openflexo.foundation.technologyadapter.TechnologyAdapter;
+import org.openflexo.foundation.technologyadapter.TechnologyObject;
 import org.openflexo.foundation.view.View;
 import org.openflexo.foundation.view.ViewLibrary;
 import org.openflexo.foundation.view.VirtualModelInstance;
@@ -43,6 +44,7 @@ import org.openflexo.ve.view.VirtualModelInstanceView;
 import org.openflexo.ve.widget.FIBViewLibraryBrowser;
 import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.FlexoController;
+import org.openflexo.view.controller.TechnologyAdapterController;
 import org.openflexo.view.controller.TechnologyAdapterControllerService;
 import org.openflexo.view.controller.model.FlexoPerspective;
 
@@ -130,7 +132,7 @@ public class ViewLibraryPerspective extends FlexoPerspective {
 	}
 
 	@Override
-	public FlexoObject getDefaultObject(FlexoObject proposedObject) {
+	public FlexoObject getDefaultObject(FlexoObject proposedObject, FlexoController controller) {
 		if (proposedObject instanceof View) {
 			return proposedObject;
 		}
@@ -142,20 +144,27 @@ public class ViewLibraryPerspective extends FlexoPerspective {
 	}
 
 	@Override
-	public boolean hasModuleViewForObject(FlexoObject object) {
-		boolean returned = /*object instanceof Diagram ||*/ object instanceof VirtualModelInstance || object instanceof View;
-		if (returned == true) {
+	public boolean hasModuleViewForObject(FlexoObject object, FlexoController controller) {
+		if (object instanceof VirtualModelInstance || object instanceof View) {
 			return true;
 		}
+		if (object instanceof TechnologyObject) {
+			return hasModuleViewForTechnologyObject((TechnologyObject<?>) object, controller);
+		}
+		return false;
+	}
+
+	public <TA extends TechnologyAdapter> boolean hasModuleViewForTechnologyObject(TechnologyObject<TA> object, FlexoController controller) {
 		TechnologyAdapterControllerService tacService = _controller.getApplicationContext().getTechnologyAdapterControllerService();
-		return tacService.
+		TechnologyAdapterController<TA> tac = tacService.getTechnologyAdapterController(object.getTechnologyAdapter());
+		return tac.hasModuleViewForObject(object, controller);
 	}
 
 	@Override
 	public ModuleView<?> createModuleViewForObject(FlexoObject object, FlexoController controller) {
-		if (object instanceof Diagram) {
+		/*if (object instanceof Diagram) {
 			return getControllerForDiagram((Diagram) object).getModuleView();
-		}
+		}*/
 		if (object instanceof VirtualModelInstance) {
 			return new VirtualModelInstanceView((VirtualModelInstance) object, (VEController) controller);
 		}
@@ -167,9 +176,9 @@ public class ViewLibraryPerspective extends FlexoPerspective {
 
 	@Override
 	public JComponent getHeader() {
-		if (getCurrentDiagramModuleView() != null) {
+		/*if (getCurrentDiagramModuleView() != null) {
 			return getCurrentDiagramModuleView().getController().getScalePanel();
-		}
+		}*/
 		return null;
 	}
 
@@ -178,12 +187,12 @@ public class ViewLibraryPerspective extends FlexoPerspective {
 		return infoLabel;
 	}
 
-	public DiagramModuleView getCurrentDiagramModuleView() {
+	/*public DiagramModuleView getCurrentDiagramModuleView() {
 		if (_controller != null && _controller.getCurrentModuleView() instanceof DiagramModuleView) {
 			return (DiagramModuleView) _controller.getCurrentModuleView();
 		}
 		return null;
-	}
+	}*/
 
 	public VirtualModelInstanceView getCurrentVirtualModelInstanceView() {
 		if (_controller != null && _controller.getCurrentModuleView() instanceof VirtualModelInstanceView) {
@@ -192,7 +201,7 @@ public class ViewLibraryPerspective extends FlexoPerspective {
 		return null;
 	}
 
-	public DiagramController getControllerForDiagram(Diagram diagram) {
+	/*public DiagramController getControllerForDiagram(Diagram diagram) {
 		DiagramController returned = _controllers.get(diagram);
 		if (returned == null) {
 			returned = new DiagramController(_controller, diagram, false);
@@ -207,7 +216,7 @@ public class ViewLibraryPerspective extends FlexoPerspective {
 				_controllers.remove(shemaController.getDrawing().getDiagram());
 			}
 		}
-	}
+	}*/
 
 	public String getWindowTitleforObject(FlexoObject object) {
 		if (object == null) {
@@ -222,7 +231,7 @@ public class ViewLibraryPerspective extends FlexoPerspective {
 		if (object instanceof View) {
 			return ((View) object).getName();
 		}
-		return object.getFullyQualifiedName();
+		return object.toString();
 	}
 
 	public void setProject(FlexoProject project) {
@@ -232,10 +241,10 @@ public class ViewLibraryPerspective extends FlexoPerspective {
 	@Override
 	public void notifyModuleViewDisplayed(ModuleView<?> moduleView) {
 		super.notifyModuleViewDisplayed(moduleView);
-		if (moduleView instanceof DiagramModuleView) {
+		/*if (moduleView instanceof DiagramModuleView) {
 			_controller.getControllerModel().setRightViewVisible(true);
-		} else {
-			_controller.getControllerModel().setRightViewVisible(false);
-		}
+		} else {*/
+		_controller.getControllerModel().setRightViewVisible(false);
+		// }
 	}
 }
