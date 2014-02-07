@@ -80,8 +80,6 @@ import org.openflexo.model.undo.UndoManager;
 import org.openflexo.swing.FlexoFileChooser;
 import org.openflexo.swing.layout.JXMultiSplitPane;
 import org.openflexo.swing.layout.MultiSplitLayout;
-import org.openflexo.swing.layout.MultiSplitLayout.Divider;
-import org.openflexo.swing.layout.MultiSplitLayout.Leaf;
 import org.openflexo.swing.layout.MultiSplitLayout.Split;
 import org.openflexo.toolbox.FileResource;
 import org.openflexo.toolbox.HasPropertyChangeSupport;
@@ -111,41 +109,41 @@ public class FreeModellingEditorApplication {
 
 	private static final int META_MASK = ToolBox.getPLATFORM() == ToolBox.MACOS ? InputEvent.META_MASK : InputEvent.CTRL_MASK;
 
-	private JFrame frame;
+	private final JFrame frame;
 	// private JDialog paletteDialog;
-	private FlexoFileChooser fileChooser;
-	private SwingToolFactory toolFactory;
+	private final FlexoFileChooser fileChooser;
+	private final SwingToolFactory toolFactory;
 
 	private DiagramFactory factory;
 
-	private Vector<DiagramEditor> diagramEditors = new Vector<DiagramEditor>();
-	private JXMultiSplitPane splitPanel;
-	private JPanel mainPanel;
+	private final Vector<DiagramEditor> diagramEditors = new Vector<DiagramEditor>();
+	private final JXMultiSplitPane splitPanel;
+	private final JPanel mainPanel;
 	private JTabbedPane tabbedPane;
 
 	private DiagramEditor currentDiagramEditor;
 
-	private JDianaToolSelector toolSelector;
-	private JDianaScaleSelector scaleSelector;
-	private JDianaLayoutWidget layoutWidget;
-	private JDianaStyles stylesWidget;
-	private JDianaPalette commonPalette;
-	private CommonPalette commonPaletteModel;
-	private JDianaPalette dynamicPalette;
-	private DynamicPalette dynamicPaletteModel;
-	private JDianaInspectors inspectors;
+	private final JDianaToolSelector toolSelector;
+	private final JDianaScaleSelector scaleSelector;
+	private final JDianaLayoutWidget layoutWidget;
+	private final JDianaStyles stylesWidget;
+	private final JDianaPalette commonPalette;
+	private final CommonPalette commonPaletteModel;
+	private final JDianaPalette dynamicPalette;
+	private final DynamicPalette dynamicPaletteModel;
+	private final JDianaInspectors inspectors;
 
-	private FIBInspectorController inspector;
-	private ConceptBrowser conceptBrowser;
-	private RepresentedConceptBrowser representedConceptBrowser;
+	// private FIBInspectorController inspector;
+	private final ConceptBrowser conceptBrowser;
+	private final RepresentedConceptBrowser representedConceptBrowser;
 
 	protected PropertyChangeListenerRegistrationManager manager;
 
-	private SynchronizedMenuItem copyItem;
-	private SynchronizedMenuItem cutItem;
-	private SynchronizedMenuItem pasteItem;
-	private SynchronizedMenuItem undoItem;
-	private SynchronizedMenuItem redoItem;
+	private final SynchronizedMenuItem copyItem;
+	private final SynchronizedMenuItem cutItem;
+	private final SynchronizedMenuItem pasteItem;
+	private final SynchronizedMenuItem undoItem;
+	private final SynchronizedMenuItem redoItem;
 
 	@SuppressWarnings("serial")
 	public FreeModellingEditorApplication() {
@@ -170,7 +168,7 @@ public class FreeModellingEditorApplication {
 
 		toolFactory = new SwingToolFactory(frame);
 
-		inspector = new FIBInspectorController(this);
+		// inspector = new FIBInspectorController(this);
 
 		mainPanel = new JPanel(new BorderLayout());
 
@@ -217,7 +215,9 @@ public class FreeModellingEditorApplication {
 		conceptBrowser = new ConceptBrowser(null);
 		representedConceptBrowser = new RepresentedConceptBrowser(null);
 
-		Split all = new Split();
+		Split all = null;
+
+		/*Split all = new Split();
 
 		Split leftColumn = new Split();
 		leftColumn.setWeight(0.0);
@@ -242,16 +242,16 @@ public class FreeModellingEditorApplication {
 		Leaf middle = new Leaf("middle");
 		middle.setWeight(1.0);
 		all.setChildren(leftColumn, new Divider(), middle, new Divider(), rightColumn);
-
+		*/
 		// Once the layout is done, the code is easy
-		MultiSplitLayout layout = new MultiSplitLayout(all);
+		MultiSplitLayout layout = new MultiSplitLayout(/*all*/);
 
 		layout.setLayoutByWeight(false);
 		layout.setFloatingDividers(true);
 
 		dynamicPalette.getComponent().setBorder(
 				BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0), dynamicPalette.getComponent().getBorder()));
-		inspector.getRootPane().setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
+		// inspector.getRootPane().setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
 		conceptBrowser.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
 
 		splitPanel = new JXMultiSplitPane(layout);
@@ -259,7 +259,7 @@ public class FreeModellingEditorApplication {
 		splitPanel.add(conceptBrowser, "left.bottom");
 		splitPanel.add(dynamicPalette.getComponent(), "right.top");
 		splitPanel.add(commonPalette.getComponent(), "right.middle");
-		splitPanel.add(inspector.getRootPane(), "right.bottom");
+		// splitPanel.add(inspector.getRootPane(), "right.bottom");
 		splitPanel.add(mainPanel, "middle");
 
 		splitPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
@@ -496,7 +496,7 @@ public class FreeModellingEditorApplication {
 	}
 
 	private class MyDrawingViewScrollPane extends JScrollPane {
-		private DiagramEditorView drawingView;
+		private final DiagramEditorView drawingView;
 
 		private MyDrawingViewScrollPane(DiagramEditorView v) {
 			super(v);
@@ -614,8 +614,8 @@ public class FreeModellingEditorApplication {
 
 		mainPanel.add(topPanel, BorderLayout.NORTH);*/
 
-		inspector.setDiagramEditor(diagramEditor);
-		inspector.switchToEmptyContent();
+		// inspector.setDiagramEditor(diagramEditor);
+		// inspector.switchToEmptyContent();
 		conceptBrowser.setDataObject(diagramEditor.getDiagram().getDataModel());
 		representedConceptBrowser.setDataObject(diagramEditor.getDiagram().getDataModel());
 
@@ -721,9 +721,9 @@ public class FreeModellingEditorApplication {
 		}
 	}
 
-	public FIBInspectorController getInspector() {
+	/*public FIBInspectorController getInspector() {
 		return inspector;
-	}
+	}*/
 
 	public DiagramEditor getCurrentDiagramEditor() {
 		return currentDiagramEditor;
@@ -774,7 +774,7 @@ public class FreeModellingEditorApplication {
 	public class SynchronizedMenuItem extends JMenuItem implements PropertyChangeListener {
 
 		private HasPropertyChangeSupport observable;
-		private Synchronizer synchronizer;
+		private final Synchronizer synchronizer;
 
 		public SynchronizedMenuItem(String menuName, Synchronizer synchronizer) {
 			super(menuName);
@@ -805,7 +805,7 @@ public class FreeModellingEditorApplication {
 
 	public class WindowMenuItem extends JCheckBoxMenuItem implements WindowListener {
 
-		private Window window;
+		private final Window window;
 
 		public WindowMenuItem(String menuName, Window aWindow) {
 			super(menuName);

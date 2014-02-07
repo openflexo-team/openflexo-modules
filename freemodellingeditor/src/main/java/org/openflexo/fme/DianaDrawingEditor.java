@@ -56,9 +56,9 @@ public class DianaDrawingEditor extends JDianaInteractiveEditor<Diagram> {
 
 	private static final Logger logger = Logger.getLogger(DianaDrawingEditor.class.getPackage().getName());
 
-	private JPopupMenu contextualMenu;
+	private final JPopupMenu contextualMenu;
 
-	private DiagramEditor diagramEditor;
+	private final DiagramEditor diagramEditor;
 
 	public DianaDrawingEditor(final DiagramDrawing aDrawing, DiagramFactory factory, DiagramEditor aDiagramEditor) {
 		super(aDrawing, factory, aDiagramEditor.getApplication().getToolFactory());
@@ -203,6 +203,7 @@ public class DianaDrawingEditor extends JDianaInteractiveEditor<Diagram> {
 		return (DiagramEditorView) super.getDrawingView();
 	}
 
+	@Override
 	protected void prepareClipboardForPasting(FGEPoint proposedPastingLocation) {
 		logger.info("Pasting in " + getPastingContext().getDrawable() + " at " + proposedPastingLocation);
 		if (getClipboard().isSingleObject()) {
@@ -232,19 +233,19 @@ public class DianaDrawingEditor extends JDianaInteractiveEditor<Diagram> {
 	protected void fireSelectionUpdated() {
 		super.fireSelectionUpdated();
 		if (getSelectedObjects().size() == 0) {
-			diagramEditor.getApplication().getInspector().switchToEmptyContent();
+			// diagramEditor.getApplication().getInspector().switchToEmptyContent();
 		} else if (getSelectedObjects().size() == 1) {
 			if (getSelectedObjects().get(0) instanceof RootNode) {
-				diagramEditor.getApplication().getInspector().switchToEmptyContent();
+				// diagramEditor.getApplication().getInspector().switchToEmptyContent();
 			} else {
-				diagramEditor.getApplication().getInspector().inspectObject(getSelectedObjects().get(0).getDrawable());
+				// diagramEditor.getApplication().getInspector().inspectObject(getSelectedObjects().get(0).getDrawable());
 			}
 		} else {
-			diagramEditor.getApplication().getInspector().switchToMultipleContent();
+			// diagramEditor.getApplication().getInspector().switchToMultipleContent();
 		}
 		diagramEditor.fireDrawingSelectionChanged(getSelectedDrawables(DiagramElement.class));
 	}
-	
+
 	public DiagramEditor getDiagramEditor() {
 		return diagramEditor;
 	}

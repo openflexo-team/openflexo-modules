@@ -27,11 +27,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import org.openflexo.antar.binding.DataBinding;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.logging.FlexoLogger;
 import org.openflexo.logging.FlexoLoggingManager;
-import org.openflexo.xmlcode.StringEncoder;
 
 public class LaunchFreeModellingEditor {
 
@@ -71,8 +69,6 @@ public class LaunchFreeModellingEditor {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		StringEncoder.getDefaultInstance()._addConverter(DataBinding.CONVERTER);
 
 		FreeModellingEditorApplication application = new FreeModellingEditorApplication();
 		application.showMainPanel();
