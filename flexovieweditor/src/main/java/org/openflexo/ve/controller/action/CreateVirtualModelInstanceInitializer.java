@@ -25,29 +25,27 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
+import org.openflexo.components.widget.CommonFIB;
 import org.openflexo.fib.controller.FIBController.Status;
 import org.openflexo.foundation.FlexoException;
-import org.openflexo.foundation.FlexoModelObject;
+import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
 import org.openflexo.foundation.action.FlexoExceptionHandler;
 import org.openflexo.foundation.action.NotImplementedException;
-import org.openflexo.foundation.rm.DuplicateResourceException;
 import org.openflexo.foundation.technologyadapter.FreeModelSlot;
 import org.openflexo.foundation.technologyadapter.ModelSlot;
 import org.openflexo.foundation.technologyadapter.TypeAwareModelSlot;
 import org.openflexo.foundation.view.View;
 import org.openflexo.foundation.view.action.CreateVirtualModelInstance;
-import org.openflexo.foundation.view.action.CreateVirtualModelInstance.CreateConcreteVirtualModelInstance;
 import org.openflexo.foundation.viewpoint.VirtualModelModelSlot;
 import org.openflexo.icon.VEIconLibrary;
 import org.openflexo.localization.FlexoLocalization;
-import org.openflexo.ve.VECst;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
 
-public class CreateVirtualModelInstanceInitializer extends ActionInitializer<CreateConcreteVirtualModelInstance, View, FlexoModelObject> {
+public class CreateVirtualModelInstanceInitializer extends ActionInitializer<CreateVirtualModelInstance, View, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
@@ -60,15 +58,15 @@ public class CreateVirtualModelInstanceInitializer extends ActionInitializer<Cre
 		return (VEControllerActionInitializer) super.getControllerActionInitializer();
 	}
 
-	private Status chooseVirtualModel(CreateConcreteVirtualModelInstance action) {
-		return instanciateShowDialogAndReturnStatus(action, VECst.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB);
+	private Status chooseVirtualModel(CreateVirtualModelInstance action) {
+		return instanciateShowDialogAndReturnStatus(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB);
 	}
 
 	@Override
-	protected FlexoActionInitializer<CreateConcreteVirtualModelInstance> getDefaultInitializer() {
-		return new FlexoActionInitializer<CreateConcreteVirtualModelInstance>() {
+	protected FlexoActionInitializer<CreateVirtualModelInstance> getDefaultInitializer() {
+		return new FlexoActionInitializer<CreateVirtualModelInstance>() {
 			@Override
-			public boolean run(EventObject e, CreateConcreteVirtualModelInstance action) {
+			public boolean run(EventObject e, CreateVirtualModelInstance action) {
 				if (action.skipChoosePopup) {
 					return true;
 				} else {
@@ -77,7 +75,7 @@ public class CreateVirtualModelInstanceInitializer extends ActionInitializer<Cre
 					while (shouldContinue) {
 						Status result;
 						if (step == 0) {
-							result = instanciateShowDialogAndReturnStatus(action, VECst.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB);
+							result = instanciateShowDialogAndReturnStatus(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB);
 						} else {
 							ModelSlot configuredModelSlot = action.getVirtualModel().getModelSlots().get(step - 1);
 							result = instanciateShowDialogAndReturnStatus(action.getModelSlotInstanceConfiguration(configuredModelSlot),
@@ -94,7 +92,7 @@ public class CreateVirtualModelInstanceInitializer extends ActionInitializer<Cre
 						}
 					}
 
-					return instanciateAndShowDialog(action, VECst.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB);
+					return instanciateAndShowDialog(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB);
 				}
 
 			}
@@ -102,10 +100,10 @@ public class CreateVirtualModelInstanceInitializer extends ActionInitializer<Cre
 	}
 
 	@Override
-	protected FlexoActionFinalizer<CreateConcreteVirtualModelInstance> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<CreateConcreteVirtualModelInstance>() {
+	protected FlexoActionFinalizer<CreateVirtualModelInstance> getDefaultFinalizer() {
+		return new FlexoActionFinalizer<CreateVirtualModelInstance>() {
 			@Override
-			public boolean run(EventObject e, CreateConcreteVirtualModelInstance action) {
+			public boolean run(EventObject e, CreateVirtualModelInstance action) {
 				// getController().setCurrentEditedObjectAsModuleView(action.getNewVirtualModelInstance());
 				getController().selectAndFocusObject(action.getNewVirtualModelInstance());
 				return true;
@@ -114,16 +112,12 @@ public class CreateVirtualModelInstanceInitializer extends ActionInitializer<Cre
 	}
 
 	@Override
-	protected FlexoExceptionHandler<CreateConcreteVirtualModelInstance> getDefaultExceptionHandler() {
-		return new FlexoExceptionHandler<CreateConcreteVirtualModelInstance>() {
+	protected FlexoExceptionHandler<CreateVirtualModelInstance> getDefaultExceptionHandler() {
+		return new FlexoExceptionHandler<CreateVirtualModelInstance>() {
 			@Override
-			public boolean handleException(FlexoException exception, CreateConcreteVirtualModelInstance action) {
+			public boolean handleException(FlexoException exception, CreateVirtualModelInstance action) {
 				if (exception instanceof NotImplementedException) {
 					FlexoController.notify(FlexoLocalization.localizedForKey("not_implemented_yet"));
-					return true;
-				}
-				if (exception instanceof DuplicateResourceException) {
-					FlexoController.notify(FlexoLocalization.localizedForKey("invalid_name_a_virtual_model_with_this_name_already_exists"));
 					return true;
 				}
 				return false;
@@ -143,13 +137,13 @@ public class CreateVirtualModelInstanceInitializer extends ActionInitializer<Cre
 	 */
 	private File getModelSlotInstanceConfigurationFIB(Class modelSlotClass) {
 		if (TypeAwareModelSlot.class.isAssignableFrom(modelSlotClass)) {
-			return VECst.CONFIGURE_TYPE_AWARE_MODEL_SLOT_INSTANCE_DIALOG_FIB;
+			return CommonFIB.CONFIGURE_TYPE_AWARE_MODEL_SLOT_INSTANCE_DIALOG_FIB;
 		}
 		if (FreeModelSlot.class.isAssignableFrom(modelSlotClass)) {
-			return VECst.CONFIGURE_FREE_MODEL_SLOT_INSTANCE_DIALOG_FIB;
+			return CommonFIB.CONFIGURE_FREE_MODEL_SLOT_INSTANCE_DIALOG_FIB;
 		}
 		if (VirtualModelModelSlot.class.isAssignableFrom(modelSlotClass)) {
-			return VECst.CONFIGURE_VIRTUAL_MODEL_SLOT_INSTANCE_DIALOG_FIB;
+			return CommonFIB.CONFIGURE_VIRTUAL_MODEL_SLOT_INSTANCE_DIALOG_FIB;
 		}
 		return null;
 	}

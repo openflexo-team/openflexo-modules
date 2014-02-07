@@ -19,10 +19,10 @@
  */
 package org.openflexo.ve.view;
 
+import org.openflexo.components.widget.CommonFIB;
 import org.openflexo.fib.model.listener.FIBMouseClickListener;
-import org.openflexo.fib.testutils.controller.FIBComponentDynamicModel;
+import org.openflexo.fib.view.FIBView;
 import org.openflexo.foundation.view.VirtualModelInstance;
-import org.openflexo.ve.VECst;
 import org.openflexo.ve.controller.VEController;
 import org.openflexo.ve.controller.ViewLibraryPerspective;
 import org.openflexo.view.FIBModuleView;
@@ -37,7 +37,7 @@ import org.openflexo.view.ModuleView;
 public class VirtualModelInstanceView extends FIBModuleView<VirtualModelInstance> implements FIBMouseClickListener {
 
 	public VirtualModelInstanceView(VirtualModelInstance vmInstance, VEController controller) {
-		super(vmInstance, controller, VECst.VIRTUAL_MODEL_INSTANCE_VIEW_FIB);
+		super(vmInstance, controller, CommonFIB.VIRTUAL_MODEL_INSTANCE_VIEW_FIB);
 	}
 
 	@Override
@@ -51,8 +51,8 @@ public class VirtualModelInstanceView extends FIBModuleView<VirtualModelInstance
 	}
 
 	@Override
-	public void mouseClicked(FIBComponentDynamicModel data, int clickCount) {
-		// System.out.println("mouseClicked with " + data + " and " + clickCount);
+	public void mouseClicked(FIBView<?, ?, ?> view, int clickCount) {
+		System.out.println("mouseClicked with " + view + " and " + clickCount);
 		/*if (data instanceof FIBTableDynamicModel && ((FIBTableDynamicModel) data).selected instanceof FlexoModelObject && clickCount == 2) {
 			FlexoObject o = (FlexoObject) ((FIBTableDynamicModel) data).selected;
 			if (o instanceof ViewPoint || o instanceof EditionPattern || o instanceof ExampleDiagram || o instanceof DiagramPalette) {

@@ -28,16 +28,16 @@ package org.openflexo.ve.view.menu;
 import java.util.logging.Logger;
 
 import org.openflexo.ve.controller.VEController;
-import org.openflexo.view.menu.ToolsMenu;
+import org.openflexo.view.menu.FileMenu;
 
 /**
- * 'Tools' menu for this Module
+ * 'File' menu for this Module
  * 
  * @author yourname
  */
-public class OEToolsMenu extends ToolsMenu {
+public class VEFileMenu extends FileMenu {
 
-	private static final Logger logger = Logger.getLogger(OEToolsMenu.class.getPackage().getName());
+	private static final Logger logger = Logger.getLogger(VEFileMenu.class.getPackage().getName());
 
 	// ==========================================================================
 	// ============================= Instance Variables
@@ -51,7 +51,7 @@ public class OEToolsMenu extends ToolsMenu {
 	// ================================
 	// ==========================================================================
 
-	public OEToolsMenu(VEController controller) {
+	public VEFileMenu(VEController controller) {
 		super(controller);
 		_xxxController = controller;
 		// Put your actions here

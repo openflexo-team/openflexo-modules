@@ -27,37 +27,38 @@ package org.openflexo.ve.view.menu;
  */
 import java.util.logging.Logger;
 
+import org.openflexo.ve.VEModule;
 import org.openflexo.ve.controller.VEController;
-import org.openflexo.view.menu.FileMenu;
+import org.openflexo.view.menu.WindowMenu;
 
 /**
- * 'File' menu for this Module
+ * 'Window' menu for this Module
  * 
  * @author yourname
  */
-public class OEFileMenu extends FileMenu {
+public class VEWindowMenu extends WindowMenu {
 
-	private static final Logger logger = Logger.getLogger(OEFileMenu.class.getPackage().getName());
+	private static final Logger logger = Logger.getLogger(VEWindowMenu.class.getPackage().getName());
 
 	// ==========================================================================
 	// ============================= Instance Variables
 	// =========================
 	// ==========================================================================
 
-	protected VEController _xxxController;
+	protected VEController veController;
 
 	// ==========================================================================
 	// ============================= Constructor
 	// ================================
 	// ==========================================================================
 
-	public OEFileMenu(VEController controller) {
-		super(controller);
-		_xxxController = controller;
+	public VEWindowMenu(VEController controller) {
+		super(controller, VEModule.VE);
+		veController = controller;
 		// Put your actions here
 	}
 
-	public VEController getXXXController() {
-		return _xxxController;
+	public VEController getVEController() {
+		return veController;
 	}
 }

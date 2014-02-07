@@ -34,14 +34,14 @@ import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
 import org.openflexo.foundation.action.FlexoActionType;
 import org.openflexo.foundation.action.FlexoActionVisibleCondition;
+import org.openflexo.foundation.view.VirtualModelInstanceObject;
 import org.openflexo.foundation.view.action.VEPaste;
-import org.openflexo.foundation.view.diagram.model.DiagramElement;
 import org.openflexo.icon.IconLibrary;
 import org.openflexo.ve.controller.VEController;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 
-public class VEPasteInitializer extends ActionInitializer<VEPaste, DiagramElement<?>, DiagramElement<?>> {
+public class VEPasteInitializer extends ActionInitializer<VEPaste, VirtualModelInstanceObject, VirtualModelInstanceObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
@@ -76,11 +76,11 @@ public class VEPasteInitializer extends ActionInitializer<VEPaste, DiagramElemen
 	}
 
 	@Override
-	protected FlexoActionEnableCondition<VEPaste, DiagramElement<?>, DiagramElement<?>> getEnableCondition() {
-		return new FlexoActionEnableCondition<VEPaste, DiagramElement<?>, DiagramElement<?>>() {
+	protected FlexoActionEnableCondition<VEPaste, VirtualModelInstanceObject, VirtualModelInstanceObject> getEnableCondition() {
+		return new FlexoActionEnableCondition<VEPaste, VirtualModelInstanceObject, VirtualModelInstanceObject>() {
 			@Override
-			public boolean isEnabled(FlexoActionType<VEPaste, DiagramElement<?>, DiagramElement<?>> actionType, DiagramElement<?> object,
-					Vector<DiagramElement<?>> globalSelection, FlexoEditor editor) {
+			public boolean isEnabled(FlexoActionType<VEPaste, VirtualModelInstanceObject, VirtualModelInstanceObject> actionType,
+					VirtualModelInstanceObject object, Vector<VirtualModelInstanceObject> globalSelection, FlexoEditor editor) {
 				return getControllerActionInitializer().getVESelectionManager().hasCopiedData();
 			}
 		};
@@ -102,12 +102,12 @@ public class VEPasteInitializer extends ActionInitializer<VEPaste, DiagramElemen
 	}
 
 	@Override
-	protected FlexoActionVisibleCondition<VEPaste, DiagramElement<?>, DiagramElement<?>> getVisibleCondition() {
-		return new FlexoActionVisibleCondition<VEPaste, DiagramElement<?>, DiagramElement<?>>() {
+	protected FlexoActionVisibleCondition<VEPaste, VirtualModelInstanceObject, VirtualModelInstanceObject> getVisibleCondition() {
+		return new FlexoActionVisibleCondition<VEPaste, VirtualModelInstanceObject, VirtualModelInstanceObject>() {
 
 			@Override
-			public boolean isVisible(FlexoActionType<VEPaste, DiagramElement<?>, DiagramElement<?>> actionType, DiagramElement<?> object,
-					Vector<DiagramElement<?>> globalSelection, FlexoEditor editor) {
+			public boolean isVisible(FlexoActionType<VEPaste, VirtualModelInstanceObject, VirtualModelInstanceObject> actionType,
+					VirtualModelInstanceObject object, Vector<VirtualModelInstanceObject> globalSelection, FlexoEditor editor) {
 				return true;
 			}
 

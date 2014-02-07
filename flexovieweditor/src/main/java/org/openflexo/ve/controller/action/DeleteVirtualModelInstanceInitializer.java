@@ -35,7 +35,7 @@ import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
 
-public class DeleteVirtualModelInstanceInitializer extends ActionInitializer<DeleteVirtualModelInstance, VirtualModelInstance<?, ?>, FlexoObject> {
+public class DeleteVirtualModelInstanceInitializer extends ActionInitializer<DeleteVirtualModelInstance, VirtualModelInstance, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 

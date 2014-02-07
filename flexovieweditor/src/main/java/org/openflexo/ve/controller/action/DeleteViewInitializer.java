@@ -24,18 +24,18 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
+import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
 import org.openflexo.foundation.view.View;
 import org.openflexo.foundation.view.action.DeleteView;
-import org.openflexo.foundation.view.diagram.model.DiagramElement;
 import org.openflexo.icon.IconLibrary;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
 
-public class DeleteViewInitializer extends ActionInitializer<DeleteView, View, DiagramElement<?>> {
+public class DeleteViewInitializer extends ActionInitializer<DeleteView, View, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 

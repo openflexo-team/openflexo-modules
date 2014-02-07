@@ -25,12 +25,14 @@ import java.util.logging.Logger;
 import javax.swing.Icon;
 
 import org.openflexo.foundation.FlexoException;
-import org.openflexo.foundation.FlexoModelObject;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
 import org.openflexo.foundation.action.FlexoExceptionHandler;
 import org.openflexo.foundation.action.NotImplementedException;
+import org.openflexo.foundation.view.VirtualModelInstance;
+import org.openflexo.foundation.view.VirtualModelInstanceObject;
 import org.openflexo.foundation.view.action.SynchronizationSchemeAction;
+import org.openflexo.foundation.viewpoint.SynchronizationScheme;
 import org.openflexo.icon.VPMIconLibrary;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.view.controller.ActionInitializer;
@@ -39,7 +41,7 @@ import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.controller.ParametersRetriever;
 
 public class SynchronizationSchemeActionInitializer extends
-		ActionInitializer<SynchronizationSchemeAction, FlexoModelObject, FlexoModelObject> {
+		ActionInitializer<SynchronizationSchemeAction, VirtualModelInstance, VirtualModelInstanceObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
@@ -57,7 +59,11 @@ public class SynchronizationSchemeActionInitializer extends
 		return new FlexoActionInitializer<SynchronizationSchemeAction>() {
 			@Override
 			public boolean run(EventObject e, SynchronizationSchemeAction action) {
-				return ParametersRetriever.retrieveParameters(action, action.escapeParameterRetrievingWhenValid);
+				ParametersRetriever<SynchronizationScheme> parameterRetriever = new ParametersRetriever<SynchronizationScheme>(action);
+				if (action.escapeParameterRetrievingWhenValid && parameterRetriever.isSkipable()) {
+					return true;
+				}
+				return parameterRetriever.retrieveParameters();
 			}
 		};
 	}

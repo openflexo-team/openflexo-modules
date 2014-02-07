@@ -26,6 +26,7 @@ package org.openflexo.ve.view.menu;
  * (c) Denali 2003-2006
  */
 import org.openflexo.module.Module;
+import org.openflexo.ve.VEModule;
 import org.openflexo.ve.controller.VEController;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.menu.EditMenu;
@@ -39,14 +40,14 @@ import org.openflexo.view.menu.WindowMenu;
  * 
  * @author benoit, yourname
  */
-public class OEMenuBar extends FlexoMenuBar {
+public class VEMenuBar extends FlexoMenuBar {
 
-	private OEFileMenu _fileMenu;
-	private OEEditMenu _editMenu;
-	private OEToolsMenu _toolsMenu;
+	private VEFileMenu _fileMenu;
+	private VEEditMenu _editMenu;
+	private VEToolsMenu _toolsMenu;
 
-	public OEMenuBar(VEController controller) {
-		super(controller, Module.XXX_MODULE);
+	public VEMenuBar(VEController controller) {
+		super(controller, VEModule.VE);
 	}
 
 	/**
@@ -58,7 +59,7 @@ public class OEMenuBar extends FlexoMenuBar {
 	@Override
 	public FileMenu getFileMenu(FlexoController controller) {
 		if (_fileMenu == null) {
-			_fileMenu = new OEFileMenu((VEController) controller);
+			_fileMenu = new VEFileMenu((VEController) controller);
 		}
 		return _fileMenu;
 	}
@@ -72,7 +73,7 @@ public class OEMenuBar extends FlexoMenuBar {
 	@Override
 	public EditMenu getEditMenu(FlexoController controller) {
 		if (_editMenu == null) {
-			_editMenu = new OEEditMenu((VEController) controller);
+			_editMenu = new VEEditMenu((VEController) controller);
 		}
 		return _editMenu;
 	}
@@ -86,7 +87,7 @@ public class OEMenuBar extends FlexoMenuBar {
 	@Override
 	public WindowMenu getWindowMenu(FlexoController controller, Module module) {
 		if (_windowMenu == null) {
-			_windowMenu = new OEWindowMenu((VEController) controller);
+			_windowMenu = new VEWindowMenu((VEController) controller);
 		}
 		return _windowMenu;
 	}
@@ -99,7 +100,7 @@ public class OEMenuBar extends FlexoMenuBar {
 	 */
 	public ToolsMenu getToolsMenu(FlexoController controller, Module module) {
 		if (_toolsMenu == null) {
-			_toolsMenu = new OEToolsMenu((VEController) controller);
+			_toolsMenu = new VEToolsMenu((VEController) controller);
 		}
 		return _toolsMenu;
 	}

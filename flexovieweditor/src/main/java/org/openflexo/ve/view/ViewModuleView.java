@@ -22,21 +22,20 @@ package org.openflexo.ve.view;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.util.Vector;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import org.openflexo.foundation.DataModification;
 import org.openflexo.foundation.FlexoEditor;
-import org.openflexo.foundation.FlexoModelObject;
+import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObservable;
 import org.openflexo.foundation.FlexoObserver;
 import org.openflexo.foundation.ObjectDeleted;
 import org.openflexo.foundation.action.FlexoActionSource;
 import org.openflexo.foundation.view.View;
 import org.openflexo.foundation.view.action.CreateVirtualModelInstance;
-import org.openflexo.foundation.view.diagram.action.CreateDiagram;
 import org.openflexo.ve.controller.VEController;
 import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.model.FlexoPerspective;
@@ -46,11 +45,11 @@ import org.openflexo.view.listener.FlexoActionButton;
  * @author vincent
  */
 public class ViewModuleView extends JPanel implements ModuleView<View>, FlexoObserver, FlexoActionSource {
-	private View view;
-	private VEController controller;
+	private final View view;
+	private final VEController controller;
 	private JPanel panel;
 
-	private FlexoPerspective declaredPerspective;
+	private final FlexoPerspective declaredPerspective;
 
 	public ViewModuleView(View view, VEController controller, FlexoPerspective perspective) {
 		super(new BorderLayout());
@@ -60,7 +59,7 @@ public class ViewModuleView extends JPanel implements ModuleView<View>, FlexoObs
 		view.addObserver(this);
 		panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 50));
 		JPanel buttonPanel = new JPanel(new GridLayout(1, 0));
-		buttonPanel.add(new FlexoActionButton(CreateDiagram.actionType, this, controller));
+		// buttonPanel.add(new FlexoActionButton(CreateDiagram.actionType, this, controller));
 		buttonPanel.add(new FlexoActionButton(CreateVirtualModelInstance.actionType, this, controller));
 		panel.add(buttonPanel);
 		add(panel);
@@ -124,7 +123,7 @@ public class ViewModuleView extends JPanel implements ModuleView<View>, FlexoObs
 	 * @see org.openflexo.foundation.action.FlexoActionSource#getFocusedObject()
 	 */
 	@Override
-	public FlexoModelObject getFocusedObject() {
+	public View getFocusedObject() {
 		return view;
 	}
 
@@ -134,7 +133,7 @@ public class ViewModuleView extends JPanel implements ModuleView<View>, FlexoObs
 	 * @see org.openflexo.foundation.action.FlexoActionSource#getGlobalSelection()
 	 */
 	@Override
-	public Vector getGlobalSelection() {
+	public List<FlexoObject> getGlobalSelection() {
 		return null;
 	}
 

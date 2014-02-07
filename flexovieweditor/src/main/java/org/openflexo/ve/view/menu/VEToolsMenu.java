@@ -28,16 +28,16 @@ package org.openflexo.ve.view.menu;
 import java.util.logging.Logger;
 
 import org.openflexo.ve.controller.VEController;
-import org.openflexo.view.menu.EditMenu;
+import org.openflexo.view.menu.ToolsMenu;
 
 /**
- * 'Edit' menu for this module
+ * 'Tools' menu for this Module
  * 
  * @author yourname
  */
-public class OEEditMenu extends EditMenu {
+public class VEToolsMenu extends ToolsMenu {
 
-	private static final Logger logger = Logger.getLogger(OEEditMenu.class.getPackage().getName());
+	private static final Logger logger = Logger.getLogger(VEToolsMenu.class.getPackage().getName());
 
 	// ==========================================================================
 	// ============================= Instance Variables
@@ -51,16 +51,13 @@ public class OEEditMenu extends EditMenu {
 	// ================================
 	// ==========================================================================
 
-	public OEEditMenu(VEController controller) {
+	public VEToolsMenu(VEController controller) {
 		super(controller);
 		_xxxController = controller;
-		addSeparator();
-		// Add actions here
-		// add(deleteItem = new FlexoMenuItem(XXXDelete.actionType, getController()));
-		// add(cutItem = new FlexoMenuItem(XXXCut.actionType, getController()));
-		// add(copyItem = new FlexoMenuItem(XXXCopy.actionType, getController()));
-		// add(pasteItem = new FlexoMenuItem(XXXPaste.actionType, getController()));
-		// add(selectAllItem = new FlexoMenuItem(XXXSelectAll.actionType, getController()));
+		// Put your actions here
 	}
 
+	public VEController getXXXController() {
+		return _xxxController;
+	}
 }

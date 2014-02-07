@@ -27,18 +27,17 @@ package org.openflexo.ve.view.menu;
  */
 import java.util.logging.Logger;
 
-import org.openflexo.module.Module;
 import org.openflexo.ve.controller.VEController;
-import org.openflexo.view.menu.WindowMenu;
+import org.openflexo.view.menu.EditMenu;
 
 /**
- * 'Window' menu for this Module
+ * 'Edit' menu for this module
  * 
  * @author yourname
  */
-public class OEWindowMenu extends WindowMenu {
+public class VEEditMenu extends EditMenu {
 
-	private static final Logger logger = Logger.getLogger(OEWindowMenu.class.getPackage().getName());
+	private static final Logger logger = Logger.getLogger(VEEditMenu.class.getPackage().getName());
 
 	// ==========================================================================
 	// ============================= Instance Variables
@@ -52,13 +51,16 @@ public class OEWindowMenu extends WindowMenu {
 	// ================================
 	// ==========================================================================
 
-	public OEWindowMenu(VEController controller) {
-		super(controller, Module.XXX_MODULE);
+	public VEEditMenu(VEController controller) {
+		super(controller);
 		_xxxController = controller;
-		// Put your actions here
+		addSeparator();
+		// Add actions here
+		// add(deleteItem = new FlexoMenuItem(XXXDelete.actionType, getController()));
+		// add(cutItem = new FlexoMenuItem(XXXCut.actionType, getController()));
+		// add(copyItem = new FlexoMenuItem(XXXCopy.actionType, getController()));
+		// add(pasteItem = new FlexoMenuItem(XXXPaste.actionType, getController()));
+		// add(selectAllItem = new FlexoMenuItem(XXXSelectAll.actionType, getController()));
 	}
 
-	public VEController getXXXController() {
-		return _xxxController;
-	}
 }

@@ -28,14 +28,12 @@ import javax.swing.KeyStroke;
 import org.openflexo.FlexoCst;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.view.VirtualModelInstanceObject;
 import org.openflexo.foundation.view.action.VESelectAll;
-import org.openflexo.foundation.view.diagram.model.DiagramConnector;
-import org.openflexo.foundation.view.diagram.model.DiagramElement;
-import org.openflexo.foundation.view.diagram.model.DiagramShape;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 
-public class VESelectAllInitializer extends ActionInitializer<VESelectAll, DiagramElement<?>, DiagramElement<?>> {
+public class VESelectAllInitializer extends ActionInitializer<VESelectAll, VirtualModelInstanceObject, VirtualModelInstanceObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
@@ -64,7 +62,7 @@ public class VESelectAllInitializer extends ActionInitializer<VESelectAll, Diagr
 			@Override
 			public boolean run(EventObject e, VESelectAll action) {
 				System.out.println("Select all with " + action.getFocusedObject());
-				DiagramElement<?> container = action.getFocusedObject();
+				/*DiagramElement<?> container = action.getFocusedObject();
 				if (action.getFocusedObject() instanceof DiagramConnector) {
 					container = ((DiagramConnector) action.getFocusedObject()).getParent();
 				} else if (action.getFocusedObject() instanceof DiagramShape
@@ -76,8 +74,8 @@ public class VESelectAllInitializer extends ActionInitializer<VESelectAll, Diagr
 					return true;
 				} else {
 					return false;
-				}
-
+				}*/
+				return false;
 			}
 		};
 	}

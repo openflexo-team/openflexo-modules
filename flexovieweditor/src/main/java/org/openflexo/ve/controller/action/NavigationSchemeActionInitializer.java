@@ -25,12 +25,14 @@ import java.util.logging.Logger;
 import javax.swing.Icon;
 
 import org.openflexo.foundation.FlexoException;
-import org.openflexo.foundation.FlexoModelObject;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
 import org.openflexo.foundation.action.FlexoExceptionHandler;
 import org.openflexo.foundation.action.NotImplementedException;
-import org.openflexo.foundation.view.diagram.action.NavigationSchemeAction;
+import org.openflexo.foundation.view.EditionPatternInstance;
+import org.openflexo.foundation.view.VirtualModelInstanceObject;
+import org.openflexo.foundation.view.action.NavigationSchemeAction;
+import org.openflexo.foundation.viewpoint.NavigationScheme;
 import org.openflexo.icon.VPMIconLibrary;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.view.controller.ActionInitializer;
@@ -38,7 +40,8 @@ import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.controller.ParametersRetriever;
 
-public class NavigationSchemeActionInitializer extends ActionInitializer<NavigationSchemeAction, FlexoModelObject, FlexoModelObject> {
+public class NavigationSchemeActionInitializer extends
+		ActionInitializer<NavigationSchemeAction, EditionPatternInstance, VirtualModelInstanceObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
@@ -63,7 +66,12 @@ public class NavigationSchemeActionInitializer extends ActionInitializer<Navigat
 				if (action.getTargetObject() == null) {
 					// If target diagram is not existant, we must create it
 					// First retrieve parameters
-					return ParametersRetriever.retrieveParameters(action, action.escapeParameterRetrievingWhenValid);
+
+					ParametersRetriever<NavigationScheme> parameterRetriever = new ParametersRetriever<NavigationScheme>(action);
+					if (action.escapeParameterRetrievingWhenValid && parameterRetriever.isSkipable()) {
+						return true;
+					}
+					return parameterRetriever.retrieveParameters();
 				} else {
 					// Target diagram is already existing, finalizer will show it
 					// First retrieve parameters

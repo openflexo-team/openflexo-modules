@@ -21,18 +21,6 @@ package org.openflexo.ve.controller.action;
 
 import java.util.logging.Logger;
 
-import org.openflexo.technologyadapter.diagram.controller.action.AddConnectorInitializer;
-import org.openflexo.technologyadapter.diagram.controller.action.AddShapeInitializer;
-import org.openflexo.technologyadapter.diagram.controller.action.CreateDiagramInitializer;
-import org.openflexo.technologyadapter.diagram.controller.action.DeclareConnectorInEditionPatternInitializer;
-import org.openflexo.technologyadapter.diagram.controller.action.DeclareShapeInEditionPatternInitializer;
-import org.openflexo.technologyadapter.diagram.controller.action.DeleteDiagramElementsInitializer;
-import org.openflexo.technologyadapter.diagram.controller.action.DeleteDiagramInitializer;
-import org.openflexo.technologyadapter.diagram.controller.action.DropSchemeActionInitializer;
-import org.openflexo.technologyadapter.diagram.controller.action.ExportDiagramToImageInitializer;
-import org.openflexo.technologyadapter.diagram.controller.action.LinkSchemeActionInitializer;
-import org.openflexo.technologyadapter.diagram.controller.action.PushToPaletteInitializer;
-import org.openflexo.technologyadapter.diagram.controller.action.ResetGraphicalRepresentationInitializer;
 import org.openflexo.ve.VECst;
 import org.openflexo.ve.controller.VEController;
 import org.openflexo.ve.controller.VESelectionManager;
@@ -84,22 +72,9 @@ public class VEControllerActionInitializer extends ControllerActionInitializer {
 		new CreateVirtualModelInstanceInitializer(this);
 		new DeleteVirtualModelInstanceInitializer(this);
 
-		// Diagram perspective
-		new CreateDiagramInitializer(this);
-		new DeleteDiagramInitializer(this);
-		new AddShapeInitializer(this);
-		new AddConnectorInitializer(this);
-		new DeleteDiagramElementsInitializer(this);
-		new DropSchemeActionInitializer(this);
-		new LinkSchemeActionInitializer(this);
 		new ActionSchemeActionInitializer(this);
 		new SynchronizationSchemeActionInitializer(this);
 		new NavigationSchemeActionInitializer(this);
-		new ResetGraphicalRepresentationInitializer(this);
-		new DeclareShapeInEditionPatternInitializer(this);
-		new DeclareConnectorInEditionPatternInitializer(this);
-		new PushToPaletteInitializer(this);
-		new ExportDiagramToImageInitializer(this);
 
 	}
 

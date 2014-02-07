@@ -34,7 +34,7 @@ import org.openflexo.module.FlexoModule;
 import org.openflexo.selection.SelectionManager;
 import org.openflexo.ve.controller.action.VEControllerActionInitializer;
 import org.openflexo.ve.view.VEMainPane;
-import org.openflexo.ve.view.menu.OEMenuBar;
+import org.openflexo.ve.view.menu.VEMenuBar;
 import org.openflexo.view.FlexoMainPane;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
@@ -83,7 +83,7 @@ public class VEController extends FlexoController {
 	 */
 	@Override
 	protected FlexoMenuBar createNewMenuBar() {
-		return new OEMenuBar(this);
+		return new VEMenuBar(this);
 	}
 
 	@Override
