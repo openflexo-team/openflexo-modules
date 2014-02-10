@@ -4,7 +4,10 @@ import org.openflexo.icon.VPMIconLibrary;
 import org.openflexo.module.Module;
 
 /**
- * ViewPointModeller module
+ * ViewPointModeller module<br>
+ * This class represents the static definition of the module<br>
+ * You should never instantiate this class (never invoke constructor of this class): this will be done by the ModuleLoader during dynamic
+ * service discovering
  * 
  * @author sylvain
  */

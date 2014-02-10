@@ -26,7 +26,7 @@ package org.openflexo.ve.view.menu;
  * (c) Denali 2003-2006
  */
 import org.openflexo.module.Module;
-import org.openflexo.ve.VEModule;
+import org.openflexo.ve.ViewEditor;
 import org.openflexo.ve.controller.VEController;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.menu.EditMenu;
@@ -47,7 +47,7 @@ public class VEMenuBar extends FlexoMenuBar {
 	private VEToolsMenu _toolsMenu;
 
 	public VEMenuBar(VEController controller) {
-		super(controller, VEModule.VE);
+		super(controller, controller.getApplicationContext().getModuleLoader().getModule(ViewEditor.class));
 	}
 
 	/**

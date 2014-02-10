@@ -26,33 +26,21 @@ import org.openflexo.components.ProgressWindow;
 import org.openflexo.fge.swing.JDianaInteractiveEditor;
 import org.openflexo.fge.swing.view.JDrawingView;
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.icon.VEIconLibrary;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.module.FlexoModule;
-import org.openflexo.module.Module;
 import org.openflexo.ve.controller.VEController;
 import org.openflexo.view.controller.FlexoController;
 
 /**
- * Ontology Editor module
+ * View Editor module
  * 
- * @author yourname
+ * @author sylvain
  */
 public class VEModule extends FlexoModule<VEModule> {
 	private static final Logger logger = Logger.getLogger(VEModule.class.getPackage().getName());
 
 	public static final String VE_MODULE_SHORT_NAME = "VE";
 	public static final String VE_MODULE_NAME = "ve_module_name";
-
-	public static final ViewEditor VE = new ViewEditor();
-
-	public static class ViewEditor extends Module<VEModule> {
-		public ViewEditor() {
-			super(VE_MODULE_NAME, VE_MODULE_SHORT_NAME, VEModule.class, VEPreferences.class, "modules/flexoviewpointmodeller", "10008",
-					"ve", VEIconLibrary.VE_SMALL_ICON, VEIconLibrary.VE_MEDIUM_ICON, VEIconLibrary.VE_MEDIUM_ICON_WITH_HOVER,
-					VEIconLibrary.VE_BIG_ICON, true);
-		}
-	}
 
 	private JDianaInteractiveEditor<?> screenshotController;
 	private JDrawingView<?> screenshot = null;
@@ -71,7 +59,7 @@ public class VEModule extends FlexoModule<VEModule> {
 
 	@Override
 	public ViewEditor getModule() {
-		return VE;
+		return getApplicationContext().getModuleLoader().getModule(ViewEditor.class);
 	}
 
 	public VEController getVEController() {

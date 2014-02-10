@@ -27,7 +27,7 @@ package org.openflexo.ve.view.menu;
  */
 import java.util.logging.Logger;
 
-import org.openflexo.ve.VEModule;
+import org.openflexo.ve.ViewEditor;
 import org.openflexo.ve.controller.VEController;
 import org.openflexo.view.menu.WindowMenu;
 
@@ -53,7 +53,7 @@ public class VEWindowMenu extends WindowMenu {
 	// ==========================================================================
 
 	public VEWindowMenu(VEController controller) {
-		super(controller, VEModule.VE);
+		super(controller, controller.getApplicationContext().getModuleLoader().getModule(ViewEditor.class));
 		veController = controller;
 		// Put your actions here
 	}

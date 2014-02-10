@@ -43,12 +43,6 @@ public class FMEModule extends FlexoModule<FMEModule> {
 	public static final String FME_MODULE_SHORT_NAME = "FME";
 	public static final String FME_MODULE_NAME = "free_modelling_editor";
 
-	// public static final ViewPointModeller VPM;
-
-	/*static {
-		VPM = new ViewPointModeller();
-	}*/
-
 	private JDianaInteractiveEditor<?> screenshotController;
 	private JDrawingView<?> screenshot = null;
 	private boolean drawWorkingArea;

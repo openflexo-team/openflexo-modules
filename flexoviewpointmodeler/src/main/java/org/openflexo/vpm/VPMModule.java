@@ -43,7 +43,6 @@ public class VPMModule extends FlexoModule<VPMModule> {
 	public static final String VPM_MODULE_SHORT_NAME = "VPM";
 	public static final String VPM_MODULE_NAME = "vpm_module_name";
 
-	public static final ViewPointModeller VPM = new ViewPointModeller();
 	private JDianaInteractiveEditor<?> screenshotController;
 	private JDrawingView<?> screenshot = null;
 	private boolean drawWorkingArea;
