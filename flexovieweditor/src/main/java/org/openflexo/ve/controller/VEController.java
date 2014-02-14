@@ -49,8 +49,8 @@ public class VEController extends FlexoController {
 
 	private static final Logger logger = Logger.getLogger(VEController.class.getPackage().getName());
 
+	public ResourcesPerspective RESOURCES_PERSPECTIVE;
 	public ViewLibraryPerspective VIEW_LIBRARY_PERSPECTIVE;
-
 	public InformationSpacePerspective INFORMATION_SPACE_PERSPECTIVE;
 
 	/**
@@ -62,6 +62,7 @@ public class VEController extends FlexoController {
 
 	@Override
 	protected void initializePerspectives() {
+		addToPerspectives(RESOURCES_PERSPECTIVE = new ResourcesPerspective(this));
 		addToPerspectives(VIEW_LIBRARY_PERSPECTIVE = new ViewLibraryPerspective(this));
 		addToPerspectives(INFORMATION_SPACE_PERSPECTIVE = new InformationSpacePerspective(this));
 	}
@@ -94,13 +95,13 @@ public class VEController extends FlexoController {
 			project.getStringEncoder()._addConverter(GraphicalRepresentation.POINT_CONVERTER);
 			project.getStringEncoder()._addConverter(GraphicalRepresentation.RECT_POLYLIN_CONVERTER);
 		}*/
-		VIEW_LIBRARY_PERSPECTIVE.setProject(project);
+		RESOURCES_PERSPECTIVE.setProject(project);
 		// ONTOLOGY_PERSPECTIVE.setProject(project);
 	}
 
 	@Override
 	public FlexoObject getDefaultObjectToSelect(FlexoProject project) {
-		return project.getViewLibrary();
+		return project;
 	}
 
 	/**
@@ -109,7 +110,7 @@ public class VEController extends FlexoController {
 	@Override
 	public void initInspectors() {
 		super.initInspectors();
-		loadInspectorGroup("Ontology");
+		// loadInspectorGroup("Ontology");
 	}
 
 	@Override
@@ -119,12 +120,13 @@ public class VEController extends FlexoController {
 
 	@Override
 	public String getWindowTitleforObject(FlexoObject object) {
-		if (getCurrentPerspective() == VIEW_LIBRARY_PERSPECTIVE) {
+		if (getCurrentPerspective() == RESOURCES_PERSPECTIVE) {
+			return RESOURCES_PERSPECTIVE.getWindowTitleforObject(object);
+		} else if (getCurrentPerspective() == VIEW_LIBRARY_PERSPECTIVE) {
 			return VIEW_LIBRARY_PERSPECTIVE.getWindowTitleforObject(object);
-		}
-		/*if (getCurrentPerspective() == ONTOLOGY_PERSPECTIVE) {
-			return ONTOLOGY_PERSPECTIVE.getWindowTitleforObject(object);
-		}*/
+		} /*else if (getCurrentPerspective() == INFORMATION_SPACE_PERSPECTIVE) {
+			return INFORMATION_SPACE_PERSPECTIVE.getWindowTitleforObject(object);
+			}*/
 		return object.toString();
 	}
 
