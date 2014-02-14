@@ -121,7 +121,7 @@ public class VEController extends FlexoController {
 	@Override
 	public String getWindowTitleforObject(FlexoObject object) {
 		if (getCurrentPerspective() == RESOURCES_PERSPECTIVE) {
-			return RESOURCES_PERSPECTIVE.getWindowTitleforObject(object);
+			return RESOURCES_PERSPECTIVE.getWindowTitleForObject(object);
 		} else if (getCurrentPerspective() == VIEW_LIBRARY_PERSPECTIVE) {
 			return VIEW_LIBRARY_PERSPECTIVE.getWindowTitleforObject(object);
 		} /*else if (getCurrentPerspective() == INFORMATION_SPACE_PERSPECTIVE) {

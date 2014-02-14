@@ -199,7 +199,7 @@ public class ResourcesPerspective extends FlexoPerspective {
 		}
 	}*/
 
-	public String getWindowTitleforObject(FlexoObject object) {
+	public String getWindowTitleForObject(FlexoObject object) {
 		if (object == null) {
 			return FlexoLocalization.localizedForKey("no_selection");
 		}
@@ -212,7 +212,16 @@ public class ResourcesPerspective extends FlexoPerspective {
 		if (object instanceof View) {
 			return ((View) object).getName();
 		}
+		if (object instanceof TechnologyObject) {
+			return getWindowTitleForTechnologyObject((TechnologyObject<?>) object, _controller);
+		}
 		return object.toString();
+	}
+
+	private <TA extends TechnologyAdapter> String getWindowTitleForTechnologyObject(TechnologyObject<TA> object, FlexoController controller) {
+		TechnologyAdapterControllerService tacService = _controller.getApplicationContext().getTechnologyAdapterControllerService();
+		TechnologyAdapterController<TA> tac = tacService.getTechnologyAdapterController(object.getTechnologyAdapter());
+		return tac.getWindowTitleforObject(object, controller);
 	}
 
 	public void setProject(FlexoProject project) {
