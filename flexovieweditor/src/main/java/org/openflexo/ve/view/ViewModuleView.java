@@ -22,17 +22,15 @@ package org.openflexo.ve.view;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import org.openflexo.foundation.DataModification;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.foundation.FlexoObservable;
-import org.openflexo.foundation.FlexoObserver;
-import org.openflexo.foundation.ObjectDeleted;
 import org.openflexo.foundation.action.FlexoActionSource;
 import org.openflexo.foundation.view.View;
 import org.openflexo.foundation.view.action.CreateVirtualModelInstance;
@@ -44,7 +42,7 @@ import org.openflexo.view.listener.FlexoActionButton;
 /**
  * @author vincent
  */
-public class ViewModuleView extends JPanel implements ModuleView<View>, FlexoObserver, FlexoActionSource {
+public class ViewModuleView extends JPanel implements ModuleView<View>, PropertyChangeListener, FlexoActionSource {
 	private final View view;
 	private final VEController controller;
 	private JPanel panel;
@@ -56,7 +54,7 @@ public class ViewModuleView extends JPanel implements ModuleView<View>, FlexoObs
 		declaredPerspective = perspective;
 		this.view = view;
 		this.controller = controller;
-		view.addObserver(this);
+		view.getPropertyChangeSupport().addPropertyChangeListener(this);
 		panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 50));
 		JPanel buttonPanel = new JPanel(new GridLayout(1, 0));
 		// buttonPanel.add(new FlexoActionButton(CreateDiagram.actionType, this, controller));
@@ -67,24 +65,24 @@ public class ViewModuleView extends JPanel implements ModuleView<View>, FlexoObs
 	}
 
 	@Override
-	public void update(final FlexoObservable observable, final DataModification dataModification) {
+	public void propertyChange(final PropertyChangeEvent evt) {
 		if (!SwingUtilities.isEventDispatchThread()) {
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
-					update(observable, dataModification);
+					propertyChange(evt);
 				}
 			});
 			return;
 		}
-		if (dataModification instanceof ObjectDeleted) {
+		if (evt.getPropertyName().equals(FlexoObject.DELETED)) {
 			deleteModuleView();
 		}
 	}
 
 	@Override
 	public void deleteModuleView() {
-		view.deleteObserver(this);
+		view.getPropertyChangeSupport().removePropertyChangeListener(this);
 		controller.removeModuleView(this);
 		panel = null;
 	}
