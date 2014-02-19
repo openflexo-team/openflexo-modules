@@ -135,7 +135,7 @@
     <Localized key="creates_pattern_role" lang="Dutch">creates_pattern_role</Localized>
     <Localized key="flexo_concept" lang="English">Edition Pattern</Localized>
     <Localized key="flexo_concept" lang="French">Edition Pattern</Localized>
-    <Localized key="flexo_concept" lang="Dutch">edition pattern</Localized>
+    <Localized key="flexo_concept" lang="Dutch">flexo concept</Localized>
     <Localized key="diagram" lang="English">Diagram</Localized>
     <Localized key="diagram" lang="French">Diagramme</Localized>
     <Localized key="diagram" lang="Dutch">Diagram</Localized>
