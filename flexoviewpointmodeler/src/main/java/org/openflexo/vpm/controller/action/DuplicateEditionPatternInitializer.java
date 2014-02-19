@@ -28,7 +28,7 @@ import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
 import org.openflexo.foundation.viewpoint.FlexoConcept;
 import org.openflexo.foundation.viewpoint.ViewPointObject;
-import org.openflexo.foundation.viewpoint.action.DuplicateEditionPattern;
+import org.openflexo.foundation.viewpoint.action.DuplicateFlexoConcept;
 import org.openflexo.icon.VPMIconLibrary;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.view.controller.ActionInitializer;
@@ -36,19 +36,19 @@ import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.vpm.controller.VPMController;
 
-public class DuplicateEditionPatternInitializer extends ActionInitializer<DuplicateEditionPattern, FlexoConcept, ViewPointObject> {
+public class DuplicateEditionPatternInitializer extends ActionInitializer<DuplicateFlexoConcept, FlexoConcept, ViewPointObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
 	DuplicateEditionPatternInitializer(VPMControllerActionInitializer actionInitializer) {
-		super(DuplicateEditionPattern.actionType, actionInitializer);
+		super(DuplicateFlexoConcept.actionType, actionInitializer);
 	}
 
 	@Override
-	protected FlexoActionInitializer<DuplicateEditionPattern> getDefaultInitializer() {
-		return new FlexoActionInitializer<DuplicateEditionPattern>() {
+	protected FlexoActionInitializer<DuplicateFlexoConcept> getDefaultInitializer() {
+		return new FlexoActionInitializer<DuplicateFlexoConcept>() {
 			@Override
-			public boolean run(EventObject e, DuplicateEditionPattern action) {
+			public boolean run(EventObject e, DuplicateFlexoConcept action) {
 				String s = FlexoController.askForString(FlexoLocalization.localizedForKey("please_provide_new_name"));
 				if (s == null) {
 					return false;
@@ -60,10 +60,10 @@ public class DuplicateEditionPatternInitializer extends ActionInitializer<Duplic
 	}
 
 	@Override
-	protected FlexoActionFinalizer<DuplicateEditionPattern> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<DuplicateEditionPattern>() {
+	protected FlexoActionFinalizer<DuplicateFlexoConcept> getDefaultFinalizer() {
+		return new FlexoActionFinalizer<DuplicateFlexoConcept>() {
 			@Override
-			public boolean run(EventObject e, DuplicateEditionPattern action) {
+			public boolean run(EventObject e, DuplicateFlexoConcept action) {
 				((VPMController) getController()).selectAndFocusObject(action.getNewFlexoConcept());
 				return true;
 			}

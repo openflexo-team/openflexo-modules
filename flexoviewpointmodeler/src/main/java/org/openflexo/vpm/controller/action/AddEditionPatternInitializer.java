@@ -26,7 +26,7 @@ import javax.swing.Icon;
 
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
-import org.openflexo.foundation.viewpoint.action.AddEditionPattern;
+import org.openflexo.foundation.viewpoint.action.AddFlexoConcept;
 import org.openflexo.icon.VPMIconLibrary;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.view.controller.ActionInitializer;
@@ -39,7 +39,7 @@ public class AddEditionPatternInitializer extends ActionInitializer {
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
 	AddEditionPatternInitializer(VPMControllerActionInitializer actionInitializer) {
-		super(AddEditionPattern.actionType, actionInitializer);
+		super(AddFlexoConcept.actionType, actionInitializer);
 	}
 
 	@Override
@@ -48,10 +48,10 @@ public class AddEditionPatternInitializer extends ActionInitializer {
 	}
 
 	@Override
-	protected FlexoActionInitializer<AddEditionPattern> getDefaultInitializer() {
-		return new FlexoActionInitializer<AddEditionPattern>() {
+	protected FlexoActionInitializer<AddFlexoConcept> getDefaultInitializer() {
+		return new FlexoActionInitializer<AddFlexoConcept>() {
 			@Override
-			public boolean run(EventObject e, AddEditionPattern action) {
+			public boolean run(EventObject e, AddFlexoConcept action) {
 				action.setNewFlexoConceptName(FlexoController.askForString(FlexoLocalization
 						.localizedForKey("name_for_new_flexo_concept")));
 				return action.getNewFlexoConceptName() != null;
@@ -60,10 +60,10 @@ public class AddEditionPatternInitializer extends ActionInitializer {
 	}
 
 	@Override
-	protected FlexoActionFinalizer<AddEditionPattern> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<AddEditionPattern>() {
+	protected FlexoActionFinalizer<AddFlexoConcept> getDefaultFinalizer() {
+		return new FlexoActionFinalizer<AddFlexoConcept>() {
 			@Override
-			public boolean run(EventObject e, AddEditionPattern action) {
+			public boolean run(EventObject e, AddFlexoConcept action) {
 				if (action.switchNewlyCreatedEditionPattern) {
 					((VPMController) getController()).setCurrentEditedObjectAsModuleView(action.getNewFlexoConcept());
 				}

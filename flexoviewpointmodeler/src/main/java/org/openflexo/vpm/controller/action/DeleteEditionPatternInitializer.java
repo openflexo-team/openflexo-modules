@@ -27,19 +27,19 @@ import javax.swing.Icon;
 import org.openflexo.foundation.action.FlexoActionInitializer;
 import org.openflexo.foundation.viewpoint.FlexoConcept;
 import org.openflexo.foundation.viewpoint.ViewPointObject;
-import org.openflexo.foundation.viewpoint.action.DeleteEditionPattern;
+import org.openflexo.foundation.viewpoint.action.DeleteFlexoConcept;
 import org.openflexo.icon.IconLibrary;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
 
-public class DeleteEditionPatternInitializer extends ActionInitializer<DeleteEditionPattern, FlexoConcept, ViewPointObject> {
+public class DeleteEditionPatternInitializer extends ActionInitializer<DeleteFlexoConcept, FlexoConcept, ViewPointObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
 	DeleteEditionPatternInitializer(VPMControllerActionInitializer actionInitializer) {
-		super(DeleteEditionPattern.actionType, actionInitializer);
+		super(DeleteFlexoConcept.actionType, actionInitializer);
 	}
 
 	@Override
@@ -48,10 +48,10 @@ public class DeleteEditionPatternInitializer extends ActionInitializer<DeleteEdi
 	}
 
 	@Override
-	protected FlexoActionInitializer<DeleteEditionPattern> getDefaultInitializer() {
-		return new FlexoActionInitializer<DeleteEditionPattern>() {
+	protected FlexoActionInitializer<DeleteFlexoConcept> getDefaultInitializer() {
+		return new FlexoActionInitializer<DeleteFlexoConcept>() {
 			@Override
-			public boolean run(EventObject e, DeleteEditionPattern action) {
+			public boolean run(EventObject e, DeleteFlexoConcept action) {
 				return FlexoController.confirm(FlexoLocalization.localizedForKey("would_you_really_like_to_delete_this_flexo_concept"));
 			}
 		};
