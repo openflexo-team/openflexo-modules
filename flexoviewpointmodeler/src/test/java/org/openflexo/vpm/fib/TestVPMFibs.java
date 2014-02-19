@@ -139,7 +139,7 @@ public class TestVPMFibs extends GenericFIBTestCase {
 	}
 
 	public void testStandardEditionPatternView() {
-		validateFIB("Fib/StandardEditionPatternView.fib");
+		validateFIB("Fib/StandardFlexoConceptView.fib");
 	}
 
 	public void testSynchronizationSchemePanel() {

@@ -3,7 +3,7 @@
   <TabPanel name="Tab" constraints="border(location=center)">
     <Tab title="Basic" layout="twocols" titleFont="SansSerif,0,11" darkLevel="0" index="0" font="SansSerif,0,11" useScrollBar="true" horizontalScrollbarPolicy="HORIZONTAL_SCROLLBAR_AS_NEEDED" verticalScrollbarPolicy="VERTICAL_SCROLLBAR_AS_NEEDED" name="BasicTab">
       <Label label="parent" index="2" constraints="twocols(expandHorizontally=false;expandVertically=false;index=2;location=left)" localize="true" />
-      <Custom componentClassName="org.openflexo.components.widget.FIBEditionPatternSelector" localize="true" manageDynamicModel="true" index="3" data="data.parentEditionPattern" constraints="twocols(expandHorizontally=true;expandVertically=false;index=3;location=right)">
+      <Custom componentClassName="org.openflexo.components.widget.FIBFlexoConceptSelector" localize="true" manageDynamicModel="true" index="3" data="data.parentEditionPattern" constraints="twocols(expandHorizontally=true;expandVertically=false;index=3;location=right)">
         <Assignment variable="component.viewPointLibrary" value="data.viewPointLibrary" />
         <Assignment variable="component.viewPoint" value="data.viewPoint" />
       </Custom>

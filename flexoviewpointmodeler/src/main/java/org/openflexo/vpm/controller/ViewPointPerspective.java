@@ -40,7 +40,7 @@ import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.controller.model.FlexoPerspective;
-import org.openflexo.vpm.view.StandardEditionPatternView;
+import org.openflexo.vpm.view.StandardFlexoConceptView;
 import org.openflexo.vpm.view.ViewPointView;
 import org.openflexo.vpm.view.VirtualModelView;
 
@@ -171,7 +171,7 @@ public class ViewPointPerspective extends FlexoPerspective {
 				// if (ep.getVirtualModel() instanceof DiagramSpecification) {
 				// return new DiagramEditionPatternView(ep, (VPMController) controller);
 				// } else {
-				return new StandardEditionPatternView(ep, controller, this);
+				return new StandardFlexoConceptView(ep, controller, this);
 				// }
 			}
 

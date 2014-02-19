@@ -168,7 +168,7 @@ public class FMEPerspective extends FlexoPerspective {
 				// if (ep.getVirtualModel() instanceof DiagramSpecification) {
 				//	return new DiagramEditionPatternView(ep, (VPMController) controller);
 				// } else {
-				return new StandardEditionPatternView(ep, (VPMController) controller);
+				return new StandardFlexoConceptView(ep, (VPMController) controller);
 				// }
 			}
 
