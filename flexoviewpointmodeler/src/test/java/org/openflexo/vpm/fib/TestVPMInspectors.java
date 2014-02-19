@@ -100,15 +100,15 @@ public class TestVPMInspectors extends GenericFIBInspectorTestCase {
 	}
 
 	public void testEditionPatternInstanceParameterInspector() {
-		validateFIB("Inspectors/VPM/EditionPatternInstanceParameter.inspector");
+		validateFIB("Inspectors/VPM/FlexoConceptInstanceParameter.inspector");
 	}
 
 	public void testEditionPatternInstancePatternRoleInspector() {
-		validateFIB("Inspectors/VPM/EditionPatternInstancePatternRole.inspector");
+		validateFIB("Inspectors/VPM/FlexoConceptInstancePatternRole.inspector");
 	}
 
 	public void testEditionPatternObjectInspector() {
-		validateFIB("Inspectors/VPM/EditionPatternObject.inspector");
+		validateFIB("Inspectors/VPM/FlexoConceptObject.inspector");
 	}
 
 	public void testEditionSchemeInspector() {

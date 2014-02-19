@@ -33,7 +33,7 @@ import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.validation.ValidationModel;
 import org.openflexo.foundation.viewpoint.FlexoConcept;
-import org.openflexo.foundation.viewpoint.EditionPatternObject;
+import org.openflexo.foundation.viewpoint.FlexoConceptObject;
 import org.openflexo.foundation.viewpoint.ViewPoint;
 import org.openflexo.foundation.viewpoint.ViewPointLibrary;
 import org.openflexo.foundation.viewpoint.ViewPointObject;
@@ -143,8 +143,8 @@ public class VPMController extends FlexoController {
 	public void selectAndFocusObject(FlexoObject object) {
 		if (object != null) {
 			logger.info("selectAndFocusObject " + object + "of " + object.getClass().getSimpleName());
-			if (object instanceof EditionPatternObject) {
-				setCurrentEditedObjectAsModuleView(((EditionPatternObject) object).getFlexoConcept());
+			if (object instanceof FlexoConceptObject) {
+				setCurrentEditedObjectAsModuleView(((FlexoConceptObject) object).getFlexoConcept());
 			} else {
 				logger.info("setCurrentEditedObjectAsModuleView with " + object);
 				setCurrentEditedObjectAsModuleView(object);
@@ -177,9 +177,9 @@ public class VPMController extends FlexoController {
 					if (pattern.getEditionSchemes().size() > 0) {
 						getSelectionManager().setSelectedObject(pattern.getEditionSchemes().get(0));
 					}
-				} else if (object instanceof EditionPatternObject) {
+				} else if (object instanceof FlexoConceptObject) {
 					if (getCurrentModuleView() instanceof EditionPatternView) {
-						((EditionPatternView) getCurrentModuleView()).tryToSelect((EditionPatternObject) object);
+						((EditionPatternView) getCurrentModuleView()).tryToSelect((FlexoConceptObject) object);
 					}
 				}
 			}

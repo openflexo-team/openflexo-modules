@@ -30,7 +30,7 @@ import org.openflexo.FlexoCst;
 import org.openflexo.components.widget.FIBViewPointLibraryBrowser;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.viewpoint.FlexoConcept;
-import org.openflexo.foundation.viewpoint.EditionPatternObject;
+import org.openflexo.foundation.viewpoint.FlexoConceptObject;
 import org.openflexo.foundation.viewpoint.ViewPoint;
 import org.openflexo.foundation.viewpoint.ViewPointLibrary;
 import org.openflexo.foundation.viewpoint.ViewPointObject;
@@ -136,8 +136,8 @@ public class ViewPointPerspective extends FlexoPerspective {
 		if (hasModuleViewForObject(proposedObject, controller)) {
 			return proposedObject;
 		}
-		if (proposedObject instanceof EditionPatternObject) {
-			return ((EditionPatternObject) proposedObject).getFlexoConcept();
+		if (proposedObject instanceof FlexoConceptObject) {
+			return ((FlexoConceptObject) proposedObject).getFlexoConcept();
 		}
 		if (proposedObject instanceof ViewPointObject) {
 			return ((ViewPointObject) proposedObject).getViewPoint();
@@ -294,8 +294,8 @@ public class ViewPointPerspective extends FlexoPerspective {
 	@Override
 	public void objectWasDoubleClicked(Object object, FlexoController controller) {
 		// logger.info("ViewPointPerspective: object was double-clicked: " + object);
-		if (object instanceof EditionPatternObject) {
-			controller.selectAndFocusObject((EditionPatternObject) object);
+		if (object instanceof FlexoConceptObject) {
+			controller.selectAndFocusObject((FlexoConceptObject) object);
 		}
 	}
 
