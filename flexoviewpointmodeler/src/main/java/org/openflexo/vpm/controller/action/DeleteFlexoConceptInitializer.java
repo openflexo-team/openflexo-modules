@@ -24,22 +24,22 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
-import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
-import org.openflexo.foundation.viewpoint.action.AddFlexoConcept;
-import org.openflexo.icon.VPMIconLibrary;
+import org.openflexo.foundation.viewpoint.FlexoConcept;
+import org.openflexo.foundation.viewpoint.ViewPointObject;
+import org.openflexo.foundation.viewpoint.action.DeleteFlexoConcept;
+import org.openflexo.icon.IconLibrary;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
-import org.openflexo.vpm.controller.VPMController;
 
-public class AddEditionPatternInitializer extends ActionInitializer {
+public class DeleteFlexoConceptInitializer extends ActionInitializer<DeleteFlexoConcept, FlexoConcept, ViewPointObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
-	AddEditionPatternInitializer(VPMControllerActionInitializer actionInitializer) {
-		super(AddFlexoConcept.actionType, actionInitializer);
+	DeleteFlexoConceptInitializer(VPMControllerActionInitializer actionInitializer) {
+		super(DeleteFlexoConcept.actionType, actionInitializer);
 	}
 
 	@Override
@@ -48,33 +48,18 @@ public class AddEditionPatternInitializer extends ActionInitializer {
 	}
 
 	@Override
-	protected FlexoActionInitializer<AddFlexoConcept> getDefaultInitializer() {
-		return new FlexoActionInitializer<AddFlexoConcept>() {
+	protected FlexoActionInitializer<DeleteFlexoConcept> getDefaultInitializer() {
+		return new FlexoActionInitializer<DeleteFlexoConcept>() {
 			@Override
-			public boolean run(EventObject e, AddFlexoConcept action) {
-				action.setNewFlexoConceptName(FlexoController.askForString(FlexoLocalization
-						.localizedForKey("name_for_new_flexo_concept")));
-				return action.getNewFlexoConceptName() != null;
-			}
-		};
-	}
-
-	@Override
-	protected FlexoActionFinalizer<AddFlexoConcept> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<AddFlexoConcept>() {
-			@Override
-			public boolean run(EventObject e, AddFlexoConcept action) {
-				if (action.switchNewlyCreatedEditionPattern) {
-					((VPMController) getController()).setCurrentEditedObjectAsModuleView(action.getNewFlexoConcept());
-				}
-				return true;
+			public boolean run(EventObject e, DeleteFlexoConcept action) {
+				return FlexoController.confirm(FlexoLocalization.localizedForKey("would_you_really_like_to_delete_this_flexo_concept"));
 			}
 		};
 	}
 
 	@Override
 	protected Icon getEnabledIcon() {
-		return VPMIconLibrary.FLEXO_CONCEPT_ICON;
+		return IconLibrary.DELETE_ICON;
 	}
 
 }

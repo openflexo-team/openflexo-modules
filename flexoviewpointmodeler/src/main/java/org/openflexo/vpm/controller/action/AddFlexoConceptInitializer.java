@@ -26,9 +26,7 @@ import javax.swing.Icon;
 
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
-import org.openflexo.foundation.viewpoint.FlexoConcept;
-import org.openflexo.foundation.viewpoint.ViewPointObject;
-import org.openflexo.foundation.viewpoint.action.DuplicateFlexoConcept;
+import org.openflexo.foundation.viewpoint.action.AddFlexoConcept;
 import org.openflexo.icon.VPMIconLibrary;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.view.controller.ActionInitializer;
@@ -36,35 +34,39 @@ import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.vpm.controller.VPMController;
 
-public class DuplicateEditionPatternInitializer extends ActionInitializer<DuplicateFlexoConcept, FlexoConcept, ViewPointObject> {
+public class AddFlexoConceptInitializer extends ActionInitializer {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
-	DuplicateEditionPatternInitializer(VPMControllerActionInitializer actionInitializer) {
-		super(DuplicateFlexoConcept.actionType, actionInitializer);
+	AddFlexoConceptInitializer(VPMControllerActionInitializer actionInitializer) {
+		super(AddFlexoConcept.actionType, actionInitializer);
 	}
 
 	@Override
-	protected FlexoActionInitializer<DuplicateFlexoConcept> getDefaultInitializer() {
-		return new FlexoActionInitializer<DuplicateFlexoConcept>() {
+	protected VPMControllerActionInitializer getControllerActionInitializer() {
+		return (VPMControllerActionInitializer) super.getControllerActionInitializer();
+	}
+
+	@Override
+	protected FlexoActionInitializer<AddFlexoConcept> getDefaultInitializer() {
+		return new FlexoActionInitializer<AddFlexoConcept>() {
 			@Override
-			public boolean run(EventObject e, DuplicateFlexoConcept action) {
-				String s = FlexoController.askForString(FlexoLocalization.localizedForKey("please_provide_new_name"));
-				if (s == null) {
-					return false;
-				}
-				action.newName = s;
-				return true;
+			public boolean run(EventObject e, AddFlexoConcept action) {
+				action.setNewFlexoConceptName(FlexoController.askForString(FlexoLocalization
+						.localizedForKey("name_for_new_flexo_concept")));
+				return action.getNewFlexoConceptName() != null;
 			}
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<DuplicateFlexoConcept> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<DuplicateFlexoConcept>() {
+	protected FlexoActionFinalizer<AddFlexoConcept> getDefaultFinalizer() {
+		return new FlexoActionFinalizer<AddFlexoConcept>() {
 			@Override
-			public boolean run(EventObject e, DuplicateFlexoConcept action) {
-				((VPMController) getController()).selectAndFocusObject(action.getNewFlexoConcept());
+			public boolean run(EventObject e, AddFlexoConcept action) {
+				if (action.switchNewlyCreatedEditionPattern) {
+					((VPMController) getController()).setCurrentEditedObjectAsModuleView(action.getNewFlexoConcept());
+				}
 				return true;
 			}
 		};
