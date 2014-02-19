@@ -29,7 +29,7 @@ import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
 import org.openflexo.foundation.action.FlexoExceptionHandler;
 import org.openflexo.foundation.action.NotImplementedException;
-import org.openflexo.foundation.view.EditionPatternInstance;
+import org.openflexo.foundation.view.FlexoConceptInstance;
 import org.openflexo.foundation.view.VirtualModelInstanceObject;
 import org.openflexo.foundation.view.action.NavigationSchemeAction;
 import org.openflexo.foundation.viewpoint.NavigationScheme;
@@ -41,7 +41,7 @@ import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.controller.ParametersRetriever;
 
 public class NavigationSchemeActionInitializer extends
-		ActionInitializer<NavigationSchemeAction, EditionPatternInstance, VirtualModelInstanceObject> {
+		ActionInitializer<NavigationSchemeAction, FlexoConceptInstance, VirtualModelInstanceObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 

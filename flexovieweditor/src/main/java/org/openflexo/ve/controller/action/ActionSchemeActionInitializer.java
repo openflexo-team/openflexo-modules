@@ -29,7 +29,7 @@ import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
 import org.openflexo.foundation.action.FlexoExceptionHandler;
 import org.openflexo.foundation.action.NotImplementedException;
-import org.openflexo.foundation.view.EditionPatternInstance;
+import org.openflexo.foundation.view.FlexoConceptInstance;
 import org.openflexo.foundation.view.VirtualModelInstanceObject;
 import org.openflexo.foundation.view.action.ActionSchemeAction;
 import org.openflexo.foundation.viewpoint.AbstractActionScheme;
@@ -41,7 +41,7 @@ import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.controller.ParametersRetriever;
 
 public class ActionSchemeActionInitializer extends
-		ActionInitializer<ActionSchemeAction, EditionPatternInstance, VirtualModelInstanceObject> {
+		ActionInitializer<ActionSchemeAction, FlexoConceptInstance, VirtualModelInstanceObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
