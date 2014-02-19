@@ -64,10 +64,10 @@
 		<property name="labelIsBoundToOntologicConcept" label="bound_to_ontological_concept" widget="READ_ONLY_CHECKBOX" constraint="0">
 			<param name="columns" value="10"/>
 		</property>
-		<property name="editionPatternIdentifier" label="edition_pattern_name" widget="READ_ONLY_TEXT_FIELD" constraint="1">
+		<property name="flexoConceptIdentifier" label="flexo_concept_name" widget="READ_ONLY_TEXT_FIELD" constraint="1">
 			<param name="columns" value="20"/>
 		</property>
-		<property name="editionPatternInstanceId" label="edition_pattern_id" widget="READ_ONLY_TEXT_FIELD" constraint="2">
+		<property name="flexoConceptInstanceId" label="flexo_concept_id" widget="READ_ONLY_TEXT_FIELD" constraint="2">
 			<param name="columns" value="20"/>
 		</property>
 		<property name="graphicalRepresentation.text" label="text" widget="TEXT_AREA" constraint="7" depends="labelIsBoundToOntologicConcept,graphicalRepresentation.isMultilineAllowed" conditional="labelIsBoundToOntologicConcept=FALSE AND graphicalRepresentation.isMultilineAllowed=true">

@@ -53,7 +53,7 @@ public class AddEditionPatternInitializer extends ActionInitializer {
 			@Override
 			public boolean run(EventObject e, AddEditionPattern action) {
 				action.setNewFlexoConceptName(FlexoController.askForString(FlexoLocalization
-						.localizedForKey("name_for_new_edition_pattern")));
+						.localizedForKey("name_for_new_flexo_concept")));
 				return action.getNewFlexoConceptName() != null;
 			}
 		};

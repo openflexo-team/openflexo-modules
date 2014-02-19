@@ -42,7 +42,7 @@
           <ShadowStyle id="34" drawShadow="false" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
           <TextStyle id="35" font="Lucida Sans,2,11" color="0,0,0" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
         </ShapeGraphicalRepresentation>
-        <EditionPatternReference id="SYL_796" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnit" instanceId="788" patternRole="missionName" userID="SYL" flexoID="796" dontGenerate="false" useSpecificDescriptions="false">
+        <EditionPatternReference id="SYL_796" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnit" instanceId="788" patternRole="missionName" userID="SYL" flexoID="796" dontGenerate="false" useSpecificDescriptions="false">
           <ConceptActorReference id="SYL_797" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#OrganizationalUnit1" patternRole="organizationUnit" userID="SYL" flexoID="797" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_798" objectReference="SHEMA.R&amp;DDefinition#SYL_789" patternRole="shape" userID="SYL" flexoID="798" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_799" objectReference="SHEMA.R&amp;DDefinition#SYL_792" patternRole="missionDescription" userID="SYL" flexoID="799" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -64,7 +64,7 @@
           <ShadowStyle id="45" drawShadow="false" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
           <TextStyle id="46" font="Lucida Sans,0,11" color="0,0,0" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
         </ShapeGraphicalRepresentation>
-        <EditionPatternReference id="SYL_803" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnit" instanceId="788" patternRole="missionDescription" userID="SYL" flexoID="803" dontGenerate="false" useSpecificDescriptions="false">
+        <EditionPatternReference id="SYL_803" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnit" instanceId="788" patternRole="missionDescription" userID="SYL" flexoID="803" dontGenerate="false" useSpecificDescriptions="false">
           <ConceptActorReference id="SYL_804" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#OrganizationalUnit1" patternRole="organizationUnit" userID="SYL" flexoID="804" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_805" objectReference="SHEMA.R&amp;DDefinition#SYL_789" patternRole="shape" userID="SYL" flexoID="805" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_806" objectReference="SHEMA.R&amp;DDefinition#SYL_792" patternRole="missionDescription" userID="SYL" flexoID="806" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -73,7 +73,7 @@
           <ConceptActorReference id="SYL_809" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#OrganizationalUnit1Mission" patternRole="mission" userID="SYL" flexoID="809" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
         </EditionPatternReference>
       </ContainedVEShape>
-      <EditionPatternReference id="SYL_794" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnit" instanceId="788" patternRole="missionContainer" userID="SYL" flexoID="794" dontGenerate="false" useSpecificDescriptions="false">
+      <EditionPatternReference id="SYL_794" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnit" instanceId="788" patternRole="missionContainer" userID="SYL" flexoID="794" dontGenerate="false" useSpecificDescriptions="false">
         <ConceptActorReference id="SYL_810" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#OrganizationalUnit1" patternRole="organizationUnit" userID="SYL" flexoID="810" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
         <ModelObjectActorReference id="SYL_811" objectReference="SHEMA.R&amp;DDefinition#SYL_789" patternRole="shape" userID="SYL" flexoID="811" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
         <ModelObjectActorReference id="SYL_812" objectReference="SHEMA.R&amp;DDefinition#SYL_792" patternRole="missionDescription" userID="SYL" flexoID="812" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -95,7 +95,7 @@
         <ShadowStyle id="56" drawShadow="false" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
         <TextStyle id="57" font="Lucida Sans,1,9" color="255,255,255" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
       </ShapeGraphicalRepresentation>
-      <EditionPatternReference id="SYL_1808" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitObjective" instanceId="1806" patternRole="shape" userID="SYL" flexoID="1808" dontGenerate="false" useSpecificDescriptions="false">
+      <EditionPatternReference id="SYL_1808" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitObjective" instanceId="1806" patternRole="shape" userID="SYL" flexoID="1808" dontGenerate="false" useSpecificDescriptions="false">
         <ObjectPropertyStatementActorReference id="SYL_1844" subjectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#OrganizationalUnit1" objectPropertyURI="http://www.agilebirds.com/openflexo/ontologies/ScopeDefinition/OrganizationalUnitScopeDefinition.owl#hasObjective" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Objective" patternRole="hasObjective" userID="SYL" flexoID="1844" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
         <ModelObjectActorReference id="SYL_1845" objectReference="SHEMA.R&amp;DDefinition#SYL_1807" patternRole="shape" userID="SYL" flexoID="1845" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
         <ConceptActorReference id="SYL_1846" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Objective" patternRole="objective" userID="SYL" flexoID="1846" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -114,7 +114,7 @@
         <ShadowStyle id="66" drawShadow="false" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
         <TextStyle id="67" font="Lucida Sans,1,9" color="255,255,255" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
       </ShapeGraphicalRepresentation>
-      <EditionPatternReference id="SYL_1811" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitObjective" instanceId="1809" patternRole="shape" userID="SYL" flexoID="1811" dontGenerate="false" useSpecificDescriptions="false">
+      <EditionPatternReference id="SYL_1811" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitObjective" instanceId="1809" patternRole="shape" userID="SYL" flexoID="1811" dontGenerate="false" useSpecificDescriptions="false">
         <ObjectPropertyStatementActorReference id="SYL_1847" subjectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#OrganizationalUnit1" objectPropertyURI="http://www.agilebirds.com/openflexo/ontologies/ScopeDefinition/OrganizationalUnitScopeDefinition.owl#hasObjective" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Objective1" patternRole="hasObjective" userID="SYL" flexoID="1847" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
         <ModelObjectActorReference id="SYL_1848" objectReference="SHEMA.R&amp;DDefinition#SYL_1810" patternRole="shape" userID="SYL" flexoID="1848" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
         <ConceptActorReference id="SYL_1849" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Objective1" patternRole="objective" userID="SYL" flexoID="1849" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -133,7 +133,7 @@
         <ShadowStyle id="76" drawShadow="false" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
         <TextStyle id="77" font="Lucida Sans,1,9" color="255,255,255" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
       </ShapeGraphicalRepresentation>
-      <EditionPatternReference id="SYL_1814" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitObjective" instanceId="1812" patternRole="shape" userID="SYL" flexoID="1814" dontGenerate="false" useSpecificDescriptions="false">
+      <EditionPatternReference id="SYL_1814" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitObjective" instanceId="1812" patternRole="shape" userID="SYL" flexoID="1814" dontGenerate="false" useSpecificDescriptions="false">
         <ObjectPropertyStatementActorReference id="SYL_1850" subjectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#OrganizationalUnit1" objectPropertyURI="http://www.agilebirds.com/openflexo/ontologies/ScopeDefinition/OrganizationalUnitScopeDefinition.owl#hasObjective" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Objective2" patternRole="hasObjective" userID="SYL" flexoID="1850" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
         <ModelObjectActorReference id="SYL_1851" objectReference="SHEMA.R&amp;DDefinition#SYL_1813" patternRole="shape" userID="SYL" flexoID="1851" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
         <ConceptActorReference id="SYL_1852" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Objective2" patternRole="objective" userID="SYL" flexoID="1852" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -165,7 +165,7 @@
           <ShadowStyle id="98" drawShadow="false" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
           <TextStyle id="99" font="Lucida Sans Demibold,1,11" color="0,0,0" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
         </ShapeGraphicalRepresentation>
-        <EditionPatternReference id="SYL_1853" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1815" patternRole="icon" userID="SYL" flexoID="1853" dontGenerate="false" useSpecificDescriptions="false">
+        <EditionPatternReference id="SYL_1853" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1815" patternRole="icon" userID="SYL" flexoID="1853" dontGenerate="false" useSpecificDescriptions="false">
           <ConceptActorReference id="SYL_1854" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position3" patternRole="position" userID="SYL" flexoID="1854" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1855" objectReference="SHEMA.R&amp;DDefinition#SYL_1816" patternRole="shape" userID="SYL" flexoID="1855" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1856" objectReference="SHEMA.R&amp;DDefinition#SYL_1819" patternRole="label" userID="SYL" flexoID="1856" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -189,7 +189,7 @@
           <ShadowStyle id="109" drawShadow="false" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
           <TextStyle id="110" font="Lucida Sans,0,10" color="0,0,0" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
         </ShapeGraphicalRepresentation>
-        <EditionPatternReference id="SYL_1862" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1815" patternRole="missionShape" userID="SYL" flexoID="1862" dontGenerate="false" useSpecificDescriptions="false">
+        <EditionPatternReference id="SYL_1862" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1815" patternRole="missionShape" userID="SYL" flexoID="1862" dontGenerate="false" useSpecificDescriptions="false">
           <ConceptActorReference id="SYL_1863" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position3" patternRole="position" userID="SYL" flexoID="1863" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1864" objectReference="SHEMA.R&amp;DDefinition#SYL_1816" patternRole="shape" userID="SYL" flexoID="1864" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1865" objectReference="SHEMA.R&amp;DDefinition#SYL_1819" patternRole="label" userID="SYL" flexoID="1865" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -213,7 +213,7 @@
           <ShadowStyle id="119" drawShadow="false" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
           <TextStyle id="120" font="Lucida Sans Demibold,1,11" color="0,0,0" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
         </ShapeGraphicalRepresentation>
-        <EditionPatternReference id="SYL_1822" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1815" patternRole="label" userID="SYL" flexoID="1822" dontGenerate="false" useSpecificDescriptions="false">
+        <EditionPatternReference id="SYL_1822" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1815" patternRole="label" userID="SYL" flexoID="1822" dontGenerate="false" useSpecificDescriptions="false">
           <ConceptActorReference id="SYL_1871" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position3" patternRole="position" userID="SYL" flexoID="1871" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1872" objectReference="SHEMA.R&amp;DDefinition#SYL_1816" patternRole="shape" userID="SYL" flexoID="1872" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1873" objectReference="SHEMA.R&amp;DDefinition#SYL_1819" patternRole="label" userID="SYL" flexoID="1873" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -237,7 +237,7 @@
           <ShadowStyle id="130" drawShadow="false" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
           <TextStyle id="131" font="Lucida Sans,0,11" color="0,0,0" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
         </ShapeGraphicalRepresentation>
-        <EditionPatternReference id="SYL_1879" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1815" patternRole="missionLabel" userID="SYL" flexoID="1879" dontGenerate="false" useSpecificDescriptions="false">
+        <EditionPatternReference id="SYL_1879" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1815" patternRole="missionLabel" userID="SYL" flexoID="1879" dontGenerate="false" useSpecificDescriptions="false">
           <ConceptActorReference id="SYL_1880" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position3" patternRole="position" userID="SYL" flexoID="1880" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1881" objectReference="SHEMA.R&amp;DDefinition#SYL_1816" patternRole="shape" userID="SYL" flexoID="1881" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1882" objectReference="SHEMA.R&amp;DDefinition#SYL_1819" patternRole="label" userID="SYL" flexoID="1882" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -248,7 +248,7 @@
           <ObjectPropertyStatementActorReference id="SYL_1887" subjectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#OrganizationalUnit1" objectPropertyURI="http://www.agilebirds.com/openflexo/ontologies/ScopeDefinition/OrganizationalUnitScopeDefinition.owl#containsPosition" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position3" patternRole="containsPosition" userID="SYL" flexoID="1887" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
         </EditionPatternReference>
       </ContainedVEShape>
-      <EditionPatternReference id="SYL_1821" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1815" patternRole="shape" userID="SYL" flexoID="1821" dontGenerate="false" useSpecificDescriptions="false">
+      <EditionPatternReference id="SYL_1821" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1815" patternRole="shape" userID="SYL" flexoID="1821" dontGenerate="false" useSpecificDescriptions="false">
         <ConceptActorReference id="SYL_1888" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position3" patternRole="position" userID="SYL" flexoID="1888" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
         <ModelObjectActorReference id="SYL_1889" objectReference="SHEMA.R&amp;DDefinition#SYL_1816" patternRole="shape" userID="SYL" flexoID="1889" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
         <ModelObjectActorReference id="SYL_1890" objectReference="SHEMA.R&amp;DDefinition#SYL_1819" patternRole="label" userID="SYL" flexoID="1890" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -285,7 +285,7 @@
           <ShadowStyle id="150" drawShadow="false" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
           <TextStyle id="151" font="Lucida Sans Demibold,1,11" color="0,0,0" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
         </ShapeGraphicalRepresentation>
-        <EditionPatternReference id="SYL_1896" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1823" patternRole="icon" userID="SYL" flexoID="1896" dontGenerate="false" useSpecificDescriptions="false">
+        <EditionPatternReference id="SYL_1896" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1823" patternRole="icon" userID="SYL" flexoID="1896" dontGenerate="false" useSpecificDescriptions="false">
           <ConceptActorReference id="SYL_1897" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position21" patternRole="position" userID="SYL" flexoID="1897" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1898" objectReference="SHEMA.R&amp;DDefinition#SYL_1824" patternRole="shape" userID="SYL" flexoID="1898" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1899" objectReference="SHEMA.R&amp;DDefinition#SYL_1827" patternRole="label" userID="SYL" flexoID="1899" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -309,7 +309,7 @@
           <ShadowStyle id="160" drawShadow="false" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
           <TextStyle id="161" font="Lucida Sans,0,10" color="0,0,0" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
         </ShapeGraphicalRepresentation>
-        <EditionPatternReference id="SYL_1905" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1823" patternRole="missionShape" userID="SYL" flexoID="1905" dontGenerate="false" useSpecificDescriptions="false">
+        <EditionPatternReference id="SYL_1905" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1823" patternRole="missionShape" userID="SYL" flexoID="1905" dontGenerate="false" useSpecificDescriptions="false">
           <ConceptActorReference id="SYL_1906" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position21" patternRole="position" userID="SYL" flexoID="1906" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1907" objectReference="SHEMA.R&amp;DDefinition#SYL_1824" patternRole="shape" userID="SYL" flexoID="1907" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1908" objectReference="SHEMA.R&amp;DDefinition#SYL_1827" patternRole="label" userID="SYL" flexoID="1908" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -333,7 +333,7 @@
           <ShadowStyle id="170" drawShadow="false" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
           <TextStyle id="171" font="Lucida Sans Demibold,1,11" color="0,0,0" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
         </ShapeGraphicalRepresentation>
-        <EditionPatternReference id="SYL_1914" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1823" patternRole="label" userID="SYL" flexoID="1914" dontGenerate="false" useSpecificDescriptions="false">
+        <EditionPatternReference id="SYL_1914" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1823" patternRole="label" userID="SYL" flexoID="1914" dontGenerate="false" useSpecificDescriptions="false">
           <ConceptActorReference id="SYL_1915" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position21" patternRole="position" userID="SYL" flexoID="1915" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1916" objectReference="SHEMA.R&amp;DDefinition#SYL_1824" patternRole="shape" userID="SYL" flexoID="1916" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1917" objectReference="SHEMA.R&amp;DDefinition#SYL_1827" patternRole="label" userID="SYL" flexoID="1917" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -357,7 +357,7 @@
           <ShadowStyle id="180" drawShadow="false" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
           <TextStyle id="181" font="Lucida Sans,0,11" color="0,0,0" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
         </ShapeGraphicalRepresentation>
-        <EditionPatternReference id="SYL_1923" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1823" patternRole="missionLabel" userID="SYL" flexoID="1923" dontGenerate="false" useSpecificDescriptions="false">
+        <EditionPatternReference id="SYL_1923" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1823" patternRole="missionLabel" userID="SYL" flexoID="1923" dontGenerate="false" useSpecificDescriptions="false">
           <ConceptActorReference id="SYL_1924" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position21" patternRole="position" userID="SYL" flexoID="1924" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1925" objectReference="SHEMA.R&amp;DDefinition#SYL_1824" patternRole="shape" userID="SYL" flexoID="1925" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1926" objectReference="SHEMA.R&amp;DDefinition#SYL_1827" patternRole="label" userID="SYL" flexoID="1926" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -368,7 +368,7 @@
           <ObjectPropertyStatementActorReference id="SYL_1931" subjectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#OrganizationalUnit1" objectPropertyURI="http://www.agilebirds.com/openflexo/ontologies/ScopeDefinition/OrganizationalUnitScopeDefinition.owl#containsPosition" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position21" patternRole="containsPosition" userID="SYL" flexoID="1931" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
         </EditionPatternReference>
       </ContainedVEShape>
-      <EditionPatternReference id="SYL_1829" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1823" patternRole="shape" userID="SYL" flexoID="1829" dontGenerate="false" useSpecificDescriptions="false">
+      <EditionPatternReference id="SYL_1829" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1823" patternRole="shape" userID="SYL" flexoID="1829" dontGenerate="false" useSpecificDescriptions="false">
         <ConceptActorReference id="SYL_1932" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position21" patternRole="position" userID="SYL" flexoID="1932" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
         <ModelObjectActorReference id="SYL_1933" objectReference="SHEMA.R&amp;DDefinition#SYL_1824" patternRole="shape" userID="SYL" flexoID="1933" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
         <ModelObjectActorReference id="SYL_1934" objectReference="SHEMA.R&amp;DDefinition#SYL_1827" patternRole="label" userID="SYL" flexoID="1934" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -405,7 +405,7 @@
           <ShadowStyle id="200" drawShadow="false" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
           <TextStyle id="201" font="Lucida Sans Demibold,1,11" color="0,0,0" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
         </ShapeGraphicalRepresentation>
-        <EditionPatternReference id="SYL_1940" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1830" patternRole="icon" userID="SYL" flexoID="1940" dontGenerate="false" useSpecificDescriptions="false">
+        <EditionPatternReference id="SYL_1940" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1830" patternRole="icon" userID="SYL" flexoID="1940" dontGenerate="false" useSpecificDescriptions="false">
           <ConceptActorReference id="SYL_1941" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position31" patternRole="position" userID="SYL" flexoID="1941" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1942" objectReference="SHEMA.R&amp;DDefinition#SYL_1831" patternRole="shape" userID="SYL" flexoID="1942" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1943" objectReference="SHEMA.R&amp;DDefinition#SYL_1834" patternRole="label" userID="SYL" flexoID="1943" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -429,7 +429,7 @@
           <ShadowStyle id="210" drawShadow="false" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
           <TextStyle id="211" font="Lucida Sans,0,10" color="0,0,0" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
         </ShapeGraphicalRepresentation>
-        <EditionPatternReference id="SYL_1949" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1830" patternRole="missionShape" userID="SYL" flexoID="1949" dontGenerate="false" useSpecificDescriptions="false">
+        <EditionPatternReference id="SYL_1949" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1830" patternRole="missionShape" userID="SYL" flexoID="1949" dontGenerate="false" useSpecificDescriptions="false">
           <ConceptActorReference id="SYL_1950" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position31" patternRole="position" userID="SYL" flexoID="1950" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1951" objectReference="SHEMA.R&amp;DDefinition#SYL_1831" patternRole="shape" userID="SYL" flexoID="1951" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1952" objectReference="SHEMA.R&amp;DDefinition#SYL_1834" patternRole="label" userID="SYL" flexoID="1952" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -453,7 +453,7 @@
           <ShadowStyle id="220" drawShadow="false" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
           <TextStyle id="221" font="Lucida Sans Demibold,1,11" color="0,0,0" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
         </ShapeGraphicalRepresentation>
-        <EditionPatternReference id="SYL_1958" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1830" patternRole="label" userID="SYL" flexoID="1958" dontGenerate="false" useSpecificDescriptions="false">
+        <EditionPatternReference id="SYL_1958" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1830" patternRole="label" userID="SYL" flexoID="1958" dontGenerate="false" useSpecificDescriptions="false">
           <ConceptActorReference id="SYL_1959" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position31" patternRole="position" userID="SYL" flexoID="1959" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1960" objectReference="SHEMA.R&amp;DDefinition#SYL_1831" patternRole="shape" userID="SYL" flexoID="1960" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1961" objectReference="SHEMA.R&amp;DDefinition#SYL_1834" patternRole="label" userID="SYL" flexoID="1961" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -477,7 +477,7 @@
           <ShadowStyle id="230" drawShadow="false" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
           <TextStyle id="231" font="Lucida Sans,0,11" color="0,0,0" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
         </ShapeGraphicalRepresentation>
-        <EditionPatternReference id="SYL_1967" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1830" patternRole="missionLabel" userID="SYL" flexoID="1967" dontGenerate="false" useSpecificDescriptions="false">
+        <EditionPatternReference id="SYL_1967" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1830" patternRole="missionLabel" userID="SYL" flexoID="1967" dontGenerate="false" useSpecificDescriptions="false">
           <ConceptActorReference id="SYL_1968" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position31" patternRole="position" userID="SYL" flexoID="1968" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1969" objectReference="SHEMA.R&amp;DDefinition#SYL_1831" patternRole="shape" userID="SYL" flexoID="1969" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1970" objectReference="SHEMA.R&amp;DDefinition#SYL_1834" patternRole="label" userID="SYL" flexoID="1970" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -488,7 +488,7 @@
           <ObjectPropertyStatementActorReference id="SYL_1975" subjectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#OrganizationalUnit1" objectPropertyURI="http://www.agilebirds.com/openflexo/ontologies/ScopeDefinition/OrganizationalUnitScopeDefinition.owl#containsPosition" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position31" patternRole="containsPosition" userID="SYL" flexoID="1975" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
         </EditionPatternReference>
       </ContainedVEShape>
-      <EditionPatternReference id="SYL_1836" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1830" patternRole="shape" userID="SYL" flexoID="1836" dontGenerate="false" useSpecificDescriptions="false">
+      <EditionPatternReference id="SYL_1836" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1830" patternRole="shape" userID="SYL" flexoID="1836" dontGenerate="false" useSpecificDescriptions="false">
         <ConceptActorReference id="SYL_1976" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position31" patternRole="position" userID="SYL" flexoID="1976" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
         <ModelObjectActorReference id="SYL_1977" objectReference="SHEMA.R&amp;DDefinition#SYL_1831" patternRole="shape" userID="SYL" flexoID="1977" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
         <ModelObjectActorReference id="SYL_1978" objectReference="SHEMA.R&amp;DDefinition#SYL_1834" patternRole="label" userID="SYL" flexoID="1978" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -525,7 +525,7 @@
           <ShadowStyle id="250" drawShadow="false" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
           <TextStyle id="251" font="Lucida Sans Demibold,1,11" color="0,0,0" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
         </ShapeGraphicalRepresentation>
-        <EditionPatternReference id="SYL_1984" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1837" patternRole="icon" userID="SYL" flexoID="1984" dontGenerate="false" useSpecificDescriptions="false">
+        <EditionPatternReference id="SYL_1984" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1837" patternRole="icon" userID="SYL" flexoID="1984" dontGenerate="false" useSpecificDescriptions="false">
           <ConceptActorReference id="SYL_1985" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position4" patternRole="position" userID="SYL" flexoID="1985" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1986" objectReference="SHEMA.R&amp;DDefinition#SYL_1838" patternRole="shape" userID="SYL" flexoID="1986" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1987" objectReference="SHEMA.R&amp;DDefinition#SYL_1841" patternRole="label" userID="SYL" flexoID="1987" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -549,7 +549,7 @@
           <ShadowStyle id="260" drawShadow="false" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
           <TextStyle id="261" font="Lucida Sans,0,10" color="0,0,0" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
         </ShapeGraphicalRepresentation>
-        <EditionPatternReference id="SYL_1993" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1837" patternRole="missionShape" userID="SYL" flexoID="1993" dontGenerate="false" useSpecificDescriptions="false">
+        <EditionPatternReference id="SYL_1993" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1837" patternRole="missionShape" userID="SYL" flexoID="1993" dontGenerate="false" useSpecificDescriptions="false">
           <ConceptActorReference id="SYL_1994" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position4" patternRole="position" userID="SYL" flexoID="1994" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1995" objectReference="SHEMA.R&amp;DDefinition#SYL_1838" patternRole="shape" userID="SYL" flexoID="1995" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_1996" objectReference="SHEMA.R&amp;DDefinition#SYL_1841" patternRole="label" userID="SYL" flexoID="1996" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -573,7 +573,7 @@
           <ShadowStyle id="270" drawShadow="false" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
           <TextStyle id="271" font="Lucida Sans Demibold,1,11" color="0,0,0" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
         </ShapeGraphicalRepresentation>
-        <EditionPatternReference id="SYL_2002" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1837" patternRole="label" userID="SYL" flexoID="2002" dontGenerate="false" useSpecificDescriptions="false">
+        <EditionPatternReference id="SYL_2002" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1837" patternRole="label" userID="SYL" flexoID="2002" dontGenerate="false" useSpecificDescriptions="false">
           <ConceptActorReference id="SYL_2003" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position4" patternRole="position" userID="SYL" flexoID="2003" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_2004" objectReference="SHEMA.R&amp;DDefinition#SYL_1838" patternRole="shape" userID="SYL" flexoID="2004" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_2005" objectReference="SHEMA.R&amp;DDefinition#SYL_1841" patternRole="label" userID="SYL" flexoID="2005" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -597,7 +597,7 @@
           <ShadowStyle id="280" drawShadow="false" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
           <TextStyle id="281" font="Lucida Sans,0,11" color="0,0,0" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
         </ShapeGraphicalRepresentation>
-        <EditionPatternReference id="SYL_2011" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1837" patternRole="missionLabel" userID="SYL" flexoID="2011" dontGenerate="false" useSpecificDescriptions="false">
+        <EditionPatternReference id="SYL_2011" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1837" patternRole="missionLabel" userID="SYL" flexoID="2011" dontGenerate="false" useSpecificDescriptions="false">
           <ConceptActorReference id="SYL_2012" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position4" patternRole="position" userID="SYL" flexoID="2012" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_2013" objectReference="SHEMA.R&amp;DDefinition#SYL_1838" patternRole="shape" userID="SYL" flexoID="2013" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_2014" objectReference="SHEMA.R&amp;DDefinition#SYL_1841" patternRole="label" userID="SYL" flexoID="2014" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -608,7 +608,7 @@
           <ObjectPropertyStatementActorReference id="SYL_2019" subjectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#OrganizationalUnit1" objectPropertyURI="http://www.agilebirds.com/openflexo/ontologies/ScopeDefinition/OrganizationalUnitScopeDefinition.owl#containsPosition" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position4" patternRole="containsPosition" userID="SYL" flexoID="2019" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
         </EditionPatternReference>
       </ContainedVEShape>
-      <EditionPatternReference id="SYL_1843" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1837" patternRole="shape" userID="SYL" flexoID="1843" dontGenerate="false" useSpecificDescriptions="false">
+      <EditionPatternReference id="SYL_1843" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnitPosition" instanceId="1837" patternRole="shape" userID="SYL" flexoID="1843" dontGenerate="false" useSpecificDescriptions="false">
         <ConceptActorReference id="SYL_2020" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position4" patternRole="position" userID="SYL" flexoID="2020" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
         <ModelObjectActorReference id="SYL_2021" objectReference="SHEMA.R&amp;DDefinition#SYL_1838" patternRole="shape" userID="SYL" flexoID="2021" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
         <ModelObjectActorReference id="SYL_2022" objectReference="SHEMA.R&amp;DDefinition#SYL_1841" patternRole="label" userID="SYL" flexoID="2022" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -619,7 +619,7 @@
         <ObjectPropertyStatementActorReference id="SYL_2027" subjectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#OrganizationalUnit1" objectPropertyURI="http://www.agilebirds.com/openflexo/ontologies/ScopeDefinition/OrganizationalUnitScopeDefinition.owl#containsPosition" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Position4" patternRole="containsPosition" userID="SYL" flexoID="2027" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
       </EditionPatternReference>
     </ContainedVEShape>
-    <EditionPatternReference id="SYL_795" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnit" instanceId="788" patternRole="shape" userID="SYL" flexoID="795" dontGenerate="false" useSpecificDescriptions="false">
+    <EditionPatternReference id="SYL_795" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl#OrganizationalUnit" instanceId="788" patternRole="shape" userID="SYL" flexoID="795" dontGenerate="false" useSpecificDescriptions="false">
       <ConceptActorReference id="SYL_816" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#OrganizationalUnit1" patternRole="organizationUnit" userID="SYL" flexoID="816" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
       <ModelObjectActorReference id="SYL_817" objectReference="SHEMA.R&amp;DDefinition#SYL_789" patternRole="shape" userID="SYL" flexoID="817" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
       <ModelObjectActorReference id="SYL_818" objectReference="SHEMA.R&amp;DDefinition#SYL_792" patternRole="missionDescription" userID="SYL" flexoID="818" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
@@ -628,7 +628,7 @@
       <ConceptActorReference id="SYL_821" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#OrganizationalUnit1Mission" patternRole="mission" userID="SYL" flexoID="821" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" />
     </EditionPatternReference>
   </ContainedVEShape>
-  <EditionPatternReference id="SYL_793" editionPattern="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalMap.owl#OrganizationalUnit" instanceId="687" patternRole="diagram" userID="SYL" flexoID="793" dontGenerate="false" useSpecificDescriptions="false">
+  <EditionPatternReference id="SYL_793" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalMap.owl#OrganizationalUnit" instanceId="687" patternRole="diagram" userID="SYL" flexoID="793" dontGenerate="false" useSpecificDescriptions="false">
     <ModelObjectActorReference id="SYL_822" objectReference="SHEMA.TestOrganizationMap#SYL_688" patternRole="shape" userID="SYL" flexoID="822" dontGenerate="false" useSpecificDescriptions="false" />
     <ModelObjectActorReference id="SYL_823" objectReference="SHEMA.R&amp;DDefinition#SYL_787" patternRole="diagram" userID="SYL" flexoID="823" dontGenerate="false" useSpecificDescriptions="false" />
     <ConceptActorReference id="SYL_824" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#OrganizationalUnit1" patternRole="organizationalUnit" userID="SYL" flexoID="824" dontGenerate="false" useSpecificDescriptions="false" />

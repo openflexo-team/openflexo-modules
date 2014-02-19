@@ -52,7 +52,7 @@ public class DeleteEditionPatternInitializer extends ActionInitializer<DeleteEdi
 		return new FlexoActionInitializer<DeleteEditionPattern>() {
 			@Override
 			public boolean run(EventObject e, DeleteEditionPattern action) {
-				return FlexoController.confirm(FlexoLocalization.localizedForKey("would_you_really_like_to_delete_this_edition_pattern"));
+				return FlexoController.confirm(FlexoLocalization.localizedForKey("would_you_really_like_to_delete_this_flexo_concept"));
 			}
 		};
 	}

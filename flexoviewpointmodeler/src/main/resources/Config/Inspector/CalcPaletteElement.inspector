@@ -4,12 +4,12 @@
 		<property name="name" label="name" widget="TEXT_FIELD" constraint="0">
 			<param name="columns" value="10"/>
 		</property>
-		<property name="editionPattern" label="editionPattern" widget="DROPDOWN" constraint="1">
+		<property name="flexoConcept" label="flexoConcept" widget="DROPDOWN" constraint="1">
 			<param name = "format" value="name"/>
 			<param name = "showReset" value="false"/>
 			<param name = "dynamiclist" value="allAvailableEditionPatterns"/>
 		</property>
-		<property_list name="parameters" label="parameters" depends="editionPattern" constraint="2">
+		<property_list name="parameters" label="parameters" depends="flexoConcept" constraint="2">
           <param name="visible_row_count" value="5"/>
           <param name="row_height" value="20"/>
           <property_list_column name="name" label="name" widget="TEXT_FIELD">
