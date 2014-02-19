@@ -76,7 +76,7 @@ public class CreatePatternRoleInitializer extends ActionInitializer<CreatePatter
 
 	@Override
 	protected Icon getEnabledIcon() {
-		return VPMIconLibrary.EDITION_PATTERN_ICON;
+		return VPMIconLibrary.FLEXO_CONCEPT_ICON;
 	}
 
 }

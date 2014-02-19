@@ -72,7 +72,7 @@ public class DuplicateEditionPatternInitializer extends ActionInitializer<Duplic
 
 	@Override
 	protected Icon getEnabledIcon() {
-		return VPMIconLibrary.EDITION_PATTERN_ICON;
+		return VPMIconLibrary.FLEXO_CONCEPT_ICON;
 	}
 
 }

@@ -49,7 +49,7 @@ public class DeclareShapeInEditionPatternDialogEDITOR extends FIBAbstractEditor 
 
 	@Override
 	public File getFIBFile() {
-		return CommonFIB.DECLARE_SHAPE_IN_EDITION_PATTERN_DIALOG_FIB;
+		return CommonFIB.DECLARE_SHAPE_IN_FLEXO_CONCEPT_DIALOG_FIB;
 	}
 
 	public static void main(String[] args) {

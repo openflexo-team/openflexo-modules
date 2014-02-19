@@ -76,7 +76,7 @@ public class CreateEditionActionInitializer extends ActionInitializer<CreateEdit
 
 	@Override
 	protected Icon getEnabledIcon() {
-		return VPMIconLibrary.EDITION_PATTERN_ACTION_ICON;
+		return VPMIconLibrary.FLEXO_CONCEPT_ACTION_ICON;
 	}
 
 }
