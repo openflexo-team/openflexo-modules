@@ -47,7 +47,7 @@ import org.openflexo.view.FlexoMainPane;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.menu.FlexoMenuBar;
-import org.openflexo.vpm.view.EditionPatternView;
+import org.openflexo.vpm.view.FlexoConceptView;
 
 /**
  * This is the controller of ViewPointModeller module
@@ -174,8 +174,8 @@ public class FMEController extends FlexoController {
 						getSelectionManager().setSelectedObject(pattern.getEditionSchemes().get(0));
 					}
 				} else if (object instanceof FlexoConceptObject) {
-					if (getCurrentModuleView() instanceof EditionPatternView) {
-						((EditionPatternView) getCurrentModuleView()).tryToSelect((FlexoConceptObject) object);
+					if (getCurrentModuleView() instanceof FlexoConceptView) {
+						((FlexoConceptView) getCurrentModuleView()).tryToSelect((FlexoConceptObject) object);
 					}
 				}
 			}
