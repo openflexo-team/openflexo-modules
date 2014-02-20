@@ -42,10 +42,10 @@
           <ShadowStyle id="34" drawShadow="true" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
           <TextStyle id="35" font="SansSerif,0,11" color="102,0,0" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
         </ShapeGraphicalRepresentation>
-        <EditionPatternReference id="SYL_556" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/Tests/BasicOrganizationTreeEditor.owl#BOTSubDepartment" instanceId="546" patternRole="shape" userID="SYL" flexoID="556" dontGenerate="false" useSpecificDescriptions="false">
+        <FlexoConceptReference id="SYL_556" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/Tests/BasicOrganizationTreeEditor.owl#BOTSubDepartment" instanceId="546" patternRole="shape" userID="SYL" flexoID="556" dontGenerate="false" useSpecificDescriptions="false">
           <ModelObjectActorReference id="SYL_557" objectReference="SHEMA.BasicOrganization#SYL_547" patternRole="shape" userID="SYL" flexoID="557" dontGenerate="false" useSpecificDescriptions="false" />
           <ConceptActorReference id="SYL_558" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#X" patternRole="subDepartment" userID="SYL" flexoID="558" dontGenerate="false" useSpecificDescriptions="false" />
-        </EditionPatternReference>
+        </FlexoConceptReference>
       </ContainedVEShape>
       <ContainedVEShape id="SYL_553" name="Worker" index="1" userID="SYL" flexoID="553" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" flexoConceptIdentifier="Employee" flexoConceptInstanceId="552" indexRelativeToEPType="0">
         <ShapeGraphicalRepresentation id="36" className="org.openflexo.ve.shema.DiagramShapeGR" x="192.0" y="40.0" width="39.21875" height="38.96537613052885" minimalWidth="0.0" minimalHeight="0.0" maximalWidth="Infinity" maximalHeight="Infinity" relativeTextX="0.5" relativeTextY="0.5" lineWrap="false" locationConstraints="FREELY_MOVABLE" dimensionConstraints="FREELY_RESIZABLE" adjustMinimalWidthToLabelWidth="true" adjustMinimalHeightToLabelHeight="true" adjustMaximalWidthToLabelWidth="false" adjustMaximalHeightToLabelHeight="false" hasSelectedForeground="false" hasSelectedBackground="false" hasFocusedForeground="false" hasFocusedBackground="false" isFloatingLabel="true" allowToLeaveBounds="true" identifier="object_0_0_1" layer="3" hasText="true" text="Worker" isMultilineAllowed="false" continuousTextEditing="false" absoluteTextX="45.0" absoluteTextY="11.0" paragraphAlignment="CENTER" horizontalTextAlignment="CENTER" verticalTextAlignment="MIDDLE" isSelectable="true" isFocusable="true" drawControlPointsWhenFocused="true" drawControlPointsWhenSelected="true" isReadOnly="false" isLabelEditable="true" isVisible="true">
@@ -60,10 +60,10 @@
           <ShadowStyle id="45" drawShadow="false" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
           <TextStyle id="46" font="Lucida Sans,0,11" color="0,0,0" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
         </ShapeGraphicalRepresentation>
-        <EditionPatternReference id="SYL_559" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/Tests/BasicOrganizationTreeEditor.owl#Employee" instanceId="552" patternRole="workerAsShape" userID="SYL" flexoID="559" dontGenerate="false" useSpecificDescriptions="false">
+        <FlexoConceptReference id="SYL_559" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/Tests/BasicOrganizationTreeEditor.owl#Employee" instanceId="552" patternRole="workerAsShape" userID="SYL" flexoID="559" dontGenerate="false" useSpecificDescriptions="false">
           <ConceptActorReference id="SYL_560" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Worker" patternRole="employeeAsWorker" userID="SYL" flexoID="560" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_561" objectReference="SHEMA.BasicOrganization#SYL_553" patternRole="workerAsShape" userID="SYL" flexoID="561" dontGenerate="false" useSpecificDescriptions="false" />
-        </EditionPatternReference>
+        </FlexoConceptReference>
       </ContainedVEShape>
       <ContainedVEShape id="SYL_555" name="Worker2" index="2" userID="SYL" flexoID="555" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" flexoConceptIdentifier="Employee" flexoConceptInstanceId="554" indexRelativeToEPType="1">
         <ShapeGraphicalRepresentation id="47" className="org.openflexo.ve.shema.DiagramShapeGR" x="126.0" y="40.0" width="39.21875" height="38.96537613052885" minimalWidth="0.0" minimalHeight="0.0" maximalWidth="Infinity" maximalHeight="Infinity" relativeTextX="0.5" relativeTextY="0.5" lineWrap="false" locationConstraints="FREELY_MOVABLE" dimensionConstraints="FREELY_RESIZABLE" adjustMinimalWidthToLabelWidth="true" adjustMinimalHeightToLabelHeight="true" adjustMaximalWidthToLabelWidth="false" adjustMaximalHeightToLabelHeight="false" hasSelectedForeground="false" hasSelectedBackground="false" hasFocusedForeground="false" hasFocusedBackground="false" isFloatingLabel="true" allowToLeaveBounds="true" identifier="object_0_0_2" layer="3" hasText="true" text="Worker2" isMultilineAllowed="false" continuousTextEditing="false" absoluteTextX="43.0" absoluteTextY="10.0" paragraphAlignment="CENTER" horizontalTextAlignment="CENTER" verticalTextAlignment="MIDDLE" isSelectable="true" isFocusable="true" drawControlPointsWhenFocused="true" drawControlPointsWhenSelected="true" isReadOnly="false" isLabelEditable="true" isVisible="true">
@@ -78,15 +78,15 @@
           <ShadowStyle id="55" drawShadow="false" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
           <TextStyle id="56" font="Lucida Sans,0,11" color="0,0,0" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
         </ShapeGraphicalRepresentation>
-        <EditionPatternReference id="SYL_562" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/Tests/BasicOrganizationTreeEditor.owl#Employee" instanceId="554" patternRole="workerAsShape" userID="SYL" flexoID="562" dontGenerate="false" useSpecificDescriptions="false">
+        <FlexoConceptReference id="SYL_562" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/Tests/BasicOrganizationTreeEditor.owl#Employee" instanceId="554" patternRole="workerAsShape" userID="SYL" flexoID="562" dontGenerate="false" useSpecificDescriptions="false">
           <ConceptActorReference id="SYL_563" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Worker2" patternRole="employeeAsWorker" userID="SYL" flexoID="563" dontGenerate="false" useSpecificDescriptions="false" />
           <ModelObjectActorReference id="SYL_564" objectReference="SHEMA.BasicOrganization#SYL_555" patternRole="workerAsShape" userID="SYL" flexoID="564" dontGenerate="false" useSpecificDescriptions="false" />
-        </EditionPatternReference>
+        </FlexoConceptReference>
       </ContainedVEShape>
-      <EditionPatternReference id="SYL_565" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/Tests/BasicOrganizationTreeEditor.owl#BOTDepartment" instanceId="542" patternRole="shape" userID="SYL" flexoID="565" dontGenerate="false" useSpecificDescriptions="false">
+      <FlexoConceptReference id="SYL_565" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/Tests/BasicOrganizationTreeEditor.owl#BOTDepartment" instanceId="542" patternRole="shape" userID="SYL" flexoID="565" dontGenerate="false" useSpecificDescriptions="false">
         <ModelObjectActorReference id="SYL_566" objectReference="SHEMA.BasicOrganization#SYL_543" patternRole="shape" userID="SYL" flexoID="566" dontGenerate="false" useSpecificDescriptions="false" />
         <ConceptActorReference id="SYL_567" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#B" patternRole="department" userID="SYL" flexoID="567" dontGenerate="false" useSpecificDescriptions="false" />
-      </EditionPatternReference>
+      </FlexoConceptReference>
     </ContainedVEShape>
     <ContainedVEShape id="SYL_545" name="C" index="1" userID="SYL" flexoID="545" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" flexoConceptIdentifier="BOTDepartment" flexoConceptInstanceId="544" indexRelativeToEPType="1">
       <ShapeGraphicalRepresentation id="57" className="org.openflexo.ve.shema.DiagramShapeGR" x="440.0" y="109.0" width="319.36563876651985" height="268.0550458715596" minimalWidth="0.0" minimalHeight="0.0" maximalWidth="Infinity" maximalHeight="Infinity" relativeTextX="0.5" relativeTextY="0.5" lineWrap="false" locationConstraints="FREELY_MOVABLE" dimensionConstraints="FREELY_RESIZABLE" adjustMinimalWidthToLabelWidth="true" adjustMinimalHeightToLabelHeight="true" adjustMaximalWidthToLabelWidth="false" adjustMaximalHeightToLabelHeight="false" hasSelectedForeground="false" hasSelectedBackground="false" hasFocusedForeground="false" hasFocusedBackground="false" isFloatingLabel="true" allowToLeaveBounds="true" identifier="object_0_1" layer="2" hasText="true" text="C" isMultilineAllowed="false" continuousTextEditing="false" absoluteTextX="83.47056467761314" absoluteTextY="60.081303385004745" paragraphAlignment="CENTER" horizontalTextAlignment="CENTER" verticalTextAlignment="MIDDLE" isSelectable="true" isFocusable="true" drawControlPointsWhenFocused="true" drawControlPointsWhenSelected="true" isReadOnly="false" isLabelEditable="true" isVisible="true">
@@ -114,15 +114,15 @@
           <ShadowStyle id="76" drawShadow="true" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
           <TextStyle id="77" font="SansSerif,0,11" color="102,0,0" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
         </ShapeGraphicalRepresentation>
-        <EditionPatternReference id="SYL_568" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/Tests/BasicOrganizationTreeEditor.owl#BOTSubDepartment" instanceId="548" patternRole="shape" userID="SYL" flexoID="568" dontGenerate="false" useSpecificDescriptions="false">
+        <FlexoConceptReference id="SYL_568" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/Tests/BasicOrganizationTreeEditor.owl#BOTSubDepartment" instanceId="548" patternRole="shape" userID="SYL" flexoID="568" dontGenerate="false" useSpecificDescriptions="false">
           <ModelObjectActorReference id="SYL_569" objectReference="SHEMA.BasicOrganization#SYL_549" patternRole="shape" userID="SYL" flexoID="569" dontGenerate="false" useSpecificDescriptions="false" />
           <ConceptActorReference id="SYL_570" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Y" patternRole="subDepartment" userID="SYL" flexoID="570" dontGenerate="false" useSpecificDescriptions="false" />
-        </EditionPatternReference>
+        </FlexoConceptReference>
       </ContainedVEShape>
-      <EditionPatternReference id="SYL_571" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/Tests/BasicOrganizationTreeEditor.owl#BOTDepartment" instanceId="544" patternRole="shape" userID="SYL" flexoID="571" dontGenerate="false" useSpecificDescriptions="false">
+      <FlexoConceptReference id="SYL_571" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/Tests/BasicOrganizationTreeEditor.owl#BOTDepartment" instanceId="544" patternRole="shape" userID="SYL" flexoID="571" dontGenerate="false" useSpecificDescriptions="false">
         <ModelObjectActorReference id="SYL_572" objectReference="SHEMA.BasicOrganization#SYL_545" patternRole="shape" userID="SYL" flexoID="572" dontGenerate="false" useSpecificDescriptions="false" />
         <ConceptActorReference id="SYL_573" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#C" patternRole="department" userID="SYL" flexoID="573" dontGenerate="false" useSpecificDescriptions="false" />
-      </EditionPatternReference>
+      </FlexoConceptReference>
     </ContainedVEShape>
     <ContainedVEShape id="SYL_551" name="Z" index="2" userID="SYL" flexoID="551" docFormat="HTML" dontGenerate="false" useSpecificDescriptions="false" flexoConceptIdentifier="BOTDepartment" flexoConceptInstanceId="550" indexRelativeToEPType="2">
       <ShapeGraphicalRepresentation id="78" className="org.openflexo.ve.shema.DiagramShapeGR" x="579.0" y="32.0" width="176.0" height="58.0" minimalWidth="0.0" minimalHeight="0.0" maximalWidth="Infinity" maximalHeight="Infinity" relativeTextX="0.5" relativeTextY="0.5" lineWrap="false" locationConstraints="FREELY_MOVABLE" dimensionConstraints="FREELY_RESIZABLE" adjustMinimalWidthToLabelWidth="true" adjustMinimalHeightToLabelHeight="true" adjustMaximalWidthToLabelWidth="false" adjustMaximalHeightToLabelHeight="false" hasSelectedForeground="false" hasSelectedBackground="false" hasFocusedForeground="false" hasFocusedBackground="false" isFloatingLabel="true" allowToLeaveBounds="true" identifier="object_0_2" layer="2" hasText="true" text="Z" isMultilineAllowed="false" continuousTextEditing="false" absoluteTextX="46.0" absoluteTextY="13.0" paragraphAlignment="CENTER" horizontalTextAlignment="CENTER" verticalTextAlignment="MIDDLE" isSelectable="true" isFocusable="true" drawControlPointsWhenFocused="true" drawControlPointsWhenSelected="true" isReadOnly="false" isLabelEditable="true" isVisible="true">
@@ -137,14 +137,14 @@
         <ShadowStyle id="87" drawShadow="true" shadowDarkness="150" shadowDepth="2" shadowBlur="4" />
         <TextStyle id="88" font="SansSerif,0,11" color="0,51,51" orientation="0" isBackgroundColored="false" backgroundColor="255,255,255" />
       </ShapeGraphicalRepresentation>
-      <EditionPatternReference id="SYL_574" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/Tests/BasicOrganizationTreeEditor.owl#BOTDepartment" instanceId="550" patternRole="shape" userID="SYL" flexoID="574" dontGenerate="false" useSpecificDescriptions="false">
+      <FlexoConceptReference id="SYL_574" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/Tests/BasicOrganizationTreeEditor.owl#BOTDepartment" instanceId="550" patternRole="shape" userID="SYL" flexoID="574" dontGenerate="false" useSpecificDescriptions="false">
         <ModelObjectActorReference id="SYL_575" objectReference="SHEMA.BasicOrganization#SYL_551" patternRole="shape" userID="SYL" flexoID="575" dontGenerate="false" useSpecificDescriptions="false" />
         <ConceptActorReference id="SYL_576" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#Z" patternRole="department" userID="SYL" flexoID="576" dontGenerate="false" useSpecificDescriptions="false" />
-      </EditionPatternReference>
+      </FlexoConceptReference>
     </ContainedVEShape>
-    <EditionPatternReference id="SYL_577" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/Tests/BasicOrganizationTreeEditor.owl#BOTCompany" instanceId="540" patternRole="shape" userID="SYL" flexoID="577" dontGenerate="false" useSpecificDescriptions="false">
+    <FlexoConceptReference id="SYL_577" flexoConcept="http://www.agilebirds.com/openflexo/ViewPoints/Tests/BasicOrganizationTreeEditor.owl#BOTCompany" instanceId="540" patternRole="shape" userID="SYL" flexoID="577" dontGenerate="false" useSpecificDescriptions="false">
       <ConceptActorReference id="SYL_578" objectURI="http://www.agilebirds.com/projects/2011/10/TestVE_1317717961558#A" patternRole="company" userID="SYL" flexoID="578" dontGenerate="false" useSpecificDescriptions="false" />
       <ModelObjectActorReference id="SYL_579" objectReference="SHEMA.BasicOrganization#SYL_541" patternRole="shape" userID="SYL" flexoID="579" dontGenerate="false" useSpecificDescriptions="false" />
-    </EditionPatternReference>
+    </FlexoConceptReference>
   </ContainedVEShape>
 </VEShema>

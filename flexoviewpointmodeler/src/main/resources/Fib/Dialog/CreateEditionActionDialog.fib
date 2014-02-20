@@ -86,9 +86,9 @@
     <Localized key="DeclarePatternRole" lang="English">DeclarePatternRole</Localized>
     <Localized key="DeclarePatternRole" lang="French">DeclarePatternRole</Localized>
     <Localized key="DeclarePatternRole" lang="Dutch">DeclarePatternRole</Localized>
-    <Localized key="AddEditionPattern" lang="English">AddEditionPattern</Localized>
-    <Localized key="AddEditionPattern" lang="French">AddEditionPattern</Localized>
-    <Localized key="AddEditionPattern" lang="Dutch">AddEditionPattern</Localized>
+    <Localized key="AddFlexoConcept" lang="English">AddFlexoConcept</Localized>
+    <Localized key="AddFlexoConcept" lang="French">AddFlexoConcept</Localized>
+    <Localized key="AddFlexoConcept" lang="Dutch">AddFlexoConcept</Localized>
     <Localized key="DeleteAction" lang="English">DeleteAction</Localized>
     <Localized key="DeleteAction" lang="French">DeleteAction</Localized>
     <Localized key="DeleteAction" lang="Dutch">DeleteAction</Localized>
@@ -128,15 +128,15 @@
     <Localized key="ExecutionAction" lang="English">ExecutionAction</Localized>
     <Localized key="ExecutionAction" lang="French">ExecutionAction</Localized>
     <Localized key="ExecutionAction" lang="Dutch">ExecutionAction</Localized>
-    <Localized key="AddEditionPatternInstance" lang="English">AddEditionPatternInstance</Localized>
-    <Localized key="AddEditionPatternInstance" lang="French">AddEditionPatternInstance</Localized>
-    <Localized key="AddEditionPatternInstance" lang="Dutch">AddEditionPatternInstance</Localized>
-    <Localized key="MatchEditionPatternInstance" lang="English">MatchEditionPatternInstance</Localized>
-    <Localized key="MatchEditionPatternInstance" lang="French">MatchEditionPatternInstance</Localized>
-    <Localized key="MatchEditionPatternInstance" lang="Dutch">MatchEditionPatternInstance</Localized>
-    <Localized key="SelectEditionPatternInstance" lang="English">SelectEditionPatternInstance</Localized>
-    <Localized key="SelectEditionPatternInstance" lang="French">SelectEditionPatternInstance</Localized>
-    <Localized key="SelectEditionPatternInstance" lang="Dutch">SelectEditionPatternInstance</Localized>
+    <Localized key="AddFlexoConceptInstance" lang="English">AddFlexoConceptInstance</Localized>
+    <Localized key="AddFlexoConceptInstance" lang="French">AddFlexoConceptInstance</Localized>
+    <Localized key="AddFlexoConceptInstance" lang="Dutch">AddFlexoConceptInstance</Localized>
+    <Localized key="MatchFlexoConceptInstance" lang="English">MatchFlexoConceptInstance</Localized>
+    <Localized key="MatchFlexoConceptInstance" lang="French">MatchFlexoConceptInstance</Localized>
+    <Localized key="MatchFlexoConceptInstance" lang="Dutch">MatchFlexoConceptInstance</Localized>
+    <Localized key="SelectFlexoConceptInstance" lang="English">SelectFlexoConceptInstance</Localized>
+    <Localized key="SelectFlexoConceptInstance" lang="French">SelectFlexoConceptInstance</Localized>
+    <Localized key="SelectFlexoConceptInstance" lang="Dutch">SelectFlexoConceptInstance</Localized>
     <Localized key="model1" lang="English">model1</Localized>
     <Localized key="model1" lang="French">model1</Localized>
     <Localized key="model1" lang="Dutch">model1</Localized>

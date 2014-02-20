@@ -28,7 +28,7 @@ import org.openflexo.foundation.viewpoint.ViewPointLibrary;
 import org.openflexo.toolbox.FileResource;
 import org.openflexo.vpm.VPMCst;
 
-public class EditionPatternViewEDITOR extends FIBAbstractEditor {
+public class FlexoConceptViewEDITOR extends FIBAbstractEditor {
 
 	@Override
 	public Object[] getData() {
@@ -41,40 +41,40 @@ public class EditionPatternViewEDITOR extends FIBAbstractEditor {
 
 		/*ViewPoint viewPoint1 = viewPointLibrary
 				.getViewPoint("http://www.agilebirds.com/openflexo/ViewPoints/Tests/BasicOrganizationTreeEditor.owl");
-		returned[0] = viewPoint1.getEditionPattern("Employee");
-		returned[1] = viewPoint1.getEditionPattern("BOTDepartment");*/
+		returned[0] = viewPoint1.getFlexoConcept("Employee");
+		returned[1] = viewPoint1.getFlexoConcept("BOTDepartment");*/
 
 		System.out.println("viewPointLibrary=" + viewPointLibrary);
 		System.out.println("vps=" + viewPointLibrary.getViewPoints());
 
 		ViewPoint viewPoint2 = viewPointLibrary
 				.getViewPoint("http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalUnitDefinition.owl");
-		returned[0] = viewPoint2.getDefaultDiagramSpecification().getEditionPattern("OrganizationalUnit");
-		returned[1] = viewPoint2.getDefaultDiagramSpecification().getEditionPattern("OrganizationalUnitPosition");
-		returned[2] = viewPoint2.getDefaultDiagramSpecification().getEditionPattern("PositionTask");
+		returned[0] = viewPoint2.getDefaultDiagramSpecification().getFlexoConcept("OrganizationalUnit");
+		returned[1] = viewPoint2.getDefaultDiagramSpecification().getFlexoConcept("OrganizationalUnitPosition");
+		returned[2] = viewPoint2.getDefaultDiagramSpecification().getFlexoConcept("PositionTask");
 
 		ViewPoint viewPoint3 = viewPointLibrary.getViewPoint("http://www.agilebirds.com/openflexo/ViewPoints/Basic/BasicOntology.owl");
-		returned[3] = viewPoint3.getDefaultDiagramSpecification().getEditionPattern("Concept");
-		returned[4] = viewPoint3.getDefaultDiagramSpecification().getEditionPattern("IsARelationship");
-		returned[5] = viewPoint3.getDefaultDiagramSpecification().getEditionPattern("HasRelationship");
+		returned[3] = viewPoint3.getDefaultDiagramSpecification().getFlexoConcept("Concept");
+		returned[4] = viewPoint3.getDefaultDiagramSpecification().getFlexoConcept("IsARelationship");
+		returned[5] = viewPoint3.getDefaultDiagramSpecification().getFlexoConcept("HasRelationship");
 
 		ViewPoint viewPoint4 = viewPointLibrary.getViewPoint("http://www.agilebirds.com/openflexo/ViewPoints/SKOS/SKOSThesaurusEditor.owl");
-		returned[6] = viewPoint4.getDefaultDiagramSpecification().getEditionPattern("Concept");
+		returned[6] = viewPoint4.getDefaultDiagramSpecification().getFlexoConcept("Concept");
 
 		ViewPoint viewPoint5 = viewPointLibrary.getViewPoint("http://www.agilebirds.com/openflexo/ViewPoints/UML/UseCaseDiagram.owl");
-		returned[7] = viewPoint5.getDefaultDiagramSpecification().getEditionPattern("Actor");
+		returned[7] = viewPoint5.getDefaultDiagramSpecification().getFlexoConcept("Actor");
 
 		ViewPoint viewPoint6 = viewPointLibrary
 				.getViewPoint("http://www.agilebirds.com/openflexo/ViewPoints/ScopeDefinition/OrganizationalMap.owl");
-		returned[8] = viewPoint6.getDefaultDiagramSpecification().getEditionPattern("ContainsPositionLink");
-		returned[9] = viewPoint6.getDefaultDiagramSpecification().getEditionPattern("SubOrganizationUnitLink");
+		returned[8] = viewPoint6.getDefaultDiagramSpecification().getFlexoConcept("ContainsPositionLink");
+		returned[9] = viewPoint6.getDefaultDiagramSpecification().getFlexoConcept("SubOrganizationUnitLink");
 
 		ViewPoint viewPoint7 = viewPointLibrary.getViewPoint("http://www.agilebirds.com/openflexo/ViewPoints/UML/PackageDiagram.owl");
-		returned[10] = viewPoint7.getDefaultDiagramSpecification().getEditionPattern("ImportPackage");
+		returned[10] = viewPoint7.getDefaultDiagramSpecification().getFlexoConcept("ImportPackage");
 
 		// ViewPoint viewPoint9 = viewPointLibrary.getOntologyCalc("http://www.thalesgroup.com/ViewPoints/sepel-ng/MappingCapture.owl");
 		// viewPoint9.loadWhenUnloaded();
-		// returned[13] = viewPoint9.getEditionPattern("ConceptMapping");
+		// returned[13] = viewPoint9.getFlexoConcept("ConceptMapping");
 
 		return returned;
 	}
@@ -85,7 +85,7 @@ public class EditionPatternViewEDITOR extends FIBAbstractEditor {
 	}
 
 	public static void main(String[] args) {
-		main(EditionPatternViewEDITOR.class);
+		main(FlexoConceptViewEDITOR.class);
 	}
 
 }

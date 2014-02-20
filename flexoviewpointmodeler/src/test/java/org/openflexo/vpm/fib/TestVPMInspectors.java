@@ -95,19 +95,19 @@ public class TestVPMInspectors extends GenericFIBInspectorTestCase {
 		validateFIB("Inspectors/VPM/DropScheme.inspector");
 	}
 
-	public void testEditionPatternInspector() {
+	public void testFlexoConceptInspector() {
 		validateFIB("Inspectors/VPM/FlexoConcept.inspector");
 	}
 
-	public void testEditionPatternInstanceParameterInspector() {
+	public void testFlexoConceptInstanceParameterInspector() {
 		validateFIB("Inspectors/VPM/FlexoConceptInstanceParameter.inspector");
 	}
 
-	public void testEditionPatternInstancePatternRoleInspector() {
+	public void testFlexoConceptInstancePatternRoleInspector() {
 		validateFIB("Inspectors/VPM/FlexoConceptInstancePatternRole.inspector");
 	}
 
-	public void testEditionPatternObjectInspector() {
+	public void testFlexoConceptObjectInspector() {
 		validateFIB("Inspectors/VPM/FlexoConceptObject.inspector");
 	}
 

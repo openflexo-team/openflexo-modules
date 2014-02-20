@@ -26,8 +26,8 @@ public class TestVPMFibs extends GenericFIBTestCase {
 		validateFIB("Fib/AddDiagramPanel.fib");
 	}
 
-	public void testAddEditionPatternInstancePanel() {
-		validateFIB("Fib/AddEditionPatternInstancePanel.fib");
+	public void testAddFlexoConceptInstancePanel() {
+		validateFIB("Fib/AddFlexoConceptInstancePanel.fib");
 	}
 
 	public void testAddIndividualPanel() {
@@ -66,8 +66,8 @@ public class TestVPMFibs extends GenericFIBTestCase {
 		validateFIB("Fib/DeletionSchemePanel.fib");
 	}
 
-	public void testDiagramEditionPatternView() {
-		validateFIB("Fib/DiagramEditionPatternView.fib");
+	public void testDiagramFlexoConceptView() {
+		validateFIB("Fib/DiagramFlexoConceptView.fib");
 	}
 
 	public void testDiagramSpecificationStructuralPanel() {
@@ -82,12 +82,12 @@ public class TestVPMFibs extends GenericFIBTestCase {
 		validateFIB("Fib/DropSchemePanel.fib");
 	}
 
-	public void testEditionPatternInspectorPanel() {
-		validateFIB("Fib/EditionPatternInspectorPanel.fib");
+	public void testFlexoConceptInspectorPanel() {
+		validateFIB("Fib/FlexoConceptInspectorPanel.fib");
 	}
 
-	public void testEditionPatternPanel() {
-		validateFIB("Fib/EditionPatternPanel.fib");
+	public void testFlexoConceptPanel() {
+		validateFIB("Fib/FlexoConceptPanel.fib");
 	}
 
 	public void testEditionSchemePanel() {
@@ -118,8 +118,8 @@ public class TestVPMFibs extends GenericFIBTestCase {
 		validateFIB("Fib/LocalizedDictionaryPanel.fib");
 	}
 
-	public void testMatchEditionPatternInstancePanel() {
-		validateFIB("Fib/MatchEditionPatternInstancePanel.fib");
+	public void testMatchFlexoConceptInstancePanel() {
+		validateFIB("Fib/MatchFlexoConceptInstancePanel.fib");
 	}
 
 	public void testNavigationSchemePanel() {
@@ -130,15 +130,15 @@ public class TestVPMFibs extends GenericFIBTestCase {
 		validateFIB("Fib/ProcedureActionPanel.fib");
 	}
 
-	public void testSelectEditionPatternInstancePanel() {
-		validateFIB("Fib/SelectEditionPatternInstancePanel.fib");
+	public void testSelectFlexoConceptInstancePanel() {
+		validateFIB("Fib/SelectFlexoConceptInstancePanel.fib");
 	}
 
 	public void testSelectIndividualPanel() {
 		validateFIB("Fib/SelectIndividualPanel.fib");
 	}
 
-	public void testStandardEditionPatternView() {
+	public void testStandardFlexoConceptView() {
 		validateFIB("Fib/StandardFlexoConceptView.fib");
 	}
 

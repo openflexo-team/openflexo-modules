@@ -7,7 +7,7 @@
 		<property name="flexoConcept" label="flexoConcept" widget="DROPDOWN" constraint="1">
 			<param name = "format" value="name"/>
 			<param name = "showReset" value="false"/>
-			<param name = "dynamiclist" value="allAvailableEditionPatterns"/>
+			<param name = "dynamiclist" value="allAvailableFlexoConcepts"/>
 		</property>
 		<property_list name="parameters" label="parameters" depends="flexoConcept" constraint="2">
           <param name="visible_row_count" value="5"/>

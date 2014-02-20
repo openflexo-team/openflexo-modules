@@ -39,7 +39,7 @@ public class CreatePatternRoleDialogEDITOR extends FIBAbstractEditor {
 
 		ViewPoint vp = viewPointLibrary.getViewPoint("http://www.agilebirds.com/openflexo/ViewPoints/Basic/BasicOntology.owl");
 		CreatePatternRole action = CreatePatternRole.actionType.makeNewAction(
-				vp.getDefaultDiagramSpecification().getEditionPatterns().get(0), null, null);
+				vp.getDefaultDiagramSpecification().getFlexoConcepts().get(0), null, null);
 		return makeArray(action);
 	}
 

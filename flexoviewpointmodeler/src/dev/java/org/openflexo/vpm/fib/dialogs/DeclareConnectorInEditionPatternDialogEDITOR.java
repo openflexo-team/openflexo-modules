@@ -26,12 +26,12 @@ import org.openflexo.components.widget.CommonFIB;
 import org.openflexo.fib.editor.FIBAbstractEditor;
 import org.openflexo.foundation.view.diagram.viewpoint.ExampleDiagram;
 import org.openflexo.foundation.view.diagram.viewpoint.ExampleDiagramConnector;
-import org.openflexo.foundation.view.diagram.viewpoint.action.DeclareExampleDiagramConnectorInEditionPattern;
+import org.openflexo.foundation.view.diagram.viewpoint.action.DeclareExampleDiagramConnectorInFlexoConcept;
 import org.openflexo.foundation.viewpoint.ViewPoint;
 import org.openflexo.foundation.viewpoint.ViewPointLibrary;
 import org.openflexo.toolbox.FileResource;
 
-public class DeclareConnectorInEditionPatternDialogEDITOR extends FIBAbstractEditor {
+public class DeclareConnectorInFlexoConceptDialogEDITOR extends FIBAbstractEditor {
 
 	@Override
 	public Object[] getData() {
@@ -42,7 +42,7 @@ public class DeclareConnectorInEditionPatternDialogEDITOR extends FIBAbstractEdi
 
 		ExampleDiagram shema = calc1.getDefaultDiagramSpecification().getExampleDiagrams().get(0);
 		ExampleDiagramConnector connector = (ExampleDiagramConnector) shema.getChilds().get(2);
-		DeclareExampleDiagramConnectorInEditionPattern action = DeclareExampleDiagramConnectorInEditionPattern.actionType.makeNewAction(
+		DeclareExampleDiagramConnectorInFlexoConcept action = DeclareExampleDiagramConnectorInFlexoConcept.actionType.makeNewAction(
 				connector, null, null);
 		return makeArray(action);
 	}
@@ -53,7 +53,7 @@ public class DeclareConnectorInEditionPatternDialogEDITOR extends FIBAbstractEdi
 	}
 
 	public static void main(String[] args) {
-		main(DeclareConnectorInEditionPatternDialogEDITOR.class);
+		main(DeclareConnectorInFlexoConceptDialogEDITOR.class);
 	}
 
 }

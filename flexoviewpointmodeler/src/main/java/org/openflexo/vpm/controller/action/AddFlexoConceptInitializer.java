@@ -64,7 +64,7 @@ public class AddFlexoConceptInitializer extends ActionInitializer {
 		return new FlexoActionFinalizer<AddFlexoConcept>() {
 			@Override
 			public boolean run(EventObject e, AddFlexoConcept action) {
-				if (action.switchNewlyCreatedEditionPattern) {
+				if (action.switchNewlyCreatedFlexoConcept) {
 					((VPMController) getController()).setCurrentEditedObjectAsModuleView(action.getNewFlexoConcept());
 				}
 				return true;

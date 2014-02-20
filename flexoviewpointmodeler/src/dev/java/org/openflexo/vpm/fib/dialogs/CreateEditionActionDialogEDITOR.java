@@ -38,7 +38,7 @@ public class CreateEditionActionDialogEDITOR extends FIBAbstractEditor {
 		ViewPointLibrary viewPointLibrary = testApplicationContext.getViewPointLibrary();
 
 		ViewPoint vp = viewPointLibrary.getViewPoint("http://www.agilebirds.com/openflexo/ViewPoints/Basic/BasicOntology.owl");
-		CreateEditionAction action = CreateEditionAction.actionType.makeNewAction(vp.getDefaultDiagramSpecification().getEditionPatterns()
+		CreateEditionAction action = CreateEditionAction.actionType.makeNewAction(vp.getDefaultDiagramSpecification().getFlexoConcepts()
 				.get(0).getEditionSchemes().get(0), null, null);
 		return makeArray(action);
 	}
