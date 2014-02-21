@@ -37,11 +37,5 @@ public class VPMContextualMenuManager extends ContextualMenuManager {
 		super(selectionManager, controller);
 	}
 
-	@Override
-	public FlexoObject getFocusedObject(Component focusedComponent, MouseEvent e) {
-		// put some code here to detect focused object
-		// finally calls super's implementation
-		return super.getFocusedObject(focusedComponent, e);
-	}
 
 }
