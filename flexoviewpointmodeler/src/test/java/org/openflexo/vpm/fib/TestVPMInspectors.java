@@ -32,7 +32,7 @@ public class TestVPMInspectors extends GenericFIBInspectorTestCase {
 	}
 
 	public void testClassPatternRoleInspector() {
-		validateFIB("Inspectors/VPM/ClassPatternRole.inspector");
+		validateFIB("Inspectors/VPM/ClassRole.inspector");
 	}
 
 	public void testCloningSchemeInspector() {
@@ -56,7 +56,7 @@ public class TestVPMInspectors extends GenericFIBInspectorTestCase {
 	}
 
 	public void testDataPropertyPatternRoleInspector() {
-		validateFIB("Inspectors/VPM/DataPropertyPatternRole.inspector");
+		validateFIB("Inspectors/VPM/DataPropertyRole.inspector");
 	}
 
 	public void testDeletionSchemeInspector() {
@@ -104,7 +104,7 @@ public class TestVPMInspectors extends GenericFIBInspectorTestCase {
 	}
 
 	public void testFlexoConceptInstancePatternRoleInspector() {
-		validateFIB("Inspectors/VPM/FlexoConceptInstancePatternRole.inspector");
+		validateFIB("Inspectors/VPM/FlexoConceptInstanceRole.inspector");
 	}
 
 	public void testFlexoConceptObjectInspector() {
@@ -156,7 +156,7 @@ public class TestVPMInspectors extends GenericFIBInspectorTestCase {
 	}
 
 	public void testIndividualPatternRoleInspector() {
-		validateFIB("Inspectors/VPM/IndividualPatternRole.inspector");
+		validateFIB("Inspectors/VPM/IndividualRole.inspector");
 	}
 
 	public void testInnerModelSlotParameterInspector() {
@@ -192,11 +192,11 @@ public class TestVPMInspectors extends GenericFIBInspectorTestCase {
 	}
 
 	public void testObjectPropertyPatternRoleInspector() {
-		validateFIB("Inspectors/VPM/ObjectPropertyPatternRole.inspector");
+		validateFIB("Inspectors/VPM/ObjectPropertyRole.inspector");
 	}
 
 	public void testOntologicObjectPatternRoleInspector() {
-		validateFIB("Inspectors/VPM/OntologicObjectPatternRole.inspector");
+		validateFIB("Inspectors/VPM/OntologicObjectRole.inspector");
 	}
 
 	public void testPatternRoleInspector() {
@@ -204,7 +204,7 @@ public class TestVPMInspectors extends GenericFIBInspectorTestCase {
 	}
 
 	public void testPrimitivePatternRoleInspector() {
-		validateFIB("Inspectors/VPM/PrimitivePatternRole.inspector");
+		validateFIB("Inspectors/VPM/PrimitiveRole.inspector");
 	}
 
 	public void testPropertyParameterInspector() {
@@ -212,7 +212,7 @@ public class TestVPMInspectors extends GenericFIBInspectorTestCase {
 	}
 
 	public void testPropertyPatternRoleInspector() {
-		validateFIB("Inspectors/VPM/PropertyPatternRole.inspector");
+		validateFIB("Inspectors/VPM/PropertyRole.inspector");
 	}
 
 	public void testShapeOverridingGraphicalRepresentationInspector() {
