@@ -26,7 +26,7 @@ import javax.swing.Icon;
 
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
-import org.openflexo.foundation.viewpoint.EditionSchemeObject;
+import org.openflexo.foundation.viewpoint.FlexoBehaviourObject;
 import org.openflexo.foundation.viewpoint.ViewPointObject;
 import org.openflexo.foundation.viewpoint.action.CreateEditionAction;
 import org.openflexo.icon.VPMIconLibrary;
@@ -35,7 +35,7 @@ import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.vpm.VPMCst;
 import org.openflexo.vpm.controller.VPMController;
 
-public class CreateEditionActionInitializer extends ActionInitializer<CreateEditionAction, EditionSchemeObject, ViewPointObject> {
+public class CreateEditionActionInitializer extends ActionInitializer<CreateEditionAction, FlexoBehaviourObject, ViewPointObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 

@@ -174,8 +174,8 @@ public class VPMController extends FlexoController {
 					VIEW_POINT_PERSPECTIVE.focusOnVirtualModel(virtualModel);
 				} else if (object instanceof FlexoConcept) {
 					FlexoConcept pattern = (FlexoConcept) object;
-					if (pattern.getEditionSchemes().size() > 0) {
-						getSelectionManager().setSelectedObject(pattern.getEditionSchemes().get(0));
+					if (pattern.getFlexoBehaviours().size() > 0) {
+						getSelectionManager().setSelectedObject(pattern.getFlexoBehaviours().get(0));
 					}
 				} else if (object instanceof FlexoConceptObject) {
 					if (getCurrentModuleView() instanceof FlexoConceptView) {

@@ -112,11 +112,11 @@ public class TestVPMInspectors extends GenericFIBInspectorTestCase {
 	}
 
 	public void testEditionSchemeInspector() {
-		validateFIB("Inspectors/VPM/EditionScheme.inspector");
+		validateFIB("Inspectors/VPM/FlexoBehaviour.inspector");
 	}
 
 	public void testEditionSchemeParameterInspector() {
-		validateFIB("Inspectors/VPM/EditionSchemeParameter.inspector");
+		validateFIB("Inspectors/VPM/FlexoBehaviourParameter.inspector");
 	}
 
 	public void testExampleDiagramInspector() {

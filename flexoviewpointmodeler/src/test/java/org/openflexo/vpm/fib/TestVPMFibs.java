@@ -91,7 +91,7 @@ public class TestVPMFibs extends GenericFIBTestCase {
 	}
 
 	public void testEditionSchemePanel() {
-		validateFIB("Fib/EditionSchemePanel.fib");
+		validateFIB("Fib/FlexoBehaviourPanel.fib");
 	}
 
 	public void testExecutionActionPanel() {
