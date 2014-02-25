@@ -28,19 +28,19 @@ import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
 import org.openflexo.foundation.viewpoint.FlexoConceptObject;
 import org.openflexo.foundation.viewpoint.ViewPointObject;
-import org.openflexo.foundation.viewpoint.action.CreatePatternRole;
+import org.openflexo.foundation.viewpoint.action.CreateFlexoRole;
 import org.openflexo.icon.VPMIconLibrary;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.vpm.VPMCst;
 import org.openflexo.vpm.controller.VPMController;
 
-public class CreatePatternRoleInitializer extends ActionInitializer<CreatePatternRole, FlexoConceptObject, ViewPointObject> {
+public class CreateFlexoRoleInitializer extends ActionInitializer<CreateFlexoRole, FlexoConceptObject, ViewPointObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
-	CreatePatternRoleInitializer(VPMControllerActionInitializer actionInitializer) {
-		super(CreatePatternRole.actionType, actionInitializer);
+	CreateFlexoRoleInitializer(VPMControllerActionInitializer actionInitializer) {
+		super(CreateFlexoRole.actionType, actionInitializer);
 	}
 
 	@Override
@@ -54,20 +54,20 @@ public class CreatePatternRoleInitializer extends ActionInitializer<CreatePatter
 	}
 
 	@Override
-	protected FlexoActionInitializer<CreatePatternRole> getDefaultInitializer() {
-		return new FlexoActionInitializer<CreatePatternRole>() {
+	protected FlexoActionInitializer<CreateFlexoRole> getDefaultInitializer() {
+		return new FlexoActionInitializer<CreateFlexoRole>() {
 			@Override
-			public boolean run(EventObject e, CreatePatternRole action) {
-				return instanciateAndShowDialog(action, VPMCst.CREATE_PATTERN_ROLE_DIALOG_FIB);
+			public boolean run(EventObject e, CreateFlexoRole action) {
+				return instanciateAndShowDialog(action, VPMCst.CREATE_FLEXO_ROLE_DIALOG_FIB);
 			}
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<CreatePatternRole> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<CreatePatternRole>() {
+	protected FlexoActionFinalizer<CreateFlexoRole> getDefaultFinalizer() {
+		return new FlexoActionFinalizer<CreateFlexoRole>() {
 			@Override
-			public boolean run(EventObject e, CreatePatternRole action) {
+			public boolean run(EventObject e, CreateFlexoRole action) {
 				// getController().setCurrentEditedObjectAsModuleView(action.getNewModelSlot(), getController().VIEW_POINT_PERSPECTIVE);
 				return true;
 			}

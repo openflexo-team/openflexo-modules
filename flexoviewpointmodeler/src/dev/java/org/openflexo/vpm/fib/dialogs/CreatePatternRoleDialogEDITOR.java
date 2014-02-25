@@ -25,7 +25,7 @@ import org.openflexo.TestApplicationContext;
 import org.openflexo.fib.editor.FIBAbstractEditor;
 import org.openflexo.foundation.viewpoint.ViewPoint;
 import org.openflexo.foundation.viewpoint.ViewPointLibrary;
-import org.openflexo.foundation.viewpoint.action.CreatePatternRole;
+import org.openflexo.foundation.viewpoint.action.CreateFlexoRole;
 import org.openflexo.toolbox.FileResource;
 import org.openflexo.vpm.VPMCst;
 

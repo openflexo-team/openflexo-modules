@@ -52,7 +52,7 @@ public class VPMCst {
 
 	// ViewPoint edition
 	public static File CREATE_MODEL_SLOT_DIALOG_FIB = new FileResource("Fib/Dialog/CreateModelSlotDialog.fib");
-	public static File CREATE_PATTERN_ROLE_DIALOG_FIB = new FileResource("Fib/Dialog/CreatePatternRoleDialog.fib");
+	public static File CREATE_FLEXO_ROLE_DIALOG_FIB = new FileResource("Fib/Dialog/CreateFlexoRoleDialog.fib");
 	public static File CREATE_EDITION_ACTION_DIALOG_FIB = new FileResource("Fib/Dialog/CreateEditionActionDialog.fib");
 	public static File CREATE_VIEW_POINT_DIALOG_FIB = new FileResource("Fib/Dialog/CreateViewPointDialog.fib");
 	public static File CREATE_VIRTUAL_MODEL_DIALOG_FIB = new FileResource("Fib/Dialog/CreateVirtualModelDialog.fib");

@@ -59,7 +59,7 @@ public class VPMControllerActionInitializer extends ControllerActionInitializer 
 		new CreateModelSlotInitializer(this);
 		new CreateVirtualModelInitializer(this);
 		new DeleteVirtualModelInitializer(this);
-		new CreatePatternRoleInitializer(this);
+		new CreateFlexoRoleInitializer(this);
 		new CreateEditionActionInitializer(this);
 		new AddFlexoConceptInitializer(this);
 		new DeleteFlexoConceptInitializer(this);
