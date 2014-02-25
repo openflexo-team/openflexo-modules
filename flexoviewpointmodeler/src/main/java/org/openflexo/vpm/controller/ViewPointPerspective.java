@@ -25,6 +25,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import org.openflexo.FlexoCst;
 import org.openflexo.components.widget.FIBViewPointLibraryBrowser;
@@ -58,12 +59,14 @@ public class ViewPointPerspective extends FlexoPerspective {
 
 	private JPanel toolsPanel;
 
+	private final VPMController controller;
+
 	/**
 	 * Default constructor taking controller as argument
 	 */
 	public ViewPointPerspective(VPMController controller) {
 		super("viewpoint_perspective");
-		// _controller = controller;
+		this.controller = controller;
 
 		viewPointLibraryBrowser = new FIBViewPointLibraryBrowser(controller.getViewPointLibrary(), controller);
 
@@ -147,8 +150,7 @@ public class ViewPointPerspective extends FlexoPerspective {
 
 	@Override
 	public boolean hasModuleViewForObject(FlexoObject object, FlexoController controller) {
-		return /*object instanceof DiagramPalette || object instanceof ExampleDiagram ||*/object instanceof ViewPoint
-				|| object instanceof FlexoConcept;
+		return object instanceof ViewPoint || object instanceof FlexoConcept;
 	}
 
 	@Override
@@ -299,4 +301,17 @@ public class ViewPointPerspective extends FlexoPerspective {
 		}
 	}
 
+	@Override
+	public void notifyModuleViewDisplayed(final ModuleView<?> moduleView) {
+		super.notifyModuleViewDisplayed(moduleView);
+		if (moduleView instanceof ViewPointView || moduleView instanceof VirtualModelView || moduleView instanceof StandardFlexoConceptView) {
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					// Force right view to be visible
+					controller.getControllerModel().setRightViewVisible(false);
+				}
+			});
+		}
+	}
 }
