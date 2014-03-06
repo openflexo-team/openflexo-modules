@@ -27,12 +27,14 @@ import javax.swing.Icon;
 import org.openflexo.components.widget.CommonFIB;
 import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.FlexoObject;
+import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
 import org.openflexo.foundation.action.FlexoExceptionHandler;
 import org.openflexo.foundation.action.NotImplementedException;
 import org.openflexo.foundation.resource.RepositoryFolder;
 import org.openflexo.foundation.view.action.CreateView;
+import org.openflexo.foundation.viewpoint.ViewPointRepository;
 import org.openflexo.icon.VEIconLibrary;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.view.controller.ActionInitializer;
@@ -57,6 +59,7 @@ public class CreateViewInitializer extends ActionInitializer<CreateView, Reposit
 		return new FlexoActionInitializer<CreateView>() {
 			@Override
 			public boolean run(EventObject e, CreateView action) {
+			//	((FlexoProject)action.getFocusedObject().getResourceRepository()).getViewPointRepository().getViewPointLibrary().getViewPoints();
 				if (action.skipChoosePopup) {
 					return true;
 				} else {
