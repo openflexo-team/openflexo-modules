@@ -9,12 +9,12 @@ import org.openflexo.fge.ForegroundStyle;
 import org.openflexo.fge.ShapeGraphicalRepresentation;
 import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
 import org.openflexo.model.exceptions.ModelDefinitionException;
-import org.openflexo.toolbox.FileResource;
+import org.openflexo.toolbox.ResourceLocator;
 
 public class BusinessDiagramFactory extends DiagramFactory {
 
-	private static final File HW_COMPONENT = new FileResource("Images/hardware.png");
-	private static final File SW_COMPONENT = new FileResource("Images/software.png");
+	private static final File HW_COMPONENT = ResourceLocator.locateFile("Images/hardware.png");
+	private static final File SW_COMPONENT = ResourceLocator.locateFile("Images/software.png");
 
 	public BusinessDiagramFactory() throws ModelDefinitionException {
 		super();

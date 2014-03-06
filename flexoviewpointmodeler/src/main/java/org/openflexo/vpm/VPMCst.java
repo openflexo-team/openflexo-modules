@@ -21,7 +21,6 @@ package org.openflexo.vpm;
 
 import java.io.File;
 
-import org.openflexo.toolbox.FileResource;
 
 /**
  * Constants used by the Diagram TA UI
@@ -51,11 +50,11 @@ public class VPMCst {
 	public static int DEFAULT_MAINFRAME_HEIGHT = 600;
 
 	// ViewPoint edition
-	public static File CREATE_MODEL_SLOT_DIALOG_FIB = new FileResource("Fib/Dialog/CreateModelSlotDialog.fib");
-	public static File CREATE_FLEXO_ROLE_DIALOG_FIB = new FileResource("Fib/Dialog/CreateFlexoRoleDialog.fib");
-	public static File CREATE_EDITION_ACTION_DIALOG_FIB = new FileResource("Fib/Dialog/CreateEditionActionDialog.fib");
-	public static File CREATE_VIEW_POINT_DIALOG_FIB = new FileResource("Fib/Dialog/CreateViewPointDialog.fib");
-	public static File CREATE_VIRTUAL_MODEL_DIALOG_FIB = new FileResource("Fib/Dialog/CreateVirtualModelDialog.fib");
-	public static File SHOW_FML_REPRESENTATION_DIALOG_FIB = new FileResource("Fib/Dialog/ShowFMLRepresentationDialog.fib");
+	public static String CREATE_MODEL_SLOT_DIALOG_FIB_NAME = "Fib/Dialog/CreateModelSlotDialog.fib";
+	public static String CREATE_FLEXO_ROLE_DIALOG_FIB_NAME = "Fib/Dialog/CreateFlexoRoleDialog.fib";
+	public static String CREATE_EDITION_ACTION_DIALOG_FIB_NAME = "Fib/Dialog/CreateEditionActionDialog.fib";
+	public static String CREATE_VIEW_POINT_DIALOG_FIB_NAME = "Fib/Dialog/CreateViewPointDialog.fib";
+	public static String CREATE_VIRTUAL_MODEL_DIALOG_FIB_NAME = "Fib/Dialog/CreateVirtualModelDialog.fib";
+	public static String SHOW_FML_REPRESENTATION_DIALOG_FIB_NAME = "Fib/Dialog/ShowFMLRepresentationDialog.fib";
 
 }

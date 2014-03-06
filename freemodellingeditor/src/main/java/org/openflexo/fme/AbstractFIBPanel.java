@@ -62,6 +62,10 @@ public class AbstractFIBPanel extends JPanel implements PropertyChangeListener, 
 	public AbstractFIBPanel(Object representedObject, File fibFile, boolean addScrollBar) {
 		this(representedObject, FIBLibrary.instance().retrieveFIBComponent(fibFile), addScrollBar);
 	}
+	
+	public AbstractFIBPanel(Object representedObject, String fibFileName, boolean addScrollBar) {
+		this(representedObject, FIBLibrary.instance().retrieveFIBComponent(fibFileName), addScrollBar);
+	}
 
 	protected AbstractFIBPanel(Object dataObject, FIBComponent fibComponent, boolean addScrollBar) {
 		super(new BorderLayout());

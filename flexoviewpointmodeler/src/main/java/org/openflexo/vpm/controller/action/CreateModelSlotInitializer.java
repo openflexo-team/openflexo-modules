@@ -58,7 +58,7 @@ public class CreateModelSlotInitializer extends ActionInitializer<CreateModelSlo
 		return new FlexoActionInitializer<CreateModelSlot>() {
 			@Override
 			public boolean run(EventObject e, CreateModelSlot action) {
-				return instanciateAndShowDialog(action, VPMCst.CREATE_MODEL_SLOT_DIALOG_FIB);
+				return instanciateAndShowDialog(action, VPMCst.CREATE_MODEL_SLOT_DIALOG_FIB_NAME);
 			}
 		};
 	}

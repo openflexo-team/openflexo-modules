@@ -37,7 +37,7 @@ import org.openflexo.view.ModuleView;
 public class VirtualModelInstanceView extends FIBModuleView<VirtualModelInstance> implements FIBMouseClickListener {
 
 	public VirtualModelInstanceView(VirtualModelInstance vmInstance, VEController controller) {
-		super(vmInstance, controller, CommonFIB.VIRTUAL_MODEL_INSTANCE_VIEW_FIB);
+		super(vmInstance, controller, CommonFIB.VIRTUAL_MODEL_INSTANCE_VIEW_FIB_NAME);
 	}
 
 	@Override

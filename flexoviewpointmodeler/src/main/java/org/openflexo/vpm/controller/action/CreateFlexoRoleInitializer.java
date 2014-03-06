@@ -58,7 +58,7 @@ public class CreateFlexoRoleInitializer extends ActionInitializer<CreateFlexoRol
 		return new FlexoActionInitializer<CreateFlexoRole>() {
 			@Override
 			public boolean run(EventObject e, CreateFlexoRole action) {
-				return instanciateAndShowDialog(action, VPMCst.CREATE_FLEXO_ROLE_DIALOG_FIB);
+				return instanciateAndShowDialog(action, VPMCst.CREATE_FLEXO_ROLE_DIALOG_FIB_NAME);
 			}
 		};
 	}

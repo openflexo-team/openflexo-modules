@@ -23,14 +23,13 @@ import java.io.File;
 import java.util.logging.Logger;
 
 import org.openflexo.fme.model.DataModel;
-import org.openflexo.toolbox.FileResource;
 
 public class ConceptBrowser extends AbstractFIBPanel {
 	static final Logger logger = Logger.getLogger(ConceptBrowser.class.getPackage().getName());
 
-	private static final File CONCEPT_BROWSER_FIB = new FileResource("Fib/ConceptBrowser.fib");
+	private static final String CONCEPT_BROWSER_FIB_NAME = "Fib/ConceptBrowser.fib";
 
 	public ConceptBrowser(DataModel dataModel) {
-		super(dataModel, CONCEPT_BROWSER_FIB, false);
+		super(dataModel, CONCEPT_BROWSER_FIB_NAME, false);
 	}
 }

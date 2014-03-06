@@ -64,8 +64,8 @@ import org.openflexo.model.exceptions.InvalidDataException;
 import org.openflexo.model.exceptions.ModelDefinitionException;
 import org.openflexo.model.undo.CompoundEdit;
 import org.openflexo.swing.ImageUtils;
-import org.openflexo.toolbox.FileResource;
 import org.openflexo.toolbox.ImageIconResource;
+import org.openflexo.toolbox.ResourceLocator;
 
 public class DiagramEditor implements FIBSelectionListener {
 
@@ -81,11 +81,11 @@ public class DiagramEditor implements FIBSelectionListener {
 	public String filter = "";
 	private Instance instance;
 
-	private static final File NEW_CONCEPT_NEW_INSTANCE_DIALOG = new FileResource("Fib/Dialog/NewConceptNewInstanceDialog.fib");
-	private static final File NEW_CONCEPT_DIALOG = new FileResource("Fib/Dialog/NewConceptDialog.fib");
-	private static final File NEW_INSTANCE_DIALOG = new FileResource("Fib/Dialog/NewInstanceDialog.fib");
-	private static final File REMOVE_CONCEPT_DIALOG = new FileResource("Fib/Dialog/RemoveConceptDialog.fib");
-	private static final File RENAME_CONCEPT_DIALOG = new FileResource("Fib/Dialog/RenameConceptDialog.fib");
+	private static final String NEW_CONCEPT_NEW_INSTANCE_DIALOG_NAME =  "Fib/Dialog/NewConceptNewInstanceDialog.fib";
+	private static final String NEW_CONCEPT_DIALOG_NAME =  "Fib/Dialog/NewConceptDialog.fib";
+	private static final String NEW_INSTANCE_DIALOG_NAME =  "Fib/Dialog/NewInstanceDialog.fib";
+	private static final String REMOVE_CONCEPT_DIALOG_NAME =  "Fib/Dialog/RemoveConceptDialog.fib";
+	private static final String RENAME_CONCEPT_DIALOG_NAME = "Fib/Dialog/RenameConceptDialog.fib";
 
 	public static DiagramEditor newDiagramEditor(DiagramFactory factory, FreeModellingEditorApplication application) {
 
@@ -458,7 +458,7 @@ public class DiagramEditor implements FIBSelectionListener {
 
 	public boolean removeConcept(Concept concept) {
 		RemoveConceptDialog dialogData = new RemoveConceptDialog(concept);
-		FIBDialog dialog = FIBDialog.instanciateAndShowDialog(REMOVE_CONCEPT_DIALOG, dialogData, application.getFrame(), true,
+		FIBDialog dialog = FIBDialog.instanciateAndShowDialog(REMOVE_CONCEPT_DIALOG_NAME, dialogData, application.getFrame(), true,
 				application.LOCALIZATION);
 		if (dialog.getStatus() == Status.VALIDATED) {
 			getDiagram().getDataModel().removeFromConcepts(concept);
@@ -469,7 +469,7 @@ public class DiagramEditor implements FIBSelectionListener {
 
 	public boolean renameConcept(Concept concept) {
 		RenameConceptDialog dialogData = new RenameConceptDialog(concept);
-		FIBDialog dialog = FIBDialog.instanciateAndShowDialog(RENAME_CONCEPT_DIALOG, dialogData, application.getFrame(), true,
+		FIBDialog dialog = FIBDialog.instanciateAndShowDialog(RENAME_CONCEPT_DIALOG_NAME, dialogData, application.getFrame(), true,
 				application.LOCALIZATION);
 		if (dialog.getStatus() == Status.VALIDATED) {
 			concept.setName(dialogData.getConceptName());
@@ -481,7 +481,7 @@ public class DiagramEditor implements FIBSelectionListener {
 	public Instance createNewConceptAndNewInstance(DiagramElement<?, ?> diagramElement) {
 		CreateConceptAndInstanceDialog dialogData = new CreateConceptAndInstanceDialog(getDiagram().getDataModel(), diagramElement
 				.getInstance().getName() + "");
-		FIBDialog dialog = FIBDialog.instanciateAndShowDialog(NEW_CONCEPT_NEW_INSTANCE_DIALOG, dialogData, application.getFrame(), true,
+		FIBDialog dialog = FIBDialog.instanciateAndShowDialog(NEW_CONCEPT_NEW_INSTANCE_DIALOG_NAME, dialogData, application.getFrame(), true,
 				application.LOCALIZATION);
 		if (dialog.getStatus() == Status.VALIDATED) {
 			Concept concept = getFactory().newInstance(Concept.class);
@@ -510,7 +510,7 @@ public class DiagramEditor implements FIBSelectionListener {
 
 	public Instance createNewInstance(DiagramElement<?, ?> diagramElement) {
 		CreateInstanceDialog dialogData = new CreateInstanceDialog(getDiagram().getDataModel(), diagramElement.getInstance().getName() + "");
-		FIBDialog dialog = FIBDialog.instanciateAndShowDialog(NEW_INSTANCE_DIALOG, dialogData, application.getFrame(), true,
+		FIBDialog dialog = FIBDialog.instanciateAndShowDialog(NEW_INSTANCE_DIALOG_NAME, dialogData, application.getFrame(), true,
 				application.LOCALIZATION);
 		if (dialog.getStatus() == Status.VALIDATED) {
 			Instance returned = getFactory().newInstance(Instance.class);
@@ -714,7 +714,7 @@ public class DiagramEditor implements FIBSelectionListener {
 				screenshot = ImageUtils.scaleImage(screenshot, 20, 20);
 
 				// File outputfile = new File("/DynamicMiniIcons/icon"+shape.getIndex()+".png");
-				File outputFile = new FileResource("icon" + shape.getIndex() + ".png");
+				File outputFile = ResourceLocator.locateFile("icon" + shape.getIndex() + ".png");
 				try {
 					outputFile.createNewFile();
 					ImageIO.write(screenshot, "png", outputFile);

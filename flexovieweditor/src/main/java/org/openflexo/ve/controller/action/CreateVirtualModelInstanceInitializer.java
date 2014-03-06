@@ -59,7 +59,7 @@ public class CreateVirtualModelInstanceInitializer extends ActionInitializer<Cre
 	}
 
 	private Status chooseVirtualModel(CreateVirtualModelInstance action) {
-		return instanciateShowDialogAndReturnStatus(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB);
+		return instanciateShowDialogAndReturnStatus(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB_NAME);
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class CreateVirtualModelInstanceInitializer extends ActionInitializer<Cre
 					while (shouldContinue) {
 						Status result;
 						if (step == 0) {
-							result = instanciateShowDialogAndReturnStatus(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB);
+							result = instanciateShowDialogAndReturnStatus(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB_NAME);
 						} else {
 							ModelSlot configuredModelSlot = action.getVirtualModel().getModelSlots().get(step - 1);
 							result = instanciateShowDialogAndReturnStatus(action.getModelSlotInstanceConfiguration(configuredModelSlot),
@@ -92,7 +92,7 @@ public class CreateVirtualModelInstanceInitializer extends ActionInitializer<Cre
 						}
 					}
 
-					return instanciateAndShowDialog(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB);
+					return instanciateAndShowDialog(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB_NAME);
 				}
 
 			}
@@ -135,15 +135,15 @@ public class CreateVirtualModelInstanceInitializer extends ActionInitializer<Cre
 	 *         separation of FIBs for Model Slot Configurations.
 	 * @return File that correspond to the FIB
 	 */
-	private File getModelSlotInstanceConfigurationFIB(Class modelSlotClass) {
+	private String getModelSlotInstanceConfigurationFIB(Class modelSlotClass) {
 		if (TypeAwareModelSlot.class.isAssignableFrom(modelSlotClass)) {
-			return CommonFIB.CONFIGURE_TYPE_AWARE_MODEL_SLOT_INSTANCE_DIALOG_FIB;
+			return CommonFIB.CONFIGURE_TYPE_AWARE_MODEL_SLOT_INSTANCE_DIALOG_FIB_NAME;
 		}
 		if (FreeModelSlot.class.isAssignableFrom(modelSlotClass)) {
-			return CommonFIB.CONFIGURE_FREE_MODEL_SLOT_INSTANCE_DIALOG_FIB;
+			return CommonFIB.CONFIGURE_FREE_MODEL_SLOT_INSTANCE_DIALOG_FIB_NAME;
 		}
 		if (VirtualModelModelSlot.class.isAssignableFrom(modelSlotClass)) {
-			return CommonFIB.CONFIGURE_VIRTUAL_MODEL_SLOT_INSTANCE_DIALOG_FIB;
+			return CommonFIB.CONFIGURE_VIRTUAL_MODEL_SLOT_INSTANCE_DIALOG_FIB_NAME;
 		}
 		return null;
 	}
