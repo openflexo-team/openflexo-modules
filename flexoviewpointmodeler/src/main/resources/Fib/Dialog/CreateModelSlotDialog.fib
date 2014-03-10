@@ -2,19 +2,19 @@
 <Panel layout="gridbag" darkLevel="0" dataClassName="org.openflexo.foundation.viewpoint.action.CreateModelSlot" controllerClassName="org.openflexo.view.controller.FlexoFIBController">
   <Panel layout="flow" hGap="5" vGap="5" flowAlignment="CENTER" borderTitle="Panel" darkLevel="0" index="0" constraints="gridbag(anchor=center;fill=horizontal;gridHeight=1;gridWidth=0;gridX=-1;gridY=-1;index=0;insetsBottom=20;insetsLeft=0;insetsRight=0;insetsTop=20;padX=0;padY=0;weightX=1.0;weightY=0.0)" name="title">
     <Image imageFile="../../../../../../../gina/gina-swing-editor/src/main/resources/FIBEditorPalette/Image/Image.gif" sizeAdjustment="OriginalSize" align="left" imageWidth="32" imageHeight="32" index="0" data="controller.getTechnologyAdapterController(data.technologyAdapter).technologyBigIcon.image" constraints="flow(index=0;location=west)" localize="true">
-      <Dependancy componentName="TechnologyAdapterDD" />
+     <!-- <Dependancy componentName="TechnologyAdapterDD" />-->
     </Image>
     <Label label="creates_model_slot" align="center" index="1" constraints="flow(anchor=center;fill=horizontal;gridHeight=1;gridWidth=0;gridX=-1;gridY=-1;index=1;insetsBottom=20;insetsLeft=0;insetsRight=0;insetsTop=20;location=center;padX=0;padY=0;weightX=1.0;weightY=0.0)" font="Lucida Grande,1,15" localize="true" />
   </Panel>
   <Label label="name" align="right" index="1" constraints="gridbag(anchor=east;fill=none;gridHeight=1;gridWidth=1;gridX=-1;gridY=-1;index=1;insetsBottom=0;insetsLeft=20;insetsRight=0;insetsTop=0;padX=0;padY=0;weightX=0.0;weightY=0.0)" localize="true" />
   <TextField index="2" data="data.modelSlotName" constraints="gridbag(anchor=west;fill=horizontal;gridHeight=1;gridWidth=0;gridX=-1;gridY=-1;index=2;insetsBottom=0;insetsLeft=0;insetsRight=20;insetsTop=0;padX=0;padY=0;weightX=1.0;weightY=0.0)" name="ModelSlotName" localize="true" columns="20" text="TextField">
-    <Dependancy componentName="OntologyFileSelector" />
+   <!-- <Dependancy componentName="OntologyFileSelector" />-->
   </TextField>
   <Label label="technology_adapter" index="3" constraints="gridbag(anchor=east;fill=none;gridHeight=1;gridWidth=1;gridX=-1;gridY=-1;index=3;insetsBottom=0;insetsLeft=20;insetsRight=0;insetsTop=0;padX=0;padY=0;weightX=0.0;weightY=0.0)" localize="true" />
   <DropDown index="4" data="data.technologyAdapter" constraints="gridbag(anchor=west;fill=horizontal;gridHeight=1;gridWidth=0;gridX=-1;gridY=-1;index=4;insetsBottom=0;insetsLeft=0;insetsRight=20;insetsTop=0;padX=0;padY=0;weightX=0.0;weightY=0.0)" name="TechnologyAdapterDD" format="object.name" icon="controller.getTechnologyAdapterController(object).technologyIcon" localize="true" list="data.focusedObject.viewPointLibrary.serviceManager.technologyAdapterService.technologyAdapters" showIcon="true" iteratorClassName="org.openflexo.foundation.technologyadapter.TechnologyAdapter" autoSelectFirstRow="true" />
   <Label label="model_slot_type" index="4" constraints="gridbag(anchor=east;fill=none;gridHeight=1;gridWidth=1;gridX=-1;gridY=-1;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;padX=0;padY=0;weightX=0.0;weightY=0.0)" visible="(TechnologyAdapterDD.data.class.simpleName != &quot;VirtualModelTechnologyAdapter&quot;)" localize="true" />
   <DropDown index="4" data="data.modelSlotClass" constraints="gridbag(anchor=west;fill=horizontal;gridHeight=1;gridWidth=0;gridX=-1;gridY=-1;insetsBottom=0;insetsLeft=0;insetsRight=20;insetsTop=0;padX=0;padY=0;weightX=1.0;weightY=0.0)" visible="(TechnologyAdapterDD.data.class.simpleName != &quot;VirtualModelTechnologyAdapter&quot;)" name="modelSlotTypeDD" format="object.simpleName" localize="true" list="data.technologyAdapter.availableModelSlotTypes" iteratorClassName="java.lang.Class" autoSelectFirstRow="true">
-    <Dependancy componentName="TechnologyAdapterDD" />
+    <!--<Dependancy componentName="TechnologyAdapterDD" />-->
   </DropDown>
  <!-- <Label label="metamodel" index="6" constraints="gridbag(anchor=east;fill=none;gridHeight=1;gridWidth=1;gridX=-1;gridY=-1;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;padX=0;padY=0;weightX=0.0;weightY=0.0)" visible="data.isTypeAwareModelSlot" localize="true">
     <Dependancy componentName="TechnologyAdapterDD" />
@@ -32,8 +32,8 @@
     <Assignment variable="component.viewPoint" value="data.focusedObject.viewPoint.resource" />
   </Custom>
  <Label label="metamodel" index="10" constraints="gridbag(anchor=east;fill=none;gridHeight=1;gridWidth=1;gridX=-1;gridY=-1;index=5;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;padX=0;padY=0;weightX=0.0;weightY=0.0)" visible="data.isTypeAwareModelSlot" localize="true">
-    <Dependancy componentName="modelSlotTypeDD" />
-    <Dependancy componentName="TechnologyAdapterDD" />
+    <!--<Dependancy componentName="modelSlotTypeDD" />
+    <Dependancy componentName="TechnologyAdapterDD" />-->
   </Label>
   <Custom componentClassName="org.openflexo.components.widget.FIBMetaModelSelector" data="data.mmRes" localize="true" manageDynamicModel="true" name="MetaModelSelector" index="11" constraints="gridbag(anchor=west;fill=horizontal;gridHeight=1;gridWidth=0;gridX=-1;gridY=-1;index=6;insetsBottom=0;insetsLeft=0;insetsRight=20;insetsTop=0;padX=0;padY=0;weightX=0.0;weightY=0.0)" visible="data.isTypeAwareModelSlot">
     <Assignment variable="component.informationSpace" value="data.editor.serviceManager.informationSpace" />
@@ -49,17 +49,17 @@
   <TextArea columns="6" rows="2" text="TextArea" index="12" data="data.description" constraints="gridbag(anchor=center;fill=both;gridHeight=1;gridWidth=0;gridX=-1;gridY=-1;index=12;insetsBottom=0;insetsLeft=0;insetsRight=20;insetsTop=0;padX=0;padY=0;weightX=1.0;weightY=1.0)" useScrollBar="true" horizontalScrollbarPolicy="HORIZONTAL_SCROLLBAR_AS_NEEDED" verticalScrollbarPolicy="VERTICAL_SCROLLBAR_AS_NEEDED" localize="true" />
   <Panel layout="border" borderTitle="Panel" titleFont="Lucida Grande,2,11" darkLevel="0" index="13" constraints="gridbag(anchor=center;fill=none;gridHeight=1;gridWidth=1;gridX=-1;gridY=-1;index=13;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;padX=0;padY=0;weightX=0.0;weightY=0.0)" font="Lucida Grande,2,11" />
   <Label label="label" index="14" data="data.validityMessage" constraints="gridbag(anchor=center;fill=horizontal;gridHeight=1;gridWidth=0;gridX=-1;gridY=-1;index=14;insetsBottom=0;insetsLeft=4;insetsRight=0;insetsTop=0;padX=0;padY=0;weightX=1.0;weightY=0.0)" font="Lucida Grande,2,11" localize="true">
-    <Dependancy componentName="ModelSlotName" />
+   <!-- <Dependancy componentName="ModelSlotName" />
     <Dependancy componentName="TechnologyAdapterDD" />
-    <Dependancy componentName="MetaModelSelector" />
+    <Dependancy componentName="MetaModelSelector" />-->
     <LocalizedDictionary />
   </Label>
   <Panel layout="flow" hGap="5" vGap="5" flowAlignment="CENTER" borderTitle="Panel" darkLevel="0" index="15" constraints="gridbag(anchor=center;fill=both;gridHeight=1;gridWidth=0;gridX=-1;gridY=-1;index=15;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;padX=0;padY=0;weightX=1.0;weightY=0.0)">
     <Button action="controller.validateAndDispose()" buttonType="Trigger" label="validate" localize="true" enable="data.isValid" index="0" constraints="flow(index=0)">
-      <Dependancy componentName="ModelSlotName" />
+   <!--   <Dependancy componentName="ModelSlotName" />
       <Dependancy componentName="TechnologyAdapterDD" />
       <Dependancy componentName="MetaModelSelector" />
-      <Dependancy componentName="MMSelector" />
+      <Dependancy componentName="MMSelector" />-->
     </Button>
     <Button action="controller.cancelAndDispose()" buttonType="Trigger" label="cancel" localize="true" index="1" constraints="flow(index=1)" />
   </Panel>
