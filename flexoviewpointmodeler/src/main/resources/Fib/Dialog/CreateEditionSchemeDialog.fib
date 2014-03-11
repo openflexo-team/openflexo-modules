@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Panel layout="twocols" darkLevel="0" dataClassName="org.openflexo.foundation.viewpoint.action.CreateEditionScheme" controllerClassName="org.openflexo.view.controller.FlexoFIBController" width="600" height="500">
+  <Panel layout="flow" hGap="5" vGap="5" flowAlignment="CENTER" borderTitle="Panel" darkLevel="0" index="0" constraints="twocols(anchor=center;expandHorizontally=true;expandVertically=false;fill=horizontal;gridHeight=1;gridWidth=0;gridX=-1;gridY=-1;index=0;insetsBottom=20;insetsLeft=0;insetsRight=0;insetsTop=20;location=center;padX=0;padY=0;weightX=1.0;weightY=0.0)" name="title">
+    <Label label="creates_flexo_behaviour" align="center" index="0" constraints="flow(anchor=center;fill=horizontal;gridHeight=1;gridWidth=0;gridX=-1;gridY=-1;index=0;insetsBottom=20;insetsLeft=0;insetsRight=0;insetsTop=20;location=center;padX=0;padY=0;weightX=1.0;weightY=0.0)" font="Lucida Grande,1,15" localize="true" />
+  </Panel>
+  <Label label="please_select_a_kind_of_behaviour" index="1" data="(RadioButtonList.selectedIndex = 1)" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=20;insetsRight=2;insetsTop=0;location=left)" localize="true" />
+  <RadioButtonList columns="1" hGap="0" vGap="-2" index="2" data="data.behaviourChoice" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=2;insetsRight=2;insetsTop=0;location=right)" name="RadioButtonList" localize="true" manageDynamicModel="true" staticList="" iteratorClassName="org.openflexo.foundation.viewpoint.action.CreateEditionScheme$CreateEditionSchemeChoice" autoSelectFirstRow="true" />
+  <Label label="builtin_behaviour" index="2" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=20;insetsRight=0;insetsTop=0;location=left)" visible="(RadioButtonList.selectedIndex = 0)" localize="true" />
+  <DropDown index="2" data="data.builtInBehaviourClass" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=20;insetsTop=0;location=right)" visible="(RadioButtonList.selectedIndex = 0)" name="BuiltInActionsDD" format="object.simpleName" icon="controller.getTechnologyAdapterController(data.modelSlot.technologyAdapter).getIconForEditionScheme(object)" localize="true" list="data.builtInBehaviours" showIcon="true" iteratorClassName="java.lang.Class" autoSelectFirstRow="true" />
+  <Label label="modelslot_behaviour" index="2" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=20;insetsRight=0;insetsTop=0;location=left)" visible="(RadioButtonList.selectedIndex = 1)" localize="true" />
+  <DropDown index="2" data="data.flexoBehaviourClass" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=20;insetsTop=0;location=right)" visible="(RadioButtonList.selectedIndex = 1)" name="ModelSlotSpecificBehavioursDD" format="object.simpleName" icon="controller.getTechnologyAdapterController(data.modelSlot.technologyAdapter).getIconForEditionScheme(object)" localize="true" list="data.modelSlotSpecificBehaviours" showIcon="true" iteratorClassName="java.lang.Class" autoSelectFirstRow="true">
+  	<Dependancy componentName="ModelSlotDD" />
+  </DropDown>
+  <Label label="modelslot" index="2" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=20;insetsRight=0;insetsTop=0;location=left)" visible="(RadioButtonList.selectedIndex = 1)" localize="true" />
+  <DropDown index="2" data="data.modelSlot" constraints="twocols(anchor=west;expandHorizontally=true;expandVertically=false;fill=horizontal;gridHeight=1;gridWidth=0;gridX=-1;gridY=-1;index=2;insetsBottom=0;insetsLeft=0;insetsRight=20;insetsTop=0;location=right;padX=0;padY=0;weightX=0.0;weightY=0.0)" visible="RadioButtonList.selectedIndex = 1" name="ModelSlotDD" format="object.name" icon="controller.getTechnologyAdapterController(object.technologyAdapter).technologyIcon" localize="true" list="data.focusedObject.virtualModel.modelSlots" showIcon="true" iteratorClassName="org.openflexo.foundation.technologyadapter.ModelSlot" autoSelectFirstRow="true">
+    <Dependancy componentName="RadioButtonList" />
+  </DropDown>
+  <Label label="description" align="right" index="11" constraints="twocols(anchor=north_east;expandHorizontally=false;expandVertically=false;fill=none;gridHeight=1;gridWidth=1;gridX=-1;gridY=-1;index=5;insetsBottom=0;insetsLeft=20;insetsRight=0;insetsTop=0;location=left;padX=0;padY=0;weightX=0.0;weightY=0.0)" localize="true" />
+  <TextArea columns="6" rows="2" text="TextArea" index="12" data="data.description" constraints="twocols(anchor=center;expandHorizontally=true;expandVertically=true;fill=both;gridHeight=1;gridWidth=0;gridX=-1;gridY=-1;index=6;insetsBottom=0;insetsLeft=0;insetsRight=20;insetsTop=0;location=right;padX=0;padY=0;weightX=1.0;weightY=1.0)" useScrollBar="true" horizontalScrollbarPolicy="HORIZONTAL_SCROLLBAR_AS_NEEDED" verticalScrollbarPolicy="VERTICAL_SCROLLBAR_AS_NEEDED" localize="true" />
+  <Panel layout="border" borderTitle="Panel" titleFont="Lucida Grande,2,11" darkLevel="0" index="13" constraints="twocols(anchor=center;expandHorizontally=false;expandVertically=false;fill=none;gridHeight=1;gridWidth=1;gridX=-1;gridY=-1;index=7;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=left;padX=0;padY=0;weightX=0.0;weightY=0.0)" font="Lucida Grande,2,11" />
+  <Label label="label" index="14" data="data.validityMessage" constraints="twocols(anchor=center;expandHorizontally=true;expandVertically=false;fill=horizontal;gridHeight=1;gridWidth=0;gridX=-1;gridY=-1;index=8;insetsBottom=0;insetsLeft=4;insetsRight=0;insetsTop=0;location=right;padX=0;padY=0;weightX=1.0;weightY=0.0)" visible="(!(data.isValid))" font="Lucida Grande,2,11" localize="true">
+
+    <LocalizedDictionary />
+  </Label>
+  <Panel layout="flow" hGap="5" vGap="5" flowAlignment="CENTER" borderTitle="Panel" darkLevel="0" index="15" constraints="twocols(anchor=center;expandHorizontally=true;expandVertically=false;fill=both;gridHeight=1;gridWidth=0;gridX=-1;gridY=-1;index=9;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=center;padX=0;padY=0;weightX=1.0;weightY=0.0)">
+    <Button action="controller.validateAndDispose()" buttonType="Trigger" label="validate" localize="true" enable="data.isValid" index="0" constraints="flow(index=0)" opaque="false">
+
+    </Button>
+    <Button action="controller.cancelAndDispose()" buttonType="Trigger" label="cancel" localize="true" index="1" constraints="flow(index=1)" opaque="false" />
+  </Panel>
+  <LocalizedDictionary>
+    
+  </LocalizedDictionary>
+</Panel>
