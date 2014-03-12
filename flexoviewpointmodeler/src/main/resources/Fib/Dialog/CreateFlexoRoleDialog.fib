@@ -147,9 +147,9 @@
     <Localized key="DiagramPatternRole" lang="English">DiagramPatternRole</Localized>
     <Localized key="DiagramPatternRole" lang="French">DiagramPatternRole</Localized>
     <Localized key="DiagramPatternRole" lang="Dutch">DiagramPatternRole</Localized>
-    <Localized key="ShapePatternRole" lang="English">ShapePatternRole</Localized>
-    <Localized key="ShapePatternRole" lang="French">ShapePatternRole</Localized>
-    <Localized key="ShapePatternRole" lang="Dutch">ShapePatternRole</Localized>
+    <Localized key="ShapeRole" lang="English">ShapeRole</Localized>
+    <Localized key="ShapeRole" lang="French">ShapeRole</Localized>
+    <Localized key="ShapeRole" lang="Dutch">ShapeRole</Localized>
     <Localized key="ConnectorPatternRole" lang="English">ConnectorPatternRole</Localized>
     <Localized key="ConnectorPatternRole" lang="French">ConnectorPatternRole</Localized>
     <Localized key="ConnectorPatternRole" lang="Dutch">ConnectorPatternRole</Localized>
