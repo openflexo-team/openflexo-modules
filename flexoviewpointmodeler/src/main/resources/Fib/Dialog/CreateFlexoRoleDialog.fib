@@ -27,7 +27,6 @@
     <Assignment variable="component.informationSpace" />
     <Assignment variable="component.contextOntologyURI" />
     <Assignment variable="component.rootClassURI" />
-    <Assignment variable="component.project" />
     <Assignment variable="component.selectableCondition" />
     <Dependancy componentName="ModelSlotDD" />
     <Dependancy componentName="PatternRoleTypeDD" />
