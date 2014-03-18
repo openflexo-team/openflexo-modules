@@ -30,6 +30,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.logging.FlexoLogger;
 import org.openflexo.logging.FlexoLoggingManager;
+import org.openflexo.rm.FileSystemResourceLocatorImpl;
+import org.openflexo.rm.ResourceLocator;
 
 public class LaunchFreeModellingEditor {
 
@@ -40,6 +42,7 @@ public class LaunchFreeModellingEditor {
 
 			@Override
 			public void run() {
+				
 				init();
 			}
 		});
@@ -47,6 +50,13 @@ public class LaunchFreeModellingEditor {
 
 	private static void init() {
 		try {
+
+			// A FileSystemResourceLocator is needed in that context
+			
+			final FileSystemResourceLocatorImpl fsrl = new FileSystemResourceLocatorImpl();
+			fsrl.appendToDirectories(System.getProperty("user.dir"));
+			ResourceLocator.appendDelegate(fsrl);
+
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			FlexoLoggingManager.initialize(-1, true, null, Level.INFO, null);
 			FlexoLocalization.initWith(FreeModellingEditorApplication.LOCALIZATION);

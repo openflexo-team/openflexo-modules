@@ -37,6 +37,7 @@ import org.openflexo.fib.model.FIBComponent;
 import org.openflexo.fib.model.listener.FIBMouseClickListener;
 import org.openflexo.fib.view.FIBView;
 import org.openflexo.localization.FlexoLocalization;
+import org.openflexo.rm.Resource;
 import org.openflexo.toolbox.HasPropertyChangeSupport;
 import org.openflexo.toolbox.PropertyChangeListenerRegistrationManager;
 
@@ -63,8 +64,8 @@ public class AbstractFIBPanel extends JPanel implements PropertyChangeListener, 
 		this(representedObject, FIBLibrary.instance().retrieveFIBComponent(fibFile), addScrollBar);
 	}
 	
-	public AbstractFIBPanel(Object representedObject, String fibFileName, boolean addScrollBar) {
-		this(representedObject, FIBLibrary.instance().retrieveFIBComponent(fibFileName), addScrollBar);
+	public AbstractFIBPanel(Object representedObject, Resource fibResource, boolean addScrollBar) {
+		this(representedObject, FIBLibrary.instance().retrieveFIBComponent(fibResource), addScrollBar);
 	}
 
 	protected AbstractFIBPanel(Object dataObject, FIBComponent fibComponent, boolean addScrollBar) {

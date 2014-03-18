@@ -54,7 +54,7 @@ public class CreateViewPointInitializer extends ActionInitializer<CreateViewPoin
 		return new FlexoActionInitializer<CreateViewPoint>() {
 			@Override
 			public boolean run(EventObject e, CreateViewPoint action) {
-				return instanciateAndShowDialog(action, VPMCst.CREATE_VIEW_POINT_DIALOG_FIB_NAME);
+				return instanciateAndShowDialog(action, VPMCst.CREATE_VIEW_POINT_DIALOG_FIB);
 			}
 		};
 	}

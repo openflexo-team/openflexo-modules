@@ -22,25 +22,27 @@ package org.openflexo.fme;
 
 import javax.swing.ImageIcon;
 
+import org.openflexo.rm.ResourceLocator;
 import org.openflexo.toolbox.ImageIconResource;
 
 public class FMEIconLibrary {
+	
 
 	// Module icons
-	public static final ImageIcon FME_SMALL_ICON = new ImageIconResource("Icons/module-fme-16.png");
-	public static final ImageIcon FME_MEDIUM_ICON = new ImageIconResource("Icons/module-fme-32.png");
-	public static final ImageIcon FME_MEDIUM_ICON_WITH_HOVER = new ImageIconResource("Icons/module-fme-hover-32.png");
-	public static final ImageIcon FME_BIG_ICON = new ImageIconResource("Icons/module-fme-hover-64.png");
+	public static final ImageIcon FME_SMALL_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/module-fme-16.png"));
+	public static final ImageIcon FME_MEDIUM_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/module-fme-32.png"));
+	public static final ImageIcon FME_MEDIUM_ICON_WITH_HOVER = new ImageIconResource(ResourceLocator.locateResource("Icons/module-fme-hover-32.png"));
+	public static final ImageIcon FME_BIG_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/module-fme-hover-64.png"));
 
 	// Perspective icons
-	public static final ImageIcon VPM_VPE_ACTIVE_ICON = new ImageIconResource("Icons/VPM/viewpoint-perspective.png");
+	public static final ImageIcon VPM_VPE_ACTIVE_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/VPM/viewpoint-perspective.png"));
 
-	public static final ImageIcon COPY_ICON = new ImageIconResource("Icons/Copy.png");
-	public static final ImageIcon PASTE_ICON = new ImageIconResource("Icons/Paste.png");
-	public static final ImageIcon CUT_ICON = new ImageIconResource("Icons/Cut.png");
-	public static final ImageIcon DELETE_ICON = new ImageIconResource("Icons/Delete.png");
+	public static final ImageIcon COPY_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/Copy.png"));
+	public static final ImageIcon PASTE_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/Paste.png"));
+	public static final ImageIcon CUT_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/Cut.png"));
+	public static final ImageIcon DELETE_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/Delete.png"));
 
-	public static final ImageIcon CONCEPT_ICON = new ImageIconResource("Icons/EClass.gif");
-	public static final ImageIcon INSTANCE_ICON = new ImageIconResource("Icons/EObject.gif");
+	public static final ImageIcon CONCEPT_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/EClass.gif"));
+	public static final ImageIcon INSTANCE_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/EObject.gif"));
 
 }

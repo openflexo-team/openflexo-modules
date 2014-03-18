@@ -53,7 +53,7 @@ public class CreateVirtualModelInitializer extends ActionInitializer<CreateVirtu
 		return new FlexoActionInitializer<CreateVirtualModel>() {
 			@Override
 			public boolean run(EventObject e, CreateVirtualModel action) {
-				return instanciateAndShowDialog(action, VPMCst.CREATE_VIRTUAL_MODEL_DIALOG_FIB_NAME);
+				return instanciateAndShowDialog(action, VPMCst.CREATE_VIRTUAL_MODEL_DIALOG_FIB);
 			}
 		};
 	}

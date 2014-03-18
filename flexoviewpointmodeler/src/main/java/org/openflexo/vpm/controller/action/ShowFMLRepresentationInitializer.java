@@ -47,7 +47,7 @@ public class ShowFMLRepresentationInitializer extends ActionInitializer<ShowFMLR
 		return new FlexoActionInitializer<ShowFMLRepresentation>() {
 			@Override
 			public boolean run(EventObject e, ShowFMLRepresentation action) {
-				return instanciateAndShowDialog(action, VPMCst.SHOW_FML_REPRESENTATION_DIALOG_FIB_NAME);
+				return instanciateAndShowDialog(action, VPMCst.SHOW_FML_REPRESENTATION_DIALOG_FIB);
 			}
 
 		};

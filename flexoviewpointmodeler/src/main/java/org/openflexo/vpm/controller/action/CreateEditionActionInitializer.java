@@ -58,7 +58,7 @@ public class CreateEditionActionInitializer extends ActionInitializer<CreateEdit
 		return new FlexoActionInitializer<CreateEditionAction>() {
 			@Override
 			public boolean run(EventObject e, CreateEditionAction action) {
-				return instanciateAndShowDialog(action, VPMCst.CREATE_EDITION_ACTION_DIALOG_FIB_NAME);
+				return instanciateAndShowDialog(action, VPMCst.CREATE_EDITION_ACTION_DIALOG_FIB);
 			}
 		};
 	}

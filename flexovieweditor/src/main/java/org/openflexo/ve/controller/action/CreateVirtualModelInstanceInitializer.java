@@ -41,6 +41,7 @@ import org.openflexo.foundation.view.action.CreateVirtualModelInstance;
 import org.openflexo.foundation.viewpoint.VirtualModelModelSlot;
 import org.openflexo.icon.VEIconLibrary;
 import org.openflexo.localization.FlexoLocalization;
+import org.openflexo.rm.Resource;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
@@ -59,7 +60,7 @@ public class CreateVirtualModelInstanceInitializer extends ActionInitializer<Cre
 	}
 
 	private Status chooseVirtualModel(CreateVirtualModelInstance action) {
-		return instanciateShowDialogAndReturnStatus(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB_NAME);
+		return instanciateShowDialogAndReturnStatus(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB);
 	}
 
 	@Override
@@ -75,7 +76,7 @@ public class CreateVirtualModelInstanceInitializer extends ActionInitializer<Cre
 					while (shouldContinue) {
 						Status result;
 						if (step == 0) {
-							result = instanciateShowDialogAndReturnStatus(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB_NAME);
+							result = instanciateShowDialogAndReturnStatus(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB);
 						} else {
 							ModelSlot configuredModelSlot = action.getVirtualModel().getModelSlots().get(step - 1);
 							result = instanciateShowDialogAndReturnStatus(action.getModelSlotInstanceConfiguration(configuredModelSlot),
@@ -92,7 +93,7 @@ public class CreateVirtualModelInstanceInitializer extends ActionInitializer<Cre
 						}
 					}
 
-					return instanciateAndShowDialog(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB_NAME);
+					return instanciateAndShowDialog(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB);
 				}
 
 			}
@@ -135,15 +136,15 @@ public class CreateVirtualModelInstanceInitializer extends ActionInitializer<Cre
 	 *         separation of FIBs for Model Slot Configurations.
 	 * @return File that correspond to the FIB
 	 */
-	private String getModelSlotInstanceConfigurationFIB(Class modelSlotClass) {
+	private Resource getModelSlotInstanceConfigurationFIB(Class modelSlotClass) {
 		if (TypeAwareModelSlot.class.isAssignableFrom(modelSlotClass)) {
-			return CommonFIB.CONFIGURE_TYPE_AWARE_MODEL_SLOT_INSTANCE_DIALOG_FIB_NAME;
+			return CommonFIB.CONFIGURE_TYPE_AWARE_MODEL_SLOT_INSTANCE_DIALOG_FIB;
 		}
 		if (FreeModelSlot.class.isAssignableFrom(modelSlotClass)) {
-			return CommonFIB.CONFIGURE_FREE_MODEL_SLOT_INSTANCE_DIALOG_FIB_NAME;
+			return CommonFIB.CONFIGURE_FREE_MODEL_SLOT_INSTANCE_DIALOG_FIB;
 		}
 		if (VirtualModelModelSlot.class.isAssignableFrom(modelSlotClass)) {
-			return CommonFIB.CONFIGURE_VIRTUAL_MODEL_SLOT_INSTANCE_DIALOG_FIB_NAME;
+			return CommonFIB.CONFIGURE_VIRTUAL_MODEL_SLOT_INSTANCE_DIALOG_FIB;
 		}
 		return null;
 	}

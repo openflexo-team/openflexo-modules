@@ -60,7 +60,7 @@ public class CreateViewInitializer extends ActionInitializer<CreateView, Reposit
 				if (action.skipChoosePopup) {
 					return true;
 				} else {
-					return instanciateAndShowDialog(action, CommonFIB.CREATE_VIEW_DIALOG_FIB_NAME);
+					return instanciateAndShowDialog(action, CommonFIB.CREATE_VIEW_DIALOG_FIB);
 				}
 
 			}

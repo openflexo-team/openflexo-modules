@@ -9,12 +9,16 @@ import org.openflexo.fge.ForegroundStyle;
 import org.openflexo.fge.ShapeGraphicalRepresentation;
 import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
 import org.openflexo.model.exceptions.ModelDefinitionException;
-import org.openflexo.toolbox.ResourceLocator;
+import org.openflexo.rm.ResourceLocator;
+import org.openflexo.rm.Resource;
+import org.openflexo.rm.ResourceLocatorDelegate;
 
 public class BusinessDiagramFactory extends DiagramFactory {
 
-	private static final File HW_COMPONENT = ResourceLocator.locateFile("Images/hardware.png");
-	private static final File SW_COMPONENT = ResourceLocator.locateFile("Images/software.png");
+	
+	
+	private static final Resource HW_COMPONENT = ResourceLocator.locateResource("Images/hardware.png");
+	private static final Resource SW_COMPONENT = ResourceLocator.locateResource("Images/software.png");
 
 	public BusinessDiagramFactory() throws ModelDefinitionException {
 		super();
@@ -37,7 +41,7 @@ public class BusinessDiagramFactory extends DiagramFactory {
 		return diagram;
 	}
 	
-	private void createNewShapeGraphicalRepresentation(Diagram diagram,String name, File image){
+	private void createNewShapeGraphicalRepresentation(Diagram diagram,String name, Resource image){
 		Concept concept = newInstance(Concept.class);
 		concept.setName(name);
 		concept.setReadOnly(true);
@@ -55,7 +59,7 @@ public class BusinessDiagramFactory extends DiagramFactory {
 			conceptGR.getShadowStyle().setDrawShadow(false);
 			BackgroundImageBackgroundStyle backgroundImage = (BackgroundImageBackgroundStyle)conceptGR.getBackground();
 			backgroundImage.setFitToShape(true);
-			backgroundImage.setImageFile(image);
+			backgroundImage.setImageResource(image);
 		}
 		
 		conceptAssoc.setGraphicalRepresentation(conceptGR);
