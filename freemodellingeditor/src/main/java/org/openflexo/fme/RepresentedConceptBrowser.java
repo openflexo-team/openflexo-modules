@@ -29,7 +29,7 @@ import org.openflexo.rm.Resource;
 public class RepresentedConceptBrowser extends AbstractFIBPanel {
 	static final Logger logger = Logger.getLogger(RepresentedConceptBrowser.class.getPackage().getName());
 
-	private static final Resource REPRESENTED_CONCEPT_BROWSER_FIB = ResourceLocator.getResourceLocator().locateResource("Fib/RepresentedConceptBrowser.fib");
+	private static final Resource REPRESENTED_CONCEPT_BROWSER_FIB = ResourceLocator.locateResource("Fib/RepresentedConceptBrowser.fib");
 
 	public RepresentedConceptBrowser(DataModel dataModel) {
 		super(dataModel, REPRESENTED_CONCEPT_BROWSER_FIB, false);
