@@ -44,13 +44,6 @@
 				<version>${project.version}</version>
 				<classifier>tests</classifier>
 			</dependency>
-			<dependency>
-				<groupId>org.openflexo</groupId>
-				<artifactId>flexo-foundation</artifactId>
-				<version>${project.version}</version>
-				<classifier>resources</classifier>
-				<type>zip</type>
-			</dependency>
 		
 			<dependency>
 				<groupId>org.openflexo</groupId>
@@ -63,95 +56,26 @@
 				<version>${project.version}</version>
 				<classifier>tests</classifier>
 			</dependency>
-			<dependency>
-				<groupId>org.openflexo</groupId>
-				<artifactId>flexo-ui</artifactId>
-				<version>${project.version}</version>
-				<classifier>resources</classifier>
-				<type>zip</type>
-			</dependency>
 		
 			<dependency>
 				<groupId>org.openflexo</groupId>
 				<artifactId>flexoutils</artifactId>
 				<version>${connie.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>org.openflexo</groupId>
-				<artifactId>flexoutils</artifactId>
-				<version>${connie.version}</version>
-				<classifier>resources</classifier>
-				<type>zip</type>
-			</dependency>
-			<dependency>
-				<groupId>org.openflexo</groupId>
-				<artifactId>flexoutils</artifactId>
-				<version>${connie.version}</version>
-				<classifier>tests</classifier>
-			</dependency>
-			<dependency>
-				<groupId>org.openflexo</groupId>
-				<artifactId>connie-core</artifactId>
-				<version>${connie.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.openflexo</groupId>
-				<artifactId>connie-core</artifactId>
-				<version>${connie.version}</version>
-				<classifier>resources</classifier>
-				<type>zip</type>
-			</dependency>
-			<dependency>
-				<groupId>org.openflexo</groupId>
-				<artifactId>connie-core</artifactId>
-				<version>${connie.version}</version>
-				<classifier>tests</classifier>
-			</dependency>
-
-			<dependency>
+		   <dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>4.10</version>
 			</dependency>
-		    <dependency>
-			   <groupId>org.openflexo</groupId>
-			   <artifactId>pamela-core</artifactId>
-			   <version>${pamela.version}</version>
-		    </dependency>
-		    <dependency>
-			   <groupId>org.openflexo</groupId>
-			   <artifactId>flexographicsutils</artifactId>
-			   <version>1.7-SNAPSHOT</version>
-		    </dependency>
-			<dependency>
+		  <dependency>
 				<groupId>org.openflexo</groupId>
 				<artifactId>gina-core</artifactId>
-				<version>${gina.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.openflexo</groupId>
-				<artifactId>gina-core</artifactId>
-				<version>${gina.version}</version>
-				<classifier>tests</classifier>
-			</dependency>		
-			<dependency>
-				<groupId>org.openflexo</groupId>
-				<artifactId>gina-core</artifactId>
-				<version>${gina.version}</version>
-				<classifier>resources</classifier>
-				<type>zip</type>
-			</dependency>
-			<dependency>
-				<groupId>org.openflexo</groupId>
-				<artifactId>gina-swing</artifactId>
 				<version>${gina.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.openflexo</groupId>
 				<artifactId>gina-swing</artifactId>
 				<version>${gina.version}</version>
-				<classifier>resources</classifier>
-				<type>zip</type>
 			</dependency>
 			<dependency>
 				<groupId>org.openflexo</groupId>
@@ -166,20 +90,6 @@
 			</dependency>		
 			<dependency>
 				<groupId>org.openflexo</groupId>
-				<artifactId>gina-swing-editor</artifactId>
-				<version>${gina.version}</version>
-				<classifier>resources</classifier>
-				<type>zip</type>
-			</dependency>
-			<dependency>
-				<groupId>org.openflexo</groupId>
-				<artifactId>diana-geom</artifactId>
-				<version>${diana.version}</version>
-				<classifier>resources</classifier>
-				<type>zip</type>
-			</dependency>
-			<dependency>
-				<groupId>org.openflexo</groupId>
 				<artifactId>diana-geom</artifactId>
 				<version>${diana.version}</version>
 			</dependency>
@@ -188,13 +98,6 @@
 				<artifactId>diana-geom</artifactId>
 				<version>${diana.version}</version>
 				<classifier>tests</classifier>
-			</dependency>
-			<dependency>
-				<groupId>org.openflexo</groupId>
-				<artifactId>diana-api</artifactId>
-				<version>${diana.version}</version>
-				<classifier>resources</classifier>
-				<type>zip</type>
 			</dependency>
 			<dependency>
 				<groupId>org.openflexo</groupId>
@@ -211,26 +114,6 @@
 				<groupId>org.openflexo</groupId>
 				<artifactId>diana-core</artifactId>
 				<version>${diana.version}</version>
-				<classifier>resources</classifier>
-				<type>zip</type>
-			</dependency>
-			<dependency>
-				<groupId>org.openflexo</groupId>
-				<artifactId>diana-core</artifactId>
-				<version>${diana.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.openflexo</groupId>
-				<artifactId>diana-core</artifactId>
-				<version>${diana.version}</version>
-				<classifier>tests</classifier>
-			</dependency>
-			<dependency>
-				<groupId>org.openflexo</groupId>
-				<artifactId>diana-swing</artifactId>
-				<version>${diana.version}</version>
-				<classifier>resources</classifier>
-				<type>zip</type>
 			</dependency>
 			<dependency>
 				<groupId>org.openflexo</groupId>
@@ -247,27 +130,7 @@
 				<groupId>org.openflexo</groupId>
 				<artifactId>diana-drawing-editor</artifactId>
 				<version>${diana.version}</version>
-				<classifier>resources</classifier>
-				<type>zip</type>
 			</dependency>
-			<dependency>
-				<groupId>org.openflexo</groupId>
-				<artifactId>diana-drawing-editor</artifactId>
-				<version>${diana.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.openflexo</groupId>
-				<artifactId>diana-geomedit</artifactId>
-				<version>${diana.version}</version>
-				<classifier>resources</classifier>
-				<type>zip</type>
-			</dependency>
-			<dependency>
-				<groupId>org.openflexo</groupId>
-				<artifactId>diana-geomedit</artifactId>
-				<version>${diana.version}</version>
-			</dependency>
-			
 			
 			<!-- Openflexo utils -->
 			
@@ -283,35 +146,17 @@
 			</dependency>
 			<dependency>
 				<groupId>org.openflexo</groupId>
-				<artifactId>flexowysiwyg</artifactId>
-				<version>${flexowysiwyg.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.openflexo</groupId>
 				<artifactId>flexodocresourcecenter</artifactId>
 				<version>${flexodocresourcecenter.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.openflexo</groupId>
-				<artifactId>flexodocresourcecenter</artifactId>
-				<version>${flexodocresourcecenter.version}</version>
-				<classifier>resources</classifier>
-				<type>zip</type>
-			</dependency>
-			<dependency>
-				<groupId>org.openflexo</groupId>
 				<artifactId>flexodocresourcemanager</artifactId>
 				<version>${flexodocresourcemanager.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.openflexo</groupId>
-				<artifactId>flexodocresourcemanager</artifactId>
-				<version>${flexodocresourcemanager.version}</version>
-				<classifier>resources</classifier>
-				<type>zip</type>
 			</dependency>
 			
 			<!-- 3rd party -->
+			<!-- 
 			
 			<dependency>
 				<groupId>org.apache.cayenne</groupId>
@@ -419,9 +264,9 @@
 				<artifactId>jersey-json</artifactId>
 				<version>${jersey.version}</version>
 			</dependency>
-			
+			--> 
 			<!--  3rd party -->
-			
+			<!-- 
 			<dependency>
 				<groupId>org.eclipse.emf</groupId>
 				<artifactId>common</artifactId>
@@ -469,7 +314,7 @@
 				<artifactId>poi-ooxml-schemas</artifactId>
 				<version>3.10-beta2</version>
 			</dependency>
-
+-->
 		</dependencies>
   	</dependencyManagement>
 	<build>
@@ -495,24 +340,6 @@
 		</resources>
 		<pluginManagement>
 			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-assembly-plugin</artifactId>
-					<configuration>
-						<descriptors>
-							<descriptor>package-resources.xml</descriptor>
-						</descriptors>
-					</configuration>
-					<executions>
-						<execution>
-							<id>build-resources</id>
-							<phase>package</phase>
-							<goals>
-								<goal>single</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
