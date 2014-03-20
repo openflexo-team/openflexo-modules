@@ -96,6 +96,7 @@ public class VEController extends FlexoController {
 			project.getStringEncoder()._addConverter(GraphicalRepresentation.RECT_POLYLIN_CONVERTER);
 		}*/
 		RESOURCES_PERSPECTIVE.setProject(project);
+		VIEW_LIBRARY_PERSPECTIVE.setProject(project);
 		// ONTOLOGY_PERSPECTIVE.setProject(project);
 	}
 
