@@ -20,6 +20,9 @@
 		<requiredProperty key="moduleTrigram">
 			<defaultValue>${moduleName.toUpperCase().substring{3}}</defaultValue>
 		</requiredProperty>
+		<requiredProperty key="moduleTrigramLower">
+			<defaultValue>${moduleName.toLowerCase().substring{3}}</defaultValue>
+		</requiredProperty>
 		<requiredProperty key="groupId">
 			<defaultValue>org.openflexo.module</defaultValue>
 		</requiredProperty>

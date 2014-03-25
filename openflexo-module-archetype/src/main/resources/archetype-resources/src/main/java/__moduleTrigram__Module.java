@@ -1,14 +1,25 @@
-/*******************************************************************************
- * Copyright (c) 2014 xtof.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the GNU Public License v3.0
- * which accompanies this distribution, and is available at
- * http://www.gnu.org/licenses/gpl.html
- * 
- * Contributors:
- *     xtof - initial API and implementation
- ******************************************************************************/
-package org.openflexo.DBEditor;
+/*
+ * (c) Copyright 2014- Openflexo
+ *
+ * This file is part of OpenFlexo.
+ *
+ * OpenFlexo is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * OpenFlexo is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with OpenFlexo. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+
+package org.openflexo.${moduleTrigram}ditor;
 
 
 import java.util.logging.Logger;
@@ -21,29 +32,29 @@ import org.openflexo.view.controller.FlexoController;
 /**
  * DbEditor module
  * 
- * @author christophe
+ * @author Someone
  */
-public class DBEModule extends FlexoModule<DBEModule> {
+public class ${moduleTrigram}Module extends FlexoModule<${moduleTrigram}Module> {
 
-	private static final Logger logger = Logger.getLogger(DBEModule.class.getPackage().getName());
+	private static final Logger logger = Logger.getLogger(${moduleTrigram}Module.class.getPackage().getName());
 
-	public static final String DBE_MODULE_SHORT_NAME = "DBE";
-	public static final String DBE_MODULE_NAME = "database_editor";
+	public static final String ${moduleTrigram}_MODULE_SHORT_NAME = "${moduleTrigram}";
+	public static final String ${moduleTrigram}_MODULE_NAME = "${moduleFullName}";
 
-	public DBEModule(ApplicationContext applicationContext) {
+	public ${moduleTrigram}Module(ApplicationContext applicationContext) {
 		super(applicationContext);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public Module<DBEModule> getModule() {
+	public Module<${moduleTrigram}Module> getModule() {
 		// TODO Auto-generated method stub
-		return DBEditor.INSTANCE;
+		return ${moduleTrigram}ditor.INSTANCE;
 	}
 
 	@Override
 	protected FlexoController createControllerForModule() {
 		// TODO Auto-generated method stub
-		return new DBEController(this);
+		return new ${moduleTrigram}Controller(this);
 	}
 }
