@@ -16,5 +16,5 @@
     <Localized key="name" lang="French">Nom</Localized>
     <Localized key="name" lang="Dutch">Name</Localized>
   </LocalizedDictionary>
-  <Parameter name="title" value="Edition Pattern Instance Parameter" />
+  <Parameter name="title" value="Flexo Concept Instance Parameter" />
 </Panel>
