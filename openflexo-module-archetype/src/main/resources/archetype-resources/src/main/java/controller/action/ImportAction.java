@@ -18,7 +18,7 @@
  *
  */
 
-package org.openflexo.module.sample.controller.action;
+package org.openflexo.module.${moduleName}.controller.action;
 
 import java.awt.event.ActionEvent;
 
