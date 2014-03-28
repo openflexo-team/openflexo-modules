@@ -33,7 +33,7 @@ import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionSource;
 import org.openflexo.foundation.view.View;
-import org.openflexo.foundation.view.action.CreateVirtualModelInstance;
+import org.openflexo.foundation.view.action.CreateBasicVirtualModelInstance;
 import org.openflexo.ve.controller.VEController;
 import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.model.FlexoPerspective;
@@ -58,7 +58,7 @@ public class ViewModuleView extends JPanel implements ModuleView<View>, Property
 		panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 50));
 		JPanel buttonPanel = new JPanel(new GridLayout(1, 0));
 		// buttonPanel.add(new FlexoActionButton(CreateDiagram.actionType, this, controller));
-		buttonPanel.add(new FlexoActionButton(CreateVirtualModelInstance.actionType, this, controller));
+		buttonPanel.add(new FlexoActionButton(CreateBasicVirtualModelInstance.actionType, this, controller));
 		panel.add(buttonPanel);
 		add(panel);
 		revalidate();

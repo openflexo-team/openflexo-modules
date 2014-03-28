@@ -69,7 +69,7 @@ public class VEControllerActionInitializer extends ControllerActionInitializer {
 		new MoveViewInitializer(this);
 
 		new DeleteViewInitializer(this);
-		new CreateVirtualModelInstanceInitializer(this);
+		new CreateBasicVirtualModelInstanceInitializer(this);
 		new DeleteVirtualModelInstanceInitializer(this);
 
 		new ActionSchemeActionInitializer(this);
