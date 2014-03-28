@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-descriptor
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd"
+	name="module"
+	xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<requiredProperties>
+		<requiredProperty key="openflexoInfrastructureVersion">
+			<defaultValue>1.7-SNAPSHOT</defaultValue>
+		</requiredProperty>
+		<requiredProperty key="moduleName">
+			<defaultValue>aModule</defaultValue>
+		</requiredProperty>
+		<requiredProperty key="artifactId">
+			<defaultValue>${moduleName}</defaultValue>
+		</requiredProperty>
+		<requiredProperty key="moduleFullName">
+			<defaultValue>${moduleName}</defaultValue>
+		</requiredProperty>
+		<requiredProperty key="moduleTrigram">
+			<defaultValue>${moduleName.toUpperCase().substring{3}}</defaultValue>
+		</requiredProperty>
+		<requiredProperty key="moduleTrigramLower">
+			<defaultValue>${moduleName.toLowerCase().substring{3}}</defaultValue>
+		</requiredProperty>
+		<requiredProperty key="groupId">
+			<defaultValue>org.openflexo.module</defaultValue>
+		</requiredProperty>
+		<requiredProperty key="package">
+			<defaultValue>org.openflexo.module.${moduleName}</defaultValue>
+		</requiredProperty>
+		<!-- computed values -->
+		<!-- voir http://www.developpez.net/forums/d1172400/java/edi-outils-pour-java/build/maven/archetype-descriptor-property-capitalize/ -->
+	</requiredProperties>
+	<fileSets>
+		<fileSet filtered="true" packaged="true" encoding="UTF-8">
+			<directory>src/main/java</directory>
+			<includes>
+				<include>**/*.java</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="true" encoding="UTF-8">
+			<directory>src/main/resources</directory>
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+</archetype-descriptor>
