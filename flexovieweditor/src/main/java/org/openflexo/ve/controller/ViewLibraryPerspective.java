@@ -283,4 +283,5 @@ public class ViewLibraryPerspective extends FlexoPerspective {
 		_controller.getControllerModel().setRightViewVisible(false);
 		// }
 	}
+
 }
