@@ -43,18 +43,16 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="true" encoding="UTF-8">
-			<directory>src/main/resources</directory>
+			<directory>src/main/resources/META-INF</directory>
 			<includes>
-				<include>META-INF/*</include>
+				<include>**/*</include>
 			</includes>
-			<excludes>Icons/*</excludes>
 		</fileSet>
 		<fileSet filtered="false" encoding="UTF-8">
-			<directory>src/main/resources</directory>
+			<directory>src/main/resources/Icons</directory>
 			<includes>
-				<include>Icons/*</include>
+				<include>**/*</include>
 			</includes>
-			<excludes>META-INF/*</excludes>
 		</fileSet>
 	</fileSets>
 </archetype-descriptor>
