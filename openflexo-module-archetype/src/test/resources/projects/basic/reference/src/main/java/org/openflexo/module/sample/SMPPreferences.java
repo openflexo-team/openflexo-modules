@@ -20,23 +20,12 @@
 
 package org.openflexo.module.sample;
 
-import org.openflexo.module.Module;
-import org.openflexo.module.sample.view.SMPIconLibrary;
+import org.openflexo.model.annotations.ModelEntity;
+import org.openflexo.model.annotations.XMLElement;
+import org.openflexo.prefs.ModulePreferences;
 
-public class sample extends Module<SMPModule> {
-
-	public static Module<SMPModule> INSTANCE = null;
-
-	public sample() {
-			
-		super(SMPModule.SMP_MODULE_NAME, SMPModule.SMP_MODULE_NAME, SMPModule.class, SMPPreferences.class, "",
-				null , "SMP", SMPIconLibrary.SMP_SMALL_ICON, SMPIconLibrary.SMP_MEDIUM_ICON, SMPIconLibrary.SMP_MEDIUM_ICON_HOVER,
-				SMPIconLibrary.SMP_BIG_ICON, false);
-
-		INSTANCE = this;
-	}
-
+@ModelEntity
+@XMLElement(xmlTag = "SMPPreferences")
+public interface SMPPreferences extends ModulePreferences<SMPModule>{
 
 }
-
-

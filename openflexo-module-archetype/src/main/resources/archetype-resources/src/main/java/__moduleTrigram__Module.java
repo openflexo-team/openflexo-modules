@@ -19,7 +19,7 @@
  */
 
 
-package org.openflexo.${moduleTrigram}ditor;
+package org.openflexo.module.${moduleName};
 
 
 import java.util.logging.Logger;
@@ -28,6 +28,7 @@ import org.openflexo.ApplicationContext;
 import org.openflexo.module.FlexoModule;
 import org.openflexo.module.Module;
 import org.openflexo.view.controller.FlexoController;
+import org.openflexo.module.${moduleName}.controller.${moduleTrigram}Controller;
 
 /**
  * DbEditor module
@@ -49,7 +50,7 @@ public class ${moduleTrigram}Module extends FlexoModule<${moduleTrigram}Module> 
 	@Override
 	public Module<${moduleTrigram}Module> getModule() {
 		// TODO Auto-generated method stub
-		return ${moduleTrigram}ditor.INSTANCE;
+		return ${moduleName}.INSTANCE;
 	}
 
 	@Override

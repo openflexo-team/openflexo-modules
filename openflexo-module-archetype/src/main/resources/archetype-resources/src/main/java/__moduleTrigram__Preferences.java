@@ -20,23 +20,12 @@
 
 package org.openflexo.module.${moduleName};
 
-import org.openflexo.module.Module;
-import org.openflexo.module.${moduleName}.view.${moduleTrigram}IconLibrary;
+import org.openflexo.model.annotations.ModelEntity;
+import org.openflexo.model.annotations.XMLElement;
+import org.openflexo.prefs.ModulePreferences;
 
-public class ${moduleName} extends Module<${moduleTrigram}Module> {
-
-	public static Module<${moduleTrigram}Module> INSTANCE = null;
-
-	public ${moduleName}() {
-			
-		super(${moduleTrigram}Module.${moduleTrigram}_MODULE_NAME, ${moduleTrigram}Module.${moduleTrigram}_MODULE_NAME, ${moduleTrigram}Module.class, ${moduleTrigram}Preferences.class, "",
-				null , "${moduleTrigram}", ${moduleTrigram}IconLibrary.${moduleTrigram}_SMALL_ICON, ${moduleTrigram}IconLibrary.${moduleTrigram}_MEDIUM_ICON, ${moduleTrigram}IconLibrary.${moduleTrigram}_MEDIUM_ICON_HOVER,
-				${moduleTrigram}IconLibrary.${moduleTrigram}_BIG_ICON, false);
-
-		INSTANCE = this;
-	}
-
+@ModelEntity
+@XMLElement(xmlTag = "${moduleTrigram}Preferences")
+public interface ${moduleTrigram}Preferences extends ModulePreferences<${moduleTrigram}Module>{
 
 }
-
-

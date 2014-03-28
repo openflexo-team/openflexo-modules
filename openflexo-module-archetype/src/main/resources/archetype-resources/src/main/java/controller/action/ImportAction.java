@@ -18,25 +18,22 @@
  *
  */
 
-package org.openflexo.module.sample;
+package org.openflexo.module.sample.controller.action;
 
-import org.openflexo.module.Module;
-import org.openflexo.module.sample.view.SMPIconLibrary;
+import java.awt.event.ActionEvent;
 
-public class sample extends Module<SMPModule> {
+import javax.swing.AbstractAction;
 
-	public static Module<SMPModule> INSTANCE = null;
+public class ImportAction extends AbstractAction {
 
-	public sample() {
-			
-		super(SMPModule.SMP_MODULE_NAME, SMPModule.SMP_MODULE_NAME, SMPModule.class, SMPPreferences.class, "",
-				null , "SMP", SMPIconLibrary.SMP_SMALL_ICON, SMPIconLibrary.SMP_MEDIUM_ICON, SMPIconLibrary.SMP_MEDIUM_ICON_HOVER,
-				SMPIconLibrary.SMP_BIG_ICON, false);
+	private static final long serialVersionUID = 1L;
 
-		INSTANCE = this;
+	public ImportAction() {
+		super();
 	}
 
-
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		// TODO : implement
+	}
 }
-
-
