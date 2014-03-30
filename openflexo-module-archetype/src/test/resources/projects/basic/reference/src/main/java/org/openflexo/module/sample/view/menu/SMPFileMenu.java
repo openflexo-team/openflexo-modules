@@ -76,7 +76,7 @@ public class SMPFileMenu extends FileMenu {
 
 	public class ImportItem extends FlexoMenuItem {
 		public ImportItem() {
-			super(new ImportAction(), "saImportve", KeyStroke.getKeyStroke(KeyEvent.VK_S, FlexoCst.META_MASK), getController(), true);
+			super(new ImportAction(), "Import", KeyStroke.getKeyStroke(KeyEvent.VK_I, FlexoCst.META_MASK), getController(), true);
 			setIcon(IconLibrary.SAVE_ICON);
 		}
 	}
