@@ -20,6 +20,7 @@
 		<flexohelp.version>1.0-SNAPSHOT</flexohelp.version>
 		<flexodocresourcecenter.version>1.0-SNAPSHOT</flexodocresourcecenter.version>
 		<flexodocresourcemanager.version>1.0-SNAPSHOT</flexodocresourcemanager.version>
+		<flexocore.version>1.7-SNAPSHOT</flexocore.version>
 	</properties>
 	<scm>
 		<connection>scm:git:ssh://git@github.com:openflexo-team/openflexo-core.git</connection>
@@ -29,31 +30,32 @@
 		<module>flexovieweditor</module>
 		<module>flexoviewpointmodeler</module>
 		<module>freemodellingeditor</module>
-   </modules>
+		<module>openflexo-module-archetype</module>
+	</modules>
 	<dependencyManagement>
 		<dependencies>
 
 			<dependency>
 				<groupId>org.openflexo</groupId>
 				<artifactId>flexo-foundation</artifactId>
-				<version>${project.version}</version>
+				<version>${flexocore.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.openflexo</groupId>
 				<artifactId>flexo-foundation</artifactId>
-				<version>${project.version}</version>
+				<version>${flexocore.version}</version>
 				<classifier>tests</classifier>
 			</dependency>
 		
 			<dependency>
 				<groupId>org.openflexo</groupId>
 				<artifactId>flexo-ui</artifactId>
-				<version>${project.version}</version>
+				<version>${flexocore.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.openflexo</groupId>
 				<artifactId>flexo-ui</artifactId>
-				<version>${project.version}</version>
+				<version>${flexocore.version}</version>
 				<classifier>tests</classifier>
 			</dependency>
 		
