@@ -19,7 +19,6 @@
  */
 package org.openflexo.ve.controller.action;
 
-import java.io.File;
 import java.util.EventObject;
 import java.util.logging.Logger;
 
@@ -37,7 +36,7 @@ import org.openflexo.foundation.technologyadapter.FreeModelSlot;
 import org.openflexo.foundation.technologyadapter.ModelSlot;
 import org.openflexo.foundation.technologyadapter.TypeAwareModelSlot;
 import org.openflexo.foundation.view.View;
-import org.openflexo.foundation.view.action.CreateVirtualModelInstance;
+import org.openflexo.foundation.view.action.CreateBasicVirtualModelInstance;
 import org.openflexo.foundation.viewpoint.VirtualModelModelSlot;
 import org.openflexo.icon.VEIconLibrary;
 import org.openflexo.localization.FlexoLocalization;
@@ -46,12 +45,13 @@ import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
 
-public class CreateVirtualModelInstanceInitializer extends ActionInitializer<CreateVirtualModelInstance, View, FlexoObject> {
+public class CreateBasicVirtualModelInstanceInitializer extends ActionInitializer<CreateBasicVirtualModelInstance, View, FlexoObject> {
 
+	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
-	CreateVirtualModelInstanceInitializer(VEControllerActionInitializer actionInitializer) {
-		super(CreateVirtualModelInstance.actionType, actionInitializer);
+	CreateBasicVirtualModelInstanceInitializer(VEControllerActionInitializer actionInitializer) {
+		super(CreateBasicVirtualModelInstance.actionType, actionInitializer);
 	}
 
 	@Override
@@ -59,15 +59,15 @@ public class CreateVirtualModelInstanceInitializer extends ActionInitializer<Cre
 		return (VEControllerActionInitializer) super.getControllerActionInitializer();
 	}
 
-	private Status chooseVirtualModel(CreateVirtualModelInstance action) {
+	/*private Status chooseVirtualModel(CreateVirtualModelInstance<?> action) {
 		return instanciateShowDialogAndReturnStatus(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB);
-	}
+	}*/
 
 	@Override
-	protected FlexoActionInitializer<CreateVirtualModelInstance> getDefaultInitializer() {
-		return new FlexoActionInitializer<CreateVirtualModelInstance>() {
+	protected FlexoActionInitializer<CreateBasicVirtualModelInstance> getDefaultInitializer() {
+		return new FlexoActionInitializer<CreateBasicVirtualModelInstance>() {
 			@Override
-			public boolean run(EventObject e, CreateVirtualModelInstance action) {
+			public boolean run(EventObject e, CreateBasicVirtualModelInstance action) {
 				if (action.skipChoosePopup) {
 					return true;
 				} else {
@@ -78,7 +78,7 @@ public class CreateVirtualModelInstanceInitializer extends ActionInitializer<Cre
 						if (step == 0) {
 							result = instanciateShowDialogAndReturnStatus(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB);
 						} else {
-							ModelSlot configuredModelSlot = action.getVirtualModel().getModelSlots().get(step - 1);
+							ModelSlot<?> configuredModelSlot = action.getVirtualModel().getModelSlots().get(step - 1);
 							result = instanciateShowDialogAndReturnStatus(action.getModelSlotInstanceConfiguration(configuredModelSlot),
 									getModelSlotInstanceConfigurationFIB(configuredModelSlot.getClass()));
 						}
@@ -101,10 +101,10 @@ public class CreateVirtualModelInstanceInitializer extends ActionInitializer<Cre
 	}
 
 	@Override
-	protected FlexoActionFinalizer<CreateVirtualModelInstance> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<CreateVirtualModelInstance>() {
+	protected FlexoActionFinalizer<CreateBasicVirtualModelInstance> getDefaultFinalizer() {
+		return new FlexoActionFinalizer<CreateBasicVirtualModelInstance>() {
 			@Override
-			public boolean run(EventObject e, CreateVirtualModelInstance action) {
+			public boolean run(EventObject e, CreateBasicVirtualModelInstance action) {
 				// getController().setCurrentEditedObjectAsModuleView(action.getNewVirtualModelInstance());
 				getController().selectAndFocusObject(action.getNewVirtualModelInstance());
 				return true;
@@ -113,10 +113,10 @@ public class CreateVirtualModelInstanceInitializer extends ActionInitializer<Cre
 	}
 
 	@Override
-	protected FlexoExceptionHandler<CreateVirtualModelInstance> getDefaultExceptionHandler() {
-		return new FlexoExceptionHandler<CreateVirtualModelInstance>() {
+	protected FlexoExceptionHandler<CreateBasicVirtualModelInstance> getDefaultExceptionHandler() {
+		return new FlexoExceptionHandler<CreateBasicVirtualModelInstance>() {
 			@Override
-			public boolean handleException(FlexoException exception, CreateVirtualModelInstance action) {
+			public boolean handleException(FlexoException exception, CreateBasicVirtualModelInstance action) {
 				if (exception instanceof NotImplementedException) {
 					FlexoController.notify(FlexoLocalization.localizedForKey("not_implemented_yet"));
 					return true;
@@ -136,7 +136,7 @@ public class CreateVirtualModelInstanceInitializer extends ActionInitializer<Cre
 	 *         separation of FIBs for Model Slot Configurations.
 	 * @return File that correspond to the FIB
 	 */
-	private Resource getModelSlotInstanceConfigurationFIB(Class modelSlotClass) {
+	private Resource getModelSlotInstanceConfigurationFIB(Class<? extends ModelSlot> modelSlotClass) {
 		if (TypeAwareModelSlot.class.isAssignableFrom(modelSlotClass)) {
 			return CommonFIB.CONFIGURE_TYPE_AWARE_MODEL_SLOT_INSTANCE_DIALOG_FIB;
 		}

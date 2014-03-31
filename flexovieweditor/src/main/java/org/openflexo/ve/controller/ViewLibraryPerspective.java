@@ -20,6 +20,8 @@
 package org.openflexo.ve.controller;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
@@ -33,10 +35,12 @@ import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.FlexoProjectObject;
 import org.openflexo.foundation.technologyadapter.TechnologyAdapter;
+import org.openflexo.foundation.technologyadapter.TechnologyAdapterService;
 import org.openflexo.foundation.technologyadapter.TechnologyObject;
 import org.openflexo.foundation.view.View;
 import org.openflexo.foundation.view.ViewLibrary;
 import org.openflexo.foundation.view.VirtualModelInstance;
+import org.openflexo.foundation.view.VirtualModelInstanceNature;
 import org.openflexo.icon.VEIconLibrary;
 import org.openflexo.inspector.FIBInspectorPanel;
 import org.openflexo.localization.FlexoLocalization;
@@ -144,6 +148,32 @@ public class ViewLibraryPerspective extends FlexoPerspective {
 		}
 	}
 
+	public List<VirtualModelInstanceNature> getSpecificNaturesForVirtualModelInstance(VirtualModelInstance vmi) {
+		List<VirtualModelInstanceNature> returned = new ArrayList<VirtualModelInstanceNature>();
+		TechnologyAdapterControllerService tacService = _controller.getApplicationContext().getTechnologyAdapterControllerService();
+		TechnologyAdapterService taService = _controller.getApplicationContext().getTechnologyAdapterService();
+		for (TechnologyAdapter ta : taService.getTechnologyAdapters()) {
+			TechnologyAdapterController<?> tac = tacService.getTechnologyAdapterController(ta);
+			returned.addAll(tac.getSpecificNatures(vmi));
+		}
+		return returned;
+	}
+
+	public ModuleView<VirtualModelInstance> getModuleViewForVirtualModelInstance(VirtualModelInstance vmi,
+			VirtualModelInstanceNature nature, FlexoController controller) {
+		TechnologyAdapterControllerService tacService = _controller.getApplicationContext().getTechnologyAdapterControllerService();
+		TechnologyAdapterService taService = _controller.getApplicationContext().getTechnologyAdapterService();
+		for (TechnologyAdapter ta : taService.getTechnologyAdapters()) {
+			TechnologyAdapterController<?> tac = tacService.getTechnologyAdapterController(ta);
+			ModuleView<VirtualModelInstance> returned = tac.createVirtualModelInstanceModuleViewForSpecificNature(vmi, nature, controller,
+					this);
+			if (returned != null) {
+				return returned;
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public boolean hasModuleViewForObject(FlexoObject object, FlexoController controller) {
 		if (object instanceof VirtualModelInstance || object instanceof View) {
@@ -167,7 +197,13 @@ public class ViewLibraryPerspective extends FlexoPerspective {
 			return getControllerForDiagram((Diagram) object).getModuleView();
 		}*/
 		if (object instanceof VirtualModelInstance) {
-			return new VirtualModelInstanceView((VirtualModelInstance) object, (VEController) controller);
+			VirtualModelInstance vmi = (VirtualModelInstance) object;
+			List<VirtualModelInstanceNature> availableNatures = getSpecificNaturesForVirtualModelInstance(vmi);
+			if (availableNatures.size() > 0) {
+				VirtualModelInstanceNature nature = availableNatures.get(0);
+				return getModuleViewForVirtualModelInstance(vmi, nature, controller);
+			}
+			return new VirtualModelInstanceView(vmi, (VEController) controller);
 		}
 		if (object instanceof View) {
 			return new ViewModuleView((View) object, (VEController) controller, this);
@@ -248,4 +284,5 @@ public class ViewLibraryPerspective extends FlexoPerspective {
 		_controller.getControllerModel().setRightViewVisible(false);
 		// }
 	}
+
 }
