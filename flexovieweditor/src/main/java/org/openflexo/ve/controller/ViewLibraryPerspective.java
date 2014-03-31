@@ -128,7 +128,8 @@ public class ViewLibraryPerspective extends FlexoPerspective {
 	 */
 	@Override
 	public ImageIcon getActiveIcon() {
-		return VEIconLibrary.VE_SP_ACTIVE_ICON;
+		// return VEIconLibrary.VE_SP_ACTIVE_ICON;
+		return VEIconLibrary.VIEW_ICON;
 	}
 
 	@Override
