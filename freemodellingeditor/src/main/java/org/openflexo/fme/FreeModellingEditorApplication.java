@@ -61,7 +61,7 @@ import org.openflexo.fge.control.exceptions.CopyException;
 import org.openflexo.fge.control.exceptions.CutException;
 import org.openflexo.fge.control.exceptions.PasteException;
 import org.openflexo.fge.swing.control.SwingToolFactory;
-import org.openflexo.fge.swing.control.tools.JDianaInspectors;
+import org.openflexo.fge.swing.control.tools.JDianaDialogInspectors;
 import org.openflexo.fge.swing.control.tools.JDianaLayoutWidget;
 import org.openflexo.fge.swing.control.tools.JDianaPalette;
 import org.openflexo.fge.swing.control.tools.JDianaScaleSelector;
@@ -97,18 +97,15 @@ public class FreeModellingEditorApplication {
 
 	private static final Logger logger = FlexoLogger.getLogger(FreeModellingEditorApplication.class.getPackage().getName());
 
-	
-
-
 	// Retrieve default Openflexo locales
 	public static final String LOCALIZATION_DIRNAME = "Localized";
-	private static LocalizedDelegateGUIImpl MAIN_LOCALIZER = new LocalizedDelegateGUIImpl(ResourceLocator.locateResource(LOCALIZATION_DIRNAME), null,
-			false);
+	private static LocalizedDelegateGUIImpl MAIN_LOCALIZER = new LocalizedDelegateGUIImpl(
+			ResourceLocator.locateResource(LOCALIZATION_DIRNAME), null, false);
 
 	// Instanciate a new localizer in directory src/dev/resources/FIBEditorLocalizer
 	// linked to parent localizer (which is Openflexo main localizer)
-	public static LocalizedDelegateGUIImpl LOCALIZATION = new LocalizedDelegateGUIImpl(ResourceLocator.locateResource("FMEEditorLocalized"),
-			MAIN_LOCALIZER, true);
+	public static LocalizedDelegateGUIImpl LOCALIZATION = new LocalizedDelegateGUIImpl(
+			ResourceLocator.locateResource("FMEEditorLocalized"), MAIN_LOCALIZER, true);
 
 	private static final int META_MASK = ToolBox.getPLATFORM() == ToolBox.MACOS ? InputEvent.META_MASK : InputEvent.CTRL_MASK;
 
@@ -134,7 +131,7 @@ public class FreeModellingEditorApplication {
 	private final CommonPalette commonPaletteModel;
 	private final JDianaPalette dynamicPalette;
 	private final DynamicPalette dynamicPaletteModel;
-	private final JDianaInspectors inspectors;
+	private final JDianaDialogInspectors inspectors;
 
 	// private FIBInspectorController inspector;
 	private final ConceptBrowser conceptBrowser;
@@ -179,7 +176,7 @@ public class FreeModellingEditorApplication {
 		stylesWidget = toolFactory.makeDianaStyles();
 		scaleSelector = toolFactory.makeDianaScaleSelector(null);
 		layoutWidget = toolFactory.makeDianaLayoutWidget();
-		inspectors = toolFactory.makeDianaInspectors();
+		inspectors = toolFactory.makeDianaDialogInspectors();
 
 		inspectors.getForegroundStyleInspector().setLocation(1000, 100);
 		inspectors.getTextStyleInspector().setLocation(1000, 300);
@@ -878,6 +875,7 @@ public class FreeModellingEditorApplication {
 	public static final ImageIcon INFO_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/Info.png"));
 	public static final ImageIcon INSPECT_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/Inspect.png"));
 	public static final ImageIcon REFRESH_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/Refresh.png"));
-	public static final ImageIcon REFRESH_DISABLED_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/Refresh-disabled.png"));
+	public static final ImageIcon REFRESH_DISABLED_ICON = new ImageIconResource(
+			ResourceLocator.locateResource("Icons/Refresh-disabled.png"));
 
 }
