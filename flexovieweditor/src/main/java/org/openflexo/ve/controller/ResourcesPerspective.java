@@ -228,16 +228,16 @@ public class ResourcesPerspective extends FlexoPerspective {
 		projectResourcesBrowser.setRootObject(project);
 	}
 
-	@Override
+	/*@Override
 	public void notifyModuleViewDisplayed(ModuleView<?> moduleView) {
 		super.notifyModuleViewDisplayed(moduleView);
 
 		if (moduleView.getRepresentedObject() instanceof TechnologyObject) {
 			notifyTechnologyObjectModuleViewDisplayed((ModuleView<TechnologyObject<?>>) moduleView, _controller);
 		}
-		/*if (moduleView instanceof DiagramModuleView) {
-			_controller.getControllerModel().setRightViewVisible(true);
-		} else {*/
+		//if (moduleView instanceof DiagramModuleView) {
+		//	_controller.getControllerModel().setRightViewVisible(true);
+		//} else {
 		_controller.getControllerModel().setRightViewVisible(false);
 		// }
 	}
@@ -247,6 +247,6 @@ public class ResourcesPerspective extends FlexoPerspective {
 		TechnologyAdapterController<?> tac = tacService.getTechnologyAdapterController(moduleView.getRepresentedObject()
 				.getTechnologyAdapter());
 		tac.notifyModuleViewDisplayed(moduleView, controller, this);
-	}
+	}*/
 
 }

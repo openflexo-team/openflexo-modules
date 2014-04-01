@@ -25,7 +25,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 import org.openflexo.FlexoCst;
 import org.openflexo.components.widget.FIBViewPointLibraryBrowser;
@@ -301,7 +300,7 @@ public class ViewPointPerspective extends FlexoPerspective {
 		}
 	}
 
-	@Override
+	/*@Override
 	public void notifyModuleViewDisplayed(final ModuleView<?> moduleView) {
 		super.notifyModuleViewDisplayed(moduleView);
 		if (moduleView instanceof ViewPointView || moduleView instanceof VirtualModelView || moduleView instanceof StandardFlexoConceptView) {
@@ -313,5 +312,5 @@ public class ViewPointPerspective extends FlexoPerspective {
 				}
 			});
 		}
-	}
+	}*/
 }

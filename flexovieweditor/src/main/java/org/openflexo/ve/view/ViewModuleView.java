@@ -36,6 +36,7 @@ import org.openflexo.foundation.view.View;
 import org.openflexo.foundation.view.action.CreateBasicVirtualModelInstance;
 import org.openflexo.ve.controller.VEController;
 import org.openflexo.view.ModuleView;
+import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.controller.model.FlexoPerspective;
 import org.openflexo.view.listener.FlexoActionButton;
 
@@ -103,6 +104,10 @@ public class ViewModuleView extends JPanel implements ModuleView<View>, Property
 
 	@Override
 	public void willShow() {
+	}
+
+	@Override
+	public void show(FlexoController controller, FlexoPerspective perspective) {
 	}
 
 	/**

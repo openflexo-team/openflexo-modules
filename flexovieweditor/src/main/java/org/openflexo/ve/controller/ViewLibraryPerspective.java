@@ -106,24 +106,15 @@ public class ViewLibraryPerspective extends FlexoPerspective {
 		// setBottomLeftView(viewBrowser);
 	}*/
 
-	@Override
+	/*@Override
 	public JComponent getTopRightView() {
-		/*if (getCurrentDiagramModuleView() != null) {
-			return getCurrentDiagramModuleView().getController().getPaletteView();
-		} else {*/
 		return EMPTY_RIGHT_VIEW;
-		// }
 	}
 
 	@Override
 	public JComponent getBottomRightView() {
-		/*if (getCurrentDiagramModuleView() != null) {
-			// if (_controller != null && _controller.getCurrentModuleView() != null) {
-			return inspectorPanel;
-		} else {*/
 		return bottomRightDummy;
-		// }
-	}
+	}*/
 
 	/**
 	 * Overrides getIcon
@@ -275,14 +266,14 @@ public class ViewLibraryPerspective extends FlexoPerspective {
 		viewLibraryBrowser.setRootObject(project.getViewLibrary());
 	}
 
-	@Override
+	/*@Override
 	public void notifyModuleViewDisplayed(ModuleView<?> moduleView) {
 		super.notifyModuleViewDisplayed(moduleView);
-		/*if (moduleView instanceof DiagramModuleView) {
-			_controller.getControllerModel().setRightViewVisible(true);
-		} else {*/
+		//if (moduleView instanceof DiagramModuleView) {
+		//	_controller.getControllerModel().setRightViewVisible(true);
+		//} else {
 		_controller.getControllerModel().setRightViewVisible(false);
 		// }
-	}
+	}*/
 
 }
