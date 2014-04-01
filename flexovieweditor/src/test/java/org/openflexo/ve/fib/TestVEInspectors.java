@@ -1,41 +1,35 @@
 package org.openflexo.ve.fib;
 
-import java.io.File;
-
+import org.junit.Test;
 import org.openflexo.fib.utils.GenericFIBInspectorTestCase;
+import org.openflexo.rm.FileResourceImpl;
+import org.openflexo.rm.ResourceLocator;
 
 public class TestVEInspectors extends GenericFIBInspectorTestCase {
 
+	/*
+	 * Use this method to print all
+	 * Then copy-paste 
+	 */
+
 	public static void main(String[] args) {
-		System.out.println(generateInspectorTestCaseClass(new File(System.getProperty("user.dir") + "/src/main/resources/Inspectors/VE"),
+		System.out.println(generateInspectorTestCaseClass(((FileResourceImpl) ResourceLocator.locateResource("Inspectors/VE")).getFile(),
 				"Inspectors/VE/"));
 	}
 
-	public void testDiagramInspector() {
-		validateFIB("Inspectors/VE/Diagram.inspector");
-	}
-
+	@Test
 	public void testViewInspector() {
 		validateFIB("Inspectors/VE/View.inspector");
 	}
 
-	public void testViewConnectorInspector() {
-		validateFIB("Inspectors/VE/ViewConnector.inspector");
-	}
-
+	@Test
 	public void testViewLibraryInspector() {
 		validateFIB("Inspectors/VE/ViewLibrary.inspector");
 	}
 
-	public void testViewObjectInspector() {
-		validateFIB("Inspectors/VE/ViewObject.inspector");
-	}
-
-	public void testViewShapeInspector() {
-		validateFIB("Inspectors/VE/ViewShape.inspector");
-	}
-
+	@Test
 	public void testVirtualModelInstanceInspector() {
 		validateFIB("Inspectors/VE/VirtualModelInstance.inspector");
 	}
+
 }
