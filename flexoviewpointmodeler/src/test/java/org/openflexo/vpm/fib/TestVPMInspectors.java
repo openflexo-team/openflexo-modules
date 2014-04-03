@@ -123,8 +123,8 @@ public class TestVPMInspectors extends GenericFIBInspectorTestCase {
 	}
 
 	@Test
-	public void testIndividualPatternRoleInspector() {
-		validateFIB("Inspectors/VPM/IndividualPatternRole.inspector");
+	public void testIndividualRoleInspector() {
+		validateFIB("Inspectors/VPM/IndividualRole.inspector");
 	}
 
 	@Test
