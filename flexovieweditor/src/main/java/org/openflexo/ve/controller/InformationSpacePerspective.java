@@ -22,18 +22,13 @@ package org.openflexo.ve.controller;
 import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
 
-import org.openflexo.FlexoCst;
 import org.openflexo.components.widget.FIBInformationSpaceBrowser;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.ontology.IFlexoOntologyObject;
 import org.openflexo.foundation.technologyadapter.TechnologyAdapter;
 import org.openflexo.foundation.technologyadapter.TechnologyObject;
 import org.openflexo.icon.VPMIconLibrary;
-import org.openflexo.view.EmptyPanel;
-import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.controller.TechnologyAdapterController;
 import org.openflexo.view.controller.model.FlexoPerspective;
@@ -42,23 +37,19 @@ public class InformationSpacePerspective extends FlexoPerspective {
 
 	static final Logger logger = Logger.getLogger(InformationSpacePerspective.class.getPackage().getName());
 
-	private final JLabel infoLabel;
-
 	private final FIBInformationSpaceBrowser informationSpaceBrowser;
 
 	/**
 	 * @param controller
 	 * @param name
 	 */
-	public InformationSpacePerspective(FlexoController controller/*VPMController controller*/) {
-		super("information_space_perspective");
+	public InformationSpacePerspective(FlexoController controller) {
+		super("information_space_perspective", controller);
 
 		informationSpaceBrowser = new FIBInformationSpaceBrowser(controller.getApplicationContext().getInformationSpace(), controller);
 
 		setTopLeftView(informationSpaceBrowser);
 
-		infoLabel = new JLabel("Information space perspective");
-		infoLabel.setFont(FlexoCst.SMALL_FONT);
 	}
 
 	/**
@@ -69,47 +60,6 @@ public class InformationSpacePerspective extends FlexoPerspective {
 	@Override
 	public ImageIcon getActiveIcon() {
 		return VPMIconLibrary.INFORMATION_SPACE_ICON;
-	}
-
-	@Override
-	public FlexoObject getDefaultObject(FlexoObject proposedObject, FlexoController controller) {
-		if (hasModuleViewForObject(proposedObject, controller)) {
-			return proposedObject;
-		}
-		// return _controller.getBaseOntologyLibrary();
-		return null;
-	}
-
-	@Override
-	public boolean hasModuleViewForObject(FlexoObject object, FlexoController controller) {
-		if (object instanceof TechnologyObject) {
-			TechnologyAdapter ta = ((TechnologyObject) object).getTechnologyAdapter();
-			TechnologyAdapterController<?> tac = controller.getApplicationContext().getTechnologyAdapterControllerService()
-					.getTechnologyAdapterController(ta);
-			return tac.hasModuleViewForObject((TechnologyObject) object, controller);
-		}
-		return false;
-	}
-
-	@Override
-	public ModuleView<?> createModuleViewForObject(FlexoObject object, FlexoController controller) {
-		if (object instanceof TechnologyObject) {
-			return createModuleViewForTechnologyObject((TechnologyObject<?>) object, controller);
-		}
-		return new EmptyPanel<FlexoObject>(controller, this, object);
-	}
-
-	public <TA extends TechnologyAdapter> ModuleView<?> createModuleViewForTechnologyObject(TechnologyObject<TA> object,
-			FlexoController controller) {
-		TA ta = object.getTechnologyAdapter();
-		TechnologyAdapterController<TA> tac = controller.getApplicationContext().getTechnologyAdapterControllerService()
-				.getTechnologyAdapterController(ta);
-		return tac.createModuleViewForObject(object, controller, this);
-	}
-
-	@Override
-	public JComponent getFooter() {
-		return infoLabel;
 	}
 
 	public String getWindowTitleforObject(FlexoObject object, FlexoController controller) {

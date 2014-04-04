@@ -22,18 +22,14 @@ package org.openflexo.fme.controller;
 import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.openflexo.FlexoCst;
 import org.openflexo.components.widget.FIBViewPointLibraryBrowser;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.viewpoint.FlexoConcept;
 import org.openflexo.foundation.viewpoint.FlexoConceptObject;
 import org.openflexo.foundation.viewpoint.ViewPoint;
 import org.openflexo.foundation.viewpoint.ViewPointLibrary;
-import org.openflexo.foundation.viewpoint.ViewPointObject;
 import org.openflexo.foundation.viewpoint.VirtualModel;
 import org.openflexo.icon.VPMIconLibrary;
 import org.openflexo.localization.FlexoLocalization;
@@ -45,12 +41,6 @@ public class FMEPerspective extends FlexoPerspective {
 
 	protected static final Logger logger = Logger.getLogger(FMEPerspective.class.getPackage().getName());
 
-	// private final VPMController _controller;
-
-	private final JLabel infoLabel;
-
-	private final JPanel EMPTY_RIGHT_VIEW = new JPanel();
-
 	private FIBViewPointLibraryBrowser viewPointLibraryBrowser = null;
 
 	private JPanel toolsPanel;
@@ -59,7 +49,7 @@ public class FMEPerspective extends FlexoPerspective {
 	 * Default constructor taking controller as argument
 	 */
 	public FMEPerspective(FMEController controller) {
-		super("viewpoint_perspective");
+		super("viewpoint_perspective", controller);
 		// _controller = controller;
 
 		viewPointLibraryBrowser = new FIBViewPointLibraryBrowser(controller.getViewPointLibrary(), controller);
@@ -71,18 +61,7 @@ public class FMEPerspective extends FlexoPerspective {
 
 		setTopLeftView(viewPointLibraryBrowser);
 
-		infoLabel = new JLabel("ViewPoint perspective");
-		infoLabel.setFont(FlexoCst.SMALL_FONT);
-		setFooter(infoLabel);
 	}
-
-	/*@Override
-	public JComponent getHeader() {
-		if (_controller.getCurrentModuleView() instanceof ExampleDiagramModuleView) {
-			return scaleSelector.getComponent();
-		}
-		return null;
-	}*/
 
 	public ModuleView<?> getCurrentModuleView(FlexoController controller) {
 		return controller.getCurrentModuleView();
@@ -90,29 +69,11 @@ public class FMEPerspective extends FlexoPerspective {
 
 	public void focusOnViewPoint(ViewPoint viewPoint) {
 		logger.info("focusOnViewPoint " + viewPoint);
-
-		// viewPointBrowser.setRootObject(viewPoint);
-		// setBottomLeftView(viewPointBrowser);
 	}
 
 	public void focusOnVirtualModel(VirtualModel virtualModel) {
 		logger.info("focusOnVirtualModel " + virtualModel);
-
-		// virtualModelBrowser.setRootObject(virtualModel);
-		// setBottomLeftView(virtualModelBrowser);
 	}
-
-	/*public void focusOnPalette(DiagramPalette palette) {
-		logger.info("focusOnPalette " + palette);
-		// diagramPaletteBrowser.setRootObject(palette);
-		// setBottomLeftView(diagramPaletteBrowser);
-	}
-
-	public void focusOnExampleDiagram(ExampleDiagram exampleDiagram) {
-		logger.info("focusOnExampleDiagram " + exampleDiagram);
-		// exampleDiagramBrowser.setRootObject(exampleDiagram);
-		// setBottomLeftView(exampleDiagramBrowser);
-	}*/
 
 	public void hideBottomBrowser() {
 		setBottomLeftView(null);
@@ -128,70 +89,6 @@ public class FMEPerspective extends FlexoPerspective {
 		return VPMIconLibrary.VIEWPOINT_ICON;
 	}
 
-	@Override
-	public FlexoObject getDefaultObject(FlexoObject proposedObject, FlexoController controller) {
-		if (hasModuleViewForObject(proposedObject, controller)) {
-			return proposedObject;
-		}
-		if (proposedObject instanceof FlexoConceptObject) {
-			return ((FlexoConceptObject) proposedObject).getFlexoConcept();
-		}
-		if (proposedObject instanceof ViewPointObject) {
-			return ((ViewPointObject) proposedObject).getViewPoint();
-		}
-		return null;
-	}
-
-	@Override
-	public boolean hasModuleViewForObject(FlexoObject object, FlexoController controller) {
-		return /*object instanceof DiagramPalette || object instanceof ExampleDiagram ||*/object instanceof ViewPoint
-				|| object instanceof FlexoConcept;
-	}
-
-	@Override
-	public ModuleView<? extends FlexoObject> createModuleViewForObject(FlexoObject object, FlexoController controller) {
-		if (object.isDeleted()) {
-			return null;
-		}
-		/*if (object instanceof ViewPoint) {
-			return new ViewPointView((ViewPoint) object, controller);
-		}
-		if (object instanceof FlexoConcept) {
-			FlexoConcept ep = (FlexoConcept) object;
-			if (ep instanceof VirtualModel) {
-				//if (ep instanceof DiagramSpecification) {
-				//	return new DiagramSpecificationView(ep, (VPMController) controller);
-				//} else {
-				return new VirtualModelView(ep, (VPMController) controller);
-				// }
-			} else {
-				// if (ep.getVirtualModel() instanceof DiagramSpecification) {
-				//	return new DiagramFlexoConceptView(ep, (VPMController) controller);
-				// } else {
-				return new StandardFlexoConceptView(ep, (VPMController) controller);
-				// }
-			}
-
-		}*/
-		/*if (object instanceof DiagramPalette) {
-			return new DiagramPaletteEditor(_controller, (DiagramPalette) object, false).getModuleView();
-		}
-		if (object instanceof ExampleDiagram) {
-			return new ExampleDiagramEditor(_controller, (ExampleDiagram) object, false).getModuleView();
-		}*/
-		return null;
-	}
-
-	@Override
-	public JComponent getTopRightView() {
-		/*if (getCurrentModuleView() instanceof DiagramPaletteModuleView) {
-			return ((DiagramPaletteModuleView) getCurrentModuleView()).getController().getPaletteView();
-		} else if (getCurrentModuleView() instanceof ExampleDiagramModuleView) {
-			return ((ExampleDiagramModuleView) getCurrentModuleView()).getController().getPaletteView();
-		}*/
-		return EMPTY_RIGHT_VIEW;
-	}
-
 	public String getWindowTitleforObject(FlexoObject object, FlexoController controller) {
 		if (object instanceof ViewPointLibrary) {
 			return FlexoLocalization.localizedForKey("view_point_library");
@@ -202,12 +99,6 @@ public class FMEPerspective extends FlexoPerspective {
 		if (object instanceof VirtualModel) {
 			return ((VirtualModel) object).getName();
 		}
-		/*if (object instanceof DiagramPalette) {
-			return ((DiagramPalette) object).getName() + " (" + FlexoLocalization.localizedForKey("palette") + ")";
-		}
-		if (object instanceof ExampleDiagram) {
-			return ((ExampleDiagram) object).getName() + " (" + FlexoLocalization.localizedForKey("example_diagram") + ")";
-		}*/
 		if (object instanceof FlexoConcept) {
 			return ((FlexoConcept) object).getName();
 		}
@@ -223,64 +114,6 @@ public class FMEPerspective extends FlexoPerspective {
 		if (object == null) {
 			return;
 		}
-
-		/*if (getBottomLeftView() == viewPointBrowser) {
-			if (!(object instanceof ViewPointObject) || (object instanceof DiagramPaletteObject)
-					|| (object instanceof ExampleDiagramObject)) {
-				setBottomLeftView(null);
-			} else {
-				ViewPointObject o = (ViewPointObject) object;
-				if (o.getViewPoint() != viewPointBrowser.getRootObject()) {
-					setBottomLeftView(null);
-				}
-			}
-		}
-
-		else if (getBottomLeftView() == exampleDiagramBrowser) {
-			if (!(object instanceof ViewPointObject)) {
-				setBottomLeftView(null);
-			} else {
-				ViewPointObject o = (ViewPointObject) object;
-				if (o instanceof ExampleDiagramObject) {
-					if (((ExampleDiagramObject) o).getExampleDiagram() != exampleDiagramBrowser.getRootObject()) {
-						setBottomLeftView(null);
-					}
-				} else {
-					setBottomLeftView(null);
-				}
-			}
-		}
-
-		else if (getBottomLeftView() == diagramPaletteBrowser) {
-
-			if (!(object instanceof ViewPointObject)) {
-				setBottomLeftView(null);
-			} else {
-				ViewPointObject o = (ViewPointObject) object;
-				if (o instanceof DiagramPaletteObject) {
-					if (((DiagramPaletteObject) o).getPalette() != diagramPaletteBrowser.getRootObject()) {
-						setBottomLeftView(null);
-					}
-				} else {
-					setBottomLeftView(null);
-				}
-			}
-		}
-
-		if (getBottomLeftView() == null) {
-			if (object instanceof ViewPointObject) {
-				if (object instanceof DiagramPaletteObject) {
-					diagramPaletteBrowser.setRootObject(((DiagramPaletteObject) object).getPalette());
-					setBottomLeftView(diagramPaletteBrowser);
-				} else if (object instanceof ExampleDiagramObject) {
-					exampleDiagramBrowser.setRootObject(((ExampleDiagramObject) object).getExampleDiagram());
-					setBottomLeftView(exampleDiagramBrowser);
-				} else {
-					viewPointBrowser.setRootObject(((ViewPointObject) object).getViewPoint());
-					setBottomLeftView(viewPointBrowser);
-				}
-			}
-		}*/
 	}
 
 	@Override

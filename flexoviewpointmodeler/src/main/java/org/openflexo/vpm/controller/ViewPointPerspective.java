@@ -22,11 +22,8 @@ package org.openflexo.vpm.controller;
 import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.openflexo.FlexoCst;
 import org.openflexo.components.widget.FIBViewPointLibraryBrowser;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.viewpoint.FlexoConcept;
@@ -40,54 +37,26 @@ import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.controller.model.FlexoPerspective;
-import org.openflexo.vpm.view.StandardFlexoConceptView;
-import org.openflexo.vpm.view.ViewPointView;
-import org.openflexo.vpm.view.VirtualModelView;
 
 public class ViewPointPerspective extends FlexoPerspective {
 
 	protected static final Logger logger = Logger.getLogger(ViewPointPerspective.class.getPackage().getName());
 
-	// private final VPMController _controller;
-
-	private final JLabel infoLabel;
-
-	private final JPanel EMPTY_RIGHT_VIEW = new JPanel();
-
 	private FIBViewPointLibraryBrowser viewPointLibraryBrowser = null;
 
 	private JPanel toolsPanel;
-
-	private final VPMController controller;
 
 	/**
 	 * Default constructor taking controller as argument
 	 */
 	public ViewPointPerspective(VPMController controller) {
-		super("viewpoint_perspective");
-		this.controller = controller;
+		super("viewpoint_perspective", controller);
 
 		viewPointLibraryBrowser = new FIBViewPointLibraryBrowser(controller.getViewPointLibrary(), controller);
 
-		/*viewPointBrowser = new FIBViewPointBrowser(null, controller);
-		virtualModelBrowser = new FIBVirtualModelBrowser(null, controller);
-		exampleDiagramBrowser = new FIBExampleDiagramBrowser(null, controller);
-		diagramPaletteBrowser = new FIBDiagramPaletteBrowser(null, controller);*/
-
 		setTopLeftView(viewPointLibraryBrowser);
 
-		infoLabel = new JLabel("ViewPoint perspective");
-		infoLabel.setFont(FlexoCst.SMALL_FONT);
-		setFooter(infoLabel);
 	}
-
-	/*@Override
-	public JComponent getHeader() {
-		if (_controller.getCurrentModuleView() instanceof ExampleDiagramModuleView) {
-			return scaleSelector.getComponent();
-		}
-		return null;
-	}*/
 
 	public ModuleView<?> getCurrentModuleView(FlexoController controller) {
 		return controller.getCurrentModuleView();
@@ -96,28 +65,12 @@ public class ViewPointPerspective extends FlexoPerspective {
 	public void focusOnViewPoint(ViewPoint viewPoint) {
 		logger.info("focusOnViewPoint " + viewPoint);
 
-		// viewPointBrowser.setRootObject(viewPoint);
-		// setBottomLeftView(viewPointBrowser);
 	}
 
 	public void focusOnVirtualModel(VirtualModel virtualModel) {
 		logger.info("focusOnVirtualModel " + virtualModel);
 
-		// virtualModelBrowser.setRootObject(virtualModel);
-		// setBottomLeftView(virtualModelBrowser);
 	}
-
-	/*public void focusOnPalette(DiagramPalette palette) {
-		logger.info("focusOnPalette " + palette);
-		// diagramPaletteBrowser.setRootObject(palette);
-		// setBottomLeftView(diagramPaletteBrowser);
-	}
-
-	public void focusOnExampleDiagram(ExampleDiagram exampleDiagram) {
-		logger.info("focusOnExampleDiagram " + exampleDiagram);
-		// exampleDiagramBrowser.setRootObject(exampleDiagram);
-		// setBottomLeftView(exampleDiagramBrowser);
-	}*/
 
 	public void hideBottomBrowser() {
 		setBottomLeftView(null);
@@ -134,8 +87,8 @@ public class ViewPointPerspective extends FlexoPerspective {
 	}
 
 	@Override
-	public FlexoObject getDefaultObject(FlexoObject proposedObject, FlexoController controller) {
-		if (hasModuleViewForObject(proposedObject, controller)) {
+	public FlexoObject getDefaultObject(FlexoObject proposedObject) {
+		if (hasModuleViewForObject(proposedObject)) {
 			return proposedObject;
 		}
 		if (proposedObject instanceof FlexoConceptObject) {
@@ -145,55 +98,6 @@ public class ViewPointPerspective extends FlexoPerspective {
 			return ((ViewPointObject) proposedObject).getViewPoint();
 		}
 		return null;
-	}
-
-	@Override
-	public boolean hasModuleViewForObject(FlexoObject object, FlexoController controller) {
-		return object instanceof ViewPoint || object instanceof FlexoConcept;
-	}
-
-	@Override
-	public ModuleView<? extends FlexoObject> createModuleViewForObject(FlexoObject object, FlexoController controller) {
-		if (object.isDeleted()) {
-			return null;
-		}
-		if (object instanceof ViewPoint) {
-			return new ViewPointView((ViewPoint) object, controller, this);
-		}
-		if (object instanceof FlexoConcept) {
-			FlexoConcept ep = (FlexoConcept) object;
-			if (ep instanceof VirtualModel) {
-				// if (ep instanceof DiagramSpecification) {
-				// return new DiagramSpecificationView(ep, (VPMController) controller);
-				// } else {
-				return new VirtualModelView(ep, controller, this);
-				// }
-			} else {
-				// if (ep.getVirtualModel() instanceof DiagramSpecification) {
-				// return new DiagramFlexoConceptView(ep, (VPMController) controller);
-				// } else {
-				return new StandardFlexoConceptView(ep, controller, this);
-				// }
-			}
-
-		}
-		/*if (object instanceof DiagramPalette) {
-			return new DiagramPaletteEditor(_controller, (DiagramPalette) object, false).getModuleView();
-		}
-		if (object instanceof ExampleDiagram) {
-			return new ExampleDiagramEditor(_controller, (ExampleDiagram) object, false).getModuleView();
-		}*/
-		return null;
-	}
-
-	@Override
-	public JComponent getTopRightView() {
-		/*if (getCurrentModuleView() instanceof DiagramPaletteModuleView) {
-			return ((DiagramPaletteModuleView) getCurrentModuleView()).getController().getPaletteView();
-		} else if (getCurrentModuleView() instanceof ExampleDiagramModuleView) {
-			return ((ExampleDiagramModuleView) getCurrentModuleView()).getController().getPaletteView();
-		}*/
-		return EMPTY_RIGHT_VIEW;
 	}
 
 	public String getWindowTitleforObject(FlexoObject object, FlexoController controller) {
@@ -206,12 +110,6 @@ public class ViewPointPerspective extends FlexoPerspective {
 		if (object instanceof VirtualModel) {
 			return ((VirtualModel) object).getName();
 		}
-		/*if (object instanceof DiagramPalette) {
-			return ((DiagramPalette) object).getName() + " (" + FlexoLocalization.localizedForKey("palette") + ")";
-		}
-		if (object instanceof ExampleDiagram) {
-			return ((ExampleDiagram) object).getName() + " (" + FlexoLocalization.localizedForKey("example_diagram") + ")";
-		}*/
 		if (object instanceof FlexoConcept) {
 			return ((FlexoConcept) object).getName();
 		}
