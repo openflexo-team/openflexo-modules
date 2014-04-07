@@ -12,6 +12,7 @@ import org.openflexo.fme.DrawEdgeControl;
 import org.openflexo.fme.ShowContextualMenuControl;
 import org.openflexo.model.exceptions.ModelDefinitionException;
 import org.openflexo.model.undo.CompoundEdit;
+import org.openflexo.model.undo.UndoManager;
 
 public class DiagramFactory extends FGEModelFactoryImpl {
 
@@ -20,7 +21,13 @@ public class DiagramFactory extends FGEModelFactoryImpl {
 
 	public DiagramFactory() throws ModelDefinitionException {
 		super(Diagram.class, Shape.class, Connector.class);
-		createUndoManager();
+	}
+
+	public UndoManager getUndoManager() {
+		if (getEditingContext() != null) {
+			return getEditingContext().getUndoManager();
+		}
+		return null;
 	}
 
 	// Called for NEW
@@ -32,7 +39,7 @@ public class DiagramFactory extends FGEModelFactoryImpl {
 		noneConcept.setName(Concept.NONE_CONCEPT);
 		noneConcept.setReadOnly(true);
 		returned.getDataModel().addToConcepts(noneConcept);
-		
+
 		// returned.setFactory(this);
 		// returned.setIndex(totalOccurences);
 		// returned.getEditedDrawing().init();
@@ -59,7 +66,7 @@ public class DiagramFactory extends FGEModelFactoryImpl {
 		returned.setGraphicalRepresentation(makeNewConnectorGR(ConnectorType.LINE));
 		returned.setStartShape(from);
 		returned.setEndShape(to);
-		
+
 		return returned;
 	}
 
@@ -145,20 +152,20 @@ public class DiagramFactory extends FGEModelFactoryImpl {
 	@Override
 	public void applyBasicControls(ConnectorGraphicalRepresentation connectorGraphicalRepresentation) {
 		super.applyBasicControls(connectorGraphicalRepresentation);
-		connectorGraphicalRepresentation.addToMouseClickControls(new ShowContextualMenuControl(this));
+		connectorGraphicalRepresentation.addToMouseClickControls(new ShowContextualMenuControl(getEditingContext()));
 	}
 
 	@Override
 	public void applyBasicControls(DrawingGraphicalRepresentation drawingGraphicalRepresentation) {
 		super.applyBasicControls(drawingGraphicalRepresentation);
-		drawingGraphicalRepresentation.addToMouseClickControls(new ShowContextualMenuControl(this));
+		drawingGraphicalRepresentation.addToMouseClickControls(new ShowContextualMenuControl(getEditingContext()));
 		drawingGraphicalRepresentation.addToMouseDragControls(new DrawEdgeControl(this));
 	}
 
 	@Override
 	public void applyBasicControls(ShapeGraphicalRepresentation shapeGraphicalRepresentation) {
 		super.applyBasicControls(shapeGraphicalRepresentation);
-		shapeGraphicalRepresentation.addToMouseClickControls(new ShowContextualMenuControl(this));
+		shapeGraphicalRepresentation.addToMouseClickControls(new ShowContextualMenuControl(getEditingContext()));
 		shapeGraphicalRepresentation.addToMouseDragControls(new DrawEdgeControl(this));
 	}
 

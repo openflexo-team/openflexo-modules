@@ -26,9 +26,7 @@ import java.util.logging.Logger;
 import org.openflexo.fge.Drawing.ContainerNode;
 import org.openflexo.fge.Drawing.DrawingTreeNode;
 import org.openflexo.fge.FGEConstants;
-import org.openflexo.fge.ShadowStyle;
 import org.openflexo.fge.ShapeGraphicalRepresentation;
-import org.openflexo.fge.TextStyle;
 import org.openflexo.fge.control.DianaInteractiveEditor.EditorTool;
 import org.openflexo.fge.control.DrawingPalette;
 import org.openflexo.fge.control.PaletteElement;
@@ -141,7 +139,7 @@ public class CommonPalette extends DrawingPalette {
 				// getController().addNewShape(new Shape(getGraphicalRepresentation().getShapeType(), dropLocation,
 				// getController().getDrawing()),container);
 
-				CompoundEdit edit = getEditor().getFactory().getUndoManager().startRecording("Dragging new Element");
+				CompoundEdit edit = getEditor().getEditingContext().getUndoManager().startRecording("Dragging new Element");
 
 				ShapeGraphicalRepresentation shapeGR = getEditor().getFactory().makeNewShapeGR(getGraphicalRepresentation());
 				if (shapeGR.getShapeSpecification().getShapeType() == ShapeType.SQUARE
@@ -159,15 +157,15 @@ public class CommonPalette extends DrawingPalette {
 					shapeGR.setBackground(getEditor().getController().getInspectedBackgroundStyle().cloneStyle());
 				}
 				if (applyCurrentTextStyle) {
-					shapeGR.setTextStyle((TextStyle) getEditor().getController().getInspectedTextStyle().cloneStyle());
+					shapeGR.setTextStyle(getEditor().getController().getInspectedTextStyle().cloneStyle());
 				}
 				if (applyCurrentShadowStyle) {
-					shapeGR.setShadowStyle((ShadowStyle) getEditor().getController().getInspectedShadowStyle().cloneStyle());
+					shapeGR.setShadowStyle(getEditor().getController().getInspectedShadowStyle().cloneStyle());
 				}
 
 				Shape newShape = getEditor().createNewShape(container, shapeGR, dropLocation);
 
-				getEditor().getFactory().getUndoManager().stopRecording(edit);
+				getEditor().getEditingContext().getUndoManager().stopRecording(edit);
 
 				getEditor().getController().setCurrentTool(EditorTool.SelectionTool);
 				getEditor().getController().setSelectedObject(getEditor().getDrawing().getDrawingTreeNode(newShape));

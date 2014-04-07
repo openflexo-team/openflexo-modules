@@ -145,6 +145,8 @@ public class FreeModellingEditorApplication {
 	private final SynchronizedMenuItem undoItem;
 	private final SynchronizedMenuItem redoItem;
 
+	private final DiagramEditingContext editingContext;
+
 	@SuppressWarnings("serial")
 	public FreeModellingEditorApplication() {
 		super();
@@ -159,6 +161,9 @@ public class FreeModellingEditorApplication {
 		} catch (ModelDefinitionException e1) {
 			e1.printStackTrace();
 		}
+
+		editingContext = new DiagramEditingContext();
+		factory.setEditingContext(editingContext);
 
 		frame = new JFrame();
 		frame.setPreferredSize(new Dimension(1100, 800));
@@ -396,7 +401,7 @@ public class FreeModellingEditorApplication {
 				if (observable instanceof UndoManager) {
 					menuItem.setEnabled(currentDiagramEditor.getController().canUndo());
 					if (currentDiagramEditor.getController().canUndo()) {
-						menuItem.setText(currentDiagramEditor.getController().getFactory().getUndoManager().getUndoPresentationName());
+						menuItem.setText(currentDiagramEditor.getController().getUndoManager().getUndoPresentationName());
 					} else {
 						menuItem.setText(FlexoLocalization.localizedForKey(LOCALIZATION, "undo"));
 					}
@@ -416,7 +421,7 @@ public class FreeModellingEditorApplication {
 				if (observable instanceof UndoManager) {
 					menuItem.setEnabled(currentDiagramEditor.getController().canRedo());
 					if (currentDiagramEditor.getController().canRedo()) {
-						menuItem.setText(currentDiagramEditor.getController().getFactory().getUndoManager().getRedoPresentationName());
+						menuItem.setText(currentDiagramEditor.getController().getUndoManager().getRedoPresentationName());
 					} else {
 						menuItem.setText(FlexoLocalization.localizedForKey(LOCALIZATION, "redo"));
 					}
@@ -489,6 +494,10 @@ public class FreeModellingEditorApplication {
 		frame.validate();
 		frame.pack();
 
+	}
+
+	public DiagramEditingContext getEditingContext() {
+		return editingContext;
 	}
 
 	public JFrame getFrame() {
@@ -623,8 +632,8 @@ public class FreeModellingEditorApplication {
 		cutItem.synchronizeWith(diagramEditor.getController());
 		pasteItem.synchronizeWith(diagramEditor.getController());
 
-		undoItem.synchronizeWith(diagramEditor.getController().getFactory().getUndoManager());
-		redoItem.synchronizeWith(diagramEditor.getController().getFactory().getUndoManager());
+		undoItem.synchronizeWith(diagramEditor.getController().getUndoManager());
+		redoItem.synchronizeWith(diagramEditor.getController().getUndoManager());
 
 		// currentDiagramEditor.getController().addObserver(inspector);
 		updateFrameTitle();

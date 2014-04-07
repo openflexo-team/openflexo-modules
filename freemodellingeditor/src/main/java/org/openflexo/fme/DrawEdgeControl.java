@@ -24,11 +24,9 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
-import org.openflexo.fge.ConnectorGraphicalRepresentation;
 import org.openflexo.fge.Drawing.DrawingTreeNode;
 import org.openflexo.fge.Drawing.ShapeNode;
 import org.openflexo.fge.FGEUtils;
-import org.openflexo.fge.connectors.ConnectorSpecification.ConnectorType;
 import org.openflexo.fge.control.AbstractDianaEditor;
 import org.openflexo.fge.control.MouseControlContext;
 import org.openflexo.fge.control.actions.MouseDragControlActionImpl;
@@ -38,12 +36,13 @@ import org.openflexo.fme.model.Connector;
 import org.openflexo.fme.model.DiagramElement;
 import org.openflexo.fme.model.DiagramFactory;
 import org.openflexo.fme.model.Shape;
+import org.openflexo.model.factory.EditingContext;
 import org.openflexo.model.undo.CompoundEdit;
 
 public class DrawEdgeControl extends MouseDragControlImpl<DianaDrawingEditor> {
 
 	public DrawEdgeControl(DiagramFactory factory) {
-		super("Draw edge", MouseButton.LEFT, new DrawEdgeAction(factory), false, true, false, false, factory); // CTRL-DRAG
+		super("Draw edge", MouseButton.LEFT, new DrawEdgeAction(factory), false, true, false, false, factory.getEditingContext()); // CTRL-DRAG
 	}
 
 	protected static class DrawEdgeAction extends MouseDragControlActionImpl<DianaDrawingEditor> {
@@ -52,10 +51,12 @@ public class DrawEdgeControl extends MouseDragControlImpl<DianaDrawingEditor> {
 		boolean drawEdge = false;
 		ShapeNode<Shape> fromShape = null;
 		ShapeNode<Shape> toShape = null;
-		private DiagramFactory factory;
+		private final DiagramFactory factory;
+		private final EditingContext editingContext;
 
 		public DrawEdgeAction(DiagramFactory factory) {
 			this.factory = factory;
+			this.editingContext = factory.getEditingContext();
 		}
 
 		@Override
@@ -63,7 +64,7 @@ public class DrawEdgeControl extends MouseDragControlImpl<DianaDrawingEditor> {
 			if (node instanceof ShapeNode) {
 				drawEdge = true;
 				fromShape = (ShapeNode<Shape>) node;
-				((DiagramEditorView) controller.getDrawingView()).setDrawEdgeAction(this);
+				controller.getDrawingView().setDrawEdgeAction(this);
 				return true;
 			}
 			return false;
@@ -75,22 +76,22 @@ public class DrawEdgeControl extends MouseDragControlImpl<DianaDrawingEditor> {
 			if (drawEdge) {
 				if (fromShape != null && toShape != null) {
 					// System.out.println("Add ConnectorSpecification contextualMenuInvoker="+contextualMenuInvoker+" point="+contextualMenuClickedPoint);
-					CompoundEdit drawEdge = factory.getUndoManager().startRecording("Draw edge");
+					CompoundEdit drawEdge = editingContext.getUndoManager().startRecording("Draw edge");
 					/*Connector newConnector = factory.makeNewConnector(fromShape.getDrawable(), toShape.getDrawable(), controller
 							.getDrawing().getModel());*/
 					DrawingTreeNode<?, ?> fatherNode = FGEUtils.getFirstCommonAncestor(fromShape, toShape);
-					Connector newConnector = ((DianaDrawingEditor) controller).getDiagramEditor().createNewConnector(controller
-							.getDrawing().getModel(),fromShape.getDrawable(),toShape.getDrawable());
-					
+					Connector newConnector = controller.getDiagramEditor().createNewConnector(controller.getDrawing().getModel(),
+							fromShape.getDrawable(), toShape.getDrawable());
+
 					((DiagramElement<?, ?>) fatherNode.getDrawable()).addToConnectors(newConnector);
 					System.out.println("Add new connector !");
-					factory.getUndoManager().stopRecording(drawEdge);
-					((DianaDrawingEditor) controller).setSelectedObject(controller.getDrawing().getDrawingTreeNode(newConnector));
+					editingContext.getUndoManager().stopRecording(drawEdge);
+					controller.setSelectedObject(controller.getDrawing().getDrawingTreeNode(newConnector));
 				}
 				drawEdge = false;
 				fromShape = null;
 				toShape = null;
-				((DiagramEditorView) controller.getDrawingView()).setDrawEdgeAction(null);
+				controller.getDrawingView().setDrawEdgeAction(null);
 				return true;
 			}
 			return false;

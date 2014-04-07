@@ -23,10 +23,8 @@ import java.awt.Font;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import org.openflexo.fge.Drawing.ContainerNode;
@@ -54,13 +52,13 @@ public class DynamicPalette extends DrawingPalette implements PropertyChangeList
 
 	private DiagramEditor editor;
 
-	private Hashtable<ConceptGRAssociation, PaletteElement> elementsForAssociations;
+	private final Hashtable<ConceptGRAssociation, PaletteElement> elementsForAssociations;
 
 	public DynamicPalette() {
 		super(200, 200, "default");
 		elementsForAssociations = new Hashtable<ConceptGRAssociation, PaletteElement>();
 	}
-	
+
 	public void update() {
 
 		List<PaletteElement> elementsToAdd = new ArrayList<PaletteElement>();
@@ -76,20 +74,17 @@ public class DynamicPalette extends DrawingPalette implements PropertyChangeList
 			if (e != null) {
 				// If there is no graphical element then we can delete the palette element
 				// Excepted if the palette element is associated to a ReadOnly concept.
-				// None concept is an exception, 
+				// None concept is an exception,
 				// it is a read only concept but palette elements can be deleted if no diagram elements are presents.
-				if(getEditor().getDiagram().getElementsWithAssociation(association).isEmpty()
-						&& (!association.getConcept().getReadOnly()
-								|| association.getConcept().getName().equals("None"))){
+				if (getEditor().getDiagram().getElementsWithAssociation(association).isEmpty()
+						&& (!association.getConcept().getReadOnly() || association.getConcept().getName().equals("None"))) {
 					System.out.println("No diagram elements with this palette element, delete the palette element");
 					elementsForAssociations.remove(association);
-		
+
+				} else {
+					elementsToRemove.remove(e);
 				}
-				else{
-					elementsToRemove.remove(e);	
-				}
-			} 
-			else if(association.getGraphicalRepresentation() instanceof ShapeGraphicalRepresentation) {
+			} else if (association.getGraphicalRepresentation() instanceof ShapeGraphicalRepresentation) {
 				e = new DynamicPaletteElement(association);
 				elementsForAssociations.put(association, e);
 				elementsToAdd.add(e);
@@ -107,7 +102,7 @@ public class DynamicPalette extends DrawingPalette implements PropertyChangeList
 			int index = getElements().indexOf(e);
 
 			px = index % 3;
-			py = (int) index / 3;
+			py = index / 3;
 
 			// FACTORY.applyDefaultProperties(gr);
 			if (e.getGraphicalRepresentation().getShapeSpecification().getShapeType() == ShapeType.SQUARE
@@ -167,11 +162,11 @@ public class DynamicPalette extends DrawingPalette implements PropertyChangeList
 	public class DynamicPaletteElement implements PaletteElement {
 
 		private ConceptGRAssociation association;
-		private ShapeGraphicalRepresentation elementGR;
+		private final ShapeGraphicalRepresentation elementGR;
 
 		public DynamicPaletteElement(ConceptGRAssociation association) {
 			this.association = association;
-			elementGR = (ShapeGraphicalRepresentation) ((ShapeGraphicalRepresentation) association.getGraphicalRepresentation());
+			elementGR = ((ShapeGraphicalRepresentation) association.getGraphicalRepresentation());
 
 			// gr.setText(st.name());
 			elementGR.setIsFloatingLabel(false);
@@ -199,13 +194,13 @@ public class DynamicPalette extends DrawingPalette implements PropertyChangeList
 			// getController().addNewShape(new Shape(getGraphicalRepresentation().getShapeType(), dropLocation,
 			// getController().getDrawing()),container);
 
-			CompoundEdit edit = getEditor().getFactory().getUndoManager().startRecording("Dragging new Element");
+			CompoundEdit edit = getEditor().getEditingContext().getUndoManager().startRecording("Dragging new Element");
 
 			Shape newShape = getEditor().createNewShape(container, association, dropLocation);
 			newShape.getGraphicalRepresentation().setWidth(50);
 			newShape.getGraphicalRepresentation().setHeight(40);
 
-			getEditor().getFactory().getUndoManager().stopRecording(edit);
+			getEditor().getEditingContext().getUndoManager().stopRecording(edit);
 
 			getEditor().getController().setCurrentTool(EditorTool.SelectionTool);
 			getEditor().getController().setSelectedObject(getEditor().getDrawing().getDrawingTreeNode(newShape));

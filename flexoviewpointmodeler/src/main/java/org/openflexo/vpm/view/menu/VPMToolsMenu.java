@@ -51,8 +51,6 @@ public class VPMToolsMenu extends ToolsMenu {
 	public FlexoMenuItem checkViewPointLibraryConsistencyItem;
 	public FlexoMenuItem checkViewPointConsistencyItem;
 
-	protected VPMController _vpmController;
-
 	// ==========================================================================
 	// ============================= Constructor
 	// ================================
@@ -60,12 +58,11 @@ public class VPMToolsMenu extends ToolsMenu {
 
 	public VPMToolsMenu(VPMController controller) {
 		super(controller);
-		_vpmController = controller;
 		// Put your actions here
 	}
 
 	public VPMController getVPMController() {
-		return _vpmController;
+		return (VPMController) getController();
 	}
 
 	@Override

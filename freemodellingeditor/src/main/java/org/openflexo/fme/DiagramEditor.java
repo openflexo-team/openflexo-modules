@@ -62,8 +62,8 @@ import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.logging.FlexoLogger;
 import org.openflexo.model.exceptions.InvalidDataException;
 import org.openflexo.model.exceptions.ModelDefinitionException;
+import org.openflexo.model.factory.EditingContext;
 import org.openflexo.model.undo.CompoundEdit;
-import org.openflexo.rm.FileResourceImpl;
 import org.openflexo.rm.Resource;
 import org.openflexo.rm.ResourceLocator;
 import org.openflexo.swing.ImageUtils;
@@ -71,10 +71,7 @@ import org.openflexo.toolbox.ImageIconResource;
 
 public class DiagramEditor implements FIBSelectionListener {
 
-	
-
 	private static final Logger logger = FlexoLogger.getLogger(DiagramEditor.class.getPackage().getName());
-	
 
 	private Diagram diagram;
 	private DiagramDrawing drawing;
@@ -86,10 +83,11 @@ public class DiagramEditor implements FIBSelectionListener {
 	public String filter = "";
 	private Instance instance;
 
-	private static final Resource NEW_CONCEPT_NEW_INSTANCE_DIALOG =  ResourceLocator.locateResource("Fib/Dialog/NewConceptNewInstanceDialog.fib");
-	private static final Resource NEW_CONCEPT_DIALOG =  ResourceLocator.locateResource("Fib/Dialog/NewConceptDialog.fib");
-	private static final Resource NEW_INSTANCE_DIALOG =  ResourceLocator.locateResource("Fib/Dialog/NewInstanceDialog.fib");
-	private static final Resource REMOVE_CONCEPT_DIALOG =  ResourceLocator.locateResource("Fib/Dialog/RemoveConceptDialog.fib");
+	private static final Resource NEW_CONCEPT_NEW_INSTANCE_DIALOG = ResourceLocator
+			.locateResource("Fib/Dialog/NewConceptNewInstanceDialog.fib");
+	private static final Resource NEW_CONCEPT_DIALOG = ResourceLocator.locateResource("Fib/Dialog/NewConceptDialog.fib");
+	private static final Resource NEW_INSTANCE_DIALOG = ResourceLocator.locateResource("Fib/Dialog/NewInstanceDialog.fib");
+	private static final Resource REMOVE_CONCEPT_DIALOG = ResourceLocator.locateResource("Fib/Dialog/RemoveConceptDialog.fib");
 	private static final Resource RENAME_CONCEPT_DIALOG = ResourceLocator.locateResource("Fib/Dialog/RenameConceptDialog.fib");
 
 	public static DiagramEditor newDiagramEditor(DiagramFactory factory, FreeModellingEditorApplication application) {
@@ -154,11 +152,15 @@ public class DiagramEditor implements FIBSelectionListener {
 		return drawing;
 	}
 
+	public EditingContext getEditingContext() {
+		return application.getEditingContext();
+	}
+
 	public DianaDrawingEditor getController() {
 		if (controller == null) {
-			CompoundEdit edit = factory.getUndoManager().startRecording("Initialize diagram");
+			CompoundEdit edit = getEditingContext().getUndoManager().startRecording("Initialize diagram");
 			controller = new DianaDrawingEditor(getDrawing(), factory, this);
-			factory.getUndoManager().stopRecording(edit);
+			getEditingContext().getUndoManager().stopRecording(edit);
 		}
 		return controller;
 	}
@@ -237,8 +239,8 @@ public class DiagramEditor implements FIBSelectionListener {
 
 		CompoundEdit edit = null;
 
-		if (!getFactory().getUndoManager().isBeeingRecording()) {
-			edit = getFactory().getUndoManager().startRecording("Dragging new Element");
+		if (!getEditingContext().getUndoManager().isBeeingRecording()) {
+			edit = getEditingContext().getUndoManager().startRecording("Dragging new Element");
 		}
 
 		Shape newShape = getFactory().makeNewShape(graphicalRepresentation, dropLocation, container.getDiagram());
@@ -286,7 +288,7 @@ public class DiagramEditor implements FIBSelectionListener {
 		container.addToShapes(newShape);
 		getApplication().getDynamicPaletteModel().update();
 		if (edit != null) {
-			getFactory().getUndoManager().stopRecording(edit);
+			getEditingContext().getUndoManager().stopRecording(edit);
 		}
 		return newShape;
 	}
@@ -295,8 +297,8 @@ public class DiagramEditor implements FIBSelectionListener {
 
 		CompoundEdit edit = null;
 
-		if (!getFactory().getUndoManager().isBeeingRecording()) {
-			edit = getFactory().getUndoManager().startRecording("Dragging new Element");
+		if (!getEditingContext().getUndoManager().isBeeingRecording()) {
+			edit = getEditingContext().getUndoManager().startRecording("Dragging new Element");
 		}
 
 		Shape newShape = getFactory().makeNewShape((ShapeGraphicalRepresentation) association.getGraphicalRepresentation(), dropLocation,
@@ -320,7 +322,7 @@ public class DiagramEditor implements FIBSelectionListener {
 		container.addToShapes(newShape);
 		getApplication().getDynamicPaletteModel().update();
 		if (edit != null) {
-			getFactory().getUndoManager().stopRecording(edit);
+			getEditingContext().getUndoManager().stopRecording(edit);
 		}
 
 		return newShape;
@@ -333,8 +335,8 @@ public class DiagramEditor implements FIBSelectionListener {
 		ConceptGRAssociation association;
 		Connector newConnector;
 
-		if (!getFactory().getUndoManager().isBeeingRecording()) {
-			edit = getFactory().getUndoManager().startRecording("Creating new connector");
+		if (!getEditingContext().getUndoManager().isBeeingRecording()) {
+			edit = getEditingContext().getUndoManager().startRecording("Creating new connector");
 		}
 
 		final List<ConnectorGraphicalRepresentation> connectorGrs = new ArrayList<ConnectorGraphicalRepresentation>();
@@ -398,7 +400,7 @@ public class DiagramEditor implements FIBSelectionListener {
 		container.addToConnectors(newConnector);
 
 		if (edit != null) {
-			getFactory().getUndoManager().stopRecording(edit);
+			getEditingContext().getUndoManager().stopRecording(edit);
 		}
 
 		return newConnector;
@@ -719,10 +721,10 @@ public class DiagramEditor implements FIBSelectionListener {
 				screenshot = ImageUtils.scaleImage(screenshot, 20, 20);
 
 				// File outputfile = new File("/DynamicMiniIcons/icon"+shape.getIndex()+".png");
-				
-				// TODO : API extension to create file when needed!! 
+
+				// TODO : API extension to create file when needed!!
 				// Via openOutputStream maybe ou getFile???
-				
+
 				Resource outputFile = ResourceLocator.locateResource("icon" + shape.getIndex() + ".png");
 				try {
 					// outputFile.createNewFile();
