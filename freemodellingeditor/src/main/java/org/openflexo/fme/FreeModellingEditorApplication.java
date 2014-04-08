@@ -152,7 +152,7 @@ public class FreeModellingEditorApplication {
 		super();
 
 		try {
-			factory = new BusinessDiagramFactory();
+			factory = new BusinessDiagramFactory(null);
 			// System.out.println("factory: " + factory.debug());
 			// FGEPamelaInjectionModule injectionModule = new FGEPamelaInjectionModule(factory);
 			// injector = Guice.createInjector(injectionModule);

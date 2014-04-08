@@ -5,6 +5,7 @@ import org.openflexo.fge.BackgroundStyle.BackgroundStyleType;
 import org.openflexo.fge.ShapeGraphicalRepresentation;
 import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
 import org.openflexo.model.exceptions.ModelDefinitionException;
+import org.openflexo.model.factory.EditingContext;
 import org.openflexo.model.undo.UndoManager;
 import org.openflexo.rm.Resource;
 import org.openflexo.rm.ResourceLocator;
@@ -14,8 +15,8 @@ public class BusinessDiagramFactory extends DiagramFactory {
 	private static final Resource HW_COMPONENT = ResourceLocator.locateResource("Images/hardware.png");
 	private static final Resource SW_COMPONENT = ResourceLocator.locateResource("Images/software.png");
 
-	public BusinessDiagramFactory() throws ModelDefinitionException {
-		super();
+	public BusinessDiagramFactory(EditingContext editingContext) throws ModelDefinitionException {
+		super(editingContext);
 	}
 
 	@Override

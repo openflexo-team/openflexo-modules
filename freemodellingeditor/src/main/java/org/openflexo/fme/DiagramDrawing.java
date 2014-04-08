@@ -114,7 +114,7 @@ public class DiagramDrawing extends DrawingImpl<Diagram> {
 	}
 
 	public static void main(String[] args) throws ModelDefinitionException {
-		DiagramFactory factory = new DiagramFactory();
+		DiagramFactory factory = new DiagramFactory(null);
 		Diagram myDrawing = factory.makeNewDiagram();
 		new DiagramDrawing(myDrawing, factory);
 	}
