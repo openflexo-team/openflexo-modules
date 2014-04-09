@@ -21,7 +21,6 @@ package org.openflexo.ve.controller.action;
 
 import java.util.logging.Logger;
 
-import org.openflexo.ve.VECst;
 import org.openflexo.ve.controller.VEController;
 import org.openflexo.ve.controller.VESelectionManager;
 import org.openflexo.view.controller.ControllerActionInitializer;
@@ -55,14 +54,6 @@ public class VEControllerActionInitializer extends ControllerActionInitializer {
 
 		new VESetPropertyInitializer(this);
 		new VESetPropertyInitializer(this);
-
-		// Disabled copy/paste
-		if (VECst.CUT_COPY_PASTE_ENABLED) {
-			new VECopyInitializer(this);
-			new VECutInitializer(this);
-			new VEPasteInitializer(this);
-			new VESelectAllInitializer(this);
-		}
 
 		// View library perspective
 		new CreateViewInitializer(this);

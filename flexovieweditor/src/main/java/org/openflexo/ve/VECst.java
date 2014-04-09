@@ -19,7 +19,6 @@
  */
 package org.openflexo.ve;
 
-
 /**
  * Constants used by the ViewEditor module.
  * 
@@ -27,13 +26,11 @@ package org.openflexo.ve;
  */
 public class VECst {
 
-	public static final boolean CUT_COPY_PASTE_ENABLED = false;
+	public static final String DEFAULT_VE_BROWSER_WINDOW_TITLE = "ontology_browser";
 
-	public static final String DEFAULT_OE_BROWSER_WINDOW_TITLE = "ontology_browser";
+	public static final int DEFAULT_VE_BROWSER_WINDOW_WIDTH = 300;
 
-	public static final int DEFAULT_OE_BROWSER_WINDOW_WIDTH = 300;
-
-	public static final int DEFAULT_OE_BROWSER_WINDOW_HEIGHT = 250;
+	public static final int DEFAULT_VE_BROWSER_WINDOW_HEIGHT = 250;
 
 	public static final int DEFAULT_MAINFRAME_WIDTH = 850;
 
