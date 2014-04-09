@@ -58,6 +58,10 @@ public class CreateBasicVirtualModelInstanceInitializer extends ActionInitialize
 	protected VEControllerActionInitializer getControllerActionInitializer() {
 		return (VEControllerActionInitializer) super.getControllerActionInitializer();
 	}
+	
+	private Status chooseAndConfigureCreationScheme(CreateBasicVirtualModelInstance action) {
+		return instanciateShowDialogAndReturnStatus(action, CommonFIB.CHOOSE_AND_CONFIGURE_CREATION_SCHEME_DIALOG_FIB);
+	}
 
 	/*private Status chooseVirtualModel(CreateVirtualModelInstance<?> action) {
 		return instanciateShowDialogAndReturnStatus(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB);
@@ -77,7 +81,12 @@ public class CreateBasicVirtualModelInstanceInitializer extends ActionInitialize
 						Status result;
 						if (step == 0) {
 							result = instanciateShowDialogAndReturnStatus(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB);
-						} else {
+						} 
+						else if (step == action.getStepsNumber() - 1 && action.getVirtualModel() != null
+								&& action.getVirtualModel().hasCreationScheme()) {
+							result = chooseAndConfigureCreationScheme(action);
+						}
+						else {
 							ModelSlot<?> configuredModelSlot = action.getVirtualModel().getModelSlots().get(step - 1);
 							result = instanciateShowDialogAndReturnStatus(action.getModelSlotInstanceConfiguration(configuredModelSlot),
 									getModelSlotInstanceConfigurationFIB(configuredModelSlot.getClass()));
