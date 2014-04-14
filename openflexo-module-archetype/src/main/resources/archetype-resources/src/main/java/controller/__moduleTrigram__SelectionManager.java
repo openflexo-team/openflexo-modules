@@ -28,28 +28,18 @@ import org.openflexo.view.menu.FlexoMenuBar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ${moduleTrigram}SelectionManager extends SelectionManager {
+public class ${moduleTrigram}SelectionManager extends MouseSelectionManager {
 
 	protected static final Logger logger = Logger.getLogger(${moduleTrigram}SelectionManager.class.getPackage().getName());
 
 	public ${moduleTrigram}SelectionManager(${moduleTrigram}Controller controller) {
 		super(controller);
 		FlexoMenuBar menuBar = controller.getMenuBar();
-		_clipboard = new ${moduleTrigram}Clipboard(this, menuBar.getEditMenu(controller).copyItem, menuBar.getEditMenu(controller).pasteItem,
-				menuBar.getEditMenu(controller).cutItem);
 		_contextualMenuManager = new ContextualMenuManager(this, controller);
 	}
 
-	public ${moduleTrigram}Controller getCEDController() {
+	public ${moduleTrigram}Controller get${moduleTrigram}Controller() {
 		return (${moduleTrigram}Controller) getController();
-	}
-
-	@Override
-	public boolean performSelectionSelectAll() {
-		if (logger.isLoggable(Level.WARNING)) {
-			logger.warning("'Select All' not implemented yet in this module");
-		}
-		return false;
 	}
 
 	/**
@@ -60,12 +50,6 @@ public class ${moduleTrigram}SelectionManager extends SelectionManager {
 	@Override
 	public FlexoObject getRootFocusedObject() {
 		return getCEDController().getCurrentDisplayedObjectAsModuleView();
-	}
-
-	@Override
-	public FlexoObject getPasteContext() {
-		// TODO please implement this
-		return null;
 	}
 
 }
