@@ -35,8 +35,6 @@ public class SMPSelectionManager extends MouseSelectionManager {
 	public SMPSelectionManager(SMPController controller) {
 		super(controller);
 		FlexoMenuBar menuBar = controller.getMenuBar();
-		_clipboard = new SMPClipboard(this, menuBar.getEditMenu(controller).copyItem, menuBar.getEditMenu(controller).pasteItem,
-				menuBar.getEditMenu(controller).cutItem);
 		_contextualMenuManager = new ContextualMenuManager(this, controller);
 	}
 
