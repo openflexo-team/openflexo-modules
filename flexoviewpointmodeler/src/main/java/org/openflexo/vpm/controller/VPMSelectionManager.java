@@ -19,25 +19,24 @@
  */
 package org.openflexo.vpm.controller;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.selection.SelectionManager;
+import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.view.menu.FlexoMenuBar;
 
 /**
  * Selection manager dedicated to this module
  */
-public class VPMSelectionManager extends SelectionManager {
+public class VPMSelectionManager extends MouseSelectionManager {
 
 	protected static final Logger logger = Logger.getLogger(VPMSelectionManager.class.getPackage().getName());
 
 	public VPMSelectionManager(VPMController controller) {
 		super(controller);
 		FlexoMenuBar menuBar = controller.getMenuBar();
-		_clipboard = new VPMClipboard(this, menuBar.getEditMenu(controller).copyItem, menuBar.getEditMenu(controller).pasteItem,
-				menuBar.getEditMenu(controller).cutItem);
+		/*_clipboard = new VPMClipboard(this, menuBar.getEditMenu(controller).copyItem, menuBar.getEditMenu(controller).pasteItem,
+				menuBar.getEditMenu(controller).cutItem);*/
 		_contextualMenuManager = new VPMContextualMenuManager(this, controller);
 	}
 
@@ -45,13 +44,13 @@ public class VPMSelectionManager extends SelectionManager {
 		return (VPMController) getController();
 	}
 
-	@Override
+	/*@Override
 	public boolean performSelectionSelectAll() {
 		if (logger.isLoggable(Level.WARNING)) {
 			logger.warning("'Select All' not implemented yet in this module");
 		}
 		return false;
-	}
+	}*/
 
 	/**
 	 * Returns the root object that can be currently edited
@@ -63,10 +62,10 @@ public class VPMSelectionManager extends SelectionManager {
 		return getCEDController().getCurrentDisplayedObjectAsModuleView();
 	}
 
-	@Override
+	/*@Override
 	public FlexoObject getPasteContext() {
 		// TODO please implement this
 		return null;
-	}
+	}*/
 
 }

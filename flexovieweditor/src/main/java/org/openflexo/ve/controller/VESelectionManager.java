@@ -19,12 +19,10 @@
  */
 package org.openflexo.ve.controller;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.selection.PastingGraphicalContext;
-import org.openflexo.selection.SelectionManager;
+import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.view.menu.FlexoMenuBar;
 
 /**
@@ -32,15 +30,15 @@ import org.openflexo.view.menu.FlexoMenuBar;
  * 
  * @author sylvain
  */
-public class VESelectionManager extends SelectionManager {
+public class VESelectionManager extends MouseSelectionManager {
 
 	protected static final Logger logger = Logger.getLogger(VESelectionManager.class.getPackage().getName());
 
 	public VESelectionManager(VEController controller) {
 		super(controller);
 		FlexoMenuBar menuBar = controller.getMenuBar();
-		_clipboard = new VEClipboard(this, menuBar.getEditMenu(controller).copyItem, menuBar.getEditMenu(controller).pasteItem,
-				menuBar.getEditMenu(controller).cutItem);
+		/*_clipboard = new VEClipboard(this, menuBar.getEditMenu(controller).copyItem, menuBar.getEditMenu(controller).pasteItem,
+				menuBar.getEditMenu(controller).cutItem);*/
 		_contextualMenuManager = new VEContextualMenuManager(this, controller);
 	}
 
@@ -48,13 +46,13 @@ public class VESelectionManager extends SelectionManager {
 		return (VEController) getController();
 	}
 
-	@Override
+	/*@Override
 	public boolean performSelectionSelectAll() {
 		if (logger.isLoggable(Level.WARNING)) {
 			logger.warning("'Select All' not implemented yet in this module");
 		}
 		return false;
-	}
+	}*/
 
 	// ==========================================================================
 	// ============================= Deletion
@@ -71,43 +69,43 @@ public class VESelectionManager extends SelectionManager {
 		return getVEController().getCurrentDisplayedObjectAsModuleView();
 	}
 
-	@Override
-	public FlexoObject getPasteContext() {
-		// TODO
-		/*if (getVEController().getCurrentModuleView() instanceof DiagramModuleView) {
-			DiagramView v = ((DiagramModuleView) getVEController().getCurrentModuleView()).getController().getDrawingView();
-			GraphicalRepresentation gr = v.getController().getLastSelectedNode();
-			if (gr != null && gr.getDrawable() instanceof FlexoModelObject) {
-				return (FlexoModelObject) gr.getDrawable();
-			} else {
-				return (FlexoModelObject) ((DrawingView<?>) getVEController().getCurrentModuleView()).getDrawingGraphicalRepresentation()
-						.getDrawable();
-			}
-		}*/
-		return null;
-	}
+	// @Override
+	// public FlexoObject getPasteContext() {
+	// TODO
+	/*if (getVEController().getCurrentModuleView() instanceof DiagramModuleView) {
+		DiagramView v = ((DiagramModuleView) getVEController().getCurrentModuleView()).getController().getDrawingView();
+		GraphicalRepresentation gr = v.getController().getLastSelectedNode();
+		if (gr != null && gr.getDrawable() instanceof FlexoModelObject) {
+			return (FlexoModelObject) gr.getDrawable();
+		} else {
+			return (FlexoModelObject) ((DrawingView<?>) getVEController().getCurrentModuleView()).getDrawingGraphicalRepresentation()
+					.getDrawable();
+		}
+	}*/
+	// return null;
+	// }
 
-	@Override
-	public PastingGraphicalContext getPastingGraphicalContext() {
-		PastingGraphicalContext pgc = new PastingGraphicalContext();
-		/*if (getVEController().getCurrentModuleView() instanceof DiagramModuleView) {
-			DiagramView v = ((DiagramModuleView) getVEController().getCurrentModuleView()).getController().getDrawingView();
-			DrawingController controller = v.getController();
-			GraphicalRepresentation target = controller.getLastSelectedNode();
-			if (target == null) {
-				pgc.targetContainer = controller.getDrawingView();
-			} else {
-				pgc.targetContainer = (JComponent) v.viewForNode(target);
-			}
-			if (controller.getLastClickedPoint() != null) {
-				pgc.precisePastingLocation = controller.getLastClickedPoint();
-				pgc.pastingLocation = new Point((int) pgc.precisePastingLocation.getX(), (int) pgc.precisePastingLocation.getY());
-			} else {
-				pgc.precisePastingLocation = new FGEPoint(0, 0);
-				pgc.pastingLocation = new Point(0, 0);
-			}
-		}*/
-		return pgc;
-	}
+	// @Override
+	// public PastingGraphicalContext getPastingGraphicalContext() {
+	// PastingGraphicalContext pgc = new PastingGraphicalContext();
+	/*if (getVEController().getCurrentModuleView() instanceof DiagramModuleView) {
+		DiagramView v = ((DiagramModuleView) getVEController().getCurrentModuleView()).getController().getDrawingView();
+		DrawingController controller = v.getController();
+		GraphicalRepresentation target = controller.getLastSelectedNode();
+		if (target == null) {
+			pgc.targetContainer = controller.getDrawingView();
+		} else {
+			pgc.targetContainer = (JComponent) v.viewForNode(target);
+		}
+		if (controller.getLastClickedPoint() != null) {
+			pgc.precisePastingLocation = controller.getLastClickedPoint();
+			pgc.pastingLocation = new Point((int) pgc.precisePastingLocation.getX(), (int) pgc.precisePastingLocation.getY());
+		} else {
+			pgc.precisePastingLocation = new FGEPoint(0, 0);
+			pgc.pastingLocation = new Point(0, 0);
+		}
+	}*/
+	// return pgc;
+	// }
 
 }

@@ -31,7 +31,7 @@ import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.module.FlexoModule;
-import org.openflexo.selection.SelectionManager;
+import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.ve.controller.action.VEControllerActionInitializer;
 import org.openflexo.ve.view.VEMainPane;
 import org.openflexo.ve.view.menu.VEMenuBar;
@@ -68,7 +68,7 @@ public class VEController extends FlexoController {
 	}
 
 	@Override
-	protected SelectionManager createSelectionManager() {
+	protected MouseSelectionManager createSelectionManager() {
 		return new VESelectionManager(this);
 	}
 

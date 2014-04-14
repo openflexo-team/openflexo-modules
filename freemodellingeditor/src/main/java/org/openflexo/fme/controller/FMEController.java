@@ -42,7 +42,7 @@ import org.openflexo.foundation.viewpoint.ViewPointObject;
 import org.openflexo.foundation.viewpoint.VirtualModel;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.module.FlexoModule;
-import org.openflexo.selection.SelectionManager;
+import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.view.FlexoMainPane;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
@@ -81,7 +81,7 @@ public class FMEController extends FlexoController {
 	}
 
 	@Override
-	protected SelectionManager createSelectionManager() {
+	protected MouseSelectionManager createSelectionManager() {
 		return new FMESelectionManager(this);
 	}
 

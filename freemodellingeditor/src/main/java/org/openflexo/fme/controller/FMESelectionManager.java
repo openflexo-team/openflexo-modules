@@ -19,39 +19,38 @@
  */
 package org.openflexo.fme.controller;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.selection.SelectionManager;
+import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.view.menu.FlexoMenuBar;
 
 /**
  * Selection manager dedicated to this module
  */
-public class FMESelectionManager extends SelectionManager {
+public class FMESelectionManager extends MouseSelectionManager {
 
 	protected static final Logger logger = Logger.getLogger(FMESelectionManager.class.getPackage().getName());
 
 	public FMESelectionManager(FMEController controller) {
 		super(controller);
 		FlexoMenuBar menuBar = controller.getMenuBar();
-		_clipboard = new FMEClipboard(this, menuBar.getEditMenu(controller).copyItem, menuBar.getEditMenu(controller).pasteItem,
-				menuBar.getEditMenu(controller).cutItem);
+		/*_clipboard = new FMEClipboard(this, menuBar.getEditMenu(controller).copyItem, menuBar.getEditMenu(controller).pasteItem,
+				menuBar.getEditMenu(controller).cutItem);*/
 		_contextualMenuManager = new FMEContextualMenuManager(this, controller);
 	}
 
-	public FMEController getCEDController() {
+	public FMEController getFMEController() {
 		return (FMEController) getController();
 	}
 
-	@Override
+	/*@Override
 	public boolean performSelectionSelectAll() {
 		if (logger.isLoggable(Level.WARNING)) {
 			logger.warning("'Select All' not implemented yet in this module");
 		}
 		return false;
-	}
+	}*/
 
 	/**
 	 * Returns the root object that can be currently edited
@@ -60,13 +59,13 @@ public class FMESelectionManager extends SelectionManager {
 	 */
 	@Override
 	public FlexoObject getRootFocusedObject() {
-		return getCEDController().getCurrentDisplayedObjectAsModuleView();
+		return getFMEController().getCurrentDisplayedObjectAsModuleView();
 	}
 
-	@Override
+	/*@Override
 	public FlexoObject getPasteContext() {
 		// TODO please implement this
 		return null;
-	}
+	}*/
 
 }
