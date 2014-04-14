@@ -40,7 +40,7 @@ public class VPMSelectionManager extends MouseSelectionManager {
 		_contextualMenuManager = new VPMContextualMenuManager(this, controller);
 	}
 
-	public VPMController getCEDController() {
+	public VPMController getVPMController() {
 		return (VPMController) getController();
 	}
 
@@ -59,7 +59,7 @@ public class VPMSelectionManager extends MouseSelectionManager {
 	 */
 	@Override
 	public FlexoObject getRootFocusedObject() {
-		return getCEDController().getCurrentDisplayedObjectAsModuleView();
+		return getVPMController().getCurrentDisplayedObjectAsModuleView();
 	}
 
 	/*@Override
