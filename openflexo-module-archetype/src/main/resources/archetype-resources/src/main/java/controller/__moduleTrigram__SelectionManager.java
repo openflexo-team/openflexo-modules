@@ -49,7 +49,7 @@ public class ${moduleTrigram}SelectionManager extends MouseSelectionManager {
 	 */
 	@Override
 	public FlexoObject getRootFocusedObject() {
-		return getCEDController().getCurrentDisplayedObjectAsModuleView();
+		return get${moduleTrigram}Controller().getCurrentDisplayedObjectAsModuleView();
 	}
 
 }

@@ -28,7 +28,7 @@ import org.openflexo.view.menu.FlexoMenuBar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SMPSelectionManager extends SelectionManager {
+public class SMPSelectionManager extends MouseSelectionManager {
 
 	protected static final Logger logger = Logger.getLogger(SMPSelectionManager.class.getPackage().getName());
 
@@ -40,16 +40,8 @@ public class SMPSelectionManager extends SelectionManager {
 		_contextualMenuManager = new ContextualMenuManager(this, controller);
 	}
 
-	public SMPController getCEDController() {
+	public SMPController getSMPController() {
 		return (SMPController) getController();
-	}
-
-	@Override
-	public boolean performSelectionSelectAll() {
-		if (logger.isLoggable(Level.WARNING)) {
-			logger.warning("'Select All' not implemented yet in this module");
-		}
-		return false;
 	}
 
 	/**
@@ -59,13 +51,7 @@ public class SMPSelectionManager extends SelectionManager {
 	 */
 	@Override
 	public FlexoObject getRootFocusedObject() {
-		return getCEDController().getCurrentDisplayedObjectAsModuleView();
-	}
-
-	@Override
-	public FlexoObject getPasteContext() {
-		// TODO please implement this
-		return null;
+		return getSMPController().getCurrentDisplayedObjectAsModuleView();
 	}
 
 }
