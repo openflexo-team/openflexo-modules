@@ -22,7 +22,7 @@ package org.openflexo.module.${moduleName}.controller;
 
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.selection.ContextualMenuManager;
-import org.openflexo.selection.SelectionManager;
+import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.view.menu.FlexoMenuBar;
 
 import java.util.logging.Level;
