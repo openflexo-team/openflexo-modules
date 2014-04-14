@@ -23,7 +23,7 @@ package org.openflexo.module.sample.controller;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.module.FlexoModule;
-import org.openflexo.selection.SelectionManager;
+import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.view.FlexoMainPane;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.menu.FlexoMenuBar;
@@ -45,11 +45,8 @@ public class SMPController extends FlexoController {
 	}
 
 	@Override
-	protected SelectionManager createSelectionManager() {
-		if (selectionManager == null){
-			this.selectionManager = new SMPSelectionManager(this);
-		}
-		return selectionManager;
+	protected MouseSelectionManager createSelectionManager() {
+		return new SMPSelectionManager(this);
 	}
 
 	@Override
