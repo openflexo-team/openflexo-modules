@@ -25,38 +25,21 @@ package org.openflexo.fme.view.menu;
  * Flexo Application Suite
  * (c) Denali 2003-2006
  */
-import java.awt.event.ActionEvent;
 import java.util.logging.Logger;
 
-import javax.swing.AbstractAction;
-
 import org.openflexo.fme.controller.FMEController;
-import org.openflexo.view.menu.FlexoMenuItem;
 import org.openflexo.view.menu.ToolsMenu;
 
 /**
- * 'Tools' menu for this Module
+ * 'Tools' menu for FreeModellingEditor module
  * 
- * @author yourname
+ * @author sylvain
  */
 public class FMEToolsMenu extends ToolsMenu {
 
 	private static final Logger logger = Logger.getLogger(FMEToolsMenu.class.getPackage().getName());
 
-	// ==========================================================================
-	// ============================= Instance Variables
-	// =========================
-	// ==========================================================================
-
-	public FlexoMenuItem checkViewPointLibraryConsistencyItem;
-	public FlexoMenuItem checkViewPointConsistencyItem;
-
 	protected FMEController fmeController;
-
-	// ==========================================================================
-	// ============================= Constructor
-	// ================================
-	// ==========================================================================
 
 	public FMEToolsMenu(FMEController controller) {
 		super(controller);
@@ -66,66 +49,6 @@ public class FMEToolsMenu extends ToolsMenu {
 
 	public FMEController getFMEController() {
 		return fmeController;
-	}
-
-	@Override
-	public void addSpecificItems() {
-		add(checkViewPointLibraryConsistencyItem = new CheckViewPointLibraryConsistencyItem());
-		add(checkViewPointConsistencyItem = new CheckViewPointConsistencyItem());
-		addSeparator();
-	}
-
-	// ==========================================================================
-	// ======================= CheckWorkflowConsistency
-	// =========================
-	// ==========================================================================
-
-	public class CheckViewPointLibraryConsistencyItem extends FlexoMenuItem {
-
-		public CheckViewPointLibraryConsistencyItem() {
-			super(new CheckViewPointLibraryConsistencyAction(), "check_all_viewpoint_consistency", null, getFMEController(), true);
-		}
-
-	}
-
-	public class CheckViewPointLibraryConsistencyAction extends AbstractAction {
-		public CheckViewPointLibraryConsistencyAction() {
-			super();
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			logger.info("Check consistency for " + getFMEController().getViewPointLibrary());
-			getFMEController().consistencyCheck(getFMEController().getViewPointLibrary());
-		}
-
-	}
-
-	// ==========================================================================
-	// ======================= CheckProcessConsistency =========================
-	// ==========================================================================
-
-	public class CheckViewPointConsistencyItem extends FlexoMenuItem {
-
-		public CheckViewPointConsistencyItem() {
-			super(new CheckViewPointConsistencyAction(), "check_viewpoint_consistency", null, getFMEController(), true);
-		}
-
-	}
-
-	public class CheckViewPointConsistencyAction extends AbstractAction {
-		public CheckViewPointConsistencyAction() {
-			super();
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			if (getFMEController().getCurrentViewPoint() != null) {
-				logger.info("Check consistency for " + getFMEController().getCurrentViewPoint());
-				getFMEController().consistencyCheck(getFMEController().getCurrentViewPoint());
-			}
-		}
-
 	}
 
 }

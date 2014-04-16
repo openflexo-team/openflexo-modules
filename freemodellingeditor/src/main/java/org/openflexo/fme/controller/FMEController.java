@@ -27,19 +27,21 @@ package org.openflexo.fme.controller;
  */
 import java.util.logging.Logger;
 
-import javax.swing.SwingUtilities;
+import javax.swing.ImageIcon;
 
+import org.openflexo.fme.FMEIconLibrary;
 import org.openflexo.fme.controller.action.FMEControllerActionInitializer;
+import org.openflexo.fme.model.FreeModel;
+import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.fme.view.menu.FMEMenuBar;
+import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.validation.ValidationModel;
-import org.openflexo.foundation.viewpoint.FlexoConcept;
-import org.openflexo.foundation.viewpoint.FlexoConceptObject;
 import org.openflexo.foundation.viewpoint.ViewPoint;
 import org.openflexo.foundation.viewpoint.ViewPointLibrary;
 import org.openflexo.foundation.viewpoint.ViewPointObject;
-import org.openflexo.foundation.viewpoint.VirtualModel;
+import org.openflexo.icon.IconLibrary;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.module.FlexoModule;
 import org.openflexo.selection.MouseSelectionManager;
@@ -47,7 +49,6 @@ import org.openflexo.view.FlexoMainPane;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.menu.FlexoMenuBar;
-import org.openflexo.vpm.view.FlexoConceptView;
 
 /**
  * This is the controller of ViewPointModeller module
@@ -66,13 +67,13 @@ public class FMEController extends FlexoController {
 	public FMEController(FlexoModule module) {
 		super(module);
 
-		SwingUtilities.invokeLater(new Runnable() {
+		/*SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
 			public void run() {
 				setCurrentEditedObjectAsModuleView(getApplicationContext().getViewPointLibrary(), FREE_MODELLING_PERSPECTIVE);
 			}
-		});
+		});*/
 	}
 
 	@Override
@@ -140,44 +141,10 @@ public class FMEController extends FlexoController {
 	public void selectAndFocusObject(FlexoObject object) {
 		if (object != null) {
 			logger.info("selectAndFocusObject " + object + "of " + object.getClass().getSimpleName());
-			if (object instanceof FlexoConceptObject) {
-				setCurrentEditedObjectAsModuleView(((FlexoConceptObject) object).getFlexoConcept());
-			} else {
+			if (object instanceof FreeModel) {
 				setCurrentEditedObjectAsModuleView(object);
 			}
 			if (getCurrentPerspective() == FREE_MODELLING_PERSPECTIVE) {
-				if (object instanceof ViewPointLibrary) {
-					/*ViewPointLibrary cl = (ViewPointLibrary) object;
-					if (cl.getViewPoints().size() > 0) {
-						getSelectionManager().setSelectedObject(cl.getViewPoints().firstElement());
-					}*/
-				} /*else if (object instanceof OWLMetaModel) {
-					OWLMetaModel ontology = (OWLMetaModel) object;
-					VIEW_POINT_PERSPECTIVE.focusOnOntology(ontology);
-					if (ontology.getClasses().size() > 0) {
-						getSelectionManager().setSelectedObject(ontology.getClasses().firstElement());
-					}
-					}*/
-				/*else if (object instanceof ExampleDiagram) {
-					VIEW_POINT_PERSPECTIVE.focusOnExampleDiagram((ExampleDiagram) object);
-				} else if (object instanceof DiagramPalette) {
-					VIEW_POINT_PERSPECTIVE.focusOnPalette((DiagramPalette) object);
-				}*/else if (object instanceof ViewPoint) {
-					ViewPoint viewPoint = (ViewPoint) object;
-					FREE_MODELLING_PERSPECTIVE.focusOnViewPoint(viewPoint);
-				} else if (object instanceof VirtualModel) {
-					VirtualModel virtualModel = (VirtualModel) object;
-					FREE_MODELLING_PERSPECTIVE.focusOnVirtualModel(virtualModel);
-				} else if (object instanceof FlexoConcept) {
-					FlexoConcept pattern = (FlexoConcept) object;
-					if (pattern.getFlexoBehaviours().size() > 0) {
-						getSelectionManager().setSelectedObject(pattern.getFlexoBehaviours().get(0));
-					}
-				} else if (object instanceof FlexoConceptObject) {
-					if (getCurrentModuleView() instanceof FlexoConceptView) {
-						((FlexoConceptView) getCurrentModuleView()).tryToSelect((FlexoConceptObject) object);
-					}
-				}
 			}
 			getSelectionManager().setSelectedObject(object);
 		} else {
@@ -215,4 +182,22 @@ public class FMEController extends FlexoController {
 	public ValidationModel getDefaultValidationModel() {
 		return ViewPointLibrary.VALIDATION_MODEL;
 	}
+
+	@Override
+	public void updateEditor(FlexoEditor from, FlexoEditor to) {
+		super.updateEditor(from, to);
+		FlexoProject project = (to != null ? to.getProject() : null);
+		FREE_MODELLING_PERSPECTIVE.setProject(project);
+	}
+
+	@Override
+	public ImageIcon iconForObject(Object object) {
+		if (object instanceof FreeModellingProject) {
+			return IconLibrary.OPENFLEXO_NOTEXT_16;
+		} else if (object instanceof FreeModel) {
+			return FMEIconLibrary.FME_SMALL_ICON;
+		}
+		return super.iconForObject(object);
+	}
+
 }

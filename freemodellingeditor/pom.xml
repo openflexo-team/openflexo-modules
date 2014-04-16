@@ -20,6 +20,16 @@
 		</plugins>
 	</build>
 	<dependencies>
+ 		<dependency>
+			<groupId>org.openflexo</groupId>
+			<artifactId>flexodiagram</artifactId>
+ 			<version>${flexocore.version}</version>
+		</dependency>
+ 		<dependency>
+			<groupId>org.openflexo</groupId>
+			<artifactId>flexodiagram-ui</artifactId>
+			<version>${flexocore.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.openflexo</groupId>
 			<artifactId>flexo-ui</artifactId>
@@ -45,6 +55,12 @@
 		<dependency>
 			<groupId>org.openflexo</groupId>
 			<artifactId>flexo-ui</artifactId>
+			<classifier>tests</classifier>
+			<scope>test</scope>
+		</dependency>
+  		<dependency>
+			<groupId>org.openflexo</groupId>
+			<artifactId>flexoutils</artifactId>
 			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>

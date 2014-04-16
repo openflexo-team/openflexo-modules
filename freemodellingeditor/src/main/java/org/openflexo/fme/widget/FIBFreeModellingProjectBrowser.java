@@ -17,42 +17,30 @@
  * along with OpenFlexo. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.openflexo.fme.controller.action;
+package org.openflexo.fme.widget;
 
 import java.util.logging.Logger;
 
 import org.openflexo.fme.controller.FMEController;
-import org.openflexo.selection.SelectionManager;
-import org.openflexo.view.controller.ControllerActionInitializer;
+import org.openflexo.foundation.FlexoProject;
+import org.openflexo.rm.Resource;
+import org.openflexo.rm.ResourceLocator;
+import org.openflexo.view.FIBBrowserView;
 
 /**
+ * Browser allowing to browse all resources of a {@link FlexoProject}<br>
  * 
- * Action initializing for this module
+ * @author sguerin
  * 
- * @author yourname
  */
-public class FMEControllerActionInitializer extends ControllerActionInitializer {
+@SuppressWarnings("serial")
+public class FIBFreeModellingProjectBrowser extends FIBBrowserView<FlexoProject> {
+	static final Logger logger = Logger.getLogger(FIBFreeModellingProjectBrowser.class.getPackage().getName());
 
-	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
+	public static final Resource FIB_FILE = ResourceLocator.locateResource("Fib/Widget/FIBFreeModellingProjectBrowser.fib");
 
-	public FMEControllerActionInitializer(FMEController controller) {
-		super(controller);
+	public FIBFreeModellingProjectBrowser(FlexoProject project, FMEController controller) {
+		super(project, controller, FIB_FILE);
+		System.out.println("Showing browser with " + project);
 	}
-
-	protected FMEController getFMEController() {
-		return (FMEController) getController();
-	}
-
-	protected SelectionManager getFMESelectionManager() {
-		return getFMEController().getSelectionManager();
-	}
-
-	@Override
-	public void initializeActions() {
-		super.initializeActions();
-
-		new CreateFreeModelInitializer(this);
-
-	}
-
 }

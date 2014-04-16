@@ -24,15 +24,16 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-import org.openflexo.components.widget.FIBViewPointLibraryBrowser;
+import org.openflexo.fme.FMEIconLibrary;
+import org.openflexo.fme.controller.editor.FreeModelDiagramEditor;
+import org.openflexo.fme.model.FreeMetaModel;
+import org.openflexo.fme.model.FreeModel;
+import org.openflexo.fme.view.FreeModelModuleView;
+import org.openflexo.fme.widget.FIBFreeModellingProjectBrowser;
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.foundation.viewpoint.FlexoConcept;
-import org.openflexo.foundation.viewpoint.FlexoConceptObject;
-import org.openflexo.foundation.viewpoint.ViewPoint;
-import org.openflexo.foundation.viewpoint.ViewPointLibrary;
-import org.openflexo.foundation.viewpoint.VirtualModel;
-import org.openflexo.icon.VPMIconLibrary;
-import org.openflexo.localization.FlexoLocalization;
+import org.openflexo.foundation.FlexoProject;
+import org.openflexo.model.undo.CompoundEdit;
+import org.openflexo.technologyadapter.diagram.controller.DiagramTechnologyAdapterController;
 import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.controller.model.FlexoPerspective;
@@ -41,7 +42,7 @@ public class FMEPerspective extends FlexoPerspective {
 
 	protected static final Logger logger = Logger.getLogger(FMEPerspective.class.getPackage().getName());
 
-	private FIBViewPointLibraryBrowser viewPointLibraryBrowser = null;
+	private FIBFreeModellingProjectBrowser freeModellingProjectBrowser = null;
 
 	private JPanel toolsPanel;
 
@@ -49,34 +50,22 @@ public class FMEPerspective extends FlexoPerspective {
 	 * Default constructor taking controller as argument
 	 */
 	public FMEPerspective(FMEController controller) {
-		super("viewpoint_perspective", controller);
+		super("free_modelling_perspective", controller);
 		// _controller = controller;
 
-		viewPointLibraryBrowser = new FIBViewPointLibraryBrowser(controller.getViewPointLibrary(), controller);
+		freeModellingProjectBrowser = new FIBFreeModellingProjectBrowser(controller.getProject(), controller);
 
 		/*viewPointBrowser = new FIBViewPointBrowser(null, controller);
 		virtualModelBrowser = new FIBVirtualModelBrowser(null, controller);
 		exampleDiagramBrowser = new FIBExampleDiagramBrowser(null, controller);
 		diagramPaletteBrowser = new FIBDiagramPaletteBrowser(null, controller);*/
 
-		setTopLeftView(viewPointLibraryBrowser);
+		setTopLeftView(freeModellingProjectBrowser);
 
 	}
 
 	public ModuleView<?> getCurrentModuleView(FlexoController controller) {
 		return controller.getCurrentModuleView();
-	}
-
-	public void focusOnViewPoint(ViewPoint viewPoint) {
-		logger.info("focusOnViewPoint " + viewPoint);
-	}
-
-	public void focusOnVirtualModel(VirtualModel virtualModel) {
-		logger.info("focusOnVirtualModel " + virtualModel);
-	}
-
-	public void hideBottomBrowser() {
-		setBottomLeftView(null);
 	}
 
 	/**
@@ -86,21 +75,15 @@ public class FMEPerspective extends FlexoPerspective {
 	 */
 	@Override
 	public ImageIcon getActiveIcon() {
-		return VPMIconLibrary.VIEWPOINT_ICON;
+		return FMEIconLibrary.FME_SMALL_ICON;
 	}
 
 	public String getWindowTitleforObject(FlexoObject object, FlexoController controller) {
-		if (object instanceof ViewPointLibrary) {
-			return FlexoLocalization.localizedForKey("view_point_library");
+		if (object instanceof FreeModel) {
+			return ((FreeModel) object).getName();
 		}
-		if (object instanceof ViewPoint) {
-			return ((ViewPoint) object).getName();
-		}
-		if (object instanceof VirtualModel) {
-			return ((VirtualModel) object).getName();
-		}
-		if (object instanceof FlexoConcept) {
-			return ((FlexoConcept) object).getName();
+		if (object instanceof FreeMetaModel) {
+			return ((FreeMetaModel) object).getName();
 		}
 		if (object != null) {
 			return object.toString();
@@ -124,9 +107,46 @@ public class FMEPerspective extends FlexoPerspective {
 	@Override
 	public void objectWasDoubleClicked(Object object, FlexoController controller) {
 		// logger.info("ViewPointPerspective: object was double-clicked: " + object);
-		if (object instanceof FlexoConceptObject) {
-			controller.selectAndFocusObject((FlexoConceptObject) object);
+		if (object instanceof FreeModel) {
+			controller.selectAndFocusObject((FreeModel) object);
+		} else {
+			super.objectWasDoubleClicked(object, controller);
 		}
 	}
 
+	public void setProject(FlexoProject project) {
+		freeModellingProjectBrowser.setRootObject(project);
+	}
+
+	@Override
+	public boolean hasModuleViewForObject(FlexoObject object) {
+		if (object instanceof FreeModel) {
+			return true;
+		}
+		return super.hasModuleViewForObject(object);
+	}
+
+	@Override
+	public ModuleView<?> createModuleViewForObject(FlexoObject object, boolean editable) {
+		if (object instanceof FreeModel) {
+			// Initialization of Diagram representation may rise PAMELA edits
+			// The goal is here to embed all those edits in a special edit record
+			// Which is to be discarded as undoable action at the end of this initialization
+			CompoundEdit edit = null;
+			if (getController().getEditor().getUndoManager() != null) {
+				edit = getController().getEditor().getUndoManager().startRecording("Initialize free diagram");
+			}
+			DiagramTechnologyAdapterController diagramTAC = getController().getApplicationContext().getTechnologyAdapterControllerService()
+					.getTechnologyAdapterController(DiagramTechnologyAdapterController.class);
+			FreeModelDiagramEditor editor = new FreeModelDiagramEditor((FreeModel) object, false, getController(),
+					diagramTAC.getToolFactory());
+			if (edit != null) {
+				getController().getEditor().getUndoManager().stopRecording(edit);
+				// Make this edit not-undoable
+				edit.die();
+			}
+			return new FreeModelModuleView(editor, this);
+		}
+		return super.createModuleViewForObject(object, editable);
+	}
 }

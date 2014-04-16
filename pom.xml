@@ -64,6 +64,12 @@
 				<artifactId>flexoutils</artifactId>
 				<version>${connie.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.openflexo</groupId>
+				<artifactId>flexoutils</artifactId>
+				<version>${connie.version}</version>
+				<classifier>tests</classifier>
+			</dependency>
 		   <dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>

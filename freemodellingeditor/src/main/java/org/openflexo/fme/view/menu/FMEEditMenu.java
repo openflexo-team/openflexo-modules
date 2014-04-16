@@ -55,12 +55,6 @@ public class FMEEditMenu extends EditMenu {
 		super(controller);
 		fmeController = controller;
 		addSeparator();
-		// Add actions here
-		// add(deleteItem = new FlexoMenuItem(XXXDelete.actionType, getController()));
-		// add(cutItem = new FlexoMenuItem(XXXCut.actionType, getController()));
-		// add(copyItem = new FlexoMenuItem(XXXCopy.actionType, getController()));
-		// add(pasteItem = new FlexoMenuItem(XXXPaste.actionType, getController()));
-		// add(selectAllItem = new FlexoMenuItem(XXXSelectAll.actionType, getController()));
 	}
 
 }

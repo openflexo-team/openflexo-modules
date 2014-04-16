@@ -19,6 +19,8 @@
  */
 package org.openflexo.fme;
 
+import org.openflexo.rm.Resource;
+import org.openflexo.rm.ResourceLocator;
 
 /**
  * Constants used by the FreeModellingEditor
@@ -46,5 +48,7 @@ public class FMECst {
 	public static int DEFAULT_MAINFRAME_WIDTH = 850;
 
 	public static int DEFAULT_MAINFRAME_HEIGHT = 600;
+
+	public static Resource CREATE_FREE_MODEL_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateFreeModelDialog.fib");
 
 }
