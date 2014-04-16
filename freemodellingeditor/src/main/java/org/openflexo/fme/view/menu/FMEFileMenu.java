@@ -48,7 +48,7 @@ public class FMEFileMenu extends FileMenu {
 	private static final Logger logger = Logger.getLogger(FMEFileMenu.class.getPackage().getName());
 
 	public FMEFileMenu(FMEController controller) {
-		super(controller, false);
+		super(controller);
 	}
 
 	public FMEController getFMEController() {
