@@ -41,6 +41,6 @@ public class FIBFreeModellingProjectBrowser extends FIBBrowserView<FlexoProject>
 
 	public FIBFreeModellingProjectBrowser(FlexoProject project, FMEController controller) {
 		super(project, controller, FIB_FILE);
-		System.out.println("Showing browser with " + project);
+		// System.out.println("Showing browser with " + project);
 	}
 }
