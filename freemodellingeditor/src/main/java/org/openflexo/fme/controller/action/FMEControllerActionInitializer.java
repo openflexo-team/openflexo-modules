@@ -51,7 +51,10 @@ public class FMEControllerActionInitializer extends ControllerActionInitializer 
 	public void initializeActions() {
 		super.initializeActions();
 
+		new ConvertToFreeModellingEditorProjectInitializer(this);
+
 		new CreateFreeModelInitializer(this);
+		new DropFreeShapeInitializer(this);
 
 	}
 
