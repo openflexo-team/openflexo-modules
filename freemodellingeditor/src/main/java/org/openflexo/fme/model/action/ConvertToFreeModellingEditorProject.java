@@ -81,11 +81,12 @@ public class ConvertToFreeModellingEditorProject extends FlexoAction<ConvertToFr
 
 		logger.info("Convert to FreeModellingProject");
 
-		FreeModellingProjectNature nature = getServiceManager().getProjectNatureService()
-				.getProjectNature(FreeModellingProjectNature.class);
+		getFreeModellingProjectNature().givesNature(getFocusedObject(), getEditor());
 
-		nature.givesNature(getFocusedObject(), getEditor());
+	}
 
+	public FreeModellingProjectNature getFreeModellingProjectNature() {
+		return getServiceManager().getProjectNatureService().getProjectNature(FreeModellingProjectNature.class);
 	}
 
 }

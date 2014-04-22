@@ -66,6 +66,8 @@ public class ConvertToFreeModellingEditorProjectInitializer extends
 				if (getController().getCurrentPerspective() instanceof FMEPerspective) {
 					((FMEPerspective) getController().getCurrentPerspective()).setProject(action.getFocusedObject());
 				}
+				getController().selectAndFocusObject(
+						action.getFreeModellingProjectNature().getFreeModellingProject(action.getFocusedObject()));
 				return true;
 			}
 		};
