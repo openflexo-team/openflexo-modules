@@ -106,7 +106,11 @@ public class FreeModelModuleView extends JPanel implements ModuleView<FreeModel>
 		getDiagramTechnologyAdapterController(controller).getInspectors().attachToEditor(getEditor());
 		getDiagramTechnologyAdapterController(controller).getDialogInspectors().attachToEditor(getEditor());
 
-		perspective.setBottomRightView(getDiagramTechnologyAdapterController(controller).getInspectors().getPanelGroup());
+		JScrollPane scrollPane = new JScrollPane(getDiagramTechnologyAdapterController(controller).getInspectors().getPanelGroup(),
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBorder(null);
+
+		perspective.setBottomRightView(scrollPane);
 
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
