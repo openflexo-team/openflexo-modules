@@ -22,14 +22,15 @@ package org.openflexo.fme.controller;
 import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 
 import org.openflexo.fme.FMEIconLibrary;
 import org.openflexo.fme.controller.editor.FreeModelDiagramEditor;
 import org.openflexo.fme.model.FreeMetaModel;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.fme.view.FreeModelModuleView;
+import org.openflexo.fme.widget.FIBConceptBrowser;
 import org.openflexo.fme.widget.FIBFreeModellingProjectBrowser;
+import org.openflexo.fme.widget.FIBRepresentedConceptBrowser;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.model.undo.CompoundEdit;
@@ -43,8 +44,8 @@ public class FMEPerspective extends FlexoPerspective {
 	protected static final Logger logger = Logger.getLogger(FMEPerspective.class.getPackage().getName());
 
 	private FIBFreeModellingProjectBrowser freeModellingProjectBrowser = null;
-
-	private JPanel toolsPanel;
+	private final FIBRepresentedConceptBrowser representedConceptBrowser;
+	private final FIBConceptBrowser conceptBrowser;
 
 	/**
 	 * Default constructor taking controller as argument
@@ -61,6 +62,23 @@ public class FMEPerspective extends FlexoPerspective {
 		diagramPaletteBrowser = new FIBDiagramPaletteBrowser(null, controller);*/
 
 		setTopLeftView(freeModellingProjectBrowser);
+
+		/*MultiSplitLayoutFactory factory = new MultiSplitLayoutFactory.DefaultMultiSplitLayoutFactory();
+
+		Leaf top = factory.makeLeaf("top");
+		Leaf bottom = factory.makeLeaf("bottom");
+		Split root = factory.makeRowSplit(top, factory.makeDivider(), bottom);
+		final MultiSplitLayout layout = new MultiSplitLayout(factory);
+		layout.setModel(root);
+		layout.setLayoutByWeight(false);
+		layout.setFloatingDividers(false);
+		JXMultiSplitPane splitPane = new JXMultiSplitPane(layout);*/
+
+		representedConceptBrowser = new FIBRepresentedConceptBrowser(null, controller);
+		conceptBrowser = new FIBConceptBrowser(null, controller);
+
+		// splitPane.add(representedConceptBrowser, "top");
+		// splitPane.add(conceptBrowser, "bottom");
 
 	}
 
@@ -89,6 +107,17 @@ public class FMEPerspective extends FlexoPerspective {
 			return object.toString();
 		}
 		return "null";
+	}
+
+	public void focusOnFreeModel(FreeModel freeModel) {
+		logger.info("focusOnFreeModel " + freeModel);
+
+		representedConceptBrowser.setFreeModel(freeModel);
+		conceptBrowser.setFreeModel(freeModel);
+
+		setMiddleLeftView(representedConceptBrowser);
+		setBottomLeftView(conceptBrowser);
+
 	}
 
 	@Override

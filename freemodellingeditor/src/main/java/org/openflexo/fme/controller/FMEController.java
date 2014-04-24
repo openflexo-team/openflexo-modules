@@ -25,6 +25,7 @@ package org.openflexo.fme.controller;
  * Flexo Application Suite
  * (c) Denali 2003-2006
  */
+
 import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
@@ -42,7 +43,6 @@ import org.openflexo.foundation.viewpoint.ViewPoint;
 import org.openflexo.foundation.viewpoint.ViewPointLibrary;
 import org.openflexo.foundation.viewpoint.ViewPointObject;
 import org.openflexo.icon.IconLibrary;
-import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.module.FlexoModule;
 import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.view.FlexoMainPane;
@@ -116,18 +116,9 @@ public class FMEController extends FlexoController {
 		return new FlexoMainPane(this);
 	}
 
-	/**
-	 * Return the ViewPointLibrary
-	 * 
-	 * @return
-	 */
-	public ViewPointLibrary getViewPointLibrary() {
-		return getApplicationContext().getService(ViewPointLibrary.class);
-	}
-
 	@Override
 	public FlexoObject getDefaultObjectToSelect(FlexoProject project) {
-		return getViewPointLibrary();
+		return project;
 	}
 
 	/**
@@ -145,6 +136,9 @@ public class FMEController extends FlexoController {
 				setCurrentEditedObjectAsModuleView(object);
 			}
 			if (getCurrentPerspective() == FREE_MODELLING_PERSPECTIVE) {
+				if (object instanceof FreeModel) {
+					FREE_MODELLING_PERSPECTIVE.focusOnFreeModel((FreeModel) object);
+				}
 			}
 			getSelectionManager().setSelectedObject(object);
 		} else {
@@ -152,19 +146,8 @@ public class FMEController extends FlexoController {
 		}
 	}
 
-	// ================================================
-	// ============ Exception management ==============
-	// ================================================
-
 	@Override
 	public String getWindowTitleforObject(FlexoObject object) {
-		// System.out.println("getWindowTitleforObject() "+object+" perspective="+getCurrentPerspective());
-		if (object instanceof ViewPointLibrary) {
-			return FlexoLocalization.localizedForKey("view_point_library");
-		}
-		/*if (object instanceof OntologyLibrary) {
-			return FlexoLocalization.localizedForKey("ontology_library");
-		}*/
 		if (getCurrentPerspective() == FREE_MODELLING_PERSPECTIVE) {
 			return FREE_MODELLING_PERSPECTIVE.getWindowTitleforObject(object, this);
 		}

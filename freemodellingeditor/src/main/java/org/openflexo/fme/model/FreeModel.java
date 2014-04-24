@@ -19,10 +19,14 @@
  */
 package org.openflexo.fme.model;
 
+import java.util.List;
+
 import org.openflexo.foundation.DefaultFlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.InvalidArgumentException;
+import org.openflexo.foundation.view.FlexoConceptInstance;
 import org.openflexo.foundation.view.VirtualModelInstance;
+import org.openflexo.foundation.viewpoint.FlexoConcept;
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelInstanceNature;
 import org.openflexo.technologyadapter.diagram.model.Diagram;
 
@@ -78,6 +82,10 @@ public class FreeModel extends DefaultFlexoObject {
 		return virtualModelInstance.getName();
 	}
 
+	public String getURI() {
+		return fmProject.getProject().getURI() + "/" + getName();
+	}
+
 	public FreeMetaModel getMetaModel() {
 		try {
 			return fmProject.getFreeMetaModel(virtualModelInstance.getVirtualModel());
@@ -85,6 +93,24 @@ public class FreeModel extends DefaultFlexoObject {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	/**
+	 * Return a new list of FlexoConcept, which are all concepts used in this FreeModel
+	 * 
+	 * @return
+	 */
+	public List<FlexoConcept> getUsedFlexoConcepts() {
+		return virtualModelInstance.getUsedFlexoConcepts();
+	}
+
+	/**
+	 * Return a new list of FlexoConcept, which are all concepts used in this FreeModel
+	 * 
+	 * @return
+	 */
+	public List<FlexoConceptInstance> getInstances(FlexoConcept concept) {
+		return virtualModelInstance.getFlexoConceptInstances(concept);
 	}
 
 }

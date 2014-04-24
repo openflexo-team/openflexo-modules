@@ -20,4 +20,5 @@ public class FreeModellingEditor extends NatureSpecificModule<FMEModule, FreeMod
 		// WE want to avoid twice defined objects
 		INSTANCE = this;
 	}
+
 }

@@ -41,9 +41,12 @@ public class FreeModelDiagramEditor extends DiagramEditor {
 
 	private final FreeModel freeModel;
 
+	private String conceptFilter;
+
 	public FreeModelDiagramEditor(FreeModel freeModel, boolean readOnly, FlexoController controller, SwingToolFactory swingToolFactory) {
 		super(new FMLControlledDiagramDrawing(freeModel.getVirtualModelInstance(), readOnly), readOnly, controller, swingToolFactory);
 		this.freeModel = freeModel;
+		conceptFilter = "*";
 	}
 
 	public FreeModel getFreeModel() {
@@ -54,4 +57,13 @@ public class FreeModelDiagramEditor extends DiagramEditor {
 	public AbstractDiagramPalette makeCommonPalette() {
 		return new FreeShapesPalette(this);
 	}
+
+	public String getConceptFilter() {
+		return conceptFilter;
+	}
+
+	public void setConceptFilter(String conceptFilter) {
+		this.conceptFilter = conceptFilter;
+	}
+
 }

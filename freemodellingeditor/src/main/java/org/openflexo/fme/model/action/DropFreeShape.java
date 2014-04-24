@@ -92,10 +92,9 @@ public class DropFreeShape extends FlexoAction<DropFreeShape, DiagramContainerEl
 	@Override
 	protected void doAction(Object context) throws SaveResourceException {
 
-		logger.info("Oooops, que dois je faire ???");
+		boolean noneConceptIsExisting = freeModel.getMetaModel().getVirtualModel().getFlexoConcept(FreeMetaModel.NONE_FLEXO_CONCEPT) != null;
 
 		FlexoConcept none = freeModel.getMetaModel().getNoneFlexoConcept(getEditor(), this);
-		logger.info("J'ai bien le concept NONE: " + none);
 
 		List<DropScheme> dsList = none.getFlexoBehaviours(DropScheme.class);
 
@@ -114,9 +113,18 @@ public class DropFreeShape extends FlexoAction<DropFreeShape, DiagramContainerEl
 			ShapeRole shapeRole = (ShapeRole) none.getFlexoRole(FreeMetaModel.SHAPE_ROLE_NAME);
 			DiagramShape shape = newFlexoConceptInstance.getFlexoActor(shapeRole);
 
-			System.out.println("OK, je tombe sur la shape " + shape);
 			shape.getGraphicalRepresentation().setsWith(getGraphicalRepresentation());
-			System.out.println("Qui devient " + shape);
+
+			if (!noneConceptIsExisting) {
+				// This means that None FlexoConcept was not existing and has been created
+				// We should notify this
+				System.out.println("OK les gars, je notifie usedFlexoConcept");
+				System.out.println("qui vaut d'ailleurs: " + freeModel.getUsedFlexoConcepts());
+				freeModel.getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null, none);
+			}
+
+			// This is used to notify the adding of a new instance of None flexo concept
+			freeModel.getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", null, newFlexoConceptInstance);
 
 		} else {
 			logger.warning("Could not find DropScheme in " + none);

@@ -55,6 +55,7 @@ public class DropFreeShapeInitializer extends ActionInitializer<DropFreeShape, D
 			@Override
 			public boolean run(EventObject e, DropFreeShape action) {
 				logger.info("DropFreeShape finalizer");
+				getController().selectAndFocusObject(action.getNewFlexoConceptInstance());
 				return true;
 			}
 		};

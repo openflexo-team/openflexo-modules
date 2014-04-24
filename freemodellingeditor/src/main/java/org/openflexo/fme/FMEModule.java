@@ -62,7 +62,7 @@ public class FMEModule extends FlexoModule<FMEModule> {
 	public void initModule() {
 		super.initModule();
 		// Put here a code to display default view
-		getFMEController().setCurrentEditedObjectAsModuleView(getFMEController().getViewPointLibrary());
+		// getFMEController().setCurrentEditedObjectAsModuleView(getFMEController().getViewPointLibrary());
 	}
 
 	@Override

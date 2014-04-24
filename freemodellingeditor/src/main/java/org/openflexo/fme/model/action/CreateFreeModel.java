@@ -229,6 +229,7 @@ public class CreateFreeModel extends FlexoAction<CreateFreeModel, FreeModellingP
 		this.freeMetaModel = freeMetaModel;
 		getPropertyChangeSupport().firePropertyChange("freeMetaModel", null, freeMetaModel);
 		getPropertyChangeSupport().firePropertyChange("isValid", wasValid, isValid());
+		getPropertyChangeSupport().firePropertyChange("errorMessage", null, getErrorMessage());
 	}
 
 	public String getFreeModelName() {
@@ -240,6 +241,7 @@ public class CreateFreeModel extends FlexoAction<CreateFreeModel, FreeModellingP
 		this.freeModelName = freeModelName;
 		getPropertyChangeSupport().firePropertyChange("freeModelName", null, freeModelName);
 		getPropertyChangeSupport().firePropertyChange("isValid", wasValid, isValid());
+		getPropertyChangeSupport().firePropertyChange("errorMessage", null, getErrorMessage());
 	}
 
 	public boolean getCreateNewMetaModel() {
@@ -251,6 +253,7 @@ public class CreateFreeModel extends FlexoAction<CreateFreeModel, FreeModellingP
 		this.createNewMetaModel = createNewMetaModel;
 		getPropertyChangeSupport().firePropertyChange("createNewMetaModel", !createNewMetaModel, createNewMetaModel);
 		getPropertyChangeSupport().firePropertyChange("isValid", wasValid, isValid());
+		getPropertyChangeSupport().firePropertyChange("errorMessage", null, getErrorMessage());
 	}
 
 	public String getFreeModelDescription() {
@@ -262,6 +265,7 @@ public class CreateFreeModel extends FlexoAction<CreateFreeModel, FreeModellingP
 		this.freeModelDescription = freeModelDescription;
 		getPropertyChangeSupport().firePropertyChange("freeModelDescription", null, freeModelDescription);
 		getPropertyChangeSupport().firePropertyChange("isValid", wasValid, isValid());
+		getPropertyChangeSupport().firePropertyChange("errorMessage", null, getErrorMessage());
 	}
 
 }
