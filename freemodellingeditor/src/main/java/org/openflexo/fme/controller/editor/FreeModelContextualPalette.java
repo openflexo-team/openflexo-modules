@@ -45,7 +45,6 @@ public class FreeModelContextualPalette extends ContextualPalette implements Pro
 	@Override
 	public boolean handleFMLControlledDrop(DrawingTreeNode<?, ?> target, DiagramPaletteElement paletteElement, FGEPoint dropLocation,
 			FMLControlledDiagramEditor editor) {
-		System.out.println("Yes, on est bien dans FME !!!");
 		return super.handleFMLControlledDrop(target, paletteElement, dropLocation, editor);
 	}
 
