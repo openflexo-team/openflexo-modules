@@ -25,7 +25,7 @@ import java.io.FileNotFoundException;
 
 import org.openflexo.antar.binding.DataBinding;
 import org.openflexo.fge.ShapeGraphicalRepresentation;
-import org.openflexo.fge.shapes.Rectangle;
+import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
 import org.openflexo.foundation.DefaultFlexoObject;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoException;
@@ -34,6 +34,8 @@ import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.resource.ResourceLoadingCancelledException;
 import org.openflexo.foundation.viewpoint.FlexoConcept;
+import org.openflexo.foundation.viewpoint.PrimitiveRole;
+import org.openflexo.foundation.viewpoint.PrimitiveRole.PrimitiveType;
 import org.openflexo.foundation.viewpoint.VirtualModel;
 import org.openflexo.foundation.viewpoint.VirtualModelModelFactory;
 import org.openflexo.foundation.viewpoint.action.AddFlexoConcept;
@@ -41,6 +43,7 @@ import org.openflexo.foundation.viewpoint.action.CreateEditionAction;
 import org.openflexo.foundation.viewpoint.action.CreateEditionAction.CreateEditionActionChoice;
 import org.openflexo.foundation.viewpoint.action.CreateEditionScheme;
 import org.openflexo.foundation.viewpoint.action.CreateFlexoRole;
+import org.openflexo.foundation.viewpoint.editionaction.AssignationAction;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
 import org.openflexo.technologyadapter.diagram.fml.DropScheme;
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelNature;
@@ -61,7 +64,8 @@ import org.openflexo.technologyadapter.diagram.metamodel.DiagramSpecification;
 public class FreeMetaModel extends DefaultFlexoObject {
 
 	public static final String NONE_FLEXO_CONCEPT = "None";
-	public static final String SHAPE_ROLE_NAME = "Shape";
+	public static final String SHAPE_ROLE_NAME = "shape";
+	public static final String NAME_ROLE_NAME = "name";
 
 	private final VirtualModel virtualModel;
 	private final FreeModellingProject fmProject;
@@ -136,15 +140,29 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			} else {
 				createShapeRole = CreateFlexoRole.actionType.makeNewAction(noneFC, null, editor);
 			}
+			createShapeRole.setModelSlot(getTypedDiagramModelSlot());
 			createShapeRole.setRoleName(SHAPE_ROLE_NAME);
 			createShapeRole.setFlexoRoleClass(ShapeRole.class);
 			createShapeRole.doAction();
-
 			ShapeRole role = (ShapeRole) createShapeRole.getNewFlexoRole();
+
+			CreateFlexoRole createNameRole = null;
+			if (ownerAction != null) {
+				createNameRole = CreateFlexoRole.actionType.makeNewEmbeddedAction(noneFC, null, ownerAction);
+			} else {
+				createNameRole = CreateFlexoRole.actionType.makeNewAction(noneFC, null, editor);
+			}
+			createNameRole.setRoleName(NAME_ROLE_NAME);
+			createNameRole.setFlexoRoleClass(PrimitiveRole.class);
+			createNameRole.setPrimitiveType(PrimitiveType.String);
+			createNameRole.doAction();
+
 			VirtualModelModelFactory factory = noneFC.getVirtualModelFactory();
-			ShapeGraphicalRepresentation shapeGR = factory.newInstance(ShapeGraphicalRepresentation.class);
-			Rectangle rectangleShape = factory.newInstance(Rectangle.class);
-			shapeGR.setShapeSpecification(rectangleShape);
+			ShapeGraphicalRepresentation shapeGR = factory.makeShapeGraphicalRepresentation(ShapeType.RECTANGLE);
+			shapeGR.setX(10);
+			shapeGR.setY(10);
+			shapeGR.setWidth(80);
+			shapeGR.setHeight(60);
 			role.setGraphicalRepresentation(shapeGR);
 
 			CreateEditionScheme createDropScheme = null;
@@ -172,6 +190,20 @@ public class FreeMetaModel extends DefaultFlexoObject {
 
 			AddShape addShape = (AddShape) createAddShape.getNewEditionAction();
 			addShape.setAssignation(new DataBinding(SHAPE_ROLE_NAME));
+
+			CreateEditionAction givesNameAction = null;
+			if (ownerAction != null) {
+				givesNameAction = CreateEditionAction.actionType.makeNewEmbeddedAction(dropScheme, null, ownerAction);
+			} else {
+				givesNameAction = CreateEditionAction.actionType.makeNewAction(dropScheme, null, editor);
+			}
+			givesNameAction.actionChoice = CreateEditionActionChoice.BuiltInAction;
+			givesNameAction.setBuiltInActionClass(AssignationAction.class);
+			givesNameAction.doAction();
+
+			AssignationAction nameAssignation = (AssignationAction) givesNameAction.getNewEditionAction();
+			nameAssignation.setAssignation(new DataBinding(NAME_ROLE_NAME));
+			nameAssignation.setValue(new DataBinding("'name'"));
 
 		}
 		return noneFC;
