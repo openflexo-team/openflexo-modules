@@ -118,8 +118,6 @@ public class DropFreeShape extends FlexoAction<DropFreeShape, DiagramContainerEl
 			if (!noneConceptIsExisting) {
 				// This means that None FlexoConcept was not existing and has been created
 				// We should notify this
-				System.out.println("OK les gars, je notifie usedFlexoConcept");
-				System.out.println("qui vaut d'ailleurs: " + freeModel.getUsedFlexoConcepts());
 				freeModel.getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null, none);
 			}
 
