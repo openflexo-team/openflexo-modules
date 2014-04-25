@@ -24,8 +24,7 @@ import java.util.logging.Logger;
 import org.openflexo.fge.swing.control.SwingToolFactory;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.AbstractDiagramPalette;
-import org.openflexo.technologyadapter.diagram.controller.diagrameditor.DiagramEditor;
-import org.openflexo.technologyadapter.diagram.controller.diagrameditor.FMLControlledDiagramDrawing;
+import org.openflexo.technologyadapter.diagram.controller.diagrameditor.FMLControlledDiagramEditor;
 import org.openflexo.view.controller.FlexoController;
 
 /**
@@ -35,7 +34,7 @@ import org.openflexo.view.controller.FlexoController;
  * @author sylvain
  * 
  */
-public class FreeModelDiagramEditor extends DiagramEditor {
+public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 
 	private static final Logger logger = Logger.getLogger(FreeModelDiagramEditor.class.getPackage().getName());
 
@@ -44,7 +43,7 @@ public class FreeModelDiagramEditor extends DiagramEditor {
 	private String conceptFilter;
 
 	public FreeModelDiagramEditor(FreeModel freeModel, boolean readOnly, FlexoController controller, SwingToolFactory swingToolFactory) {
-		super(new FMLControlledDiagramDrawing(freeModel.getVirtualModelInstance(), readOnly), readOnly, controller, swingToolFactory);
+		super(freeModel.getVirtualModelInstance(), readOnly, controller, swingToolFactory);
 		this.freeModel = freeModel;
 		conceptFilter = "*";
 	}
