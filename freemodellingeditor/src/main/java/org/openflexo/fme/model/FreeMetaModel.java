@@ -127,18 +127,35 @@ public class FreeMetaModel extends DefaultFlexoObject {
 	}
 
 	public FlexoConcept getNoneFlexoConcept(FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction) {
-		FlexoConcept noneFC = getVirtualModel().getFlexoConcept(NONE_FLEXO_CONCEPT);
-		if (noneFC == null) {
-			AddFlexoConcept action = AddFlexoConcept.actionType.makeNewAction(getVirtualModel(), null, editor);
-			action.setNewFlexoConceptName(NONE_FLEXO_CONCEPT);
-			action.doAction();
-			noneFC = action.getNewFlexoConcept();
+		return getFlexoConcept(NONE_FLEXO_CONCEPT, editor, ownerAction);
+	}
 
+	/**
+	 * Return (creates when non-existant) a FlexoConcept (in the context of FreeModellingEditor)
+	 * 
+	 * @param conceptName
+	 * @param editor
+	 * @param ownerAction
+	 * @return
+	 */
+	public FlexoConcept getFlexoConcept(String conceptName, FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction) {
+
+		FlexoConcept returned = getVirtualModel().getFlexoConcept(conceptName);
+
+		if (returned == null) {
+
+			// Creates the concept
+			AddFlexoConcept action = AddFlexoConcept.actionType.makeNewAction(getVirtualModel(), null, editor);
+			action.setNewFlexoConceptName(conceptName);
+			action.doAction();
+			returned = action.getNewFlexoConcept();
+
+			// Creates shape role
 			CreateFlexoRole createShapeRole = null;
 			if (ownerAction != null) {
-				createShapeRole = CreateFlexoRole.actionType.makeNewEmbeddedAction(noneFC, null, ownerAction);
+				createShapeRole = CreateFlexoRole.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
 			} else {
-				createShapeRole = CreateFlexoRole.actionType.makeNewAction(noneFC, null, editor);
+				createShapeRole = CreateFlexoRole.actionType.makeNewAction(returned, null, editor);
 			}
 			createShapeRole.setModelSlot(getTypedDiagramModelSlot());
 			createShapeRole.setRoleName(SHAPE_ROLE_NAME);
@@ -146,20 +163,23 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			createShapeRole.doAction();
 			ShapeRole role = (ShapeRole) createShapeRole.getNewFlexoRole();
 
+			// Create new PrimitiveRole (String type) to store the name of this instance
 			CreateFlexoRole createNameRole = null;
 			if (ownerAction != null) {
-				createNameRole = CreateFlexoRole.actionType.makeNewEmbeddedAction(noneFC, null, ownerAction);
+				createNameRole = CreateFlexoRole.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
 			} else {
-				createNameRole = CreateFlexoRole.actionType.makeNewAction(noneFC, null, editor);
+				createNameRole = CreateFlexoRole.actionType.makeNewAction(returned, null, editor);
 			}
 			createNameRole.setRoleName(NAME_ROLE_NAME);
 			createNameRole.setFlexoRoleClass(PrimitiveRole.class);
 			createNameRole.setPrimitiveType(PrimitiveType.String);
 			createNameRole.doAction();
 
+			// Bind shapes's label to name role
 			role.setLabel(new DataBinding("name"));
 
-			VirtualModelModelFactory factory = noneFC.getVirtualModelFactory();
+			// Init a default GR
+			VirtualModelModelFactory factory = returned.getVirtualModelFactory();
 			ShapeGraphicalRepresentation shapeGR = factory.makeShapeGraphicalRepresentation(ShapeType.RECTANGLE);
 			shapeGR.setX(10);
 			shapeGR.setY(10);
@@ -167,11 +187,12 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			shapeGR.setHeight(60);
 			role.setGraphicalRepresentation(shapeGR);
 
+			// Create new DropScheme
 			CreateEditionScheme createDropScheme = null;
 			if (ownerAction != null) {
-				createDropScheme = CreateEditionScheme.actionType.makeNewEmbeddedAction(noneFC, null, ownerAction);
+				createDropScheme = CreateEditionScheme.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
 			} else {
-				createDropScheme = CreateEditionScheme.actionType.makeNewAction(noneFC, null, editor);
+				createDropScheme = CreateEditionScheme.actionType.makeNewAction(returned, null, editor);
 			}
 			createDropScheme.setFlexoBehaviourName("drop");
 			createDropScheme.setFlexoBehaviourClass(DropScheme.class);
@@ -207,9 +228,9 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			nameAssignation.setAssignation(new DataBinding(NAME_ROLE_NAME));
 			nameAssignation.setValue(new DataBinding("'name'"));
 
-			noneFC.getInspector().setRenderer(new DataBinding<String>("instance.name"));
+			returned.getInspector().setRenderer(new DataBinding<String>("instance.name"));
 		}
-		return noneFC;
+		return returned;
 	}
 
 }

@@ -55,6 +55,7 @@ public class FMEControllerActionInitializer extends ControllerActionInitializer 
 
 		new CreateFreeModelInitializer(this);
 		new DropFreeShapeInitializer(this);
+		new CreateNewConceptInitializer(this);
 
 	}
 
