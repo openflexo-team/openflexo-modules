@@ -157,6 +157,8 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			createNameRole.setPrimitiveType(PrimitiveType.String);
 			createNameRole.doAction();
 
+			role.setLabel(new DataBinding("name"));
+
 			VirtualModelModelFactory factory = noneFC.getVirtualModelFactory();
 			ShapeGraphicalRepresentation shapeGR = factory.makeShapeGraphicalRepresentation(ShapeType.RECTANGLE);
 			shapeGR.setX(10);
@@ -205,6 +207,7 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			nameAssignation.setAssignation(new DataBinding(NAME_ROLE_NAME));
 			nameAssignation.setValue(new DataBinding("'name'"));
 
+			noneFC.getInspector().setRenderer(new DataBinding<String>("instance.name"));
 		}
 		return noneFC;
 	}

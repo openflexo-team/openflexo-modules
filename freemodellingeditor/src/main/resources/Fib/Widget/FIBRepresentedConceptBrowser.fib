@@ -9,7 +9,7 @@
       <BrowserElement dataClassName="org.openflexo.foundation.viewpoint.FlexoConcept" label="concept.name" icon="controller.iconForObject(concept)" isEditable="false" filtered="false" defaultVisible="true" name="concept">
         <Children data="data.getInstances(concept)" name="instances" />
       </BrowserElement>
-      <BrowserElement dataClassName="org.openflexo.foundation.view.FlexoConceptInstance" label="instance.toString" icon="controller.iconForObject(instance)" isEditable="false" filtered="false" defaultVisible="true" name="instance" />
+      <BrowserElement dataClassName="org.openflexo.foundation.view.FlexoConceptInstance" label="instance.stringRepresentation" icon="controller.iconForObject(instance)" isEditable="false" filtered="false" defaultVisible="true" name="instance" />
     </Browser>
   </Panel>
   <LocalizedDictionary>
