@@ -19,6 +19,8 @@
  */
 package org.openflexo.fme.model;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import org.openflexo.foundation.DefaultFlexoObject;
@@ -41,7 +43,7 @@ import org.openflexo.technologyadapter.diagram.model.Diagram;
  * @author sylvain
  * 
  */
-public class FreeModel extends DefaultFlexoObject {
+public class FreeModel extends DefaultFlexoObject implements PropertyChangeListener {
 
 	private final VirtualModelInstance virtualModelInstance;
 	private final FreeModellingProject fmProject;
@@ -64,6 +66,7 @@ public class FreeModel extends DefaultFlexoObject {
 			throw new InvalidArgumentException("VirtualModelInstance does not have the FMLControlledDiagramVirtualModelInstanceNature");
 		}
 		this.virtualModelInstance = virtualModelInstance;
+		virtualModelInstance.getPropertyChangeSupport().addPropertyChangeListener(this);
 	}
 
 	public FreeModellingProject getFreeModellingProject() {
@@ -113,4 +116,17 @@ public class FreeModel extends DefaultFlexoObject {
 		return virtualModelInstance.getFlexoConceptInstances(concept);
 	}
 
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (evt.getSource() == virtualModelInstance) {
+			if (evt.getPropertyName().equals(VirtualModelInstance.FLEXO_CONCEPT_INSTANCES_KEY)) {
+				if (evt.getNewValue() instanceof FlexoConceptInstance) {
+					// A new FlexoConceptInstance has been created/added
+					FlexoConceptInstance fci = (FlexoConceptInstance) evt.getNewValue();
+					getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null, fci);
+					getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", null, fci);
+				}
+			}
+		}
+	}
 }
