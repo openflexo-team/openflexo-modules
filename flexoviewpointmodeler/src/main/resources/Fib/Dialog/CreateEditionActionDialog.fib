@@ -52,6 +52,9 @@
       <Dependancy componentName="RadioButtonList" />
       <Dependancy componentName="ModelSlotDD" />
       <Dependancy componentName="ActionTypeDD" />
+      <Dependancy componentName="BuiltInActionsDD" />
+      <Dependancy componentName="ControlActionsDD" />
+      <Dependancy componentName="RequestActionsDD" />
     </Button>
     <Button action="controller.cancelAndDispose()" buttonType="Trigger" label="cancel" localize="true" index="1" constraints="flow(index=1)" opaque="false" />
   </Panel>
