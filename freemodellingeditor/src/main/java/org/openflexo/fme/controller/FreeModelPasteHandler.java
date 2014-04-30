@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 import org.openflexo.fme.controller.editor.FreeModelDiagramEditor;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.fme.model.FreeModellingProjectNature;
+import org.openflexo.foundation.action.FlexoClipboard;
 import org.openflexo.foundation.action.PasteAction.PastingContext;
 import org.openflexo.foundation.view.FlexoConceptInstance;
 import org.openflexo.foundation.view.VirtualModelInstance;
@@ -59,17 +60,19 @@ public class FreeModelPasteHandler extends FMLControlledDiagramPasteHandler {
 	}
 
 	@Override
-	public void prepareClipboardForPasting(Clipboard clipboard, PastingContext<VirtualModelInstance> pastingContext) {
+	public void prepareClipboardForPasting(FlexoClipboard clipboard, PastingContext<VirtualModelInstance> pastingContext) {
 
 		super.prepareClipboardForPasting(clipboard, pastingContext);
 
+		Clipboard leaderClipboard = clipboard.getLeaderClipboard();
+
 		// Translating names
-		if (clipboard.isSingleObject()) {
-			if (clipboard.getSingleContents() instanceof FlexoConceptInstance) {
-				translateName((FlexoConceptInstance) clipboard.getSingleContents());
+		if (leaderClipboard.isSingleObject()) {
+			if (leaderClipboard.getSingleContents() instanceof FlexoConceptInstance) {
+				translateName((FlexoConceptInstance) leaderClipboard.getSingleContents());
 			}
 		} else {
-			for (Object o : clipboard.getMultipleContents()) {
+			for (Object o : leaderClipboard.getMultipleContents()) {
 				if (o instanceof FlexoConceptInstance) {
 					translateName((FlexoConceptInstance) o);
 				}
