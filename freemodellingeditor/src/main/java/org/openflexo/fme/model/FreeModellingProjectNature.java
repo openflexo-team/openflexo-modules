@@ -28,9 +28,11 @@ import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.nature.ProjectNature;
 import org.openflexo.foundation.nature.ProjectNatureService;
+import org.openflexo.foundation.view.FlexoConceptInstance;
 import org.openflexo.foundation.view.View;
 import org.openflexo.foundation.view.action.CreateView;
 import org.openflexo.foundation.view.rm.ViewResource;
+import org.openflexo.foundation.viewpoint.FlexoRole;
 import org.openflexo.foundation.viewpoint.ViewPoint;
 import org.openflexo.foundation.viewpoint.action.CreateViewPoint;
 import org.openflexo.foundation.viewpoint.rm.ViewPointResource;
@@ -227,6 +229,16 @@ public class FreeModellingProjectNature implements ProjectNature<FreeModellingPr
 			}
 		}
 		return returned;
+	}
+
+	public String getInstanceName(FlexoConceptInstance flexoConceptInstance) {
+		FlexoRole<String> nameRole = (FlexoRole<String>) flexoConceptInstance.getFlexoConcept().getFlexoRole(FreeMetaModel.NAME_ROLE_NAME);
+		return flexoConceptInstance.getFlexoActor(nameRole);
+	}
+
+	public void setInstanceName(FlexoConceptInstance flexoConceptInstance, String value) {
+		FlexoRole<String> nameRole = (FlexoRole<String>) flexoConceptInstance.getFlexoConcept().getFlexoRole(FreeMetaModel.NAME_ROLE_NAME);
+		flexoConceptInstance.setFlexoActor(value, nameRole);
 	}
 
 }

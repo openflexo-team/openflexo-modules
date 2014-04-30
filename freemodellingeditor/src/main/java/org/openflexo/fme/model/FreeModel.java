@@ -77,6 +77,10 @@ public class FreeModel extends DefaultFlexoObject implements PropertyChangeListe
 		return virtualModelInstance;
 	}
 
+	public FreeModellingProjectNature getProjectNature() {
+		return getFreeModellingProject().getProjectNature();
+	}
+
 	public Diagram getDiagram() {
 		return FMLControlledDiagramVirtualModelInstanceNature.getDiagram(virtualModelInstance);
 	}

@@ -98,6 +98,10 @@ public class FreeMetaModel extends DefaultFlexoObject {
 		return virtualModel;
 	}
 
+	public FreeModellingProjectNature getProjectNature() {
+		return getFreeModellingProject().getProjectNature();
+	}
+
 	public TypedDiagramModelSlot getTypedDiagramModelSlot() {
 		return FMLControlledDiagramVirtualModelNature.getTypedDiagramModelSlot(getVirtualModel());
 	}

@@ -22,7 +22,9 @@ package org.openflexo.fme.controller.editor;
 import java.util.logging.Logger;
 
 import org.openflexo.fge.swing.control.SwingToolFactory;
+import org.openflexo.fme.controller.FreeModelPasteHandler;
 import org.openflexo.fme.model.FreeModel;
+import org.openflexo.technologyadapter.diagram.controller.action.FMLControlledDiagramPasteHandler;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.AbstractDiagramPalette;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.FMLControlledDiagramEditor;
 import org.openflexo.view.controller.FlexoController;
@@ -42,10 +44,26 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 
 	private String conceptFilter;
 
+	private final FreeModelPasteHandler freeModelPasteHandler;
+
 	public FreeModelDiagramEditor(FreeModel freeModel, boolean readOnly, FlexoController controller, SwingToolFactory swingToolFactory) {
 		super(freeModel.getVirtualModelInstance(), readOnly, controller, swingToolFactory);
 		this.freeModel = freeModel;
 		conceptFilter = "*";
+		// We have to switch properly between those paste handlers
+		// AND do not forget to destroy them
+		freeModelPasteHandler = new FreeModelPasteHandler(freeModel, this);
+	}
+
+	@Override
+	public FMLControlledDiagramPasteHandler getPasteHandler() {
+		return freeModelPasteHandler;
+	}
+
+	@Override
+	public void delete() {
+		getFlexoController().getEditingContext().unregisterPasteHandler(freeModelPasteHandler);
+		super.delete();
 	}
 
 	public FreeModel getFreeModel() {
