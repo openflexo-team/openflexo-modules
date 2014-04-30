@@ -30,7 +30,6 @@ import javax.swing.SwingUtilities;
 
 import org.openflexo.fme.controller.editor.FreeModelDiagramEditor;
 import org.openflexo.fme.model.FreeModel;
-import org.openflexo.foundation.view.VirtualModelInstance;
 import org.openflexo.technologyadapter.diagram.controller.DiagramTechnologyAdapterController;
 import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.FlexoController;
@@ -88,8 +87,7 @@ public class FreeModelModuleView extends JPanel implements ModuleView<FreeModel>
 
 		System.out.println("FreeModelModuleView WILL HIDE !!!!!!");
 
-		getEditor().getFlexoController().getEditingContext()
-				.unregisterPasteHandler(VirtualModelInstance.class, getEditor().getPasteHandler());
+		getEditor().getFlexoController().getEditingContext().unregisterPasteHandler(getEditor().getPasteHandler());
 
 	}
 
@@ -98,8 +96,7 @@ public class FreeModelModuleView extends JPanel implements ModuleView<FreeModel>
 
 		System.out.println("FreeModelModuleView WILL SHOW !!!!!!");
 
-		getEditor().getFlexoController().getEditingContext()
-				.registerPasteHandler(VirtualModelInstance.class, getEditor().getPasteHandler());
+		getEditor().getFlexoController().getEditingContext().registerPasteHandler(getEditor().getPasteHandler());
 
 		getPerspective().focusOnObject(getRepresentedObject());
 	}
