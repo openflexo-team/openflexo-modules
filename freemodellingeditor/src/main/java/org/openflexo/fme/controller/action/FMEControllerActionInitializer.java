@@ -54,6 +54,7 @@ public class FMEControllerActionInitializer extends ControllerActionInitializer 
 		new ConvertToFreeModellingEditorProjectInitializer(this);
 
 		new CreateFreeModelInitializer(this);
+		new CreateFreeModelFromPPTInitializer(this);
 		new DropFreeShapeInitializer(this);
 		new CreateNewConceptInitializer(this);
 
