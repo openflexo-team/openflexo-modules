@@ -51,5 +51,7 @@ public class FMECst {
 
 	public static Resource CREATE_FREE_MODEL_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateFreeModelDialog.fib");
 	public static Resource CREATE_NEW_CONCEPT_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateNewConceptDialog.fib");
+	public static Resource DECLARE_INSTANCE_OF_EXISTING_CONCEPT_DIALOG_FIB = ResourceLocator
+			.locateResource("Fib/Dialog/DeclareInstanceOfExistingConceptDialog.fib");
 
 }

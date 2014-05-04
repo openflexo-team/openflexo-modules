@@ -57,6 +57,7 @@ public class FMEControllerActionInitializer extends ControllerActionInitializer 
 		new CreateFreeModelFromPPTInitializer(this);
 		new DropFreeShapeInitializer(this);
 		new CreateNewConceptInitializer(this);
+		new DeclareInstanceOfExistingConceptInitializer(this);
 
 	}
 

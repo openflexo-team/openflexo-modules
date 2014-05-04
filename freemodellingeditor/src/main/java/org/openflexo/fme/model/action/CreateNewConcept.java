@@ -80,7 +80,8 @@ public class CreateNewConcept extends FlexoAction<CreateNewConcept, FlexoConcept
 	private String newConceptDescription;
 
 	private FlexoConcept newFlexoConcept;
-	private FlexoConceptInstance newFlexoConceptInstance;
+
+	// private FlexoConceptInstance newFlexoConceptInstance;
 
 	CreateNewConcept(FlexoConceptInstance focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
@@ -120,6 +121,8 @@ public class CreateNewConcept extends FlexoAction<CreateNewConcept, FlexoConcept
 		// Sets new concept GR with actual shape GR
 		ShapeRole shapeRole = (ShapeRole) newFlexoConcept.getFlexoRole(FreeMetaModel.SHAPE_ROLE_NAME);
 		shapeRole.getGraphicalRepresentation().setsWith(shapeElement.getGraphicalRepresentation());
+		shapeRole.getGraphicalRepresentation().setX(10);
+		shapeRole.getGraphicalRepresentation().setY(10);
 
 		// We will here bypass the classical DropScheme
 		flexoConceptInstance.setFlexoConcept(newFlexoConcept);
@@ -152,7 +155,7 @@ public class CreateNewConcept extends FlexoAction<CreateNewConcept, FlexoConcept
 		freeModel.getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null, newFlexoConcept);
 
 		// This is used to notify the adding of a new instance of a flexo concept
-		freeModel.getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", null, newFlexoConceptInstance);
+		freeModel.getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", null, getFocusedObject());
 	}
 
 	public String getNewConceptName() {

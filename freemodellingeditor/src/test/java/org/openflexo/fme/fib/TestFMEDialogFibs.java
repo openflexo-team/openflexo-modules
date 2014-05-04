@@ -22,4 +22,9 @@ public class TestFMEDialogFibs extends GenericFIBTestCase {
 		validateFIB("Fib/Dialog/CreateNewConceptDialog.fib");
 	}
 
+	@Test
+	public void testDeclareInstanceOfExistingConceptDialog() {
+		validateFIB("Fib/Dialog/DeclareInstanceOfExistingConceptDialog.fib");
+	}
+
 }

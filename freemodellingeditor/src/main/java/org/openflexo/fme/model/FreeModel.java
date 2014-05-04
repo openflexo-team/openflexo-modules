@@ -29,6 +29,7 @@ import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.view.FlexoConceptInstance;
 import org.openflexo.foundation.view.VirtualModelInstance;
 import org.openflexo.foundation.viewpoint.FlexoConcept;
+import org.openflexo.foundation.viewpoint.VirtualModel;
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelInstanceNature;
 import org.openflexo.technologyadapter.diagram.model.Diagram;
 
@@ -71,6 +72,10 @@ public class FreeModel extends DefaultFlexoObject implements PropertyChangeListe
 
 	public FreeModellingProject getFreeModellingProject() {
 		return fmProject;
+	}
+
+	public VirtualModel getVirtualModel() {
+		return getMetaModel().getVirtualModel();
 	}
 
 	public VirtualModelInstance getVirtualModelInstance() {
