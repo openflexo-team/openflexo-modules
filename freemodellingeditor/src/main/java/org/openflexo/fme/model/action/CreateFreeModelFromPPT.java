@@ -103,14 +103,18 @@ public class CreateFreeModelFromPPT extends FlexoAction<CreateFreeModelFromPPT, 
 		logger.info("Create free model from PPT slide : Import PPT Slide ");
 		CreateDiagramFromPPTSlide actionCreateDiagramFromPPTSlide = CreateDiagramFromPPTSlide.actionType
 				.makeNewEmbeddedAction(getFocusedObject().getDiagramSpecificationsFolder(), null, this);
-		
-		actionCreateDiagramFromPPTSlide.setDiagram(actionCreateFreeModel.getFreeModel().getDiagram());
-		actionCreateDiagramFromPPTSlide.doAction();
-		
-		none = freeModel.getMetaModel().getNoneFlexoConcept(getEditor(), this);
-		createFlexoConceptInstancesFromDiagramContainer(actionCreateDiagramFromPPTSlide.getDiagram());
-		
-		logger.info("Create free model from PPT slide : Free Model Created ");
+		if(actionCreateFreeModel.getFreeModel()!=null){
+			actionCreateDiagramFromPPTSlide.setDiagram(actionCreateFreeModel.getFreeModel().getDiagram());
+			actionCreateDiagramFromPPTSlide.doAction();
+			
+			none = freeModel.getMetaModel().getNoneFlexoConcept(getEditor(), this);
+			createFlexoConceptInstancesFromDiagramContainer(actionCreateDiagramFromPPTSlide.getDiagram());
+			
+			logger.info("Create free model from PPT slide : Free Model Created ");
+		}
+		else{
+			logger.info("Create free model from PPT slide : Action is interrupted ");
+		}
 	}
 	
 	public FreeModel getFreeModel() {
