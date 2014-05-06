@@ -28,19 +28,19 @@ import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
 import org.openflexo.foundation.viewpoint.FlexoConceptObject;
 import org.openflexo.foundation.viewpoint.ViewPointObject;
-import org.openflexo.foundation.viewpoint.action.CreateEditionScheme;
+import org.openflexo.foundation.viewpoint.action.CreateFlexoBehaviour;
 import org.openflexo.icon.VPMIconLibrary;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.vpm.VPMCst;
 import org.openflexo.vpm.controller.VPMController;
 
-public class CreateEditionSchemeInitializer extends ActionInitializer<CreateEditionScheme, FlexoConceptObject, ViewPointObject> {
+public class CreateFlexoBehaviourInitializer extends ActionInitializer<CreateFlexoBehaviour, FlexoConceptObject, ViewPointObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
-	CreateEditionSchemeInitializer(VPMControllerActionInitializer actionInitializer) {
-		super(CreateEditionScheme.actionType, actionInitializer);
+	CreateFlexoBehaviourInitializer(VPMControllerActionInitializer actionInitializer) {
+		super(CreateFlexoBehaviour.actionType, actionInitializer);
 	}
 
 	@Override
@@ -54,20 +54,20 @@ public class CreateEditionSchemeInitializer extends ActionInitializer<CreateEdit
 	}
 
 	@Override
-	protected FlexoActionInitializer<CreateEditionScheme> getDefaultInitializer() {
-		return new FlexoActionInitializer<CreateEditionScheme>() {
+	protected FlexoActionInitializer<CreateFlexoBehaviour> getDefaultInitializer() {
+		return new FlexoActionInitializer<CreateFlexoBehaviour>() {
 			@Override
-			public boolean run(EventObject e, CreateEditionScheme action) {
-				return instanciateAndShowDialog(action, VPMCst.CREATE_EDITION_SCHEME_DIALOG_FIB);
+			public boolean run(EventObject e, CreateFlexoBehaviour action) {
+				return instanciateAndShowDialog(action, VPMCst.CREATE_FLEXO_BEHAVIOUR_DIALOG_FIB);
 			}
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<CreateEditionScheme> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<CreateEditionScheme>() {
+	protected FlexoActionFinalizer<CreateFlexoBehaviour> getDefaultFinalizer() {
+		return new FlexoActionFinalizer<CreateFlexoBehaviour>() {
 			@Override
-			public boolean run(EventObject e, CreateEditionScheme action) {
+			public boolean run(EventObject e, CreateFlexoBehaviour action) {
 				// getController().setCurrentEditedObjectAsModuleView(action.getNewModelSlot(), getController().VIEW_POINT_PERSPECTIVE);
 				return true;
 			}

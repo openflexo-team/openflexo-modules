@@ -61,7 +61,7 @@ public class VPMControllerActionInitializer extends ControllerActionInitializer 
 		new DeleteVirtualModelInitializer(this);
 		new CreateFlexoRoleInitializer(this);
 		new CreateEditionActionInitializer(this);
-		new CreateEditionSchemeInitializer(this);
+		new CreateFlexoBehaviourInitializer(this);
 		new AddFlexoConceptInitializer(this);
 		new DeleteFlexoConceptInitializer(this);
 		new DuplicateFlexoConceptInitializer(this);

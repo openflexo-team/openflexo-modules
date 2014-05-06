@@ -43,8 +43,8 @@ import org.openflexo.foundation.viewpoint.VirtualModelModelFactory;
 import org.openflexo.foundation.viewpoint.action.AddFlexoConcept;
 import org.openflexo.foundation.viewpoint.action.CreateEditionAction;
 import org.openflexo.foundation.viewpoint.action.CreateEditionAction.CreateEditionActionChoice;
-import org.openflexo.foundation.viewpoint.action.CreateEditionScheme;
-import org.openflexo.foundation.viewpoint.action.CreateEditionSchemeParameter;
+import org.openflexo.foundation.viewpoint.action.CreateFlexoBehaviour;
+import org.openflexo.foundation.viewpoint.action.CreateFlexoBehaviourParameter;
 import org.openflexo.foundation.viewpoint.action.CreateFlexoRole;
 import org.openflexo.foundation.viewpoint.editionaction.AssignationAction;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
@@ -202,11 +202,11 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			role.setGraphicalRepresentation(shapeGR);
 
 			// Create new DropScheme
-			CreateEditionScheme createDropScheme = null;
+			CreateFlexoBehaviour createDropScheme = null;
 			if (ownerAction != null) {
-				createDropScheme = CreateEditionScheme.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
+				createDropScheme = CreateFlexoBehaviour.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
 			} else {
-				createDropScheme = CreateEditionScheme.actionType.makeNewAction(returned, null, editor);
+				createDropScheme = CreateFlexoBehaviour.actionType.makeNewAction(returned, null, editor);
 			}
 			createDropScheme.setFlexoBehaviourName("drop");
 			createDropScheme.setFlexoBehaviourClass(DropScheme.class);
@@ -216,11 +216,11 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			dropScheme.setSkipConfirmationPanel(true);
 
 			// Create new DropScheme parameter
-			CreateEditionSchemeParameter createDropSchemeParameter = null;
+			CreateFlexoBehaviourParameter createDropSchemeParameter = null;
 			if (ownerAction != null) {
-				createDropSchemeParameter = CreateEditionSchemeParameter.actionType.makeNewEmbeddedAction(dropScheme, null, ownerAction);
+				createDropSchemeParameter = CreateFlexoBehaviourParameter.actionType.makeNewEmbeddedAction(dropScheme, null, ownerAction);
 			} else {
-				createDropSchemeParameter = CreateEditionSchemeParameter.actionType.makeNewAction(dropScheme, null, editor);
+				createDropSchemeParameter = CreateFlexoBehaviourParameter.actionType.makeNewAction(dropScheme, null, editor);
 			}
 			createDropSchemeParameter.setParameterName("conceptName");
 			createDropSchemeParameter.setFlexoBehaviourParameterClass(TextFieldParameter.class);
