@@ -42,6 +42,7 @@ import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlotInstanceConfiguration;
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelNature;
+import org.openflexo.technologyadapter.diagram.fml.action.CreateDiagramPalette;
 import org.openflexo.technologyadapter.diagram.fml.action.CreateDiagramSpecification;
 import org.openflexo.technologyadapter.diagram.fml.action.CreateFMLControlledDiagramVirtualModelInstance;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramSpecification;
@@ -144,6 +145,11 @@ public class CreateFreeModel extends FlexoAction<CreateFreeModel, FreeModellingP
 		createDS.doAction();
 		DiagramSpecification diagramSpecification = createDS.getNewDiagramSpecification();
 		System.out.println("DiagramSpecification has been created: " + diagramSpecification);
+
+		CreateDiagramPalette createPalette = CreateDiagramPalette.actionType.makeNewEmbeddedAction(diagramSpecification, null, this);
+		createPalette.setNewPaletteName(FreeMetaModel.PALETTE_NAME);
+		createPalette.doAction();
+		System.out.println("Palette has been created: " + createPalette.getNewPalette());
 
 		// Now we create the VirtualModel
 		System.out.println("Creating VirtualModel...");

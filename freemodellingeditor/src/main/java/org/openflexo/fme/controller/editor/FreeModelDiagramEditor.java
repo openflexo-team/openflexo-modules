@@ -26,7 +26,9 @@ import org.openflexo.fme.controller.FreeModelPasteHandler;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.technologyadapter.diagram.controller.action.FMLControlledDiagramPasteHandler;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.AbstractDiagramPalette;
+import org.openflexo.technologyadapter.diagram.controller.diagrameditor.ContextualPalette;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.FMLControlledDiagramEditor;
+import org.openflexo.technologyadapter.diagram.metamodel.DiagramPalette;
 import org.openflexo.view.controller.FlexoController;
 
 /**
@@ -71,8 +73,18 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 	}
 
 	@Override
+	public String getCommonPaletteTitle() {
+		return "Free shapes";
+	}
+
+	@Override
 	public AbstractDiagramPalette makeCommonPalette() {
 		return new FreeShapesPalette(this);
+	}
+
+	@Override
+	public ContextualPalette makeContextualPalette(DiagramPalette palette) {
+		return new ConceptsPalette(palette, this);
 	}
 
 	public String getConceptFilter() {

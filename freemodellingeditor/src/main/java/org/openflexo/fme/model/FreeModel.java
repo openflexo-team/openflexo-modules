@@ -29,6 +29,7 @@ import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.view.FlexoConceptInstance;
 import org.openflexo.foundation.view.VirtualModelInstance;
 import org.openflexo.foundation.viewpoint.FlexoConcept;
+import org.openflexo.foundation.viewpoint.FlexoRole;
 import org.openflexo.foundation.viewpoint.VirtualModel;
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelInstanceNature;
 import org.openflexo.technologyadapter.diagram.model.Diagram;
@@ -137,5 +138,37 @@ public class FreeModel extends DefaultFlexoObject implements PropertyChangeListe
 				}
 			}
 		}
+	}
+
+	public String getProposedName(FlexoConcept concept) {
+
+		String baseName;
+		if (concept.getName().equals(FreeMetaModel.NONE_FLEXO_CONCEPT)) {
+			baseName = "unnamed";
+		} else {
+			baseName = concept.getName().toLowerCase();
+		}
+
+		String returned = baseName;
+		int index = 2;
+
+		while (getFlexoConceptInstanceNamed(returned, concept) != null) {
+			returned = baseName + index;
+			index++;
+		}
+
+		return returned;
+
+	}
+
+	public FlexoConceptInstance getFlexoConceptInstanceNamed(String name, FlexoConcept concept) {
+		FlexoRole nameRole = concept.getFlexoRole(FreeMetaModel.NAME_ROLE_NAME);
+		for (FlexoConceptInstance fci : getVirtualModelInstance().getFlexoConceptInstances(concept)) {
+			String fciName = (String) fci.getFlexoActor(nameRole);
+			if (fciName != null && fciName.equals(name)) {
+				return fci;
+			}
+		}
+		return null;
 	}
 }

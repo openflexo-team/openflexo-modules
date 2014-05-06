@@ -19,12 +19,8 @@
  */
 package org.openflexo.vpm;
 
-import java.io.File;
-
-import org.openflexo.rm.ResourceLocator;
 import org.openflexo.rm.Resource;
-import org.openflexo.rm.ResourceLocatorDelegate;
-
+import org.openflexo.rm.ResourceLocator;
 
 /**
  * Constants used by the Diagram TA UI
@@ -32,9 +28,7 @@ import org.openflexo.rm.ResourceLocatorDelegate;
  * @author yourname
  */
 public class VPMCst {
-	
 
-	
 	public static final int PALETTE_DOC_SPLIT_LOCATION = 300;
 
 	public static String CED_MODULE_VERSION = "0.0.1";
@@ -59,9 +53,10 @@ public class VPMCst {
 	public static Resource CREATE_MODEL_SLOT_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateModelSlotDialog.fib");
 	public static Resource CREATE_FLEXO_ROLE_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateFlexoRoleDialog.fib");
 	public static Resource CREATE_EDITION_ACTION_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateEditionActionDialog.fib");
-	public static Resource CREATE_EDITION_SCHEME_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateEditionSchemeDialog.fib");
+	public static Resource CREATE_FLEXO_BEHAVIOUR_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateFlexoBehaviourDialog.fib");
 	public static Resource CREATE_VIEW_POINT_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateViewPointDialog.fib");
 	public static Resource CREATE_VIRTUAL_MODEL_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateVirtualModelDialog.fib");
-	public static Resource SHOW_FML_REPRESENTATION_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/ShowFMLRepresentationDialog.fib");
+	public static Resource SHOW_FML_REPRESENTATION_DIALOG_FIB = ResourceLocator
+			.locateResource("Fib/Dialog/ShowFMLRepresentationDialog.fib");
 
 }

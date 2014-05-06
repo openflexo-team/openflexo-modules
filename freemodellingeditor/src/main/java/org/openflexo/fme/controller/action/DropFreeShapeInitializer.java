@@ -22,7 +22,7 @@ package org.openflexo.fme.controller.action;
 import java.util.EventObject;
 import java.util.logging.Logger;
 
-import org.openflexo.fme.model.action.DropFreeShape;
+import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
@@ -30,31 +30,31 @@ import org.openflexo.technologyadapter.diagram.model.DiagramContainerElement;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 
-public class DropFreeShapeInitializer extends ActionInitializer<DropFreeShape, DiagramContainerElement<?>, FlexoObject> {
+public class DropFreeShapeInitializer extends ActionInitializer<DropShape, DiagramContainerElement<?>, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
 	public DropFreeShapeInitializer(ControllerActionInitializer actionInitializer) {
-		super(DropFreeShape.actionType, actionInitializer);
+		super(DropShape.actionType, actionInitializer);
 	}
 
 	@Override
-	protected FlexoActionInitializer<DropFreeShape> getDefaultInitializer() {
-		return new FlexoActionInitializer<DropFreeShape>() {
+	protected FlexoActionInitializer<DropShape> getDefaultInitializer() {
+		return new FlexoActionInitializer<DropShape>() {
 			@Override
-			public boolean run(EventObject e, DropFreeShape action) {
-				logger.info("DropFreeShape initializer");
+			public boolean run(EventObject e, DropShape action) {
+				logger.info("DropShape initializer");
 				return true;
 			}
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<DropFreeShape> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<DropFreeShape>() {
+	protected FlexoActionFinalizer<DropShape> getDefaultFinalizer() {
+		return new FlexoActionFinalizer<DropShape>() {
 			@Override
-			public boolean run(EventObject e, DropFreeShape action) {
-				logger.info("DropFreeShape finalizer");
+			public boolean run(EventObject e, DropShape action) {
+				logger.info("DropShape finalizer");
 				getController().selectAndFocusObject(action.getNewFlexoConceptInstance());
 				return true;
 			}

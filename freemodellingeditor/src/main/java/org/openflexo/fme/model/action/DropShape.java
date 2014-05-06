@@ -34,6 +34,7 @@ import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
 import org.openflexo.foundation.resource.SaveResourceException;
 import org.openflexo.foundation.view.FlexoConceptInstance;
+import org.openflexo.foundation.viewpoint.FlexoBehaviourParameter;
 import org.openflexo.foundation.viewpoint.FlexoConcept;
 import org.openflexo.technologyadapter.diagram.fml.DropScheme;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
@@ -47,19 +48,19 @@ import org.openflexo.technologyadapter.diagram.model.action.DropSchemeAction;
  * @author sylvain
  * 
  */
-public class DropFreeShape extends FlexoAction<DropFreeShape, DiagramContainerElement<?>, FlexoObject> {
+public class DropShape extends FlexoAction<DropShape, DiagramContainerElement<?>, FlexoObject> {
 
-	private static final Logger logger = Logger.getLogger(DropFreeShape.class.getPackage().getName());
+	private static final Logger logger = Logger.getLogger(DropShape.class.getPackage().getName());
 
-	public static FlexoActionType<DropFreeShape, DiagramContainerElement<?>, FlexoObject> actionType = new FlexoActionType<DropFreeShape, DiagramContainerElement<?>, FlexoObject>(
+	public static FlexoActionType<DropShape, DiagramContainerElement<?>, FlexoObject> actionType = new FlexoActionType<DropShape, DiagramContainerElement<?>, FlexoObject>(
 			"drop_free_shape", FlexoActionType.newMenu, FlexoActionType.defaultGroup, FlexoActionType.ADD_ACTION_TYPE) {
 
 		/**
 		 * Factory method
 		 */
 		@Override
-		public DropFreeShape makeNewAction(DiagramContainerElement<?> focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
-			return new DropFreeShape(focusedObject, globalSelection, editor);
+		public DropShape makeNewAction(DiagramContainerElement<?> focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+			return new DropShape(focusedObject, globalSelection, editor);
 		}
 
 		@Override
@@ -75,57 +76,73 @@ public class DropFreeShape extends FlexoAction<DropFreeShape, DiagramContainerEl
 	};
 
 	static {
-		FlexoObjectImpl.addActionForClass(DropFreeShape.actionType, DiagramContainerElement.class);
+		FlexoObjectImpl.addActionForClass(DropShape.actionType, DiagramContainerElement.class);
 	}
 
 	private FreeModel freeModel;
 	private DiagramContainerElement<?> parent;
-	private String newShapeName;
 	private ShapeGraphicalRepresentation graphicalRepresentation;
+	private FlexoConcept concept;
+	private FGEPoint dropLocation;
 
 	private FlexoConceptInstance newFlexoConceptInstance;
 
-	DropFreeShape(DiagramContainerElement<?> focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+	DropShape(DiagramContainerElement<?> focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 
 	@Override
 	protected void doAction(Object context) throws SaveResourceException {
 
-		boolean noneConceptIsExisting = freeModel.getMetaModel().getVirtualModel().getFlexoConcept(FreeMetaModel.NONE_FLEXO_CONCEPT) != null;
+		FlexoConcept concept = getConcept();
 
-		FlexoConcept none = freeModel.getMetaModel().getNoneFlexoConcept(getEditor(), this);
+		boolean noneConceptIsExisting = true;
 
-		List<DropScheme> dsList = none.getFlexoBehaviours(DropScheme.class);
+		// When non concept supplied, use (eventually creates) None concept
+		if (concept == null) {
+			noneConceptIsExisting = freeModel.getMetaModel().getVirtualModel().getFlexoConcept(FreeMetaModel.NONE_FLEXO_CONCEPT) != null;
+			concept = freeModel.getMetaModel().getNoneFlexoConcept(getEditor(), this);
+		}
+
+		List<DropScheme> dsList = concept.getFlexoBehaviours(DropScheme.class);
 
 		if (dsList.size() == 1) {
 
 			DropScheme dropScheme = dsList.get(0);
-
+			FlexoBehaviourParameter nameParam = dropScheme.getParameters().size() > 0 ? dropScheme.getParameters().get(0) : null;
 			DropSchemeAction action = DropSchemeAction.actionType.makeNewEmbeddedAction(getFreeModel().getVirtualModelInstance(), null,
 					this);
+			if (nameParam != null) {
+				action.setParameterValue(nameParam, getFreeModel().getProposedName(concept));
+			}
 			action.setDropScheme(dropScheme);
 			action.setParent(getParent());
-			action.setDropLocation(new FGEPoint(getGraphicalRepresentation().getX(), getGraphicalRepresentation().getY()));
+			action.setDropLocation(dropLocation);
 			action.doAction();
 			newFlexoConceptInstance = action.getFlexoConceptInstance();
 
-			ShapeRole shapeRole = (ShapeRole) none.getFlexoRole(FreeMetaModel.SHAPE_ROLE_NAME);
+			ShapeRole shapeRole = (ShapeRole) concept.getFlexoRole(FreeMetaModel.SHAPE_ROLE_NAME);
 			DiagramShape shape = newFlexoConceptInstance.getFlexoActor(shapeRole);
 
-			shape.getGraphicalRepresentation().setsWith(getGraphicalRepresentation());
+			// If another GR was defined (overriding the one from ShapeRole)
+			if (getGraphicalRepresentation() != null) {
+				shape.getGraphicalRepresentation().setsWith(getGraphicalRepresentation());
+			}
+
+			shape.getGraphicalRepresentation().setX(dropLocation.x);
+			shape.getGraphicalRepresentation().setY(dropLocation.y);
 
 			if (!noneConceptIsExisting) {
 				// This means that None FlexoConcept was not existing and has been created
 				// We should notify this
-				freeModel.getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null, none);
+				freeModel.getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null, concept);
 			}
 
 			// This is used to notify the adding of a new instance of None flexo concept
 			freeModel.getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", null, newFlexoConceptInstance);
 
 		} else {
-			logger.warning("Could not find DropScheme in " + none);
+			logger.warning("Could not find DropScheme in " + concept);
 		}
 	}
 
@@ -148,14 +165,6 @@ public class DropFreeShape extends FlexoAction<DropFreeShape, DiagramContainerEl
 		this.parent = parent;
 	}
 
-	public String getNewShapeName() {
-		return newShapeName;
-	}
-
-	public void setNewShapeName(String newShapeName) {
-		this.newShapeName = newShapeName;
-	}
-
 	public ShapeGraphicalRepresentation getGraphicalRepresentation() {
 		return graphicalRepresentation;
 	}
@@ -166,6 +175,22 @@ public class DropFreeShape extends FlexoAction<DropFreeShape, DiagramContainerEl
 
 	public FlexoConceptInstance getNewFlexoConceptInstance() {
 		return newFlexoConceptInstance;
+	}
+
+	public FlexoConcept getConcept() {
+		return concept;
+	}
+
+	public void setConcept(FlexoConcept concept) {
+		this.concept = concept;
+	}
+
+	public FGEPoint getDropLocation() {
+		return dropLocation;
+	}
+
+	public void setDropLocation(FGEPoint dropLocation) {
+		this.dropLocation = dropLocation;
 	}
 
 }
