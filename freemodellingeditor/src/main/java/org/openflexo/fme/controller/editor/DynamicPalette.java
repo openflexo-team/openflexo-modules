@@ -22,10 +22,24 @@ package org.openflexo.fme.controller.editor;
 import java.awt.Font;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Logger;
 
+import org.openflexo.fge.Drawing.ContainerNode;
+import org.openflexo.fge.Drawing.DrawingTreeNode;
+import org.openflexo.fge.GRParameter;
+import org.openflexo.fge.GraphicalRepresentation;
+import org.openflexo.fge.ShapeGraphicalRepresentation;
+import org.openflexo.fge.control.PaletteElement;
+import org.openflexo.fge.geom.FGEPoint;
+import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
+import org.openflexo.foundation.FlexoObject;
 import org.openflexo.logging.FlexoLogger;
+import org.openflexo.model.factory.AccessibleProxyObject;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.AbstractDiagramPalette;
+import org.openflexo.technologyadapter.diagram.model.DiagramElement;
 
 public class DynamicPalette extends AbstractDiagramPalette implements PropertyChangeListener {
 
@@ -47,6 +61,7 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 		super(editor, 200, 200, "dynamic_palette");
 		getEditor().getFreeModel().getPropertyChangeSupport().addPropertyChangeListener(this);
 		// elementsForAssociations = new Hashtable<ConceptGRAssociation, PaletteElement>();
+		update();
 	}
 
 	@Override
@@ -55,14 +70,150 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 		super.delete();
 	}
 
-	/*public void update() {
+	@SuppressWarnings("serial")
+	public static class GraphicalRepresentationSet<T extends FlexoObject> extends HashMap<GraphicalRepresentation, List<T>> {
+
+		public static final GRParameter<?>[] IGNORED_PROPERTIES = { GraphicalRepresentation.IDENTIFIER, GraphicalRepresentation.TEXT,
+				ShapeGraphicalRepresentation.X, ShapeGraphicalRepresentation.Y, ShapeGraphicalRepresentation.WIDTH,
+				ShapeGraphicalRepresentation.HEIGHT };
+
+		public static <T> T valueForParameter(GraphicalRepresentation gr, GRParameter<T> parameter) {
+			if (gr.hasKey(parameter.getName())) {
+				return (T) gr.objectForKey(parameter.getName());
+			}
+			return null;
+		}
+
+		public static boolean equals(GraphicalRepresentation gr1, GraphicalRepresentation gr2) {
+			if (!gr1.getClass().equals(gr2.getClass())) {
+				return false;
+			}
+			for (GRParameter<?> p : GRParameter.getGRParameters(gr1.getClass())) {
+				boolean isToBeIgnored = false;
+				for (GRParameter<?> ignoredP : IGNORED_PROPERTIES) {
+					if (p.getName().equals(ignoredP.getName())) {
+						isToBeIgnored = true;
+						break;
+					}
+				}
+				if (!isToBeIgnored) {
+					Object value1 = valueForParameter(gr1, p);
+					Object value2 = valueForParameter(gr2, p);
+					if (value1 == null) {
+						if (value2 != null) {
+							System.out.println("Differs 1 " + value1 + " and " + value2 + " for " + p);
+							return false;
+						}
+					} else {
+						if (value1 instanceof AccessibleProxyObject) {
+							if (!((AccessibleProxyObject) value1).equalsObject(value2)) {
+								System.out.println("Differs 2 " + value1 + " and " + value2 + " for " + p);
+								return false;
+							}
+						} else {
+							if (!value1.equals(value2)) {
+								System.out.println("Differs 3 " + value1 + " and " + value2 + " for " + p);
+								return false;
+							}
+						}
+					}
+				}
+			}
+			return true;
+		}
+
+		public T put(GraphicalRepresentation key, T value) {
+			List<T> list;
+			for (GraphicalRepresentation gr : keySet()) {
+				if (equals(key, gr)) {
+					// Found an existing list of FlexoObject which has same graphical representation
+					list = get(gr);
+					if (!list.contains(value)) {
+						list.add(value);
+						return value;
+					}
+				}
+			}
+			list = new ArrayList<T>();
+			put(key, list);
+			list.add(value);
+			return value;
+		}
+
+	}
+
+	public void update() {
+
+		System.out.println("PALETTE ELEMENTS:" + getElements());
+		// System.out.println("ELEMENTS ASSOCIATION:" + getEditor().getDiagram().getAssociations());
+
+		GraphicalRepresentationSet<DiagramElement<?>> diagramGRs = new GraphicalRepresentationSet<DiagramElement<?>>();
+
+		// For each existing DiagramElement:
+		for (DiagramElement<?> e : getEditor().getFreeModel().getDiagram().getDescendants()) {
+			diagramGRs.put(e.getGraphicalRepresentation(), e);
+		}
+
+		System.out.println("DiagramGRs=" + diagramGRs);
+		for (GraphicalRepresentation gr : diagramGRs.keySet()) {
+			System.out.println(" > For " + gr + " : " + diagramGRs.get(gr));
+		}
 
 		List<PaletteElement> elementsToAdd = new ArrayList<PaletteElement>();
 		List<PaletteElement> elementsToRemove = new ArrayList<PaletteElement>(getElements());
-		System.out.println("PALETTE ELEMENTS:" + getElements());
-		System.out.println("ELEMENTS ASSOCIATION:" + getEditor().getDiagram().getAssociations());
+
+		for (GraphicalRepresentation key : diagramGRs.keySet()) {
+			// We iterate here on each different Shape GR
+			if (key instanceof ShapeGraphicalRepresentation) {
+				PaletteElement existingElement = null;
+				for (PaletteElement e : getElements()) {
+					if (GraphicalRepresentationSet.equals(e.getGraphicalRepresentation(), key)) {
+						existingElement = e;
+						break;
+					}
+				}
+				if (existingElement != null) {
+					// Fine, nothing to do for this one
+					elementsToRemove.remove(existingElement);
+				} else {
+					existingElement = makePaletteElement((ShapeGraphicalRepresentation) key);
+					elementsToAdd.add(existingElement);
+				}
+			}
+		}
+
+		for (PaletteElement e : elementsToRemove) {
+			System.out.println("Removing: " + e);
+			removeElement(e);
+		}
+		for (PaletteElement e : elementsToAdd) {
+			System.out.println("Adding: " + e);
+			addElement(e);
+		}
+
+		for (PaletteElement e : getElements()) {
+			int px, py;
+			int index = getElements().indexOf(e);
+
+			px = index % 3;
+			py = index / 3;
+
+			if (e.getGraphicalRepresentation().getShapeSpecification().getShapeType() == ShapeType.SQUARE
+					|| e.getGraphicalRepresentation().getShapeSpecification().getShapeType() == ShapeType.CIRCLE) {
+				e.getGraphicalRepresentation().setX(px * GRID_WIDTH + 15);
+				e.getGraphicalRepresentation().setY(py * GRID_HEIGHT + 10);
+				e.getGraphicalRepresentation().setWidth(30);
+				e.getGraphicalRepresentation().setHeight(30);
+			} else {
+				e.getGraphicalRepresentation().setX(px * GRID_WIDTH + 10);
+				e.getGraphicalRepresentation().setY(py * GRID_HEIGHT + 10);
+				e.getGraphicalRepresentation().setWidth(40);
+				e.getGraphicalRepresentation().setHeight(30);
+			}
+		}
+
 		// For each existing association
-		for (ConceptGRAssociation association : getEditor().getDiagram().getAssociations()) {
+		/*for (ConceptGRAssociation association : getEditor().getDiagram().getAssociations()) {
 			// Retrieve the corresponding palette element
 			PaletteElement e = elementsForAssociations.get(association);
 
@@ -113,9 +264,9 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 				e.getGraphicalRepresentation().setWidth(40);
 				e.getGraphicalRepresentation().setHeight(30);
 			}
+		*/
 
-		}
-	}*/
+	}
 
 	/*public PaletteElement getPaletteElement(ConceptGRAssociation association) {
 		return elementsForAssociations.get(association);
@@ -154,7 +305,7 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getPropertyName().equals(SHAPE_ADDED)) {
 			System.out.println("On update la palette dynamique");
-			// update();
+			update();
 		}
 	}
 
@@ -217,6 +368,39 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 		public void delete() {
 			association = null;
 		}
-
+	}
 	}*/
+
+	private PaletteElement makePaletteElement(final ShapeGraphicalRepresentation prototypeGR) {
+		final ShapeGraphicalRepresentation gr = (ShapeGraphicalRepresentation) prototypeGR.cloneObject();
+		PaletteElement returned = new PaletteElement() {
+			@Override
+			public boolean acceptDragging(DrawingTreeNode<?, ?> target) {
+				return getEditor() != null && target instanceof ContainerNode;
+			}
+
+			@Override
+			public boolean elementDragged(DrawingTreeNode<?, ?> target, FGEPoint dropLocation) {
+				return handleDrop(target, getGraphicalRepresentation(), dropLocation);
+			}
+
+			@Override
+			public ShapeGraphicalRepresentation getGraphicalRepresentation() {
+				return gr;
+			}
+
+			@Override
+			public void delete() {
+				gr.delete();
+			}
+
+		};
+		return returned;
+	}
+
+	private boolean handleDrop(DrawingTreeNode<?, ?> target, ShapeGraphicalRepresentation graphicalRepresentation, FGEPoint dropLocation) {
+		System.out.println("YES 888888       !!!!!!!!!!!!!!!!");
+		return false;
+	}
+
 }
