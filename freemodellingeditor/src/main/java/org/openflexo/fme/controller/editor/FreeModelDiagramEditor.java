@@ -21,7 +21,10 @@ package org.openflexo.fme.controller.editor;
 
 import java.util.logging.Logger;
 
+import javax.swing.JTabbedPane;
+
 import org.openflexo.fge.swing.control.SwingToolFactory;
+import org.openflexo.fge.swing.control.tools.JDianaPalette;
 import org.openflexo.fme.controller.FreeModelPasteHandler;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.technologyadapter.diagram.controller.action.FMLControlledDiagramPasteHandler;
@@ -48,9 +51,15 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 
 	private final FreeModelPasteHandler freeModelPasteHandler;
 
+	private final DynamicPalette dynamicPalette;
+	private final JDianaPalette dynamicPaletteComponent;
+
 	public FreeModelDiagramEditor(FreeModel freeModel, boolean readOnly, FlexoController controller, SwingToolFactory swingToolFactory) {
 		super(freeModel.getVirtualModelInstance(), readOnly, controller, swingToolFactory);
 		this.freeModel = freeModel;
+		dynamicPalette = new DynamicPalette(this);
+		dynamicPaletteComponent = swingToolFactory.makeDianaPalette(dynamicPalette);
+		dynamicPaletteComponent.attachToEditor(this);
 		conceptFilter = "*";
 		// We have to switch properly between those paste handlers
 		// AND do not forget to destroy them
@@ -85,6 +94,13 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 	@Override
 	public ContextualPalette makeContextualPalette(DiagramPalette palette) {
 		return new ConceptsPalette(palette, this);
+	}
+
+	@Override
+	protected JTabbedPane makePaletteView() {
+		JTabbedPane returned = super.makePaletteView();
+		returned.add(dynamicPaletteComponent.getPaletteViewInScrollPane(), "Used shapes", 0);
+		return returned;
 	}
 
 	public String getConceptFilter() {
