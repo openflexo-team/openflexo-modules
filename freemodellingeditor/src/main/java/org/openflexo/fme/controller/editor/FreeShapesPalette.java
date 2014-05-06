@@ -30,10 +30,9 @@ import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
 import org.openflexo.fib.FIBLibrary;
 import org.openflexo.fib.controller.FIBDialog;
 import org.openflexo.fib.model.FIBComponent;
-import org.openflexo.fme.model.action.DropFreeShape;
+import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.action.FlexoUndoManager.FlexoActionCompoundEdit;
 import org.openflexo.foundation.view.FlexoConceptInstance;
-import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.logging.FlexoLogger;
 import org.openflexo.technologyadapter.diagram.controller.DiagramCst;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.CommonPalette;
@@ -60,7 +59,7 @@ public class FreeShapesPalette extends CommonPalette {
 			FGEPoint dropLocation, boolean applyCurrentForeground, boolean applyCurrentBackground, boolean applyCurrentTextStyle,
 			boolean applyCurrentShadowStyle, boolean isImage, boolean resize) {
 
-		System.out.println("Yes, on est bien dans FME !!!");
+		System.out.println("handleBasicGraphicalRepresentationDrop in FME !!!");
 
 		if (getEditor() == null) {
 			return false;
@@ -82,11 +81,11 @@ public class FreeShapesPalette extends CommonPalette {
 		if (resize) {
 			if (shapeGR.getShapeSpecification().getShapeType() == ShapeType.SQUARE
 					|| shapeGR.getShapeSpecification().getShapeType() == ShapeType.CIRCLE) {
-				shapeGR.setWidth(40);
-				shapeGR.setHeight(40);
-			} else {
 				shapeGR.setWidth(50);
-				shapeGR.setHeight(40);
+				shapeGR.setHeight(50);
+			} else {
+				shapeGR.setWidth(60);
+				shapeGR.setHeight(45);
 			}
 		}
 		if (applyCurrentForeground) {
@@ -102,8 +101,8 @@ public class FreeShapesPalette extends CommonPalette {
 			shapeGR.setShadowStyle(getEditor().getInspectedShadowStyle().cloneStyle());
 		}
 
-		shapeGR.setX(dropLocation.x);
-		shapeGR.setY(dropLocation.y);
+		// shapeGR.setX(dropLocation.x);
+		// shapeGR.setY(dropLocation.y);
 
 		if (isImage) {
 			FIBComponent fibComponent = FIBLibrary.instance().retrieveFIBComponent(DiagramCst.IMPORT_IMAGE_FILE_DIALOG_FIB);
@@ -111,17 +110,14 @@ public class FreeShapesPalette extends CommonPalette {
 					new FlexoFIBController(fibComponent, getEditor().getFlexoController()));
 		}
 
-		System.out.println("OK, create DropFreeShape");
+		System.out.println("OK, create DropShape");
 		System.out.println("location=" + shapeGR.getLocation());
 		System.out.println("size=" + shapeGR.getSize());
 
-		DropFreeShape action = DropFreeShape.actionType.makeNewAction(container, null, getEditor().getFlexoController().getEditor());
+		DropShape action = DropShape.actionType.makeNewAction(container, null, getEditor().getFlexoController().getEditor());
 		action.setFreeModel(getEditor().getFreeModel());
 		action.setGraphicalRepresentation(shapeGR);
-		action.setNewShapeName(shapeGR.getText());
-		if (action.getNewShapeName() == null) {
-			action.setNewShapeName(FlexoLocalization.localizedForKey("shape"));
-		}
+		action.setDropLocation(dropLocation);
 
 		action.setCompoundEdit(edit);
 		action.doAction();
@@ -129,7 +125,7 @@ public class FreeShapesPalette extends CommonPalette {
 		FlexoConceptInstance newFlexoConceptInstance = action.getNewFlexoConceptInstance();
 		// DiagramShape shape = newFlexoConceptInstance.getFlexoActor(patternRole)
 
-		System.out.println("Apres le DropFreeShape:");
+		System.out.println("Apres le DropShape:");
 		// System.out.println("location=" + newShape.getGraphicalRepresentation().getLocation());
 		// System.out.println("size=" + newShape.getGraphicalRepresentation().getSize());
 

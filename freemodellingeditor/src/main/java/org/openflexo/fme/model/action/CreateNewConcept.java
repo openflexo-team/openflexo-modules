@@ -22,6 +22,8 @@ package org.openflexo.fme.model.action;
 import java.util.Vector;
 import java.util.logging.Logger;
 
+import org.openflexo.fge.ShapeGraphicalRepresentation;
+import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
 import org.openflexo.fme.model.FreeMetaModel;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.fme.model.FreeModellingProject;
@@ -35,7 +37,11 @@ import org.openflexo.foundation.action.FlexoActionType;
 import org.openflexo.foundation.view.FlexoConceptInstance;
 import org.openflexo.foundation.viewpoint.FlexoConcept;
 import org.openflexo.localization.FlexoLocalization;
+import org.openflexo.technologyadapter.diagram.fml.DropScheme;
+import org.openflexo.technologyadapter.diagram.fml.FMLDiagramPaletteElementBinding;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
+import org.openflexo.technologyadapter.diagram.fml.action.AddDiagramPaletteElement;
+import org.openflexo.technologyadapter.diagram.metamodel.DiagramPaletteElement;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 import org.openflexo.toolbox.StringUtils;
 
@@ -118,6 +124,52 @@ public class CreateNewConcept extends FlexoAction<CreateNewConcept, FlexoConcept
 		// Now we create the new concept
 		newFlexoConcept = freeModel.getMetaModel().getFlexoConcept(getNewConceptName(), getEditor(), this);
 
+		// Add entry in palette
+		AddDiagramPaletteElement addDiagramPaletteElement = AddDiagramPaletteElement.actionType.makeNewEmbeddedAction(freeModel
+				.getMetaModel().getConceptsPalette(), null, this);
+		ShapeGraphicalRepresentation paletteElementGR = (ShapeGraphicalRepresentation) shapeElement.getGraphicalRepresentation()
+				.cloneObject();
+		paletteElementGR.setX(10);
+		paletteElementGR.setY(10);
+		paletteElementGR.setText(getNewConceptName());
+		paletteElementGR.setIsFloatingLabel(false);
+		addDiagramPaletteElement.setGraphicalRepresentation(paletteElementGR);
+		addDiagramPaletteElement.setNewElementName(getNewConceptName());
+		addDiagramPaletteElement.doAction();
+
+		DiagramPaletteElement paletteElement = addDiagramPaletteElement.getNewElement();
+
+		System.out.println("Created palette element: " + paletteElement);
+		int px, py;
+		int index = freeModel.getMetaModel().getConceptsPalette().getElements().indexOf(addDiagramPaletteElement.getNewElement());
+		px = index % 3;
+		py = index / 3;
+
+		// FACTORY.applyDefaultProperties(gr);
+		if (paletteElementGR.getShapeSpecification().getShapeType() == ShapeType.SQUARE
+				|| paletteElementGR.getShapeSpecification().getShapeType() == ShapeType.CIRCLE) {
+			paletteElementGR.setX(10);
+			paletteElementGR.setY(10);
+			paletteElementGR.setX(px * FreeMetaModel.PALETTE_GRID_WIDTH + 15);
+			paletteElementGR.setY(py * FreeMetaModel.PALETTE_GRID_HEIGHT + 10);
+			paletteElementGR.setWidth(30);
+			paletteElementGR.setHeight(30);
+		} else {
+			paletteElementGR.setX(px * FreeMetaModel.PALETTE_GRID_WIDTH + 10);
+			paletteElementGR.setY(py * FreeMetaModel.PALETTE_GRID_HEIGHT + 10);
+			paletteElementGR.setWidth(40);
+			paletteElementGR.setHeight(30);
+		}
+
+		// Create binding and associate it
+		DropScheme dropScheme = newFlexoConcept.getFlexoBehaviours(DropScheme.class).get(0);
+		FMLDiagramPaletteElementBinding newBinding = newFlexoConcept.getVirtualModel().getVirtualModelFactory()
+				.newInstance(FMLDiagramPaletteElementBinding.class);
+		newBinding.setPaletteElement(paletteElement);
+		newBinding.setFlexoConcept(newFlexoConcept);
+		newBinding.setDropScheme(dropScheme);
+		freeModel.getMetaModel().getTypedDiagramModelSlot().addToPaletteElementBindings(newBinding);
+
 		// Sets new concept GR with actual shape GR
 		ShapeRole shapeRole = (ShapeRole) newFlexoConcept.getFlexoRole(FreeMetaModel.SHAPE_ROLE_NAME);
 		shapeRole.getGraphicalRepresentation().setsWith(shapeElement.getGraphicalRepresentation());
@@ -126,30 +178,6 @@ public class CreateNewConcept extends FlexoAction<CreateNewConcept, FlexoConcept
 
 		// We will here bypass the classical DropScheme
 		flexoConceptInstance.setFlexoConcept(newFlexoConcept);
-
-		/*List<DropScheme> dsList = newFlexoConcept.getFlexoBehaviours(DropScheme.class);
-
-		// We now apply here the default drop scheme
-		if (dsList.size() == 1) {
-
-			DropScheme dropScheme = dsList.get(0);
-
-			DropSchemeAction action = DropSchemeAction.actionType.makeNewEmbeddedAction(flexoConceptInstance.getVirtualModelInstance(),
-					null, this);
-			action.setDropScheme(dropScheme);
-			action.setParent(shapeElement.getParent());
-			action.setDropLocation(new FGEPoint(shapeElement.getGraphicalRepresentation().getX(), shapeElement.getGraphicalRepresentation()
-					.getY()));
-			action.doAction();
-			newFlexoConceptInstance = action.getFlexoConceptInstance();
-
-		} else {
-			logger.warning("Could not find DropScheme in " + newFlexoConcept);
-		}*/
-
-		// Now remove old FCI
-		// getFocusedObject().getVirtualModelInstance().removeFromFlexoConceptInstances(flexoConceptInstance);
-		// flexoConceptInstance.delete();
 
 		// We should notify the creation of a new FlexoConcept
 		freeModel.getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null, newFlexoConcept);
