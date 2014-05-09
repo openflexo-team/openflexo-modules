@@ -69,6 +69,7 @@ public class FreeModelModuleView extends JPanel implements ModuleView<FreeModel>
 	@Override
 	public void deleteModuleView() {
 		getRepresentedObject().getPropertyChangeSupport().removePropertyChangeListener(getRepresentedObject().getDeletedProperty(), this);
+		getEditor().getFlexoController().removeModuleView(this);
 		getEditor().delete();
 	}
 
