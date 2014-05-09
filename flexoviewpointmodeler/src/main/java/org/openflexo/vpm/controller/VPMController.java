@@ -19,18 +19,13 @@
  */
 package org.openflexo.vpm.controller;
 
-/*
- * Created on <date> by <yourname>
- *
- * Flexo Application Suite
- * (c) Denali 2003-2006
- */
 import java.util.logging.Logger;
 
 import javax.swing.SwingUtilities;
 
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
+import org.openflexo.foundation.technologyadapter.TechnologyAdapter;
 import org.openflexo.foundation.validation.ValidationModel;
 import org.openflexo.foundation.viewpoint.FlexoConcept;
 import org.openflexo.foundation.viewpoint.FlexoConceptObject;
@@ -38,12 +33,13 @@ import org.openflexo.foundation.viewpoint.ViewPoint;
 import org.openflexo.foundation.viewpoint.ViewPointLibrary;
 import org.openflexo.foundation.viewpoint.ViewPointObject;
 import org.openflexo.foundation.viewpoint.VirtualModel;
-import org.openflexo.localization.FlexoLocalization;
+import org.openflexo.foundation.viewpoint.VirtualModelTechnologyAdapter;
 import org.openflexo.module.FlexoModule;
 import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.view.FlexoMainPane;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
+import org.openflexo.view.controller.TechnologyAdapterController;
 import org.openflexo.view.menu.FlexoMenuBar;
 import org.openflexo.vpm.controller.action.VPMControllerActionInitializer;
 import org.openflexo.vpm.view.FlexoConceptView;
@@ -59,7 +55,6 @@ public class VPMController extends FlexoController {
 	private static final Logger logger = Logger.getLogger(VPMController.class.getPackage().getName());
 
 	public ViewPointPerspective VIEW_POINT_PERSPECTIVE;
-	public InformationSpacePerspective INFORMATION_SPACE_PERSPECTIVE;
 
 	/**
 	 * Default constructor
@@ -79,7 +74,14 @@ public class VPMController extends FlexoController {
 	@Override
 	protected void initializePerspectives() {
 		addToPerspectives(VIEW_POINT_PERSPECTIVE = new ViewPointPerspective(this));
-		addToPerspectives(INFORMATION_SPACE_PERSPECTIVE = new InformationSpacePerspective(this));
+
+		for (TechnologyAdapter ta : getApplicationContext().getTechnologyAdapterService().getTechnologyAdapters()) {
+			if (!(ta instanceof VirtualModelTechnologyAdapter)) {
+				TechnologyAdapterController<?> tac = getApplicationContext().getTechnologyAdapterControllerService()
+						.getTechnologyAdapterController(ta);
+				tac.installTechnologyPerspective(this);
+			}
+		}
 
 	}
 
@@ -187,28 +189,6 @@ public class VPMController extends FlexoController {
 		} else {
 			logger.warning("Cannot set focus on a NULL object");
 		}
-	}
-
-	// ================================================
-	// ============ Exception management ==============
-	// ================================================
-
-	@Override
-	public String getWindowTitleforObject(FlexoObject object) {
-		// System.out.println("getWindowTitleforObject() "+object+" perspective="+getCurrentPerspective());
-		if (object instanceof ViewPointLibrary) {
-			return FlexoLocalization.localizedForKey("view_point_library");
-		}
-		/*if (object instanceof OntologyLibrary) {
-			return FlexoLocalization.localizedForKey("ontology_library");
-		}*/
-		if (getCurrentPerspective() == VIEW_POINT_PERSPECTIVE) {
-			return VIEW_POINT_PERSPECTIVE.getWindowTitleforObject(object, this);
-		}
-		if (getCurrentPerspective() == INFORMATION_SPACE_PERSPECTIVE) {
-			return INFORMATION_SPACE_PERSPECTIVE.getWindowTitleforObject(object, this);
-		}
-		return object.toString();
 	}
 
 	public ViewPoint getCurrentViewPoint() {

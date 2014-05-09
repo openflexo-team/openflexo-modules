@@ -96,6 +96,7 @@ public class FMEPerspective extends FlexoPerspective {
 		return FMEIconLibrary.FME_SMALL_ICON;
 	}
 
+	@Override
 	public String getWindowTitleforObject(FlexoObject object, FlexoController controller) {
 		if (object instanceof FreeModel) {
 			return ((FreeModel) object).getName();

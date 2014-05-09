@@ -66,10 +66,4 @@ public class ${moduleTrigram}Controller extends FlexoController {
 		return new FlexoMainPane(this);
 	}
 
-	@Override
-	public String getWindowTitleforObject(FlexoObject object) {
-		// TODO Auto-generated method stub
-		return ${moduleTrigram}Module.${moduleTrigram}_MODULE_NAME;
-	}
-
 }

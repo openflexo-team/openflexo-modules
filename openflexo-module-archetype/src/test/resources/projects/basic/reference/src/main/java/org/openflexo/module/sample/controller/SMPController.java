@@ -66,10 +66,4 @@ public class SMPController extends FlexoController {
 		return new FlexoMainPane(this);
 	}
 
-	@Override
-	public String getWindowTitleforObject(FlexoObject object) {
-		// TODO Auto-generated method stub
-		return SMPModule.SMP_MODULE_NAME;
-	}
-
 }

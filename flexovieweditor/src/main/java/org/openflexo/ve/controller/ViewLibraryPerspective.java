@@ -37,6 +37,7 @@ import org.openflexo.icon.VEIconLibrary;
 import org.openflexo.inspector.FIBInspectorPanel;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.ve.view.VirtualModelInstanceView;
+import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.controller.model.FlexoPerspective;
 
 public class ViewLibraryPerspective extends FlexoPerspective {
@@ -108,7 +109,8 @@ public class ViewLibraryPerspective extends FlexoPerspective {
 		return null;
 	}
 
-	public String getWindowTitleforObject(FlexoObject object) {
+	@Override
+	public String getWindowTitleforObject(FlexoObject object, FlexoController controller) {
 		if (object == null) {
 			return FlexoLocalization.localizedForKey("no_selection");
 		}

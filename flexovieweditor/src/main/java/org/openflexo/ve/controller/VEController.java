@@ -30,6 +30,8 @@ import java.util.logging.Logger;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
+import org.openflexo.foundation.technologyadapter.TechnologyAdapter;
+import org.openflexo.foundation.viewpoint.VirtualModelTechnologyAdapter;
 import org.openflexo.module.FlexoModule;
 import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.ve.controller.action.VEControllerActionInitializer;
@@ -38,20 +40,21 @@ import org.openflexo.ve.view.menu.VEMenuBar;
 import org.openflexo.view.FlexoMainPane;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
+import org.openflexo.view.controller.ProjectResourcesPerspective;
+import org.openflexo.view.controller.TechnologyAdapterController;
 import org.openflexo.view.menu.FlexoMenuBar;
 
 /**
- * Controller for this module
+ * Controller for ViewEditor module
  * 
- * @author yourname
+ * @author sylvain
  */
 public class VEController extends FlexoController {
 
 	private static final Logger logger = Logger.getLogger(VEController.class.getPackage().getName());
 
-	public ResourcesPerspective RESOURCES_PERSPECTIVE;
+	public ProjectResourcesPerspective RESOURCES_PERSPECTIVE;
 	public ViewLibraryPerspective VIEW_LIBRARY_PERSPECTIVE;
-	public InformationSpacePerspective INFORMATION_SPACE_PERSPECTIVE;
 
 	/**
 	 * Default constructor
@@ -62,9 +65,17 @@ public class VEController extends FlexoController {
 
 	@Override
 	protected void initializePerspectives() {
-		addToPerspectives(RESOURCES_PERSPECTIVE = new ResourcesPerspective(this));
+		addToPerspectives(RESOURCES_PERSPECTIVE = new ProjectResourcesPerspective(this));
 		addToPerspectives(VIEW_LIBRARY_PERSPECTIVE = new ViewLibraryPerspective(this));
-		addToPerspectives(INFORMATION_SPACE_PERSPECTIVE = new InformationSpacePerspective(this));
+
+		for (TechnologyAdapter ta : getApplicationContext().getTechnologyAdapterService().getTechnologyAdapters()) {
+			if (!(ta instanceof VirtualModelTechnologyAdapter)) {
+				TechnologyAdapterController<?> tac = getApplicationContext().getTechnologyAdapterControllerService()
+						.getTechnologyAdapterController(ta);
+				tac.installTechnologyPerspective(this);
+			}
+		}
+
 	}
 
 	@Override
@@ -117,18 +128,6 @@ public class VEController extends FlexoController {
 	@Override
 	protected FlexoMainPane createMainPane() {
 		return new VEMainPane(this);
-	}
-
-	@Override
-	public String getWindowTitleforObject(FlexoObject object) {
-		if (getCurrentPerspective() == RESOURCES_PERSPECTIVE) {
-			return RESOURCES_PERSPECTIVE.getWindowTitleForObject(object);
-		} else if (getCurrentPerspective() == VIEW_LIBRARY_PERSPECTIVE) {
-			return VIEW_LIBRARY_PERSPECTIVE.getWindowTitleforObject(object);
-		} /*else if (getCurrentPerspective() == INFORMATION_SPACE_PERSPECTIVE) {
-			return INFORMATION_SPACE_PERSPECTIVE.getWindowTitleforObject(object);
-			}*/
-		return object.toString();
 	}
 
 }

@@ -146,14 +146,6 @@ public class FMEController extends FlexoController {
 		}
 	}
 
-	@Override
-	public String getWindowTitleforObject(FlexoObject object) {
-		if (getCurrentPerspective() == FREE_MODELLING_PERSPECTIVE) {
-			return FREE_MODELLING_PERSPECTIVE.getWindowTitleforObject(object, this);
-		}
-		return object.toString();
-	}
-
 	public ViewPoint getCurrentViewPoint() {
 		if (getCurrentDisplayedObjectAsModuleView() instanceof ViewPointObject) {
 			return ((ViewPointObject) getCurrentDisplayedObjectAsModuleView()).getViewPoint();
