@@ -79,7 +79,9 @@ public class VPMController extends FlexoController {
 			if (!(ta instanceof VirtualModelTechnologyAdapter)) {
 				TechnologyAdapterController<?> tac = getApplicationContext().getTechnologyAdapterControllerService()
 						.getTechnologyAdapterController(ta);
-				tac.installTechnologyPerspective(this);
+				if (tac != null) {
+					tac.installTechnologyPerspective(this);
+				}
 			}
 		}
 
