@@ -122,6 +122,13 @@ public class FMEPerspective extends FlexoPerspective {
 	}
 
 	@Override
+	public void focusOnObject(FlexoObject object) {
+		if (object instanceof FreeModel) {
+			focusOnFreeModel((FreeModel) object);
+		}
+	};
+
+	@Override
 	public void objectWasClicked(Object object, FlexoController controller) {
 		// logger.info("ViewPointPerspective: object was clicked: " + object);
 		if (object == null) {

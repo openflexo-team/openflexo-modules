@@ -53,5 +53,7 @@ public class FMECst {
 	public static Resource CREATE_NEW_CONCEPT_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateNewConceptDialog.fib");
 	public static Resource DECLARE_INSTANCE_OF_EXISTING_CONCEPT_DIALOG_FIB = ResourceLocator
 			.locateResource("Fib/Dialog/DeclareInstanceOfExistingConceptDialog.fib");
+	public static Resource DECLARE_INSTANCE_OF_EXISTING_CONCEPT_FROM_DIAGRAM_ELEMENT_DIALOG_FIB = ResourceLocator
+			.locateResource("Fib/Dialog/DeclareInstanceOfExistingConceptFromDiagramElementDialog.fib");
 
 }

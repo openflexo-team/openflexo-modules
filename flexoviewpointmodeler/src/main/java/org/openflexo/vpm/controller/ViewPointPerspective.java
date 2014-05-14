@@ -26,6 +26,7 @@ import javax.swing.JPanel;
 
 import org.openflexo.components.widget.FIBViewPointLibraryBrowser;
 import org.openflexo.foundation.FlexoObject;
+import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.viewpoint.FlexoConcept;
 import org.openflexo.foundation.viewpoint.FlexoConceptObject;
 import org.openflexo.foundation.viewpoint.ViewPoint;
@@ -100,6 +101,7 @@ public class ViewPointPerspective extends FlexoPerspective {
 		return null;
 	}
 
+	@Override
 	public String getWindowTitleforObject(FlexoObject object, FlexoController controller) {
 		if (object instanceof ViewPointLibrary) {
 			return FlexoLocalization.localizedForKey("view_point_library");
@@ -211,4 +213,21 @@ public class ViewPointPerspective extends FlexoPerspective {
 			});
 		}
 	}*/
+
+	@Override
+	public boolean hasModuleViewForObject(FlexoObject object) {
+		if (object instanceof FlexoProject) {
+			return getSpecificNaturesForProject((FlexoProject) object).size() > 0;
+		}
+		if (object instanceof ViewPoint) {
+			return true;
+		}
+		if (object instanceof VirtualModel) {
+			return true;
+		}
+		if (object instanceof FlexoConcept) {
+			return true;
+		}
+		return false;
+	}
 }
