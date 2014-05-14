@@ -24,8 +24,8 @@ import java.util.Vector;
 import java.util.logging.Logger;
 
 import org.openflexo.fge.ShapeGraphicalRepresentation;
+import org.openflexo.fge.ShapeGraphicalRepresentation.LocationConstraints;
 import org.openflexo.fge.geom.FGEPoint;
-import org.openflexo.fme.controller.editor.DynamicPalette;
 import org.openflexo.fme.model.FreeMetaModel;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.foundation.FlexoEditor;
@@ -128,6 +128,10 @@ public class DropShape extends FlexoAction<DropShape, DiagramContainerElement<?>
 			// If another GR was defined (overriding the one from ShapeRole)
 			if (getGraphicalRepresentation() != null) {
 				shape.getGraphicalRepresentation().setsWith(getGraphicalRepresentation());
+				shape.getGraphicalRepresentation().setIsReadOnly(false);
+				shape.getGraphicalRepresentation().setIsFocusable(true);
+				shape.getGraphicalRepresentation().setIsSelectable(true);
+				shape.getGraphicalRepresentation().setLocationConstraints(LocationConstraints.FREELY_MOVABLE);
 			}
 
 			shape.getGraphicalRepresentation().setX(dropLocation.x);
@@ -143,7 +147,7 @@ public class DropShape extends FlexoAction<DropShape, DiagramContainerElement<?>
 			freeModel.getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", null, newFlexoConceptInstance);
 
 			// This is used to notify the adding of a new shape, will be used in DynamicPalette
-			freeModel.getPropertyChangeSupport().firePropertyChange(DynamicPalette.SHAPE_ADDED, null, newFlexoConceptInstance);
+			// freeModel.getPropertyChangeSupport().firePropertyChange(DynamicPalette.SHAPE_ADDED, null, newFlexoConceptInstance);
 
 		} else {
 			logger.warning("Could not find DropScheme in " + concept);

@@ -25,12 +25,10 @@ import java.util.logging.Logger;
 import org.openflexo.fge.Drawing.DrawingTreeNode;
 import org.openflexo.fge.geom.FGEPoint;
 import org.openflexo.fme.model.action.DropShape;
-import org.openflexo.foundation.view.FlexoConceptInstance;
 import org.openflexo.foundation.view.VirtualModelInstance;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.ContextualPalette;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.FMLControlledDiagramEditor;
-import org.openflexo.technologyadapter.diagram.fml.DropScheme;
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelNature;
 import org.openflexo.technologyadapter.diagram.fml.FMLDiagramPaletteElementBinding;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramPalette;
@@ -58,7 +56,6 @@ public class ConceptsPalette extends ContextualPalette implements PropertyChange
 	@Override
 	public boolean handleFMLControlledDrop(DrawingTreeNode<?, ?> target, DiagramPaletteElement paletteElement, FGEPoint dropLocation,
 			FMLControlledDiagramEditor editor) {
-		System.out.println("handleFMLControlledDrop in FME !!!");
 
 		if (getEditor() == null) {
 			return false;
@@ -67,12 +64,8 @@ public class ConceptsPalette extends ContextualPalette implements PropertyChange
 		DiagramContainerElement<?> rootContainer = (DiagramContainerElement<?>) target.getDrawable();
 		VirtualModelInstance vmi = editor.getVirtualModelInstance();
 		TypedDiagramModelSlot ms = FMLControlledDiagramVirtualModelNature.getTypedDiagramModelSlot(vmi.getVirtualModel());
-		System.out.println("ms=" + ms);
-		System.out.println("bindings=" + ms.getPaletteElementBindings());
 		FMLDiagramPaletteElementBinding binding = ms.getPaletteElementBinding(paletteElement);
-		System.out.println("binding=" + binding);
-		DropScheme dropScheme = binding.getDropScheme();
-		System.out.println("dropScheme=" + dropScheme);
+		// DropScheme dropScheme = binding.getDropScheme();
 
 		DropShape action = DropShape.actionType.makeNewAction(rootContainer, null, getEditor().getFlexoController().getEditor());
 		action.setFreeModel(getEditor().getFreeModel());
@@ -81,16 +74,8 @@ public class ConceptsPalette extends ContextualPalette implements PropertyChange
 
 		action.doAction();
 
-		FlexoConceptInstance newFlexoConceptInstance = action.getNewFlexoConceptInstance();
-		// DiagramShape shape = newFlexoConceptInstance.getFlexoActor(patternRole)
-
-		System.out.println("Created newFlexoConceptInstance:" + newFlexoConceptInstance);
-		// System.out.println("location=" + newShape.getGraphicalRepresentation().getLocation());
-		// System.out.println("size=" + newShape.getGraphicalRepresentation().getSize());
-
-		// getEditor().setCurrentTool(EditorTool.SelectionTool);
-
-		// getEditor().setSelectedObject(getEditor().getDrawing().getDrawingTreeNode(newShape));
+		// FlexoConceptInstance newFlexoConceptInstance = action.getNewFlexoConceptInstance();
+		// System.out.println("Created newFlexoConceptInstance:" + newFlexoConceptInstance);
 
 		return action.hasActionExecutionSucceeded();
 

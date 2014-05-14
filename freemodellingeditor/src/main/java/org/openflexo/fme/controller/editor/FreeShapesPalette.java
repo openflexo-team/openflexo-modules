@@ -125,10 +125,6 @@ public class FreeShapesPalette extends CommonPalette {
 		FlexoConceptInstance newFlexoConceptInstance = action.getNewFlexoConceptInstance();
 		// DiagramShape shape = newFlexoConceptInstance.getFlexoActor(patternRole)
 
-		System.out.println("Apres le DropShape:");
-		// System.out.println("location=" + newShape.getGraphicalRepresentation().getLocation());
-		// System.out.println("size=" + newShape.getGraphicalRepresentation().getSize());
-
 		getEditor().setCurrentTool(EditorTool.SelectionTool);
 
 		// getEditor().setSelectedObject(getEditor().getDrawing().getDrawingTreeNode(newShape));
