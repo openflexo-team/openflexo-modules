@@ -98,8 +98,25 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 
 	@Override
 	protected JTabbedPane makePaletteView() {
+
 		JTabbedPane returned = super.makePaletteView();
+
 		returned.add(dynamicPaletteComponent.getPaletteViewInScrollPane(), "Used shapes", 0);
+
+		if (getDiagram().getShapes().size() > 0) {
+			if (getFreeModel().getVirtualModel().getFlexoConcepts().size() > 1) {
+				// In this case, we should activate the concept palette (the second one)
+				returned.setSelectedIndex(1);
+			} else {
+				// In this case, activate used shape palette
+				returned.setSelectedIndex(0);
+				activatePalette(dynamicPaletteComponent);
+			}
+		} else {
+			// Empty diagram, activate free shapes
+			returned.setSelectedIndex(2);
+			activatePalette(getCommonPalette());
+		}
 		return returned;
 	}
 
