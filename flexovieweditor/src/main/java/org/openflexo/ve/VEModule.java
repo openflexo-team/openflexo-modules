@@ -127,4 +127,17 @@ public class VEModule extends FlexoModule<VEModule> {
 		}
 	}
 
+	@Override
+	public boolean close() {
+		if (getApplicationContext().getResourceManager().getUnsavedResources().size() == 0) {
+			return super.close();
+		} else {
+			if (getVEController().reviewModifiedResources()) {
+				return super.close();
+			} else {
+				return false;
+			}
+		}
+	}
+
 }
