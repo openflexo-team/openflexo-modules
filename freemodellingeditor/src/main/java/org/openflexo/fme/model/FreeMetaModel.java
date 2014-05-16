@@ -47,6 +47,8 @@ import org.openflexo.foundation.viewpoint.action.CreateFlexoBehaviour;
 import org.openflexo.foundation.viewpoint.action.CreateFlexoBehaviourParameter;
 import org.openflexo.foundation.viewpoint.action.CreateFlexoRole;
 import org.openflexo.foundation.viewpoint.editionaction.AssignationAction;
+import org.openflexo.foundation.viewpoint.inspector.TextAreaInspectorEntry;
+import org.openflexo.foundation.viewpoint.inspector.TextFieldInspectorEntry;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
 import org.openflexo.technologyadapter.diagram.fml.DropScheme;
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelNature;
@@ -71,6 +73,7 @@ public class FreeMetaModel extends DefaultFlexoObject {
 	public static final String NONE_FLEXO_CONCEPT = "None";
 	public static final String SHAPE_ROLE_NAME = "shape";
 	public static final String NAME_ROLE_NAME = "name";
+	public static final String DESCRIPTION_ROLE_NAME = "description";
 	public static final String PALETTE_NAME = "Concepts";
 	public static final int PALETTE_GRID_WIDTH = 50;
 	public static final int PALETTE_GRID_HEIGHT = 40;
@@ -254,6 +257,16 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			AssignationAction nameAssignation = (AssignationAction) givesNameAction.getNewEditionAction();
 			nameAssignation.setAssignation(new DataBinding(NAME_ROLE_NAME));
 			nameAssignation.setValue(new DataBinding("parameters.conceptName"));
+
+			// Create inspector
+			TextFieldInspectorEntry nameEntry = returned.getInspector().createNewTextField();
+			nameEntry.setName(NAME_ROLE_NAME);
+			nameEntry.setLabel(NAME_ROLE_NAME);
+			nameEntry.setData(new DataBinding<String>("name"));
+			TextAreaInspectorEntry descriptionEntry = returned.getInspector().createNewTextArea();
+			descriptionEntry.setName(DESCRIPTION_ROLE_NAME);
+			descriptionEntry.setLabel(DESCRIPTION_ROLE_NAME);
+			descriptionEntry.setData(new DataBinding<String>("description"));
 
 			returned.getInspector().setRenderer(new DataBinding<String>("instance.name"));
 		}
