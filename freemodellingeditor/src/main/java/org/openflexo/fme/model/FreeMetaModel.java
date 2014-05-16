@@ -229,6 +229,7 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			createDropSchemeParameter.setFlexoBehaviourParameterClass(TextFieldParameter.class);
 			createDropSchemeParameter.doAction();
 			TextFieldParameter parameter = (TextFieldParameter) createDropSchemeParameter.getNewParameter();
+			parameter.setDefaultValue(new DataBinding<String>("\"" + parameter.getName() + "\""));
 
 			CreateEditionAction createAddShape = null;
 			if (ownerAction != null) {
