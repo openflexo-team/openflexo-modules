@@ -21,8 +21,6 @@ package org.openflexo.vpm.controller;
 
 import java.util.logging.Logger;
 
-import javax.swing.SwingUtilities;
-
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.technologyadapter.TechnologyAdapter;
@@ -62,13 +60,13 @@ public class VPMController extends FlexoController {
 	public VPMController(FlexoModule module) {
 		super(module);
 
-		SwingUtilities.invokeLater(new Runnable() {
+		/*SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
 			public void run() {
 				setCurrentEditedObjectAsModuleView(getApplicationContext().getViewPointLibrary(), VIEW_POINT_PERSPECTIVE);
 			}
-		});
+		});*/
 	}
 
 	@Override
@@ -204,4 +202,5 @@ public class VPMController extends FlexoController {
 	public ValidationModel getDefaultValidationModel() {
 		return ViewPointLibrary.VALIDATION_MODEL;
 	}
+
 }
