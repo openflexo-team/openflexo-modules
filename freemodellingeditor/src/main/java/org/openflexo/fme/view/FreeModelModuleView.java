@@ -28,6 +28,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
+import org.openflexo.fme.controller.FMEPerspective;
 import org.openflexo.fme.controller.editor.FreeModelDiagramEditor;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.technologyadapter.diagram.controller.DiagramTechnologyAdapterController;
@@ -45,13 +46,23 @@ public class FreeModelModuleView extends JPanel implements ModuleView<FreeModel>
 	private final FreeModelDiagramEditor editor;
 	private final FlexoPerspective perspective;
 
-	public FreeModelModuleView(FreeModelDiagramEditor editor, FlexoPerspective perspective) {
+	private final JPanel bottomPanel;
+
+	public FreeModelModuleView(FreeModelDiagramEditor editor, FMEPerspective perspective) {
 		super();
 		setLayout(new BorderLayout());
 		this.editor = editor;
 		this.perspective = perspective;
 		add(editor.getToolsPanel(), BorderLayout.NORTH);
 		add(new JScrollPane(editor.getDrawingView()), BorderLayout.CENTER);
+
+		bottomPanel = new JPanel(new BorderLayout());
+
+		bottomPanel.add(editor.getFlexoController().makeInfoLabel(), BorderLayout.CENTER);
+		add(bottomPanel, BorderLayout.SOUTH);
+
+		editor.getFlexoController().setInfoMessage("Free Modelling Editor - CTRL-drag to draw edges", false);
+
 		validate();
 
 		getRepresentedObject().getPropertyChangeSupport().addPropertyChangeListener(getRepresentedObject().getDeletedProperty(), this);
@@ -90,6 +101,7 @@ public class FreeModelModuleView extends JPanel implements ModuleView<FreeModel>
 
 		getEditor().getFlexoController().getEditingContext().unregisterPasteHandler(getEditor().getPasteHandler());
 
+		bottomPanel.remove(getDiagramTechnologyAdapterController(getEditor().getFlexoController()).getScaleSelector().getComponent());
 	}
 
 	@Override
@@ -98,6 +110,9 @@ public class FreeModelModuleView extends JPanel implements ModuleView<FreeModel>
 		System.out.println("FreeModelModuleView WILL SHOW !!!!!!");
 
 		getEditor().getFlexoController().getEditingContext().registerPasteHandler(getEditor().getPasteHandler());
+
+		bottomPanel.add(getDiagramTechnologyAdapterController(getEditor().getFlexoController()).getScaleSelector().getComponent(),
+				BorderLayout.EAST);
 
 		getPerspective().focusOnObject(getRepresentedObject());
 	}
@@ -116,6 +131,7 @@ public class FreeModelModuleView extends JPanel implements ModuleView<FreeModel>
 
 		getDiagramTechnologyAdapterController(controller).getInspectors().attachToEditor(getEditor());
 		getDiagramTechnologyAdapterController(controller).getDialogInspectors().attachToEditor(getEditor());
+		getDiagramTechnologyAdapterController(controller).getScaleSelector().attachToEditor(getEditor());
 
 		/*JScrollPane scrollPane = new JScrollPane(getDiagramTechnologyAdapterController(controller).getInspectors().getPanelGroup(),
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
