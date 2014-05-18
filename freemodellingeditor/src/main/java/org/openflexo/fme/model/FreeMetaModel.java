@@ -34,6 +34,7 @@ import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.resource.ResourceLoadingCancelledException;
+import org.openflexo.foundation.viewpoint.DeletionScheme;
 import org.openflexo.foundation.viewpoint.FlexoConcept;
 import org.openflexo.foundation.viewpoint.PrimitiveRole;
 import org.openflexo.foundation.viewpoint.PrimitiveRole.PrimitiveType;
@@ -47,6 +48,7 @@ import org.openflexo.foundation.viewpoint.action.CreateFlexoBehaviour;
 import org.openflexo.foundation.viewpoint.action.CreateFlexoBehaviourParameter;
 import org.openflexo.foundation.viewpoint.action.CreateFlexoRole;
 import org.openflexo.foundation.viewpoint.editionaction.AssignationAction;
+import org.openflexo.foundation.viewpoint.editionaction.DeleteAction;
 import org.openflexo.foundation.viewpoint.inspector.TextAreaInspectorEntry;
 import org.openflexo.foundation.viewpoint.inspector.TextFieldInspectorEntry;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
@@ -258,6 +260,34 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			AssignationAction nameAssignation = (AssignationAction) givesNameAction.getNewEditionAction();
 			nameAssignation.setAssignation(new DataBinding(NAME_ROLE_NAME));
 			nameAssignation.setValue(new DataBinding("parameters.conceptName"));
+
+			// Create new DeletionScheme
+			CreateFlexoBehaviour createDeletionScheme = null;
+			if (ownerAction != null) {
+				createDeletionScheme = CreateFlexoBehaviour.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
+			} else {
+				createDeletionScheme = CreateFlexoBehaviour.actionType.makeNewAction(returned, null, editor);
+			}
+			createDeletionScheme.setFlexoBehaviourName("delete");
+			createDeletionScheme.setFlexoBehaviourClass(DeletionScheme.class);
+			createDeletionScheme.doAction();
+			assertTrue(createDeletionScheme.hasActionExecutionSucceeded());
+			DeletionScheme deletionScheme = (DeletionScheme) createDeletionScheme.getNewFlexoBehaviour();
+			deletionScheme.setSkipConfirmationPanel(true);
+
+			CreateEditionAction createDeleteShape = null;
+			if (ownerAction != null) {
+				createDeleteShape = CreateEditionAction.actionType.makeNewEmbeddedAction(deletionScheme, null, ownerAction);
+			} else {
+				createDeleteShape = CreateEditionAction.actionType.makeNewAction(deletionScheme, null, editor);
+			}
+			createDeleteShape.actionChoice = CreateEditionActionChoice.ModelSlotSpecificAction;
+			createDeleteShape.setModelSlot(getTypedDiagramModelSlot());
+			createDeleteShape.setModelSlotSpecificActionClass(DeleteAction.class);
+			createDeleteShape.doAction();
+
+			DeleteAction deleteShape = (DeleteAction) createDeleteShape.getNewEditionAction();
+			deleteShape.setObject(new DataBinding(SHAPE_ROLE_NAME));
 
 			// Create inspector
 			TextFieldInspectorEntry nameEntry = returned.getInspector().createNewTextField();
