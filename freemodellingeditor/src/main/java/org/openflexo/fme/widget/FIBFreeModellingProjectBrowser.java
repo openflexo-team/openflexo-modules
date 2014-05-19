@@ -21,6 +21,8 @@ package org.openflexo.fme.widget;
 
 import java.util.logging.Logger;
 
+import org.openflexo.fib.model.FIBBrowser;
+import org.openflexo.fib.model.FIBContainer;
 import org.openflexo.fme.controller.FMEController;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.rm.Resource;
@@ -43,4 +45,22 @@ public class FIBFreeModellingProjectBrowser extends FIBBrowserView<FlexoProject>
 		super(project, controller, FIB_FILE);
 		// System.out.println("Showing browser with " + project);
 	}
+
+	@Override
+	protected void initializeFIBComponent() {
+
+		FIBBrowser projectBrowser = retrieveFIBBrowserNamed((FIBContainer) getFIBComponent(), "ProjectBrowser");
+
+		if (projectBrowser != null) {
+			bindFlexoActionsToBrowser(projectBrowser);
+		}
+
+		FIBBrowser freeModellingProjectBrowser = retrieveFIBBrowserNamed((FIBContainer) getFIBComponent(), "FreeModellingProjectBrowser");
+
+		if (freeModellingProjectBrowser != null) {
+			bindFlexoActionsToBrowser(freeModellingProjectBrowser);
+		}
+
+	}
+
 }
