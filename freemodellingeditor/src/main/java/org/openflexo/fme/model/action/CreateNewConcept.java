@@ -22,10 +22,7 @@ package org.openflexo.fme.model.action;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import org.openflexo.fge.ShapeGraphicalRepresentation;
-import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
 import org.openflexo.fme.model.FreeMetaModel;
-import org.openflexo.fme.model.FreeModel;
 import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.FlexoEditor;
@@ -34,15 +31,8 @@ import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
-import org.openflexo.foundation.view.FlexoConceptInstance;
 import org.openflexo.foundation.viewpoint.FlexoConcept;
 import org.openflexo.localization.FlexoLocalization;
-import org.openflexo.technologyadapter.diagram.fml.DropScheme;
-import org.openflexo.technologyadapter.diagram.fml.FMLDiagramPaletteElementBinding;
-import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
-import org.openflexo.technologyadapter.diagram.fml.action.AddDiagramPaletteElement;
-import org.openflexo.technologyadapter.diagram.metamodel.DiagramPaletteElement;
-import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 import org.openflexo.toolbox.StringUtils;
 
 /**
@@ -51,35 +41,35 @@ import org.openflexo.toolbox.StringUtils;
  * @author sylvain
  * 
  */
-public class CreateNewConcept extends FlexoAction<CreateNewConcept, FlexoConceptInstance, FlexoObject> {
+public class CreateNewConcept extends FlexoAction<CreateNewConcept, FreeMetaModel, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(CreateNewConcept.class.getPackage().getName());
 
-	public static FlexoActionType<CreateNewConcept, FlexoConceptInstance, FlexoObject> actionType = new FlexoActionType<CreateNewConcept, FlexoConceptInstance, FlexoObject>(
+	public static FlexoActionType<CreateNewConcept, FreeMetaModel, FlexoObject> actionType = new FlexoActionType<CreateNewConcept, FreeMetaModel, FlexoObject>(
 			"create_new_concept", FlexoActionType.defaultGroup, FlexoActionType.ADD_ACTION_TYPE) {
 
 		/**
 		 * Factory method
 		 */
 		@Override
-		public CreateNewConcept makeNewAction(FlexoConceptInstance focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+		public CreateNewConcept makeNewAction(FreeMetaModel focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 			return new CreateNewConcept(focusedObject, globalSelection, editor);
 		}
 
 		@Override
-		public boolean isVisibleForSelection(FlexoConceptInstance object, Vector<FlexoObject> globalSelection) {
+		public boolean isVisibleForSelection(FreeMetaModel object, Vector<FlexoObject> globalSelection) {
 			return true;
 		}
 
 		@Override
-		public boolean isEnabledForSelection(FlexoConceptInstance object, Vector<FlexoObject> globalSelection) {
-			return object.getFlexoConcept().getName().equals(FreeMetaModel.NONE_FLEXO_CONCEPT);
+		public boolean isEnabledForSelection(FreeMetaModel object, Vector<FlexoObject> globalSelection) {
+			return true;
 		}
 
 	};
 
 	static {
-		FlexoObjectImpl.addActionForClass(CreateNewConcept.actionType, FlexoConceptInstance.class);
+		FlexoObjectImpl.addActionForClass(CreateNewConcept.actionType, FreeMetaModel.class);
 	}
 
 	private String newConceptName;
@@ -89,7 +79,7 @@ public class CreateNewConcept extends FlexoAction<CreateNewConcept, FlexoConcept
 
 	// private FlexoConceptInstance newFlexoConceptInstance;
 
-	CreateNewConcept(FlexoConceptInstance focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+	CreateNewConcept(FreeMetaModel focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 
@@ -98,92 +88,14 @@ public class CreateNewConcept extends FlexoAction<CreateNewConcept, FlexoConcept
 	}
 
 	public FreeModellingProject getFreeModellingProject() {
-		return getFreeModellingProjectNature().getFreeModellingProject(getFocusedObject().getProject());
-	}
-
-	public FreeModel getFreeModel() throws InvalidArgumentException {
-		return getFreeModellingProject().getFreeModel(getFocusedObject().getVirtualModelInstance());
+		return getFocusedObject().getFreeModellingProject();
 	}
 
 	@Override
 	protected void doAction(Object context) throws InvalidArgumentException {
 
-		FreeModel freeModel = getFreeModel();
-		if (freeModel == null) {
-			throw new InvalidArgumentException("FlexoConceptInstance does not belong to any FreeModel");
-		}
-
-		FlexoConceptInstance flexoConceptInstance = getFocusedObject();
-
-		// Retrieve shape role of None FC
-		ShapeRole noneShapeRole = (ShapeRole) flexoConceptInstance.getFlexoConcept().getFlexoRole(FreeMetaModel.SHAPE_ROLE_NAME);
-
-		// Retrieve actual shape element
-		DiagramShape shapeElement = flexoConceptInstance.getFlexoActor(noneShapeRole);
-
 		// Now we create the new concept
-		newFlexoConcept = freeModel.getMetaModel().getFlexoConcept(getNewConceptName(), getEditor(), this);
-
-		// Add entry in palette
-		AddDiagramPaletteElement addDiagramPaletteElement = AddDiagramPaletteElement.actionType.makeNewEmbeddedAction(freeModel
-				.getMetaModel().getConceptsPalette(), null, this);
-		ShapeGraphicalRepresentation paletteElementGR = (ShapeGraphicalRepresentation) shapeElement.getGraphicalRepresentation()
-				.cloneObject();
-		paletteElementGR.setX(10);
-		paletteElementGR.setY(10);
-		paletteElementGR.setText(getNewConceptName());
-		paletteElementGR.setIsFloatingLabel(false);
-		addDiagramPaletteElement.setGraphicalRepresentation(paletteElementGR);
-		addDiagramPaletteElement.setNewElementName(getNewConceptName());
-		addDiagramPaletteElement.doAction();
-
-		DiagramPaletteElement paletteElement = addDiagramPaletteElement.getNewElement();
-
-		System.out.println("Created palette element: " + paletteElement);
-		int px, py;
-		int index = freeModel.getMetaModel().getConceptsPalette().getElements().indexOf(addDiagramPaletteElement.getNewElement());
-		px = index % 3;
-		py = index / 3;
-
-		// FACTORY.applyDefaultProperties(gr);
-		if (paletteElementGR.getShapeSpecification().getShapeType() == ShapeType.SQUARE
-				|| paletteElementGR.getShapeSpecification().getShapeType() == ShapeType.CIRCLE) {
-			paletteElementGR.setX(10);
-			paletteElementGR.setY(10);
-			paletteElementGR.setX(px * FreeMetaModel.PALETTE_GRID_WIDTH + 15);
-			paletteElementGR.setY(py * FreeMetaModel.PALETTE_GRID_HEIGHT + 10);
-			paletteElementGR.setWidth(30);
-			paletteElementGR.setHeight(30);
-		} else {
-			paletteElementGR.setX(px * FreeMetaModel.PALETTE_GRID_WIDTH + 10);
-			paletteElementGR.setY(py * FreeMetaModel.PALETTE_GRID_HEIGHT + 10);
-			paletteElementGR.setWidth(40);
-			paletteElementGR.setHeight(30);
-		}
-
-		// Create binding and associate it
-		DropScheme dropScheme = newFlexoConcept.getFlexoBehaviours(DropScheme.class).get(0);
-		FMLDiagramPaletteElementBinding newBinding = newFlexoConcept.getVirtualModel().getVirtualModelFactory()
-				.newInstance(FMLDiagramPaletteElementBinding.class);
-		newBinding.setPaletteElement(paletteElement);
-		newBinding.setFlexoConcept(newFlexoConcept);
-		newBinding.setDropScheme(dropScheme);
-		freeModel.getMetaModel().getTypedDiagramModelSlot().addToPaletteElementBindings(newBinding);
-
-		// Sets new concept GR with actual shape GR
-		ShapeRole shapeRole = (ShapeRole) newFlexoConcept.getFlexoRole(FreeMetaModel.SHAPE_ROLE_NAME);
-		shapeRole.getGraphicalRepresentation().setsWith(shapeElement.getGraphicalRepresentation());
-		shapeRole.getGraphicalRepresentation().setX(10);
-		shapeRole.getGraphicalRepresentation().setY(10);
-
-		// We will here bypass the classical DropScheme
-		flexoConceptInstance.setFlexoConcept(newFlexoConcept);
-
-		// We should notify the creation of a new FlexoConcept
-		freeModel.getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null, newFlexoConcept);
-
-		// This is used to notify the adding of a new instance of a flexo concept
-		freeModel.getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", null, getFocusedObject());
+		newFlexoConcept = getFocusedObject().getFlexoConcept(getNewConceptName(), getEditor(), this);
 	}
 
 	public String getNewConceptName() {
@@ -229,7 +141,7 @@ public class CreateNewConcept extends FlexoAction<CreateNewConcept, FlexoConcept
 			return false;
 		}
 
-		if (getFocusedObject().getVirtualModelInstance().getVirtualModel().getFlexoConcept(newConceptName) != null) {
+		if (getFocusedObject().getVirtualModel().getFlexoConcept(newConceptName) != null) {
 			errorMessage = FlexoLocalization.localizedForKey("a_concept_with_that_name_already_exists");
 			return false;
 		}

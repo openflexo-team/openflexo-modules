@@ -110,7 +110,7 @@ public class CreateNewConceptFromDiagramElement extends FlexoAction<CreateNewCon
 		flexoConceptInstance = createFlexoConceptInstanceFromDiagramShape(getFocusedObject());
 
 		logger.info("Create new concept from diagram element ");
-		CreateNewConcept actionCreateNewConcept = CreateNewConcept.actionType.makeNewEmbeddedAction(flexoConceptInstance, null, this);
+		CreateNewConceptFromNoneConcept actionCreateNewConcept = CreateNewConceptFromNoneConcept.actionType.makeNewEmbeddedAction(flexoConceptInstance, null, this);
 		actionCreateNewConcept.doAction();
 		flexoConcept = actionCreateNewConcept.getNewFlexoConcept();
 	}

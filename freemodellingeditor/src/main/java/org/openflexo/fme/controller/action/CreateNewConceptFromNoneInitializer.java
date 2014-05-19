@@ -23,39 +23,40 @@ import java.util.EventObject;
 import java.util.logging.Logger;
 
 import org.openflexo.fme.FMECst;
-import org.openflexo.fme.model.FreeMetaModel;
-import org.openflexo.fme.model.action.CreateNewConcept;
+import org.openflexo.fme.model.action.CreateNewConceptFromNoneConcept;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.view.FlexoConceptInstance;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 
-public class CreateNewConceptInitializer extends ActionInitializer<CreateNewConcept, FreeMetaModel, FlexoObject> {
+public class CreateNewConceptFromNoneInitializer extends
+		ActionInitializer<CreateNewConceptFromNoneConcept, FlexoConceptInstance, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
-	public CreateNewConceptInitializer(ControllerActionInitializer actionInitializer) {
-		super(CreateNewConcept.actionType, actionInitializer);
+	public CreateNewConceptFromNoneInitializer(ControllerActionInitializer actionInitializer) {
+		super(CreateNewConceptFromNoneConcept.actionType, actionInitializer);
 	}
 
 	@Override
-	protected FlexoActionInitializer<CreateNewConcept> getDefaultInitializer() {
-		return new FlexoActionInitializer<CreateNewConcept>() {
+	protected FlexoActionInitializer<CreateNewConceptFromNoneConcept> getDefaultInitializer() {
+		return new FlexoActionInitializer<CreateNewConceptFromNoneConcept>() {
 			@Override
-			public boolean run(EventObject e, CreateNewConcept action) {
-				logger.info("CreateNewConcept initializer");
-				return instanciateAndShowDialog(action, FMECst.CREATE_NEW_CONCEPT_DIALOG_FIB);
+			public boolean run(EventObject e, CreateNewConceptFromNoneConcept action) {
+				logger.info("CreateNewConceptFromNoneConcept initializer");
+				return instanciateAndShowDialog(action, FMECst.CREATE_NEW_CONCEPT_FROM_NONE_DIALOG_FIB);
 			}
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<CreateNewConcept> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<CreateNewConcept>() {
+	protected FlexoActionFinalizer<CreateNewConceptFromNoneConcept> getDefaultFinalizer() {
+		return new FlexoActionFinalizer<CreateNewConceptFromNoneConcept>() {
 			@Override
-			public boolean run(EventObject e, CreateNewConcept action) {
-				logger.info("CreateNewConcept finalizer");
+			public boolean run(EventObject e, CreateNewConceptFromNoneConcept action) {
+				logger.info("CreateNewConceptFromNoneConcept finalizer");
 				getController().selectAndFocusObject(action.getFocusedObject());
 				return true;
 			}

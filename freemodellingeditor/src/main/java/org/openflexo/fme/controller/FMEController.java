@@ -32,6 +32,7 @@ import javax.swing.ImageIcon;
 
 import org.openflexo.fme.FMEIconLibrary;
 import org.openflexo.fme.controller.action.FMEControllerActionInitializer;
+import org.openflexo.fme.model.FreeMetaModel;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.fme.view.menu.FMEMenuBar;
@@ -43,6 +44,7 @@ import org.openflexo.foundation.viewpoint.ViewPoint;
 import org.openflexo.foundation.viewpoint.ViewPointLibrary;
 import org.openflexo.foundation.viewpoint.ViewPointObject;
 import org.openflexo.icon.IconLibrary;
+import org.openflexo.icon.VPMIconLibrary;
 import org.openflexo.module.FlexoModule;
 import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.view.FlexoMainPane;
@@ -171,6 +173,8 @@ public class FMEController extends FlexoController {
 			return IconLibrary.OPENFLEXO_NOTEXT_16;
 		} else if (object instanceof FreeModel) {
 			return FMEIconLibrary.FME_SMALL_ICON;
+		} else if (object instanceof FreeMetaModel) {
+			return VPMIconLibrary.VIRTUAL_MODEL_ICON;
 		}
 		return super.iconForObject(object);
 	}
