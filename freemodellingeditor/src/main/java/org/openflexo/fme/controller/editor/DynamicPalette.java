@@ -423,6 +423,10 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 		@Override
 		public void propertyChange(PropertyChangeEvent event) {
 
+			if (getEditor() == null || getEditor().getDiagram() == null) {
+				return;
+			}
+			
 			if (getEditor().getDiagram().getResource().isSerializing() || getEditor().getDiagram().getResource().isDeserializing()) {
 				return;
 			}

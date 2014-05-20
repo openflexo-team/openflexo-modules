@@ -22,8 +22,6 @@ package org.openflexo.fme.model.action;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import org.openflexo.fge.ShapeGraphicalRepresentation;
-import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
 import org.openflexo.fme.model.FreeMetaModel;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.fme.model.FreeModellingProject;
@@ -37,11 +35,7 @@ import org.openflexo.foundation.action.FlexoActionType;
 import org.openflexo.foundation.view.FlexoConceptInstance;
 import org.openflexo.foundation.viewpoint.FlexoConcept;
 import org.openflexo.localization.FlexoLocalization;
-import org.openflexo.technologyadapter.diagram.fml.DropScheme;
-import org.openflexo.technologyadapter.diagram.fml.FMLDiagramPaletteElementBinding;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
-import org.openflexo.technologyadapter.diagram.fml.action.AddDiagramPaletteElement;
-import org.openflexo.technologyadapter.diagram.metamodel.DiagramPaletteElement;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 import org.openflexo.toolbox.StringUtils;
 
@@ -62,7 +56,8 @@ public class CreateNewConceptFromNoneConcept extends FlexoAction<CreateNewConcep
 		 * Factory method
 		 */
 		@Override
-		public CreateNewConceptFromNoneConcept makeNewAction(FlexoConceptInstance focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+		public CreateNewConceptFromNoneConcept makeNewAction(FlexoConceptInstance focusedObject, Vector<FlexoObject> globalSelection,
+				FlexoEditor editor) {
 			return new CreateNewConceptFromNoneConcept(focusedObject, globalSelection, editor);
 		}
 
@@ -125,7 +120,10 @@ public class CreateNewConceptFromNoneConcept extends FlexoAction<CreateNewConcep
 		newFlexoConcept = freeModel.getMetaModel().getFlexoConcept(getNewConceptName(), getEditor(), this);
 
 		// Add entry in palette
-		AddDiagramPaletteElement addDiagramPaletteElement = AddDiagramPaletteElement.actionType.makeNewEmbeddedAction(freeModel
+		freeModel.getMetaModel().createPaletteElementForConcept(newFlexoConcept, shapeElement.getGraphicalRepresentation(), this);
+
+		/*
+		CreateDiagramPaletteElement createDiagramPaletteElement = CreateDiagramPaletteElement.actionType.makeNewEmbeddedAction(freeModel
 				.getMetaModel().getConceptsPalette(), null, this);
 		ShapeGraphicalRepresentation paletteElementGR = (ShapeGraphicalRepresentation) shapeElement.getGraphicalRepresentation()
 				.cloneObject();
@@ -133,15 +131,15 @@ public class CreateNewConceptFromNoneConcept extends FlexoAction<CreateNewConcep
 		paletteElementGR.setY(10);
 		paletteElementGR.setText(getNewConceptName());
 		paletteElementGR.setIsFloatingLabel(false);
-		addDiagramPaletteElement.setGraphicalRepresentation(paletteElementGR);
-		addDiagramPaletteElement.setNewElementName(getNewConceptName());
-		addDiagramPaletteElement.doAction();
+		createDiagramPaletteElement.setGraphicalRepresentation(paletteElementGR);
+		createDiagramPaletteElement.setNewElementName(getNewConceptName());
+		createDiagramPaletteElement.doAction();
 
-		DiagramPaletteElement paletteElement = addDiagramPaletteElement.getNewElement();
+		DiagramPaletteElement paletteElement = createDiagramPaletteElement.getNewElement();
 
 		System.out.println("Created palette element: " + paletteElement);
 		int px, py;
-		int index = freeModel.getMetaModel().getConceptsPalette().getElements().indexOf(addDiagramPaletteElement.getNewElement());
+		int index = freeModel.getMetaModel().getConceptsPalette().getElements().indexOf(createDiagramPaletteElement.getNewElement());
 		px = index % 3;
 		py = index / 3;
 
@@ -169,6 +167,7 @@ public class CreateNewConceptFromNoneConcept extends FlexoAction<CreateNewConcep
 		newBinding.setFlexoConcept(newFlexoConcept);
 		newBinding.setDropScheme(dropScheme);
 		freeModel.getMetaModel().getTypedDiagramModelSlot().addToPaletteElementBindings(newBinding);
+		*/
 
 		// Sets new concept GR with actual shape GR
 		ShapeRole shapeRole = (ShapeRole) newFlexoConcept.getFlexoRole(FreeMetaModel.SHAPE_ROLE_NAME);

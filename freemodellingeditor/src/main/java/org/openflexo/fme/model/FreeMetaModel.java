@@ -56,8 +56,10 @@ import org.openflexo.technologyadapter.diagram.fml.DropScheme;
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelNature;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
 import org.openflexo.technologyadapter.diagram.fml.action.CreateDiagramPalette;
+import org.openflexo.technologyadapter.diagram.fml.action.CreateFMLControlledDiagramPaletteElement;
 import org.openflexo.technologyadapter.diagram.fml.editionaction.AddShape;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramPalette;
+import org.openflexo.technologyadapter.diagram.metamodel.DiagramPaletteElement;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramSpecification;
 
 /**
@@ -313,6 +315,48 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			System.out.println("Palette has been created: " + createPalette.getNewPalette());
 		}
 		return getDiagramSpecification().getPalette(PALETTE_NAME);
+	}
+
+	public DiagramPaletteElement createPaletteElementForConcept(FlexoConcept concept, ShapeGraphicalRepresentation gr,
+			FlexoAction<?, ?, ?> ownerAction) {
+
+		CreateFMLControlledDiagramPaletteElement action = CreateFMLControlledDiagramPaletteElement.actionType.makeNewEmbeddedAction(
+				concept.getVirtualModel(), null, ownerAction);
+		action.setPalette(getConceptsPalette());
+
+		ShapeGraphicalRepresentation paletteElementGR = (ShapeGraphicalRepresentation) gr.cloneObject();
+		int px, py;
+		int index = getConceptsPalette().getElements().size();
+		px = index % 3;
+		py = index / 3;
+
+		// FACTORY.applyDefaultProperties(gr);
+		if (paletteElementGR.getShapeSpecification().getShapeType() == ShapeType.SQUARE
+				|| paletteElementGR.getShapeSpecification().getShapeType() == ShapeType.CIRCLE) {
+			paletteElementGR.setX(10);
+			paletteElementGR.setY(10);
+			paletteElementGR.setX(px * FreeMetaModel.PALETTE_GRID_WIDTH + 15);
+			paletteElementGR.setY(py * FreeMetaModel.PALETTE_GRID_HEIGHT + 10);
+			paletteElementGR.setWidth(30);
+			paletteElementGR.setHeight(30);
+		} else {
+			paletteElementGR.setX(px * FreeMetaModel.PALETTE_GRID_WIDTH + 10);
+			paletteElementGR.setY(py * FreeMetaModel.PALETTE_GRID_HEIGHT + 10);
+			paletteElementGR.setWidth(40);
+			paletteElementGR.setHeight(30);
+		}
+		paletteElementGR.setText(concept.getName());
+
+		action.setGraphicalRepresentation(paletteElementGR);
+		action.setConcept(concept);
+		if (concept.getFlexoBehaviours(DropScheme.class).size() > 0) {
+			action.setDropScheme(concept.getFlexoBehaviours(DropScheme.class).get(0));
+		}
+
+		action.doAction();
+
+		return action.getNewElement();
+
 	}
 
 }

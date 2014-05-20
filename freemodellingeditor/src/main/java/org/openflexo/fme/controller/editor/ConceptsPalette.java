@@ -19,18 +19,24 @@
  */
 package org.openflexo.fme.controller.editor;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.logging.Logger;
 
 import org.openflexo.fge.Drawing.DrawingTreeNode;
 import org.openflexo.fge.geom.FGEPoint;
+import org.openflexo.fme.controller.editor.DynamicPalette.GraphicalRepresentationSet;
+import org.openflexo.fme.model.FreeMetaModel;
 import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.view.VirtualModelInstance;
+import org.openflexo.foundation.viewpoint.FlexoConcept;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.ContextualPalette;
+import org.openflexo.technologyadapter.diagram.controller.diagrameditor.DiagramEditor;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.FMLControlledDiagramEditor;
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelNature;
 import org.openflexo.technologyadapter.diagram.fml.FMLDiagramPaletteElementBinding;
+import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramPalette;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramPaletteElement;
 import org.openflexo.technologyadapter.diagram.model.DiagramContainerElement;
@@ -81,4 +87,38 @@ public class ConceptsPalette extends ContextualPalette implements PropertyChange
 
 	}
 
+	@Override
+	protected ContextualPaletteElement makePaletteElement(final DiagramPaletteElement element, DiagramEditor editor) {
+		if (editor instanceof FMLControlledDiagramEditor) {
+			VirtualModelInstance vmi = ((FMLControlledDiagramEditor) editor).getVirtualModelInstance();
+			TypedDiagramModelSlot ms = FMLControlledDiagramVirtualModelNature.getTypedDiagramModelSlot(vmi.getVirtualModel());
+			if (ms != null) {
+				FMLDiagramPaletteElementBinding binding = ms.getPaletteElementBinding(element);
+				if (binding != null) {
+					FlexoConcept concept = binding.getFlexoConcept();
+					final ShapeRole conceptShapeRole = (ShapeRole) concept.getFlexoRole(FreeMetaModel.SHAPE_ROLE_NAME);
+					if (conceptShapeRole != null) {
+						conceptShapeRole.getGraphicalRepresentation().getPropertyChangeSupport()
+								.addPropertyChangeListener(new PropertyChangeListener() {
+									@Override
+									public void propertyChange(PropertyChangeEvent event) {
+										element.getGraphicalRepresentation().setsWith(conceptShapeRole.getGraphicalRepresentation(),
+												GraphicalRepresentationSet.IGNORED_PROPERTIES);
+									}
+								});
+					}
+				}
+			}
+		}
+		return super.makePaletteElement(element, editor);
+	}
+
+	public class FreeConceptPaletteElement extends ContextualPaletteElement {
+		public FreeConceptPaletteElement(DiagramPaletteElement aPaletteElement) {
+			super(aPaletteElement);
+
+			// if (aPaletteElement.getD)
+
+		}
+	}
 }

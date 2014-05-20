@@ -23,6 +23,7 @@ import java.util.Vector;
 import java.util.logging.Logger;
 
 import org.openflexo.fge.ShapeGraphicalRepresentation;
+import org.openflexo.fme.controller.editor.DynamicPalette.GraphicalRepresentationSet;
 import org.openflexo.fme.model.FreeMetaModel;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.fme.model.FreeModellingProject;
@@ -37,7 +38,12 @@ import org.openflexo.foundation.view.FlexoConceptInstance;
 import org.openflexo.foundation.viewpoint.FlexoConcept;
 import org.openflexo.foundation.viewpoint.VirtualModel;
 import org.openflexo.localization.FlexoLocalization;
+import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
+import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelNature;
+import org.openflexo.technologyadapter.diagram.fml.FMLDiagramPaletteElementBinding;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
+import org.openflexo.technologyadapter.diagram.metamodel.DiagramPalette;
+import org.openflexo.technologyadapter.diagram.metamodel.DiagramPaletteElement;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 
 /**
@@ -83,7 +89,7 @@ public class DeclareInstanceOfExistingConcept extends FlexoAction<DeclareInstanc
 	}
 
 	private FlexoConcept concept;
-	private GRStrategy grStrategy = GRStrategy.GetConceptShape;
+	private GRStrategy grStrategy = null; // GRStrategy.GetConceptShape;
 
 	DeclareInstanceOfExistingConcept(FlexoConceptInstance focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
@@ -112,11 +118,22 @@ public class DeclareInstanceOfExistingConcept extends FlexoAction<DeclareInstanc
 		boolean wasValid = isValid();
 		this.concept = concept;
 		getPropertyChangeSupport().firePropertyChange("concept", null, concept);
+		getPropertyChangeSupport().firePropertyChange("grStrategy", null, concept);
 		getPropertyChangeSupport().firePropertyChange("isValid", wasValid, isValid());
 		getPropertyChangeSupport().firePropertyChange("errorMessage", null, getErrorMessage());
 	}
 
 	public GRStrategy getGrStrategy() {
+		if (grStrategy == null) {
+			try {
+				if (getFreeModel().getInstances(getConcept()).size() > 0) {
+					return GRStrategy.GetConceptShape;
+				}
+			} catch (InvalidArgumentException e) {
+				e.printStackTrace();
+			}
+			return GRStrategy.RedefineShapeOfConcept;
+		}
 		return grStrategy;
 	}
 
@@ -151,6 +168,8 @@ public class DeclareInstanceOfExistingConcept extends FlexoAction<DeclareInstanc
 			// Sets concept GR with actual shape GR
 			newShapeRole.getGraphicalRepresentation().setsWith(shapeElement.getGraphicalRepresentation(), ShapeGraphicalRepresentation.X,
 					ShapeGraphicalRepresentation.Y);
+			// Look at the palette element
+			// DiagramPalette palette = freeModel.getMetaModel().getConceptsPalette();
 			break;
 		case GetConceptShape:
 			// Sets actual shape GR with concept GR
@@ -164,6 +183,32 @@ public class DeclareInstanceOfExistingConcept extends FlexoAction<DeclareInstanc
 
 		// We will here bypass the classical DropScheme
 		flexoConceptInstance.setFlexoConcept(concept);
+
+		// In case of GRStrategy is to redefine concept shape, we now need to set GR of all instances
+		if (getGrStrategy() == GRStrategy.RedefineShapeOfConcept) {
+			for (FlexoConceptInstance fci : freeModel.getInstances(concept)) {
+				fci.getFlexoActor(newShapeRole).getGraphicalRepresentation()
+						.setsWith(newShapeRole.getGraphicalRepresentation(), GraphicalRepresentationSet.IGNORED_PROPERTIES);
+			}
+		}
+
+		if (freeModel.getInstances(concept).size() == 1) {
+			// This was the first time such an instance of this concept is used
+			// This might be a good idea to add a palette element (when non existant)
+			DiagramPalette palette = freeModel.getMetaModel().getConceptsPalette();
+			DiagramPaletteElement existingElement = null;
+			TypedDiagramModelSlot ms = FMLControlledDiagramVirtualModelNature.getTypedDiagramModelSlot(freeModel.getMetaModel()
+					.getVirtualModel());
+			for (FMLDiagramPaletteElementBinding b : ms.getPaletteElementBindings()) {
+				if (b.getFlexoConcept() == concept) {
+					existingElement = b.getPaletteElement();
+				}
+			}
+			if (existingElement == null) {
+				// No palette element matching related concept was found
+				freeModel.getMetaModel().createPaletteElementForConcept(concept, shapeElement.getGraphicalRepresentation(), this);
+			}
+		}
 
 		// We should notify the creation of a new FlexoConcept
 		freeModel.getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null, getConcept());
