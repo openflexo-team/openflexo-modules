@@ -11,5 +11,8 @@
     <Button id="9" manageDynamicModel="false" useScrollBar="false" buttonType="Trigger" action="controller.cancelAndDispose()" index="1" localize="true" constraints="flow(index=1)" label="cancel" readOnly="false" />
   </Panel>
   <LocalizedDictionary>
+  	<Localized key="creates_new_free_model" lang="English">Create new free model</Localized>
+    <Localized key="creates_new_free_model" lang="French">Créer un nouveau modèle libre</Localized>
+    <Localized key="creates_new_free_model" lang="Dutch">creates_new_free_model</Localized>
   </LocalizedDictionary>
 </Panel>

@@ -13,5 +13,8 @@
     <Button id="9" manageDynamicModel="false" useScrollBar="false" buttonType="Trigger" action="controller.cancelAndDispose()" index="1" localize="true" constraints="flow(index=1)" label="cancel" readOnly="false" />
   </Panel>
   <LocalizedDictionary>
+  	<Localized key="declare_as_instance_of_existing_concept" lang="English">Declare as instance of an existing concept</Localized>
+    <Localized key="declare_as_instance_of_existing_concept" lang="French">Déclarer comme une instance d'un concept existant</Localized>
+    <Localized key="declare_as_instance_of_existing_concept" lang="Dutch">declare_as_instance_of_existing_concept</Localized>
   </LocalizedDictionary>
 </Panel>
