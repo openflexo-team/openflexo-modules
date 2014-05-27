@@ -22,40 +22,38 @@ package org.openflexo.fme.controller.action;
 import java.util.EventObject;
 import java.util.logging.Logger;
 
+import org.openflexo.fme.model.action.DeleteFMEFlexoConceptInstance;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
 import org.openflexo.foundation.view.FlexoConceptInstance;
 import org.openflexo.foundation.view.VirtualModelInstanceObject;
-import org.openflexo.foundation.view.action.DeletionSchemeAction;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 
-public class DeletionSchemeActionInitializer extends
-		ActionInitializer<DeletionSchemeAction, FlexoConceptInstance, VirtualModelInstanceObject> {
+public class DeleteFMEFlexoConceptInstanceActionInitializer extends
+		ActionInitializer<DeleteFMEFlexoConceptInstance, FlexoConceptInstance, VirtualModelInstanceObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
-	DeletionSchemeActionInitializer(FMEControllerActionInitializer actionInitializer) {
-		super(DeletionSchemeAction.actionType, actionInitializer);
+	DeleteFMEFlexoConceptInstanceActionInitializer(FMEControllerActionInitializer actionInitializer) {
+		super(DeleteFMEFlexoConceptInstance.actionType, actionInitializer);
 	}
 
 	@Override
-	protected FlexoActionInitializer<DeletionSchemeAction> getDefaultInitializer() {
-		return new FlexoActionInitializer<DeletionSchemeAction>() {
+	protected FlexoActionInitializer<DeleteFMEFlexoConceptInstance> getDefaultInitializer() {
+		return new FlexoActionInitializer<DeleteFMEFlexoConceptInstance>() {
 			@Override
-			public boolean run(EventObject e, DeletionSchemeAction action) {
-				action.setDeletionScheme(action.getFocusedObject().getFlexoConcept().getDeletionSchemes().get(0));
+			public boolean run(EventObject e, DeleteFMEFlexoConceptInstance action) {
 				return true;
 			}
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<DeletionSchemeAction> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<DeletionSchemeAction>() {
+	protected FlexoActionFinalizer<DeleteFMEFlexoConceptInstance> getDefaultFinalizer() {
+		return new FlexoActionFinalizer<DeleteFMEFlexoConceptInstance>() {
 			@Override
-			public boolean run(EventObject e, DeletionSchemeAction action) {
-				getController().selectAndFocusObject(action.getFocusedObject());
+			public boolean run(EventObject e, DeleteFMEFlexoConceptInstance action) {
 				return true;
 			}
 		};
