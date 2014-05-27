@@ -22,25 +22,25 @@ package org.openflexo.fme.model.action;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import org.openflexo.fme.model.FreeMetaModel;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.fme.model.FreeModellingProject;
+import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
+import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
 import org.openflexo.foundation.resource.SaveResourceException;
 import org.openflexo.foundation.view.FlexoConceptInstance;
+import org.openflexo.foundation.view.VirtualModelInstance;
 import org.openflexo.foundation.view.VirtualModelInstanceObject;
 import org.openflexo.foundation.view.action.DeletionSchemeAction;
 
 /**
- * This action is used to create a new {@link FreeModel} in a {@link FreeModellingProject}<br>
+ * This action is used to delete a flexo concept instance within Free modeling editor<br>
  * 
- * New {@link FreeModel} might be created while a new associated {@link FreeMetaModel} is created, or using an existing one.
- * 
- * @author sylvain
+ * @author vincent
  * 
  */
 public class DeleteFMEFlexoConceptInstance extends
@@ -49,7 +49,7 @@ public class DeleteFMEFlexoConceptInstance extends
 	private static final Logger logger = Logger.getLogger(DeleteFMEFlexoConceptInstance.class.getPackage().getName());
 
 	public static FlexoActionType<DeleteFMEFlexoConceptInstance, FlexoConceptInstance, VirtualModelInstanceObject> actionType = new FlexoActionType<DeleteFMEFlexoConceptInstance, FlexoConceptInstance, VirtualModelInstanceObject>(
-			"delete_flexo_concept_instance", FlexoActionType.newMenu, FlexoActionType.defaultGroup, FlexoActionType.ADD_ACTION_TYPE) {
+			"delete_flexo_concept_instance", FlexoActionType.defaultGroup, FlexoActionType.DELETE_ACTION_TYPE) {
 
 		/**
 		 * Factory method
@@ -85,16 +85,41 @@ public class DeleteFMEFlexoConceptInstance extends
 
 		logger.info("Delete flexo concept instances");
 
-		for (FlexoObject selection : getGlobalSelectionAndFocusedObject()) {
-			if (selection instanceof FlexoConceptInstance) {
-				DeletionSchemeAction deletionSchemeAction = DeletionSchemeAction.actionType.makeNewEmbeddedAction(
-						(FlexoConceptInstance) selection, getGlobalSelection(), this);
-				deletionSchemeAction.setVirtualModelInstance(((FlexoConceptInstance) selection).getVirtualModelInstance());
-				deletionSchemeAction.setDeletionScheme(((FlexoConceptInstance) selection).getFlexoConcept().getDeletionSchemes().get(0));
-				deletionSchemeAction.doAction();
+		try {
+			FreeModel freeModel = getFreeModel();
+			for (FlexoObject selection : getGlobalSelection()) {
+				if (selection instanceof FlexoConceptInstance) {
+					VirtualModelInstance vmi = ((FlexoConceptInstance) selection).getVirtualModelInstance();
+					DeletionSchemeAction deletionSchemeAction = DeletionSchemeAction.actionType.makeNewEmbeddedAction(
+							(FlexoConceptInstance) selection, getGlobalSelection(), this);
+					deletionSchemeAction.setVirtualModelInstance(vmi);
+					deletionSchemeAction
+							.setDeletionScheme(((FlexoConceptInstance) selection).getFlexoConcept().getDeletionSchemes().get(0));
+					deletionSchemeAction.doAction();
+					vmi.removeFromFlexoConceptInstances(((FlexoConceptInstance) selection));
+					selection.delete(context);
+					// This is used to notify the deletion of an instance of a flexo concept
+					freeModel.getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", selection, null);
+				}
 			}
+
+			// TODO Delete concept if no instances??
+
+		} catch (InvalidArgumentException e) {
+			e.printStackTrace();
 		}
 
-		// TODO Delete concept if no instances??
+	}
+
+	public FreeModellingProjectNature getFreeModellingProjectNature() {
+		return getServiceManager().getProjectNatureService().getProjectNature(FreeModellingProjectNature.class);
+	}
+
+	public FreeModellingProject getFreeModellingProject() {
+		return getFreeModellingProjectNature().getFreeModellingProject(getEditor().getProject());
+	}
+
+	public FreeModel getFreeModel() throws InvalidArgumentException {
+		return getFreeModellingProject().getFreeModel(getFocusedObject().getVirtualModelInstance());
 	}
 }
