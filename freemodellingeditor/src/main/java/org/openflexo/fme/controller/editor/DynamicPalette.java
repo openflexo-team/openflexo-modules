@@ -170,9 +170,11 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 
 		GraphicalRepresentationSet<DiagramElement<?>> diagramGRs = new GraphicalRepresentationSet<DiagramElement<?>>();
 
-		// For each existing DiagramElement:
+		// For each existing DiagramElement which is not deleted:
 		for (DiagramElement<?> e : getEditor().getFreeModel().getDiagram().getDescendants()) {
-			diagramGRs.put(e.getGraphicalRepresentation(), e);
+			if (!e.isDeleted()) {
+				diagramGRs.put(e.getGraphicalRepresentation(), e);
+			}
 		}
 
 		/*System.out.println("DiagramGRs=" + diagramGRs);
