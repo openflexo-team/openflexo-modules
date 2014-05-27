@@ -383,7 +383,9 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 		@Override
 		public void delete() {
 			for (DiagramElement<?> el : diagramElements) {
-				el.getGraphicalRepresentation().getPropertyChangeSupport().removePropertyChangeListener(this);
+				if (el.getGraphicalRepresentation() != null && el.getGraphicalRepresentation().getPropertyChangeSupport() != null) {
+					el.getGraphicalRepresentation().getPropertyChangeSupport().removePropertyChangeListener(this);
+				}
 			}
 			// Dont do this, otherwise some other unexpected GR will be deleted
 			// gr.delete();
@@ -426,7 +428,7 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 			if (getEditor() == null || getEditor().getDiagram() == null) {
 				return;
 			}
-			
+
 			if (getEditor().getDiagram().getResource().isSerializing() || getEditor().getDiagram().getResource().isDeserializing()) {
 				return;
 			}
