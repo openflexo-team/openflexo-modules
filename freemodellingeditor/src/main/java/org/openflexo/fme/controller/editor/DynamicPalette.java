@@ -435,17 +435,19 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 				return;
 			}
 
-			for (GRParameter<?> p : GraphicalRepresentationSet.IGNORED_PROPERTIES) {
-				if (event.getPropertyName().equals(p.getName())) {
-					// This property is ignored
+			if (event.getPropertyName() != null) {
+				for (GRParameter<?> p : GraphicalRepresentationSet.IGNORED_PROPERTIES) {
+					if (event.getPropertyName().equals(p.getName())) {
+						// This property is ignored
+						return;
+					}
+				}
+
+				if (event.getPropertyName().equals(ProxyMethodHandler.SERIALIZING)
+						|| event.getPropertyName().equals(ProxyMethodHandler.DESERIALIZING)
+						|| event.getPropertyName().equals(ProxyMethodHandler.MODIFIED)) {
 					return;
 				}
-			}
-
-			if (event.getPropertyName().equals(ProxyMethodHandler.SERIALIZING)
-					|| event.getPropertyName().equals(ProxyMethodHandler.DESERIALIZING)
-					|| event.getPropertyName().equals(ProxyMethodHandler.MODIFIED)) {
-				return;
 			}
 
 			System.out.println("An observed DiagramElement GR has changed: " + event + " property " + event.getPropertyName());
