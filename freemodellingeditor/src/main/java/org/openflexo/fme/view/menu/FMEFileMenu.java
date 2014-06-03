@@ -39,9 +39,9 @@ import org.openflexo.view.menu.FileMenu;
 import org.openflexo.view.menu.FlexoMenuItem;
 
 /**
- * 'File' menu for this Module
+ * 'File' menu for FME Module
  * 
- * @author yourname
+ * @author sylvain
  */
 public class FMEFileMenu extends FileMenu {
 

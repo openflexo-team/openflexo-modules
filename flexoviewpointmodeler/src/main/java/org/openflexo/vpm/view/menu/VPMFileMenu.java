@@ -19,12 +19,6 @@
  */
 package org.openflexo.vpm.view.menu;
 
-/*
- * Created on <date> by <yourname>
- *
- * Flexo Application Suite
- * (c) Denali 2003-2006
- */
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.logging.Logger;
@@ -39,16 +33,16 @@ import org.openflexo.view.menu.FlexoMenuItem;
 import org.openflexo.vpm.controller.VPMController;
 
 /**
- * 'File' menu for this Module
+ * 'File' menu for VPM Module
  * 
- * @author yourname
+ * @author sylvain
  */
 public class VPMFileMenu extends FileMenu {
 
 	private static final Logger logger = Logger.getLogger(VPMFileMenu.class.getPackage().getName());
 
 	public VPMFileMenu(VPMController controller) {
-		super(controller, false);
+		super(controller);
 	}
 
 	public VPMController getCEDController() {

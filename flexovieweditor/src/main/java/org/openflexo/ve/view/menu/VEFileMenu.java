@@ -19,21 +19,15 @@
  */
 package org.openflexo.ve.view.menu;
 
-/*
- * Created on <date> by <yourname>
- *
- * Flexo Application Suite
- * (c) Denali 2003-2006
- */
 import java.util.logging.Logger;
 
 import org.openflexo.ve.controller.VEController;
 import org.openflexo.view.menu.FileMenu;
 
 /**
- * 'File' menu for this Module
+ * 'File' menu for ViewEditor Module
  * 
- * @author yourname
+ * @author sylvain
  */
 public class VEFileMenu extends FileMenu {
 

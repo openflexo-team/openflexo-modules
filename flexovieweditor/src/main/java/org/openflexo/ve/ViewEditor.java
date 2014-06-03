@@ -18,7 +18,7 @@ public class ViewEditor extends Module<VEModule> {
 	public ViewEditor() {
 		super(VEModule.VE_MODULE_NAME, VEModule.VE_MODULE_SHORT_NAME, VEModule.class, VEPreferences.class,
 				"modules/flexoviewpointmodeller", "10402", "ve", VEIconLibrary.VE_SMALL_ICON, VEIconLibrary.VE_MEDIUM_ICON,
-				VEIconLibrary.VE_MEDIUM_ICON_WITH_HOVER, VEIconLibrary.VE_BIG_ICON, true);
+				VEIconLibrary.VE_MEDIUM_ICON_WITH_HOVER, VEIconLibrary.VE_BIG_ICON);
 
 		// WE set it now, because we are sure the ServiceManager did this call first
 		// WE want to avoid twice defined objects
