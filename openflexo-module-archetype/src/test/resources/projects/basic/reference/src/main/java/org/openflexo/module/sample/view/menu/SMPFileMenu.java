@@ -49,7 +49,7 @@ public class SMPFileMenu extends FileMenu {
 	private static final Logger logger = Logger.getLogger(SMPFileMenu.class.getPackage().getName());
 
 	public SMPFileMenu(SMPController controller) {
-		super(controller, false);
+		super(controller);
 	}
 
 	public SMPController getSMPController() {

@@ -31,7 +31,7 @@ public class sample extends Module<SMPModule> {
 			
 		super(SMPModule.SMP_MODULE_NAME, SMPModule.SMP_MODULE_NAME, SMPModule.class, SMPPreferences.class, "",
 				null , "SMP", SMPIconLibrary.SMP_SMALL_ICON, SMPIconLibrary.SMP_MEDIUM_ICON, SMPIconLibrary.SMP_MEDIUM_ICON_HOVER,
-				SMPIconLibrary.SMP_BIG_ICON, false);
+				SMPIconLibrary.SMP_BIG_ICON);
 
 		INSTANCE = this;
 	}

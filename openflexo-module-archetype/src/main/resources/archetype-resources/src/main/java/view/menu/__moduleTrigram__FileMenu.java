@@ -49,7 +49,7 @@ public class ${moduleTrigram}FileMenu extends FileMenu {
 	private static final Logger logger = Logger.getLogger(${moduleTrigram}FileMenu.class.getPackage().getName());
 
 	public ${moduleTrigram}FileMenu(${moduleTrigram}Controller controller) {
-		super(controller, false);
+		super(controller);
 	}
 
 	public ${moduleTrigram}Controller get${moduleTrigram}Controller() {

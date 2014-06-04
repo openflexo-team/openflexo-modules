@@ -31,7 +31,7 @@ public class ${moduleName} extends Module<${moduleTrigram}Module> {
 			
 		super(${moduleTrigram}Module.${moduleTrigram}_MODULE_NAME, ${moduleTrigram}Module.${moduleTrigram}_MODULE_NAME, ${moduleTrigram}Module.class, ${moduleTrigram}Preferences.class, "",
 				null , "${moduleTrigram}", ${moduleTrigram}IconLibrary.${moduleTrigram}_SMALL_ICON, ${moduleTrigram}IconLibrary.${moduleTrigram}_MEDIUM_ICON, ${moduleTrigram}IconLibrary.${moduleTrigram}_MEDIUM_ICON_HOVER,
-				${moduleTrigram}IconLibrary.${moduleTrigram}_BIG_ICON, false);
+				${moduleTrigram}IconLibrary.${moduleTrigram}_BIG_ICON);
 
 		INSTANCE = this;
 	}
