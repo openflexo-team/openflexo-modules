@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.openflexo.fge.BackgroundImageBackgroundStyle;
 import org.openflexo.fge.Drawing.ContainerNode;
 import org.openflexo.fge.Drawing.DrawingTreeNode;
 import org.openflexo.fge.GRParameter;
@@ -115,7 +116,7 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 						}
 					} else {
 						if (value1 instanceof AccessibleProxyObject) {
-							if (!((AccessibleProxyObject) value1).equalsObject(value2)) {
+							if (!((AccessibleProxyObject) value1).equalsObject(value2) && !asSameBackgroungImage(value1, value2)) {
 								// System.out.println("Differs 2 " + value1 + " and " + value2 + " for " + p);
 								return false;
 							}
@@ -129,6 +130,23 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 				}
 			}
 			return true;
+		}
+
+		// LOW / MODULES-121 Special case to solve the problem of palette element duplication for shape with images.
+		// Our current macanims to retrieve image resources instanciate a new FileResource each time
+		// it locates it, thus for a same file, many FileResources are instanciated and so palette elements are duplicated.
+		// This should be solve in 1.7, for instance by createing a dedicated technology adapter for images.
+		// For now, just adress the problem rapidly
+		private static boolean asSameBackgroungImage(Object value1, Object value2) {
+			if (value1 instanceof BackgroundImageBackgroundStyle && value2 instanceof BackgroundImageBackgroundStyle) {
+				BackgroundImageBackgroundStyle bibs1 = (BackgroundImageBackgroundStyle) value1;
+				BackgroundImageBackgroundStyle bibs2 = (BackgroundImageBackgroundStyle) value2;
+				if (bibs1.getImageFile() != null && bibs2.getImageFile() != null
+						&& bibs1.getImageFile().getAbsolutePath().equals(bibs2.getImageFile().getAbsolutePath())) {
+					return true;
+				}
+			}
+			return false;
 		}
 
 		public T put(GraphicalRepresentation key, T value) {
