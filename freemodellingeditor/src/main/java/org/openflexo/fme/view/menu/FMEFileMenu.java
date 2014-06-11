@@ -25,18 +25,10 @@ package org.openflexo.fme.view.menu;
  * Flexo Application Suite
  * (c) Denali 2003-2006
  */
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import java.util.logging.Logger;
 
-import javax.swing.AbstractAction;
-import javax.swing.KeyStroke;
-
-import org.openflexo.FlexoCst;
 import org.openflexo.fme.controller.FMEController;
-import org.openflexo.icon.IconLibrary;
 import org.openflexo.view.menu.FileMenu;
-import org.openflexo.view.menu.FlexoMenuItem;
 
 /**
  * 'File' menu for FME Module
@@ -57,7 +49,7 @@ public class FMEFileMenu extends FileMenu {
 
 	@Override
 	public void addSpecificItems() {
-		add(new SaveModifiedItem());
+		// add(new SaveModifiedItem());
 		addSeparator();
 	}
 
@@ -71,7 +63,8 @@ public class FMEFileMenu extends FileMenu {
 
 	}
 
-	public class SaveModifiedItem extends FlexoMenuItem {
+	// Already provided by super class
+	/*public class SaveModifiedItem extends FlexoMenuItem {
 		public SaveModifiedItem() {
 			super(new SaveModifiedAction(), "save", KeyStroke.getKeyStroke(KeyEvent.VK_S, FlexoCst.META_MASK), getController(), true);
 			setIcon(IconLibrary.SAVE_ICON);
@@ -87,6 +80,6 @@ public class FMEFileMenu extends FileMenu {
 		public void actionPerformed(ActionEvent event) {
 			getFMEController().reviewModifiedResources();
 		}
-	}
+	}*/
 
 }
