@@ -184,8 +184,6 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 
 	public void update() {
 
-		System.out.println("********* update in DynamicPalette");
-
 		GraphicalRepresentationSet<DiagramElement<?>> diagramGRs = new GraphicalRepresentationSet<DiagramElement<?>>();
 
 		// For each existing DiagramElement which is not deleted:
@@ -194,11 +192,6 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 				diagramGRs.put(e.getGraphicalRepresentation(), e);
 			}
 		}
-
-		/*System.out.println("DiagramGRs=" + diagramGRs);
-		for (GraphicalRepresentation gr : diagramGRs.keySet()) {
-			System.out.println(" > For " + gr + " : " + diagramGRs.get(gr));
-		}*/
 
 		List<PaletteElement> elementsToAdd = new ArrayList<PaletteElement>();
 		List<PaletteElement> elementsToRemove = new ArrayList<PaletteElement>(getElements());
@@ -274,77 +267,13 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 		}
 	}
 
-	/*public class DynamicPaletteElement implements PaletteElement {
-
-		private ConceptGRAssociation association;
-		private final ShapeGraphicalRepresentation elementGR;
-
-		public DynamicPaletteElement(ConceptGRAssociation association) {
-			this.association = association;
-			elementGR = ((ShapeGraphicalRepresentation) association.getGraphicalRepresentation());
-
-			// gr.setText(st.name());
-			elementGR.setIsFloatingLabel(false);
-			elementGR.setIsVisible(true);
-			elementGR.setAllowToLeaveBounds(false);
-
-		}
-
-		@Override
-		public boolean acceptDragging(DrawingTreeNode<?, ?> target) {
-			return getEditor() != null && target instanceof ContainerNode;
-		}
-
-		@Override
-		public boolean elementDragged(DrawingTreeNode<?, ?> target, FGEPoint dropLocation) {
-
-			if (getEditor() == null) {
-				return false;
-			}
-
-			DiagramElement<?, ?> container = (DiagramElement<?, ?>) target.getDrawable();
-
-			logger.info("dragging " + this + " in " + container);
-
-			// getController().addNewShape(new Shape(getGraphicalRepresentation().getShapeType(), dropLocation,
-			// getController().getDrawing()),container);
-
-			CompoundEdit edit = getEditor().getEditingContext().getUndoManager().startRecording("Dragging new Element");
-
-			Shape newShape = getEditor().createNewShape(container, association, dropLocation);
-			newShape.getGraphicalRepresentation().setWidth(50);
-			newShape.getGraphicalRepresentation().setHeight(40);
-
-			getEditor().getEditingContext().getUndoManager().stopRecording(edit);
-
-			getEditor().getController().setCurrentTool(EditorTool.SelectionTool);
-			getEditor().getController().setSelectedObject(getEditor().getDrawing().getDrawingTreeNode(newShape));
-
-			return true;
-		}
-
-		@Override
-		public ShapeGraphicalRepresentation getGraphicalRepresentation() {
-			// return (ShapeGraphicalRepresentation) association.getGraphicalRepresentation();
-			return elementGR;
-		}
-
-		@Override
-		public void delete() {
-			association = null;
-		}
-	}
-	}*/
-
 	private PaletteElement makePaletteElement(final ShapeGraphicalRepresentation prototypeGR, List<DiagramElement<?>> diagramElements) {
+
 		final ShapeGraphicalRepresentation gr = (ShapeGraphicalRepresentation) prototypeGR.cloneObject();
 		return new DynamicPaletteElement(gr, diagramElements);
 	}
 
 	private boolean handleDrop(DrawingTreeNode<?, ?> target, DynamicPaletteElement paletteElement, FGEPoint dropLocation) {
-		System.out.println("YES 888888       !!!!!!!!!!!!!!!!");
-		System.out.println("concept=" + paletteElement.getFlexoConcept());
-
 		if (getEditor() == null) {
 			return false;
 		}
@@ -468,7 +397,7 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 				}
 			}
 
-			System.out.println("An observed DiagramElement GR has changed: " + event + " property " + event.getPropertyName());
+			// System.out.println("An observed DiagramElement GR has changed: " + event + " property " + event.getPropertyName());
 
 			update();
 		}
