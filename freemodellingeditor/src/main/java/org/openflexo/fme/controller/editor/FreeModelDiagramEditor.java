@@ -23,16 +23,31 @@ import java.util.logging.Logger;
 
 import javax.swing.JTabbedPane;
 
+import org.openflexo.fge.Drawing.ContainerNode;
+import org.openflexo.fge.ShapeGraphicalRepresentation;
+import org.openflexo.fge.ShapeGraphicalRepresentation.LocationConstraints;
+import org.openflexo.fge.geom.FGEPoint;
+import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
 import org.openflexo.fge.swing.control.SwingToolFactory;
 import org.openflexo.fge.swing.control.tools.JDianaPalette;
+import org.openflexo.fib.FIBLibrary;
+import org.openflexo.fib.controller.FIBDialog;
+import org.openflexo.fib.model.FIBComponent;
 import org.openflexo.fme.controller.FreeModelPasteHandler;
 import org.openflexo.fme.model.FreeModel;
+import org.openflexo.fme.model.action.DropShape;
+import org.openflexo.foundation.action.FlexoUndoManager.FlexoActionCompoundEdit;
+import org.openflexo.foundation.view.FlexoConceptInstance;
+import org.openflexo.technologyadapter.diagram.controller.DiagramCst;
 import org.openflexo.technologyadapter.diagram.controller.action.FMLControlledDiagramPasteHandler;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.AbstractDiagramPalette;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.ContextualPalette;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.FMLControlledDiagramEditor;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramPalette;
+import org.openflexo.technologyadapter.diagram.model.DiagramContainerElement;
+import org.openflexo.view.FlexoFrame;
 import org.openflexo.view.controller.FlexoController;
+import org.openflexo.view.controller.FlexoFIBController;
 
 /**
  * Editor of a FreeModel diagram<br>
@@ -126,6 +141,78 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 
 	public void setConceptFilter(String conceptFilter) {
 		this.conceptFilter = conceptFilter;
+	}
+
+	@Override
+	public boolean handleNewShapeCreation(ShapeGraphicalRepresentation shapeGR, ContainerNode<?, ?> parentNode, FGEPoint dropLocation,
+			boolean applyCurrentForeground, boolean applyCurrentBackground, boolean applyCurrentTextStyle, boolean applyCurrentShadowStyle,
+			boolean isImage, boolean resize) {
+
+		/*if (true) {
+			return super.handleNewShapeCreation(shapeGR, parentNode, dropLocation, applyCurrentForeground, applyCurrentBackground,
+					applyCurrentTextStyle, applyCurrentShadowStyle, isImage, resize);
+		}*/
+
+		DiagramContainerElement<?> container = (DiagramContainerElement<?>) parentNode.getDrawable();
+
+		// logger.info("dragging " + this + " in " + container);
+
+		FlexoActionCompoundEdit edit = (FlexoActionCompoundEdit) getUndoManager().startRecording("Making new shape");
+
+		shapeGR.setIsReadOnly(false);
+		shapeGR.setIsFocusable(true);
+		shapeGR.setIsSelectable(true);
+		shapeGR.setLocationConstraints(LocationConstraints.FREELY_MOVABLE);
+
+		if (resize) {
+			if (shapeGR.getShapeSpecification().getShapeType() == ShapeType.SQUARE
+					|| shapeGR.getShapeSpecification().getShapeType() == ShapeType.CIRCLE) {
+				shapeGR.setWidth(50);
+				shapeGR.setHeight(50);
+			} else {
+				shapeGR.setWidth(60);
+				shapeGR.setHeight(45);
+			}
+		}
+		if (applyCurrentForeground) {
+			shapeGR.setForeground(getInspectedForegroundStyle().cloneStyle());
+		}
+		if (applyCurrentBackground) {
+			shapeGR.setBackground(getInspectedBackgroundStyle().cloneStyle());
+		}
+		if (applyCurrentTextStyle) {
+			shapeGR.setTextStyle(getInspectedTextStyle().cloneStyle());
+		}
+		if (applyCurrentShadowStyle) {
+			shapeGR.setShadowStyle(getInspectedShadowStyle().cloneStyle());
+		}
+
+		// shapeGR.setX(dropLocation.x);
+		// shapeGR.setY(dropLocation.y);
+
+		if (isImage) {
+			FIBComponent fibComponent = FIBLibrary.instance().retrieveFIBComponent(DiagramCst.IMPORT_IMAGE_FILE_DIALOG_FIB);
+			FIBDialog dialog = FIBDialog.instanciateAndShowDialog(fibComponent, shapeGR, FlexoFrame.getActiveFrame(), true,
+					new FlexoFIBController(fibComponent, getFlexoController()));
+		}
+
+		DropShape action = DropShape.actionType.makeNewAction(container, null, getFlexoController().getEditor());
+		action.setFreeModel(getFreeModel());
+		action.setGraphicalRepresentation(shapeGR);
+		action.setDropLocation(dropLocation);
+
+		action.setCompoundEdit(edit);
+		action.doAction();
+
+		FlexoConceptInstance newFlexoConceptInstance = action.getNewFlexoConceptInstance();
+		// DiagramShape shape = newFlexoConceptInstance.getFlexoActor(patternRole)
+
+		setCurrentTool(EditorTool.SelectionTool);
+
+		// getEditor().setSelectedObject(getEditor().getDrawing().getDrawingTreeNode(newShape));
+
+		return action.hasActionExecutionSucceeded();
+
 	}
 
 }

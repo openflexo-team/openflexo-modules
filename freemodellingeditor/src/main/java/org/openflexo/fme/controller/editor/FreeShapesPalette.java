@@ -59,15 +59,13 @@ public class FreeShapesPalette extends CommonPalette {
 			FGEPoint dropLocation, boolean applyCurrentForeground, boolean applyCurrentBackground, boolean applyCurrentTextStyle,
 			boolean applyCurrentShadowStyle, boolean isImage, boolean resize) {
 
-		System.out.println("handleBasicGraphicalRepresentationDrop in FME !!!");
-
 		if (getEditor() == null) {
 			return false;
 		}
 
 		DiagramContainerElement<?> container = (DiagramContainerElement<?>) target.getDrawable();
 
-		logger.info("dragging " + this + " in " + container);
+		// logger.info("dragging " + this + " in " + container);
 
 		FlexoActionCompoundEdit edit = (FlexoActionCompoundEdit) getEditor().getUndoManager().startRecording("Dragging new Element");
 
@@ -109,10 +107,6 @@ public class FreeShapesPalette extends CommonPalette {
 			FIBDialog dialog = FIBDialog.instanciateAndShowDialog(fibComponent, shapeGR, FlexoFrame.getActiveFrame(), true,
 					new FlexoFIBController(fibComponent, getEditor().getFlexoController()));
 		}
-
-		System.out.println("OK, create DropShape");
-		System.out.println("location=" + shapeGR.getLocation());
-		System.out.println("size=" + shapeGR.getSize());
 
 		DropShape action = DropShape.actionType.makeNewAction(container, null, getEditor().getFlexoController().getEditor());
 		action.setFreeModel(getEditor().getFreeModel());
