@@ -220,7 +220,7 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			createDropScheme.doAction();
 			assertTrue(createDropScheme.hasActionExecutionSucceeded());
 			DropScheme dropScheme = (DropScheme) createDropScheme.getNewFlexoBehaviour();
-			dropScheme.setSkipConfirmationPanel(true);
+			dropScheme.setSkipConfirmationPanel(false);
 			dropScheme.setTopTarget(true);
 
 			// Create new DropScheme parameter
