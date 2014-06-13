@@ -44,6 +44,7 @@ public class DeleteFMEFlexoConceptInstanceActionInitializer extends
 		return new FlexoActionInitializer<DeleteFMEFlexoConceptInstance>() {
 			@Override
 			public boolean run(EventObject e, DeleteFMEFlexoConceptInstance action) {
+				getController().getSelectionManager().resetSelection();
 				return true;
 			}
 		};
@@ -54,6 +55,10 @@ public class DeleteFMEFlexoConceptInstanceActionInitializer extends
 		return new FlexoActionFinalizer<DeleteFMEFlexoConceptInstance>() {
 			@Override
 			public boolean run(EventObject e, DeleteFMEFlexoConceptInstance action) {
+				if (getControllerActionInitializer().getController().getSelectionManager().getLastSelectedObject() != null
+						&& getControllerActionInitializer().getController().getSelectionManager().getLastSelectedObject().isDeleted()) {
+					getControllerActionInitializer().getController().getSelectionManager().resetSelection();
+				}
 				return true;
 			}
 		};
