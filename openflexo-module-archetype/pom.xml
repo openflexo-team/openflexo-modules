@@ -7,15 +7,11 @@
   </parent>
   <artifactId>openflexo-module-archetype</artifactId>
   <groupId>org.openflexo.archetypes</groupId>
-  <version>1.7.1-beta-SNAPSHOT</version>
+  <version>1.7-SNAPSHOT</version>
   <packaging>maven-archetype</packaging>
   <name>module-archetype</name>
   <description>Provides module development generator for Openflexo</description>
   <properties>
   	<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
-
-  <scm>
-    <tag>1.7.0</tag>
-  </scm>
 </project>
