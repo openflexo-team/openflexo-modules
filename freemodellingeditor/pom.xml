@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.openflexo</groupId>
 		<artifactId>openflexo-modules</artifactId>
-        <version>1.7-SNAPSHOT</version>
+        <version>1.7.1-beta-SNAPSHOT</version>
 	</parent>
 	<artifactId>free-modelling-editor</artifactId>
 	<name>Free Modelling Editor</name>
