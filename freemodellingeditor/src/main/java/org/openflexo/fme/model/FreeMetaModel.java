@@ -166,7 +166,12 @@ public class FreeMetaModel extends DefaultFlexoObject {
 		if (returned == null) {
 
 			// Creates the concept
-			AddFlexoConcept action = AddFlexoConcept.actionType.makeNewAction(getVirtualModel(), null, editor);
+			AddFlexoConcept action;
+			if (ownerAction != null) {
+				action = AddFlexoConcept.actionType.makeNewEmbeddedAction(getVirtualModel(), null, ownerAction);
+			} else {
+				action = AddFlexoConcept.actionType.makeNewAction(getVirtualModel(), null, editor);
+			}
 			action.setNewFlexoConceptName(conceptName);
 			action.doAction();
 			returned = action.getNewFlexoConcept();
