@@ -102,8 +102,11 @@ public class ConceptsPalette extends ContextualPalette implements PropertyChange
 								.addPropertyChangeListener(new PropertyChangeListener() {
 									@Override
 									public void propertyChange(PropertyChangeEvent event) {
-										element.getGraphicalRepresentation().setsWith(conceptShapeRole.getGraphicalRepresentation(),
-												GraphicalRepresentationSet.IGNORED_PROPERTIES);
+										if (element.getGraphicalRepresentation() != null && conceptShapeRole != null
+												&& conceptShapeRole.getGraphicalRepresentation() != null) {
+											element.getGraphicalRepresentation().setsWith(conceptShapeRole.getGraphicalRepresentation(),
+													GraphicalRepresentationSet.IGNORED_PROPERTIES);
+										}
 									}
 								});
 					}
