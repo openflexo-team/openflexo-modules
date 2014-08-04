@@ -30,7 +30,7 @@ import java.util.logging.Logger;
 import org.openflexo.fge.BackgroundImageBackgroundStyle;
 import org.openflexo.fge.Drawing.ContainerNode;
 import org.openflexo.fge.Drawing.DrawingTreeNode;
-import org.openflexo.fge.GRParameter;
+import org.openflexo.fge.GRProperty;
 import org.openflexo.fge.GraphicalRepresentation;
 import org.openflexo.fge.ShapeGraphicalRepresentation;
 import org.openflexo.fge.control.PaletteElement;
@@ -82,12 +82,12 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 	@SuppressWarnings("serial")
 	public static class GraphicalRepresentationSet<T extends FlexoObject> extends HashMap<GraphicalRepresentation, List<T>> {
 
-		public static final GRParameter<?>[] IGNORED_PROPERTIES = { GraphicalRepresentation.IDENTIFIER, GraphicalRepresentation.TEXT,
+		public static final GRProperty<?>[] IGNORED_PROPERTIES = { GraphicalRepresentation.IDENTIFIER, GraphicalRepresentation.TEXT,
 				GraphicalRepresentation.IS_READ_ONLY, GraphicalRepresentation.IS_FOCUSABLE, GraphicalRepresentation.IS_SELECTABLE,
 				ShapeGraphicalRepresentation.X, ShapeGraphicalRepresentation.Y, ShapeGraphicalRepresentation.WIDTH,
 				ShapeGraphicalRepresentation.HEIGHT, ShapeGraphicalRepresentation.LOCATION_CONSTRAINTS };
 
-		public static <T> T valueForParameter(GraphicalRepresentation gr, GRParameter<T> parameter) {
+		public static <T> T valueForParameter(GraphicalRepresentation gr, GRProperty<T> parameter) {
 			if (gr.hasKey(parameter.getName())) {
 				return (T) gr.objectForKey(parameter.getName());
 			}
@@ -98,9 +98,9 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 			if (!gr1.getClass().equals(gr2.getClass())) {
 				return false;
 			}
-			for (GRParameter<?> p : GRParameter.getGRParameters(gr1.getClass())) {
+			for (GRProperty<?> p : GRProperty.getGRParameters(gr1.getClass())) {
 				boolean isToBeIgnored = false;
-				for (GRParameter<?> ignoredP : IGNORED_PROPERTIES) {
+				for (GRProperty<?> ignoredP : IGNORED_PROPERTIES) {
 					if (p.getName().equals(ignoredP.getName())) {
 						isToBeIgnored = true;
 						break;
@@ -383,7 +383,7 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 			}
 
 			if (event.getPropertyName() != null) {
-				for (GRParameter<?> p : GraphicalRepresentationSet.IGNORED_PROPERTIES) {
+				for (GRProperty<?> p : GraphicalRepresentationSet.IGNORED_PROPERTIES) {
 					if (event.getPropertyName().equals(p.getName())) {
 						// This property is ignored
 						return;
