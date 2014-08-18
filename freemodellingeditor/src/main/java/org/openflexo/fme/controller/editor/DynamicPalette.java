@@ -22,11 +22,16 @@ package org.openflexo.fme.controller.editor;
 import java.awt.Font;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.openflexo.antar.binding.DataBinding;
+import org.openflexo.antar.expr.BindingValue;
+import org.openflexo.antar.expr.NullReferenceException;
+import org.openflexo.antar.expr.TypeMismatchException;
 import org.openflexo.fge.BackgroundImageBackgroundStyle;
 import org.openflexo.fge.Drawing.ContainerNode;
 import org.openflexo.fge.Drawing.DrawingTreeNode;
@@ -85,7 +90,11 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 		public static final GRProperty<?>[] IGNORED_PROPERTIES = { GraphicalRepresentation.IDENTIFIER, GraphicalRepresentation.TEXT,
 				GraphicalRepresentation.IS_READ_ONLY, GraphicalRepresentation.IS_FOCUSABLE, GraphicalRepresentation.IS_SELECTABLE,
 				ShapeGraphicalRepresentation.X, ShapeGraphicalRepresentation.Y, ShapeGraphicalRepresentation.WIDTH,
-				ShapeGraphicalRepresentation.HEIGHT, ShapeGraphicalRepresentation.LOCATION_CONSTRAINTS };
+				ShapeGraphicalRepresentation.HEIGHT, ShapeGraphicalRepresentation.LOCATION_CONSTRAINTS, ShapeGraphicalRepresentation.Y_CONSTRAINTS, ShapeGraphicalRepresentation.X_CONSTRAINTS, 
+				ShapeGraphicalRepresentation.HEIGHT_CONSTRAINTS, ShapeGraphicalRepresentation.WIDTH_CONSTRAINTS, 
+				ShapeGraphicalRepresentation.MINIMAL_HEIGHT, ShapeGraphicalRepresentation.MAXIMAL_HEIGHT, ShapeGraphicalRepresentation.MAXIMAL_WIDTH,
+				ShapeGraphicalRepresentation.MINIMAL_HEIGHT, ShapeGraphicalRepresentation.ALLOW_TO_LEAVE_BOUNDS, ShapeGraphicalRepresentation.SELECTED_BACKGROUND,
+				ShapeGraphicalRepresentation.FOCUSED_FOREGROUND};
 
 		public static <T> T valueForParameter(GraphicalRepresentation gr, GRProperty<T> parameter) {
 			if (gr.hasKey(parameter.getName())) {
@@ -120,7 +129,24 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 								// System.out.println("Differs 2 " + value1 + " and " + value2 + " for " + p);
 								return false;
 							}
-						} else {
+						} 
+						/*else if(value1 instanceof DataBinding){
+							try {
+								if(((DataBinding) value1).getBindingValue(gr1.get)!=((DataBinding) value2).getBindingValue(null)){
+									return false;
+								}
+							} catch (TypeMismatchException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (NullReferenceException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (InvocationTargetException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}*/
+						else {
 							if (!value1.equals(value2)) {
 								// System.out.println("Differs 3 " + value1 + " and " + value2 + " for " + p);
 								return false;
