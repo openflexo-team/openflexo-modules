@@ -13,8 +13,11 @@
     <Button id="9" manageDynamicModel="false" useScrollBar="false" buttonType="Trigger" action="controller.cancelAndDispose()" index="1" localize="true" constraints="flow(index=1)" label="cancel" readOnly="false" />
   </Panel>
   <LocalizedDictionary>
-  	<Localized key="declare_as_instance_of_existing_concept" lang="English">Declare as instance of an existing concept</Localized>
-    <Localized key="declare_as_instance_of_existing_concept" lang="French">Déclarer comme une instance d'un concept existant</Localized>
-    <Localized key="declare_as_instance_of_existing_concept" lang="Dutch">declare_as_instance_of_existing_concept</Localized>
+  	<Localized key="declare_as_instance_of_existing_concept" lang="English" value="Declare as instance of an existing concept" />
+    <Localized key="declare_as_instance_of_existing_concept" lang="French" value="Déclarer comme une instance d'un concept existant" />
+    <Localized key="declare_as_instance_of_existing_concept" lang="Dutch" value="declare_as_instance_of_existing_concept" />
+     <Localized key="representation_strategy" lang="English" value="Representing Strategy" />
+    <Localized key="representation_strategy" lang="French" value="Stratégie de Représentation" />
+    <Localized key="representation_strategy" lang="Dutch" value="Representing Strategy" />
   </LocalizedDictionary>
 </Panel>

@@ -13,8 +13,8 @@
     </Browser>
   </Panel>
   <LocalizedDictionary>
-  	<Localized key="represented_concepts" lang="English">Represented concepts</Localized>
-    <Localized key="represented_concepts" lang="French">Concepts représentés</Localized>
-    <Localized key="represented_concepts" lang="Dutch">Represented concepts</Localized>
+  	<Localized key="represented_concepts" lang="English" value="Represented concepts" />
+    <Localized key="represented_concepts" lang="French" value="Concepts représentés" />
+    <Localized key="represented_concepts" lang="Dutch" value="Represented concepts" />
   </LocalizedDictionary>
 </Panel>

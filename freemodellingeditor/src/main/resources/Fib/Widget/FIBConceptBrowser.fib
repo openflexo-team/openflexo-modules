@@ -26,8 +26,8 @@
     <Label label="all_concepts" align="center" constraints="border(location=north)" localize="true" />
   </Panel>
   <LocalizedDictionary>
-    <Localized key="all_concepts" lang="English">All concepts</Localized>
-    <Localized key="all_concepts" lang="French">Tout les concepts</Localized>
-    <Localized key="all_concepts" lang="Dutch">All concepts</Localized>
+    <Localized key="all_concepts" lang="English" value="All concepts"/>
+    <Localized key="all_concepts" lang="French" value="Tout les concepts" />
+    <Localized key="all_concepts" lang="Dutch" value="All concepts" />
   </LocalizedDictionary>
 </Panel>

@@ -11,5 +11,11 @@
     <Button id="9" manageDynamicModel="false" useScrollBar="false" buttonType="Trigger" action="controller.cancelAndDispose()" index="1" localize="true" constraints="flow(index=1)" label="cancel" readOnly="false" />
   </Panel>
   <LocalizedDictionary>
+  	<Localized key="creates_new_concept" lang="English" value="Create new concept"/>
+    <Localized key="creates_new_concept" lang="French" value="Créer un nouveau concept"/>
+    <Localized key="creates_new_concept" lang="Dutch" value="creates_new_concept"/>
+    <Localized key="concept_name" lang="English" value="Concept Name"/>
+    <Localized key="concept_name" lang="French" value="Nom du Concept"/>
+    <Localized key="concept_name" lang="Dutch" value="Concept Name"/>
   </LocalizedDictionary>
 </Panel>
