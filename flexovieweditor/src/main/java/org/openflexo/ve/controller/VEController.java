@@ -78,6 +78,8 @@ public class VEController extends FlexoController {
 			}
 		}
 
+		// Set the current Perspective to be the view library
+		this.switchToPerspective(VIEW_LIBRARY_PERSPECTIVE);
 	}
 
 	@Override
