@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VirtualModel id="0" userID="FLX" useSpecificDescriptions="false" flexoID="-1" name="DiagrammeSimpleDesFonctions">
+  <FlexoConcept id="1" userID="FLX" useSpecificDescriptions="false" flexoID="5" name="fonctionSimpleGR">
+    <Inspector id="2" flexoID="4" userID="FLX" useSpecificDescriptions="false" inspectorTitle="fonctionSimpleGR" renderer="instance.fonction.name.toString">
+      <TextField id="3" flexoID="33" description="" name="Nom" useSpecificDescriptions="false" userID="FLX" readOnly="true" data="fonction.name.cellValue.toString" label="Nom">
+        <Inspector idref="2" />
+      </TextField>
+    </Inspector>
+    <FlexoConceptInstanceRole id="4" cloningStratgey="Reference" flexoID="18" name="fonction" useSpecificDescriptions="false" userID="FLX" flexoConceptTypeURI="http://www.brest.fr/CartoDesMissions/DBCartoBasse#Fonction">
+      <VirtualModelModelSlot idref="5" />
+    </FlexoConceptInstanceRole>
+    <ShapeRole id="6" exampleLabel="label" useSpecificDescriptions="false" userID="FLX" cloningStratgey="Clone" flexoID="6" name="shape">
+      <ShapeGraphicalRepresentation id="7" minimalHeight="0.0" relativeTextX="0.500000000745058" transparency="1.0" drawControlPointsWhenFocused="true" height="75.0" hasFocusedBackground="false" verticalTextAlignment="MIDDLE" adjustMinimalWidthToLabelWidth="true" width="200.0" hasFocusedForeground="false" hasSelectedBackground="false" allowToLeaveBounds="true" isFocusable="true" drawControlPointsWhenSelected="true" isSelectable="true" isLabelEditable="true" relativeTextY="0.2999999992549419" continuousTextEditing="true" minimalWidth="0.0" identifier="654ddc8a" lineWrap="true" locationConstraints="FREELY_MOVABLE" adjustMinimalHeightToLabelHeight="true" horizontalTextAlignment="CENTER" adaptBoundsToContents="false" maximalHeight="Infinity" isVisible="true" dimensionConstraints="FREELY_RESIZABLE" isReadOnly="false" adjustMaximalHeightToLabelHeight="false" isFloatingLabel="false" hasSelectedForeground="false" paragraphAlignment="CENTER" layer="1" absoluteTextX="0.0" absoluteTextY="0.0" adjustMaximalWidthToLabelWidth="false" isMultilineAllowed="false" y="49.0" maximalWidth="Infinity" x="115.0">
+        <FocusedForegroundStyle id="8" dashStyle="PLAIN_STROKE" color="0,0,0" noStroke="false" transparencyLevel="0.5" useTransparency="false" lineWidth="1.0" capStyle="CAP_SQUARE" joinStyle="JOIN_MITER" />
+        <SelectedColorBackgroundStyle id="9" color="192,192,192" transparencyLevel="0.5" useTransparency="false" />
+        <TextStyle id="10" orientation="0" color="0,0,0" backgroundColor="255,255,255" font="SansSerif,1,11" isBackgroundColored="false" />
+        <ShapeBorder id="11" bottom="2" left="2" right="2" top="2" />
+        <ForegroundStyle id="12" dashStyle="PLAIN_STROKE" color="0,51,255" noStroke="false" transparencyLevel="0.5" useTransparency="false" lineWidth="1.0" capStyle="CAP_SQUARE" joinStyle="JOIN_MITER" />
+        <SelectedForegroundStyle id="13" dashStyle="PLAIN_STROKE" color="0,0,0" noStroke="false" transparencyLevel="0.5" useTransparency="false" lineWidth="1.0" capStyle="CAP_SQUARE" joinStyle="JOIN_MITER" />
+        <FocusedColorBackgroundStyle id="14" color="192,192,192" transparencyLevel="0.5" useTransparency="false" />
+        <RectangleShape id="15" arcSize="30.0" isRounded="true" />
+        <ShadowStyle id="16" shadowDepth="2" shadowBlur="4" drawShadow="true" shadowDarkness="150" />
+        <ColorGradientBackgroundStyle id="17" direction="SOUTH_EAST_NORTH_WEST" transparencyLevel="0.5" useTransparency="false" color2="153,153,255" color1="255,255,255" />
+      </ShapeGraphicalRepresentation>
+      <GRSpec id="18" featureName="label" flexoID="460" readOnly="true" userID="FLX" useSpecificDescriptions="false" value="fonction.name.cellValue.toString" />
+      <TypedDiagramModelSlot idref="19" />
+    </ShapeRole>
+    <DropScheme id="28" useSpecificDescriptions="false" width="800" userID="FLX" label="dropNewAtToplevel" definePopupDefaultSize="false" height="600" flexoID="21" skipConfirmationPanel="false" name="dropNewAtToplevel" target="top">
+      <TextFieldParameter id="29" flexoID="26" isRequired="false" name="Nom" userID="FLX" useSpecificDescriptions="false" label="Nom de la mission" defaultValue="&quot;Inscrire le Nom de la mission&quot;" />
+      <AddShape id="30" flexoID="22" assignation="shape" container="topLevel" useSpecificDescriptions="false" userID="FLX" extendParentBoundsToHostThisShape="false">
+        <TypedDiagramModelSlot idref="19" />
+      </AddShape>
+      <AddFlexoConceptInstance id="31" userID="FLX" useSpecificDescriptions="false" virtualModelInstance="virtualModelInstance.cartoVMI" flexoID="23" creationSchemeURI="http://www.brest.fr/CartoDesMissions/DBCartoBasse#Fonction.creationFonction" assignation="fonction">
+        <VirtualModelModelSlot idref="5" />
+        <AddFlexoConceptInstanceParameter id="32" flexoID="24" useSpecificDescriptions="false" userID="FLX" value="parameters.Nom" paramName="Nom" />
+      </AddFlexoConceptInstance>
+    </DropScheme>
+    <CreationScheme id="50" useSpecificDescriptions="false" width="800" userID="FLX" label="createShapeFromFonction" definePopupDefaultSize="false" height="600" flexoID="45" skipConfirmationPanel="false" name="createShapeFromFonction">
+      <FlexoConceptInstanceParameter id="51" useSpecificDescriptions="false" userID="FLX" label="unefonction" flexoID="47" isRequired="false" name="unefonction" />
+      <DeclareFlexoRole id="52" userID="FLX" useSpecificDescriptions="false" object="parameters.unefonction" flexoID="48" assignation="fonction" />
+      <AddShape id="53" flexoID="49" assignation="shape" description="" useSpecificDescriptions="false" userID="FLX" extendParentBoundsToHostThisShape="false">
+        <TypedDiagramModelSlot idref="19" />
+      </AddShape>
+    </CreationScheme>
+    <DropScheme id="43" useSpecificDescriptions="false" width="800" userID="FLX" label="dropSelectedAtTopLevel" definePopupDefaultSize="false" height="600" flexoID="174" skipConfirmationPanel="false" name="dropSelectedAtTopLevel" target="top">
+      <FlexoConceptInstanceParameter id="44" useSpecificDescriptions="false" userID="FLX" label="fonctionToRepresent" flexoID="175" isRequired="true" name="fonctionToRepresent" flexoConceptTypeURI="http://www.brest.fr/CartoDesMissions/DBCartoBasse#Fonction">
+        <VirtualModelModelSlot idref="5" />
+      </FlexoConceptInstanceParameter>
+      <DeclareFlexoRole id="45" userID="FLX" useSpecificDescriptions="false" object="parameters.fonctionToRepresent" flexoID="176" assignation="fonction" />
+      <AddShape id="46" flexoID="177" assignation="shape" description="" container="topLevel" useSpecificDescriptions="false" userID="FLX" extendParentBoundsToHostThisShape="false">
+        <TypedDiagramModelSlot idref="19" />
+      </AddShape>
+    </DropScheme>
+  </FlexoConcept>
+  <FlexoConcept id="54" userID="FLX" useSpecificDescriptions="false" flexoID="272" name="missionSimpleGR">
+    <Inspector id="55" flexoID="271" userID="FLX" useSpecificDescriptions="false" inspectorTitle="missionSimpleGR" />
+    <ShapeRole id="56" exampleLabel="Nouvelle Mission" useSpecificDescriptions="false" userID="FLX" cloningStratgey="Clone" flexoID="276" name="shape">
+      <ShapeGraphicalRepresentation id="57" minimalHeight="0.0" relativeTextX="0.5" transparency="1.0" drawControlPointsWhenFocused="true" height="75.0" hasFocusedBackground="false" verticalTextAlignment="MIDDLE" adjustMinimalWidthToLabelWidth="true" width="200.0" hasFocusedForeground="false" hasSelectedBackground="false" allowToLeaveBounds="true" isFocusable="true" drawControlPointsWhenSelected="true" isSelectable="true" isLabelEditable="true" relativeTextY="0.30000000074505806" continuousTextEditing="true" minimalWidth="0.0" identifier="20ffca31" lineWrap="true" locationConstraints="FREELY_MOVABLE" adjustMinimalHeightToLabelHeight="true" horizontalTextAlignment="CENTER" adaptBoundsToContents="false" maximalHeight="Infinity" isVisible="true" dimensionConstraints="FREELY_RESIZABLE" isReadOnly="false" adjustMaximalHeightToLabelHeight="false" isFloatingLabel="false" hasSelectedForeground="false" paragraphAlignment="CENTER" layer="1" absoluteTextX="0.0" absoluteTextY="0.0" adjustMaximalWidthToLabelWidth="false" isMultilineAllowed="true" y="40.0" maximalWidth="Infinity" x="160.0">
+        <FocusedForegroundStyle id="58" dashStyle="PLAIN_STROKE" color="0,0,0" noStroke="false" transparencyLevel="0.5" useTransparency="false" lineWidth="1.0" capStyle="CAP_SQUARE" joinStyle="JOIN_MITER" />
+        <SelectedColorBackgroundStyle id="59" color="192,192,192" transparencyLevel="0.5" useTransparency="false" />
+        <TextStyle id="60" orientation="0" color="0,0,0" backgroundColor="255,255,255" font="Aharoni Gras,1,14" isBackgroundColored="false" />
+        <ShapeBorder id="61" bottom="2" left="2" right="2" top="2" />
+        <ForegroundStyle id="62" dashStyle="PLAIN_STROKE" color="255,102,0" noStroke="false" transparencyLevel="0.5" useTransparency="false" lineWidth="1.0" capStyle="CAP_SQUARE" joinStyle="JOIN_MITER" />
+        <SelectedForegroundStyle id="63" dashStyle="PLAIN_STROKE" color="0,0,0" noStroke="false" transparencyLevel="0.5" useTransparency="false" lineWidth="1.0" capStyle="CAP_SQUARE" joinStyle="JOIN_MITER" />
+        <FocusedColorBackgroundStyle id="64" color="192,192,192" transparencyLevel="0.5" useTransparency="false" />
+        <RectangleShape id="65" arcSize="30.0" isRounded="true" />
+        <ShadowStyle id="66" shadowDepth="2" shadowBlur="4" drawShadow="true" shadowDarkness="150" />
+        <ColorGradientBackgroundStyle id="67" direction="SOUTH_EAST_NORTH_WEST" transparencyLevel="0.5" useTransparency="false" color2="255,153,51" color1="255,255,255" />
+      </ShapeGraphicalRepresentation>
+      <GRSpec id="68" featureName="label" flexoID="461" readOnly="true" userID="FLX" useSpecificDescriptions="false" value="missionFC.nameCell.cellValue.toString" />
+      <TypedDiagramModelSlot idref="19" />
+    </ShapeRole>
+    <FlexoConceptInstanceRole id="69" cloningStratgey="Reference" flexoID="267" name="missionFC" useSpecificDescriptions="false" userID="FLX" flexoConceptTypeURI="http://www.brest.fr/CartoDesMissions/DBCartoBasse#Mission">
+      <VirtualModelModelSlot idref="5" />
+    </FlexoConceptInstanceRole>
+    <DropScheme id="21" useSpecificDescriptions="false" width="800" userID="FLX" label="dropNewAtTopLevel" definePopupDefaultSize="false" height="600" flexoID="274" skipConfirmationPanel="false" name="dropNewAtTopLevel" target="top">
+      <TextFieldParameter id="22" flexoID="63" isRequired="true" name="Nom" userID="FLX" useSpecificDescriptions="false" label="Nom de la mission" defaultValue="&quot;Inscrire Le nom de la mission&quot;" />
+      <AddShape id="23" flexoID="270" assignation="shape" useSpecificDescriptions="false" userID="FLX" extendParentBoundsToHostThisShape="false">
+        <TypedDiagramModelSlot idref="19" />
+      </AddShape>
+      <AddFlexoConceptInstance id="24" userID="FLX" useSpecificDescriptions="false" virtualModelInstance="virtualModelInstance.cartoVMI" flexoID="269" creationSchemeURI="http://www.brest.fr/CartoDesMissions/DBCartoBasse#Mission.creationMission" description="" assignation="missionFC">
+        <VirtualModelModelSlot idref="5" />
+        <AddFlexoConceptInstanceParameter id="25" flexoID="62" useSpecificDescriptions="false" userID="FLX" value="parameters.Nom" paramName="Nom" />
+      </AddFlexoConceptInstance>
+    </DropScheme>
+    <DropScheme id="36" useSpecificDescriptions="false" width="800" userID="FLX" label="dropSelectedAtTopLevel" definePopupDefaultSize="false" height="600" flexoID="273" skipConfirmationPanel="false" name="dropSelectedAtTopLevel" target="top">
+      <FlexoConceptInstanceParameter id="37" useSpecificDescriptions="false" userID="FLX" label="missionToRepresent" flexoID="171" isRequired="true" name="missionToRepresent" flexoConceptTypeURI="http://www.brest.fr/CartoDesMissions/DBCartoBasse#Mission">
+        <VirtualModelModelSlot idref="5" />
+      </FlexoConceptInstanceParameter>
+      <DeclareFlexoRole id="38" userID="FLX" useSpecificDescriptions="false" object="parameters.missionToRepresent" flexoID="268" assignation="missionFC" />
+      <AddShape id="39" flexoID="275" assignation="shape" container="topLevel" useSpecificDescriptions="false" userID="FLX" extendParentBoundsToHostThisShape="false">
+        <TypedDiagramModelSlot idref="19" />
+      </AddShape>
+    </DropScheme>
+  </FlexoConcept>
+  <FlexoConcept id="70" userID="FLX" useSpecificDescriptions="false" flexoID="65" name="AffectationFonctionAMission">
+    <Inspector id="71" flexoID="64" userID="FLX" useSpecificDescriptions="false" inspectorTitle="AffectationFonctionAMission" />
+    <ConnectorRole id="72" exampleLabel="label" userID="FLX" useSpecificDescriptions="false" cloningStratgey="Clone" flexoID="71" name="connector">
+      <ConnectorGraphicalRepresentation id="73" lineWrap="false" horizontalTextAlignment="CENTER" transparency="1.0" drawControlPointsWhenFocused="true" isVisible="true" isReadOnly="false" paragraphAlignment="CENTER" hasSelectedForeground="false" verticalTextAlignment="MIDDLE" applyForegroundToSymbols="true" hasFocusedForeground="false" absoluteTextX="0.0" layer="64" absoluteTextY="0.0" isFocusable="true" drawControlPointsWhenSelected="true" isSelectable="true" isLabelEditable="true" continuousTextEditing="true" isMultilineAllowed="false" identifier="6c9008e8">
+        <SelectedForegroundStyle id="74" dashStyle="PLAIN_STROKE" color="0,0,0" noStroke="false" transparencyLevel="0.5" useTransparency="false" lineWidth="1.0" capStyle="CAP_SQUARE" joinStyle="JOIN_MITER" />
+        <FocusedForegroundStyle id="75" dashStyle="PLAIN_STROKE" color="0,0,0" noStroke="false" transparencyLevel="0.5" useTransparency="false" lineWidth="1.0" capStyle="CAP_SQUARE" joinStyle="JOIN_MITER" />
+        <RectPolylinConnectorSpecification id="76" isEndingLocationFixed="true" endOrientation="SOUTH" relativeMiddleSymbolLocation="0.5" isStartingLocationDraggable="true" middleSymbolSize="10.0" adjustability="AUTO_LAYOUT" straightLineWhenPossible="true" fixedEndLocation="0.17793212710861006,0.8824555990585254" startSymbol="NONE" endSymbol="NONE" rectPolylinConstraints="END_ORIENTATION_FIXED" startOrientation="EAST" pixelOverlap="20" arcSize="5" startSymbolSize="10.0" middleSymbol="NONE" crossedControlPoint="0.4440677966101695,0.36" isEndingLocationDraggable="true" endSymbolSize="10.0" isRounded="false" isStartingLocationFixed="false" />
+        <TextStyle id="77" orientation="0" color="0,0,0" backgroundColor="255,255,255" font="SansSerif,1,11" isBackgroundColored="false" />
+        <ForegroundStyle id="78" dashStyle="PLAIN_STROKE" color="51,102,255" noStroke="false" transparencyLevel="0.5" useTransparency="false" lineWidth="1.800000001490116" capStyle="CAP_SQUARE" joinStyle="JOIN_MITER" />
+      </ConnectorGraphicalRepresentation>
+      <TypedDiagramModelSlot idref="19" />
+    </ConnectorRole>
+    <FlexoConceptInstanceRole id="79" cloningStratgey="Reference" flexoID="155" name="fonctionGR" useSpecificDescriptions="false" userID="FLX" flexoConceptTypeURI="http://www.brest.fr/CartoDesMissions/DiagrammeSimpleDesFonctions#fonctionSimpleGR">
+      <VirtualModelModelSlot idref="80" />
+    </FlexoConceptInstanceRole>
+    <LinkScheme id="81" northDirectionSupported="true" fromTarget="http://www.brest.fr/CartoDesMissions/DiagrammeSimpleDesFonctions#fonctionSimpleGR" toTarget="http://www.brest.fr/CartoDesMissions/DiagrammeSimpleDesFonctions#missionSimpleGR" useSpecificDescriptions="false" width="800" userID="FLX" label="AffecterFonctionaMission" definePopupDefaultSize="false" southDirectionSupported="true" westDirectionSupported="true" isAvailableWithFloatingPalette="true" flexoID="66" height="600" skipConfirmationPanel="false" name="AffecterFonctionaMission" eastDirectionSupported="true">
+      <FetchRequestIterationAction id="82" flexoID="141" iteratorName="existingLink" useSpecificDescriptions="false" userID="FLX">
+        <VirtualModelModelSlot idref="80" />
+        <FetchRequest_SelectFlexoConceptInstance id="83" flexoID="142" userID="FLX" useSpecificDescriptions="false" flexoConceptTypeURI="http://www.brest.fr/CartoDesMissions/DiagrammeSimpleDesFonctions#AffectationFonctionAMission">
+          <Condition id="84" flexoID="139" condition="(selected.fonctionGR = fromTarget)" userID="FLX" useSpecificDescriptions="false" />
+          <VirtualModelModelSlot idref="80" />
+        </FetchRequest_SelectFlexoConceptInstance>
+        <DeleteFlexoConceptInstance id="85" userID="FLX" useSpecificDescriptions="false" virtualModelInstance="virtualModelInstance" deletionSchemeURI="http://www.brest.fr/CartoDesMissions/DiagrammeSimpleDesFonctions#AffectationFonctionAMission.delete" object="existingLink" flexoID="151" description="">
+          <VirtualModelModelSlot idref="80" />
+        </DeleteFlexoConceptInstance>
+      </FetchRequestIterationAction>
+      <AddConnector id="86" userID="FLX" useSpecificDescriptions="false" flexoID="67" description="" assignation="connector" fromShape="fromTarget.shape" toShape="toTarget.shape">
+        <TypedDiagramModelSlot idref="19" />
+      </AddConnector>
+      <DeclareFlexoRole id="87" userID="FLX" useSpecificDescriptions="false" object="toTarget.missionFC" flexoID="68" description="" assignation="fromTarget.fonction.mission" />
+      <DeclareFlexoRole id="88" userID="FLX" useSpecificDescriptions="false" object="fromTarget" flexoID="143" assignation="fonctionGR" />
+      <ExecutionAction id="89" flexoID="134" description="" useSpecificDescriptions="false" userID="FLX" execution="fromTarget.fonction.affecterAMission(toTarget.missionFC)" />
+    </LinkScheme>
+    <DeletionScheme id="90" useSpecificDescriptions="false" width="800" userID="FLX" label="delete" definePopupDefaultSize="false" height="600" flexoID="413" skipConfirmationPanel="false" name="delete">
+      <DeleteAction id="91" flexoID="416" description="" userID="FLX" useSpecificDescriptions="false" object="connector" />
+      <DeclareFlexoRole id="92" userID="FLX" useSpecificDescriptions="false" object="null" flexoID="424" assignation="fonctionGR" />
+    </DeletionScheme>
+    <CreationScheme id="93" useSpecificDescriptions="false" width="800" userID="FLX" label="createFromFonctionGR" definePopupDefaultSize="false" height="600" flexoID="452" skipConfirmationPanel="false" name="createFromFonctionGR">
+      <FlexoConceptInstanceParameter id="94" useSpecificDescriptions="false" userID="FLX" label="fonctionGR" flexoID="454" isRequired="true" name="fonctionGR" flexoConceptTypeURI="http://www.brest.fr/CartoDesMissions/DiagrammeSimpleDesFonctions#fonctionSimpleGR">
+        <VirtualModelModelSlot idref="80" />
+      </FlexoConceptInstanceParameter>
+      <FlexoConceptInstanceParameter id="95" useSpecificDescriptions="false" userID="FLX" label="missionGR" flexoID="455" isRequired="true" name="missionGR" flexoConceptTypeURI="http://www.brest.fr/CartoDesMissions/DiagrammeSimpleDesFonctions#missionSimpleGR">
+        <VirtualModelModelSlot idref="80" />
+      </FlexoConceptInstanceParameter>
+      <DeclareFlexoRole id="96" userID="FLX" useSpecificDescriptions="false" object="parameters.fonctionGR" flexoID="456" assignation="fonctionGR" />
+      <AddConnector id="97" userID="FLX" useSpecificDescriptions="false" flexoID="457" description="" assignation="connector" fromShape="fonctionGR.shape" conditional="(fonctionGR != null)" toShape="parameters.missionGR.shape">
+        <TypedDiagramModelSlot idref="19" />
+      </AddConnector>
+    </CreationScheme>
+  </FlexoConcept>
+  <Inspector id="98" flexoID="-1" userID="FLX" useSpecificDescriptions="false" inspectorTitle="DiagrammeSimpleDesFonctions" />
+  <ModelSlot_VirtualModelModelSlot id="80" cloningStratgey="Reference" flexoID="1" isRequired="false" userID="FLX" useSpecificDescriptions="false" name="virtualModelInstance" isReadOnly="false" virtualModelURI="http://www.brest.fr/CartoDesMissions/DiagrammeSimpleDesFonctions" />
+  <ModelSlot_VirtualModelModelSlot id="5" cloningStratgey="Reference" flexoID="2" isRequired="true" userID="FLX" useSpecificDescriptions="false" name="cartoVMI" isReadOnly="false" virtualModelURI="http://www.brest.fr/CartoDesMissions/DBCartoBasse" />
+  <ModelSlot_TypedDiagramModelSlot id="19" userID="FLX" useSpecificDescriptions="false" cloningStratgey="Reference" flexoID="3" isRequired="true" name="diagram" metaModelURI="http://www.brest.fr/DiagrammeSimpleDesFonctions" isReadOnly="false">
+    <FMLDiagramPaletteElementBinding id="20" paletteElementId="http://www.brest.fr/DiagrammeSimpleDesFonctions/Fonctions.palette#Nouvelle Mission" userID="FLX" useSpecificDescriptions="false" flexoID="2">
+      <DropScheme idref="21" />
+      <FMLDiagramPaletteElementBindingParameter id="26" flexoID="3" useSpecificDescriptions="false" userID="FLX" />
+    </FMLDiagramPaletteElementBinding>
+    <FMLDiagramPaletteElementBinding id="27" paletteElementId="http://www.brest.fr/DiagrammeSimpleDesFonctions/Fonctions.palette#Nouvelle Fonction" userID="FLX" useSpecificDescriptions="false" flexoID="2">
+      <DropScheme idref="28" />
+      <FMLDiagramPaletteElementBindingParameter id="33" flexoID="3" useSpecificDescriptions="false" userID="FLX" />
+      <FMLDiagramPaletteElementBindingParameter id="34" flexoID="4" useSpecificDescriptions="false" userID="FLX" />
+    </FMLDiagramPaletteElementBinding>
+    <FMLDiagramPaletteElementBinding id="35" paletteElementId="http://www.brest.fr/DiagrammeSimpleDesFonctions/Fonctions.palette#Représenter Mission" userID="FLX" useSpecificDescriptions="false" flexoID="2">
+      <DropScheme idref="36" />
+      <FMLDiagramPaletteElementBindingParameter id="40" flexoID="9" useSpecificDescriptions="false" userID="FLX" />
+      <FMLDiagramPaletteElementBindingParameter id="41" flexoID="10" useSpecificDescriptions="false" userID="FLX" />
+    </FMLDiagramPaletteElementBinding>
+    <FMLDiagramPaletteElementBinding id="42" paletteElementId="http://www.brest.fr/DiagrammeSimpleDesFonctions/Fonctions.palette#Représenter  Fonction" userID="FLX" useSpecificDescriptions="false" flexoID="3">
+      <DropScheme idref="43" />
+      <FMLDiagramPaletteElementBindingParameter id="47" flexoID="11" useSpecificDescriptions="false" userID="FLX" />
+      <FMLDiagramPaletteElementBindingParameter id="48" flexoID="12" useSpecificDescriptions="false" userID="FLX" />
+      <FMLDiagramPaletteElementBindingParameter id="49" flexoID="13" useSpecificDescriptions="false" userID="FLX" />
+    </FMLDiagramPaletteElementBinding>
+  </ModelSlot_TypedDiagramModelSlot>
+  <ActionScheme id="99" useSpecificDescriptions="false" width="800" userID="FLX" label="updateHierarchy" definePopupDefaultSize="false" height="600" flexoID="392" skipConfirmationPanel="false" name="updateHierarchy">
+    <FetchRequestIterationAction id="100" flexoID="393" iteratorName="missionGR" description="" useSpecificDescriptions="false" userID="FLX">
+      <VirtualModelModelSlot idref="80" />
+      <FetchRequest_SelectFlexoConceptInstance id="101" flexoID="394" userID="FLX" useSpecificDescriptions="false" flexoConceptTypeURI="http://www.brest.fr/CartoDesMissions/DiagrammeSimpleDesFonctions#missionSimpleGR">
+        <VirtualModelModelSlot idref="80" />
+      </FetchRequest_SelectFlexoConceptInstance>
+      <FetchRequestIterationAction id="102" flexoID="395" iteratorName="selectedFonction" description="" useSpecificDescriptions="false" userID="FLX">
+        <VirtualModelModelSlot idref="5" />
+        <FetchRequest_SelectFlexoConceptInstance id="103" flexoID="396" variableName="selectedFonctionGR" assignation="selectedFonctionGR" userID="FLX" useSpecificDescriptions="false" flexoConceptTypeURI="http://www.brest.fr/CartoDesMissions/DBCartoBasse#Fonction">
+          <Condition id="104" flexoID="-1" condition="(selected.mission = missionGR.missionFC)" userID="FLX" useSpecificDescriptions="false" />
+          <VirtualModelModelSlot idref="5" />
+        </FetchRequest_SelectFlexoConceptInstance>
+        <MatchFlexoConceptInstance id="105" variableName="nouvelleFonctionGR" useSpecificDescriptions="false" userID="FLX" virtualModelInstance="virtualModelInstance" flexoID="400" creationSchemeURI="http://www.brest.fr/CartoDesMissions/DiagrammeSimpleDesFonctions#fonctionSimpleGR.createShapeFromFonction" assignation="nouvelleFonctionGR">
+          <MatchingCriteria id="106" flexoID="397" useSpecificDescriptions="false" userID="FLX" value="selectedFonction" patternRoleName="fonction" />
+          <MatchingCriteria id="107" flexoID="398" useSpecificDescriptions="false" userID="FLX" patternRoleName="shape" />
+          <CreateFlexoConceptInstanceParameter id="108" flexoID="399" useSpecificDescriptions="false" userID="FLX" value="selectedFonction" paramName="unefonction" />
+        </MatchFlexoConceptInstance>
+        <MatchFlexoConceptInstance id="109" useSpecificDescriptions="false" userID="FLX" virtualModelInstance="virtualModelInstance" flexoID="451" creationSchemeURI="http://www.brest.fr/CartoDesMissions/DiagrammeSimpleDesFonctions#AffectationFonctionAMission.createFromFonctionGR" description="">
+          <MatchingCriteria id="110" flexoID="449" useSpecificDescriptions="false" userID="FLX" patternRoleName="connector" />
+          <MatchingCriteria id="111" flexoID="450" useSpecificDescriptions="false" userID="FLX" value="nouvelleFonctionGR" patternRoleName="fonctionGR" />
+          <CreateFlexoConceptInstanceParameter id="112" flexoID="458" useSpecificDescriptions="false" userID="FLX" value="nouvelleFonctionGR" paramName="fonctionGR" />
+          <CreateFlexoConceptInstanceParameter id="113" flexoID="459" useSpecificDescriptions="false" userID="FLX" value="missionGR" paramName="missionGR" />
+        </MatchFlexoConceptInstance>
+      </FetchRequestIterationAction>
+    </FetchRequestIterationAction>
+  </ActionScheme>
+</VirtualModel>

@@ -16,14 +16,14 @@
     <Button action="controller.cancelAndDispose()" buttonType="Trigger" label="Cancel" localize="true" index="1" constraints="flow(index=1)" />
   </Panel>
   <LocalizedDictionary>
-    <Localized key="Validate" lang="English">Validate</Localized>
-    <Localized key="Validate" lang="French">Validate</Localized>
-    <Localized key="Validate" lang="Dutch">Validate</Localized>
-    <Localized key="Cancel" lang="English">Cancel</Localized>
-    <Localized key="Cancel" lang="French">Annuler</Localized>
-    <Localized key="Cancel" lang="Dutch">Cancel</Localized>
-    <Localized key="concept_name" lang="English">Concept name</Localized>
-    <Localized key="concept_name" lang="French">Nom du concept</Localized>
-    <Localized key="concept_name" lang="Dutch">concept_name</Localized>
+    <Localized key="Validate" lang="English" value="Validate" />
+    <Localized key="Validate" lang="French" value="Validate" />
+    <Localized key="Validate" lang="Dutch" value="Validate" />
+    <Localized key="Cancel" lang="English" value="Cancel" />
+    <Localized key="Cancel" lang="French" value="Annuler" />
+    <Localized key="Cancel" lang="Dutch" value="Cancel" />
+    <Localized key="concept_name" lang="English" value="Concept name" />
+    <Localized key="concept_name" lang="French" value="Nom du concept" />
+    <Localized key="concept_name" lang="Dutch" value="concept_name" />
   </LocalizedDictionary>
 </Panel>

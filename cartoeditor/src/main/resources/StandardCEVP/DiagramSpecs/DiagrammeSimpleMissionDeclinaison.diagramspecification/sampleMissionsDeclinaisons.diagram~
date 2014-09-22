@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram id="0" diagramSpecificationURI="http://brest.fr/DiagrammesSpec/DiagrammeSimpleMissionDeclinaison" userID="FLX" useSpecificDescriptions="false" uri="http://brest.fr/DiagrammesSpec/DiagrammeSimpleMissionDeclinaison/sampleMissionsDeclinaisons" title="sampleMissionsDéclinaisons" flexoID="2" description="" name="sampleMissionsDeclinaisons">
+  <DrawingGraphicalRepresentation id="1" lineWrap="false" minimalHeight="0.0" adjustMinimalHeightToLabelHeight="true" backgroundColor="255,255,255" horizontalTextAlignment="CENTER" maximalHeight="Infinity" transparency="1.0" height="1000.0" isVisible="true" drawControlPointsWhenFocused="true" dimensionConstraints="FREELY_RESIZABLE" isReadOnly="false" adjustMaximalHeightToLabelHeight="false" paragraphAlignment="CENTER" verticalTextAlignment="MIDDLE" adjustMinimalWidthToLabelWidth="true" width="1000.0" layer="0" absoluteTextX="0.0" rectangleSelectingSelectionColor="0,0,255" absoluteTextY="0.0" isResizable="false" selectionColor="0,0,255" isFocusable="true" drawControlPointsWhenSelected="true" isSelectable="true" isLabelEditable="true" focusColor="255,0,0" adjustMaximalWidthToLabelWidth="false" continuousTextEditing="true" isMultilineAllowed="false" drawWorkingArea="false" minimalWidth="0.0" identifier="67d5590b" maximalWidth="Infinity">
+    <TextStyle id="2" orientation="0" color="0,0,0" backgroundColor="255,255,255" font="Lucida Sans,0,11" isBackgroundColored="false" />
+  </DrawingGraphicalRepresentation>
+  <Shape id="3" flexoID="3" useSpecificDescriptions="false" userID="FLX" name="Forme">
+    <ShapeGraphicalRepresentation id="4" minimalHeight="0.0" relativeTextX="0.5" transparency="1.0" drawControlPointsWhenFocused="true" height="83.02222222222223" hasFocusedBackground="false" verticalTextAlignment="MIDDLE" adjustMinimalWidthToLabelWidth="true" width="210.03636363636366" hasFocusedForeground="false" hasSelectedBackground="false" allowToLeaveBounds="false" isFocusable="true" drawControlPointsWhenSelected="true" isSelectable="true" isLabelEditable="true" relativeTextY="0.5" continuousTextEditing="true" minimalWidth="0.0" identifier="306c902e" lineWrap="false" locationConstraints="FREELY_MOVABLE" adjustMinimalHeightToLabelHeight="true" horizontalTextAlignment="CENTER" adaptBoundsToContents="false" maximalHeight="Infinity" isVisible="true" dimensionConstraints="FREELY_RESIZABLE" isReadOnly="false" adjustMaximalHeightToLabelHeight="false" isFloatingLabel="false" hasSelectedForeground="false" paragraphAlignment="CENTER" layer="1" absoluteTextX="0.0" absoluteTextY="0.0" adjustMaximalWidthToLabelWidth="false" isMultilineAllowed="false" y="107.0" maximalWidth="Infinity" x="132.0">
+      <FocusedForegroundStyle id="5" dashStyle="PLAIN_STROKE" color="0,0,0" noStroke="false" transparencyLevel="0.5" useTransparency="false" lineWidth="1.0" joinStyle="JOIN_MITER" capStyle="CAP_SQUARE" />
+      <SelectedColorBackgroundStyle id="6" color="254,247,217" transparencyLevel="0.5" useTransparency="false" />
+      <TextStyle id="7" orientation="0" color="0,0,0" backgroundColor="255,255,255" font="Lucida Sans,0,11" isBackgroundColored="false" />
+      <ShapeBorder id="8" bottom="2" left="2" right="2" top="2" />
+      <ForegroundStyle id="9" dashStyle="PLAIN_STROKE" color="0,0,0" noStroke="false" transparencyLevel="0.5" useTransparency="false" lineWidth="1.0" joinStyle="JOIN_MITER" capStyle="CAP_SQUARE" />
+      <SelectedForegroundStyle id="10" dashStyle="PLAIN_STROKE" color="0,0,0" noStroke="false" transparencyLevel="0.5" useTransparency="false" lineWidth="1.0" joinStyle="JOIN_MITER" capStyle="CAP_SQUARE" />
+      <FocusedColorBackgroundStyle id="11" color="254,247,217" transparencyLevel="0.5" useTransparency="false" />
+      <RectangleShape id="12" arcSize="20.0" isRounded="true" />
+      <ShadowStyle id="13" shadowBlur="4" shadowDepth="2" drawShadow="true" shadowDarkness="150" />
+      <ColorBackgroundStyle id="14" color="254,247,217" transparencyLevel="0.5" useTransparency="false" />
+    </ShapeGraphicalRepresentation>
+    <Shape id="15" flexoID="4" useSpecificDescriptions="false" userID="FLX" name="">
+      <ShapeGraphicalRepresentation id="16" minimalHeight="0.0" relativeTextX="0.5" transparency="1.0" drawControlPointsWhenFocused="true" height="40.0" hasFocusedBackground="false" verticalTextAlignment="MIDDLE" adjustMinimalWidthToLabelWidth="true" width="50.0" hasFocusedForeground="false" hasSelectedBackground="false" allowToLeaveBounds="false" isFocusable="true" drawControlPointsWhenSelected="true" isSelectable="true" isLabelEditable="true" relativeTextY="0.5" continuousTextEditing="true" minimalWidth="0.0" identifier="50ba9167" lineWrap="false" locationConstraints="FREELY_MOVABLE" adjustMinimalHeightToLabelHeight="true" horizontalTextAlignment="CENTER" adaptBoundsToContents="false" maximalHeight="Infinity" isVisible="true" dimensionConstraints="FREELY_RESIZABLE" isReadOnly="false" adjustMaximalHeightToLabelHeight="false" isFloatingLabel="false" hasSelectedForeground="false" paragraphAlignment="CENTER" layer="1" absoluteTextX="0.0" absoluteTextY="0.0" adjustMaximalWidthToLabelWidth="false" isMultilineAllowed="false" y="6.0" maximalWidth="Infinity" x="153.0">
+        <FocusedForegroundStyle id="17" dashStyle="PLAIN_STROKE" color="0,0,0" noStroke="false" transparencyLevel="0.5" useTransparency="false" lineWidth="1.0" joinStyle="JOIN_MITER" capStyle="CAP_SQUARE" />
+        <SelectedColorBackgroundStyle id="18" color="254,247,217" transparencyLevel="0.5" useTransparency="false" />
+        <TextStyle id="19" orientation="0" color="0,0,0" backgroundColor="255,255,255" font="Lucida Sans,0,11" isBackgroundColored="false" />
+        <ShapeBorder id="20" bottom="2" left="2" right="2" top="2" />
+        <ForegroundStyle id="21" dashStyle="PLAIN_STROKE" color="0,0,0" noStroke="false" transparencyLevel="0.5" useTransparency="false" lineWidth="1.0" joinStyle="JOIN_MITER" capStyle="CAP_SQUARE" />
+        <SelectedForegroundStyle id="22" dashStyle="PLAIN_STROKE" color="0,0,0" noStroke="false" transparencyLevel="0.5" useTransparency="false" lineWidth="1.0" joinStyle="JOIN_MITER" capStyle="CAP_SQUARE" />
+        <FocusedColorBackgroundStyle id="23" color="254,247,217" transparencyLevel="0.5" useTransparency="false" />
+        <PlusShape id="24" ratio="0.25" />
+        <ShadowStyle id="25" shadowBlur="4" shadowDepth="2" drawShadow="true" shadowDarkness="150" />
+        <ColorBackgroundStyle id="26" color="254,247,217" transparencyLevel="0.5" useTransparency="false" />
+      </ShapeGraphicalRepresentation>
+    </Shape>
+  </Shape>
+</Diagram>

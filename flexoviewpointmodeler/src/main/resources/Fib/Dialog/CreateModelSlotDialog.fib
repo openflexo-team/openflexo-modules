@@ -78,30 +78,30 @@
     <Localized key="read_only" lang="English" value="Read only" />
     <Localized key="read_only" lang="French" value="Lecture seule" />
     <Localized key="read_only" lang="Dutch" value="Read only" />
-    <Localized key="Openflexo built-in diagram technology adapter" lang="English">Openflexo built-in diagram technology adapter</Localized>
-    <Localized key="Openflexo built-in diagram technology adapter" lang="French">Openflexo built-in diagram technology adapter</Localized>
-    <Localized key="Openflexo built-in diagram technology adapter" lang="Dutch">Openflexo built-in diagram technology adapter</Localized>
-    <Localized key="EMF technology adapter" lang="English">EMF technology adapter</Localized>
-    <Localized key="EMF technology adapter" lang="French">EMF technology adapter</Localized>
-    <Localized key="EMF technology adapter" lang="Dutch">EMF technology adapter</Localized>
-    <Localized key="OWL technology adapter" lang="English">OWL technology adapter</Localized>
-    <Localized key="OWL technology adapter" lang="French">OWL technology adapter</Localized>
-    <Localized key="OWL technology adapter" lang="Dutch">OWL technology adapter</Localized>
-    <Localized key="XSD/XML technology adapter" lang="English">XSD/XML technology adapter</Localized>
-    <Localized key="XSD/XML technology adapter" lang="French">XSD/XML technology adapter</Localized>
-    <Localized key="XSD/XML technology adapter" lang="Dutch">XSD/XML technology adapter</Localized>
-    <Localized key="Openflexo built-in virtual model technology adapter" lang="English">Openflexo built-in virtual model technology adapter</Localized>
-    <Localized key="Openflexo built-in virtual model technology adapter" lang="French">Openflexo built-in virtual model technology adapter</Localized>
-    <Localized key="Openflexo built-in virtual model technology adapter" lang="Dutch">Openflexo built-in virtual model technology adapter</Localized>
-    <Localized key="Excel technology adapter" lang="English">Excel technology adapter</Localized>
-    <Localized key="Excel technology adapter" lang="French">Excel technology adapter</Localized>
-    <Localized key="Excel technology adapter" lang="Dutch">Excel technology adapter</Localized>
-    <Localized key="Openflexo diagram" lang="English">Openflexo diagram</Localized>
-    <Localized key="Openflexo diagram" lang="French">Openflexo diagram</Localized>
-    <Localized key="Openflexo diagram" lang="Dutch">Openflexo diagram</Localized>
-    <Localized key="Openflexo virtual model" lang="English">Openflexo virtual model</Localized>
-    <Localized key="Openflexo virtual model" lang="French">Openflexo virtual model</Localized>
-    <Localized key="Openflexo virtual model" lang="Dutch">Openflexo virtual model</Localized>
+    <Localized key="Openflexo built-in diagram technology adapter" lang="English" value="Openflexo built-in diagram technology adapter" />
+    <Localized key="Openflexo built-in diagram technology adapter" lang="French" value="Openflexo built-in diagram technology adapter" />
+    <Localized key="Openflexo built-in diagram technology adapter" lang="Dutch" value="Openflexo built-in diagram technology adapter" />
+    <Localized key="EMF technology adapter" lang="English" value="EMF technology adapter" />
+    <Localized key="EMF technology adapter" lang="French" value="EMF technology adapter" />
+    <Localized key="EMF technology adapter" lang="Dutch" value="EMF technology adapter" />
+    <Localized key="OWL technology adapter" lang="English" value="OWL technology adapter" />
+    <Localized key="OWL technology adapter" lang="French" value="OWL technology adapter" />
+    <Localized key="OWL technology adapter" lang="Dutch" value="OWL technology adapter" />
+    <Localized key="XSD/XML technology adapter" lang="English" value="XSD/XML technology adapter" />
+    <Localized key="XSD/XML technology adapter" lang="French" value="XSD/XML technology adapter" />
+    <Localized key="XSD/XML technology adapter" lang="Dutch" value="XSD/XML technology adapter" />
+    <Localized key="Openflexo built-in virtual model technology adapter" lang="English" value="Openflexo built-in virtual model technology adapter" />
+    <Localized key="Openflexo built-in virtual model technology adapter" lang="French" value="Openflexo built-in virtual model technology adapter" />
+    <Localized key="Openflexo built-in virtual model technology adapter" lang="Dutch" value="Openflexo built-in virtual model technology adapter" />
+    <Localized key="Excel technology adapter" lang="English" value="Excel technology adapter" />
+    <Localized key="Excel technology adapter" lang="French" value="Excel technology adapter" />
+    <Localized key="Excel technology adapter" lang="Dutch" value="Excel technology adapter" />
+    <Localized key="Openflexo diagram" lang="English" value="Openflexo diagram" />
+    <Localized key="Openflexo diagram" lang="French" value="Openflexo diagram" />
+    <Localized key="Openflexo diagram" lang="Dutch" value="Openflexo diagram" />
+    <Localized key="Openflexo virtual model" lang="English" value="Openflexo virtual model" />
+    <Localized key="Openflexo virtual model" lang="French" value="Openflexo virtual model" />
+    <Localized key="Openflexo virtual model" lang="Dutch" value="Openflexo virtual model" />
   
   </LocalizedDictionary>
 </Panel>

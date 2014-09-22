@@ -56,18 +56,18 @@
     <Button action="controller.cancelAndDispose()" buttonType="Trigger" label="cancel" localize="true" index="1" constraints="flow(index=1)" opaque="false" />
   </Panel>
   <LocalizedDictionary>
-    <Localized key="Openflexo built-in diagram technology adapter" lang="English">Openflexo built-in diagram technology adapter</Localized>
-    <Localized key="Openflexo built-in diagram technology adapter" lang="French">Openflexo built-in diagram technology adapter</Localized>
-    <Localized key="Openflexo built-in diagram technology adapter" lang="Dutch">Openflexo built-in diagram technology adapter</Localized>
-    <Localized key="EMF technology adapter" lang="English">EMF technology adapter</Localized>
-    <Localized key="EMF technology adapter" lang="French">EMF technology adapter</Localized>
-    <Localized key="EMF technology adapter" lang="Dutch">EMF technology adapter</Localized>
-    <Localized key="OWL technology adapter" lang="English">OWL technology adapter</Localized>
-    <Localized key="OWL technology adapter" lang="French">OWL technology adapter</Localized>
-    <Localized key="OWL technology adapter" lang="Dutch">OWL technology adapter</Localized>
-    <Localized key="XSD/XML technology adapter" lang="English">XSD/XML technology adapter</Localized>
-    <Localized key="XSD/XML technology adapter" lang="French">XSD/XML technology adapter</Localized>
-    <Localized key="XSD/XML technology adapter" lang="Dutch">XSD/XML technology adapter</Localized>
+    <Localized key="Openflexo built-in diagram technology adapter" lang="English" value="Openflexo built-in diagram technology adapter" />
+    <Localized key="Openflexo built-in diagram technology adapter" lang="French" value="Openflexo built-in diagram technology adapter" />
+    <Localized key="Openflexo built-in diagram technology adapter" lang="Dutch" value="Openflexo built-in diagram technology adapter" />
+    <Localized key="EMF technology adapter" lang="English" value="EMF technology adapter" />
+    <Localized key="EMF technology adapter" lang="French" value="EMF technology adapter" />
+    <Localized key="EMF technology adapter" lang="Dutch" value="EMF technology adapter" />
+    <Localized key="OWL technology adapter" lang="English" value="OWL technology adapter" />
+    <Localized key="OWL technology adapter" lang="French" value="OWL technology adapter" />
+    <Localized key="OWL technology adapter" lang="Dutch" value="OWL technology adapter" />
+    <Localized key="XSD/XML technology adapter" lang="English" value="XSD/XML technology adapter" />
+    <Localized key="XSD/XML technology adapter" lang="French" value="XSD/XML technology adapter" />
+    <Localized key="XSD/XML technology adapter" lang="Dutch" value="XSD/XML technology adapter" />
     <Localized key="flexo_role_type" lang="English" value="Flexo role type" />
     <Localized key="flexo_role_type" lang="French" value="Type de Flexo Role" />
     <Localized key="flexo_role_type" lang="Dutch" value="flexo_role_type" />

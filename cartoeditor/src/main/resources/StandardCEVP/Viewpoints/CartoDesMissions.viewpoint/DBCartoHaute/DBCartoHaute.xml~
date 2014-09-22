@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VirtualModel id="0" userID="FLX" useSpecificDescriptions="false" flexoID="-1" description="Ensemble des concepts de la carto Haute de BMO" name="DBCartoHaute">
+  <FlexoConcept id="1" userID="FLX" useSpecificDescriptions="false" flexoID="13" name="ObjectifInterpellation">
+    <Inspector id="2" flexoID="12" userID="FLX" useSpecificDescriptions="false" inspectorTitle="ObjectifInterpellation" renderer="instance.exceldata.excelCells.get(1).cellValue.toString" />
+    <ExcelRowRole id="3" cloningStratgey="Reference" flexoID="22" name="exceldata" useSpecificDescriptions="false" userID="FLX">
+      <BasicExcelModelSlot idref="4" />
+    </ExcelRowRole>
+    <CreationScheme id="5" useSpecificDescriptions="false" width="800" userID="FLX" label="createFromExcel" definePopupDefaultSize="false" height="600" flexoID="19" skipConfirmationPanel="false" name="createFromExcel">
+      <TechnologyObjectParameter id="6" useSpecificDescriptions="false" userID="FLX" label="excelrow" flexoID="21" isRequired="true" name="excelrow">
+        <BasicExcelModelSlot idref="4" />
+      </TechnologyObjectParameter>
+      <DeclareFlexoRole id="7" userID="FLX" useSpecificDescriptions="false" object="parameters.excelrow" flexoID="32" assignation="exceldata" />
+    </CreationScheme>
+  </FlexoConcept>
+  <FlexoConcept id="8" userID="FLX" useSpecificDescriptions="false" flexoID="23" name="DeclinaisonTransversale">
+    <Inspector id="9" flexoID="16" userID="FLX" useSpecificDescriptions="false" inspectorTitle="DeclinaisonTransversale" renderer="instance.exceldata.excelCells.get(1).cellValue.toString" />
+    <ExcelRowRole id="10" cloningStratgey="Reference" flexoID="33" name="exceldata" useSpecificDescriptions="false" userID="FLX">
+      <BasicExcelModelSlot idref="4" />
+    </ExcelRowRole>
+    <FlexoConceptInstanceRole id="11" cloningStratgey="Reference" flexoID="49" name="objectifDeRattachement" useSpecificDescriptions="false" userID="FLX" flexoConceptTypeURI="http://www.brest.fr/CartoDesMissions/DBCartoHaute#ObjectifInterpellation">
+      <VirtualModelModelSlot idref="12" />
+    </FlexoConceptInstanceRole>
+    <CreationScheme id="13" useSpecificDescriptions="false" width="800" userID="FLX" label="createFromExcel" definePopupDefaultSize="false" height="600" flexoID="34" skipConfirmationPanel="false" name="createFromExcel">
+      <TechnologyObjectParameter id="14" useSpecificDescriptions="false" userID="FLX" label="excelrow" flexoID="36" isRequired="true" name="excelrow">
+        <BasicExcelModelSlot idref="4" />
+      </TechnologyObjectParameter>
+      <FlexoConceptInstanceParameter id="15" useSpecificDescriptions="false" userID="FLX" label="objectif" flexoID="50" isRequired="false" name="objectif" flexoConceptTypeURI="http://www.brest.fr/CartoDesMissions/DBCartoHaute#ObjectifInterpellation">
+        <VirtualModelModelSlot idref="12" />
+      </FlexoConceptInstanceParameter>
+      <DeclareFlexoRole id="16" userID="FLX" useSpecificDescriptions="false" object="parameters.excelrow" flexoID="37" description="" assignation="exceldata" />
+      <DeclareFlexoRole id="17" userID="FLX" useSpecificDescriptions="false" object="parameters.objectif" flexoID="53" assignation="objectifDeRattachement" conditional="(parameters.objectif != null)" />
+    </CreationScheme>
+  </FlexoConcept>
+  <Inspector id="18" flexoID="-1" userID="FLX" useSpecificDescriptions="false" inspectorTitle="DBCartoHaute" />
+  <ExcelSheetRole id="19" cloningStratgey="Reference" flexoID="4" name="objectifSheet" useSpecificDescriptions="false" userID="FLX">
+    <BasicExcelModelSlot idref="4" />
+  </ExcelSheetRole>
+  <ExcelSheetRole id="20" cloningStratgey="Reference" flexoID="5" name="declinaisonSheet" useSpecificDescriptions="false" userID="FLX">
+    <BasicExcelModelSlot idref="4" />
+  </ExcelSheetRole>
+  <ModelSlot_VirtualModelModelSlot id="12" cloningStratgey="Reference" flexoID="1" isRequired="false" userID="FLX" useSpecificDescriptions="false" name="virtualModelInstance" isReadOnly="false" virtualModelURI="http://www.brest.fr/CartoDesMissions/DBCartoHaute" />
+  <ModelSlot_BasicExcelModelSlot id="4" cloningStratgey="Reference" flexoID="3" isRequired="true" description="" name="excel" useSpecificDescriptions="false" userID="FLX" isReadOnly="false" />
+  <CreationScheme id="21" useSpecificDescriptions="false" width="800" userID="FLX" label="createFromExcel" definePopupDefaultSize="false" height="600" flexoID="2" skipConfirmationPanel="false" name="createFromExcel">
+    <FetchRequestIterationAction id="22" flexoID="6" iteratorName="selectedObjSheet" description="" useSpecificDescriptions="false" userID="FLX">
+      <BasicExcelModelSlot idref="4" />
+      <FetchRequest_SelectExcelSheet id="23" flexoID="7" userID="FLX" useSpecificDescriptions="false">
+        <Condition id="24" flexoID="-1" condition="(selected.name = &quot;Objectifs&quot;)" userID="FLX" useSpecificDescriptions="false" />
+        <BasicExcelModelSlot idref="4" />
+      </FetchRequest_SelectExcelSheet>
+      <DeclareFlexoRole id="25" userID="FLX" useSpecificDescriptions="false" object="selectedObjSheet" flexoID="8" assignation="objectifSheet" />
+    </FetchRequestIterationAction>
+    <FetchRequestIterationAction id="26" flexoID="9" iteratorName="selectedDeclSheet" useSpecificDescriptions="false" userID="FLX">
+      <BasicExcelModelSlot idref="4" />
+      <FetchRequest_SelectExcelSheet id="27" flexoID="10" userID="FLX" useSpecificDescriptions="false">
+        <Condition id="28" flexoID="-1" condition="(selected.name = &quot;Declinaisons&quot;)" userID="FLX" useSpecificDescriptions="false" />
+        <BasicExcelModelSlot idref="4" />
+      </FetchRequest_SelectExcelSheet>
+      <DeclareFlexoRole id="29" userID="FLX" useSpecificDescriptions="false" object="selectedDeclSheet" flexoID="11" assignation="declinaisonSheet" />
+    </FetchRequestIterationAction>
+  </CreationScheme>
+  <ActionScheme id="30" useSpecificDescriptions="false" width="800" userID="FLX" label="synchronizationFromExcel" definePopupDefaultSize="false" height="600" flexoID="29" skipConfirmationPanel="false" name="synchronizationFromExcel">
+    <FetchRequestIterationAction id="31" flexoID="30" iteratorName="selectedObjectif" useSpecificDescriptions="false" userID="FLX">
+      <BasicExcelModelSlot idref="4" />
+      <FetchRequest_SelectExcelRow id="32" flexoID="31" excelSheet="objectifSheet" userID="FLX" useSpecificDescriptions="false">
+        <BasicExcelModelSlot idref="4" />
+      </FetchRequest_SelectExcelRow>
+      <MatchFlexoConceptInstance id="33" useSpecificDescriptions="false" userID="FLX" virtualModelInstance="virtualModelInstance" flexoID="40" creationSchemeURI="http://www.brest.fr/CartoDesMissions/DBCartoHaute#ObjectifInterpellation.createFromExcel" description="">
+        <MatchingCriteria id="34" flexoID="63" useSpecificDescriptions="false" userID="FLX" value="selectedObjectif" patternRoleName="exceldata" />
+        <CreateFlexoConceptInstanceParameter id="35" flexoID="64" useSpecificDescriptions="false" userID="FLX" value="selectedObjectif" paramName="excelrow" />
+      </MatchFlexoConceptInstance>
+    </FetchRequestIterationAction>
+    <FetchRequestIterationAction id="36" flexoID="43" iteratorName="selectedDeclinaison" useSpecificDescriptions="false" userID="FLX">
+      <BasicExcelModelSlot idref="4" />
+      <FetchRequest_SelectExcelRow id="37" flexoID="44" excelSheet="declinaisonSheet" userID="FLX" useSpecificDescriptions="false">
+        <BasicExcelModelSlot idref="4" />
+      </FetchRequest_SelectExcelRow>
+      <MatchFlexoConceptInstance id="38" variableName="nouvelleDeclinaison" useSpecificDescriptions="false" userID="FLX" virtualModelInstance="virtualModelInstance" flexoID="45" creationSchemeURI="http://www.brest.fr/CartoDesMissions/DBCartoHaute#DeclinaisonTransversale.createFromExcel" assignation="nouvelleDeclinaison">
+        <MatchingCriteria id="39" flexoID="65" useSpecificDescriptions="false" userID="FLX" value="selectedDeclinaison" patternRoleName="exceldata" />
+        <MatchingCriteria id="40" flexoID="66" useSpecificDescriptions="false" userID="FLX" patternRoleName="objectifDeRattachement" />
+        <CreateFlexoConceptInstanceParameter id="41" flexoID="67" useSpecificDescriptions="false" userID="FLX" value="selectedDeclinaison" paramName="excelrow" />
+        <CreateFlexoConceptInstanceParameter id="42" flexoID="68" useSpecificDescriptions="false" userID="FLX" paramName="objectif" />
+      </MatchFlexoConceptInstance>
+      <FetchRequestIterationAction id="43" flexoID="54" iteratorName="objectifRattachement" useSpecificDescriptions="false" userID="FLX">
+        <VirtualModelModelSlot idref="12" />
+        <FetchRequest_SelectFlexoConceptInstance id="44" flexoID="55" description="" userID="FLX" useSpecificDescriptions="false" flexoConceptTypeURI="http://www.brest.fr/CartoDesMissions/DBCartoHaute#ObjectifInterpellation">
+          <Condition id="45" flexoID="-1" condition="(selected.exceldata.excelCells.get(0).cellValue.toString = nouvelleDeclinaison.exceldata.excelCells.get(0).cellValue.toString.substring(0,1))" userID="FLX" useSpecificDescriptions="false" />
+          <VirtualModelModelSlot idref="12" />
+        </FetchRequest_SelectFlexoConceptInstance>
+        <DeclareFlexoRole id="46" userID="FLX" useSpecificDescriptions="false" object="objectifRattachement" flexoID="56" description="" assignation="nouvelleDeclinaison.objectifDeRattachement" conditional="(objectifRattachement != null)" />
+      </FetchRequestIterationAction>
+    </FetchRequestIterationAction>
+  </ActionScheme>
+</VirtualModel>
