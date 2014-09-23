@@ -59,131 +59,131 @@
     <Button action="controller.cancelAndDispose()" buttonType="Trigger" label="cancel" localize="true" index="1" constraints="flow(index=1)" opaque="false" />
   </Panel>
   <LocalizedDictionary>
-    <Localized key="BuiltInAction" lang="English">BuiltInAction</Localized>
-    <Localized key="BuiltInAction" lang="French">BuiltInAction</Localized>
-    <Localized key="BuiltInAction" lang="Dutch">BuiltInAction</Localized>
-    <Localized key="ModelSlotSpecificAction" lang="English">ModelSlotSpecificAction</Localized>
-    <Localized key="ModelSlotSpecificAction" lang="French">ModelSlotSpecificAction</Localized>
-    <Localized key="ModelSlotSpecificAction" lang="Dutch">ModelSlotSpecificAction</Localized>
-    <Localized key="RequestAction" lang="English">RequestAction</Localized>
-    <Localized key="RequestAction" lang="French">RequestAction</Localized>
-    <Localized key="RequestAction" lang="Dutch">RequestAction</Localized>
-    <Localized key="ControlAction" lang="English">ControlAction</Localized>
-    <Localized key="ControlAction" lang="French">ControlAction</Localized>
-    <Localized key="ControlAction" lang="Dutch">ControlAction</Localized>
-    <Localized key="description" lang="English">Description</Localized>
-    <Localized key="description" lang="French">Description</Localized>
-    <Localized key="description" lang="Dutch">Description</Localized>
-    <Localized key="cancel" lang="English">Cancel</Localized>
-    <Localized key="cancel" lang="French">Annuler</Localized>
-    <Localized key="cancel" lang="Dutch">Cancel</Localized>
-    <Localized key="validate" lang="English">Validate</Localized>
-    <Localized key="validate" lang="French">Valider</Localized>
-    <Localized key="validate" lang="Dutch">Validate</Localized>
-    <Localized key="action_type" lang="English">Action type</Localized>
-    <Localized key="action_type" lang="French">Type d'Action</Localized>
-    <Localized key="action_type" lang="Dutch">Action type</Localized>
-    <Localized key="please_select_a_kind_of_action" lang="English">Please select a kind of action</Localized>
-    <Localized key="please_select_a_kind_of_action" lang="French">Veuillez choisir un type d'action</Localized>
-    <Localized key="please_select_a_kind_of_action" lang="Dutch">please_select_a_kind_of_action</Localized>
-    <Localized key="DeclarePatternRole" lang="English">DeclarePatternRole</Localized>
-    <Localized key="DeclarePatternRole" lang="French">DeclarePatternRole</Localized>
-    <Localized key="DeclarePatternRole" lang="Dutch">DeclarePatternRole</Localized>
-    <Localized key="AddFlexoConcept" lang="English">AddFlexoConcept</Localized>
-    <Localized key="AddFlexoConcept" lang="French">AddFlexoConcept</Localized>
-    <Localized key="AddFlexoConcept" lang="Dutch">AddFlexoConcept</Localized>
-    <Localized key="DeleteAction" lang="English">DeleteAction</Localized>
-    <Localized key="DeleteAction" lang="French">DeleteAction</Localized>
-    <Localized key="DeleteAction" lang="Dutch">DeleteAction</Localized>
-    <Localized key="model_slot" lang="English">Model slot</Localized>
-    <Localized key="model_slot" lang="French">Model slot</Localized>
-    <Localized key="model_slot" lang="Dutch">model_slot</Localized>
-    <Localized key="creates_edition_action" lang="English">Create Edition Action</Localized>
-    <Localized key="creates_edition_action" lang="French">Créer une action d édition</Localized>
-    <Localized key="creates_edition_action" lang="Dutch">creates_edition_action</Localized>
-    <Localized key="fetch_request" lang="English">Fetch request</Localized>
-    <Localized key="fetch_request" lang="French">Requête</Localized>
-    <Localized key="fetch_request" lang="Dutch">fetch_request</Localized>
-    <Localized key="action" lang="English">Action</Localized>
-    <Localized key="action" lang="French">Action</Localized>
-    <Localized key="action" lang="Dutch">actie</Localized>
-    <Localized key="ConditionalAction" lang="English">ConditionalAction</Localized>
-    <Localized key="ConditionalAction" lang="French">ConditionalAction</Localized>
-    <Localized key="ConditionalAction" lang="Dutch">ConditionalAction</Localized>
-    <Localized key="IterationAction" lang="English">IterationAction</Localized>
-    <Localized key="IterationAction" lang="French">IterationAction</Localized>
-    <Localized key="IterationAction" lang="Dutch">IterationAction</Localized>
-    <Localized key="FetchRequestIterationAction" lang="English">FetchRequestIterationAction</Localized>
-    <Localized key="FetchRequestIterationAction" lang="French">FetchRequestIterationAction</Localized>
-    <Localized key="FetchRequestIterationAction" lang="Dutch">FetchRequestIterationAction</Localized>
-    <Localized key="control_action" lang="English">control_action</Localized>
-    <Localized key="control_action" lang="French">control_action</Localized>
-    <Localized key="control_action" lang="Dutch">control_action</Localized>
-    <Localized key="please_select_an_action_type" lang="English">Please select a type of action</Localized>
-    <Localized key="please_select_an_action_type" lang="French">Veuillez choisir un type d'action</Localized>
-    <Localized key="please_select_an_action_type" lang="Dutch">please_select_an_action_type</Localized>
-    <Localized key="please_choose_a_model_slot" lang="English">Please choose a Model Slot</Localized>
-    <Localized key="please_choose_a_model_slot" lang="French">Veuillez choisir un Model Slot</Localized>
-    <Localized key="please_choose_a_model_slot" lang="Dutch">please_choose_a_model_slot</Localized>
-    <Localized key="AssignationAction" lang="English">AssignationAction</Localized>
-    <Localized key="AssignationAction" lang="French">AssignationAction</Localized>
-    <Localized key="AssignationAction" lang="Dutch">AssignationAction</Localized>
-    <Localized key="ExecutionAction" lang="English">ExecutionAction</Localized>
-    <Localized key="ExecutionAction" lang="French">ExecutionAction</Localized>
-    <Localized key="ExecutionAction" lang="Dutch">ExecutionAction</Localized>
-    <Localized key="AddFlexoConceptInstance" lang="English">AddFlexoConceptInstance</Localized>
-    <Localized key="AddFlexoConceptInstance" lang="French">AddFlexoConceptInstance</Localized>
-    <Localized key="AddFlexoConceptInstance" lang="Dutch">AddFlexoConceptInstance</Localized>
-    <Localized key="MatchFlexoConceptInstance" lang="English">MatchFlexoConceptInstance</Localized>
-    <Localized key="MatchFlexoConceptInstance" lang="French">MatchFlexoConceptInstance</Localized>
-    <Localized key="MatchFlexoConceptInstance" lang="Dutch">MatchFlexoConceptInstance</Localized>
-    <Localized key="SelectFlexoConceptInstance" lang="English">SelectFlexoConceptInstance</Localized>
-    <Localized key="SelectFlexoConceptInstance" lang="French">SelectFlexoConceptInstance</Localized>
-    <Localized key="SelectFlexoConceptInstance" lang="Dutch">SelectFlexoConceptInstance</Localized>
-    <Localized key="model1" lang="English">model1</Localized>
-    <Localized key="model1" lang="French">model1</Localized>
-    <Localized key="model1" lang="Dutch">model1</Localized>
-    <Localized key="model2" lang="English">model2</Localized>
-    <Localized key="model2" lang="French">model2</Localized>
-    <Localized key="model2" lang="Dutch">model2</Localized>
-    <Localized key="this" lang="English">this</Localized>
-    <Localized key="this" lang="French">this</Localized>
-    <Localized key="this" lang="Dutch">this</Localized>
-    <Localized key="InsertAfter" lang="English">InsertAfter</Localized>
-    <Localized key="InsertAfter" lang="French">InsertAfter</Localized>
-    <Localized key="InsertAfter" lang="Dutch">InsertAfter</Localized>
-    <Localized key="InsertBefore" lang="English">InsertBefore</Localized>
-    <Localized key="InsertBefore" lang="French">InsertBefore</Localized>
-    <Localized key="InsertBefore" lang="Dutch">InsertBefore</Localized>
-    <Localized key="InsertInside" lang="English">InsertInside</Localized>
-    <Localized key="InsertInside" lang="French">InsertInside</Localized>
-    <Localized key="InsertInside" lang="Dutch">InsertInside</Localized>
-    <Localized key="position" lang="English">Position</Localized>
-    <Localized key="position" lang="French">Position</Localized>
-    <Localized key="position" lang="Dutch">position</Localized>
-    <Localized key="SelectEMFObjectIndividual" lang="English">SelectEMFObjectIndividual</Localized>
-    <Localized key="SelectEMFObjectIndividual" lang="French">SelectEMFObjectIndividual</Localized>
-    <Localized key="SelectEMFObjectIndividual" lang="Dutch">SelectEMFObjectIndividual</Localized>
-    <Localized key="AddEMFObjectIndividual" lang="English">AddEMFObjectIndividual</Localized>
-    <Localized key="AddEMFObjectIndividual" lang="French">AddEMFObjectIndividual</Localized>
-    <Localized key="AddEMFObjectIndividual" lang="Dutch">AddEMFObjectIndividual</Localized>
-    <Localized key="AddEMFObjectIndividualAttributeDataPropertyValue" lang="English">AddEMFObjectIndividualAttributeDataPropertyValue</Localized>
-    <Localized key="AddEMFObjectIndividualAttributeDataPropertyValue" lang="French">AddEMFObjectIndividualAttributeDataPropertyValue</Localized>
-    <Localized key="AddEMFObjectIndividualAttributeDataPropertyValue" lang="Dutch">AddEMFObjectIndividualAttributeDataPropertyValue</Localized>
-    <Localized key="AddEMFObjectIndividualAttributeObjectPropertyValue" lang="English">AddEMFObjectIndividualAttributeObjectPropertyValue</Localized>
-    <Localized key="AddEMFObjectIndividualAttributeObjectPropertyValue" lang="French">AddEMFObjectIndividualAttributeObjectPropertyValue</Localized>
-    <Localized key="AddEMFObjectIndividualAttributeObjectPropertyValue" lang="Dutch">AddEMFObjectIndividualAttributeObjectPropertyValue</Localized>
-    <Localized key="AddEMFObjectIndividualReferenceObjectPropertyValue" lang="English">AddEMFObjectIndividualReferenceObjectPropertyValue</Localized>
-    <Localized key="AddEMFObjectIndividualReferenceObjectPropertyValue" lang="French">AddEMFObjectIndividualReferenceObjectPropertyValue</Localized>
-    <Localized key="AddEMFObjectIndividualReferenceObjectPropertyValue" lang="Dutch">AddEMFObjectIndividualReferenceObjectPropertyValue</Localized>
-    <Localized key="RemoveEMFObjectIndividualAttributeDataPropertyValue" lang="English">RemoveEMFObjectIndividualAttributeDataPropertyValue</Localized>
-    <Localized key="RemoveEMFObjectIndividualAttributeDataPropertyValue" lang="French">RemoveEMFObjectIndividualAttributeDataPropertyValue</Localized>
-    <Localized key="RemoveEMFObjectIndividualAttributeDataPropertyValue" lang="Dutch">RemoveEMFObjectIndividualAttributeDataPropertyValue</Localized>
-    <Localized key="RemoveEMFObjectIndividualAttributeObjectPropertyValue" lang="English">RemoveEMFObjectIndividualAttributeObjectPropertyValue</Localized>
-    <Localized key="RemoveEMFObjectIndividualAttributeObjectPropertyValue" lang="French">RemoveEMFObjectIndividualAttributeObjectPropertyValue</Localized>
-    <Localized key="RemoveEMFObjectIndividualAttributeObjectPropertyValue" lang="Dutch">RemoveEMFObjectIndividualAttributeObjectPropertyValue</Localized>
-    <Localized key="RemoveEMFObjectIndividualReferenceObjectPropertyValue" lang="English">RemoveEMFObjectIndividualReferenceObjectPropertyValue</Localized>
-    <Localized key="RemoveEMFObjectIndividualReferenceObjectPropertyValue" lang="French">RemoveEMFObjectIndividualReferenceObjectPropertyValue</Localized>
-    <Localized key="RemoveEMFObjectIndividualReferenceObjectPropertyValue" lang="Dutch">RemoveEMFObjectIndividualReferenceObjectPropertyValue</Localized>
+    <Localized key="BuiltInAction" lang="English" value="BuiltInAction" />
+    <Localized key="BuiltInAction" lang="French" value="BuiltInAction" />
+    <Localized key="BuiltInAction" lang="Dutch" value="BuiltInAction" />
+    <Localized key="ModelSlotSpecificAction" lang="English" value="ModelSlotSpecificAction" />
+    <Localized key="ModelSlotSpecificAction" lang="French" value="ModelSlotSpecificAction" />
+    <Localized key="ModelSlotSpecificAction" lang="Dutch" value="ModelSlotSpecificAction" />
+    <Localized key="RequestAction" lang="English" value="RequestAction" />
+    <Localized key="RequestAction" lang="French" value="RequestAction" />
+    <Localized key="RequestAction" lang="Dutch" value="RequestAction" />
+    <Localized key="ControlAction" lang="English" value="ControlAction" />
+    <Localized key="ControlAction" lang="French" value="ControlAction" />
+    <Localized key="ControlAction" lang="Dutch" value="ControlAction" />
+    <Localized key="description" lang="English" value="Description" />
+    <Localized key="description" lang="French" value="Description" />
+    <Localized key="description" lang="Dutch" value="Description" />
+    <Localized key="cancel" lang="English" value="Cancel" />
+    <Localized key="cancel" lang="French" value="Annuler" />
+    <Localized key="cancel" lang="Dutch" value="Cancel" />
+    <Localized key="validate" lang="English" value="Validate" />
+    <Localized key="validate" lang="French" value="Valider" />
+    <Localized key="validate" lang="Dutch" value="Validate" />
+    <Localized key="action_type" lang="English" value="Action type" />
+    <Localized key="action_type" lang="French" value="Type d'Action" />
+    <Localized key="action_type" lang="Dutch" value="Action type" />
+    <Localized key="please_select_a_kind_of_action" lang="English" value="Please select a kind of action" />
+    <Localized key="please_select_a_kind_of_action" lang="French" value="Veuillez choisir un type d'action" />
+    <Localized key="please_select_a_kind_of_action" lang="Dutch" value="please_select_a_kind_of_action" />
+    <Localized key="DeclarePatternRole" lang="English" value="DeclarePatternRole" />
+    <Localized key="DeclarePatternRole" lang="French" value="DeclarePatternRole" />
+    <Localized key="DeclarePatternRole" lang="Dutch" value="DeclarePatternRole" />
+    <Localized key="AddFlexoConcept" lang="English" value="AddFlexoConcept" />
+    <Localized key="AddFlexoConcept" lang="French" value="AddFlexoConcept" />
+    <Localized key="AddFlexoConcept" lang="Dutch" value="AddFlexoConcept" />
+    <Localized key="DeleteAction" lang="English" value="DeleteAction" />
+    <Localized key="DeleteAction" lang="French" value="DeleteAction" />
+    <Localized key="DeleteAction" lang="Dutch" value="DeleteAction" />
+    <Localized key="model_slot" lang="English" value="Model slot" />
+    <Localized key="model_slot" lang="French" value="Model slot" />
+    <Localized key="model_slot" lang="Dutch" value="model_slot" />
+    <Localized key="creates_edition_action" lang="English" value="Create Edition Action" />
+    <Localized key="creates_edition_action" lang="French" value="Créer une action d édition" />
+    <Localized key="creates_edition_action" lang="Dutch" value="creates_edition_action" />
+    <Localized key="fetch_request" lang="English" value="Fetch request" />
+    <Localized key="fetch_request" lang="French" value="Requête" />
+    <Localized key="fetch_request" lang="Dutch" value="fetch_request" />
+    <Localized key="action" lang="English" value="Action" />
+    <Localized key="action" lang="French" value="Action" />
+    <Localized key="action" lang="Dutch" value="actie" />
+    <Localized key="ConditionalAction" lang="English" value="ConditionalAction" />
+    <Localized key="ConditionalAction" lang="French" value="ConditionalAction" />
+    <Localized key="ConditionalAction" lang="Dutch" value="ConditionalAction" />
+    <Localized key="IterationAction" lang="English" value="IterationAction" />
+    <Localized key="IterationAction" lang="French" value="IterationAction" />
+    <Localized key="IterationAction" lang="Dutch" value="IterationAction" />
+    <Localized key="FetchRequestIterationAction" lang="English" value="FetchRequestIterationAction" />
+    <Localized key="FetchRequestIterationAction" lang="French" value="FetchRequestIterationAction" />
+    <Localized key="FetchRequestIterationAction" lang="Dutch" value="FetchRequestIterationAction" />
+    <Localized key="control_action" lang="English" value="control_action" />
+    <Localized key="control_action" lang="French" value="control_action" />
+    <Localized key="control_action" lang="Dutch" value="control_action" />
+    <Localized key="please_select_an_action_type" lang="English" value="Please select a type of action" />
+    <Localized key="please_select_an_action_type" lang="French" value="Veuillez choisir un type d'action" />
+    <Localized key="please_select_an_action_type" lang="Dutch" value="please_select_an_action_type" />
+    <Localized key="please_choose_a_model_slot" lang="English" value="Please choose a Model Slot" />
+    <Localized key="please_choose_a_model_slot" lang="French" value="Veuillez choisir un Model Slot" />
+    <Localized key="please_choose_a_model_slot" lang="Dutch" value="please_choose_a_model_slot" />
+    <Localized key="AssignationAction" lang="English" value="AssignationAction" />
+    <Localized key="AssignationAction" lang="French" value="AssignationAction" />
+    <Localized key="AssignationAction" lang="Dutch" value="AssignationAction" />
+    <Localized key="ExecutionAction" lang="English" value="ExecutionAction" />
+    <Localized key="ExecutionAction" lang="French" value="ExecutionAction" />
+    <Localized key="ExecutionAction" lang="Dutch" value="ExecutionAction" />
+    <Localized key="AddFlexoConceptInstance" lang="English" value="AddFlexoConceptInstance" />
+    <Localized key="AddFlexoConceptInstance" lang="French" value="AddFlexoConceptInstance" />
+    <Localized key="AddFlexoConceptInstance" lang="Dutch" value="AddFlexoConceptInstance" />
+    <Localized key="MatchFlexoConceptInstance" lang="English" value="MatchFlexoConceptInstance" />
+    <Localized key="MatchFlexoConceptInstance" lang="French" value="MatchFlexoConceptInstance" />
+    <Localized key="MatchFlexoConceptInstance" lang="Dutch" value="MatchFlexoConceptInstance" />
+    <Localized key="SelectFlexoConceptInstance" lang="English" value="SelectFlexoConceptInstance" />
+    <Localized key="SelectFlexoConceptInstance" lang="French" value="SelectFlexoConceptInstance" />
+    <Localized key="SelectFlexoConceptInstance" lang="Dutch" value="SelectFlexoConceptInstance" />
+    <Localized key="model1" lang="English" value="model1" />
+    <Localized key="model1" lang="French" value="model1" />
+    <Localized key="model1" lang="Dutch" value="model1" />
+    <Localized key="model2" lang="English" value="model2" />
+    <Localized key="model2" lang="French" value="model2" />
+    <Localized key="model2" lang="Dutch" value="model2" />
+    <Localized key="this" lang="English" value="this" />
+    <Localized key="this" lang="French" value="this" />
+    <Localized key="this" lang="Dutch" value="this" />
+    <Localized key="InsertAfter" lang="English" value="InsertAfter" />
+    <Localized key="InsertAfter" lang="French" value="InsertAfter" />
+    <Localized key="InsertAfter" lang="Dutch" value="InsertAfter" />
+    <Localized key="InsertBefore" lang="English" value="InsertBefore" />
+    <Localized key="InsertBefore" lang="French" value="InsertBefore" />
+    <Localized key="InsertBefore" lang="Dutch" value="InsertBefore" />
+    <Localized key="InsertInside" lang="English" value="InsertInside" />
+    <Localized key="InsertInside" lang="French" value="InsertInside" />
+    <Localized key="InsertInside" lang="Dutch" value="InsertInside" />
+    <Localized key="position" lang="English" value="Position" />
+    <Localized key="position" lang="French" value="Position" />
+    <Localized key="position" lang="Dutch" value="position" />
+    <Localized key="SelectEMFObjectIndividual" lang="English" value="SelectEMFObjectIndividual" />
+    <Localized key="SelectEMFObjectIndividual" lang="French" value="SelectEMFObjectIndividual" />
+    <Localized key="SelectEMFObjectIndividual" lang="Dutch" value="SelectEMFObjectIndividual" />
+    <Localized key="AddEMFObjectIndividual" lang="English" value="AddEMFObjectIndividual" />
+    <Localized key="AddEMFObjectIndividual" lang="French" value="AddEMFObjectIndividual" />
+    <Localized key="AddEMFObjectIndividual" lang="Dutch" value="AddEMFObjectIndividual" />
+    <Localized key="AddEMFObjectIndividualAttributeDataPropertyValue" lang="English" value="AddEMFObjectIndividualAttributeDataPropertyValue" />
+    <Localized key="AddEMFObjectIndividualAttributeDataPropertyValue" lang="French" value="AddEMFObjectIndividualAttributeDataPropertyValue" />
+    <Localized key="AddEMFObjectIndividualAttributeDataPropertyValue" lang="Dutch" value="AddEMFObjectIndividualAttributeDataPropertyValue" />
+    <Localized key="AddEMFObjectIndividualAttributeObjectPropertyValue" lang="English" value="AddEMFObjectIndividualAttributeObjectPropertyValue" />
+    <Localized key="AddEMFObjectIndividualAttributeObjectPropertyValue" lang="French" value="AddEMFObjectIndividualAttributeObjectPropertyValue" />
+    <Localized key="AddEMFObjectIndividualAttributeObjectPropertyValue" lang="Dutch" value="AddEMFObjectIndividualAttributeObjectPropertyValue" />
+    <Localized key="AddEMFObjectIndividualReferenceObjectPropertyValue" lang="English" value="AddEMFObjectIndividualReferenceObjectPropertyValue" />
+    <Localized key="AddEMFObjectIndividualReferenceObjectPropertyValue" lang="French" value="AddEMFObjectIndividualReferenceObjectPropertyValue" />
+    <Localized key="AddEMFObjectIndividualReferenceObjectPropertyValue" lang="Dutch" value="AddEMFObjectIndividualReferenceObjectPropertyValue" />
+    <Localized key="RemoveEMFObjectIndividualAttributeDataPropertyValue" lang="English" value="RemoveEMFObjectIndividualAttributeDataPropertyValue" />
+    <Localized key="RemoveEMFObjectIndividualAttributeDataPropertyValue" lang="French" value="RemoveEMFObjectIndividualAttributeDataPropertyValue" />
+    <Localized key="RemoveEMFObjectIndividualAttributeDataPropertyValue" lang="Dutch" value="RemoveEMFObjectIndividualAttributeDataPropertyValue" />
+    <Localized key="RemoveEMFObjectIndividualAttributeObjectPropertyValue" lang="English" value="RemoveEMFObjectIndividualAttributeObjectPropertyValue" />
+    <Localized key="RemoveEMFObjectIndividualAttributeObjectPropertyValue" lang="French" value="RemoveEMFObjectIndividualAttributeObjectPropertyValue" />
+    <Localized key="RemoveEMFObjectIndividualAttributeObjectPropertyValue" lang="Dutch" value="RemoveEMFObjectIndividualAttributeObjectPropertyValue" />
+    <Localized key="RemoveEMFObjectIndividualReferenceObjectPropertyValue" lang="English" value="RemoveEMFObjectIndividualReferenceObjectPropertyValue" />
+    <Localized key="RemoveEMFObjectIndividualReferenceObjectPropertyValue" lang="French" value="RemoveEMFObjectIndividualReferenceObjectPropertyValue" />
+    <Localized key="RemoveEMFObjectIndividualReferenceObjectPropertyValue" lang="Dutch" value="RemoveEMFObjectIndividualReferenceObjectPropertyValue" />
   </LocalizedDictionary>
 </Panel>

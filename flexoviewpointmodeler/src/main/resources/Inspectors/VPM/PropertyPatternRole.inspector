@@ -4,8 +4,8 @@
     <Tab title="Basic" layout="twocols" titleFont="SansSerif,0,11" darkLevel="0" index="0" font="SansSerif,0,11" useScrollBar="true" horizontalScrollbarPolicy="HORIZONTAL_SCROLLBAR_AS_NEEDED" verticalScrollbarPolicy="VERTICAL_SCROLLBAR_AS_NEEDED" name="BasicTab" />
   </TabPanel>
   <LocalizedDictionary>
-    <Localized key="Advanced" lang="French">Avancé</Localized>
-    <Localized key="Basic" lang="French">Basique</Localized>
+    <Localized key="Advanced" lang="French" value="Avancé" />
+    <Localized key="Basic" lang="French" value="Basique" />
   </LocalizedDictionary>
   <Parameter name="title" value="Property Pattern Role" />
 </Panel>
