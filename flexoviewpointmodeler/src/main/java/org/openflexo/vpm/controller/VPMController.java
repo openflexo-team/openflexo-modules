@@ -200,7 +200,7 @@ public class VPMController extends FlexoController {
 
 	@Override
 	public ValidationModel getDefaultValidationModel() {
-		return ViewPointLibrary.VALIDATION_MODEL;
+		return getApplicationContext().getViewPointLibrary().getDefaultValidationModel();
 	}
 
 }

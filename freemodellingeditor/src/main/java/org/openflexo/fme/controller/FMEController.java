@@ -41,7 +41,6 @@ import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.validation.ValidationModel;
 import org.openflexo.foundation.viewpoint.ViewPoint;
-import org.openflexo.foundation.viewpoint.ViewPointLibrary;
 import org.openflexo.foundation.viewpoint.ViewPointObject;
 import org.openflexo.icon.IconLibrary;
 import org.openflexo.icon.VPMIconLibrary;
@@ -157,7 +156,7 @@ public class FMEController extends FlexoController {
 
 	@Override
 	public ValidationModel getDefaultValidationModel() {
-		return ViewPointLibrary.VALIDATION_MODEL;
+		return getApplicationContext().getViewPointLibrary().getDefaultValidationModel();
 	}
 
 	@Override

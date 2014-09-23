@@ -50,7 +50,7 @@ public class FMEFileMenu extends FileMenu {
 	@Override
 	public void addSpecificItems() {
 		// add(new SaveModifiedItem());
-		addSeparator();
+		// addSeparator();
 	}
 
 	@Override

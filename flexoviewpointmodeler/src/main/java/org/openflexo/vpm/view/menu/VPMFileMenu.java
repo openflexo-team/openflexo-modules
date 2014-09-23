@@ -44,7 +44,7 @@ public class VPMFileMenu extends FileMenu {
 	@Override
 	public void addSpecificItems() {
 		// add(new SaveModifiedItem());
-		addSeparator();
+		// addSeparator();
 	}
 
 	@Override
