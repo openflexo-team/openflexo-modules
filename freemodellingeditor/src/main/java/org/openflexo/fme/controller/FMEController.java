@@ -39,11 +39,11 @@ import org.openflexo.fme.view.menu.FMEMenuBar;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
+import org.openflexo.foundation.validation.FlexoValidationModel;
 import org.openflexo.foundation.viewpoint.ViewPoint;
 import org.openflexo.foundation.viewpoint.ViewPointObject;
 import org.openflexo.icon.IconLibrary;
 import org.openflexo.icon.VPMIconLibrary;
-import org.openflexo.model.validation.ValidationModel;
 import org.openflexo.module.FlexoModule;
 import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.view.FlexoMainPane;
@@ -155,8 +155,11 @@ public class FMEController extends FlexoController {
 	}
 
 	@Override
-	public ValidationModel getDefaultValidationModel() {
-		return getApplicationContext().getViewPointLibrary().getDefaultValidationModel();
+	public FlexoValidationModel getValidationModelForObject(FlexoObject object) {
+		if (object instanceof ViewPointObject) {
+			return getApplicationContext().getViewPointLibrary().getViewPointValidationModel();
+		}
+		return super.getValidationModelForObject(object);
 	}
 
 	@Override

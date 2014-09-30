@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.technologyadapter.TechnologyAdapter;
+import org.openflexo.foundation.validation.FlexoValidationModel;
 import org.openflexo.foundation.viewpoint.FlexoConcept;
 import org.openflexo.foundation.viewpoint.FlexoConceptObject;
 import org.openflexo.foundation.viewpoint.ViewPoint;
@@ -31,7 +32,6 @@ import org.openflexo.foundation.viewpoint.ViewPointLibrary;
 import org.openflexo.foundation.viewpoint.ViewPointObject;
 import org.openflexo.foundation.viewpoint.VirtualModel;
 import org.openflexo.foundation.viewpoint.VirtualModelTechnologyAdapter;
-import org.openflexo.model.validation.ValidationModel;
 import org.openflexo.module.FlexoModule;
 import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.view.FlexoMainPane;
@@ -199,8 +199,11 @@ public class VPMController extends FlexoController {
 	}
 
 	@Override
-	public ValidationModel getDefaultValidationModel() {
-		return getApplicationContext().getViewPointLibrary().getDefaultValidationModel();
+	public FlexoValidationModel getValidationModelForObject(FlexoObject object) {
+		if (object instanceof ViewPointObject) {
+			return getApplicationContext().getViewPointLibrary().getViewPointValidationModel();
+		}
+		return super.getValidationModelForObject(object);
 	}
 
 }
