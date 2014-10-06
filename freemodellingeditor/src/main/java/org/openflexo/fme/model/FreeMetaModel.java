@@ -41,7 +41,7 @@ import org.openflexo.foundation.viewpoint.PrimitiveRole.PrimitiveType;
 import org.openflexo.foundation.viewpoint.TextFieldParameter;
 import org.openflexo.foundation.viewpoint.VirtualModel;
 import org.openflexo.foundation.viewpoint.VirtualModelModelFactory;
-import org.openflexo.foundation.viewpoint.action.AddFlexoConcept;
+import org.openflexo.foundation.viewpoint.action.CreateFlexoConcept;
 import org.openflexo.foundation.viewpoint.action.CreateEditionAction;
 import org.openflexo.foundation.viewpoint.action.CreateEditionAction.CreateEditionActionChoice;
 import org.openflexo.foundation.viewpoint.action.CreateFlexoBehaviour;
@@ -166,11 +166,11 @@ public class FreeMetaModel extends DefaultFlexoObject {
 		if (returned == null) {
 
 			// Creates the concept
-			AddFlexoConcept action;
+			CreateFlexoConcept action;
 			if (ownerAction != null) {
-				action = AddFlexoConcept.actionType.makeNewEmbeddedAction(getVirtualModel(), null, ownerAction);
+				action = CreateFlexoConcept.actionType.makeNewEmbeddedAction(getVirtualModel(), null, ownerAction);
 			} else {
-				action = AddFlexoConcept.actionType.makeNewAction(getVirtualModel(), null, editor);
+				action = CreateFlexoConcept.actionType.makeNewAction(getVirtualModel(), null, editor);
 			}
 			action.setNewFlexoConceptName(conceptName);
 			action.doAction();
