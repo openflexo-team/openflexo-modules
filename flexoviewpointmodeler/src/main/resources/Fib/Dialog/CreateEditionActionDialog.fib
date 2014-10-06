@@ -89,9 +89,9 @@
     <Localized key="DeclarePatternRole" lang="English" value="DeclarePatternRole" />
     <Localized key="DeclarePatternRole" lang="French" value="DeclarePatternRole" />
     <Localized key="DeclarePatternRole" lang="Dutch" value="DeclarePatternRole" />
-    <Localized key="AddFlexoConcept" lang="English" value="AddFlexoConcept" />
-    <Localized key="AddFlexoConcept" lang="French" value="AddFlexoConcept" />
-    <Localized key="AddFlexoConcept" lang="Dutch" value="AddFlexoConcept" />
+    <Localized key="CreateFlexoConcept" lang="English" value="Create Flexo Concept" />
+    <Localized key="CreateFlexoConcept" lang="French" value="Créer un Flexo Concept" />
+    <Localized key="CreateFlexoConcept" lang="Dutch" value="CreateFlexoConcept" />
     <Localized key="DeleteAction" lang="English" value="DeleteAction" />
     <Localized key="DeleteAction" lang="French" value="DeleteAction" />
     <Localized key="DeleteAction" lang="Dutch" value="DeleteAction" />
