@@ -26,20 +26,19 @@ import javax.swing.Icon;
 
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
-import org.openflexo.foundation.viewpoint.action.AddFlexoConcept;
+import org.openflexo.foundation.viewpoint.action.CreateFlexoConcept;
 import org.openflexo.icon.VPMIconLibrary;
-import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
-import org.openflexo.view.controller.FlexoController;
+import org.openflexo.vpm.VPMCst;
 import org.openflexo.vpm.controller.VPMController;
 
-public class AddFlexoConceptInitializer extends ActionInitializer {
+public class CreateFlexoConceptInitializer extends ActionInitializer {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
-	AddFlexoConceptInitializer(VPMControllerActionInitializer actionInitializer) {
-		super(AddFlexoConcept.actionType, actionInitializer);
+	CreateFlexoConceptInitializer(VPMControllerActionInitializer actionInitializer) {
+		super(CreateFlexoConcept.actionType, actionInitializer);
 	}
 
 	@Override
@@ -48,22 +47,23 @@ public class AddFlexoConceptInitializer extends ActionInitializer {
 	}
 
 	@Override
-	protected FlexoActionInitializer<AddFlexoConcept> getDefaultInitializer() {
-		return new FlexoActionInitializer<AddFlexoConcept>() {
+	protected FlexoActionInitializer<CreateFlexoConcept> getDefaultInitializer() {
+		return new FlexoActionInitializer<CreateFlexoConcept>() {
 			@Override
-			public boolean run(EventObject e, AddFlexoConcept action) {
-				action.setNewFlexoConceptName(FlexoController.askForString(FlexoLocalization
+			public boolean run(EventObject e, CreateFlexoConcept action) {
+				/*action.setNewFlexoConceptName(FlexoController.askForString(FlexoLocalization
 						.localizedForKey("name_for_new_flexo_concept")));
-				return action.getNewFlexoConceptName() != null;
+				return action.getNewFlexoConceptName() != null;*/
+				return instanciateAndShowDialog(action, VPMCst.CREATE_FLEXO_CONCEPT_DIALOG_FIB);
 			}
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<AddFlexoConcept> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<AddFlexoConcept>() {
+	protected FlexoActionFinalizer<CreateFlexoConcept> getDefaultFinalizer() {
+		return new FlexoActionFinalizer<CreateFlexoConcept>() {
 			@Override
-			public boolean run(EventObject e, AddFlexoConcept action) {
+			public boolean run(EventObject e, CreateFlexoConcept action) {
 				if (action.switchNewlyCreatedFlexoConcept) {
 					((VPMController) getController()).setCurrentEditedObjectAsModuleView(action.getNewFlexoConcept());
 				}
