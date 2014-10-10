@@ -25,6 +25,8 @@ import java.util.logging.Logger;
 import javax.swing.Icon;
 
 import org.openflexo.components.widget.CommonFIB;
+import org.openflexo.components.wizard.Wizard;
+import org.openflexo.components.wizard.WizardDialog;
 import org.openflexo.fib.controller.FIBController.Status;
 import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.FlexoObject;
@@ -32,15 +34,10 @@ import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
 import org.openflexo.foundation.action.FlexoExceptionHandler;
 import org.openflexo.foundation.action.NotImplementedException;
-import org.openflexo.foundation.technologyadapter.FreeModelSlot;
-import org.openflexo.foundation.technologyadapter.ModelSlot;
-import org.openflexo.foundation.technologyadapter.TypeAwareModelSlot;
 import org.openflexo.foundation.view.View;
 import org.openflexo.foundation.view.action.CreateBasicVirtualModelInstance;
-import org.openflexo.foundation.viewpoint.VirtualModelModelSlot;
 import org.openflexo.icon.VEIconLibrary;
 import org.openflexo.localization.FlexoLocalization;
-import org.openflexo.rm.Resource;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
@@ -75,6 +72,20 @@ public class CreateBasicVirtualModelInstanceInitializer extends ActionInitialize
 				if (action.skipChoosePopup) {
 					return true;
 				} else {
+
+					Wizard wizard = new CreateBasicVirtualModelInstanceWizard(action, getController());
+					WizardDialog dialog = new WizardDialog(wizard);
+					dialog.showDialog();
+
+					if (dialog.getStatus() != Status.VALIDATED) {
+						// Operation cancelled
+						return false;
+					}
+
+					return true;
+
+					/*System.out.println("returned = " + dialog.getStatus());
+
 					int step = 0;
 					boolean shouldContinue = true;
 					while (shouldContinue) {
@@ -98,9 +109,9 @@ public class CreateBasicVirtualModelInstanceInitializer extends ActionInitialize
 						} else if (result == Status.BACK && step - 1 >= 0) {
 							step = step - 1;
 						}
-					}
+					}*/
 
-					return instanciateAndShowDialog(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB);
+					// return instanciateAndShowDialog(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB);
 				}
 
 			}
@@ -143,7 +154,7 @@ public class CreateBasicVirtualModelInstanceInitializer extends ActionInitialize
 	 *         separation of FIBs for Model Slot Configurations.
 	 * @return File that correspond to the FIB
 	 */
-	private Resource getModelSlotInstanceConfigurationFIB(Class<? extends ModelSlot> modelSlotClass) {
+	/*private Resource getModelSlotInstanceConfigurationFIB(Class<? extends ModelSlot> modelSlotClass) {
 		if (TypeAwareModelSlot.class.isAssignableFrom(modelSlotClass)) {
 			return CommonFIB.CONFIGURE_TYPE_AWARE_MODEL_SLOT_INSTANCE_DIALOG_FIB;
 		}
@@ -154,5 +165,5 @@ public class CreateBasicVirtualModelInstanceInitializer extends ActionInitialize
 			return CommonFIB.CONFIGURE_VIRTUAL_MODEL_SLOT_INSTANCE_DIALOG_FIB;
 		}
 		return null;
-	}
+	}*/
 }
