@@ -36,6 +36,7 @@ import org.openflexo.foundation.view.FlexoConceptInstance;
 import org.openflexo.foundation.view.VirtualModelInstance;
 import org.openflexo.foundation.view.VirtualModelInstanceObject;
 import org.openflexo.foundation.view.action.DeletionSchemeAction;
+import org.openflexo.foundation.view.action.DeletionSchemeActionType;
 
 /**
  * This action is used to delete a flexo concept instance within Free modeling editor<br>
@@ -90,11 +91,11 @@ public class DeleteFMEFlexoConceptInstance extends
 			for (FlexoObject selection : getGlobalSelection()) {
 				if (selection instanceof FlexoConceptInstance) {
 					VirtualModelInstance vmi = ((FlexoConceptInstance) selection).getVirtualModelInstance();
-					DeletionSchemeAction deletionSchemeAction = DeletionSchemeAction.actionType.makeNewEmbeddedAction(
+					DeletionSchemeActionType deletionSchemeActionType = new DeletionSchemeActionType(((FlexoConceptInstance) selection)
+							.getFlexoConcept().getDefaultDeletionScheme(), (FlexoConceptInstance) selection);
+					DeletionSchemeAction deletionSchemeAction = deletionSchemeActionType.makeNewEmbeddedAction(
 							(FlexoConceptInstance) selection, getGlobalSelection(), this);
 					deletionSchemeAction.setVirtualModelInstance(vmi);
-					deletionSchemeAction
-							.setDeletionScheme(((FlexoConceptInstance) selection).getFlexoConcept().getDeletionSchemes().get(0));
 					deletionSchemeAction.doAction();
 					vmi.removeFromFlexoConceptInstances(((FlexoConceptInstance) selection));
 					selection.delete(context);
