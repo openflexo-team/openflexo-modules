@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.openflexo.foundation.DefaultFlexoObject;
 import org.openflexo.foundation.FlexoException;
@@ -199,6 +200,11 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 		return null;
 	}
 
+	public void removeFreeModel(FreeModel model){
+		models.remove(model.getVirtualModelInstance());
+		getFreeModellingView().removeFromVirtualModelInstances(model.getVirtualModelInstance());
+	}
+	
 	public DiagramTechnologyAdapter getDiagramTechnologyAdapter() {
 		return diagramTechnologyAdapter;
 	}

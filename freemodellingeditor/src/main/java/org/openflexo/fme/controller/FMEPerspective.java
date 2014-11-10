@@ -163,6 +163,11 @@ public class FMEPerspective extends FlexoPerspective {
 		return super.hasModuleViewForObject(object);
 	}
 
+	public void closeFreeModelBrowsers(){
+		setMiddleLeftView(null);
+		setBottomLeftView(null);
+	}
+	
 	@Override
 	public ModuleView<?> createModuleViewForObject(FlexoObject object, boolean editable) {
 		if (object instanceof FreeModel) {
