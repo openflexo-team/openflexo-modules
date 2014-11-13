@@ -196,7 +196,7 @@ public class ViewPointPerspective extends FlexoPerspective {
 	public void objectWasDoubleClicked(Object object, FlexoController controller) {
 		// logger.info("ViewPointPerspective: object was double-clicked: " + object);
 		if (object instanceof FlexoConceptObject) {
-			controller.selectAndFocusObject((FlexoConceptObject) object);
+			controller.selectAndFocusObjectAsTask((FlexoConceptObject) object);
 		}
 	}
 
