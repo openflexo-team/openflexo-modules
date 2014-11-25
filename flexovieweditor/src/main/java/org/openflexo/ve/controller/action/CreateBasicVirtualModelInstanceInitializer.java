@@ -72,46 +72,14 @@ public class CreateBasicVirtualModelInstanceInitializer extends ActionInitialize
 				if (action.skipChoosePopup) {
 					return true;
 				} else {
-
 					Wizard wizard = new CreateBasicVirtualModelInstanceWizard(action, getController());
 					WizardDialog dialog = new WizardDialog(wizard);
 					dialog.showDialog();
-
 					if (dialog.getStatus() != Status.VALIDATED) {
 						// Operation cancelled
 						return false;
 					}
-
 					return true;
-
-					/*System.out.println("returned = " + dialog.getStatus());
-
-					int step = 0;
-					boolean shouldContinue = true;
-					while (shouldContinue) {
-						Status result;
-						if (step == 0) {
-							result = instanciateShowDialogAndReturnStatus(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB);
-						} else if (step == action.getStepsNumber() - 1 && action.getVirtualModel() != null
-								&& action.getVirtualModel().hasCreationScheme()) {
-							result = chooseAndConfigureCreationScheme(action);
-						} else {
-							ModelSlot<?> configuredModelSlot = action.getVirtualModel().getModelSlots().get(step - 1);
-							result = instanciateShowDialogAndReturnStatus(action.getModelSlotInstanceConfiguration(configuredModelSlot),
-									getModelSlotInstanceConfigurationFIB(configuredModelSlot.getClass()));
-						}
-						if (result == Status.CANCELED) {
-							return false;
-						} else if (result == Status.VALIDATED) {
-							return true;
-						} else if (result == Status.NEXT && step + 1 <= action.getStepsNumber()) {
-							step = step + 1;
-						} else if (result == Status.BACK && step - 1 >= 0) {
-							step = step - 1;
-						}
-					}*/
-
-					// return instanciateAndShowDialog(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB);
 				}
 
 			}
