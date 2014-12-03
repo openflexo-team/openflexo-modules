@@ -23,11 +23,16 @@
 	         visible="data.hasNature('org.openflexo.fme.model.FreeModellingProjectNature')">
 		<BrowserElement dataClassName="org.openflexo.fme.model.FreeModellingProject" label="project.name"
 		                icon="controller.iconForObject(project)" isEditable="false" filtered="false" defaultVisible="true" name="project">
-			<Children data="project.freeModels" name="freeModels"/>
+			<Children data="project.freeMetaModels" name="freeMetaModels"/>
+		</BrowserElement>
+		<BrowserElement dataClassName="org.openflexo.fme.model.FreeMetaModel" label="freeMetaModel.name" icon="controller.iconForObject(freeMetaModel)"
+		                isEditable="false" filtered="false" defaultVisible="true" name="freeMetaModel">
+		                <Children data="freeMetaModel.getFreeModels()" name="freeModels"/>
 		</BrowserElement>
 		<BrowserElement dataClassName="org.openflexo.fme.model.FreeModel" label="freeModel.name" icon="controller.iconForObject(freeModel)"
 		                isEditable="false" filtered="false" defaultVisible="true" name="freeModel">
 		</BrowserElement>
+	
 
 		<!--   <BrowserElement dataClassName="org.openflexo.foundation.resource.FileSystemBasedResourceCenter" label="fsResourceCenter.name" icon="controller.iconForObject(fsResourceCenter)" isEditable="false" filtered="false" defaultVisible="true" name="fsResourceCenter">
 			  <Children data="fsResourceCenter.rootFolder.children" name="subFolders" />

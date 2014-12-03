@@ -132,6 +132,8 @@ public class CreateFreeModel extends FlexoAction<CreateFreeModel, FreeModellingP
 		} catch (InvalidArgumentException e) {
 			e.printStackTrace();
 		}
+		
+		getFocusedObject().getPropertyChangeSupport().firePropertyChange("freeMetaModels", null, null);
 	}
 
 	private FreeMetaModel createNewMetaModel(String metaModelName) {

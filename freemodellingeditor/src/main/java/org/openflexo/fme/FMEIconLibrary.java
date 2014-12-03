@@ -45,4 +45,5 @@ public class FMEIconLibrary {
 	public static final ImageIcon CONCEPT_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/EClass.gif"));
 	public static final ImageIcon INSTANCE_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/EObject.gif"));
 
+	public static final ImageIcon DIAGRAM_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/Diagram.png"));
 }

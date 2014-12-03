@@ -180,6 +180,20 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 		}
 		return returned;
 	}
+	
+	public List<FreeModel> getFreeModels(FreeMetaModel metamodel) {
+		List<FreeModel> returned = new ArrayList<FreeModel>();
+		for (VirtualModelInstance vmi : getFreeModellingView().getVirtualModelInstances()) {
+			try {
+				if(vmi.getVirtualModel().equals(metamodel.getVirtualModel())){
+					returned.add(getFreeModel(vmi));
+				}
+			} catch (InvalidArgumentException e) {
+				FreeModellingProjectNature.logger.warning(e.getMessage());
+			}
+		}
+		return returned;
+	}
 
 	public FreeModel getFreeModel(VirtualModelInstance virtualModelInstance) throws InvalidArgumentException {
 		FreeModel returned = models.get(virtualModelInstance);

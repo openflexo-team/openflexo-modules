@@ -174,9 +174,9 @@ public class FMEController extends FlexoController {
 		if (object instanceof FreeModellingProject) {
 			return IconLibrary.OPENFLEXO_NOTEXT_16;
 		} else if (object instanceof FreeModel) {
-			return FMEIconLibrary.FME_SMALL_ICON;
+			return FMEIconLibrary.DIAGRAM_ICON;
 		} else if (object instanceof FreeMetaModel) {
-			return VPMIconLibrary.VIRTUAL_MODEL_ICON;
+			return FMEIconLibrary.FME_SMALL_ICON;
 		}
 		return super.iconForObject(object);
 	}

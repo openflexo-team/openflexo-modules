@@ -23,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.awt.Font;
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import org.openflexo.antar.binding.DataBinding;
 import org.openflexo.fge.ShapeGraphicalRepresentation;
@@ -41,11 +42,11 @@ import org.openflexo.foundation.viewpoint.PrimitiveRole.PrimitiveType;
 import org.openflexo.foundation.viewpoint.TextFieldParameter;
 import org.openflexo.foundation.viewpoint.VirtualModel;
 import org.openflexo.foundation.viewpoint.VirtualModelModelFactory;
-import org.openflexo.foundation.viewpoint.action.CreateFlexoConcept;
 import org.openflexo.foundation.viewpoint.action.CreateEditionAction;
 import org.openflexo.foundation.viewpoint.action.CreateEditionAction.CreateEditionActionChoice;
 import org.openflexo.foundation.viewpoint.action.CreateFlexoBehaviour;
 import org.openflexo.foundation.viewpoint.action.CreateFlexoBehaviourParameter;
+import org.openflexo.foundation.viewpoint.action.CreateFlexoConcept;
 import org.openflexo.foundation.viewpoint.action.CreateFlexoRole;
 import org.openflexo.foundation.viewpoint.editionaction.AssignationAction;
 import org.openflexo.foundation.viewpoint.editionaction.DeleteAction;
@@ -113,6 +114,10 @@ public class FreeMetaModel extends DefaultFlexoObject {
 
 	public VirtualModel getVirtualModel() {
 		return virtualModel;
+	}
+	
+	public List<FreeModel> getFreeModels(){
+		return getFreeModellingProject().getFreeModels(this);
 	}
 
 	public FreeModellingProjectNature getProjectNature() {
