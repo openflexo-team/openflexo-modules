@@ -33,16 +33,6 @@ public class TestVPMDialogFibs extends GenericFIBTestCase {
 	}
 
 	@Test
-	public void testCreateViewPointDialog() {
-		validateFIB("Fib/Dialog/CreateViewPointDialog.fib");
-	}
-
-	@Test
-	public void testCreateVirtualModelDialog() {
-		validateFIB("Fib/Dialog/CreateVirtualModelDialog.fib");
-	}
-
-	@Test
 	public void testShowFMLRepresentationDialog() {
 		validateFIB("Fib/Dialog/ShowFMLRepresentationDialog.fib");
 	}
