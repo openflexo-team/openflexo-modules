@@ -56,7 +56,7 @@ public class VPMCst {
 	public static Resource CREATE_EDITION_ACTION_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateEditionActionDialog.fib");
 	public static Resource CREATE_FLEXO_BEHAVIOUR_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateFlexoBehaviourDialog.fib");
 	// public static Resource CREATE_VIEW_POINT_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateViewPointDialog.fib");
-	public static Resource CREATE_VIRTUAL_MODEL_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateVirtualModelDialog.fib");
+	// public static Resource CREATE_VIRTUAL_MODEL_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateVirtualModelDialog.fib");
 	public static Resource SHOW_FML_REPRESENTATION_DIALOG_FIB = ResourceLocator
 			.locateResource("Fib/Dialog/ShowFMLRepresentationDialog.fib");
 
