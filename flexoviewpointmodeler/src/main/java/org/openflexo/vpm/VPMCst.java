@@ -50,7 +50,7 @@ public class VPMCst {
 	public static int DEFAULT_MAINFRAME_HEIGHT = 600;
 
 	// ViewPoint edition
-	public static Resource CREATE_MODEL_SLOT_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateModelSlotDialog.fib");
+	// public static Resource CREATE_MODEL_SLOT_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateModelSlotDialog.fib");
 	public static Resource CREATE_FLEXO_CONCEPT_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateFlexoConceptDialog.fib");
 	public static Resource CREATE_FLEXO_ROLE_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateFlexoRoleDialog.fib");
 	public static Resource CREATE_EDITION_ACTION_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateEditionActionDialog.fib");
