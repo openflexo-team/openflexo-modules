@@ -24,13 +24,15 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
+import org.openflexo.components.wizard.Wizard;
+import org.openflexo.components.wizard.WizardDialog;
+import org.openflexo.fib.controller.FIBController.Status;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
 import org.openflexo.foundation.viewpoint.action.CreateFlexoConcept;
 import org.openflexo.icon.VPMIconLibrary;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
-import org.openflexo.vpm.VPMCst;
 import org.openflexo.vpm.controller.VPMController;
 
 public class CreateFlexoConceptInitializer extends ActionInitializer {
@@ -51,10 +53,15 @@ public class CreateFlexoConceptInitializer extends ActionInitializer {
 		return new FlexoActionInitializer<CreateFlexoConcept>() {
 			@Override
 			public boolean run(EventObject e, CreateFlexoConcept action) {
-				/*action.setNewFlexoConceptName(FlexoController.askForString(FlexoLocalization
-						.localizedForKey("name_for_new_flexo_concept")));
-				return action.getNewFlexoConceptName() != null;*/
-				return instanciateAndShowDialog(action, VPMCst.CREATE_FLEXO_CONCEPT_DIALOG_FIB);
+				Wizard wizard = new CreateFlexoConceptWizard(action, getController());
+				WizardDialog dialog = new WizardDialog(wizard);
+				dialog.showDialog();
+				if (dialog.getStatus() != Status.VALIDATED) {
+					// Operation cancelled
+					return false;
+				}
+				return true;
+				// return instanciateAndShowDialog(action, VPMCst.CREATE_FLEXO_CONCEPT_DIALOG_FIB);
 			}
 		};
 	}

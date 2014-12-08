@@ -76,7 +76,7 @@ public class CreateFlexoRoleInitializer extends ActionInitializer<CreateFlexoRol
 
 	@Override
 	protected Icon getEnabledIcon() {
-		return VPMIconLibrary.FLEXO_CONCEPT_ICON;
+		return VPMIconLibrary.FLEXO_ROLE_ICON;
 	}
 
 }
