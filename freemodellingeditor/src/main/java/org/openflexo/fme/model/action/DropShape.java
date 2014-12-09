@@ -117,7 +117,7 @@ public class DropShape extends FlexoAction<DropShape, DiagramContainerElement<?>
 				action.setParameterValue(nameParam, getFreeModel().getProposedName(concept));
 			}
 			action.setDropScheme(dropScheme);
-			action.setParent(getParent());
+			// action.setParent(getParent());
 			action.setDropLocation(dropLocation);
 			action.doAction();
 			newFlexoConceptInstance = action.getFlexoConceptInstance();
@@ -162,7 +162,7 @@ public class DropShape extends FlexoAction<DropShape, DiagramContainerElement<?>
 		this.freeModel = freeModel;
 	}
 
-	public DiagramContainerElement<?> getParent() {
+	/*public DiagramContainerElement<?> getParent() {
 		if (parent == null) {
 			parent = getFocusedObject();
 		}
@@ -171,7 +171,7 @@ public class DropShape extends FlexoAction<DropShape, DiagramContainerElement<?>
 
 	public void setParent(DiagramContainerElement<?> parent) {
 		this.parent = parent;
-	}
+	}*/
 
 	public ShapeGraphicalRepresentation getGraphicalRepresentation() {
 		return graphicalRepresentation;
