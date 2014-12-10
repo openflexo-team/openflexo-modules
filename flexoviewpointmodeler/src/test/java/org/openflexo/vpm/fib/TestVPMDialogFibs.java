@@ -18,21 +18,6 @@ public class TestVPMDialogFibs extends GenericFIBTestCase {
 	}
 
 	@Test
-	public void testCreateEditionSchemeDialog() {
-		validateFIB("Fib/Dialog/CreateFlexoBehaviourDialog.fib");
-	}
-
-	@Test
-	public void testCreateFlexoRoleDialog() {
-		validateFIB("Fib/Dialog/CreateFlexoRoleDialog.fib");
-	}
-
-	@Test
-	public void testCreateModelSlotDialog() {
-		validateFIB("Fib/Dialog/CreateModelSlotDialog.fib");
-	}
-
-	@Test
 	public void testShowFMLRepresentationDialog() {
 		validateFIB("Fib/Dialog/ShowFMLRepresentationDialog.fib");
 	}
