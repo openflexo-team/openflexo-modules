@@ -13,6 +13,16 @@ public class TestFMEWizardFibs extends GenericFIBTestCase {
 	}
 
 	@Test
+	public void testConfigureNewConcept() {
+		validateFIB("Fib/Wizard/ConfigureNewConcept.fib");
+	}
+
+	@Test
+	public void testConfigureNewConceptFromNoneConcept() {
+		validateFIB("Fib/Wizard/ConfigureNewConceptFromNoneConcept.fib");
+	}
+
+	@Test
 	public void testDescribeFreeModel() {
 		validateFIB("Fib/Wizard/DescribeFreeModel.fib");
 	}

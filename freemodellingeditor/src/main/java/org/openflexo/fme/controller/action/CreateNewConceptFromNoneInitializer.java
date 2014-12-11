@@ -22,7 +22,9 @@ package org.openflexo.fme.controller.action;
 import java.util.EventObject;
 import java.util.logging.Logger;
 
-import org.openflexo.fme.FMECst;
+import org.openflexo.components.wizard.Wizard;
+import org.openflexo.components.wizard.WizardDialog;
+import org.openflexo.fib.controller.FIBController.Status;
 import org.openflexo.fme.model.action.CreateNewConceptFromNoneConcept;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
@@ -46,7 +48,14 @@ public class CreateNewConceptFromNoneInitializer extends
 			@Override
 			public boolean run(EventObject e, CreateNewConceptFromNoneConcept action) {
 				logger.info("CreateNewConceptFromNoneConcept initializer");
-				return instanciateAndShowDialog(action, FMECst.CREATE_NEW_CONCEPT_FROM_NONE_DIALOG_FIB);
+				Wizard wizard = new CreateNewConceptFromNoneConceptWizard(action, getController());
+				WizardDialog dialog = new WizardDialog(wizard);
+				dialog.showDialog();
+				if (dialog.getStatus() != Status.VALIDATED) {
+					// Operation cancelled
+					return false;
+				}
+				return true;
 			}
 		};
 	}

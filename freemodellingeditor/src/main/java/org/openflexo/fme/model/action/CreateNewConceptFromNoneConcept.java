@@ -34,7 +34,6 @@ import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
 import org.openflexo.foundation.view.FlexoConceptInstance;
 import org.openflexo.foundation.viewpoint.FlexoConcept;
-import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 import org.openflexo.toolbox.StringUtils;
@@ -194,7 +193,6 @@ public class CreateNewConceptFromNoneConcept extends FlexoAction<CreateNewConcep
 		this.newConceptName = newConceptName;
 		getPropertyChangeSupport().firePropertyChange("newConceptName", null, newConceptName);
 		getPropertyChangeSupport().firePropertyChange("isValid", wasValid, isValid());
-		getPropertyChangeSupport().firePropertyChange("errorMessage", null, getErrorMessage());
 	}
 
 	public String getNewConceptDescription() {
@@ -206,30 +204,20 @@ public class CreateNewConceptFromNoneConcept extends FlexoAction<CreateNewConcep
 		this.newConceptDescription = newConceptDescription;
 		getPropertyChangeSupport().firePropertyChange("newConceptDescription", null, newConceptDescription);
 		getPropertyChangeSupport().firePropertyChange("isValid", wasValid, isValid());
-		getPropertyChangeSupport().firePropertyChange("errorMessage", null, getErrorMessage());
 	}
 
 	public FlexoConcept getNewFlexoConcept() {
 		return newFlexoConcept;
 	}
 
-	private String errorMessage;
-
-	public String getErrorMessage() {
-		isValid();
-		return errorMessage;
-	}
-
 	@Override
 	public boolean isValid() {
 
 		if (StringUtils.isEmpty(newConceptName)) {
-			errorMessage = FlexoLocalization.localizedForKey("no_concept_name_defined");
 			return false;
 		}
 
 		if (getFocusedObject().getVirtualModelInstance().getVirtualModel().getFlexoConcept(newConceptName) != null) {
-			errorMessage = FlexoLocalization.localizedForKey("a_concept_with_that_name_already_exists");
 			return false;
 		}
 
