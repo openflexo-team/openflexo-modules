@@ -17,4 +17,9 @@ public class TestFMEWizardFibs extends GenericFIBTestCase {
 		validateFIB("Fib/Wizard/DescribeFreeModel.fib");
 	}
 
+	@Test
+	public void testDescribeFreeModelDiagram() {
+		validateFIB("Fib/Wizard/DescribeFreeModelDiagram.fib");
+	}
+
 }

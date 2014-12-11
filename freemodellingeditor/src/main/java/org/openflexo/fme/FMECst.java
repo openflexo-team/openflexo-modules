@@ -49,8 +49,9 @@ public class FMECst {
 
 	public static int DEFAULT_MAINFRAME_HEIGHT = 600;
 
-	public static Resource CREATE_FREE_MODEL_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateFreeModelDialog.fib");
-	public static Resource CREATE_FREE_MODEL_DIAGRAM_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateFreeModelDiagramDialog.fib");
+	// public static Resource CREATE_FREE_MODEL_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateFreeModelDialog.fib");
+	// public static Resource CREATE_FREE_MODEL_DIAGRAM_DIALOG_FIB =
+	// ResourceLocator.locateResource("Fib/Dialog/CreateFreeModelDiagramDialog.fib");
 	public static Resource CREATE_NEW_CONCEPT_FROM_NONE_DIALOG_FIB = ResourceLocator
 			.locateResource("Fib/Dialog/CreateNewConceptFromNoneDialog.fib");
 	public static Resource CREATE_NEW_CONCEPT_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateNewConceptDialog.fib");

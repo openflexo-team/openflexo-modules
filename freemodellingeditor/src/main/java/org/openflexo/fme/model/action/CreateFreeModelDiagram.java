@@ -23,24 +23,12 @@ import java.util.Vector;
 import java.util.logging.Logger;
 
 import org.openflexo.fme.model.FreeMetaModel;
-import org.openflexo.fme.model.FreeModel;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
-import org.openflexo.foundation.InvalidArgumentException;
-import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
-import org.openflexo.foundation.resource.SaveResourceException;
-import org.openflexo.foundation.view.VirtualModelInstance;
-import org.openflexo.foundation.view.action.ModelSlotInstanceConfiguration.DefaultModelSlotInstanceConfigurationOption;
-import org.openflexo.localization.FlexoLocalization;
-import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
-import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlotInstanceConfiguration;
-import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelNature;
-import org.openflexo.technologyadapter.diagram.fml.action.CreateFMLControlledDiagramVirtualModelInstance;
-import org.openflexo.toolbox.StringUtils;
 
-public class CreateFreeModelDiagram extends FlexoAction<CreateFreeModelDiagram, FreeMetaModel, FlexoObject> {
+public class CreateFreeModelDiagram extends AbstractCreateFreeModelDiagram<CreateFreeModelDiagram> {
 
 	private static final Logger logger = Logger.getLogger(CreateFreeModelDiagram.class.getPackage().getName());
 
@@ -71,91 +59,8 @@ public class CreateFreeModelDiagram extends FlexoAction<CreateFreeModelDiagram, 
 		FlexoObjectImpl.addActionForClass(CreateFreeModelDiagram.actionType, FreeMetaModel.class);
 	}
 
-	private FreeModel freeModel;
-	private String diagramName;
-
 	CreateFreeModelDiagram(FreeMetaModel focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
-	}
-
-	@Override
-	protected void doAction(Object context) throws SaveResourceException {
-
-		logger.info("Create diagram free model");
-		
-		CreateFMLControlledDiagramVirtualModelInstance action = CreateFMLControlledDiagramVirtualModelInstance.actionType
-				.makeNewEmbeddedAction(getFocusedObject().getFreeModellingProject().getFreeModellingView(), null, this);
-		action.setNewVirtualModelInstanceName(getDiagramName());
-		action.setNewVirtualModelInstanceTitle(getDiagramName());
-		action.setVirtualModel(getFocusedObject().getVirtualModel());
-
-		TypedDiagramModelSlot diagramModelSlot = FMLControlledDiagramVirtualModelNature.getTypedDiagramModelSlot(getFocusedObject()
-				.getVirtualModel());
-		TypedDiagramModelSlotInstanceConfiguration diagramModelSlotInstanceConfiguration = (TypedDiagramModelSlotInstanceConfiguration) action
-				.getModelSlotInstanceConfiguration(diagramModelSlot);
-		diagramModelSlotInstanceConfiguration.setOption(DefaultModelSlotInstanceConfigurationOption.CreatePrivateNewModel);
-		diagramModelSlotInstanceConfiguration.setFilename(getDiagramName() + ".diagram");
-		diagramModelSlotInstanceConfiguration.setRelativePath("Diagrams/");
-		diagramModelSlotInstanceConfiguration.setModelUri(FreeModel.getDiagramURI(getFocusedObject().getFreeModellingProject().getProject(), getDiagramName()));
-		action.doAction();
-
-		VirtualModelInstance newVirtualModelInstance = action.getNewVirtualModelInstance();
-
-		// Wrap into FreeModel
-		try {
-			freeModel = getFocusedObject().getFreeModellingProject().getFreeModel(newVirtualModelInstance);
-		} catch (InvalidArgumentException e) {
-			e.printStackTrace();
-		}
-		
-		getFocusedObject().getFreeModellingProject().getPropertyChangeSupport().firePropertyChange("freeMetaModels", null, null);
-		
-	}
-
-	private String errorMessage;
-
-	public String getErrorMessage() {
-		isValid();
-		// System.out.println("valid=" + isValid());
-		// System.out.println("errorMessage=" + errorMessage);
-		return errorMessage;
-	}
-
-	@Override
-	public boolean isValid() {
-
-		if (StringUtils.isEmpty(diagramName)) {
-			errorMessage = FlexoLocalization.localizedForKey("no_diagram_name_defined");
-			return false;
-		}
-
-		if (getFocusedObject().getFreeModellingProject().getFreeModel(diagramName) != null) {
-			errorMessage = FlexoLocalization.localizedForKey("a_diagram_with_that_name_already_exists");
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Return newly created FreeModel
-	 * 
-	 * @return
-	 */
-	public FreeModel getFreeModel() {
-		return freeModel;
-	}
-
-	public String getDiagramName() {
-		return diagramName;
-	}
-
-	public void setDiagramName(String diagramName) {
-		boolean wasValid = isValid();
-		this.diagramName = diagramName;
-		getPropertyChangeSupport().firePropertyChange("diagramName", null, diagramName);
-		getPropertyChangeSupport().firePropertyChange("isValid", wasValid, isValid());
-		getPropertyChangeSupport().firePropertyChange("errorMessage", null, getErrorMessage());
 	}
 
 }

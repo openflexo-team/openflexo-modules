@@ -109,9 +109,6 @@ public class CreateFreeModelFromPPT extends AbstractCreateFreeModel<CreateFreeMo
 			actionCreateDiagramFromPPTSlide.setSlide(getSlide());
 			actionCreateDiagramFromPPTSlide.setDiagram(freeModel.getDiagram());
 
-			System.out.println("L'action est valide: " + actionCreateDiagramFromPPTSlide.isValid());
-			System.out.println("error message=" + actionCreateDiagramFromPPTSlide.getErrorMessage());
-
 			actionCreateDiagramFromPPTSlide.doAction();
 			none = freeModel.getMetaModel().getNoneFlexoConcept(getEditor(), this);
 			createFlexoConceptInstancesFromDiagramContainer(actionCreateDiagramFromPPTSlide.getDiagram());

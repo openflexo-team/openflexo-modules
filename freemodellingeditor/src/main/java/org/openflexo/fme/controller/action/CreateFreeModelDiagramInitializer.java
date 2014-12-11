@@ -24,15 +24,15 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
-import org.openflexo.fme.FMECst;
-import org.openflexo.fme.FMEIconLibrary;
+import org.openflexo.components.wizard.Wizard;
+import org.openflexo.components.wizard.WizardDialog;
+import org.openflexo.fib.controller.FIBController.Status;
 import org.openflexo.fme.model.FreeMetaModel;
-import org.openflexo.fme.model.FreeModel;
-import org.openflexo.fme.model.action.CreateFreeModel;
 import org.openflexo.fme.model.action.CreateFreeModelDiagram;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.technologyadapter.diagram.gui.DiagramIconLibrary;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 
@@ -54,7 +54,14 @@ public class CreateFreeModelDiagramInitializer extends ActionInitializer<CreateF
 		return new FlexoActionInitializer<CreateFreeModelDiagram>() {
 			@Override
 			public boolean run(EventObject e, CreateFreeModelDiagram action) {
-				return instanciateAndShowDialog(action, FMECst.CREATE_FREE_MODEL_DIAGRAM_DIALOG_FIB);
+				Wizard wizard = new CreateFreeModelDiagramWizard(action, getController());
+				WizardDialog dialog = new WizardDialog(wizard);
+				dialog.showDialog();
+				if (dialog.getStatus() != Status.VALIDATED) {
+					// Operation cancelled
+					return false;
+				}
+				return true;
 			}
 		};
 	}
@@ -72,7 +79,7 @@ public class CreateFreeModelDiagramInitializer extends ActionInitializer<CreateF
 
 	@Override
 	protected Icon getEnabledIcon() {
-		return FMEIconLibrary.FME_SMALL_ICON;
+		return DiagramIconLibrary.DIAGRAM_ICON;
 	}
 
 }

@@ -34,7 +34,7 @@ public class CreateFreeModelFromPPTWizard extends AbstractCreateFreeModelWizard<
 
 	@Override
 	public String getWizardTitle() {
-		return FlexoLocalization.localizedForKey("create_free_model_from_powerpoint_file");
+		return FlexoLocalization.localizedForKey("create_free_model_based_on_a_powerpoint_slide");
 	}
 
 	@Override

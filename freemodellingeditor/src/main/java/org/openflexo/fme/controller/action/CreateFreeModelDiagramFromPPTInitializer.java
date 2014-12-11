@@ -24,12 +24,15 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
-import org.openflexo.fme.FMEIconLibrary;
+import org.openflexo.components.wizard.Wizard;
+import org.openflexo.components.wizard.WizardDialog;
+import org.openflexo.fib.controller.FIBController.Status;
 import org.openflexo.fme.model.FreeMetaModel;
 import org.openflexo.fme.model.action.CreateFreeModelDiagramFromPPT;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.technologyadapter.diagram.gui.DiagramIconLibrary;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 
@@ -51,6 +54,13 @@ public class CreateFreeModelDiagramFromPPTInitializer extends ActionInitializer<
 		return new FlexoActionInitializer<CreateFreeModelDiagramFromPPT>() {
 			@Override
 			public boolean run(EventObject e, CreateFreeModelDiagramFromPPT action) {
+				Wizard wizard = new CreateFreeModelDiagramFromPPTWizard(action, getController());
+				WizardDialog dialog = new WizardDialog(wizard);
+				dialog.showDialog();
+				if (dialog.getStatus() != Status.VALIDATED) {
+					// Operation cancelled
+					return false;
+				}
 				return true;
 			}
 		};
@@ -69,7 +79,7 @@ public class CreateFreeModelDiagramFromPPTInitializer extends ActionInitializer<
 
 	@Override
 	protected Icon getEnabledIcon() {
-		return FMEIconLibrary.FME_SMALL_ICON;
+		return DiagramIconLibrary.DIAGRAM_ICON;
 	}
 
 }
