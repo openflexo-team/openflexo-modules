@@ -24,7 +24,9 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
-import org.openflexo.fme.FMECst;
+import org.openflexo.components.wizard.Wizard;
+import org.openflexo.components.wizard.WizardDialog;
+import org.openflexo.fib.controller.FIBController.Status;
 import org.openflexo.fme.FMEIconLibrary;
 import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.fme.model.action.CreateFreeModel;
@@ -52,7 +54,15 @@ public class CreateFreeModelInitializer extends ActionInitializer<CreateFreeMode
 		return new FlexoActionInitializer<CreateFreeModel>() {
 			@Override
 			public boolean run(EventObject e, CreateFreeModel action) {
-				return instanciateAndShowDialog(action, FMECst.CREATE_FREE_MODEL_DIALOG_FIB);
+				Wizard wizard = new CreateFreeModelWizard(action, getController());
+				WizardDialog dialog = new WizardDialog(wizard);
+				dialog.showDialog();
+				if (dialog.getStatus() != Status.VALIDATED) {
+					// Operation cancelled
+					return false;
+				}
+				return true;
+				// return instanciateAndShowDialog(action, FMECst.CREATE_FREE_MODEL_DIALOG_FIB);
 			}
 		};
 	}

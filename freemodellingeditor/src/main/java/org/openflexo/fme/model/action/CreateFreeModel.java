@@ -37,7 +37,6 @@ import org.openflexo.foundation.view.action.ModelSlotInstanceConfiguration.Defau
 import org.openflexo.foundation.viewpoint.VirtualModel;
 import org.openflexo.foundation.viewpoint.action.CreateModelSlot;
 import org.openflexo.foundation.viewpoint.action.CreateVirtualModel;
-import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlotInstanceConfiguration;
@@ -132,7 +131,7 @@ public class CreateFreeModel extends FlexoAction<CreateFreeModel, FreeModellingP
 		} catch (InvalidArgumentException e) {
 			e.printStackTrace();
 		}
-		
+
 		getFocusedObject().getPropertyChangeSupport().firePropertyChange("freeMetaModels", null, null);
 	}
 
@@ -189,30 +188,18 @@ public class CreateFreeModel extends FlexoAction<CreateFreeModel, FreeModellingP
 
 	}
 
-	private String errorMessage;
-
-	public String getErrorMessage() {
-		isValid();
-		// System.out.println("valid=" + isValid());
-		// System.out.println("errorMessage=" + errorMessage);
-		return errorMessage;
-	}
-
 	@Override
 	public boolean isValid() {
 
 		if (StringUtils.isEmpty(freeModelName)) {
-			errorMessage = FlexoLocalization.localizedForKey("no_free_model_name_defined");
 			return false;
 		}
 
 		if (getFocusedObject().getFreeModel(freeModelName) != null) {
-			errorMessage = FlexoLocalization.localizedForKey("a_free_model_with_that_name_already_exists");
 			return false;
 		}
 
 		if (!getCreateNewMetaModel() && getFreeMetaModel() == null) {
-			errorMessage = FlexoLocalization.localizedForKey("no_meta_model_defined");
 			return false;
 		}
 
@@ -237,7 +224,6 @@ public class CreateFreeModel extends FlexoAction<CreateFreeModel, FreeModellingP
 		this.freeMetaModel = freeMetaModel;
 		getPropertyChangeSupport().firePropertyChange("freeMetaModel", null, freeMetaModel);
 		getPropertyChangeSupport().firePropertyChange("isValid", wasValid, isValid());
-		getPropertyChangeSupport().firePropertyChange("errorMessage", null, getErrorMessage());
 	}
 
 	public String getFreeModelName() {
@@ -249,7 +235,6 @@ public class CreateFreeModel extends FlexoAction<CreateFreeModel, FreeModellingP
 		this.freeModelName = freeModelName;
 		getPropertyChangeSupport().firePropertyChange("freeModelName", null, freeModelName);
 		getPropertyChangeSupport().firePropertyChange("isValid", wasValid, isValid());
-		getPropertyChangeSupport().firePropertyChange("errorMessage", null, getErrorMessage());
 	}
 
 	public boolean getCreateNewMetaModel() {
@@ -261,7 +246,6 @@ public class CreateFreeModel extends FlexoAction<CreateFreeModel, FreeModellingP
 		this.createNewMetaModel = createNewMetaModel;
 		getPropertyChangeSupport().firePropertyChange("createNewMetaModel", !createNewMetaModel, createNewMetaModel);
 		getPropertyChangeSupport().firePropertyChange("isValid", wasValid, isValid());
-		getPropertyChangeSupport().firePropertyChange("errorMessage", null, getErrorMessage());
 	}
 
 	public String getFreeModelDescription() {
@@ -273,7 +257,6 @@ public class CreateFreeModel extends FlexoAction<CreateFreeModel, FreeModellingP
 		this.freeModelDescription = freeModelDescription;
 		getPropertyChangeSupport().firePropertyChange("freeModelDescription", null, freeModelDescription);
 		getPropertyChangeSupport().firePropertyChange("isValid", wasValid, isValid());
-		getPropertyChangeSupport().firePropertyChange("errorMessage", null, getErrorMessage());
 	}
 
 }
