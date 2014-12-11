@@ -24,10 +24,11 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
-import org.openflexo.fme.FMECst;
+import org.openflexo.components.wizard.Wizard;
+import org.openflexo.components.wizard.WizardDialog;
+import org.openflexo.fib.controller.FIBController.Status;
 import org.openflexo.fme.FMEIconLibrary;
 import org.openflexo.fme.model.FreeModellingProject;
-import org.openflexo.fme.model.action.CreateFreeModel;
 import org.openflexo.fme.model.action.CreateFreeModelFromPPT;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
@@ -53,6 +54,13 @@ public class CreateFreeModelFromPPTInitializer extends ActionInitializer<CreateF
 		return new FlexoActionInitializer<CreateFreeModelFromPPT>() {
 			@Override
 			public boolean run(EventObject e, CreateFreeModelFromPPT action) {
+				Wizard wizard = new CreateFreeModelFromPPTWizard(action, getController());
+				WizardDialog dialog = new WizardDialog(wizard);
+				dialog.showDialog();
+				if (dialog.getStatus() != Status.VALIDATED) {
+					// Operation cancelled
+					return false;
+				}
 				return true;
 			}
 		};

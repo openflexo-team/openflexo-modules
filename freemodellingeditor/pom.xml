@@ -29,6 +29,16 @@
 		</dependency>
 		<dependency>
 			<groupId>org.openflexo</groupId>
+			<artifactId>powerpointconnector</artifactId>
+ 			<version>${flexocore.version}</version>
+		</dependency>
+ 		<dependency>
+			<groupId>org.openflexo</groupId>
+			<artifactId>powerpointconnector-ui</artifactId>
+			<version>${flexocore.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openflexo</groupId>
 			<artifactId>flexo-ui</artifactId>
 		</dependency>
 		<dependency>

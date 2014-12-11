@@ -19,30 +19,27 @@
  */
 package org.openflexo.fme.model.action;
 
-import java.util.List;
+import java.io.File;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import org.openflexo.fge.geom.FGEPoint;
+import org.apache.poi.hslf.model.Slide;
 import org.openflexo.fme.model.FreeMetaModel;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
-import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
 import org.openflexo.foundation.resource.SaveResourceException;
 import org.openflexo.foundation.view.FlexoConceptInstance;
 import org.openflexo.foundation.viewpoint.FlexoConcept;
 import org.openflexo.foundation.viewpoint.PrimitiveRole;
-import org.openflexo.technologyadapter.diagram.fml.ConnectorRole;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
 import org.openflexo.technologyadapter.diagram.fml.action.CreateDiagramFromPPTSlide;
-import org.openflexo.technologyadapter.diagram.model.DiagramConnector;
 import org.openflexo.technologyadapter.diagram.model.DiagramContainerElement;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
-
+import org.openflexo.toolbox.StringUtils;
 
 /**
  * This action is used to create a new {@link FreeModel} in a {@link FreeModellingProject}<br>
@@ -52,7 +49,7 @@ import org.openflexo.technologyadapter.diagram.model.DiagramShape;
  * @author sylvain
  * 
  */
-public class CreateFreeModelFromPPT extends FlexoAction<CreateFreeModelFromPPT, FreeModellingProject, FlexoObject> {
+public class CreateFreeModelFromPPT extends AbstractCreateFreeModel<CreateFreeModelFromPPT> {
 
 	private static final Logger logger = Logger.getLogger(CreateFreeModelFromPPT.class.getPackage().getName());
 
@@ -63,7 +60,8 @@ public class CreateFreeModelFromPPT extends FlexoAction<CreateFreeModelFromPPT, 
 		 * Factory method
 		 */
 		@Override
-		public CreateFreeModelFromPPT makeNewAction(FreeModellingProject focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+		public CreateFreeModelFromPPT makeNewAction(FreeModellingProject focusedObject, Vector<FlexoObject> globalSelection,
+				FlexoEditor editor) {
 			return new CreateFreeModelFromPPT(focusedObject, globalSelection, editor);
 		}
 
@@ -83,55 +81,55 @@ public class CreateFreeModelFromPPT extends FlexoAction<CreateFreeModelFromPPT, 
 		FlexoObjectImpl.addActionForClass(CreateFreeModelFromPPT.actionType, FreeModellingProject.class);
 	}
 
+	private FlexoConcept none;
+
+	private File pptFile;
+	private Slide slide;
+	private String diagramName;
+	private String diagramTitle;
+
 	CreateFreeModelFromPPT(FreeModellingProject focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
-	
-	private FreeModel freeModel;
 
-	private FlexoConcept none;
-	
 	@Override
 	protected void doAction(Object context) throws SaveResourceException {
 
 		logger.info("Create free model from PPT slide");
-		logger.info("Create free model from PPT slide : Create free model ");
-		CreateFreeModel actionCreateFreeModel = CreateFreeModel.actionType.makeNewEmbeddedAction(getFocusedObject(), null, this);
-		actionCreateFreeModel.doAction();
-		freeModel = actionCreateFreeModel.getFreeModel();
-		
+
+		freeModel = createNewFreeModel();
+
 		logger.info("Create free model from PPT slide : Import PPT Slide ");
-		CreateDiagramFromPPTSlide actionCreateDiagramFromPPTSlide = CreateDiagramFromPPTSlide.actionType
-				.makeNewEmbeddedAction(getFocusedObject().getDiagramSpecificationsFolder(), null, this);
-		if(actionCreateFreeModel.getFreeModel()!=null){
-			actionCreateDiagramFromPPTSlide.setDiagram(actionCreateFreeModel.getFreeModel().getDiagram());
+		CreateDiagramFromPPTSlide actionCreateDiagramFromPPTSlide = CreateDiagramFromPPTSlide.actionType.makeNewEmbeddedAction(
+				getFocusedObject().getDiagramSpecificationsFolder(), null, this);
+		if (freeModel != null) {
+			actionCreateDiagramFromPPTSlide.setDiagramName(getDiagramName());
+			actionCreateDiagramFromPPTSlide.setDiagramTitle(getDiagramTitle());
+			actionCreateDiagramFromPPTSlide.setFile(getFile());
+			actionCreateDiagramFromPPTSlide.setSlide(getSlide());
+			actionCreateDiagramFromPPTSlide.setDiagram(freeModel.getDiagram());
+
+			System.out.println("L'action est valide: " + actionCreateDiagramFromPPTSlide.isValid());
+			System.out.println("error message=" + actionCreateDiagramFromPPTSlide.getErrorMessage());
+
 			actionCreateDiagramFromPPTSlide.doAction();
-			
 			none = freeModel.getMetaModel().getNoneFlexoConcept(getEditor(), this);
 			createFlexoConceptInstancesFromDiagramContainer(actionCreateDiagramFromPPTSlide.getDiagram());
-			
 			logger.info("Create free model from PPT slide : Free Model Created ");
 		}
-		else{
-			logger.info("Create free model from PPT slide : Action is interrupted ");
-		}
 	}
-	
-	public FreeModel getFreeModel() {
-		return freeModel;
-	}
-	
-	private void createFlexoConceptInstancesFromDiagramContainer(DiagramContainerElement<?> diagramContainerElement){
-		for(DiagramShape diagramShape : diagramContainerElement.getShapes()){
+
+	private void createFlexoConceptInstancesFromDiagramContainer(DiagramContainerElement<?> diagramContainerElement) {
+		for (DiagramShape diagramShape : diagramContainerElement.getShapes()) {
 			createFlexoConceptInstanceFromDiagramShape(diagramShape);
-			if(diagramShape.getShapes()!=null){
+			if (diagramShape.getShapes() != null) {
 				createFlexoConceptInstancesFromDiagramContainer(diagramShape);
 			}
 		}
 		// TODO connectors
 	}
-	
-	private FlexoConceptInstance createFlexoConceptInstanceFromDiagramShape(DiagramShape diagramShape){
+
+	private FlexoConceptInstance createFlexoConceptInstanceFromDiagramShape(DiagramShape diagramShape) {
 		FlexoConceptInstance newFlexoConceptInstance = freeModel.getVirtualModelInstance().makeNewFlexoConceptInstance(none);
 		ShapeRole shapeRole = (ShapeRole) none.getFlexoRole(FreeMetaModel.SHAPE_ROLE_NAME);
 		newFlexoConceptInstance.setFlexoActor(diagramShape, shapeRole);
@@ -139,12 +137,81 @@ public class CreateFreeModelFromPPT extends FlexoAction<CreateFreeModelFromPPT, 
 		newFlexoConceptInstance.setFlexoActor(diagramShape.getName(), nameRole);
 		return newFlexoConceptInstance;
 	}
-	
+
 	/*private FlexoConceptInstance createFlexoConceptInstanceFromDiagramConnector(DiagramConnector diagramConnector){
 		FlexoConceptInstance newFlexoConceptInstance = freeModel.getVirtualModelInstance().makeNewFlexoConceptInstance(none);
 		ConnectorRole connectorRole = (ConnectorRole) none.getFlexoRole(FreeMetaModel.SHAPE_ROLE_NAME);
 		newFlexoConceptInstance.setFlexoActor(diagramConnector, connectorRole);
 		return newFlexoConceptInstance;
 	}*/
+
+	@Override
+	public boolean isValid() {
+		if (!super.isValid()) {
+			return false;
+		}
+
+		if (getFile() == null || !getFile().exists()) {
+			return false;
+		}
+
+		if (getSlide() == null) {
+			return false;
+		}
+
+		if (StringUtils.isEmpty(getDiagramName())) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public File getFile() {
+		return pptFile;
+	}
+
+	public void setFile(File pptFile) {
+		if ((pptFile == null && this.pptFile != null) || (pptFile != null && !pptFile.equals(this.pptFile))) {
+			File oldValue = this.pptFile;
+			this.pptFile = pptFile;
+			getPropertyChangeSupport().firePropertyChange("file", oldValue, pptFile);
+		}
+	}
+
+	public Slide getSlide() {
+		return slide;
+	}
+
+	public void setSlide(Slide slide) {
+		if ((slide == null && this.slide != null) || (slide != null && !slide.equals(this.slide))) {
+			Slide oldValue = this.slide;
+			this.slide = slide;
+			getPropertyChangeSupport().firePropertyChange("slide", oldValue, slide);
+		}
+	}
+
+	public String getDiagramName() {
+		return diagramName;
+	}
+
+	public void setDiagramName(String diagramName) {
+		if ((diagramName == null && this.diagramName != null) || (diagramName != null && !diagramName.equals(this.diagramName))) {
+			String oldValue = this.diagramName;
+			this.diagramName = diagramName;
+			getPropertyChangeSupport().firePropertyChange("diagramName", oldValue, diagramName);
+		}
+	}
+
+	public String getDiagramTitle() {
+		return diagramTitle;
+	}
+
+	public void setDiagramTitle(String diagramTitle) {
+		if ((diagramTitle == null && this.diagramTitle != null) || (diagramTitle != null && !diagramTitle.equals(this.diagramTitle))) {
+			String oldValue = this.diagramTitle;
+			this.diagramTitle = diagramTitle;
+			getPropertyChangeSupport().firePropertyChange("diagramTitle", oldValue, diagramTitle);
+		}
+	}
 
 }
