@@ -13,11 +13,6 @@ public class TestFMEDialogFibs extends GenericFIBTestCase {
 	}
 
 	@Test
-	public void testCreateFreeModelDialog() {
-		validateFIB("Fib/Dialog/CreateFreeModelDialog.fib");
-	}
-
-	@Test
 	public void testCreateNewConceptDialog() {
 		validateFIB("Fib/Dialog/CreateNewConceptDialog.fib");
 	}
