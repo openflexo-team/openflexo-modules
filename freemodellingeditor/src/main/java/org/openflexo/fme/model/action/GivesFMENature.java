@@ -48,8 +48,7 @@ public class GivesFMENature extends FlexoAction<GivesFMENature, FlexoProject, Fl
 
 	private static final Logger logger = Logger.getLogger(GivesFMENature.class.getPackage().getName());
 
-	public static FlexoActionType<GivesFMENature, FlexoProject, FlexoObject> actionType = new FlexoActionType<GivesFMENature, FlexoProject, FlexoObject>(
-			"gives_fme_nature", FlexoActionType.ADD_ACTION_TYPE) {
+	public static FlexoActionType<GivesFMENature, FlexoProject, FlexoObject> actionType = new FlexoActionType<GivesFMENature, FlexoProject, FlexoObject>("gives_fme_nature") {
 
 		/**
 		 * Factory method
