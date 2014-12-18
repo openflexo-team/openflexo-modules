@@ -24,21 +24,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import org.openflexo.fme.model.action.GivesFMENature;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.nature.ProjectNature;
 import org.openflexo.foundation.nature.ProjectNatureService;
 import org.openflexo.foundation.view.FlexoConceptInstance;
 import org.openflexo.foundation.view.View;
-import org.openflexo.foundation.view.action.CreateView;
-import org.openflexo.foundation.view.rm.ViewResource;
 import org.openflexo.foundation.viewpoint.FlexoRole;
 import org.openflexo.foundation.viewpoint.ViewPoint;
-import org.openflexo.foundation.viewpoint.action.CreateViewPoint;
-import org.openflexo.foundation.viewpoint.rm.ViewPointResource;
 import org.openflexo.logging.FlexoLogger;
-import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
-import org.openflexo.technologyadapter.diagram.rm.DiagramSpecificationRepository;
 
 /**
  * Defines the nature of a project to be interpreted as a FreeModelProject<br>
@@ -152,37 +147,8 @@ public class FreeModellingProjectNature implements ProjectNature<FreeModellingPr
 	 */
 	@Override
 	public void givesNature(FlexoProject project, FlexoEditor editor) {
-
-		ViewPointResource freeModellingViewPointResource = project.getViewPointRepository().getResource(
-				project.getURI() + FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
-
-		if (freeModellingViewPointResource == null) {
-			CreateViewPoint action = CreateViewPoint.actionType.makeNewAction(project.getViewPointRepository().getRootFolder(), null,
-					editor);
-			action.setNewViewPointName(FREE_MODELLING_VIEWPOINT_NAME);
-			action.setNewViewPointURI(project.getURI() + FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
-			action.setNewViewPointDescription("This is the generic ViewPoint storing all FreeModelling meta-models");
-			action.doAction();
-			freeModellingViewPointResource = (ViewPointResource) action.getNewViewPoint().getResource();
-		}
-
-		ViewResource freeModellingViewResource = project.getViewLibrary().getResource(
-				project.getURI() + FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
-
-		if (freeModellingViewResource == null) {
-			CreateView action = CreateView.actionType.makeNewAction(project.getViewLibrary().getRootFolder(), null, editor);
-			action.setNewViewName(FREE_MODELLING_VIEW_NAME);
-			action.setNewViewTitle(FREE_MODELLING_VIEW_NAME);
-			action.setViewpointResource(freeModellingViewPointResource);
-			action.doAction();
-			freeModellingViewResource = (ViewResource) action.getNewView().getResource();
-		}
-
-		DiagramTechnologyAdapter diagramTechnologyAdapter = project.getServiceManager().getTechnologyAdapterService()
-				.getTechnologyAdapter(DiagramTechnologyAdapter.class);
-		DiagramSpecificationRepository dsRepository = project.getRepository(DiagramSpecificationRepository.class, diagramTechnologyAdapter);
-		dsRepository.createNewFolder(DIAGRAM_SPECIFICATIONS_FOLDER);
-
+		GivesFMENature action = GivesFMENature.actionType.makeNewAction(project, null,editor);
+		action.doAction();
 	}
 
 	public List<FreeModel> getFreeModels(FlexoProject project) {
