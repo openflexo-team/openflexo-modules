@@ -22,6 +22,7 @@ package org.openflexo.fme.controller.editor;
 import java.awt.Font;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -120,7 +121,8 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 							// System.out.println("Differs 1 " + value1 + " and " + value2 + " for " + p);
 							return false;
 						}
-					} else {
+					}
+					else {
 						if (value1 instanceof AccessibleProxyObject) {
 							if (!((AccessibleProxyObject) value1).equalsObject(value2) && !asSameBackgroungImage(value1, value2)) {
 								// System.out.println("Differs 2 " + value1 + " and " + value2 + " for " + p);
@@ -164,9 +166,14 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 			if (value1 instanceof BackgroundImageBackgroundStyle && value2 instanceof BackgroundImageBackgroundStyle) {
 				BackgroundImageBackgroundStyle bibs1 = (BackgroundImageBackgroundStyle) value1;
 				BackgroundImageBackgroundStyle bibs2 = (BackgroundImageBackgroundStyle) value2;
-				if (bibs1.getImageFile() != null && bibs2.getImageFile() != null
-						&& bibs1.getImageFile().getAbsolutePath().equals(bibs2.getImageFile().getAbsolutePath())) {
-					return true;
+				try {
+					if (bibs1.getImageFile() != null && bibs2.getImageFile() != null
+							&& bibs1.getImageFile().getCanonicalPath().equals(bibs2.getImageFile().getCanonicalPath())) {
+						return true;
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 			return false;
@@ -236,7 +243,8 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 					if (existingElement instanceof DynamicPaletteElement) {
 						((DynamicPaletteElement) existingElement).updateDiagramElements(diagramGRs.get(key));
 					}
-				} else {
+				}
+				else {
 					existingElement = makePaletteElement((ShapeGraphicalRepresentation) key, diagramGRs.get(key));
 					elementsToAdd.add(existingElement);
 				}
@@ -267,7 +275,8 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 					e.getGraphicalRepresentation().setY(py * GRID_HEIGHT + 10);
 					e.getGraphicalRepresentation().setWidth(30);
 					e.getGraphicalRepresentation().setHeight(30);
-				} else {
+				}
+				else {
 					e.getGraphicalRepresentation().setX(px * GRID_WIDTH + 10);
 					e.getGraphicalRepresentation().setY(py * GRID_HEIGHT + 10);
 					e.getGraphicalRepresentation().setWidth(40);
@@ -384,7 +393,8 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 			for (DiagramElement<?> e : updatedElements) {
 				if (diagramElements.contains(e)) {
 					elementsToRemove.remove(e);
-				} else {
+				}
+				else {
 					elementsToAdd.add(e);
 				}
 			}
