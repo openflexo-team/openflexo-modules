@@ -19,6 +19,7 @@
  */
 package org.openflexo.fme.controller.editor;
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -319,7 +320,7 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 			action.setConcept(paletteElement.getFlexoConcept());
 			action.setDropLocation(dropLocation);
 			action.setGraphicalRepresentation(paletteElement.getGraphicalRepresentation());
-
+			action.setTargetSize(paletteElement.getInitialDimensions());
 			action.doAction();
 
 			FlexoConceptInstance newFlexoConceptInstance = action.getNewFlexoConceptInstance();
@@ -337,6 +338,7 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 
 		private final List<DiagramElement<?>> diagramElements;
 		private final ShapeGraphicalRepresentation gr;
+		private final Dimension initialDimensions;
 
 		public DynamicPaletteElement(ShapeGraphicalRepresentation gr, List<DiagramElement<?>> diagramElements) {
 			this.gr = gr;
@@ -346,6 +348,12 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 					el.getGraphicalRepresentation().getPropertyChangeSupport().addPropertyChangeListener(this);
 				}
 			}
+			// If this is an image, fit the shape for a better rendering
+			if (gr.getBackground() instanceof BackgroundImageBackgroundStyle) {
+				((BackgroundImageBackgroundStyle) gr.getBackground()).setFitToShape(true);
+			}
+			// Store initial gr dimensions
+			initialDimensions = new Dimension((int) gr.getWidth(), (int) gr.getHeight());
 		}
 
 		@Override
@@ -366,6 +374,10 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 		@Override
 		public ShapeGraphicalRepresentation getGraphicalRepresentation() {
 			return gr;
+		}
+
+		public Dimension getInitialDimensions() {
+			return initialDimensions;
 		}
 
 		@Override

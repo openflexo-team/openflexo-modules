@@ -19,6 +19,7 @@
  */
 package org.openflexo.fme.model.action;
 
+import java.awt.Dimension;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Logger;
@@ -85,6 +86,7 @@ public class DropShape extends FlexoAction<DropShape, DiagramContainerElement<?>
 	private ShapeGraphicalRepresentation graphicalRepresentation;
 	private FlexoConcept concept;
 	private FGEPoint dropLocation;
+	private Dimension targetSize;
 
 	private FlexoConceptInstance newFlexoConceptInstance;
 
@@ -133,6 +135,10 @@ public class DropShape extends FlexoAction<DropShape, DiagramContainerElement<?>
 				shape.getGraphicalRepresentation().setIsSelectable(true);
 				shape.getGraphicalRepresentation().setLocationConstraints(LocationConstraints.FREELY_MOVABLE);
 			}
+			if (getTargetSize() != null) {
+				shape.getGraphicalRepresentation().setHeight(getTargetSize().getHeight());
+				shape.getGraphicalRepresentation().setWidth(getTargetSize().getWidth());
+			}
 
 			shape.getGraphicalRepresentation().setX(dropLocation.x);
 			shape.getGraphicalRepresentation().setY(dropLocation.y);
@@ -149,7 +155,8 @@ public class DropShape extends FlexoAction<DropShape, DiagramContainerElement<?>
 			// This is used to notify the adding of a new shape, will be used in DynamicPalette
 			// freeModel.getPropertyChangeSupport().firePropertyChange(DynamicPalette.SHAPE_ADDED, null, newFlexoConceptInstance);
 
-		} else {
+		}
+		else {
 			logger.warning("Could not find DropScheme in " + concept);
 		}
 	}
@@ -199,6 +206,14 @@ public class DropShape extends FlexoAction<DropShape, DiagramContainerElement<?>
 
 	public void setDropLocation(FGEPoint dropLocation) {
 		this.dropLocation = dropLocation;
+	}
+
+	public Dimension getTargetSize() {
+		return targetSize;
+	}
+
+	public void setTargetSize(Dimension targetSize) {
+		this.targetSize = targetSize;
 	}
 
 }
