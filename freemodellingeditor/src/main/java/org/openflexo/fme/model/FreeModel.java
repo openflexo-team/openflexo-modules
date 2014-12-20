@@ -135,6 +135,11 @@ public class FreeModel extends DefaultFlexoObject implements PropertyChangeListe
 					FlexoConceptInstance fci = (FlexoConceptInstance) evt.getNewValue();
 					getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null, fci);
 					getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", null, fci);
+				} else if (evt.getOldValue() instanceof FlexoConceptInstance) {
+					// A FlexoConceptInstance has been removed
+					FlexoConceptInstance fci = (FlexoConceptInstance) evt.getOldValue();
+					getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", fci, null);
+					getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", fci, null);
 				}
 			}
 		}
