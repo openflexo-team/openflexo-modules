@@ -24,7 +24,6 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
-import org.openflexo.components.widget.CommonFIB;
 import org.openflexo.components.wizard.Wizard;
 import org.openflexo.components.wizard.WizardDialog;
 import org.openflexo.fib.controller.FIBController.Status;
@@ -56,9 +55,9 @@ public class CreateBasicVirtualModelInstanceInitializer extends ActionInitialize
 		return (VEControllerActionInitializer) super.getControllerActionInitializer();
 	}
 
-	private Status chooseAndConfigureCreationScheme(CreateBasicVirtualModelInstance action) {
+	/*private Status chooseAndConfigureCreationScheme(CreateBasicVirtualModelInstance action) {
 		return instanciateShowDialogAndReturnStatus(action, CommonFIB.CHOOSE_AND_CONFIGURE_CREATION_SCHEME_DIALOG_FIB);
-	}
+	}*/
 
 	/*private Status chooseVirtualModel(CreateVirtualModelInstance<?> action) {
 		return instanciateShowDialogAndReturnStatus(action, CommonFIB.CREATE_VIRTUAL_MODEL_INSTANCE_DIALOG_FIB);
