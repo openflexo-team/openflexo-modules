@@ -17,9 +17,9 @@
 		<diana.version>1.1</diana.version>
 		<jiraclient.version>1.1</jiraclient.version>
 		<flexohelp.version>1.1</flexohelp.version>
-		<flexodocresourcecenter.version>1.7.0</flexodocresourcecenter.version>
-		<flexodocresourcemanager.version>1.7.0</flexodocresourcemanager.version>
-		<flexocore.version>1.7.0</flexocore.version>
+		<flexodocresourcecenter.version>1.7.1-SNAPSHOT</flexodocresourcecenter.version>
+		<flexodocresourcemanager.version>1.7.1-SNAPSHOT</flexodocresourcemanager.version>
+		<flexocore.version>1.7.1-SNAPSHOT</flexocore.version>
 	</properties>
 	<scm>
 		<connection>scm:git:ssh://git@github.com/openflexo-team/openflexo-modules.git</connection>
