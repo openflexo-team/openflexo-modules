@@ -7,7 +7,7 @@
   </parent>
   <artifactId>openflexo-module-archetype</artifactId>
   <groupId>org.openflexo.archetypes</groupId>
-  <version>1.7.0</version>
+  <version>1.7.0-SNAPSHOT</version>
   <packaging>maven-archetype</packaging>
   <name>module-archetype</name>
   <description>Provides module development generator for Openflexo</description>
@@ -16,6 +16,6 @@
   </properties>
 
   <scm>
-    <tag>Openflexo-Modules-1.7.0</tag>
+    <tag>1.7.0</tag>
   </scm>
 </project>
