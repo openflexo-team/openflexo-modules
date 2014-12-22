@@ -23,8 +23,8 @@ import java.util.EventObject;
 import java.util.logging.Logger;
 
 import org.openflexo.foundation.action.FlexoActionInitializer;
-import org.openflexo.foundation.viewpoint.ViewPointObject;
-import org.openflexo.foundation.viewpoint.action.ShowFMLRepresentation;
+import org.openflexo.foundation.fml.ViewPointObject;
+import org.openflexo.foundation.fml.action.ShowFMLRepresentation;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.vpm.VPMCst;

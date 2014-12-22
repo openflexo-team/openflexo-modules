@@ -29,8 +29,8 @@ import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
+import org.openflexo.foundation.fmlrt.action.DeleteVirtualModelInstance;
 import org.openflexo.foundation.resource.SaveResourceException;
-import org.openflexo.foundation.view.action.DeleteVirtualModelInstance;
 import org.openflexo.technologyadapter.diagram.fml.action.CreateFMLControlledDiagramVirtualModelInstance;
 
 /**

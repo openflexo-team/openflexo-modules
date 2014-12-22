@@ -24,8 +24,8 @@ import java.util.logging.Logger;
 
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
-import org.openflexo.foundation.view.View;
-import org.openflexo.foundation.view.action.MoveView;
+import org.openflexo.foundation.fmlrt.View;
+import org.openflexo.foundation.fmlrt.action.MoveView;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 

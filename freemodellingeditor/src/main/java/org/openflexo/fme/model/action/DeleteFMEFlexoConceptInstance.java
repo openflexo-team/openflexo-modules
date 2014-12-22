@@ -31,12 +31,12 @@ import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
+import org.openflexo.foundation.fmlrt.FlexoConceptInstance;
+import org.openflexo.foundation.fmlrt.VirtualModelInstance;
+import org.openflexo.foundation.fmlrt.VirtualModelInstanceObject;
+import org.openflexo.foundation.fmlrt.action.DeletionSchemeAction;
+import org.openflexo.foundation.fmlrt.action.DeletionSchemeActionType;
 import org.openflexo.foundation.resource.SaveResourceException;
-import org.openflexo.foundation.view.FlexoConceptInstance;
-import org.openflexo.foundation.view.VirtualModelInstance;
-import org.openflexo.foundation.view.VirtualModelInstanceObject;
-import org.openflexo.foundation.view.action.DeletionSchemeAction;
-import org.openflexo.foundation.view.action.DeletionSchemeActionType;
 
 /**
  * This action is used to delete a flexo concept instance within Free modeling editor<br>

@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 import org.openflexo.fib.model.FIBComponent;
 import org.openflexo.fme.controller.editor.FreeModelDiagramEditor;
 import org.openflexo.fme.view.FreeModelModuleView;
-import org.openflexo.foundation.viewpoint.FlexoConcept;
+import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.view.controller.FlexoFIBController;
 

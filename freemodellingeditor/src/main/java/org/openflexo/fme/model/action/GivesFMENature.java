@@ -30,12 +30,12 @@ import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
+import org.openflexo.foundation.fml.action.CreateViewPoint;
+import org.openflexo.foundation.fml.rm.ViewPointResource;
+import org.openflexo.foundation.fmlrt.action.CreateView;
+import org.openflexo.foundation.fmlrt.rm.ViewResource;
 import org.openflexo.foundation.resource.InvalidFileNameException;
 import org.openflexo.foundation.resource.SaveResourceException;
-import org.openflexo.foundation.view.action.CreateView;
-import org.openflexo.foundation.view.rm.ViewResource;
-import org.openflexo.foundation.viewpoint.action.CreateViewPoint;
-import org.openflexo.foundation.viewpoint.rm.ViewPointResource;
 import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.technologyadapter.diagram.rm.DiagramSpecificationRepository;
 

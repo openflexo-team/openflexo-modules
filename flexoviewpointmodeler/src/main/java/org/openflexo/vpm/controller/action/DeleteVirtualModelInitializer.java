@@ -25,9 +25,9 @@ import java.util.logging.Logger;
 import javax.swing.Icon;
 
 import org.openflexo.foundation.action.FlexoActionInitializer;
-import org.openflexo.foundation.viewpoint.ViewPointObject;
-import org.openflexo.foundation.viewpoint.VirtualModel;
-import org.openflexo.foundation.viewpoint.action.DeleteVirtualModel;
+import org.openflexo.foundation.fml.ViewPointObject;
+import org.openflexo.foundation.fml.VirtualModel;
+import org.openflexo.foundation.fml.action.DeleteVirtualModel;
 import org.openflexo.icon.IconLibrary;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.view.controller.ActionInitializer;

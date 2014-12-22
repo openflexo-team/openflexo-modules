@@ -27,12 +27,12 @@ import java.util.logging.Logger;
 import org.openflexo.fme.model.action.GivesFMENature;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoProject;
+import org.openflexo.foundation.fml.FlexoRole;
+import org.openflexo.foundation.fml.ViewPoint;
+import org.openflexo.foundation.fmlrt.FlexoConceptInstance;
+import org.openflexo.foundation.fmlrt.View;
 import org.openflexo.foundation.nature.ProjectNature;
 import org.openflexo.foundation.nature.ProjectNatureService;
-import org.openflexo.foundation.view.FlexoConceptInstance;
-import org.openflexo.foundation.view.View;
-import org.openflexo.foundation.viewpoint.FlexoRole;
-import org.openflexo.foundation.viewpoint.ViewPoint;
 import org.openflexo.logging.FlexoLogger;
 
 /**

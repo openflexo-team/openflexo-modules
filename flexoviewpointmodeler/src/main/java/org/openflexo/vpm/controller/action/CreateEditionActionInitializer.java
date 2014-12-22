@@ -26,9 +26,9 @@ import javax.swing.Icon;
 
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
-import org.openflexo.foundation.viewpoint.FlexoBehaviourObject;
-import org.openflexo.foundation.viewpoint.ViewPointObject;
-import org.openflexo.foundation.viewpoint.action.CreateEditionAction;
+import org.openflexo.foundation.fml.FlexoBehaviourObject;
+import org.openflexo.foundation.fml.ViewPointObject;
+import org.openflexo.foundation.fml.action.CreateEditionAction;
 import org.openflexo.icon.VPMIconLibrary;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;

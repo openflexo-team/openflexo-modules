@@ -32,7 +32,7 @@ import org.openflexo.fib.controller.FIBDialog;
 import org.openflexo.fib.model.FIBComponent;
 import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.action.FlexoUndoManager.FlexoActionCompoundEdit;
-import org.openflexo.foundation.view.FlexoConceptInstance;
+import org.openflexo.foundation.fmlrt.FlexoConceptInstance;
 import org.openflexo.logging.FlexoLogger;
 import org.openflexo.technologyadapter.diagram.controller.DiagramCst;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.CommonPalette;
