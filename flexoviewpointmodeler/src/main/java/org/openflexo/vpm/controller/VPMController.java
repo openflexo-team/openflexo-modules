@@ -21,15 +21,16 @@ package org.openflexo.vpm.controller;
 
 import java.util.logging.Logger;
 
+import org.openflexo.fml.controller.view.FlexoConceptView;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
+import org.openflexo.foundation.fml.FMLTechnologyAdapter;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.FlexoConceptObject;
 import org.openflexo.foundation.fml.ViewPoint;
 import org.openflexo.foundation.fml.ViewPointLibrary;
 import org.openflexo.foundation.fml.ViewPointObject;
 import org.openflexo.foundation.fml.VirtualModel;
-import org.openflexo.foundation.fml.FMLTechnologyAdapter;
 import org.openflexo.foundation.technologyadapter.TechnologyAdapter;
 import org.openflexo.foundation.validation.FlexoValidationModel;
 import org.openflexo.module.FlexoModule;
@@ -40,7 +41,6 @@ import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.controller.TechnologyAdapterController;
 import org.openflexo.view.menu.FlexoMenuBar;
 import org.openflexo.vpm.controller.action.VPMControllerActionInitializer;
-import org.openflexo.vpm.view.FlexoConceptView;
 import org.openflexo.vpm.view.menu.VPMMenuBar;
 
 /**
@@ -112,6 +112,7 @@ public class VPMController extends FlexoController {
 	public void initInspectors() {
 		super.initInspectors();
 		loadInspectorGroup("IFlexoOntology");
+		loadInspectorGroup("FML");
 
 	}
 

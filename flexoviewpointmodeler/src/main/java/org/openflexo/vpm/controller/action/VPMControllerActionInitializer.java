@@ -53,20 +53,6 @@ public class VPMControllerActionInitializer extends ControllerActionInitializer 
 
 		new VPMSetPropertyInitializer(this);
 
-		// ViewPoint perspective
-		new CreateViewPointInitializer(this);
-		new DeleteViewPointInitializer(this);
-		new CreateModelSlotInitializer(this);
-		new CreateVirtualModelInitializer(this);
-		new DeleteVirtualModelInitializer(this);
-		new CreateFlexoRoleInitializer(this);
-		new CreateEditionActionInitializer(this);
-		new CreateFlexoBehaviourInitializer(this);
-		new CreateFlexoConceptInitializer(this);
-		new DeleteFlexoConceptInitializer(this);
-		new DuplicateFlexoConceptInitializer(this);
-		new ShowFMLRepresentationInitializer(this);
-
 		// Misc
 		new ConvertViewPoint1ActionInitializer(this);
 
