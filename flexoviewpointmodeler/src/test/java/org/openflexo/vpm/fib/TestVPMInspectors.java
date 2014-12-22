@@ -239,7 +239,7 @@ public class TestVPMInspectors extends GenericFIBInspectorTestCase {
 
 	@Test
 	public void testVirtualModelModelSlotInspector() {
-		validateFIB("Inspectors/VPM/VirtualModelModelSlot.inspector");
+		validateFIB("Inspectors/VPM/FMLModelSlot.inspector");
 	}
 
 	@Test

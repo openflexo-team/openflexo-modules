@@ -129,7 +129,7 @@ public class CreateBasicVirtualModelInstanceInitializer extends ActionInitialize
 		if (FreeModelSlot.class.isAssignableFrom(modelSlotClass)) {
 			return CommonFIB.CONFIGURE_FREE_MODEL_SLOT_INSTANCE_DIALOG_FIB;
 		}
-		if (VirtualModelModelSlot.class.isAssignableFrom(modelSlotClass)) {
+		if (FMLModelSlot.class.isAssignableFrom(modelSlotClass)) {
 			return CommonFIB.CONFIGURE_VIRTUAL_MODEL_SLOT_INSTANCE_DIALOG_FIB;
 		}
 		return null;

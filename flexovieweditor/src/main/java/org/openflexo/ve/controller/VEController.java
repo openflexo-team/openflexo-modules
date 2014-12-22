@@ -30,7 +30,7 @@ import java.util.logging.Logger;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
-import org.openflexo.foundation.fml.VirtualModelTechnologyAdapter;
+import org.openflexo.foundation.fml.FMLTechnologyAdapter;
 import org.openflexo.foundation.technologyadapter.TechnologyAdapter;
 import org.openflexo.module.FlexoModule;
 import org.openflexo.selection.MouseSelectionManager;
@@ -69,7 +69,7 @@ public class VEController extends FlexoController {
 		addToPerspectives(VIEW_LIBRARY_PERSPECTIVE = new ViewLibraryPerspective(this));
 
 		for (TechnologyAdapter ta : getApplicationContext().getTechnologyAdapterService().getTechnologyAdapters()) {
-			if (!(ta instanceof VirtualModelTechnologyAdapter)) {
+			if (!(ta instanceof FMLTechnologyAdapter)) {
 				TechnologyAdapterController<?> tac = getApplicationContext().getTechnologyAdapterControllerService()
 						.getTechnologyAdapterController(ta);
 				if (tac != null) {

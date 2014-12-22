@@ -29,7 +29,7 @@ import org.openflexo.foundation.fml.ViewPoint;
 import org.openflexo.foundation.fml.ViewPointLibrary;
 import org.openflexo.foundation.fml.ViewPointObject;
 import org.openflexo.foundation.fml.VirtualModel;
-import org.openflexo.foundation.fml.VirtualModelTechnologyAdapter;
+import org.openflexo.foundation.fml.FMLTechnologyAdapter;
 import org.openflexo.foundation.technologyadapter.TechnologyAdapter;
 import org.openflexo.foundation.validation.FlexoValidationModel;
 import org.openflexo.module.FlexoModule;
@@ -74,7 +74,7 @@ public class VPMController extends FlexoController {
 		addToPerspectives(VIEW_POINT_PERSPECTIVE = new ViewPointPerspective(this));
 
 		for (TechnologyAdapter ta : getApplicationContext().getTechnologyAdapterService().getTechnologyAdapters()) {
-			if (!(ta instanceof VirtualModelTechnologyAdapter)) {
+			if (!(ta instanceof FMLTechnologyAdapter)) {
 				TechnologyAdapterController<?> tac = getApplicationContext().getTechnologyAdapterControllerService()
 						.getTechnologyAdapterController(ta);
 				if (tac != null) {
