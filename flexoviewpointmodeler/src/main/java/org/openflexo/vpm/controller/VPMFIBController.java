@@ -3,8 +3,8 @@ package org.openflexo.vpm.controller;
 import java.util.logging.Logger;
 
 import org.openflexo.fib.model.FIBComponent;
+import org.openflexo.fml.controller.ViewPointEditingFIBController;
 import org.openflexo.logging.FlexoLogger;
-import org.openflexo.view.controller.ViewPointEditingFIBController;
 
 /**
  * Represents the controller used in VPM (ViewPointModeller)<br>

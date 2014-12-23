@@ -40,7 +40,7 @@ import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.fml.ViewPoint;
-import org.openflexo.foundation.fml.ViewPointObject;
+import org.openflexo.foundation.fml.FMLObject;
 import org.openflexo.foundation.validation.FlexoValidationModel;
 import org.openflexo.icon.IconLibrary;
 import org.openflexo.icon.FMLIconLibrary;
@@ -148,15 +148,15 @@ public class FMEController extends FlexoController {
 	}
 
 	public ViewPoint getCurrentViewPoint() {
-		if (getCurrentDisplayedObjectAsModuleView() instanceof ViewPointObject) {
-			return ((ViewPointObject) getCurrentDisplayedObjectAsModuleView()).getViewPoint();
+		if (getCurrentDisplayedObjectAsModuleView() instanceof FMLObject) {
+			return ((FMLObject) getCurrentDisplayedObjectAsModuleView()).getViewPoint();
 		}
 		return null;
 	}
 
 	@Override
 	public FlexoValidationModel getValidationModelForObject(FlexoObject object) {
-		if (object instanceof ViewPointObject) {
+		if (object instanceof FMLObject) {
 			return getApplicationContext().getViewPointLibrary().getViewPointValidationModel();
 		}
 		return super.getValidationModelForObject(object);

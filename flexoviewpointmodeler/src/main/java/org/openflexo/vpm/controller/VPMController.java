@@ -21,15 +21,12 @@ package org.openflexo.vpm.controller;
 
 import java.util.logging.Logger;
 
-import org.openflexo.fml.controller.view.FlexoConceptView;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
-import org.openflexo.foundation.fml.FlexoConcept;
+import org.openflexo.foundation.fml.FMLObject;
 import org.openflexo.foundation.fml.FlexoConceptObject;
 import org.openflexo.foundation.fml.ViewPoint;
 import org.openflexo.foundation.fml.ViewPointLibrary;
-import org.openflexo.foundation.fml.ViewPointObject;
-import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.validation.FlexoValidationModel;
 import org.openflexo.module.FlexoModule;
 import org.openflexo.selection.MouseSelectionManager;
@@ -49,29 +46,17 @@ public class VPMController extends FlexoController {
 
 	private static final Logger logger = Logger.getLogger(VPMController.class.getPackage().getName());
 
-	public ViewPointPerspective VIEW_POINT_PERSPECTIVE;
-
 	/**
 	 * Default constructor
 	 */
 	public VPMController(FlexoModule module) {
 		super(module);
 
-		/*SwingUtilities.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-				setCurrentEditedObjectAsModuleView(getApplicationContext().getViewPointLibrary(), VIEW_POINT_PERSPECTIVE);
-			}
-		});*/
 	}
 
 	@Override
 	protected void initializePerspectives() {
-		addToPerspectives(VIEW_POINT_PERSPECTIVE = new ViewPointPerspective(this));
-
 		initializeAllAvailableTechnologyPerspectives();
-
 	}
 
 	@Override
@@ -141,24 +126,9 @@ public class VPMController extends FlexoController {
 				logger.info("setCurrentEditedObjectAsModuleView with " + object);
 				setCurrentEditedObjectAsModuleView(object);
 			}
-			if (getCurrentPerspective() == VIEW_POINT_PERSPECTIVE) {
+			/*if (getCurrentPerspective() == VIEW_POINT_PERSPECTIVE) {
 				if (object instanceof ViewPointLibrary) {
-					/*ViewPointLibrary cl = (ViewPointLibrary) object;
-					if (cl.getViewPoints().size() > 0) {
-						getSelectionManager().setSelectedObject(cl.getViewPoints().firstElement());
-					}*/
-				} /*else if (object instanceof OWLMetaModel) {
-					OWLMetaModel ontology = (OWLMetaModel) object;
-					VIEW_POINT_PERSPECTIVE.focusOnOntology(ontology);
-					if (ontology.getClasses().size() > 0) {
-						getSelectionManager().setSelectedObject(ontology.getClasses().firstElement());
-					}
-					}*/
-				/*else if (object instanceof ExampleDiagram) {
-					VIEW_POINT_PERSPECTIVE.focusOnExampleDiagram((ExampleDiagram) object);
-				} else if (object instanceof DiagramPalette) {
-					VIEW_POINT_PERSPECTIVE.focusOnPalette((DiagramPalette) object);
-				}*/else if (object instanceof ViewPoint) {
+				} else if (object instanceof ViewPoint) {
 					ViewPoint viewPoint = (ViewPoint) object;
 					VIEW_POINT_PERSPECTIVE.focusOnViewPoint(viewPoint);
 				} else if (object instanceof VirtualModel) {
@@ -174,7 +144,7 @@ public class VPMController extends FlexoController {
 						((FlexoConceptView) getCurrentModuleView()).tryToSelect((FlexoConceptObject) object);
 					}
 				}
-			}
+			}*/
 			getSelectionManager().setSelectedObject(object);
 		} else {
 			logger.warning("Cannot set focus on a NULL object");
@@ -182,15 +152,15 @@ public class VPMController extends FlexoController {
 	}
 
 	public ViewPoint getCurrentViewPoint() {
-		if (getCurrentDisplayedObjectAsModuleView() instanceof ViewPointObject) {
-			return ((ViewPointObject) getCurrentDisplayedObjectAsModuleView()).getViewPoint();
+		if (getCurrentDisplayedObjectAsModuleView() instanceof FMLObject) {
+			return ((FMLObject) getCurrentDisplayedObjectAsModuleView()).getViewPoint();
 		}
 		return null;
 	}
 
 	@Override
 	public FlexoValidationModel getValidationModelForObject(FlexoObject object) {
-		if (object instanceof ViewPointObject) {
+		if (object instanceof FMLObject) {
 			return getApplicationContext().getViewPointLibrary().getViewPointValidationModel();
 		}
 		return super.getValidationModelForObject(object);

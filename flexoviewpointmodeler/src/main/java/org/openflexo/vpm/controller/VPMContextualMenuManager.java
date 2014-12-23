@@ -19,23 +19,18 @@
  */
 package org.openflexo.vpm.controller;
 
-import java.awt.Component;
-import java.awt.event.MouseEvent;
-
-import org.openflexo.foundation.FlexoObject;
 import org.openflexo.selection.ContextualMenuManager;
 
 /**
  * 
- * Contextual menu manager for this module
+ * Contextual menu manager for this VPM module
  * 
- * @author yourname
+ * @author sylvain
  */
 public class VPMContextualMenuManager extends ContextualMenuManager {
 
 	public VPMContextualMenuManager(VPMSelectionManager selectionManager, VPMController controller) {
 		super(selectionManager, controller);
 	}
-
 
 }
