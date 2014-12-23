@@ -26,8 +26,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import org.openflexo.components.widget.FIBViewLibraryBrowser;
 import org.openflexo.fml.rt.controller.view.VirtualModelInstanceView;
+import org.openflexo.fml.rt.controller.widget.FIBViewLibraryBrowser;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.FlexoProjectObject;

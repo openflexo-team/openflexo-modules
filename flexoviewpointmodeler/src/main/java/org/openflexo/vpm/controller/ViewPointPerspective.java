@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-import org.openflexo.components.widget.FIBViewPointLibraryBrowser;
+import org.openflexo.fml.controller.widget.FIBViewPointLibraryBrowser;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.fml.FlexoConcept;
@@ -43,7 +43,7 @@ public class ViewPointPerspective extends FlexoPerspective {
 
 	protected static final Logger logger = Logger.getLogger(ViewPointPerspective.class.getPackage().getName());
 
-	private FIBViewPointLibraryBrowser viewPointLibraryBrowser = null;
+	private final FIBViewPointLibraryBrowser viewPointLibraryBrowser = null;
 
 	private JPanel toolsPanel;
 
@@ -53,7 +53,7 @@ public class ViewPointPerspective extends FlexoPerspective {
 	public ViewPointPerspective(VPMController controller) {
 		super("viewpoint_perspective", controller);
 
-		viewPointLibraryBrowser = new FIBViewPointLibraryBrowser(controller.getViewPointLibrary(), controller);
+		// viewPointLibraryBrowser = new FIBViewPointLibraryBrowser(controller.getViewPointLibrary(), controller);
 
 		setTopLeftView(viewPointLibraryBrowser);
 
