@@ -53,19 +53,6 @@ public class VEControllerActionInitializer extends ControllerActionInitializer {
 		super.initializeActions();
 
 		new VESetPropertyInitializer(this);
-		new VESetPropertyInitializer(this);
-
-		// View library perspective
-		new CreateViewInitializer(this);
-		new MoveViewInitializer(this);
-
-		new DeleteViewInitializer(this);
-		new CreateBasicVirtualModelInstanceInitializer(this);
-		new DeleteVirtualModelInstanceInitializer(this);
-
-		new ActionSchemeActionInitializer(this);
-		new SynchronizationSchemeActionInitializer(this);
-		new NavigationSchemeActionInitializer(this);
 
 	}
 

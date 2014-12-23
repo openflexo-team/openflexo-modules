@@ -27,16 +27,16 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import org.openflexo.components.widget.FIBViewLibraryBrowser;
+import org.openflexo.fml.rt.controller.view.VirtualModelInstanceView;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.FlexoProjectObject;
-import org.openflexo.foundation.fmlrt.View;
-import org.openflexo.foundation.fmlrt.ViewLibrary;
-import org.openflexo.foundation.fmlrt.VirtualModelInstance;
-import org.openflexo.icon.VEIconLibrary;
+import org.openflexo.foundation.fml.rt.View;
+import org.openflexo.foundation.fml.rt.ViewLibrary;
+import org.openflexo.foundation.fml.rt.VirtualModelInstance;
+import org.openflexo.icon.FMLRTIconLibrary;
 import org.openflexo.inspector.FIBInspectorPanel;
 import org.openflexo.localization.FlexoLocalization;
-import org.openflexo.ve.view.VirtualModelInstanceView;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.controller.model.FlexoPerspective;
 
@@ -79,7 +79,7 @@ public class ViewLibraryPerspective extends FlexoPerspective {
 	 */
 	@Override
 	public ImageIcon getActiveIcon() {
-		return VEIconLibrary.VIEW_ICON;
+		return FMLRTIconLibrary.VIEW_ICON;
 	}
 
 	@Override

@@ -19,19 +19,11 @@
  */
 package org.openflexo.ve.controller;
 
-/*
- * Created on <date> by <yourname>
- *
- * Flexo Application Suite
- * (c) Denali 2003-2006
- */
 import java.util.logging.Logger;
 
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
-import org.openflexo.foundation.fml.FMLTechnologyAdapter;
-import org.openflexo.foundation.technologyadapter.TechnologyAdapter;
 import org.openflexo.module.FlexoModule;
 import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.ve.controller.action.VEControllerActionInitializer;
@@ -41,7 +33,6 @@ import org.openflexo.view.FlexoMainPane;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.controller.ProjectResourcesPerspective;
-import org.openflexo.view.controller.TechnologyAdapterController;
 import org.openflexo.view.menu.FlexoMenuBar;
 
 /**
@@ -68,15 +59,7 @@ public class VEController extends FlexoController {
 		addToPerspectives(RESOURCES_PERSPECTIVE = new ProjectResourcesPerspective(this));
 		addToPerspectives(VIEW_LIBRARY_PERSPECTIVE = new ViewLibraryPerspective(this));
 
-		for (TechnologyAdapter ta : getApplicationContext().getTechnologyAdapterService().getTechnologyAdapters()) {
-			if (!(ta instanceof FMLTechnologyAdapter)) {
-				TechnologyAdapterController<?> tac = getApplicationContext().getTechnologyAdapterControllerService()
-						.getTechnologyAdapterController(ta);
-				if (tac != null) {
-					tac.installTechnologyPerspective(this);
-				}
-			}
-		}
+		initializeAllAvailableTechnologyPerspectives();
 
 		// Set the current Perspective to be the view library
 		this.switchToPerspective(VIEW_LIBRARY_PERSPECTIVE);

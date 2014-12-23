@@ -1,6 +1,5 @@
 package org.openflexo.ve;
 
-import org.openflexo.icon.VEIconLibrary;
 import org.openflexo.module.Module;
 
 /**

@@ -29,7 +29,7 @@ import org.openflexo.fme.controller.editor.DynamicPalette.GraphicalRepresentatio
 import org.openflexo.fme.model.FreeMetaModel;
 import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.fml.FlexoConcept;
-import org.openflexo.foundation.fmlrt.VirtualModelInstance;
+import org.openflexo.foundation.fml.rt.VirtualModelInstance;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.ContextualPalette;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.DiagramEditor;

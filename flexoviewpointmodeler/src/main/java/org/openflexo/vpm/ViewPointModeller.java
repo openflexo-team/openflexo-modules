@@ -1,6 +1,5 @@
 package org.openflexo.vpm;
 
-import org.openflexo.icon.VPMIconLibrary;
 import org.openflexo.module.Module;
 
 /**
