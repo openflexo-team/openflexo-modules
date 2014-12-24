@@ -21,7 +21,6 @@ package org.openflexo.ve.controller;
 
 import java.util.logging.Logger;
 
-import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.module.FlexoModule;
@@ -45,7 +44,6 @@ public class VEController extends FlexoController {
 	private static final Logger logger = Logger.getLogger(VEController.class.getPackage().getName());
 
 	public ProjectResourcesPerspective RESOURCES_PERSPECTIVE;
-	public ViewLibraryPerspective VIEW_LIBRARY_PERSPECTIVE;
 
 	/**
 	 * Default constructor
@@ -57,12 +55,11 @@ public class VEController extends FlexoController {
 	@Override
 	protected void initializePerspectives() {
 		addToPerspectives(RESOURCES_PERSPECTIVE = new ProjectResourcesPerspective(this));
-		addToPerspectives(VIEW_LIBRARY_PERSPECTIVE = new ViewLibraryPerspective(this));
 
 		initializeAllAvailableTechnologyPerspectives();
 
 		// Set the current Perspective to be the view library
-		this.switchToPerspective(VIEW_LIBRARY_PERSPECTIVE);
+		this.switchToPerspective(RESOURCES_PERSPECTIVE);
 	}
 
 	@Override
@@ -85,22 +82,26 @@ public class VEController extends FlexoController {
 		return new VEMenuBar(this);
 	}
 
-	@Override
+	/*@Override
 	public void updateEditor(FlexoEditor from, FlexoEditor to) {
 		super.updateEditor(from, to);
-		FlexoProject project = to != null ? to.getProject() : null;
-		/*if (project != null) {
-			project.getStringEncoder()._addConverter(GraphicalRepresentation.POINT_CONVERTER);
-			project.getStringEncoder()._addConverter(GraphicalRepresentation.RECT_POLYLIN_CONVERTER);
-		}*/
-		if (RESOURCES_PERSPECTIVE != null) {
-			RESOURCES_PERSPECTIVE.setProject(project);
-		}
-		if (VIEW_LIBRARY_PERSPECTIVE != null) {
-			VIEW_LIBRARY_PERSPECTIVE.setProject(project);
-		}
-		// ONTOLOGY_PERSPECTIVE.setProject(project);
+		FlexoProject project = to != null ? to.getProject() : null;*/
+	/*if (project != null) {
+		project.getStringEncoder()._addConverter(GraphicalRepresentation.POINT_CONVERTER);
+		project.getStringEncoder()._addConverter(GraphicalRepresentation.RECT_POLYLIN_CONVERTER);
+	}*/
+	/*if (RESOURCES_PERSPECTIVE != null) {
+		RESOURCES_PERSPECTIVE.setProject(project);
 	}
+	if (VIEW_LIBRARY_PERSPECTIVE != null) {
+		VIEW_LIBRARY_PERSPECTIVE.setProject(project);
+	}*/
+	// ONTOLOGY_PERSPECTIVE.setProject(project);
+
+	/*for (FlexoPerspective perspective : getControllerModel().getPerspectives()) {
+		perspective.setProject(project);
+	}
+	}*/
 
 	@Override
 	public FlexoObject getDefaultObjectToSelect(FlexoProject project) {
