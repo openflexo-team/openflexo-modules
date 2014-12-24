@@ -114,6 +114,10 @@ public class VEController extends FlexoController {
 	public void initInspectors() {
 		super.initInspectors();
 		// loadInspectorGroup("Ontology");
+		// TODO: do it in adapter-ui
+		loadInspectorGroup("FML-RT");
+		// TODO: do it in adapter-ui
+		loadInspectorGroup("FML");
 	}
 
 	@Override

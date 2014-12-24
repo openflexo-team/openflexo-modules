@@ -85,7 +85,8 @@ public class VPMController extends FlexoController {
 	@Override
 	public void initInspectors() {
 		super.initInspectors();
-		loadInspectorGroup("IFlexoOntology");
+		// loadInspectorGroup("IFlexoOntology");
+		// TODO: do it in adapter-ui
 		loadInspectorGroup("FML");
 
 	}
