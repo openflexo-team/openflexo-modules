@@ -37,16 +37,16 @@ import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.fml.DeletionScheme;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.PrimitiveRole;
+import org.openflexo.foundation.fml.PrimitiveRole.PrimitiveType;
 import org.openflexo.foundation.fml.TextFieldParameter;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.VirtualModelModelFactory;
-import org.openflexo.foundation.fml.PrimitiveRole.PrimitiveType;
 import org.openflexo.foundation.fml.action.CreateEditionAction;
+import org.openflexo.foundation.fml.action.CreateEditionAction.CreateEditionActionChoice;
 import org.openflexo.foundation.fml.action.CreateFlexoBehaviour;
 import org.openflexo.foundation.fml.action.CreateFlexoBehaviourParameter;
 import org.openflexo.foundation.fml.action.CreateFlexoConcept;
 import org.openflexo.foundation.fml.action.CreateFlexoRole;
-import org.openflexo.foundation.fml.action.CreateEditionAction.CreateEditionActionChoice;
 import org.openflexo.foundation.fml.editionaction.AssignationAction;
 import org.openflexo.foundation.fml.editionaction.DeleteAction;
 import org.openflexo.foundation.fml.inspector.TextAreaInspectorEntry;
@@ -115,8 +115,8 @@ public class FreeMetaModel extends DefaultFlexoObject {
 	public VirtualModel getVirtualModel() {
 		return virtualModel;
 	}
-	
-	public List<FreeModel> getFreeModels(){
+
+	public List<FreeModel> getFreeModels() {
 		return getFreeModellingProject().getFreeModels(this);
 	}
 
@@ -248,9 +248,9 @@ public class FreeMetaModel extends DefaultFlexoObject {
 
 			CreateEditionAction createAddShape = null;
 			if (ownerAction != null) {
-				createAddShape = CreateEditionAction.actionType.makeNewEmbeddedAction(dropScheme, null, ownerAction);
+				createAddShape = CreateEditionAction.actionType.makeNewEmbeddedAction(dropScheme.getControlGraph(), null, ownerAction);
 			} else {
-				createAddShape = CreateEditionAction.actionType.makeNewAction(dropScheme, null, editor);
+				createAddShape = CreateEditionAction.actionType.makeNewAction(dropScheme.getControlGraph(), null, editor);
 			}
 			createAddShape.actionChoice = CreateEditionActionChoice.ModelSlotSpecificAction;
 			createAddShape.setModelSlot(getTypedDiagramModelSlot());
@@ -262,9 +262,9 @@ public class FreeMetaModel extends DefaultFlexoObject {
 
 			CreateEditionAction givesNameAction = null;
 			if (ownerAction != null) {
-				givesNameAction = CreateEditionAction.actionType.makeNewEmbeddedAction(dropScheme, null, ownerAction);
+				givesNameAction = CreateEditionAction.actionType.makeNewEmbeddedAction(dropScheme.getControlGraph(), null, ownerAction);
 			} else {
-				givesNameAction = CreateEditionAction.actionType.makeNewAction(dropScheme, null, editor);
+				givesNameAction = CreateEditionAction.actionType.makeNewAction(dropScheme.getControlGraph(), null, editor);
 			}
 			givesNameAction.actionChoice = CreateEditionActionChoice.BuiltInAction;
 			givesNameAction.setBuiltInActionClass(AssignationAction.class);
@@ -290,9 +290,10 @@ public class FreeMetaModel extends DefaultFlexoObject {
 
 			CreateEditionAction createDeleteShape = null;
 			if (ownerAction != null) {
-				createDeleteShape = CreateEditionAction.actionType.makeNewEmbeddedAction(deletionScheme, null, ownerAction);
+				createDeleteShape = CreateEditionAction.actionType.makeNewEmbeddedAction(deletionScheme.getControlGraph(), null,
+						ownerAction);
 			} else {
-				createDeleteShape = CreateEditionAction.actionType.makeNewAction(deletionScheme, null, editor);
+				createDeleteShape = CreateEditionAction.actionType.makeNewAction(deletionScheme.getControlGraph(), null, editor);
 			}
 			createDeleteShape.actionChoice = CreateEditionActionChoice.ModelSlotSpecificAction;
 			createDeleteShape.setModelSlot(getTypedDiagramModelSlot());
