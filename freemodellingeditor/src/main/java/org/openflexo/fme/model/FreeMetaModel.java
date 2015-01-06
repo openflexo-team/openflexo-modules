@@ -49,6 +49,7 @@ import org.openflexo.foundation.fml.action.CreateFlexoConcept;
 import org.openflexo.foundation.fml.action.CreateFlexoRole;
 import org.openflexo.foundation.fml.editionaction.AssignationAction;
 import org.openflexo.foundation.fml.editionaction.DeleteAction;
+import org.openflexo.foundation.fml.editionaction.ExpressionAction;
 import org.openflexo.foundation.fml.inspector.TextAreaInspectorEntry;
 import org.openflexo.foundation.fml.inspector.TextFieldInspectorEntry;
 import org.openflexo.foundation.resource.ResourceLoadingCancelledException;
@@ -255,10 +256,11 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			createAddShape.actionChoice = CreateEditionActionChoice.ModelSlotSpecificAction;
 			createAddShape.setModelSlot(getTypedDiagramModelSlot());
 			createAddShape.setModelSlotSpecificActionClass(AddShape.class);
+			createAddShape.setAssignation(new DataBinding(SHAPE_ROLE_NAME));
 			createAddShape.doAction();
 
-			AddShape addShape = (AddShape) createAddShape.getNewEditionAction();
-			addShape.setAssignation(new DataBinding(SHAPE_ROLE_NAME));
+			// AssignationAction<DiagramShape> addShapeAssigment = (AssignationAction<DiagramShape>) createAddShape.getNewEditionAction();
+			// AddShape addShape = (AddShape)addShapeAssigment.getAssignableAction();
 
 			CreateEditionAction givesNameAction = null;
 			if (ownerAction != null) {
@@ -267,12 +269,12 @@ public class FreeMetaModel extends DefaultFlexoObject {
 				givesNameAction = CreateEditionAction.actionType.makeNewAction(dropScheme.getControlGraph(), null, editor);
 			}
 			givesNameAction.actionChoice = CreateEditionActionChoice.BuiltInAction;
-			givesNameAction.setBuiltInActionClass(AssignationAction.class);
+			givesNameAction.setBuiltInActionClass(ExpressionAction.class);
+			givesNameAction.setAssignation(new DataBinding(NAME_ROLE_NAME));
 			givesNameAction.doAction();
 
-			AssignationAction nameAssignation = (AssignationAction) givesNameAction.getNewEditionAction();
-			nameAssignation.setAssignation(new DataBinding(NAME_ROLE_NAME));
-			nameAssignation.setValue(new DataBinding("parameters.conceptName"));
+			AssignationAction<?> nameAssignation = (AssignationAction<?>) givesNameAction.getNewEditionAction();
+			((ExpressionAction) nameAssignation.getAssignableAction()).setExpression(new DataBinding("parameters.conceptName"));
 
 			// Create new DeletionScheme
 			CreateFlexoBehaviour createDeletionScheme = null;
