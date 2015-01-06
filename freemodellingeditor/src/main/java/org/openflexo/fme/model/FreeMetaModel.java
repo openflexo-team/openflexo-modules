@@ -297,9 +297,9 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			} else {
 				createDeleteShape = CreateEditionAction.actionType.makeNewAction(deletionScheme.getControlGraph(), null, editor);
 			}
-			createDeleteShape.actionChoice = CreateEditionActionChoice.ModelSlotSpecificAction;
-			createDeleteShape.setModelSlot(getTypedDiagramModelSlot());
-			createDeleteShape.setModelSlotSpecificActionClass(DeleteAction.class);
+			createDeleteShape.actionChoice = CreateEditionActionChoice.BuiltInAction;
+			// createDeleteShape.setModelSlot(getTypedDiagramModelSlot());
+			createDeleteShape.setBuiltInActionClass(DeleteAction.class);
 			createDeleteShape.doAction();
 
 			DeleteAction deleteShape = (DeleteAction) createDeleteShape.getNewEditionAction();
