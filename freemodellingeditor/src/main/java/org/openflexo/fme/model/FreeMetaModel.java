@@ -40,7 +40,7 @@ import org.openflexo.foundation.fml.PrimitiveRole;
 import org.openflexo.foundation.fml.PrimitiveRole.PrimitiveType;
 import org.openflexo.foundation.fml.TextFieldParameter;
 import org.openflexo.foundation.fml.VirtualModel;
-import org.openflexo.foundation.fml.VirtualModelModelFactory;
+import org.openflexo.foundation.fml.FMLModelFactory;
 import org.openflexo.foundation.fml.action.CreateEditionAction;
 import org.openflexo.foundation.fml.action.CreateEditionAction.CreateEditionActionChoice;
 import org.openflexo.foundation.fml.action.CreateFlexoBehaviour;
@@ -211,7 +211,7 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			role.setLabel(new DataBinding("name"));
 
 			// Init a default GR
-			VirtualModelModelFactory factory = returned.getVirtualModelFactory();
+			FMLModelFactory factory = returned.getVirtualModelFactory();
 			ShapeGraphicalRepresentation shapeGR = factory.makeShapeGraphicalRepresentation(ShapeType.RECTANGLE);
 			shapeGR.setX(10);
 			shapeGR.setY(10);
@@ -335,7 +335,7 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			FlexoAction<?, ?, ?> ownerAction) {
 
 		CreateFMLControlledDiagramPaletteElement action = CreateFMLControlledDiagramPaletteElement.actionType.makeNewEmbeddedAction(
-				concept.getVirtualModel(), null, ownerAction);
+				concept.getOwningVirtualModel(), null, ownerAction);
 		action.setPalette(getConceptsPalette());
 
 		ShapeGraphicalRepresentation paletteElementGR = (ShapeGraphicalRepresentation) gr.cloneObject();

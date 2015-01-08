@@ -200,7 +200,7 @@ public class DeclareInstanceOfExistingConcept extends FlexoAction<DeclareInstanc
 			TypedDiagramModelSlot ms = FMLControlledDiagramVirtualModelNature.getTypedDiagramModelSlot(freeModel.getMetaModel()
 					.getVirtualModel());
 			for (FMLDiagramPaletteElementBinding b : ms.getPaletteElementBindings()) {
-				if (b.getFlexoConcept() == concept) {
+				if (b.getBoundFlexoConcept() == concept) {
 					existingElement = b.getPaletteElement();
 				}
 			}

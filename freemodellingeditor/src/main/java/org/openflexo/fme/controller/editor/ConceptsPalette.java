@@ -75,7 +75,7 @@ public class ConceptsPalette extends ContextualPalette implements PropertyChange
 
 		DropShape action = DropShape.actionType.makeNewAction(rootContainer, null, getEditor().getFlexoController().getEditor());
 		action.setFreeModel(getEditor().getFreeModel());
-		action.setConcept(binding.getFlexoConcept());
+		action.setConcept(binding.getBoundFlexoConcept());
 		action.setDropLocation(dropLocation);
 
 		action.doAction();
@@ -95,7 +95,7 @@ public class ConceptsPalette extends ContextualPalette implements PropertyChange
 			if (ms != null) {
 				FMLDiagramPaletteElementBinding binding = ms.getPaletteElementBinding(element);
 				if (binding != null) {
-					FlexoConcept concept = binding.getFlexoConcept();
+					FlexoConcept concept = binding.getBoundFlexoConcept();
 					final ShapeRole conceptShapeRole = (ShapeRole) concept.getFlexoRole(FreeMetaModel.SHAPE_ROLE_NAME);
 					if (conceptShapeRole != null) {
 						conceptShapeRole.getGraphicalRepresentation().getPropertyChangeSupport()
