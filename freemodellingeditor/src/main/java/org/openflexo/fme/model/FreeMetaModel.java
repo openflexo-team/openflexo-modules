@@ -211,7 +211,7 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			role.setLabel(new DataBinding("name"));
 
 			// Init a default GR
-			FMLModelFactory factory = returned.getVirtualModelFactory();
+			FMLModelFactory factory = returned.getFMLModelFactory();
 			ShapeGraphicalRepresentation shapeGR = factory.makeShapeGraphicalRepresentation(ShapeType.RECTANGLE);
 			shapeGR.setX(10);
 			shapeGR.setY(10);

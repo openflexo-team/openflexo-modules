@@ -160,7 +160,7 @@ public class CreateNewConceptFromNoneConcept extends FlexoAction<CreateNewConcep
 
 		// Create binding and associate it
 		DropScheme dropScheme = newFlexoConcept.getFlexoBehaviours(DropScheme.class).get(0);
-		FMLDiagramPaletteElementBinding newBinding = newFlexoConcept.getVirtualModel().getVirtualModelFactory()
+		FMLDiagramPaletteElementBinding newBinding = newFlexoConcept.getVirtualModel().getFMLModelFactory()
 				.newInstance(FMLDiagramPaletteElementBinding.class);
 		newBinding.setPaletteElement(paletteElement);
 		newBinding.setFlexoConcept(newFlexoConcept);
