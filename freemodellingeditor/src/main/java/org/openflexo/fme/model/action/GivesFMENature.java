@@ -48,7 +48,8 @@ public class GivesFMENature extends FlexoAction<GivesFMENature, FlexoProject, Fl
 
 	private static final Logger logger = Logger.getLogger(GivesFMENature.class.getPackage().getName());
 
-	public static FlexoActionType<GivesFMENature, FlexoProject, FlexoObject> actionType = new FlexoActionType<GivesFMENature, FlexoProject, FlexoObject>("gives_fme_nature") {
+	public static FlexoActionType<GivesFMENature, FlexoProject, FlexoObject> actionType = new FlexoActionType<GivesFMENature, FlexoProject, FlexoObject>(
+			"gives_fme_nature") {
 
 		/**
 		 * Factory method
@@ -83,9 +84,11 @@ public class GivesFMENature extends FlexoAction<GivesFMENature, FlexoProject, Fl
 		ViewPointResource freeModellingViewPointResource = getFocusedObject().getViewPointRepository().getResource(
 				getFocusedObject().getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
 
-		// Since CreateViewpoint/View are LongRunning actions, we call them as embedded actions, therefore we are ensure that Viewpoint and View are created after doAction() call.
+		// Since CreateViewpoint/View are LongRunning actions, we call them as embedded actions, therefore we are ensure that Viewpoint and
+		// View are created after doAction() call.
 		if (freeModellingViewPointResource == null) {
-			CreateViewPoint action = CreateViewPoint.actionType.makeNewEmbeddedAction(getFocusedObject().getViewPointRepository().getRootFolder(), null,this);
+			CreateViewPoint action = CreateViewPoint.actionType.makeNewEmbeddedAction(getFocusedObject().getViewPointRepository()
+					.getRootFolder(), null, this);
 			action.setNewViewPointName(FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_NAME);
 			action.setNewViewPointURI(getFocusedObject().getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
 			action.setNewViewPointDescription("This is the generic ViewPoint storing all FreeModelling meta-models");
@@ -97,7 +100,8 @@ public class GivesFMENature extends FlexoAction<GivesFMENature, FlexoProject, Fl
 				getFocusedObject().getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
 
 		if (freeModellingViewResource == null) {
-			CreateView action = CreateView.actionType.makeNewEmbeddedAction(getFocusedObject().getViewLibrary().getRootFolder(), null, this);
+			CreateView action = CreateView.actionType
+					.makeNewEmbeddedAction(getFocusedObject().getViewLibrary().getRootFolder(), null, this);
 			action.setNewViewName(FreeModellingProjectNature.FREE_MODELLING_VIEW_NAME);
 			action.setNewViewTitle(FreeModellingProjectNature.FREE_MODELLING_VIEW_NAME);
 			action.setViewpointResource(freeModellingViewPointResource);
@@ -107,7 +111,8 @@ public class GivesFMENature extends FlexoAction<GivesFMENature, FlexoProject, Fl
 
 		DiagramTechnologyAdapter diagramTechnologyAdapter = getFocusedObject().getServiceManager().getTechnologyAdapterService()
 				.getTechnologyAdapter(DiagramTechnologyAdapter.class);
-		DiagramSpecificationRepository dsRepository = getFocusedObject().getRepository(DiagramSpecificationRepository.class, diagramTechnologyAdapter);
+		DiagramSpecificationRepository dsRepository = getFocusedObject().getRepository(DiagramSpecificationRepository.class,
+				diagramTechnologyAdapter);
 		dsRepository.createNewFolder(FreeModellingProjectNature.DIAGRAM_SPECIFICATIONS_FOLDER);
 	}
 
