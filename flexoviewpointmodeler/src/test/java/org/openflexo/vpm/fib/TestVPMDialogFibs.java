@@ -2,7 +2,6 @@ package org.openflexo.vpm.fib;
 
 import java.io.File;
 
-import org.junit.Test;
 import org.openflexo.fib.utils.GenericFIBTestCase;
 
 public class TestVPMDialogFibs extends GenericFIBTestCase {
@@ -12,14 +11,6 @@ public class TestVPMDialogFibs extends GenericFIBTestCase {
 				"Fib/Dialog/"));
 	}
 
-	@Test
-	public void testCreateEditionActionDialog() {
-		validateFIB("Fib/Dialog/CreateEditionActionDialog.fib");
-	}
-
-	@Test
-	public void testShowFMLRepresentationDialog() {
-		validateFIB("Fib/Dialog/ShowFMLRepresentationDialog.fib");
-	}
+	// No test yet
 
 }
