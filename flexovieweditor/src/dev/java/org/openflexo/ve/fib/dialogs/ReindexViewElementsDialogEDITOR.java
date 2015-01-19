@@ -24,9 +24,9 @@ import java.io.File;
 import org.openflexo.fib.ProjectDialogEDITOR;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoProject;
-import org.openflexo.foundation.view.View;
-import org.openflexo.foundation.view.diagram.action.ReindexDiagramElements;
-import org.openflexo.foundation.view.diagram.model.Diagram;
+import org.openflexo.foundation.fml.rt.View;
+import org.openflexo.foundation.fml.rt.diagram.action.ReindexDiagramElements;
+import org.openflexo.foundation.fml.rt.diagram.model.Diagram;
 import org.openflexo.toolbox.FileResource;
 import org.openflexo.ve.VECst;
 

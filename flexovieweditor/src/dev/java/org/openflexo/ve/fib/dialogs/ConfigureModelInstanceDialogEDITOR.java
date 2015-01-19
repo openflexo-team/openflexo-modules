@@ -24,9 +24,9 @@ import java.io.File;
 import org.openflexo.fib.ProjectDialogEDITOR;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoProject;
-import org.openflexo.foundation.view.View;
-import org.openflexo.foundation.view.action.CreateVirtualModelInstance;
-import org.openflexo.foundation.view.action.CreateVirtualModelInstance.CreateConcreteVirtualModelInstance;
+import org.openflexo.foundation.fml.rt.View;
+import org.openflexo.foundation.fml.rt.action.CreateVirtualModelInstance;
+import org.openflexo.foundation.fml.rt.action.CreateVirtualModelInstance.CreateConcreteVirtualModelInstance;
 import org.openflexo.toolbox.FileResource;
 import org.openflexo.ve.VECst;
 

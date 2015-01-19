@@ -24,11 +24,11 @@ import java.io.File;
 import org.openflexo.TestApplicationContext;
 import org.openflexo.components.widget.CommonFIB;
 import org.openflexo.fib.editor.FIBAbstractEditor;
-import org.openflexo.foundation.view.diagram.viewpoint.ExampleDiagram;
-import org.openflexo.foundation.view.diagram.viewpoint.ExampleDiagramShape;
-import org.openflexo.foundation.view.diagram.viewpoint.action.DeclareExampleDiagramShapeInFlexoConcept;
-import org.openflexo.foundation.viewpoint.ViewPoint;
-import org.openflexo.foundation.viewpoint.ViewPointLibrary;
+import org.openflexo.foundation.fml.rt.diagram.viewpoint.ExampleDiagram;
+import org.openflexo.foundation.fml.rt.diagram.viewpoint.ExampleDiagramShape;
+import org.openflexo.foundation.fml.rt.diagram.viewpoint.action.DeclareExampleDiagramShapeInFlexoConcept;
+import org.openflexo.foundation.fml.ViewPoint;
+import org.openflexo.foundation.fml.ViewPointLibrary;
 import org.openflexo.toolbox.FileResource;
 
 public class DeclareShapeInFlexoConceptDialogEDITOR extends FIBAbstractEditor {

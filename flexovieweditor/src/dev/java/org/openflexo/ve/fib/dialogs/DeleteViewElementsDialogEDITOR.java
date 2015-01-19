@@ -25,11 +25,11 @@ import java.util.Vector;
 import org.openflexo.fib.ProjectDialogEDITOR;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoProject;
-import org.openflexo.foundation.view.View;
-import org.openflexo.foundation.view.diagram.action.DeleteDiagramElements;
-import org.openflexo.foundation.view.diagram.model.Diagram;
-import org.openflexo.foundation.view.diagram.model.DiagramElement;
-import org.openflexo.foundation.view.diagram.model.DiagramShape;
+import org.openflexo.foundation.fml.rt.View;
+import org.openflexo.foundation.fml.rt.diagram.action.DeleteDiagramElements;
+import org.openflexo.foundation.fml.rt.diagram.model.Diagram;
+import org.openflexo.foundation.fml.rt.diagram.model.DiagramElement;
+import org.openflexo.foundation.fml.rt.diagram.model.DiagramShape;
 import org.openflexo.toolbox.FileResource;
 import org.openflexo.ve.VECst;
 

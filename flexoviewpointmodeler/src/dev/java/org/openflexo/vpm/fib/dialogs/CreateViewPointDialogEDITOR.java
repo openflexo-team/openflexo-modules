@@ -24,8 +24,8 @@ import java.io.File;
 import org.openflexo.TestApplicationContext;
 import org.openflexo.fib.editor.FIBAbstractEditor;
 import org.openflexo.foundation.resource.FlexoResourceCenter;
-import org.openflexo.foundation.viewpoint.ViewPointLibrary;
-import org.openflexo.foundation.viewpoint.action.CreateViewPoint;
+import org.openflexo.foundation.fml.ViewPointLibrary;
+import org.openflexo.foundation.fml.action.CreateViewPoint;
 import org.openflexo.toolbox.FileResource;
 import org.openflexo.vpm.VPMCst;
 
