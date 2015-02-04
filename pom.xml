@@ -20,6 +20,7 @@
 		<flexodocresourcecenter.version>1.7.1-SNAPSHOT</flexodocresourcecenter.version>
 		<flexodocresourcemanager.version>1.7.1-SNAPSHOT</flexodocresourcemanager.version>
 		<flexocore.version>1.7.1-SNAPSHOT</flexocore.version>
+		<modules.logo>https://media.openflexo.org/images/modules_logo64x64.png</modules.logo>
 	</properties>
 	<scm>
 		<connection>scm:git:ssh://git@github.com/openflexo-team/openflexo-modules.git</connection>
