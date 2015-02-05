@@ -44,7 +44,7 @@ import java.awt.Font;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import org.openflexo.antar.binding.DataBinding;
+import org.openflexo.connie.DataBinding;
 import org.openflexo.fge.ShapeGraphicalRepresentation;
 import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
 import org.openflexo.foundation.DefaultFlexoObject;
