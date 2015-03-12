@@ -42,7 +42,7 @@ package org.openflexo.vpm.fib.dialogs;
 import java.io.File;
 
 import org.openflexo.TestApplicationContext;
-import org.openflexo.components.widget.CommonFIB;
+import org.openflexo.fml.controller.CommonFIB;
 import org.openflexo.fib.editor.FIBAbstractEditor;
 import org.openflexo.foundation.fml.rt.diagram.viewpoint.ExampleDiagram;
 import org.openflexo.foundation.fml.rt.diagram.viewpoint.ExampleDiagramShape;

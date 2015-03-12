@@ -42,7 +42,7 @@ package org.openflexo.vpm.fib.dialogs;
 import java.io.File;
 
 import org.openflexo.TestApplicationContext;
-import org.openflexo.components.widget.CommonFIB;
+import org.openflexo.fml.controller.CommonFIB;
 import org.openflexo.fib.editor.FIBAbstractEditor;
 import org.openflexo.toolbox.FileResource;
 import org.openflexo.vpm.VPMModule;
