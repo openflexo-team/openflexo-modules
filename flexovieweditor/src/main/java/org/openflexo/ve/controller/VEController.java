@@ -102,43 +102,9 @@ public class VEController extends FlexoController {
 		return new VEMenuBar(this);
 	}
 
-	/*@Override
-	public void updateEditor(FlexoEditor from, FlexoEditor to) {
-		super.updateEditor(from, to);
-		FlexoProject project = to != null ? to.getProject() : null;*/
-	/*if (project != null) {
-		project.getStringEncoder()._addConverter(GraphicalRepresentation.POINT_CONVERTER);
-		project.getStringEncoder()._addConverter(GraphicalRepresentation.RECT_POLYLIN_CONVERTER);
-	}*/
-	/*if (RESOURCES_PERSPECTIVE != null) {
-		RESOURCES_PERSPECTIVE.setProject(project);
-	}
-	if (VIEW_LIBRARY_PERSPECTIVE != null) {
-		VIEW_LIBRARY_PERSPECTIVE.setProject(project);
-	}*/
-	// ONTOLOGY_PERSPECTIVE.setProject(project);
-
-	/*for (FlexoPerspective perspective : getControllerModel().getPerspectives()) {
-		perspective.setProject(project);
-	}
-	}*/
-
 	@Override
 	public FlexoObject getDefaultObjectToSelect(FlexoProject project) {
 		return project;
-	}
-
-	/**
-	 * Init inspectors
-	 */
-	@Override
-	public void initInspectors() {
-		super.initInspectors();
-		// loadInspectorGroup("Ontology");
-		// TODO: do it in adapter-ui
-		loadInspectorGroup("FML-RT");
-		// TODO: do it in adapter-ui
-		loadInspectorGroup("FML");
 	}
 
 	@Override

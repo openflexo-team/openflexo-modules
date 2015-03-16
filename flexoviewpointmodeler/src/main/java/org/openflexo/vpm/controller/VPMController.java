@@ -99,18 +99,6 @@ public class VPMController extends FlexoController {
 		return new VPMMenuBar(this);
 	}
 
-	/**
-	 * Init inspectors
-	 */
-	@Override
-	public void initInspectors() {
-		super.initInspectors();
-		// loadInspectorGroup("IFlexoOntology");
-		// TODO: do it in adapter-ui
-		// loadInspectorGroup("FML", getCoreInspectorGroup());
-
-	}
-
 	@Override
 	protected FlexoMainPane createMainPane() {
 		return new FlexoMainPane(this);
