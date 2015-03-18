@@ -200,7 +200,7 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			action.doAction();
 			returned = action.getNewFlexoConcept();
 
-			// Creates shape role
+			// Creates shape property
 			CreateFlexoRole createShapeRole = null;
 			if (ownerAction != null) {
 				createShapeRole = CreateFlexoRole.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
@@ -225,7 +225,7 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			createNameRole.setPrimitiveType(PrimitiveType.String);
 			createNameRole.doAction();
 
-			// Bind shapes's label to name role
+			// Bind shapes's label to name property
 			role.setLabel(new DataBinding("name"));
 
 			// Init a default GR

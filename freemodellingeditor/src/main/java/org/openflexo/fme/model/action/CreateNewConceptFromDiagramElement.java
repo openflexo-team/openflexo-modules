@@ -129,16 +129,17 @@ public class CreateNewConceptFromDiagramElement extends FlexoAction<CreateNewCon
 		flexoConceptInstance = createFlexoConceptInstanceFromDiagramShape(getFocusedObject());
 
 		logger.info("Create new concept from diagram element ");
-		CreateNewConceptFromNoneConcept actionCreateNewConcept = CreateNewConceptFromNoneConcept.actionType.makeNewEmbeddedAction(flexoConceptInstance, null, this);
+		CreateNewConceptFromNoneConcept actionCreateNewConcept = CreateNewConceptFromNoneConcept.actionType.makeNewEmbeddedAction(
+				flexoConceptInstance, null, this);
 		actionCreateNewConcept.doAction();
 		flexoConcept = actionCreateNewConcept.getNewFlexoConcept();
 	}
 
 	private FlexoConceptInstance createFlexoConceptInstanceFromDiagramShape(DiagramElement<?> diagramElement) {
 		FlexoConceptInstance newFlexoConceptInstance = getFreeModel().getVirtualModelInstance().makeNewFlexoConceptInstance(none);
-		GraphicalElementRole geRole = (ShapeRole) none.getFlexoRole(FreeMetaModel.SHAPE_ROLE_NAME);
+		GraphicalElementRole geRole = (ShapeRole) none.getFlexoProperty(FreeMetaModel.SHAPE_ROLE_NAME);
 		newFlexoConceptInstance.setFlexoActor(diagramElement, geRole);
-		PrimitiveRole<String> nameRole = (PrimitiveRole<String>) none.getFlexoRole(FreeMetaModel.NAME_ROLE_NAME);
+		PrimitiveRole<String> nameRole = (PrimitiveRole<String>) none.getFlexoProperty(FreeMetaModel.NAME_ROLE_NAME);
 		newFlexoConceptInstance.setFlexoActor(diagramElement.getName(), nameRole);
 		return newFlexoConceptInstance;
 	}

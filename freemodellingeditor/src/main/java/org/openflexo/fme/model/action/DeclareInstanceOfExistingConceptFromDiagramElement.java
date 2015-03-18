@@ -157,9 +157,9 @@ public class DeclareInstanceOfExistingConceptFromDiagramElement extends
 
 	private FlexoConceptInstance createFlexoConceptInstanceFromDiagramShape(DiagramElement<?> diagramElement) {
 		FlexoConceptInstance newFlexoConceptInstance = getFreeModel().getVirtualModelInstance().makeNewFlexoConceptInstance(none);
-		GraphicalElementRole geRole = (ShapeRole) none.getFlexoRole(FreeMetaModel.SHAPE_ROLE_NAME);
+		GraphicalElementRole geRole = (ShapeRole) none.getFlexoProperty(FreeMetaModel.SHAPE_ROLE_NAME);
 		newFlexoConceptInstance.setFlexoActor(diagramElement, geRole);
-		PrimitiveRole<String> nameRole = (PrimitiveRole<String>) none.getFlexoRole(FreeMetaModel.NAME_ROLE_NAME);
+		PrimitiveRole<String> nameRole = (PrimitiveRole<String>) none.getFlexoProperty(FreeMetaModel.NAME_ROLE_NAME);
 		newFlexoConceptInstance.setFlexoActor(diagramElement.getName(), nameRole);
 		return newFlexoConceptInstance;
 	}
