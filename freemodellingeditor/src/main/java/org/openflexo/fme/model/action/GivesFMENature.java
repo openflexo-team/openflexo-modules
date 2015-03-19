@@ -100,6 +100,11 @@ public class GivesFMENature extends FlexoAction<GivesFMENature, FlexoProject, Fl
 
 	@Override
 	protected void doAction(Object context) throws InvalidFileNameException, SaveResourceException, InvalidArgumentException {
+		if (getFocusedObject().getViewPointRepository() == null) {
+			logger.warning("Could not determine ViewPointRepository. Aborting operation.");
+			throw new InvalidArgumentException("Could not determine ViewPointRepository. Aborting operation.");
+		}
+
 		ViewPointResource freeModellingViewPointResource = getFocusedObject().getViewPointRepository().getResource(
 				getFocusedObject().getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
 
