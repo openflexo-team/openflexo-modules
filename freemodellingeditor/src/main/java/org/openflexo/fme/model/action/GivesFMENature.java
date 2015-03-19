@@ -121,7 +121,7 @@ public class GivesFMENature extends FlexoAction<GivesFMENature, FlexoProject, Fl
 		}
 
 		ViewResource freeModellingViewResource = getFocusedObject().getViewLibrary().getResource(
-				getFocusedObject().getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
+				getFocusedObject().getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEW_RELATIVE_URI);
 
 		if (freeModellingViewResource == null) {
 			CreateView action = CreateView.actionType
