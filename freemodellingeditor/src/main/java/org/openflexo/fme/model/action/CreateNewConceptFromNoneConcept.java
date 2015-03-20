@@ -129,7 +129,7 @@ public class CreateNewConceptFromNoneConcept extends FlexoAction<CreateNewConcep
 		FlexoConceptInstance flexoConceptInstance = getFocusedObject();
 
 		// Retrieve shape property of None FC
-		ShapeRole noneShapeRole = (ShapeRole) flexoConceptInstance.getFlexoConcept().getFlexoProperty(FreeMetaModel.SHAPE_ROLE_NAME);
+		ShapeRole noneShapeRole = (ShapeRole) flexoConceptInstance.getFlexoConcept().getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
 
 		// Retrieve actual shape element
 		DiagramShape shapeElement = flexoConceptInstance.getFlexoActor(noneShapeRole);
@@ -188,7 +188,7 @@ public class CreateNewConceptFromNoneConcept extends FlexoAction<CreateNewConcep
 		*/
 
 		// Sets new concept GR with actual shape GR
-		ShapeRole shapeRole = (ShapeRole) newFlexoConcept.getFlexoProperty(FreeMetaModel.SHAPE_ROLE_NAME);
+		ShapeRole shapeRole = (ShapeRole) newFlexoConcept.getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
 		shapeRole.getGraphicalRepresentation().setsWith(shapeElement.getGraphicalRepresentation());
 		shapeRole.getGraphicalRepresentation().setX(10);
 		shapeRole.getGraphicalRepresentation().setY(10);

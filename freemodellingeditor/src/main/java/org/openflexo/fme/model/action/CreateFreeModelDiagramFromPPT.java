@@ -153,9 +153,9 @@ public class CreateFreeModelDiagramFromPPT extends AbstractCreateFreeModelDiagra
 
 	private FlexoConceptInstance createFlexoConceptInstanceFromDiagramShape(DiagramShape diagramShape) {
 		FlexoConceptInstance newFlexoConceptInstance = getFreeModel().getVirtualModelInstance().makeNewFlexoConceptInstance(none);
-		ShapeRole shapeRole = (ShapeRole) none.getFlexoProperty(FreeMetaModel.SHAPE_ROLE_NAME);
+		ShapeRole shapeRole = (ShapeRole) none.getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
 		newFlexoConceptInstance.setFlexoActor(diagramShape, shapeRole);
-		PrimitiveRole<String> nameRole = (PrimitiveRole<String>) none.getFlexoProperty(FreeMetaModel.NAME_ROLE_NAME);
+		PrimitiveRole<String> nameRole = (PrimitiveRole<String>) none.getAccessibleProperty(FreeMetaModel.NAME_ROLE_NAME);
 		newFlexoConceptInstance.setFlexoActor(diagramShape.getName(), nameRole);
 		return newFlexoConceptInstance;
 	}

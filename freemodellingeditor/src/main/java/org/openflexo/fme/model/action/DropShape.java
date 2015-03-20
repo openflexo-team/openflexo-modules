@@ -143,7 +143,7 @@ public class DropShape extends FlexoAction<DropShape, DiagramContainerElement<?>
 			action.doAction();
 			newFlexoConceptInstance = action.getFlexoConceptInstance();
 
-			ShapeRole shapeRole = (ShapeRole) concept.getFlexoProperty(FreeMetaModel.SHAPE_ROLE_NAME);
+			ShapeRole shapeRole = (ShapeRole) concept.getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
 			DiagramShape shape = newFlexoConceptInstance.getFlexoActor(shapeRole);
 
 			// If another GR was defined (overriding the one from ShapeRole)
