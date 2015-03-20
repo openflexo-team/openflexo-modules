@@ -43,6 +43,7 @@ import java.util.Vector;
 import java.util.logging.Logger;
 
 import org.apache.poi.hslf.model.Slide;
+import org.openflexo.connie.DataBinding;
 import org.openflexo.fme.model.FreeMetaModel;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.fme.model.FreeModellingProject;
@@ -150,6 +151,7 @@ public class CreateFreeModelFromPPT extends AbstractCreateFreeModel<CreateFreeMo
 		ShapeRole shapeRole = (ShapeRole) none.getFlexoRole(FreeMetaModel.SHAPE_ROLE_NAME);
 		newFlexoConceptInstance.setFlexoActor(diagramShape, shapeRole);
 		PrimitiveRole<String> nameRole = (PrimitiveRole<String>) none.getFlexoRole(FreeMetaModel.NAME_ROLE_NAME);
+		shapeRole.setLabel(new DataBinding(FreeMetaModel.NAME_ROLE_NAME));
 		newFlexoConceptInstance.setFlexoActor(diagramShape.getName(), nameRole);
 		return newFlexoConceptInstance;
 	}

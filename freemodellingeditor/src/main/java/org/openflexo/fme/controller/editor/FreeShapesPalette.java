@@ -56,6 +56,7 @@ import org.openflexo.logging.FlexoLogger;
 import org.openflexo.technologyadapter.diagram.controller.DiagramCst;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.CommonPalette;
 import org.openflexo.technologyadapter.diagram.model.DiagramContainerElement;
+import org.openflexo.technologyadapter.diagram.model.DiagramElement;
 import org.openflexo.view.FlexoFrame;
 import org.openflexo.view.controller.FlexoFIBController;
 
@@ -100,7 +101,8 @@ public class FreeShapesPalette extends CommonPalette {
 					|| shapeGR.getShapeSpecification().getShapeType() == ShapeType.CIRCLE) {
 				shapeGR.setWidth(50);
 				shapeGR.setHeight(50);
-			} else {
+			}
+			else {
 				shapeGR.setWidth(60);
 				shapeGR.setHeight(45);
 			}
@@ -137,6 +139,13 @@ public class FreeShapesPalette extends CommonPalette {
 
 		FlexoConceptInstance newFlexoConceptInstance = action.getNewFlexoConceptInstance();
 		// DiagramShape shape = newFlexoConceptInstance.getFlexoActor(patternRole)
+
+		// The new shape has well be added to the diagram, and the drawing (which listen to the diagram) has well received the event
+		// The drawing is now up-to-date... but there is something wrong if we are in FML-controlled mode.
+		// Since the shape has been added BEFORE the FlexoConceptInstance has been set, the drawing only knows about the DiagamShape,
+		// and not about an FMLControlledDiagramShape. That's why we need to notify again the new diagram element's parent, to be
+		// sure that the Drawing can discover that the new shape is FML-controlled
+		container.getPropertyChangeSupport().firePropertyChange(DiagramElement.INVALIDATE, null, container);
 
 		getEditor().setCurrentTool(EditorTool.SelectionTool);
 

@@ -342,6 +342,13 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 			action.setTargetSize(paletteElement.getInitialDimensions());
 			action.doAction();
 
+			// The new shape has well be added to the diagram, and the drawing (which listen to the diagram) has well received the event
+			// The drawing is now up-to-date... but there is something wrong if we are in FML-controlled mode.
+			// Since the shape has been added BEFORE the FlexoConceptInstance has been set, the drawing only knows about the DiagamShape,
+			// and not about an FMLControlledDiagramShape. That's why we need to notify again the new diagram element's parent, to be
+			// sure that the Drawing can discover that the new shape is FML-controlled
+			rootContainer.getPropertyChangeSupport().firePropertyChange(DiagramElement.INVALIDATE, null, rootContainer);
+
 			FlexoConceptInstance newFlexoConceptInstance = action.getNewFlexoConceptInstance();
 			return action.hasActionExecutionSucceeded();
 		}

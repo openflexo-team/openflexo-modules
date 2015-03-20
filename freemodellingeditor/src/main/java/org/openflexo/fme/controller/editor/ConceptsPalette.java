@@ -59,6 +59,7 @@ import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramPalette;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramPaletteElement;
 import org.openflexo.technologyadapter.diagram.model.DiagramContainerElement;
+import org.openflexo.technologyadapter.diagram.model.DiagramElement;
 
 public class ConceptsPalette extends ContextualPalette implements PropertyChangeListener {
 
@@ -99,6 +100,12 @@ public class ConceptsPalette extends ContextualPalette implements PropertyChange
 
 		action.doAction();
 
+		// The new shape has well be added to the diagram, and the drawing (which listen to the diagram) has well received the event
+		// The drawing is now up-to-date... but there is something wrong if we are in FML-controlled mode.
+		// Since the shape has been added BEFORE the FlexoConceptInstance has been set, the drawing only knows about the DiagamShape,
+		// and not about an FMLControlledDiagramShape. That's why we need to notify again the new diagram element's parent, to be
+		// sure that the Drawing can discover that the new shape is FML-controlled
+		rootContainer.getPropertyChangeSupport().firePropertyChange(DiagramElement.INVALIDATE, null, rootContainer);
 		// FlexoConceptInstance newFlexoConceptInstance = action.getNewFlexoConceptInstance();
 		// System.out.println("Created newFlexoConceptInstance:" + newFlexoConceptInstance);
 
