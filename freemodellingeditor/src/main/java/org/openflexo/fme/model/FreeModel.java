@@ -46,7 +46,7 @@ import org.openflexo.foundation.DefaultFlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.fml.FlexoConcept;
-import org.openflexo.foundation.fml.FlexoProperty;
+import org.openflexo.foundation.fml.FlexoRole;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.fml.rt.VirtualModelInstance;
@@ -186,7 +186,7 @@ public class FreeModel extends DefaultFlexoObject implements PropertyChangeListe
 	}
 
 	public FlexoConceptInstance getFlexoConceptInstanceNamed(String name, FlexoConcept concept) {
-		FlexoProperty<?> nameRole = concept.getFlexoProperty(FreeMetaModel.NAME_ROLE_NAME);
+		FlexoRole<?> nameRole = (FlexoRole<?>) concept.getFlexoProperty(FreeMetaModel.NAME_ROLE_NAME);
 		for (FlexoConceptInstance fci : getVirtualModelInstance().getFlexoConceptInstances(concept)) {
 			String fciName = (String) fci.getFlexoActor(nameRole);
 			if (fciName != null && fciName.equals(name)) {
