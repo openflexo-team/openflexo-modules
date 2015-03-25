@@ -186,7 +186,7 @@ public class FreeModel extends DefaultFlexoObject implements PropertyChangeListe
 	}
 
 	public FlexoConceptInstance getFlexoConceptInstanceNamed(String name, FlexoConcept concept) {
-		FlexoRole nameRole = concept.getFlexoRole(FreeMetaModel.NAME_ROLE_NAME);
+		FlexoRole<?> nameRole = (FlexoRole<?>) concept.getAccessibleProperty(FreeMetaModel.NAME_ROLE_NAME);
 		for (FlexoConceptInstance fci : getVirtualModelInstance().getFlexoConceptInstances(concept)) {
 			String fciName = (String) fci.getFlexoActor(nameRole);
 			if (fciName != null && fciName.equals(name)) {

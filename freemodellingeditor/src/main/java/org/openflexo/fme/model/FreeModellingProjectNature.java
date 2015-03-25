@@ -166,7 +166,7 @@ public class FreeModellingProjectNature implements ProjectNature<FreeModellingPr
 	 */
 	@Override
 	public void givesNature(FlexoProject project, FlexoEditor editor) {
-		GivesFMENature action = GivesFMENature.actionType.makeNewAction(project, null,editor);
+		GivesFMENature action = GivesFMENature.actionType.makeNewAction(project, null, editor);
 		action.doAction();
 	}
 
@@ -217,12 +217,14 @@ public class FreeModellingProjectNature implements ProjectNature<FreeModellingPr
 	}
 
 	public String getInstanceName(FlexoConceptInstance flexoConceptInstance) {
-		FlexoRole<String> nameRole = (FlexoRole<String>) flexoConceptInstance.getFlexoConcept().getFlexoRole(FreeMetaModel.NAME_ROLE_NAME);
+		FlexoRole<String> nameRole = (FlexoRole<String>) flexoConceptInstance.getFlexoConcept().getAccessibleProperty(
+				FreeMetaModel.NAME_ROLE_NAME);
 		return flexoConceptInstance.getFlexoActor(nameRole);
 	}
 
 	public void setInstanceName(FlexoConceptInstance flexoConceptInstance, String value) {
-		FlexoRole<String> nameRole = (FlexoRole<String>) flexoConceptInstance.getFlexoConcept().getFlexoRole(FreeMetaModel.NAME_ROLE_NAME);
+		FlexoRole<String> nameRole = (FlexoRole<String>) flexoConceptInstance.getFlexoConcept().getAccessibleProperty(
+				FreeMetaModel.NAME_ROLE_NAME);
 		flexoConceptInstance.setFlexoActor(value, nameRole);
 	}
 

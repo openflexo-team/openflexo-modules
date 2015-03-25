@@ -143,7 +143,7 @@ public class DropShape extends FlexoAction<DropShape, DiagramContainerElement<?>
 			action.doAction();
 			newFlexoConceptInstance = action.getFlexoConceptInstance();
 
-			ShapeRole shapeRole = (ShapeRole) concept.getFlexoRole(FreeMetaModel.SHAPE_ROLE_NAME);
+			ShapeRole shapeRole = (ShapeRole) concept.getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
 			DiagramShape shape = newFlexoConceptInstance.getFlexoActor(shapeRole);
 
 			// If another GR was defined (overriding the one from ShapeRole)
@@ -174,8 +174,7 @@ public class DropShape extends FlexoAction<DropShape, DiagramContainerElement<?>
 			// This is used to notify the adding of a new shape, will be used in DynamicPalette
 			// freeModel.getPropertyChangeSupport().firePropertyChange(DynamicPalette.SHAPE_ADDED, null, newFlexoConceptInstance);
 
-		}
-		else {
+		} else {
 			logger.warning("Could not find DropScheme in " + concept);
 		}
 	}

@@ -174,13 +174,13 @@ public class DeclareInstanceOfExistingConcept extends FlexoAction<DeclareInstanc
 
 		FlexoConceptInstance flexoConceptInstance = getFocusedObject();
 
-		// Retrieve shape role of this FC
-		ShapeRole currentShapeRole = (ShapeRole) flexoConceptInstance.getFlexoConcept().getFlexoRole(FreeMetaModel.SHAPE_ROLE_NAME);
+		// Retrieve shape property of this FC
+		ShapeRole currentShapeRole = (ShapeRole) flexoConceptInstance.getFlexoConcept().getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
 
 		// Retrieve actual shape element
 		DiagramShape shapeElement = flexoConceptInstance.getFlexoActor(currentShapeRole);
 
-		ShapeRole newShapeRole = (ShapeRole) getConcept().getFlexoRole(FreeMetaModel.SHAPE_ROLE_NAME);
+		ShapeRole newShapeRole = (ShapeRole) getConcept().getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
 
 		switch (getGrStrategy()) {
 		case RedefineShapeOfConcept:

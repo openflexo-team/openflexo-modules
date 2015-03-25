@@ -122,7 +122,7 @@ public class ConceptsPalette extends ContextualPalette implements PropertyChange
 				FMLDiagramPaletteElementBinding binding = ms.getPaletteElementBinding(element);
 				if (binding != null) {
 					FlexoConcept concept = binding.getBoundFlexoConcept();
-					final ShapeRole conceptShapeRole = (ShapeRole) concept.getFlexoRole(FreeMetaModel.SHAPE_ROLE_NAME);
+					final ShapeRole conceptShapeRole = (ShapeRole) concept.getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
 					if (conceptShapeRole != null) {
 						conceptShapeRole.getGraphicalRepresentation().getPropertyChangeSupport()
 								.addPropertyChangeListener(new PropertyChangeListener() {
