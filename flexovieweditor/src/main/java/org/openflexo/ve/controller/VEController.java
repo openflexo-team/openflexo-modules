@@ -51,7 +51,6 @@ import org.openflexo.ve.view.menu.VEMenuBar;
 import org.openflexo.view.FlexoMainPane;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
-import org.openflexo.view.controller.ProjectResourcesPerspective;
 import org.openflexo.view.menu.FlexoMenuBar;
 
 /**
@@ -63,7 +62,7 @@ public class VEController extends FlexoController {
 
 	private static final Logger logger = Logger.getLogger(VEController.class.getPackage().getName());
 
-	public ProjectResourcesPerspective RESOURCES_PERSPECTIVE;
+	// public ProjectResourcesPerspective RESOURCES_PERSPECTIVE;
 
 	/**
 	 * Default constructor
@@ -74,12 +73,15 @@ public class VEController extends FlexoController {
 
 	@Override
 	protected void initializePerspectives() {
-		addToPerspectives(RESOURCES_PERSPECTIVE = new ProjectResourcesPerspective(this));
 
-		initializeAllAvailableTechnologyPerspectives();
+		initializeFMLRTTechnologyAdapterPerspectives();
+
+		// addToPerspectives(RESOURCES_PERSPECTIVE = new ProjectResourcesPerspective(this));
+
+		// initializeAllAvailableTechnologyPerspectives();
 
 		// Set the current Perspective to be the view library
-		this.switchToPerspective(RESOURCES_PERSPECTIVE);
+		// this.switchToPerspective(RESOURCES_PERSPECTIVE);
 	}
 
 	@Override
