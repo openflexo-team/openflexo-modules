@@ -68,7 +68,7 @@ public class CreateNewConceptFromNoneInitializer extends
 			public boolean run(EventObject e, CreateNewConceptFromNoneConcept action) {
 				logger.info("CreateNewConceptFromNoneConcept initializer");
 				Wizard wizard = new CreateNewConceptFromNoneConceptWizard(action, getController());
-				WizardDialog dialog = new WizardDialog(wizard);
+				WizardDialog dialog = new WizardDialog(wizard, getController());
 				dialog.showDialog();
 				if (dialog.getStatus() != Status.VALIDATED) {
 					// Operation cancelled

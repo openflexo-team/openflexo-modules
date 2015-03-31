@@ -67,7 +67,7 @@ public class CreateNewConceptInitializer extends ActionInitializer<CreateNewConc
 			public boolean run(EventObject e, CreateNewConcept action) {
 				logger.info("CreateNewConcept initializer");
 				Wizard wizard = new CreateNewConceptWizard(action, getController());
-				WizardDialog dialog = new WizardDialog(wizard);
+				WizardDialog dialog = new WizardDialog(wizard, getController());
 				dialog.showDialog();
 				if (dialog.getStatus() != Status.VALIDATED) {
 					// Operation cancelled
