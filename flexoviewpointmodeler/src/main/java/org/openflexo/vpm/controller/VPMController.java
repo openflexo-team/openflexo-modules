@@ -49,7 +49,6 @@ import org.openflexo.foundation.fml.ViewPoint;
 import org.openflexo.foundation.fml.ViewPointLibrary;
 import org.openflexo.foundation.validation.FlexoValidationModel;
 import org.openflexo.module.FlexoModule;
-import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.view.FlexoMainPane;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
@@ -83,7 +82,7 @@ public class VPMController extends FlexoController {
 	}
 
 	@Override
-	protected MouseSelectionManager createSelectionManager() {
+	protected VPMSelectionManager createSelectionManager() {
 		return new VPMSelectionManager(this);
 	}
 
@@ -138,25 +137,6 @@ public class VPMController extends FlexoController {
 				logger.info("setCurrentEditedObjectAsModuleView with " + object);
 				setCurrentEditedObjectAsModuleView(object);
 			}
-			/*if (getCurrentPerspective() == VIEW_POINT_PERSPECTIVE) {
-				if (object instanceof ViewPointLibrary) {
-				} else if (object instanceof ViewPoint) {
-					ViewPoint viewPoint = (ViewPoint) object;
-					VIEW_POINT_PERSPECTIVE.focusOnViewPoint(viewPoint);
-				} else if (object instanceof VirtualModel) {
-					VirtualModel virtualModel = (VirtualModel) object;
-					VIEW_POINT_PERSPECTIVE.focusOnVirtualModel(virtualModel);
-				} else if (object instanceof FlexoConcept) {
-					FlexoConcept pattern = (FlexoConcept) object;
-					if (pattern.getFlexoBehaviours().size() > 0) {
-						getSelectionManager().setSelectedObject(pattern.getFlexoBehaviours().get(0));
-					}
-				} else if (object instanceof FlexoConceptObject) {
-					if (getCurrentModuleView() instanceof FlexoConceptView) {
-						((FlexoConceptView) getCurrentModuleView()).tryToSelect((FlexoConceptObject) object);
-					}
-				}
-			}*/
 			getSelectionManager().setSelectedObject(object);
 		} else {
 			logger.warning("Cannot set focus on a NULL object");
