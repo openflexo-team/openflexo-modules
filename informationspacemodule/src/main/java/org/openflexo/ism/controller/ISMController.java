@@ -37,61 +37,52 @@
  * 
  */
 
-package org.openflexo.ve.controller;
+package org.openflexo.ism.controller;
 
 import java.util.logging.Logger;
 
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
-import org.openflexo.module.FlexoModule;
+import org.openflexo.ism.ISMModule;
+import org.openflexo.ism.controller.action.ISMControllerActionInitializer;
+import org.openflexo.ism.view.ISMMainPane;
+import org.openflexo.ism.view.menu.ISMMenuBar;
 import org.openflexo.selection.MouseSelectionManager;
-import org.openflexo.ve.controller.action.VEControllerActionInitializer;
-import org.openflexo.ve.view.VEMainPane;
-import org.openflexo.ve.view.menu.VEMenuBar;
 import org.openflexo.view.FlexoMainPane;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.menu.FlexoMenuBar;
 
 /**
- * Controller for ViewEditor module
+ * Controller for InformationSpace module
  * 
  * @author sylvain
  */
-public class VEController extends FlexoController {
+public class ISMController extends FlexoController {
 
-	private static final Logger logger = Logger.getLogger(VEController.class.getPackage().getName());
-
-	// public ProjectResourcesPerspective RESOURCES_PERSPECTIVE;
+	private static final Logger logger = Logger.getLogger(ISMController.class.getPackage().getName());
 
 	/**
 	 * Default constructor
 	 */
-	public VEController(FlexoModule module) {
+	public ISMController(ISMModule module) {
 		super(module);
+		// addToPerspectives(new InformationSpacePerspective());
 	}
 
 	@Override
 	protected void initializePerspectives() {
-
-		initializeFMLRTTechnologyAdapterPerspectives();
-
-		// addToPerspectives(RESOURCES_PERSPECTIVE = new ProjectResourcesPerspective(this));
-
-		// initializeAllAvailableTechnologyPerspectives();
-
-		// Set the current Perspective to be the view library
-		// this.switchToPerspective(RESOURCES_PERSPECTIVE);
+		initializeAllAvailableTechnologyPerspectives(false, false);
 	}
 
 	@Override
 	protected MouseSelectionManager createSelectionManager() {
-		return new VESelectionManager(this);
+		return new ISMSelectionManager(this);
 	}
 
 	@Override
 	public ControllerActionInitializer createControllerActionInitializer() {
-		return new VEControllerActionInitializer(this);
+		return new ISMControllerActionInitializer(this);
 	}
 
 	/**
@@ -101,7 +92,7 @@ public class VEController extends FlexoController {
 	 */
 	@Override
 	protected FlexoMenuBar createNewMenuBar() {
-		return new VEMenuBar(this);
+		return new ISMMenuBar(this);
 	}
 
 	@Override
@@ -111,7 +102,7 @@ public class VEController extends FlexoController {
 
 	@Override
 	protected FlexoMainPane createMainPane() {
-		return new VEMainPane(this);
+		return new ISMMainPane(this);
 	}
 
 }

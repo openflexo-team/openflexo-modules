@@ -74,7 +74,7 @@ public class CreateFreeModelDiagramInitializer extends ActionInitializer<CreateF
 			@Override
 			public boolean run(EventObject e, CreateFreeModelDiagram action) {
 				Wizard wizard = new CreateFreeModelDiagramWizard(action, getController());
-				WizardDialog dialog = new WizardDialog(wizard);
+				WizardDialog dialog = new WizardDialog(wizard, getController());
 				dialog.showDialog();
 				if (dialog.getStatus() != Status.VALIDATED) {
 					// Operation cancelled

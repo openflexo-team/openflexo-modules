@@ -30,6 +30,7 @@
 	<modules>
 		<module>flexovieweditor</module>
 		<module>flexoviewpointmodeler</module>
+		<module>informationspacemodule</module>
 		<module>freemodellingeditor</module>
 		<module>openflexo-module-archetype</module>
 	</modules>

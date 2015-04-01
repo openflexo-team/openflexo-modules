@@ -74,7 +74,7 @@ public class CreateFreeModelDiagramFromPPTInitializer extends ActionInitializer<
 			@Override
 			public boolean run(EventObject e, CreateFreeModelDiagramFromPPT action) {
 				Wizard wizard = new CreateFreeModelDiagramFromPPTWizard(action, getController());
-				WizardDialog dialog = new WizardDialog(wizard);
+				WizardDialog dialog = new WizardDialog(wizard, getController());
 				dialog.showDialog();
 				if (dialog.getStatus() != Status.VALIDATED) {
 					// Operation cancelled

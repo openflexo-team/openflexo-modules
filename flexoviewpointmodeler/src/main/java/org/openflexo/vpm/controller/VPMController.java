@@ -76,7 +76,10 @@ public class VPMController extends FlexoController {
 
 	@Override
 	protected void initializePerspectives() {
-		initializeAllAvailableTechnologyPerspectives();
+		// initializeAllAvailableTechnologyPerspectives();
+
+		initializeFMLTechnologyAdapterPerspectives();
+
 	}
 
 	@Override
