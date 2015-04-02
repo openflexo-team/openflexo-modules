@@ -63,4 +63,10 @@ public class ViewEditor extends Module<VEModule> {
 
 	}
 
+	@Override
+	public String getHTMLDescription() {
+		return "<html>The <b>ViewEditor</b> offers domain-specific modeling features for business users & engineers."
+				+ "This module allows you to create and edit models (Views) based on ViewPoints built with  <b>ViewPointModeller</b></html>";
+	}
+
 }

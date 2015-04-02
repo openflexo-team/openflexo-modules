@@ -60,4 +60,11 @@ public class ViewPointModeller extends Module<VPMModule> {
 		// WE want to avoid twice defined objects
 		INSTANCE = this;
 	}
+
+	@Override
+	public String getHTMLDescription() {
+		return "<html><b>The ViewPointModeller</b> offers meta-modelling features (experts users).<br>"
+				+ "This module allows you to define your own tooling (ViewPoint) based on model federation (using and connecting multiple sources of informations)."
+				+ "Those tools might be used in the <b>ViewEditor</b> module.</html>";
+	}
 }

@@ -59,4 +59,9 @@ public class FreeModellingEditor extends NatureSpecificModule<FMEModule, FreeMod
 		INSTANCE = this;
 	}
 
+	@Override
+	public String getHTMLDescription() {
+		return "<html>The <b>FreeModellingEditor</b> highlights your business concepts from simple drawings, and allows you to initialize a tooling from your design and your proper way to represent it.<br>"
+				+ "This module is a good starting point for discovering Openflexo tooling or to initiate a modeling activity.</html>";
+	}
 }

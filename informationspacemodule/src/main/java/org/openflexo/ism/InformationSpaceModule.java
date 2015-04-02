@@ -63,4 +63,11 @@ public class InformationSpaceModule extends Module<ISMModule> {
 
 	}
 
+	@Override
+	public String getHTMLDescription() {
+		return "<html><b>Information Space Module</b> allows you to browse your information sources.<br>"
+				+ "This module presents, for all loaded technologies, all interpretable resources present in all resource centers."
+				+ "Those sources of information might be read and/or edited using that module.</html>";
+	}
+
 }
