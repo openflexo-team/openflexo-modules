@@ -38,8 +38,6 @@
 
 package org.openflexo.fme.model;
 
-import static org.junit.Assert.assertTrue;
-
 import java.awt.Font;
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -247,7 +245,6 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			createDropScheme.setFlexoBehaviourName("drop");
 			createDropScheme.setFlexoBehaviourClass(DropScheme.class);
 			createDropScheme.doAction();
-			assertTrue(createDropScheme.hasActionExecutionSucceeded());
 			DropScheme dropScheme = (DropScheme) createDropScheme.getNewFlexoBehaviour();
 			dropScheme.setSkipConfirmationPanel(false);
 			dropScheme.setTopTarget(true);
@@ -304,7 +301,6 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			createDeletionScheme.setFlexoBehaviourName("delete");
 			createDeletionScheme.setFlexoBehaviourClass(DeletionScheme.class);
 			createDeletionScheme.doAction();
-			assertTrue(createDeletionScheme.hasActionExecutionSucceeded());
 			DeletionScheme deletionScheme = (DeletionScheme) createDeletionScheme.getNewFlexoBehaviour();
 			deletionScheme.setSkipConfirmationPanel(true);
 
