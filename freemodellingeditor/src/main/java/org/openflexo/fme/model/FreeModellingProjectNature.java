@@ -106,6 +106,9 @@ public class FreeModellingProjectNature implements ProjectNature<FreeModellingPr
 		if (project == null) {
 			return false;
 		}
+		if (project.getViewPointRepository() == null) {
+			return false;
+		}
 		if (project.getViewPointRepository().getAllResources().size() == 0) {
 			return false;
 		}
