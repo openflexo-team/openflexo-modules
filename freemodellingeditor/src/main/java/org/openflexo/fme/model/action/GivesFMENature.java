@@ -138,6 +138,10 @@ public class GivesFMENature extends FlexoAction<GivesFMENature, FlexoProject, Fl
 		DiagramSpecificationRepository dsRepository = getFocusedObject().getRepository(DiagramSpecificationRepository.class,
 				diagramTechnologyAdapter);
 		dsRepository.createNewFolder(FreeModellingProjectNature.DIAGRAM_SPECIFICATIONS_FOLDER);
+
+		// We have now to notify project of nature modifications
+		getFocusedObject().getPropertyChangeSupport().firePropertyChange("asNature(String)", false, true);
+		getFocusedObject().getPropertyChangeSupport().firePropertyChange("hasNature(String)", false, true);
 	}
 
 	@Override
