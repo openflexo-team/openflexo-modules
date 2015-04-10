@@ -53,10 +53,6 @@ public class FMEIconLibrary {
 			ResourceLocator.locateResource("Icons/module-fme-hover-32.png"));
 	public static final ImageIcon FME_BIG_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/module-fme-hover-64.png"));
 
-	// Perspective icons
-	public static final ImageIcon VPM_VPE_ACTIVE_ICON = new ImageIconResource(
-			ResourceLocator.locateResource("Icons/VPM/viewpoint-perspective.png"));
-
 	public static final ImageIcon COPY_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/Copy.png"));
 	public static final ImageIcon PASTE_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/Paste.png"));
 	public static final ImageIcon CUT_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/Cut.png"));
