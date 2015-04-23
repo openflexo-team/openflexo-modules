@@ -66,7 +66,7 @@ public class FIBFreeModellingProjectBrowser extends FIBBrowserView<FlexoProject>
 	}
 
 	@Override
-	protected void initializeFIBComponent() {
+	public void initializeFIBComponent() {
 
 		FIBBrowser projectBrowser = retrieveFIBBrowserNamed((FIBContainer) getFIBComponent(), "ProjectBrowser");
 
