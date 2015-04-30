@@ -57,6 +57,7 @@ import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.technologyadapter.diagram.fml.GraphicalElementRole;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
 import org.openflexo.technologyadapter.diagram.model.DiagramElement;
+import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 
 /**
  * This action is used to create a new FlexoConcept from a diagram element
@@ -82,12 +83,14 @@ public class CreateNewConceptFromDiagramElement extends FlexoAction<CreateNewCon
 
 		@Override
 		public boolean isVisibleForSelection(DiagramElement<?> object, Vector<FlexoObject> globalSelection) {
-			return true;
+			// TODO: handle other kind of elements
+			return object instanceof DiagramShape;
 		}
 
 		@Override
 		public boolean isEnabledForSelection(DiagramElement<?> object, Vector<FlexoObject> globalSelection) {
-			return true;
+			// TODO: handle other kind of elements
+			return object instanceof DiagramShape;
 		}
 
 	};
@@ -129,8 +132,8 @@ public class CreateNewConceptFromDiagramElement extends FlexoAction<CreateNewCon
 		flexoConceptInstance = createFlexoConceptInstanceFromDiagramShape(getFocusedObject());
 
 		logger.info("Create new concept from diagram element ");
-		CreateNewConceptFromNoneConcept actionCreateNewConcept = CreateNewConceptFromNoneConcept.actionType.makeNewEmbeddedAction(
-				flexoConceptInstance, null, this);
+		CreateNewConceptFromNoneConcept actionCreateNewConcept = CreateNewConceptFromNoneConcept.actionType
+				.makeNewEmbeddedAction(flexoConceptInstance, null, this);
 		actionCreateNewConcept.doAction();
 		flexoConcept = actionCreateNewConcept.getNewFlexoConcept();
 	}
