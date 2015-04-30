@@ -27,7 +27,7 @@
   </Panel>
   <LocalizedDictionary>
     <Localized key="all_concepts" lang="English" value="All concepts"/>
-    <Localized key="all_concepts" lang="French" value="Tout les concepts" />
+    <Localized key="all_concepts" lang="French" value="Tous les concepts" />
     <Localized key="all_concepts" lang="Dutch" value="All concepts" />
   </LocalizedDictionary>
 </Panel>
