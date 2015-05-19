@@ -1,22 +1,41 @@
-/*
- * (c) Copyright 2010-2011 AgileBirds
+/**
+ * 
+ * Copyright (c) 2014-2015, Openflexo
+ * 
+ * This file is part of Freemodellingeditor, a component of the software infrastructure 
+ * developed at Openflexo.
+ * 
+ * 
+ * Openflexo is dual-licensed under the European Union Public License (EUPL, either 
+ * version 1.1 of the License, or any later version ), which is available at 
+ * https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+ * and the GNU General Public License (GPL, either version 3 of the License, or any 
+ * later version), which is available at http://www.gnu.org/licenses/gpl.html .
+ * 
+ * You can redistribute it and/or modify under the terms of either of these licenses
+ * 
+ * If you choose to redistribute it and/or modify under the terms of the GNU GPL, you
+ * must include the following additional permission.
  *
- * This file is part of OpenFlexo.
+ *          Additional permission under GNU GPL version 3 section 7
  *
- * OpenFlexo is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ *          If you modify this Program, or any covered work, by linking or 
+ *          combining it with software containing parts covered by the terms 
+ *          of EPL 1.0, the licensors of this Program grant you additional permission
+ *          to convey the resulting work. * 
+ * 
+ * This software is distributed in the hope that it will be useful, but WITHOUT ANY 
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ * PARTICULAR PURPOSE. 
  *
- * OpenFlexo is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with OpenFlexo. If not, see <http://www.gnu.org/licenses/>.
- *
+ * See http://www.openflexo.org/license.html for details.
+ * 
+ * 
+ * Please contact Openflexo (openflexo-contacts@openflexo.org)
+ * or visit www.openflexo.org if you need additional information.
+ * 
  */
+
 package org.openflexo.fme.model.action;
 
 import java.util.Vector;
@@ -32,8 +51,8 @@ import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
-import org.openflexo.foundation.view.FlexoConceptInstance;
-import org.openflexo.foundation.viewpoint.FlexoConcept;
+import org.openflexo.foundation.fml.FlexoConcept;
+import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 import org.openflexo.toolbox.StringUtils;
@@ -109,8 +128,8 @@ public class CreateNewConceptFromNoneConcept extends FlexoAction<CreateNewConcep
 
 		FlexoConceptInstance flexoConceptInstance = getFocusedObject();
 
-		// Retrieve shape role of None FC
-		ShapeRole noneShapeRole = (ShapeRole) flexoConceptInstance.getFlexoConcept().getFlexoRole(FreeMetaModel.SHAPE_ROLE_NAME);
+		// Retrieve shape property of None FC
+		ShapeRole noneShapeRole = (ShapeRole) flexoConceptInstance.getFlexoConcept().getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
 
 		// Retrieve actual shape element
 		DiagramShape shapeElement = flexoConceptInstance.getFlexoActor(noneShapeRole);
@@ -160,7 +179,7 @@ public class CreateNewConceptFromNoneConcept extends FlexoAction<CreateNewConcep
 
 		// Create binding and associate it
 		DropScheme dropScheme = newFlexoConcept.getFlexoBehaviours(DropScheme.class).get(0);
-		FMLDiagramPaletteElementBinding newBinding = newFlexoConcept.getVirtualModel().getVirtualModelFactory()
+		FMLDiagramPaletteElementBinding newBinding = newFlexoConcept.getVirtualModel().getFMLModelFactory()
 				.newInstance(FMLDiagramPaletteElementBinding.class);
 		newBinding.setPaletteElement(paletteElement);
 		newBinding.setFlexoConcept(newFlexoConcept);
@@ -169,7 +188,7 @@ public class CreateNewConceptFromNoneConcept extends FlexoAction<CreateNewConcep
 		*/
 
 		// Sets new concept GR with actual shape GR
-		ShapeRole shapeRole = (ShapeRole) newFlexoConcept.getFlexoRole(FreeMetaModel.SHAPE_ROLE_NAME);
+		ShapeRole shapeRole = (ShapeRole) newFlexoConcept.getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
 		shapeRole.getGraphicalRepresentation().setsWith(shapeElement.getGraphicalRepresentation());
 		shapeRole.getGraphicalRepresentation().setX(10);
 		shapeRole.getGraphicalRepresentation().setY(10);

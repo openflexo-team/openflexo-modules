@@ -1,31 +1,48 @@
-/*
- * (c) Copyright 2013-2014 Openflexo
+/**
+ * 
+ * Copyright (c) 2014-2015, Openflexo
+ * 
+ * This file is part of Freemodellingeditor, a component of the software infrastructure 
+ * developed at Openflexo.
+ * 
+ * 
+ * Openflexo is dual-licensed under the European Union Public License (EUPL, either 
+ * version 1.1 of the License, or any later version ), which is available at 
+ * https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+ * and the GNU General Public License (GPL, either version 3 of the License, or any 
+ * later version), which is available at http://www.gnu.org/licenses/gpl.html .
+ * 
+ * You can redistribute it and/or modify under the terms of either of these licenses
+ * 
+ * If you choose to redistribute it and/or modify under the terms of the GNU GPL, you
+ * must include the following additional permission.
  *
- * This file is part of OpenFlexo.
+ *          Additional permission under GNU GPL version 3 section 7
  *
- * OpenFlexo is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ *          If you modify this Program, or any covered work, by linking or 
+ *          combining it with software containing parts covered by the terms 
+ *          of EPL 1.0, the licensors of this Program grant you additional permission
+ *          to convey the resulting work. * 
+ * 
+ * This software is distributed in the hope that it will be useful, but WITHOUT ANY 
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ * PARTICULAR PURPOSE. 
  *
- * OpenFlexo is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with OpenFlexo. If not, see <http://www.gnu.org/licenses/>.
- *
+ * See http://www.openflexo.org/license.html for details.
+ * 
+ * 
+ * Please contact Openflexo (openflexo-contacts@openflexo.org)
+ * or visit www.openflexo.org if you need additional information.
+ * 
  */
-package org.openflexo.fme.model;
 
-import static org.junit.Assert.assertTrue;
+package org.openflexo.fme.model;
 
 import java.awt.Font;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import org.openflexo.antar.binding.DataBinding;
+import org.openflexo.connie.DataBinding;
 import org.openflexo.fge.ShapeGraphicalRepresentation;
 import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
 import org.openflexo.foundation.DefaultFlexoObject;
@@ -34,24 +51,24 @@ import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
+import org.openflexo.foundation.fml.DeletionScheme;
+import org.openflexo.foundation.fml.FMLModelFactory;
+import org.openflexo.foundation.fml.FlexoConcept;
+import org.openflexo.foundation.fml.PrimitiveRole;
+import org.openflexo.foundation.fml.PrimitiveRole.PrimitiveType;
+import org.openflexo.foundation.fml.TextFieldParameter;
+import org.openflexo.foundation.fml.VirtualModel;
+import org.openflexo.foundation.fml.action.CreateEditionAction;
+import org.openflexo.foundation.fml.action.CreateFlexoBehaviour;
+import org.openflexo.foundation.fml.action.CreateFlexoBehaviourParameter;
+import org.openflexo.foundation.fml.action.CreateFlexoConcept;
+import org.openflexo.foundation.fml.action.CreateFlexoRole;
+import org.openflexo.foundation.fml.editionaction.AssignationAction;
+import org.openflexo.foundation.fml.editionaction.DeleteAction;
+import org.openflexo.foundation.fml.editionaction.ExpressionAction;
+import org.openflexo.foundation.fml.inspector.TextAreaInspectorEntry;
+import org.openflexo.foundation.fml.inspector.TextFieldInspectorEntry;
 import org.openflexo.foundation.resource.ResourceLoadingCancelledException;
-import org.openflexo.foundation.viewpoint.DeletionScheme;
-import org.openflexo.foundation.viewpoint.FlexoConcept;
-import org.openflexo.foundation.viewpoint.PrimitiveRole;
-import org.openflexo.foundation.viewpoint.PrimitiveRole.PrimitiveType;
-import org.openflexo.foundation.viewpoint.TextFieldParameter;
-import org.openflexo.foundation.viewpoint.VirtualModel;
-import org.openflexo.foundation.viewpoint.VirtualModelModelFactory;
-import org.openflexo.foundation.viewpoint.action.CreateEditionAction;
-import org.openflexo.foundation.viewpoint.action.CreateEditionAction.CreateEditionActionChoice;
-import org.openflexo.foundation.viewpoint.action.CreateFlexoBehaviour;
-import org.openflexo.foundation.viewpoint.action.CreateFlexoBehaviourParameter;
-import org.openflexo.foundation.viewpoint.action.CreateFlexoConcept;
-import org.openflexo.foundation.viewpoint.action.CreateFlexoRole;
-import org.openflexo.foundation.viewpoint.editionaction.AssignationAction;
-import org.openflexo.foundation.viewpoint.editionaction.DeleteAction;
-import org.openflexo.foundation.viewpoint.inspector.TextAreaInspectorEntry;
-import org.openflexo.foundation.viewpoint.inspector.TextFieldInspectorEntry;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
 import org.openflexo.technologyadapter.diagram.fml.DropScheme;
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelNature;
@@ -115,8 +132,8 @@ public class FreeMetaModel extends DefaultFlexoObject {
 	public VirtualModel getVirtualModel() {
 		return virtualModel;
 	}
-	
-	public List<FreeModel> getFreeModels(){
+
+	public List<FreeModel> getFreeModels() {
 		return getFreeModellingProject().getFreeModels(this);
 	}
 
@@ -181,7 +198,7 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			action.doAction();
 			returned = action.getNewFlexoConcept();
 
-			// Creates shape role
+			// Creates shape property
 			CreateFlexoRole createShapeRole = null;
 			if (ownerAction != null) {
 				createShapeRole = CreateFlexoRole.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
@@ -206,11 +223,11 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			createNameRole.setPrimitiveType(PrimitiveType.String);
 			createNameRole.doAction();
 
-			// Bind shapes's label to name role
+			// Bind shapes's label to name property
 			role.setLabel(new DataBinding("name"));
 
 			// Init a default GR
-			VirtualModelModelFactory factory = returned.getVirtualModelFactory();
+			FMLModelFactory factory = returned.getFMLModelFactory();
 			ShapeGraphicalRepresentation shapeGR = factory.makeShapeGraphicalRepresentation(ShapeType.RECTANGLE);
 			shapeGR.setX(10);
 			shapeGR.setY(10);
@@ -228,7 +245,6 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			createDropScheme.setFlexoBehaviourName("drop");
 			createDropScheme.setFlexoBehaviourClass(DropScheme.class);
 			createDropScheme.doAction();
-			assertTrue(createDropScheme.hasActionExecutionSucceeded());
 			DropScheme dropScheme = (DropScheme) createDropScheme.getNewFlexoBehaviour();
 			dropScheme.setSkipConfirmationPanel(false);
 			dropScheme.setTopTarget(true);
@@ -248,31 +264,32 @@ public class FreeMetaModel extends DefaultFlexoObject {
 
 			CreateEditionAction createAddShape = null;
 			if (ownerAction != null) {
-				createAddShape = CreateEditionAction.actionType.makeNewEmbeddedAction(dropScheme, null, ownerAction);
+				createAddShape = CreateEditionAction.actionType.makeNewEmbeddedAction(dropScheme.getControlGraph(), null, ownerAction);
 			} else {
-				createAddShape = CreateEditionAction.actionType.makeNewAction(dropScheme, null, editor);
+				createAddShape = CreateEditionAction.actionType.makeNewAction(dropScheme.getControlGraph(), null, editor);
 			}
-			createAddShape.actionChoice = CreateEditionActionChoice.ModelSlotSpecificAction;
+			// createAddShape.actionChoice = CreateEditionActionChoice.ModelSlotSpecificAction;
 			createAddShape.setModelSlot(getTypedDiagramModelSlot());
-			createAddShape.setModelSlotSpecificActionClass(AddShape.class);
+			createAddShape.setEditionActionClass(AddShape.class);
+			createAddShape.setAssignation(new DataBinding(SHAPE_ROLE_NAME));
 			createAddShape.doAction();
 
-			AddShape addShape = (AddShape) createAddShape.getNewEditionAction();
-			addShape.setAssignation(new DataBinding(SHAPE_ROLE_NAME));
+			// AssignationAction<DiagramShape> addShapeAssigment = (AssignationAction<DiagramShape>) createAddShape.getNewEditionAction();
+			// AddShape addShape = (AddShape)addShapeAssigment.getAssignableAction();
 
 			CreateEditionAction givesNameAction = null;
 			if (ownerAction != null) {
-				givesNameAction = CreateEditionAction.actionType.makeNewEmbeddedAction(dropScheme, null, ownerAction);
+				givesNameAction = CreateEditionAction.actionType.makeNewEmbeddedAction(dropScheme.getControlGraph(), null, ownerAction);
 			} else {
-				givesNameAction = CreateEditionAction.actionType.makeNewAction(dropScheme, null, editor);
+				givesNameAction = CreateEditionAction.actionType.makeNewAction(dropScheme.getControlGraph(), null, editor);
 			}
-			givesNameAction.actionChoice = CreateEditionActionChoice.BuiltInAction;
-			givesNameAction.setBuiltInActionClass(AssignationAction.class);
+			// givesNameAction.actionChoice = CreateEditionActionChoice.BuiltInAction;
+			givesNameAction.setEditionActionClass(ExpressionAction.class);
+			givesNameAction.setAssignation(new DataBinding(NAME_ROLE_NAME));
 			givesNameAction.doAction();
 
-			AssignationAction nameAssignation = (AssignationAction) givesNameAction.getNewEditionAction();
-			nameAssignation.setAssignation(new DataBinding(NAME_ROLE_NAME));
-			nameAssignation.setValue(new DataBinding("parameters.conceptName"));
+			AssignationAction<?> nameAssignation = (AssignationAction<?>) givesNameAction.getNewEditionAction();
+			((ExpressionAction) nameAssignation.getAssignableAction()).setExpression(new DataBinding("parameters.conceptName"));
 
 			// Create new DeletionScheme
 			CreateFlexoBehaviour createDeletionScheme = null;
@@ -284,19 +301,19 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			createDeletionScheme.setFlexoBehaviourName("delete");
 			createDeletionScheme.setFlexoBehaviourClass(DeletionScheme.class);
 			createDeletionScheme.doAction();
-			assertTrue(createDeletionScheme.hasActionExecutionSucceeded());
 			DeletionScheme deletionScheme = (DeletionScheme) createDeletionScheme.getNewFlexoBehaviour();
 			deletionScheme.setSkipConfirmationPanel(true);
 
 			CreateEditionAction createDeleteShape = null;
 			if (ownerAction != null) {
-				createDeleteShape = CreateEditionAction.actionType.makeNewEmbeddedAction(deletionScheme, null, ownerAction);
+				createDeleteShape = CreateEditionAction.actionType.makeNewEmbeddedAction(deletionScheme.getControlGraph(), null,
+						ownerAction);
 			} else {
-				createDeleteShape = CreateEditionAction.actionType.makeNewAction(deletionScheme, null, editor);
+				createDeleteShape = CreateEditionAction.actionType.makeNewAction(deletionScheme.getControlGraph(), null, editor);
 			}
-			createDeleteShape.actionChoice = CreateEditionActionChoice.ModelSlotSpecificAction;
-			createDeleteShape.setModelSlot(getTypedDiagramModelSlot());
-			createDeleteShape.setModelSlotSpecificActionClass(DeleteAction.class);
+			// createDeleteShape.actionChoice = CreateEditionActionChoice.BuiltInAction;
+			// createDeleteShape.setModelSlot(getTypedDiagramModelSlot());
+			createDeleteShape.setEditionActionClass(DeleteAction.class);
 			createDeleteShape.doAction();
 
 			DeleteAction deleteShape = (DeleteAction) createDeleteShape.getNewEditionAction();
@@ -332,7 +349,7 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			FlexoAction<?, ?, ?> ownerAction) {
 
 		CreateFMLControlledDiagramPaletteElement action = CreateFMLControlledDiagramPaletteElement.actionType.makeNewEmbeddedAction(
-				concept.getVirtualModel(), null, ownerAction);
+				concept.getOwningVirtualModel(), null, ownerAction);
 		action.setPalette(getConceptsPalette());
 
 		ShapeGraphicalRepresentation paletteElementGR = (ShapeGraphicalRepresentation) gr.cloneObject();

@@ -1,22 +1,41 @@
-/*
- * (c) Copyright 2010-2011 AgileBirds
+/**
+ * 
+ * Copyright (c) 2014, Openflexo
+ * 
+ * This file is part of Freemodellingeditor, a component of the software infrastructure 
+ * developed at Openflexo.
+ * 
+ * 
+ * Openflexo is dual-licensed under the European Union Public License (EUPL, either 
+ * version 1.1 of the License, or any later version ), which is available at 
+ * https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+ * and the GNU General Public License (GPL, either version 3 of the License, or any 
+ * later version), which is available at http://www.gnu.org/licenses/gpl.html .
+ * 
+ * You can redistribute it and/or modify under the terms of either of these licenses
+ * 
+ * If you choose to redistribute it and/or modify under the terms of the GNU GPL, you
+ * must include the following additional permission.
  *
- * This file is part of OpenFlexo.
+ *          Additional permission under GNU GPL version 3 section 7
  *
- * OpenFlexo is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ *          If you modify this Program, or any covered work, by linking or 
+ *          combining it with software containing parts covered by the terms 
+ *          of EPL 1.0, the licensors of this Program grant you additional permission
+ *          to convey the resulting work. * 
+ * 
+ * This software is distributed in the hope that it will be useful, but WITHOUT ANY 
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ * PARTICULAR PURPOSE. 
  *
- * OpenFlexo is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with OpenFlexo. If not, see <http://www.gnu.org/licenses/>.
- *
+ * See http://www.openflexo.org/license.html for details.
+ * 
+ * 
+ * Please contact Openflexo (openflexo-contacts@openflexo.org)
+ * or visit www.openflexo.org if you need additional information.
+ * 
  */
+
 package org.openflexo.fme.controller.editor;
 
 import java.util.logging.Logger;
@@ -32,11 +51,12 @@ import org.openflexo.fib.controller.FIBDialog;
 import org.openflexo.fib.model.FIBComponent;
 import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.action.FlexoUndoManager.FlexoActionCompoundEdit;
-import org.openflexo.foundation.view.FlexoConceptInstance;
+import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.logging.FlexoLogger;
 import org.openflexo.technologyadapter.diagram.controller.DiagramCst;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.CommonPalette;
 import org.openflexo.technologyadapter.diagram.model.DiagramContainerElement;
+import org.openflexo.technologyadapter.diagram.model.DiagramElement;
 import org.openflexo.view.FlexoFrame;
 import org.openflexo.view.controller.FlexoFIBController;
 
@@ -81,7 +101,8 @@ public class FreeShapesPalette extends CommonPalette {
 					|| shapeGR.getShapeSpecification().getShapeType() == ShapeType.CIRCLE) {
 				shapeGR.setWidth(50);
 				shapeGR.setHeight(50);
-			} else {
+			}
+			else {
 				shapeGR.setWidth(60);
 				shapeGR.setHeight(45);
 			}
@@ -118,6 +139,13 @@ public class FreeShapesPalette extends CommonPalette {
 
 		FlexoConceptInstance newFlexoConceptInstance = action.getNewFlexoConceptInstance();
 		// DiagramShape shape = newFlexoConceptInstance.getFlexoActor(patternRole)
+
+		// The new shape has well be added to the diagram, and the drawing (which listen to the diagram) has well received the event
+		// The drawing is now up-to-date... but there is something wrong if we are in FML-controlled mode.
+		// Since the shape has been added BEFORE the FlexoConceptInstance has been set, the drawing only knows about the DiagamShape,
+		// and not about an FMLControlledDiagramShape. That's why we need to notify again the new diagram element's parent, to be
+		// sure that the Drawing can discover that the new shape is FML-controlled
+		container.getPropertyChangeSupport().firePropertyChange(DiagramElement.INVALIDATE, null, container);
 
 		getEditor().setCurrentTool(EditorTool.SelectionTool);
 

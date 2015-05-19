@@ -1,22 +1,41 @@
-/*
- * (c) Copyright 2010-2011 AgileBirds
+/**
+ * 
+ * Copyright (c) 2014-2015, Openflexo
+ * 
+ * This file is part of Freemodellingeditor, a component of the software infrastructure 
+ * developed at Openflexo.
+ * 
+ * 
+ * Openflexo is dual-licensed under the European Union Public License (EUPL, either 
+ * version 1.1 of the License, or any later version ), which is available at 
+ * https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+ * and the GNU General Public License (GPL, either version 3 of the License, or any 
+ * later version), which is available at http://www.gnu.org/licenses/gpl.html .
+ * 
+ * You can redistribute it and/or modify under the terms of either of these licenses
+ * 
+ * If you choose to redistribute it and/or modify under the terms of the GNU GPL, you
+ * must include the following additional permission.
  *
- * This file is part of OpenFlexo.
+ *          Additional permission under GNU GPL version 3 section 7
  *
- * OpenFlexo is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ *          If you modify this Program, or any covered work, by linking or 
+ *          combining it with software containing parts covered by the terms 
+ *          of EPL 1.0, the licensors of this Program grant you additional permission
+ *          to convey the resulting work. * 
+ * 
+ * This software is distributed in the hope that it will be useful, but WITHOUT ANY 
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ * PARTICULAR PURPOSE. 
  *
- * OpenFlexo is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with OpenFlexo. If not, see <http://www.gnu.org/licenses/>.
- *
+ * See http://www.openflexo.org/license.html for details.
+ * 
+ * 
+ * Please contact Openflexo (openflexo-contacts@openflexo.org)
+ * or visit www.openflexo.org if you need additional information.
+ * 
  */
+
 package org.openflexo.fme.model.action;
 
 import java.util.Vector;
@@ -30,12 +49,12 @@ import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
+import org.openflexo.foundation.fml.action.CreateViewPoint;
+import org.openflexo.foundation.fml.rm.ViewPointResource;
+import org.openflexo.foundation.fml.rt.action.CreateView;
+import org.openflexo.foundation.fml.rt.rm.ViewResource;
 import org.openflexo.foundation.resource.InvalidFileNameException;
 import org.openflexo.foundation.resource.SaveResourceException;
-import org.openflexo.foundation.view.action.CreateView;
-import org.openflexo.foundation.view.rm.ViewResource;
-import org.openflexo.foundation.viewpoint.action.CreateViewPoint;
-import org.openflexo.foundation.viewpoint.rm.ViewPointResource;
 import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.technologyadapter.diagram.rm.DiagramSpecificationRepository;
 
@@ -48,7 +67,8 @@ public class GivesFMENature extends FlexoAction<GivesFMENature, FlexoProject, Fl
 
 	private static final Logger logger = Logger.getLogger(GivesFMENature.class.getPackage().getName());
 
-	public static FlexoActionType<GivesFMENature, FlexoProject, FlexoObject> actionType = new FlexoActionType<GivesFMENature, FlexoProject, FlexoObject>("gives_fme_nature") {
+	public static FlexoActionType<GivesFMENature, FlexoProject, FlexoObject> actionType = new FlexoActionType<GivesFMENature, FlexoProject, FlexoObject>(
+			"gives_fme_nature") {
 
 		/**
 		 * Factory method
@@ -80,12 +100,19 @@ public class GivesFMENature extends FlexoAction<GivesFMENature, FlexoProject, Fl
 
 	@Override
 	protected void doAction(Object context) throws InvalidFileNameException, SaveResourceException, InvalidArgumentException {
+		if (getFocusedObject().getViewPointRepository() == null) {
+			logger.warning("Could not determine ViewPointRepository. Aborting operation.");
+			throw new InvalidArgumentException("Could not determine ViewPointRepository. Aborting operation.");
+		}
+
 		ViewPointResource freeModellingViewPointResource = getFocusedObject().getViewPointRepository().getResource(
 				getFocusedObject().getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
 
-		// Since CreateViewpoint/View are LongRunning actions, we call them as embedded actions, therefore we are ensure that Viewpoint and View are created after doAction() call.
+		// Since CreateViewpoint/View are LongRunning actions, we call them as embedded actions, therefore we are ensure that Viewpoint and
+		// View are created after doAction() call.
 		if (freeModellingViewPointResource == null) {
-			CreateViewPoint action = CreateViewPoint.actionType.makeNewEmbeddedAction(getFocusedObject().getViewPointRepository().getRootFolder(), null,this);
+			CreateViewPoint action = CreateViewPoint.actionType.makeNewEmbeddedAction(getFocusedObject().getViewPointRepository()
+					.getRootFolder(), null, this);
 			action.setNewViewPointName(FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_NAME);
 			action.setNewViewPointURI(getFocusedObject().getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
 			action.setNewViewPointDescription("This is the generic ViewPoint storing all FreeModelling meta-models");
@@ -94,10 +121,11 @@ public class GivesFMENature extends FlexoAction<GivesFMENature, FlexoProject, Fl
 		}
 
 		ViewResource freeModellingViewResource = getFocusedObject().getViewLibrary().getResource(
-				getFocusedObject().getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
+				getFocusedObject().getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEW_RELATIVE_URI);
 
 		if (freeModellingViewResource == null) {
-			CreateView action = CreateView.actionType.makeNewEmbeddedAction(getFocusedObject().getViewLibrary().getRootFolder(), null, this);
+			CreateView action = CreateView.actionType
+					.makeNewEmbeddedAction(getFocusedObject().getViewLibrary().getRootFolder(), null, this);
 			action.setNewViewName(FreeModellingProjectNature.FREE_MODELLING_VIEW_NAME);
 			action.setNewViewTitle(FreeModellingProjectNature.FREE_MODELLING_VIEW_NAME);
 			action.setViewpointResource(freeModellingViewPointResource);
@@ -107,8 +135,13 @@ public class GivesFMENature extends FlexoAction<GivesFMENature, FlexoProject, Fl
 
 		DiagramTechnologyAdapter diagramTechnologyAdapter = getFocusedObject().getServiceManager().getTechnologyAdapterService()
 				.getTechnologyAdapter(DiagramTechnologyAdapter.class);
-		DiagramSpecificationRepository dsRepository = getFocusedObject().getRepository(DiagramSpecificationRepository.class, diagramTechnologyAdapter);
+		DiagramSpecificationRepository dsRepository = getFocusedObject().getRepository(DiagramSpecificationRepository.class,
+				diagramTechnologyAdapter);
 		dsRepository.createNewFolder(FreeModellingProjectNature.DIAGRAM_SPECIFICATIONS_FOLDER);
+
+		// We have now to notify project of nature modifications
+		getFocusedObject().getPropertyChangeSupport().firePropertyChange("asNature(String)", false, true);
+		getFocusedObject().getPropertyChangeSupport().firePropertyChange("hasNature(String)", false, true);
 	}
 
 	@Override

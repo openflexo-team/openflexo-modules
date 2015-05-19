@@ -6,10 +6,10 @@
       <BrowserElement dataClassName="org.openflexo.fme.model.FreeModel" label="freeModel.name" isEditable="false" filtered="false" defaultVisible="true" name="freeModel">
         <Children data="freeModel.usedFlexoConcepts" name="usedFlexoConcepts" />
       </BrowserElement>
-      <BrowserElement dataClassName="org.openflexo.foundation.viewpoint.FlexoConcept" label="concept.name" icon="controller.iconForObject(concept)" isEditable="false" filtered="false" defaultVisible="true" name="concept">
+      <BrowserElement dataClassName="org.openflexo.foundation.fml.FlexoConcept" label="concept.name" icon="controller.iconForObject(concept)" isEditable="false" filtered="false" defaultVisible="true" name="concept">
         <Children data="data.getInstances(concept)" name="instances" />
       </BrowserElement>
-      <BrowserElement dataClassName="org.openflexo.foundation.view.FlexoConceptInstance" label="instance.stringRepresentation" icon="controller.iconForObject(instance)" isEditable="false" filtered="false" defaultVisible="true" name="instance" />
+      <BrowserElement dataClassName="org.openflexo.foundation.fml.rt.FlexoConceptInstance" label="instance.stringRepresentation" icon="controller.iconForObject(instance)" isEditable="false" filtered="false" defaultVisible="true" name="instance" />
     </Browser>
   </Panel>
   <LocalizedDictionary>
