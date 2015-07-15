@@ -41,6 +41,7 @@ package org.openflexo.fme.model.action;
 import java.util.Vector;
 import java.util.logging.Logger;
 
+import org.openflexo.connie.DataBinding;
 import org.openflexo.fme.model.FreeMetaModel;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.fme.model.FreeModellingProject;
@@ -53,11 +54,24 @@ import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.PrimitiveRole;
+import org.openflexo.foundation.fml.TextFieldParameter;
+import org.openflexo.foundation.fml.PrimitiveRole.PrimitiveType;
+import org.openflexo.foundation.fml.action.CreateEditionAction;
+import org.openflexo.foundation.fml.action.CreateFlexoBehaviourParameter;
+import org.openflexo.foundation.fml.action.CreateFlexoRole;
+import org.openflexo.foundation.fml.editionaction.AssignationAction;
+import org.openflexo.foundation.fml.editionaction.ExpressionAction;
+import org.openflexo.foundation.fml.rm.VirtualModelResource;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
+import org.openflexo.technologyadapter.diagram.fml.ConnectorRole;
+import org.openflexo.technologyadapter.diagram.fml.DropScheme;
 import org.openflexo.technologyadapter.diagram.fml.GraphicalElementRole;
+import org.openflexo.technologyadapter.diagram.fml.LinkScheme;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
+import org.openflexo.technologyadapter.diagram.fml.action.DeclareConnectorInFlexoConcept;
+import org.openflexo.technologyadapter.diagram.fml.editionaction.AddShape;
+import org.openflexo.technologyadapter.diagram.model.DiagramConnector;
 import org.openflexo.technologyadapter.diagram.model.DiagramElement;
-import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 
 /**
  * This action is used to create a new FlexoConcept from a diagram element
@@ -84,13 +98,15 @@ public class CreateNewConceptFromDiagramElement extends FlexoAction<CreateNewCon
 		@Override
 		public boolean isVisibleForSelection(DiagramElement<?> object, Vector<FlexoObject> globalSelection) {
 			// TODO: handle other kind of elements
-			return object instanceof DiagramShape;
+			//return object instanceof DiagramShape;
+			return true;
 		}
 
 		@Override
 		public boolean isEnabledForSelection(DiagramElement<?> object, Vector<FlexoObject> globalSelection) {
 			// TODO: handle other kind of elements
-			return object instanceof DiagramShape;
+			//return object instanceof DiagramShape;
+			return true;
 		}
 
 	};
@@ -126,16 +142,30 @@ public class CreateNewConceptFromDiagramElement extends FlexoAction<CreateNewCon
 
 	@Override
 	protected void doAction(Object context) throws InvalidArgumentException {
-
+		
 		logger.info("Create new instance of created concept from diagram element ");
 		none = getFreeModel().getMetaModel().getNoneFlexoConcept(getEditor(), this);
-		flexoConceptInstance = createFlexoConceptInstanceFromDiagramShape(getFocusedObject());
+		
+		if(getFocusedObject() instanceof DiagramConnector){
+			DiagramConnector connector = (DiagramConnector)getFocusedObject();
+			DeclareConnectorInFlexoConcept declareConnectorConcept = DeclareConnectorInFlexoConcept.actionType
+					.makeNewEmbeddedAction(connector, null, this);
+			declareConnectorConcept.setVirtualModelResource((VirtualModelResource)(getFreeModel().getVirtualModel().getResource()));
+			declareConnectorConcept.doAction();
+			flexoConcept = declareConnectorConcept.getFlexoConcept();
+		//	declareConnectorConcept.
+			flexoConceptInstance = createFlexoConceptInstanceFromDiagramConnector(connector);
+		}
+		else{
+			flexoConceptInstance = createFlexoConceptInstanceFromDiagramShape(getFocusedObject());
 
-		logger.info("Create new concept from diagram element ");
-		CreateNewConceptFromNoneConcept actionCreateNewConcept = CreateNewConceptFromNoneConcept.actionType
-				.makeNewEmbeddedAction(flexoConceptInstance, null, this);
-		actionCreateNewConcept.doAction();
-		flexoConcept = actionCreateNewConcept.getNewFlexoConcept();
+			logger.info("Create new concept from diagram element ");
+			CreateNewConceptFromNoneConcept actionCreateNewConcept = CreateNewConceptFromNoneConcept.actionType
+					.makeNewEmbeddedAction(flexoConceptInstance, null, this);
+			actionCreateNewConcept.doAction();
+			flexoConcept = actionCreateNewConcept.getNewFlexoConcept();
+		}
+		
 	}
 
 	private FlexoConceptInstance createFlexoConceptInstanceFromDiagramShape(DiagramElement<?> diagramElement) {
@@ -147,6 +177,46 @@ public class CreateNewConceptFromDiagramElement extends FlexoAction<CreateNewCon
 		return newFlexoConceptInstance;
 	}
 
+	private FlexoConceptInstance createFlexoConceptInstanceFromDiagramConnector(DiagramConnector connector) {
+		FlexoConceptInstance newFlexoConceptInstance = getFreeModel().getVirtualModelInstance().makeNewFlexoConceptInstance(flexoConcept);
+		ConnectorRole geRole = (ConnectorRole) flexoConcept.getAccessibleProperty("connector");
+		geRole.setReadOnlyLabel(false);
+		newFlexoConceptInstance.setFlexoActor(connector, geRole);
+		CreateFlexoRole createNameRole = CreateFlexoRole.actionType.makeNewEmbeddedAction(flexoConcept, null, this);
+		createNameRole.setRoleName(FreeMetaModel.NAME_ROLE_NAME);
+		createNameRole.setFlexoRoleClass(PrimitiveRole.class);
+		createNameRole.setPrimitiveType(PrimitiveType.String);
+		createNameRole.doAction();
+		// Bind shapes's label to name property
+		geRole.setLabel(new DataBinding("name"));
+		newFlexoConceptInstance.setFlexoActor(flexoConcept.getName(), (PrimitiveRole)createNameRole.getNewFlexoProperty());
+		LinkScheme linkScheme = (LinkScheme) flexoConcept.getFlexoBehaviours(LinkScheme.class).get(0);
+		
+		// Create new DropScheme parameter
+		CreateFlexoBehaviourParameter createSchemeParameter = CreateFlexoBehaviourParameter.actionType.makeNewEmbeddedAction(linkScheme, null, this);
+		createSchemeParameter.setParameterName("conceptName");
+		createSchemeParameter.setFlexoBehaviourParameterClass(TextFieldParameter.class);
+		createSchemeParameter.doAction();
+		TextFieldParameter parameter = (TextFieldParameter) createSchemeParameter.getNewParameter();
+		parameter.setDefaultValue(new DataBinding<String>("\"" + parameter.getName() + "\""));
+
+		CreateEditionAction givesNameAction = CreateEditionAction.actionType.makeNewEmbeddedAction(linkScheme.getControlGraph(), null, this);
+		
+		// givesNameAction.actionChoice = CreateEditionActionChoice.BuiltInAction;
+		givesNameAction.setEditionActionClass(ExpressionAction.class);
+		givesNameAction.setAssignation(new DataBinding(FreeMetaModel.NAME_ROLE_NAME));
+		givesNameAction.doAction();
+
+		AssignationAction<?> nameAssignation = (AssignationAction<?>) givesNameAction.getNewEditionAction();
+		((ExpressionAction) nameAssignation.getAssignableAction()).setExpression(new DataBinding("parameters.conceptName"));
+
+		
+		connector.getParent().getPropertyChangeSupport().firePropertyChange(DiagramElement.INVALIDATE, null, connector.getParent());
+
+		return newFlexoConceptInstance;
+	}
+
+	
 	public FlexoConcept getFlexoConcept() {
 		return flexoConcept;
 	}
