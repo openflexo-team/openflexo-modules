@@ -62,7 +62,7 @@ import org.openflexo.foundation.fml.action.CreateEditionAction;
 import org.openflexo.foundation.fml.action.CreateFlexoBehaviour;
 import org.openflexo.foundation.fml.action.CreateFlexoBehaviourParameter;
 import org.openflexo.foundation.fml.action.CreateFlexoConcept;
-import org.openflexo.foundation.fml.action.CreateFlexoRole;
+import org.openflexo.foundation.fml.action.AbstractCreateFlexoRole;
 import org.openflexo.foundation.fml.editionaction.AssignationAction;
 import org.openflexo.foundation.fml.editionaction.DeleteAction;
 import org.openflexo.foundation.fml.editionaction.ExpressionAction;
@@ -199,11 +199,11 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			returned = action.getNewFlexoConcept();
 
 			// Creates shape property
-			CreateFlexoRole createShapeRole = null;
+			AbstractCreateFlexoRole createShapeRole = null;
 			if (ownerAction != null) {
-				createShapeRole = CreateFlexoRole.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
+				createShapeRole = AbstractCreateFlexoRole.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
 			} else {
-				createShapeRole = CreateFlexoRole.actionType.makeNewAction(returned, null, editor);
+				createShapeRole = AbstractCreateFlexoRole.actionType.makeNewAction(returned, null, editor);
 			}
 			createShapeRole.setModelSlot(getTypedDiagramModelSlot());
 			createShapeRole.setRoleName(SHAPE_ROLE_NAME);
@@ -212,11 +212,11 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			ShapeRole role = (ShapeRole) createShapeRole.getNewFlexoRole();
 
 			// Create new PrimitiveRole (String type) to store the name of this instance
-			CreateFlexoRole createNameRole = null;
+			AbstractCreateFlexoRole createNameRole = null;
 			if (ownerAction != null) {
-				createNameRole = CreateFlexoRole.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
+				createNameRole = AbstractCreateFlexoRole.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
 			} else {
-				createNameRole = CreateFlexoRole.actionType.makeNewAction(returned, null, editor);
+				createNameRole = AbstractCreateFlexoRole.actionType.makeNewAction(returned, null, editor);
 			}
 			createNameRole.setRoleName(NAME_ROLE_NAME);
 			createNameRole.setFlexoRoleClass(PrimitiveRole.class);
