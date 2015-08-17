@@ -54,7 +54,6 @@ import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.fml.DeletionScheme;
 import org.openflexo.foundation.fml.FMLModelFactory;
 import org.openflexo.foundation.fml.FlexoConcept;
-import org.openflexo.foundation.fml.PrimitiveRole;
 import org.openflexo.foundation.fml.PrimitiveRole.PrimitiveType;
 import org.openflexo.foundation.fml.TextFieldParameter;
 import org.openflexo.foundation.fml.VirtualModel;
@@ -62,7 +61,8 @@ import org.openflexo.foundation.fml.action.CreateEditionAction;
 import org.openflexo.foundation.fml.action.CreateFlexoBehaviour;
 import org.openflexo.foundation.fml.action.CreateFlexoBehaviourParameter;
 import org.openflexo.foundation.fml.action.CreateFlexoConcept;
-import org.openflexo.foundation.fml.action.AbstractCreateFlexoRole;
+import org.openflexo.foundation.fml.action.CreatePrimitiveRole;
+import org.openflexo.foundation.fml.action.CreateTechnologyRole;
 import org.openflexo.foundation.fml.editionaction.AssignationAction;
 import org.openflexo.foundation.fml.editionaction.DeleteAction;
 import org.openflexo.foundation.fml.editionaction.ExpressionAction;
@@ -120,7 +120,8 @@ public class FreeMetaModel extends DefaultFlexoObject {
 		super();
 		this.fmProject = fmProject;
 		if (!virtualModel.hasNature(FMLControlledDiagramVirtualModelNature.INSTANCE)) {
-			throw new InvalidArgumentException("VirtualModel " + virtualModel + " does not have the FMLControlledDiagramVirtualModelNature");
+			throw new InvalidArgumentException(
+					"VirtualModel " + virtualModel + " does not have the FMLControlledDiagramVirtualModelNature");
 		}
 		this.virtualModel = virtualModel;
 	}
@@ -199,11 +200,11 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			returned = action.getNewFlexoConcept();
 
 			// Creates shape property
-			AbstractCreateFlexoRole createShapeRole = null;
+			CreateTechnologyRole createShapeRole = null;
 			if (ownerAction != null) {
-				createShapeRole = AbstractCreateFlexoRole.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
+				createShapeRole = CreateTechnologyRole.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
 			} else {
-				createShapeRole = AbstractCreateFlexoRole.actionType.makeNewAction(returned, null, editor);
+				createShapeRole = CreateTechnologyRole.actionType.makeNewAction(returned, null, editor);
 			}
 			createShapeRole.setModelSlot(getTypedDiagramModelSlot());
 			createShapeRole.setRoleName(SHAPE_ROLE_NAME);
@@ -212,14 +213,13 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			ShapeRole role = (ShapeRole) createShapeRole.getNewFlexoRole();
 
 			// Create new PrimitiveRole (String type) to store the name of this instance
-			AbstractCreateFlexoRole createNameRole = null;
+			CreatePrimitiveRole createNameRole = null;
 			if (ownerAction != null) {
-				createNameRole = AbstractCreateFlexoRole.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
+				createNameRole = CreatePrimitiveRole.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
 			} else {
-				createNameRole = AbstractCreateFlexoRole.actionType.makeNewAction(returned, null, editor);
+				createNameRole = CreatePrimitiveRole.actionType.makeNewAction(returned, null, editor);
 			}
 			createNameRole.setRoleName(NAME_ROLE_NAME);
-			createNameRole.setFlexoRoleClass(PrimitiveRole.class);
 			createNameRole.setPrimitiveType(PrimitiveType.String);
 			createNameRole.doAction();
 
@@ -348,8 +348,8 @@ public class FreeMetaModel extends DefaultFlexoObject {
 	public DiagramPaletteElement createPaletteElementForConcept(FlexoConcept concept, ShapeGraphicalRepresentation gr,
 			FlexoAction<?, ?, ?> ownerAction) {
 
-		CreateFMLControlledDiagramPaletteElement action = CreateFMLControlledDiagramPaletteElement.actionType.makeNewEmbeddedAction(
-				concept.getOwningVirtualModel(), null, ownerAction);
+		CreateFMLControlledDiagramPaletteElement action = CreateFMLControlledDiagramPaletteElement.actionType
+				.makeNewEmbeddedAction(concept.getOwningVirtualModel(), null, ownerAction);
 		action.setPalette(getConceptsPalette());
 
 		ShapeGraphicalRepresentation paletteElementGR = (ShapeGraphicalRepresentation) gr.cloneObject();

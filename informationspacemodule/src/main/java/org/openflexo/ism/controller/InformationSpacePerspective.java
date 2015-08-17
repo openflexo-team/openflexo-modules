@@ -44,7 +44,6 @@ import javax.swing.ImageIcon;
 
 import org.openflexo.components.widget.FIBInformationSpaceBrowser;
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.foundation.ontology.IFlexoOntologyObject;
 import org.openflexo.foundation.technologyadapter.TechnologyAdapter;
 import org.openflexo.foundation.technologyadapter.TechnologyObject;
 import org.openflexo.icon.FMLIconLibrary;
@@ -81,15 +80,13 @@ public class InformationSpacePerspective extends FlexoPerspective {
 		return FMLIconLibrary.INFORMATION_SPACE_ICON;
 	}
 
+	@Override
 	public String getWindowTitleforObject(FlexoObject object, FlexoController controller) {
 		if (object instanceof TechnologyObject) {
 			TechnologyAdapter ta = ((TechnologyObject) object).getTechnologyAdapter();
 			TechnologyAdapterController<?> tac = controller.getApplicationContext().getTechnologyAdapterControllerService()
 					.getTechnologyAdapterController(ta);
 			return tac.getWindowTitleforObject((TechnologyObject) object, controller);
-		}
-		if (object instanceof IFlexoOntologyObject) {
-			return ((IFlexoOntologyObject) object).getName();
 		}
 		if (object != null) {
 			return object.toString();
