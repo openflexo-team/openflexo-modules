@@ -58,11 +58,10 @@ import org.openflexo.fme.view.menu.FMEMenuBar;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
-import org.openflexo.foundation.fml.ViewPoint;
 import org.openflexo.foundation.fml.FMLObject;
+import org.openflexo.foundation.fml.ViewPoint;
 import org.openflexo.foundation.validation.FlexoValidationModel;
 import org.openflexo.icon.IconLibrary;
-import org.openflexo.icon.FMLIconLibrary;
 import org.openflexo.module.FlexoModule;
 import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.view.FlexoMainPane;
@@ -88,7 +87,7 @@ public class FMEController extends FlexoController {
 		super(module);
 
 		/*SwingUtilities.invokeLater(new Runnable() {
-
+		
 			@Override
 			public void run() {
 				setCurrentEditedObjectAsModuleView(getApplicationContext().getViewPointLibrary(), FREE_MODELLING_PERSPECTIVE);
@@ -127,8 +126,6 @@ public class FMEController extends FlexoController {
 	@Override
 	public void initInspectors() {
 		super.initInspectors();
-		loadInspectorGroup("IFlexoOntology");
-
 	}
 
 	@Override

@@ -64,7 +64,7 @@ public class InformationSpacePerspective extends FlexoPerspective {
 	public InformationSpacePerspective(FlexoController controller) {
 		super("information_space_perspective", controller);
 
-		informationSpaceBrowser = new FIBInformationSpaceBrowser(controller.getApplicationContext().getInformationSpace(), controller);
+		informationSpaceBrowser = new FIBInformationSpaceBrowser(controller.getApplicationContext().getResourceManager(), controller);
 
 		setTopLeftView(informationSpaceBrowser);
 
