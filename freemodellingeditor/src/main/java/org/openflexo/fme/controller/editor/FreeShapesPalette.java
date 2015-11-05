@@ -47,8 +47,9 @@ import org.openflexo.fge.control.DianaInteractiveEditor.EditorTool;
 import org.openflexo.fge.geom.FGEPoint;
 import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
 import org.openflexo.fib.FIBLibrary;
-import org.openflexo.fib.controller.FIBDialog;
 import org.openflexo.fib.model.FIBComponent;
+import org.openflexo.fib.swing.utils.JFIBDialog;
+import org.openflexo.fib.swing.view.SwingViewFactory;
 import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.action.FlexoUndoManager.FlexoActionCompoundEdit;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
@@ -125,8 +126,8 @@ public class FreeShapesPalette extends CommonPalette {
 
 		if (isImage) {
 			FIBComponent fibComponent = FIBLibrary.instance().retrieveFIBComponent(DiagramCst.IMPORT_IMAGE_FILE_DIALOG_FIB);
-			FIBDialog dialog = FIBDialog.instanciateAndShowDialog(fibComponent, shapeGR, FlexoFrame.getActiveFrame(), true,
-					new FlexoFIBController(fibComponent, getEditor().getFlexoController()));
+			JFIBDialog dialog = JFIBDialog.instanciateAndShowDialog(fibComponent, shapeGR, FlexoFrame.getActiveFrame(), true,
+					new FlexoFIBController(fibComponent, SwingViewFactory.INSTANCE, getEditor().getFlexoController()));
 		}
 
 		DropShape action = DropShape.actionType.makeNewAction(container, null, getEditor().getFlexoController().getEditor());

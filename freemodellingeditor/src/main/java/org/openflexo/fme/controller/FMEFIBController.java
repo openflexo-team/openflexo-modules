@@ -41,6 +41,7 @@ package org.openflexo.fme.controller;
 import java.util.logging.Logger;
 
 import org.openflexo.fib.model.FIBComponent;
+import org.openflexo.fib.view.GinaViewFactory;
 import org.openflexo.fme.controller.editor.FreeModelDiagramEditor;
 import org.openflexo.fme.view.FreeModelModuleView;
 import org.openflexo.foundation.fml.FlexoConcept;
@@ -59,8 +60,8 @@ public class FMEFIBController extends FlexoFIBController {
 
 	private static final Logger logger = Logger.getLogger(FMEFIBController.class.getPackage().getName());
 
-	public FMEFIBController(FIBComponent component) {
-		super(component);
+	public FMEFIBController(FIBComponent component, GinaViewFactory<?> viewFactory) {
+		super(component, viewFactory);
 		// Default parent localizer is the main localizer
 		setParentLocalizer(FlexoLocalization.getMainLocalizer());
 	}

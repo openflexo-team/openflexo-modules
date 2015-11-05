@@ -50,8 +50,9 @@ import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
 import org.openflexo.fge.swing.control.SwingToolFactory;
 import org.openflexo.fge.swing.control.tools.JDianaPalette;
 import org.openflexo.fib.FIBLibrary;
-import org.openflexo.fib.controller.FIBDialog;
 import org.openflexo.fib.model.FIBComponent;
+import org.openflexo.fib.swing.utils.JFIBDialog;
+import org.openflexo.fib.swing.view.SwingViewFactory;
 import org.openflexo.fme.controller.FreeModelPasteHandler;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.fme.model.action.DropShape;
@@ -141,12 +142,14 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 			if (getFreeModel().getVirtualModel().getFlexoConcepts().size() > 1) {
 				// In this case, we should activate the concept palette (the second one)
 				returned.setSelectedIndex(1);
-			} else {
+			}
+			else {
 				// In this case, activate used shape palette
 				returned.setSelectedIndex(0);
 				activatePalette(dynamicPaletteComponent);
 			}
-		} else {
+		}
+		else {
 			// Empty diagram, activate free shapes
 			returned.setSelectedIndex(2);
 			activatePalette(getCommonPalette());
@@ -188,7 +191,8 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 					|| shapeGR.getShapeSpecification().getShapeType() == ShapeType.CIRCLE) {
 				shapeGR.setWidth(50);
 				shapeGR.setHeight(50);
-			} else {
+			}
+			else {
 				shapeGR.setWidth(60);
 				shapeGR.setHeight(45);
 			}
@@ -211,8 +215,8 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 
 		if (isImage) {
 			FIBComponent fibComponent = FIBLibrary.instance().retrieveFIBComponent(DiagramCst.IMPORT_IMAGE_FILE_DIALOG_FIB);
-			FIBDialog dialog = FIBDialog.instanciateAndShowDialog(fibComponent, shapeGR, FlexoFrame.getActiveFrame(), true,
-					new FlexoFIBController(fibComponent, getFlexoController()));
+			JFIBDialog dialog = JFIBDialog.instanciateAndShowDialog(fibComponent, shapeGR, FlexoFrame.getActiveFrame(), true,
+					new FlexoFIBController(fibComponent, SwingViewFactory.INSTANCE, getFlexoController()));
 		}
 
 		DropShape action = DropShape.actionType.makeNewAction(container, null, getFlexoController().getEditor());
