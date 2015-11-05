@@ -38,7 +38,7 @@
 
 package org.openflexo.vpm.fib;
 
-import org.openflexo.fib.utils.GenericFIBTestCase;
+import org.openflexo.gina.utils.GenericFIBTestCase;
 import org.openflexo.rm.FileResourceImpl;
 import org.openflexo.rm.ResourceLocator;
 

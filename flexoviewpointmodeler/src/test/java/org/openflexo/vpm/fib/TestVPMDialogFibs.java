@@ -40,7 +40,7 @@ package org.openflexo.vpm.fib;
 
 import java.io.File;
 
-import org.openflexo.fib.utils.GenericFIBTestCase;
+import org.openflexo.gina.utils.GenericFIBTestCase;
 
 public class TestVPMDialogFibs extends GenericFIBTestCase {
 

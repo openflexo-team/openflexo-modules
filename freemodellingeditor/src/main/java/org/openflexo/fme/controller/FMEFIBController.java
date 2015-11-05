@@ -40,11 +40,11 @@ package org.openflexo.fme.controller;
 
 import java.util.logging.Logger;
 
-import org.openflexo.fib.model.FIBComponent;
-import org.openflexo.fib.view.GinaViewFactory;
 import org.openflexo.fme.controller.editor.FreeModelDiagramEditor;
 import org.openflexo.fme.view.FreeModelModuleView;
 import org.openflexo.foundation.fml.FlexoConcept;
+import org.openflexo.gina.model.FIBComponent;
+import org.openflexo.gina.view.GinaViewFactory;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.view.controller.FlexoFIBController;
 
