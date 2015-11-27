@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Panel layout="twocols" darkLevel="0" data="" dataClassName="fr.archwater.DataExtractionProject"
+       controllerClassName="org.openflexo.gina.FIBController" visible="">
+	<Browser root="data" iteratorClassName="java.lang.Object" visibleRowCount="5" rowHeight="18" boundToSelectionManager="true"
+	         selectionMode="DiscontiguousTreeSelection" selected="" showFooter="true" rootVisible="true" showRootsHandle="true"
+	         localize="true" manageDynamicModel="true" clickAction="controller.singleClick(ProjectBrowser.selected)"
+	         doubleClickAction="controller.doubleClick(ProjectBrowser.selected)"
+	         rightClickAction="controller.rightClick(ProjectBrowser.selected,event)" name="ProjectBrowser" index="0"
+	         constraints="twocols(expandHorizontally=true;expandVertically=true;index=0;insetsBottom=0;insetsLeft=2;insetsRight=2;insetsTop=0;location=center)"
+	         visible="!data.hasNature('org.openflexo.module.cartoeditor.model.CEProjectNature')">
+		<BrowserElement dataClassName="fr.archwater.ProductLabelDirectory"
+			label="folder.toString" icon="controller.iconForObject(folder)"
+			isEditable="false"
+			filtered="false" defaultVisible="true" name="folder">
+			<Children data="folder.subdirectories" 
+				name="subFolders" />
+			<Children data="folder.labels"
+				name="resource" />
+		</BrowserElement>
+		<BrowserElement dataClassName="fr.archwater.ProductLabel"
+			label="resource.name" icon="controller.iconForObject(resource)"
+			isEditable="false" filtered="false" defaultVisible="true"
+			name="resource">
+		</BrowserElement>
+	</Browser>
+	<LocalizedDictionary/>
+</Panel>
