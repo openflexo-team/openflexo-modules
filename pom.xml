@@ -33,7 +33,6 @@
 		<module>informationspacemodule</module>
 		<module>freemodellingeditor</module>
 		<module>openflexo-module-archetype</module>
-		<module>arcchemicals</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>
