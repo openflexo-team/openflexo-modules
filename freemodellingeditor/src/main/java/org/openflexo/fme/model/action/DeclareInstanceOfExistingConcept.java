@@ -56,6 +56,7 @@ import org.openflexo.foundation.action.FlexoActionType;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
+import org.openflexo.foundation.fml.rt.VirtualModelInstance;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelNature;
@@ -123,7 +124,7 @@ public class DeclareInstanceOfExistingConcept extends FlexoAction<DeclareInstanc
 	}
 
 	public FreeModel getFreeModel() throws InvalidArgumentException {
-		return getFreeModellingProject().getFreeModel(getFocusedObject().getVirtualModelInstance());
+		return getFreeModellingProject().getFreeModel((VirtualModelInstance) getFocusedObject().getVirtualModelInstance());
 	}
 
 	public FlexoConcept getConcept() {
@@ -175,7 +176,8 @@ public class DeclareInstanceOfExistingConcept extends FlexoAction<DeclareInstanc
 		FlexoConceptInstance flexoConceptInstance = getFocusedObject();
 
 		// Retrieve shape property of this FC
-		ShapeRole currentShapeRole = (ShapeRole) flexoConceptInstance.getFlexoConcept().getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
+		ShapeRole currentShapeRole = (ShapeRole) flexoConceptInstance.getFlexoConcept()
+				.getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
 
 		// Retrieve actual shape element
 		DiagramShape shapeElement = flexoConceptInstance.getFlexoActor(currentShapeRole);

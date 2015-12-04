@@ -50,6 +50,7 @@ import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
+import org.openflexo.foundation.fml.rt.AbstractVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.fml.rt.VirtualModelInstance;
 import org.openflexo.foundation.fml.rt.VirtualModelInstanceObject;
@@ -109,7 +110,7 @@ public class DeleteFMEFlexoConceptInstance extends
 			FreeModel freeModel = getFreeModel();
 			for (FlexoObject selection : getGlobalSelection()) {
 				if (selection instanceof FlexoConceptInstance) {
-					VirtualModelInstance vmi = ((FlexoConceptInstance) selection).getVirtualModelInstance();
+					AbstractVirtualModelInstance<?, ?> vmi = ((FlexoConceptInstance) selection).getVirtualModelInstance();
 					DeletionSchemeActionType deletionSchemeActionType = new DeletionSchemeActionType(((FlexoConceptInstance) selection)
 							.getFlexoConcept().getDefaultDeletionScheme(), (FlexoConceptInstance) selection);
 					DeletionSchemeAction deletionSchemeAction = deletionSchemeActionType.makeNewEmbeddedAction(
@@ -140,6 +141,6 @@ public class DeleteFMEFlexoConceptInstance extends
 	}
 
 	public FreeModel getFreeModel() throws InvalidArgumentException {
-		return getFreeModellingProject().getFreeModel(getFocusedObject().getVirtualModelInstance());
+		return getFreeModellingProject().getFreeModel((VirtualModelInstance) getFocusedObject().getVirtualModelInstance());
 	}
 }
