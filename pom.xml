@@ -304,7 +304,7 @@
 		   -->
             <distributionManagement>
                 <site>
-                    <id>openflexo-ta.website</id>
+                    <id>openflexo-modules.website</id>
                     <url>scp://server-one.openflexo.org${sitedeploy.dir}/${project.version}/</url>
                 </site>
             </distributionManagement>
