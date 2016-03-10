@@ -45,8 +45,8 @@ import org.openflexo.fme.model.FreeModel;
 import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.action.FlexoClipboard;
 import org.openflexo.foundation.action.PasteAction.PastingContext;
+import org.openflexo.foundation.fml.rt.AbstractVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
-import org.openflexo.foundation.fml.rt.VirtualModelInstance;
 import org.openflexo.model.factory.Clipboard;
 import org.openflexo.technologyadapter.diagram.controller.action.FMLControlledDiagramPasteHandler;
 import org.openflexo.toolbox.StringUtils;
@@ -79,7 +79,7 @@ public class FreeModelPasteHandler extends FMLControlledDiagramPasteHandler {
 	}
 
 	@Override
-	public void prepareClipboardForPasting(FlexoClipboard clipboard, PastingContext<VirtualModelInstance> pastingContext) {
+	public void prepareClipboardForPasting(FlexoClipboard clipboard, PastingContext<AbstractVirtualModelInstance<?, ?>> pastingContext) {
 
 		super.prepareClipboardForPasting(clipboard, pastingContext);
 

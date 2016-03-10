@@ -43,7 +43,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.openflexo.foundation.DefaultFlexoObject;
 import org.openflexo.foundation.FlexoException;
@@ -52,6 +51,7 @@ import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.fml.ViewPoint;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.rm.ViewPointResource;
+import org.openflexo.foundation.fml.rt.AbstractVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.View;
 import org.openflexo.foundation.fml.rt.VirtualModelInstance;
 import org.openflexo.foundation.fml.rt.rm.ViewResource;
@@ -190,22 +190,24 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 
 	public List<FreeModel> getFreeModels() {
 		List<FreeModel> returned = new ArrayList<FreeModel>();
-		for (VirtualModelInstance vmi : getFreeModellingView().getVirtualModelInstances()) {
+		for (AbstractVirtualModelInstance<?, ?> vmi : getFreeModellingView().getVirtualModelInstances()) {
 			try {
-				returned.add(getFreeModel(vmi));
+				if (vmi instanceof VirtualModelInstance) {
+					returned.add(getFreeModel((VirtualModelInstance) vmi));
+				}
 			} catch (InvalidArgumentException e) {
 				FreeModellingProjectNature.logger.warning(e.getMessage());
 			}
 		}
 		return returned;
 	}
-	
+
 	public List<FreeModel> getFreeModels(FreeMetaModel metamodel) {
 		List<FreeModel> returned = new ArrayList<FreeModel>();
-		for (VirtualModelInstance vmi : getFreeModellingView().getVirtualModelInstances()) {
+		for (AbstractVirtualModelInstance<?, ?> vmi : getFreeModellingView().getVirtualModelInstances()) {
 			try {
-				if(vmi.getVirtualModel().equals(metamodel.getVirtualModel())){
-					returned.add(getFreeModel(vmi));
+				if (vmi instanceof VirtualModelInstance && vmi.getVirtualModel().equals(metamodel.getVirtualModel())) {
+					returned.add(getFreeModel((VirtualModelInstance) vmi));
 				}
 			} catch (InvalidArgumentException e) {
 				FreeModellingProjectNature.logger.warning(e.getMessage());
@@ -233,11 +235,11 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 		return null;
 	}
 
-	public void removeFreeModel(FreeModel model){
+	public void removeFreeModel(FreeModel model) {
 		models.remove(model.getVirtualModelInstance());
 		getFreeModellingView().removeFromVirtualModelInstances(model.getVirtualModelInstance());
 	}
-	
+
 	public DiagramTechnologyAdapter getDiagramTechnologyAdapter() {
 		return diagramTechnologyAdapter;
 	}
