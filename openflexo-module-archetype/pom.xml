@@ -15,7 +15,7 @@
 	<properties>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<modules.logo>https://media.openflexo.org/images/modules_logo64x64.png</modules.logo>
-		<sitedeploy.dir>/home/www/sites/openflexo-modules</sitedeploy.dir>
+		<sitedeploy.dir>/home/www/sites/openflexo-modules/module-archetype</sitedeploy.dir>
 	</properties>
 
 	<scm>
@@ -37,7 +37,7 @@
    		-->
             <distributionManagement>
                 <site>
-                    <id>openflexo-modules.website</id>
+                    <id>openflexo-module-archetype.website</id>
                     <url>scp://server-one.openflexo.org${sitedeploy.dir}/SNAPSHOT/</url>
                 </site>
             </distributionManagement>
@@ -54,7 +54,7 @@
 		   -->
             <distributionManagement>
                 <site>
-                    <id>openflexo-modules.website</id>
+                    <id>openflexo-module-archetype.website</id>
                     <url>scp://server-one.openflexo.org${sitedeploy.dir}/SNAPSHOT/</url>
                 </site>
             </distributionManagement>
@@ -71,7 +71,7 @@
 		   -->
             <distributionManagement>
                 <site>
-                    <id>openflexo-modules.website</id>
+                    <id>>openflexo-module-archetype</id>
                     <url>scp://server-one.openflexo.org${sitedeploy.dir}/${project.version}/</url>
                 </site>
             </distributionManagement>
