@@ -46,8 +46,12 @@ import org.openflexo.fge.swing.JDianaInteractiveEditor;
 import org.openflexo.fge.swing.view.JDrawingView;
 import org.openflexo.fme.controller.FMEController;
 import org.openflexo.foundation.FlexoObject;
+import org.openflexo.foundation.fml.FMLTechnologyAdapter;
+import org.openflexo.foundation.fml.rt.FMLRTTechnologyAdapter;
+import org.openflexo.foundation.technologyadapter.TechnologyAdapterService;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.module.FlexoModule;
+import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.view.controller.FlexoController;
 
 /**
@@ -80,6 +84,10 @@ public class FMEModule extends FlexoModule<FMEModule> {
 	@Override
 	public void initModule() {
 		super.initModule();
+		TechnologyAdapterService taService = getApplicationContext().getTechnologyAdapterService();
+		taService.activateTechnologyAdapter(taService.getTechnologyAdapter(FMLTechnologyAdapter.class));
+		taService.activateTechnologyAdapter(taService.getTechnologyAdapter(FMLRTTechnologyAdapter.class));
+		taService.activateTechnologyAdapter(taService.getTechnologyAdapter(DiagramTechnologyAdapter.class));
 		// Put here a code to display default view
 		// getFMEController().setCurrentEditedObjectAsModuleView(getFMEController().getViewPointLibrary());
 	}
@@ -102,10 +110,12 @@ public class FMEModule extends FlexoModule<FMEModule> {
 	public boolean close() {
 		if (getApplicationContext().getResourceManager().getUnsavedResources().size() == 0) {
 			return super.close();
-		} else {
+		}
+		else {
 			if (getFMEController().reviewModifiedResources()) {
 				return super.close();
-			} else {
+			}
+			else {
 				return false;
 			}
 		}
@@ -135,15 +145,15 @@ public class FMEModule extends FlexoModule<FMEModule> {
 			}
 			return null;
 		}
-
+	
 		logger.info("createScreenshotForShema() " + target);
-
+	
 		screenshotObject = target;
-
+	
 		// prevent example diagram to be marked as modified during screenshot generation
 		target.setIgnoreNotifications();
 		screenshotController = new ExampleDiagramEditor(getFMEController(), target, true);
-
+	
 		screenshot = screenshotController.getDrawingView();
 		drawWorkingArea = screenshot.getDrawing().getRoot().getDrawWorkingArea();
 		screenshot.getDrawing().getRoot().setDrawWorkingArea(false);
@@ -155,10 +165,10 @@ public class FMEModule extends FlexoModule<FMEModule> {
 		screenshot.setSize(d);
 		screenshot.setPreferredSize(d);
 		target.resetIgnoreNotifications();
-
+	
 		return screenshot;
 	}
-
+	
 	@Override
 	public JComponent createScreenshotForDiagramPalette(DiagramPalette target) {
 		if (target == null) {
@@ -167,15 +177,15 @@ public class FMEModule extends FlexoModule<FMEModule> {
 			}
 			return null;
 		}
-
+	
 		logger.info("createScreenshotForPalette() " + target);
-
+	
 		screenshotObject = target;
-
+	
 		// prevent process to be marked as modified during screenshot generation
 		target.setIgnoreNotifications();
 		screenshotController = new DiagramPaletteEditor(getFMEController(), target, true);
-
+	
 		screenshot = screenshotController.getDrawingView();
 		drawWorkingArea = screenshot.getDrawing().getRoot().getDrawWorkingArea();
 		screenshot.getDrawing().getRoot().setDrawWorkingArea(false);
@@ -185,7 +195,7 @@ public class FMEModule extends FlexoModule<FMEModule> {
 		screenshot.setSize(d);
 		screenshot.setPreferredSize(d);
 		target.resetIgnoreNotifications();
-
+	
 		return screenshot;
 	}*/
 

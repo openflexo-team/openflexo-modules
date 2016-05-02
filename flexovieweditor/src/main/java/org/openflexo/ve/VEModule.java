@@ -46,6 +46,9 @@ import org.openflexo.components.ProgressWindow;
 import org.openflexo.fge.swing.JDianaInteractiveEditor;
 import org.openflexo.fge.swing.view.JDrawingView;
 import org.openflexo.foundation.FlexoObject;
+import org.openflexo.foundation.fml.FMLTechnologyAdapter;
+import org.openflexo.foundation.fml.rt.FMLRTTechnologyAdapter;
+import org.openflexo.foundation.technologyadapter.TechnologyAdapterService;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.module.FlexoModule;
 import org.openflexo.ve.controller.VEController;
@@ -70,6 +73,14 @@ public class VEModule extends FlexoModule<VEModule> {
 	public VEModule(ApplicationContext applicationContext) throws Exception {
 		super(applicationContext);
 		ProgressWindow.setProgressInstance(FlexoLocalization.localizedForKey("build_editor"));
+	}
+
+	@Override
+	public void initModule() {
+		super.initModule();
+		TechnologyAdapterService taService = getApplicationContext().getTechnologyAdapterService();
+		taService.activateTechnologyAdapter(taService.getTechnologyAdapter(FMLTechnologyAdapter.class));
+		taService.activateTechnologyAdapter(taService.getTechnologyAdapter(FMLRTTechnologyAdapter.class));
 	}
 
 	@Override
@@ -111,13 +122,13 @@ public class VEModule extends FlexoModule<VEModule> {
 			}
 			return null;
 		}
-
+	
 		screenshotObject = target;
-
+	
 		// prevent process to be marked as modified during screenshot generation
 		target.setIgnoreNotifications();
 		screenshotController = new DiagramController(getVEController(), target, true);
-
+	
 		screenshot = screenshotController.getDrawingView();
 		drawWorkingArea = screenshot.getDrawingGraphicalRepresentation().getDrawWorkingArea();
 		screenshot.getDrawingGraphicalRepresentation().setDrawWorkingArea(false);
@@ -129,7 +140,7 @@ public class VEModule extends FlexoModule<VEModule> {
 		screenshot.setSize(d);
 		screenshot.setPreferredSize(d);
 		target.resetIgnoreNotifications();
-
+	
 		return screenshot;
 	}*/
 
@@ -151,10 +162,12 @@ public class VEModule extends FlexoModule<VEModule> {
 	public boolean close() {
 		if (getApplicationContext().getResourceManager().getUnsavedResources().size() == 0) {
 			return super.close();
-		} else {
+		}
+		else {
 			if (getVEController().reviewModifiedResources()) {
 				return super.close();
-			} else {
+			}
+			else {
 				return false;
 			}
 		}

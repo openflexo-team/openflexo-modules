@@ -72,6 +72,8 @@ public class ISMController extends FlexoController {
 
 	@Override
 	protected void initializePerspectives() {
+		initializeFMLTechnologyPerspective();
+		initializeFMLRTTechnologyPerspective();
 		initializeAllAvailableTechnologyPerspectives(false, false);
 	}
 
