@@ -53,6 +53,7 @@ import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.OpenflexoProjectAtRunTimeTestCase;
 import org.openflexo.foundation.resource.ResourceLoadingCancelledException;
+import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.test.OrderedRunner;
 import org.openflexo.test.TestOrder;
 
@@ -76,10 +77,10 @@ public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 	@TestOrder(1)
 	public void testCreateFreeModellingEditorProject() {
 
-		instanciateTestServiceManager();
+		instanciateTestServiceManager(DiagramTechnologyAdapter.class);
 
-		FreeModellingProjectNature FREE_MODELLING_NATURE = serviceManager.getProjectNatureService().getProjectNature(
-				FreeModellingProjectNature.class);
+		FreeModellingProjectNature FREE_MODELLING_NATURE = serviceManager.getProjectNatureService()
+				.getProjectNature(FreeModellingProjectNature.class);
 		assertNotNull(FREE_MODELLING_NATURE);
 
 		editor = createProject("TestFMEProject", FREE_MODELLING_NATURE);
@@ -137,14 +138,14 @@ public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 	@TestOrder(5)
 	public void testReloadProject() throws FileNotFoundException, ResourceLoadingCancelledException, FlexoException {
 
-		instanciateTestServiceManager();
+		instanciateTestServiceManager(DiagramTechnologyAdapter.class);
 		editor = reloadProject(project.getDirectory());
 		project = editor.getProject();
 		assertNotNull(editor);
 		assertNotNull(project);
 
-		FreeModellingProjectNature FREE_MODELLING_NATURE = serviceManager.getProjectNatureService().getProjectNature(
-				FreeModellingProjectNature.class);
+		FreeModellingProjectNature FREE_MODELLING_NATURE = serviceManager.getProjectNatureService()
+				.getProjectNature(FreeModellingProjectNature.class);
 		assertNotNull(FREE_MODELLING_NATURE);
 
 		assertTrue(project.hasNature(FREE_MODELLING_NATURE));
