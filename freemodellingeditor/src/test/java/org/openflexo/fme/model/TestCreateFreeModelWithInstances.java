@@ -44,7 +44,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.junit.Test;
@@ -53,11 +52,10 @@ import org.openflexo.fge.geom.FGEPoint;
 import org.openflexo.fme.model.action.CreateFreeModel;
 import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.FlexoEditor;
-import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.OpenflexoProjectAtRunTimeTestCase;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
-import org.openflexo.foundation.resource.ResourceLoadingCancelledException;
+import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 import org.openflexo.test.OrderedRunner;
 import org.openflexo.test.TestOrder;
@@ -82,10 +80,10 @@ public class TestCreateFreeModelWithInstances extends OpenflexoProjectAtRunTimeT
 	@TestOrder(1)
 	public void testCreateFreeModellingEditorProject() {
 
-		instanciateTestServiceManager();
+		instanciateTestServiceManager(DiagramTechnologyAdapter.class);
 
-		FreeModellingProjectNature FREE_MODELLING_NATURE = serviceManager.getProjectNatureService().getProjectNature(
-				FreeModellingProjectNature.class);
+		FreeModellingProjectNature FREE_MODELLING_NATURE = serviceManager.getProjectNatureService()
+				.getProjectNature(FreeModellingProjectNature.class);
 		assertNotNull(FREE_MODELLING_NATURE);
 
 		editor = createProject("TestFMEProject", FREE_MODELLING_NATURE);
@@ -125,18 +123,18 @@ public class TestCreateFreeModelWithInstances extends OpenflexoProjectAtRunTimeT
 	public void testCreateInstance() {
 		DropShape action = DropShape.actionType.makeNewAction(freeModel1.getDiagram(), null, editor);
 		action.setFreeModel(freeModel1);
-		action.setDropLocation(new FGEPoint(12,34));
+		action.setDropLocation(new FGEPoint(12, 34));
 		action.doAction();
 		assertTrue(action.hasActionExecutionSucceeded());
 		List<FlexoConceptInstance> result = freeModel1.getInstances(freeModel1.getMetaModel().getNoneFlexoConcept(editor, action));
-		assertEquals(1,result.size());
+		assertEquals(1, result.size());
 		FlexoConceptInstance tutu = result.get(0);
 		assertNotNull(tutu);
 		DiagramShape laShapeDeLinstance = tutu.getFlexoActor(FreeMetaModel.SHAPE_ROLE_NAME);
 		assertNotNull(laShapeDeLinstance);
 		List<DiagramShape> lesShapes = freeModel1.getDiagram().getShapes();
 		assertNotNull(lesShapes);
-		assertEquals(1,lesShapes.size());
-		assertSame(laShapeDeLinstance,lesShapes.get(0));
+		assertEquals(1, lesShapes.size());
+		assertSame(laShapeDeLinstance, lesShapes.get(0));
 	}
 }

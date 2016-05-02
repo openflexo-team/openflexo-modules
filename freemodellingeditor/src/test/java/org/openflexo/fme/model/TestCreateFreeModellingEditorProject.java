@@ -45,6 +45,7 @@ import org.junit.Test;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.OpenflexoProjectAtRunTimeTestCase;
+import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.test.TestOrder;
 
 /**
@@ -59,10 +60,10 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 	@TestOrder(1)
 	public void testCreateFreeModellingEditorProject() {
 
-		instanciateTestServiceManager();
+		instanciateTestServiceManager(DiagramTechnologyAdapter.class);
 
-		FreeModellingProjectNature FREE_MODELLING_NATURE = serviceManager.getProjectNatureService().getProjectNature(
-				FreeModellingProjectNature.class);
+		FreeModellingProjectNature FREE_MODELLING_NATURE = serviceManager.getProjectNatureService()
+				.getProjectNature(FreeModellingProjectNature.class);
 		assertNotNull(FREE_MODELLING_NATURE);
 
 		FlexoEditor editor = createProject("TestFMEProject", FREE_MODELLING_NATURE);
