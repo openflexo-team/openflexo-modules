@@ -54,7 +54,7 @@ import org.openflexo.module.FlexoModule;
 import org.openflexo.module.ModuleLoader;
 import org.openflexo.module.ModuleLoadingException;
 import org.openflexo.prefs.PreferencesService;
-import org.openflexo.project.ProjectLoader;
+import org.openflexo.project.InteractiveProjectLoader;
 import org.openflexo.rm.Resource;
 import org.openflexo.rm.ResourceLocator;
 import org.openflexo.test.OrderedRunner;
@@ -83,7 +83,7 @@ public class TestLoadModule extends OpenflexoTestCaseWithGUI {
 
 		logger.info("services: " + serviceManager.getRegisteredServices());
 
-		assertNotNull(serviceManager.getService(ProjectLoader.class));
+		assertNotNull(serviceManager.getService(InteractiveProjectLoader.class));
 		assertNotNull(serviceManager.getService(ModuleLoader.class));
 		assertNotNull(serviceManager.getService(FlexoResourceCenterService.class));
 		assertNotNull(serviceManager.getService(TechnologyAdapterService.class));
