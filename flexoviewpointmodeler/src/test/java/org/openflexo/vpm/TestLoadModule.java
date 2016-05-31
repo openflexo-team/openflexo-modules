@@ -37,7 +37,6 @@ package org.openflexo.vpm;
  * 
  */
 
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
@@ -47,22 +46,16 @@ import java.util.logging.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openflexo.OpenflexoTestCaseWithGUI;
+import org.openflexo.foundation.ProjectLoader;
 import org.openflexo.foundation.resource.FlexoResourceCenterService;
 import org.openflexo.foundation.technologyadapter.TechnologyAdapterService;
-import org.openflexo.icon.FMLIconLibrary;
 import org.openflexo.module.FlexoModule;
 import org.openflexo.module.ModuleLoader;
 import org.openflexo.module.ModuleLoadingException;
 import org.openflexo.prefs.PreferencesService;
-import org.openflexo.project.InteractiveProjectLoader;
-import org.openflexo.rm.Resource;
-import org.openflexo.rm.ResourceLocator;
 import org.openflexo.test.OrderedRunner;
 import org.openflexo.test.TestOrder;
-import org.openflexo.toolbox.ImageIconResource;
 import org.openflexo.view.controller.TechnologyAdapterControllerService;
-import org.openflexo.vpm.VPMModule;
-import org.openflexo.vpm.ViewPointModeller;
 
 @RunWith(OrderedRunner.class)
 public class TestLoadModule extends OpenflexoTestCaseWithGUI {
@@ -80,10 +73,9 @@ public class TestLoadModule extends OpenflexoTestCaseWithGUI {
 		log("test0UseTestApplicationContext()");
 		instanciateTestServiceManager();
 
-
 		logger.info("services: " + serviceManager.getRegisteredServices());
 
-		assertNotNull(serviceManager.getService(InteractiveProjectLoader.class));
+		assertNotNull(serviceManager.getService(ProjectLoader.class));
 		assertNotNull(serviceManager.getService(ModuleLoader.class));
 		assertNotNull(serviceManager.getService(FlexoResourceCenterService.class));
 		assertNotNull(serviceManager.getService(TechnologyAdapterService.class));
@@ -92,7 +84,6 @@ public class TestLoadModule extends OpenflexoTestCaseWithGUI {
 
 		moduleLoader = serviceManager.getModuleLoader();
 		assertEquals(moduleLoader, serviceManager.getService(ModuleLoader.class));
-
 
 	}
 
@@ -116,8 +107,6 @@ public class TestLoadModule extends OpenflexoTestCaseWithGUI {
 
 		assertNotNull(serviceManager.getService(TechnologyAdapterControllerService.class));
 
-
 	}
-
 
 }
