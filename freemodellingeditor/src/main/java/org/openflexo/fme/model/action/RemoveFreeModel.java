@@ -50,7 +50,6 @@ import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
 import org.openflexo.foundation.fml.rt.action.DeleteVirtualModelInstance;
 import org.openflexo.foundation.resource.SaveResourceException;
-import org.openflexo.technologyadapter.diagram.fml.action.CreateFMLControlledDiagramVirtualModelInstance;
 
 /**
  * This action is used to remove a {@link FreeModel} from a {@link FreeModellingProject}<br>
@@ -89,7 +88,6 @@ public class RemoveFreeModel extends FlexoAction<RemoveFreeModel, FreeModel, Fle
 		FlexoObjectImpl.addActionForClass(RemoveFreeModel.actionType, FreeModel.class);
 	}
 
-
 	RemoveFreeModel(FreeModel focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
@@ -100,13 +98,15 @@ public class RemoveFreeModel extends FlexoAction<RemoveFreeModel, FreeModel, Fle
 		logger.info("Remove free model action started ...");
 		logger.info("Delete virtual model instance");
 		getFocusedObject().getFreeModellingProject().removeFreeModel(getFocusedObject());
-		DeleteVirtualModelInstance deleteVm = DeleteVirtualModelInstance.actionType.makeNewEmbeddedAction(getFocusedObject().getVirtualModelInstance(), null, this);
+		DeleteVirtualModelInstance deleteVm = DeleteVirtualModelInstance.actionType
+				.makeNewEmbeddedAction(getFocusedObject().getVirtualModelInstance(), null, this);
 		deleteVm.doAction();
 		logger.info("Delete free model");
 		getFocusedObject().delete();
-		if(getFocusedObject().isDeleted()){
+		if (getFocusedObject().isDeleted()) {
 			logger.info("Free Model " + getFocusedObject().getName() + " Deleted");
-		}else{
+		}
+		else {
 			logger.warning("Free Model " + getFocusedObject().getName() + " Not Deleted");
 		}
 		getFocusedObject().getFreeModellingProject().getPropertyChangeSupport().firePropertyChange("freeModels", null, null);

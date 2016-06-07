@@ -38,14 +38,12 @@
 
 package org.openflexo.fme.controller.action;
 
-import java.io.ObjectInputStream.GetField;
 import java.util.EventObject;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
 import org.openflexo.fme.FMEIconLibrary;
-import org.openflexo.fme.FreeModellingEditor;
 import org.openflexo.fme.controller.FMEController;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.fme.model.action.RemoveFreeModel;
@@ -83,10 +81,11 @@ public class RemoveFreeModelInitializer extends ActionInitializer<RemoveFreeMode
 		return new FlexoActionFinalizer<RemoveFreeModel>() {
 			@Override
 			public boolean run(EventObject e, RemoveFreeModel action) {
-				FMEController fmeController = (FMEController)getController();
-				if(action.getFocusedObject().getFreeModellingProject().getFreeModels().size()>0){
+				FMEController fmeController = (FMEController) getController();
+				if (action.getFocusedObject().getFreeModellingProject().getFreeModels().size() > 0) {
 					fmeController.selectAndFocusObject(action.getFocusedObject().getFreeModellingProject().getFreeModels().get(0));
-				}else{
+				}
+				else {
 					fmeController.selectAndFocusObject(action.getFocusedObject().getFreeModellingProject());
 					fmeController.FREE_MODELLING_PERSPECTIVE.closeFreeModelBrowsers();
 				}
