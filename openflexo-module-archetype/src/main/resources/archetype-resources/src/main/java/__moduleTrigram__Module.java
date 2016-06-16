@@ -67,6 +67,11 @@ public class ${moduleTrigram}Module extends FlexoModule<${moduleTrigram}Module> 
 	}
 
 	@Override
+	public String getLocalizationDirectory() {
+		return "FlexoLocalization/${moduleTrigram}";
+	}
+
+	@Override
 	public Module<${moduleTrigram}Module> getModule() {
 		// TODO Auto-generated method stub
 		return ${moduleName}.INSTANCE;
