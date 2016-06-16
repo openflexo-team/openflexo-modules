@@ -60,7 +60,7 @@ public class FIBConceptBrowser extends FIBBrowserView<FreeModel> {
 	public static final Resource FIB_FILE = ResourceLocator.locateResource("Fib/Widget/FIBConceptBrowser.fib");
 
 	public FIBConceptBrowser(FreeModel freeModel, FMEController controller) {
-		super(freeModel, controller, FIB_FILE);
+		super(freeModel, controller, FIB_FILE, controller.getModuleLocales());
 		// System.out.println("Showing browser with " + project);
 	}
 

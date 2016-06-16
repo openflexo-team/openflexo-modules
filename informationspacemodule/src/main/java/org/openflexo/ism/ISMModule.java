@@ -69,7 +69,12 @@ public class ISMModule extends FlexoModule<ISMModule> {
 
 	public ISMModule(ApplicationContext applicationContext) throws Exception {
 		super(applicationContext);
-		ProgressWindow.setProgressInstance(FlexoLocalization.localizedForKey("build_editor"));
+		ProgressWindow.setProgressInstance(FlexoLocalization.getMainLocalizer().localizedForKey("build_editor"));
+	}
+
+	@Override
+	public String getLocalizationDirectory() {
+		return "FlexoLocalization/InformationSpaceModule";
 	}
 
 	@Override
@@ -120,10 +125,12 @@ public class ISMModule extends FlexoModule<ISMModule> {
 	public boolean close() {
 		if (getApplicationContext().getResourceManager().getUnsavedResources().size() == 0) {
 			return super.close();
-		} else {
+		}
+		else {
 			if (getISMController().reviewModifiedResources()) {
 				return super.close();
-			} else {
+			}
+			else {
 				return false;
 			}
 		}

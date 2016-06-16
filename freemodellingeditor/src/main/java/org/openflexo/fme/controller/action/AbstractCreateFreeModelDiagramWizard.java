@@ -49,7 +49,6 @@ import org.openflexo.fme.model.action.AbstractCreateFreeModelDiagram;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.rt.VirtualModelInstance;
 import org.openflexo.gina.annotation.FIBPanel;
-import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.toolbox.StringUtils;
 import org.openflexo.view.controller.FlexoController;
 
@@ -110,7 +109,7 @@ public abstract class AbstractCreateFreeModelDiagramWizard<A extends AbstractCre
 
 		@Override
 		public String getTitle() {
-			return FlexoLocalization.localizedForKey("describe_new_diagram");
+			return action.getLocales().localizedForKey("describe_new_diagram");
 		}
 
 		public FreeMetaModel getFreeMetaModel() {
@@ -121,15 +120,16 @@ public abstract class AbstractCreateFreeModelDiagramWizard<A extends AbstractCre
 		public boolean isValid() {
 
 			if (StringUtils.isEmpty(getDiagramName())) {
-				setIssueMessage(FlexoLocalization.localizedForKey("no_diagram_name_defined"), IssueMessageType.ERROR);
+				setIssueMessage(action.getLocales().localizedForKey("no_diagram_name_defined"), IssueMessageType.ERROR);
 				return false;
 			}
 
 			if (getFreeMetaModel().getFreeModellingProject().getFreeModel(getDiagramName()) != null) {
-				setIssueMessage(FlexoLocalization.localizedForKey("a_diagram_with_that_name_already_exists"), IssueMessageType.ERROR);
+				setIssueMessage(action.getLocales().localizedForKey("a_diagram_with_that_name_already_exists"), IssueMessageType.ERROR);
 				return false;
-			} else if (StringUtils.isEmpty(getDescription())) {
-				setIssueMessage(FlexoLocalization.localizedForKey("it_is_recommanded_to_describe_new_diagram"), IssueMessageType.WARNING);
+			}
+			else if (StringUtils.isEmpty(getDescription())) {
+				setIssueMessage(action.getLocales().localizedForKey("it_is_recommanded_to_describe_new_diagram"), IssueMessageType.WARNING);
 			}
 
 			return true;

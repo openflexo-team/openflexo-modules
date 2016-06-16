@@ -49,7 +49,6 @@ import org.openflexo.fme.model.action.AbstractCreateFreeModel;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.rt.VirtualModelInstance;
 import org.openflexo.gina.annotation.FIBPanel;
-import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.toolbox.StringUtils;
 import org.openflexo.view.controller.FlexoController;
 
@@ -101,7 +100,7 @@ public abstract class AbstractCreateFreeModelWizard<A extends AbstractCreateFree
 
 		@Override
 		public String getTitle() {
-			return FlexoLocalization.localizedForKey("describe_free_model");
+			return action.getLocales().localizedForKey("describe_free_model");
 		}
 
 		public FreeModellingProject getFreeModellingProject() {
@@ -112,22 +111,22 @@ public abstract class AbstractCreateFreeModelWizard<A extends AbstractCreateFree
 		public boolean isValid() {
 
 			if (StringUtils.isEmpty(getFreeModelName())) {
-				setIssueMessage(FlexoLocalization.localizedForKey("no_free_model_name_defined"), IssueMessageType.ERROR);
+				setIssueMessage(action.getLocales().localizedForKey("no_free_model_name_defined"), IssueMessageType.ERROR);
 				return false;
 			}
 
 			else if (getFreeModellingProject().getFreeModel(getFreeModelName()) != null) {
-				setIssueMessage(FlexoLocalization.localizedForKey("a_free_model_with_that_name_already_exists"), IssueMessageType.ERROR);
+				setIssueMessage(action.getLocales().localizedForKey("a_free_model_with_that_name_already_exists"), IssueMessageType.ERROR);
 				return false;
 			}
 
 			else if (!getAction().getCreateNewMetaModel() && getAction().getFreeMetaModel() == null) {
-				setIssueMessage(FlexoLocalization.localizedForKey("no_meta_model_defined"), IssueMessageType.ERROR);
+				setIssueMessage(action.getLocales().localizedForKey("no_meta_model_defined"), IssueMessageType.ERROR);
 				return false;
 			}
 
 			else if (StringUtils.isEmpty(getFreeModelDescription())) {
-				setIssueMessage(FlexoLocalization.localizedForKey("it_is_recommanded_to_describe_free_model"), IssueMessageType.WARNING);
+				setIssueMessage(action.getLocales().localizedForKey("it_is_recommanded_to_describe_free_model"), IssueMessageType.WARNING);
 			}
 
 			return true;

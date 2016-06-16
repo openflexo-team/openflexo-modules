@@ -55,6 +55,7 @@ import org.openflexo.foundation.fml.action.CreateVirtualModel;
 import org.openflexo.foundation.fml.rt.VirtualModelInstance;
 import org.openflexo.foundation.fml.rt.action.ModelSlotInstanceConfiguration.DefaultModelSlotInstanceConfigurationOption;
 import org.openflexo.foundation.resource.SaveResourceException;
+import org.openflexo.localization.LocalizedDelegate;
 import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlotInstanceConfiguration;
@@ -89,6 +90,14 @@ public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> exten
 	}
 
 	@Override
+	public LocalizedDelegate getLocales() {
+		if (getFocusedObject() != null) {
+			return getFocusedObject().getLocales();
+		}
+		return super.getLocales();
+	}
+
+	@Override
 	protected void doAction(Object context) throws SaveResourceException {
 
 		freeModel = createNewFreeModel();
@@ -112,8 +121,8 @@ public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> exten
 		action.setNewVirtualModelInstanceTitle(getFreeModelName());
 		action.setVirtualModel(freeMetaModel.getVirtualModel());
 
-		TypedDiagramModelSlot diagramModelSlot = FMLControlledDiagramVirtualModelNature.getTypedDiagramModelSlot(freeMetaModel
-				.getVirtualModel());
+		TypedDiagramModelSlot diagramModelSlot = FMLControlledDiagramVirtualModelNature
+				.getTypedDiagramModelSlot(freeMetaModel.getVirtualModel());
 		TypedDiagramModelSlotInstanceConfiguration diagramModelSlotInstanceConfiguration = (TypedDiagramModelSlotInstanceConfiguration) action
 				.getModelSlotInstanceConfiguration(diagramModelSlot);
 		diagramModelSlotInstanceConfiguration.setOption(DefaultModelSlotInstanceConfigurationOption.CreatePrivateNewModel);
@@ -140,8 +149,8 @@ public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> exten
 
 		// First we create the diagram specification
 		System.out.println("Creating DiagramSpecification...");
-		CreateDiagramSpecification createDS = CreateDiagramSpecification.actionType.makeNewEmbeddedAction(getFocusedObject()
-				.getDiagramSpecificationsFolder(), null, this);
+		CreateDiagramSpecification createDS = CreateDiagramSpecification.actionType
+				.makeNewEmbeddedAction(getFocusedObject().getDiagramSpecificationsFolder(), null, this);
 		createDS.setNewDiagramSpecificationName(metaModelName);
 		createDS.setNewDiagramSpecificationURI(FreeMetaModel.getDiagramSpecificationURI(getFocusedObject().getProject(), metaModelName));
 		createDS.doAction();
@@ -164,8 +173,8 @@ public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> exten
 
 		// Now we create the diagram model slot
 		CreateModelSlot createMS = CreateModelSlot.actionType.makeNewEmbeddedAction(newVirtualModel, null, this);
-		createMS.setTechnologyAdapter(getServiceManager().getTechnologyAdapterService()
-				.getTechnologyAdapter(DiagramTechnologyAdapter.class));
+		createMS.setTechnologyAdapter(
+				getServiceManager().getTechnologyAdapterService().getTechnologyAdapter(DiagramTechnologyAdapter.class));
 		createMS.setModelSlotClass(TypedDiagramModelSlot.class);
 		createMS.setModelSlotName("diagram");
 		createMS.setMmRes(diagramSpecification.getResource());

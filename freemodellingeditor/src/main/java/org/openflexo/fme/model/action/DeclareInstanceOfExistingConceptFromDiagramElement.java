@@ -41,6 +41,8 @@ package org.openflexo.fme.model.action;
 import java.util.Vector;
 import java.util.logging.Logger;
 
+import org.openflexo.ApplicationContext;
+import org.openflexo.fme.FreeModellingEditor;
 import org.openflexo.fme.model.FreeMetaModel;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.fme.model.FreeModellingProject;
@@ -55,7 +57,7 @@ import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.PrimitiveRole;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
-import org.openflexo.localization.FlexoLocalization;
+import org.openflexo.localization.LocalizedDelegate;
 import org.openflexo.technologyadapter.diagram.fml.GraphicalElementRole;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
 import org.openflexo.technologyadapter.diagram.model.DiagramElement;
@@ -66,8 +68,8 @@ import org.openflexo.technologyadapter.diagram.model.DiagramElement;
  * @author vincent
  * 
  */
-public class DeclareInstanceOfExistingConceptFromDiagramElement extends
-		FlexoAction<DeclareInstanceOfExistingConceptFromDiagramElement, DiagramElement<?>, FlexoObject> {
+public class DeclareInstanceOfExistingConceptFromDiagramElement
+		extends FlexoAction<DeclareInstanceOfExistingConceptFromDiagramElement, DiagramElement<?>, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(DeclareInstanceOfExistingConceptFromDiagramElement.class.getPackage().getName());
 
@@ -108,6 +110,15 @@ public class DeclareInstanceOfExistingConceptFromDiagramElement extends
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 
+	@Override
+	public LocalizedDelegate getLocales() {
+		if (getServiceManager() instanceof ApplicationContext) {
+			return ((ApplicationContext) getServiceManager()).getModuleLoader().getModule(FreeModellingEditor.class)
+					.getLoadedModuleInstance().getLocales();
+		}
+		return super.getLocales();
+	}
+
 	public FreeModellingProjectNature getFreeModellingProjectNature() {
 		return getServiceManager().getProjectNatureService().getProjectNature(FreeModellingProjectNature.class);
 	}
@@ -141,15 +152,15 @@ public class DeclareInstanceOfExistingConceptFromDiagramElement extends
 		DeclareInstanceOfExistingConcept actionDeclareInstanceOfExistingConcept = DeclareInstanceOfExistingConcept.actionType
 				.makeNewEmbeddedAction(flexoConceptInstance, null, this);
 		switch (grStrategy) {
-		case GetConceptShape:
-			actionDeclareInstanceOfExistingConcept.setGrStrategy(DeclareInstanceOfExistingConcept.GRStrategy.GetConceptShape);
-			break;
-		case RedefineShapeOfConcept:
-			actionDeclareInstanceOfExistingConcept.setGrStrategy(DeclareInstanceOfExistingConcept.GRStrategy.RedefineShapeOfConcept);
-			break;
-		case KeepShape:
-			actionDeclareInstanceOfExistingConcept.setGrStrategy(DeclareInstanceOfExistingConcept.GRStrategy.KeepShape);
-			break;
+			case GetConceptShape:
+				actionDeclareInstanceOfExistingConcept.setGrStrategy(DeclareInstanceOfExistingConcept.GRStrategy.GetConceptShape);
+				break;
+			case RedefineShapeOfConcept:
+				actionDeclareInstanceOfExistingConcept.setGrStrategy(DeclareInstanceOfExistingConcept.GRStrategy.RedefineShapeOfConcept);
+				break;
+			case KeepShape:
+				actionDeclareInstanceOfExistingConcept.setGrStrategy(DeclareInstanceOfExistingConcept.GRStrategy.KeepShape);
+				break;
 		}
 		actionDeclareInstanceOfExistingConcept.setConcept(concept);
 		actionDeclareInstanceOfExistingConcept.doAction();
@@ -205,7 +216,7 @@ public class DeclareInstanceOfExistingConceptFromDiagramElement extends
 	@Override
 	public boolean isValid() {
 		if (getConcept() == null) {
-			errorMessage = FlexoLocalization.localizedForKey("no_concept_defined");
+			errorMessage = getLocales().localizedForKey("no_concept_defined");
 			return false;
 		}
 		return true;

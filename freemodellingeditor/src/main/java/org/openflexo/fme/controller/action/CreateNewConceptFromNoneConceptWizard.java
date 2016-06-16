@@ -49,10 +49,9 @@ import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.fml.rt.VirtualModelInstance;
 import org.openflexo.gina.annotation.FIBPanel;
+import org.openflexo.icon.FMLIconLibrary;
 import org.openflexo.icon.IconFactory;
 import org.openflexo.icon.IconLibrary;
-import org.openflexo.icon.FMLIconLibrary;
-import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.toolbox.StringUtils;
 import org.openflexo.view.controller.FlexoController;
 
@@ -73,7 +72,7 @@ public class CreateNewConceptFromNoneConceptWizard extends FlexoWizard {
 
 	@Override
 	public String getWizardTitle() {
-		return FlexoLocalization.localizedForKey("create_new_concept");
+		return action.getLocales().localizedForKey("create_new_concept");
 	}
 
 	@Override
@@ -108,19 +107,19 @@ public class CreateNewConceptFromNoneConceptWizard extends FlexoWizard {
 
 		@Override
 		public String getTitle() {
-			return FlexoLocalization.localizedForKey("configure_new_concept");
+			return action.getLocales().localizedForKey("configure_new_concept");
 		}
 
 		@Override
 		public boolean isValid() {
 
 			if (StringUtils.isEmpty(getNewConceptName())) {
-				setIssueMessage(FlexoLocalization.localizedForKey("no_concept_name_defined"), IssueMessageType.ERROR);
+				setIssueMessage(action.getLocales().localizedForKey("no_concept_name_defined"), IssueMessageType.ERROR);
 				return false;
 			}
 
 			if (getFlexoConceptInstance().getVirtualModelInstance().getVirtualModel().getFlexoConcept(getNewConceptName()) != null) {
-				setIssueMessage(FlexoLocalization.localizedForKey("a_concept_with_that_name_already_exists"), IssueMessageType.ERROR);
+				setIssueMessage(action.getLocales().localizedForKey("a_concept_with_that_name_already_exists"), IssueMessageType.ERROR);
 				return false;
 			}
 

@@ -44,7 +44,6 @@ import java.util.logging.Logger;
 import org.openflexo.fme.model.action.CreateFreeModelDiagram;
 import org.openflexo.icon.IconFactory;
 import org.openflexo.icon.IconLibrary;
-import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.technologyadapter.diagram.gui.DiagramIconLibrary;
 import org.openflexo.view.controller.FlexoController;
 
@@ -59,7 +58,7 @@ public class CreateFreeModelDiagramWizard extends AbstractCreateFreeModelDiagram
 
 	@Override
 	public String getWizardTitle() {
-		return FlexoLocalization.localizedForKey("create_free_model_diagram");
+		return getAction().getLocales().localizedForKey("create_free_model_diagram");
 	}
 
 	@Override

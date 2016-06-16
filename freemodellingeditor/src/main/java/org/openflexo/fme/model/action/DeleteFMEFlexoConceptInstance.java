@@ -41,6 +41,8 @@ package org.openflexo.fme.model.action;
 import java.util.Vector;
 import java.util.logging.Logger;
 
+import org.openflexo.ApplicationContext;
+import org.openflexo.fme.FreeModellingEditor;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.fme.model.FreeModellingProjectNature;
@@ -57,6 +59,7 @@ import org.openflexo.foundation.fml.rt.VirtualModelInstanceObject;
 import org.openflexo.foundation.fml.rt.action.DeletionSchemeAction;
 import org.openflexo.foundation.fml.rt.action.DeletionSchemeActionType;
 import org.openflexo.foundation.resource.SaveResourceException;
+import org.openflexo.localization.LocalizedDelegate;
 
 /**
  * This action is used to delete a flexo concept instance within Free modeling editor<br>
@@ -64,8 +67,8 @@ import org.openflexo.foundation.resource.SaveResourceException;
  * @author vincent
  * 
  */
-public class DeleteFMEFlexoConceptInstance extends
-		FlexoAction<DeleteFMEFlexoConceptInstance, FlexoConceptInstance, VirtualModelInstanceObject> {
+public class DeleteFMEFlexoConceptInstance
+		extends FlexoAction<DeleteFMEFlexoConceptInstance, FlexoConceptInstance, VirtualModelInstanceObject> {
 
 	private static final Logger logger = Logger.getLogger(DeleteFMEFlexoConceptInstance.class.getPackage().getName());
 
@@ -97,8 +100,18 @@ public class DeleteFMEFlexoConceptInstance extends
 		FlexoObjectImpl.addActionForClass(DeleteFMEFlexoConceptInstance.actionType, FlexoConceptInstance.class);
 	}
 
-	DeleteFMEFlexoConceptInstance(FlexoConceptInstance focusedObject, Vector<VirtualModelInstanceObject> globalSelection, FlexoEditor editor) {
+	DeleteFMEFlexoConceptInstance(FlexoConceptInstance focusedObject, Vector<VirtualModelInstanceObject> globalSelection,
+			FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
+	}
+
+	@Override
+	public LocalizedDelegate getLocales() {
+		if (getServiceManager() instanceof ApplicationContext) {
+			return ((ApplicationContext) getServiceManager()).getModuleLoader().getModule(FreeModellingEditor.class)
+					.getLoadedModuleInstance().getLocales();
+		}
+		return super.getLocales();
 	}
 
 	@Override
@@ -111,10 +124,11 @@ public class DeleteFMEFlexoConceptInstance extends
 			for (FlexoObject selection : getGlobalSelection()) {
 				if (selection instanceof FlexoConceptInstance) {
 					AbstractVirtualModelInstance<?, ?> vmi = ((FlexoConceptInstance) selection).getVirtualModelInstance();
-					DeletionSchemeActionType deletionSchemeActionType = new DeletionSchemeActionType(((FlexoConceptInstance) selection)
-							.getFlexoConcept().getDefaultDeletionScheme(), (FlexoConceptInstance) selection);
-					DeletionSchemeAction deletionSchemeAction = deletionSchemeActionType.makeNewEmbeddedAction(
-							(FlexoConceptInstance) selection, getGlobalSelection(), this);
+					DeletionSchemeActionType deletionSchemeActionType = new DeletionSchemeActionType(
+							((FlexoConceptInstance) selection).getFlexoConcept().getDefaultDeletionScheme(),
+							(FlexoConceptInstance) selection);
+					DeletionSchemeAction deletionSchemeAction = deletionSchemeActionType
+							.makeNewEmbeddedAction((FlexoConceptInstance) selection, getGlobalSelection(), this);
 					deletionSchemeAction.setVirtualModelInstance(vmi);
 					deletionSchemeAction.doAction();
 					vmi.removeFromFlexoConceptInstances(((FlexoConceptInstance) selection));

@@ -41,6 +41,8 @@ package org.openflexo.fme.model.action;
 import java.util.Vector;
 import java.util.logging.Logger;
 
+import org.openflexo.ApplicationContext;
+import org.openflexo.fme.FreeModellingEditor;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.foundation.FlexoEditor;
@@ -50,6 +52,7 @@ import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
 import org.openflexo.foundation.fml.rt.action.DeleteVirtualModelInstance;
 import org.openflexo.foundation.resource.SaveResourceException;
+import org.openflexo.localization.LocalizedDelegate;
 
 /**
  * This action is used to remove a {@link FreeModel} from a {@link FreeModellingProject}<br>
@@ -90,6 +93,15 @@ public class RemoveFreeModel extends FlexoAction<RemoveFreeModel, FreeModel, Fle
 
 	RemoveFreeModel(FreeModel focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
+	}
+
+	@Override
+	public LocalizedDelegate getLocales() {
+		if (getServiceManager() instanceof ApplicationContext) {
+			return ((ApplicationContext) getServiceManager()).getModuleLoader().getModule(FreeModellingEditor.class)
+					.getLoadedModuleInstance().getLocales();
+		}
+		return super.getLocales();
 	}
 
 	@Override

@@ -41,6 +41,8 @@ package org.openflexo.fme.model.action;
 import java.util.Vector;
 import java.util.logging.Logger;
 
+import org.openflexo.ApplicationContext;
+import org.openflexo.fme.FreeModellingEditor;
 import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
@@ -49,6 +51,7 @@ import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
 import org.openflexo.foundation.resource.SaveResourceException;
+import org.openflexo.localization.LocalizedDelegate;
 
 /**
  * This action is used to gives {@link FreeModellingProjectNature} to a {@link FlexoProject}<br>
@@ -93,6 +96,15 @@ public class ConvertToFreeModellingEditorProject extends FlexoAction<ConvertToFr
 
 	ConvertToFreeModellingEditorProject(FlexoProject focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
+	}
+
+	@Override
+	public LocalizedDelegate getLocales() {
+		if (getServiceManager() instanceof ApplicationContext) {
+			return ((ApplicationContext) getServiceManager()).getModuleLoader().getModule(FreeModellingEditor.class)
+					.getLoadedModuleInstance().getLocales();
+		}
+		return super.getLocales();
 	}
 
 	@Override

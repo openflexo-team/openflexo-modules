@@ -41,6 +41,8 @@ package org.openflexo.fme.model.action;
 import java.util.Vector;
 import java.util.logging.Logger;
 
+import org.openflexo.ApplicationContext;
+import org.openflexo.fme.FreeModellingEditor;
 import org.openflexo.fme.model.FreeMetaModel;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.fme.model.FreeModellingProject;
@@ -54,6 +56,7 @@ import org.openflexo.foundation.action.FlexoActionType;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.fml.rt.VirtualModelInstance;
+import org.openflexo.localization.LocalizedDelegate;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 import org.openflexo.toolbox.StringUtils;
@@ -107,6 +110,15 @@ public class CreateNewConceptFromNoneConcept extends FlexoAction<CreateNewConcep
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 
+	@Override
+	public LocalizedDelegate getLocales() {
+		if (getServiceManager() instanceof ApplicationContext) {
+			return ((ApplicationContext) getServiceManager()).getModuleLoader().getModule(FreeModellingEditor.class)
+					.getLoadedModuleInstance().getLocales();
+		}
+		return super.getLocales();
+	}
+
 	public FreeModellingProjectNature getFreeModellingProjectNature() {
 		return getServiceManager().getProjectNatureService().getProjectNature(FreeModellingProjectNature.class);
 	}
@@ -153,15 +165,15 @@ public class CreateNewConceptFromNoneConcept extends FlexoAction<CreateNewConcep
 		createDiagramPaletteElement.setGraphicalRepresentation(paletteElementGR);
 		createDiagramPaletteElement.setNewElementName(getNewConceptName());
 		createDiagramPaletteElement.doAction();
-
+		
 		DiagramPaletteElement paletteElement = createDiagramPaletteElement.getNewElement();
-
+		
 		System.out.println("Created palette element: " + paletteElement);
 		int px, py;
 		int index = freeModel.getMetaModel().getConceptsPalette().getElements().indexOf(createDiagramPaletteElement.getNewElement());
 		px = index % 3;
 		py = index / 3;
-
+		
 		// FACTORY.applyDefaultProperties(gr);
 		if (paletteElementGR.getShapeSpecification().getShapeType() == ShapeType.SQUARE
 				|| paletteElementGR.getShapeSpecification().getShapeType() == ShapeType.CIRCLE) {
@@ -177,7 +189,7 @@ public class CreateNewConceptFromNoneConcept extends FlexoAction<CreateNewConcep
 			paletteElementGR.setWidth(40);
 			paletteElementGR.setHeight(30);
 		}
-
+		
 		// Create binding and associate it
 		DropScheme dropScheme = newFlexoConcept.getFlexoBehaviours(DropScheme.class).get(0);
 		FMLDiagramPaletteElementBinding newBinding = newFlexoConcept.getVirtualModel().getFMLModelFactory()

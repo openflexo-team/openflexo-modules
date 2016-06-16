@@ -43,9 +43,11 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.Logger;
 
+import org.openflexo.ApplicationContext;
 import org.openflexo.fge.ShapeGraphicalRepresentation;
 import org.openflexo.fge.ShapeGraphicalRepresentation.LocationConstraints;
 import org.openflexo.fge.geom.FGEPoint;
+import org.openflexo.fme.FreeModellingEditor;
 import org.openflexo.fme.model.FreeMetaModel;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.foundation.FlexoEditor;
@@ -57,6 +59,7 @@ import org.openflexo.foundation.fml.FlexoBehaviourParameter;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.resource.SaveResourceException;
+import org.openflexo.localization.LocalizedDelegate;
 import org.openflexo.technologyadapter.diagram.fml.DropScheme;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
 import org.openflexo.technologyadapter.diagram.model.DiagramContainerElement;
@@ -111,6 +114,15 @@ public class DropShape extends FlexoAction<DropShape, DiagramContainerElement<?>
 
 	DropShape(DiagramContainerElement<?> focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
+	}
+
+	@Override
+	public LocalizedDelegate getLocales() {
+		if (getServiceManager() instanceof ApplicationContext) {
+			return ((ApplicationContext) getServiceManager()).getModuleLoader().getModule(FreeModellingEditor.class)
+					.getLoadedModuleInstance().getLocales();
+		}
+		return super.getLocales();
 	}
 
 	@Override
@@ -174,7 +186,8 @@ public class DropShape extends FlexoAction<DropShape, DiagramContainerElement<?>
 			// This is used to notify the adding of a new shape, will be used in DynamicPalette
 			// freeModel.getPropertyChangeSupport().firePropertyChange(DynamicPalette.SHAPE_ADDED, null, newFlexoConceptInstance);
 
-		} else {
+		}
+		else {
 			logger.warning("Could not find DropScheme in " + concept);
 		}
 	}
@@ -193,7 +206,7 @@ public class DropShape extends FlexoAction<DropShape, DiagramContainerElement<?>
 		}
 		return parent;
 	}
-
+	
 	public void setParent(DiagramContainerElement<?> parent) {
 		this.parent = parent;
 	}*/

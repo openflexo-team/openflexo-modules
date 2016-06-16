@@ -49,7 +49,6 @@ import org.openflexo.foundation.fml.ViewPoint;
 import org.openflexo.foundation.fml.action.ConvertViewPoint1Action;
 import org.openflexo.foundation.fml.rm.ViewPointResource;
 import org.openflexo.foundation.resource.ResourceLoadingCancelledException;
-import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
@@ -68,8 +67,8 @@ public class ConvertViewPoint1ActionInitializer extends ActionInitializer<Conver
 		return new FlexoActionInitializer<ConvertViewPoint1Action>() {
 			@Override
 			public boolean run(EventObject e, ConvertViewPoint1Action action) {
-				return FlexoController.confirm(FlexoLocalization
-						.localizedForKey("would_you_really_like_to_convert_viewpoint_(undoable_action)?"));
+				return FlexoController
+						.confirm(action.getLocales().localizedForKey("would_you_really_like_to_convert_viewpoint_(undoable_action)?"));
 			}
 		};
 	}

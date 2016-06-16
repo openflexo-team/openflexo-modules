@@ -44,6 +44,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.openflexo.ApplicationContext;
+import org.openflexo.fme.FreeModellingEditor;
 import org.openflexo.foundation.DefaultFlexoObject;
 import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.FlexoProject;
@@ -58,6 +60,7 @@ import org.openflexo.foundation.fml.rt.rm.ViewResource;
 import org.openflexo.foundation.nature.ProjectWrapper;
 import org.openflexo.foundation.resource.RepositoryFolder;
 import org.openflexo.foundation.resource.ResourceLoadingCancelledException;
+import org.openflexo.localization.LocalizedDelegate;
 import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelNature;
 import org.openflexo.technologyadapter.diagram.rm.DiagramSpecificationRepository;
@@ -89,16 +92,16 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 	private final FreeModellingProjectNature projectNature;
 
 	// Do never instanciate this class but ask it to FreeModellingProjectNature
-	protected FreeModellingProject(FlexoProject project, FreeModellingProjectNature projectNature) throws FileNotFoundException,
-			ResourceLoadingCancelledException, InvalidArgumentException, FlexoException {
+	protected FreeModellingProject(FlexoProject project, FreeModellingProjectNature projectNature)
+			throws FileNotFoundException, ResourceLoadingCancelledException, InvalidArgumentException, FlexoException {
 		this.project = project;
 		this.projectNature = projectNature;
 
-		ViewPointResource freeModellingViewPointResource = project.getViewPointRepository().getResource(
-				project.getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
+		ViewPointResource freeModellingViewPointResource = project.getViewPointRepository()
+				.getResource(project.getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
 
-		ViewResource freeModellingViewResource = project.getViewLibrary().getResource(
-				project.getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEW_RELATIVE_URI);
+		ViewResource freeModellingViewResource = project.getViewLibrary()
+				.getResource(project.getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEW_RELATIVE_URI);
 
 		if (freeModellingViewPointResource == null) {
 			throw new InvalidArgumentException("Could not retrieve FreeModellingViewPoint resource (searched uri="
@@ -137,6 +140,15 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 
 	}
 
+	@Override
+	public LocalizedDelegate getLocales() {
+		if (getProject() != null && getProject().getServiceManager() instanceof ApplicationContext) {
+			return ((ApplicationContext) getProject().getServiceManager()).getModuleLoader().getModule(FreeModellingEditor.class)
+					.getLoadedModuleInstance().getLocales();
+		}
+		return super.getLocales();
+	}
+
 	public String getName() {
 		return project.getProjectName();
 	}
@@ -170,8 +182,10 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 				metaModels.put(virtualModel, returned);
 			}
 			return returned;
-		} else {
-			throw new InvalidArgumentException("VirtualModel " + virtualModel + " does not have the FMLControlledDiagramVirtualModelNature");
+		}
+		else {
+			throw new InvalidArgumentException(
+					"VirtualModel " + virtualModel + " does not have the FMLControlledDiagramVirtualModelNature");
 		}
 	}
 

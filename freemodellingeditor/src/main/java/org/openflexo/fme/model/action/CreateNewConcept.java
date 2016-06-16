@@ -51,6 +51,7 @@ import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
 import org.openflexo.foundation.fml.FlexoConcept;
+import org.openflexo.localization.LocalizedDelegate;
 import org.openflexo.toolbox.StringUtils;
 
 /**
@@ -99,6 +100,14 @@ public class CreateNewConcept extends FlexoAction<CreateNewConcept, FreeMetaMode
 
 	CreateNewConcept(FreeMetaModel focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
+	}
+
+	@Override
+	public LocalizedDelegate getLocales() {
+		if (getFocusedObject() != null) {
+			return getFocusedObject().getFreeModellingProject().getLocales();
+		}
+		return super.getLocales();
 	}
 
 	public FreeModellingProjectNature getFreeModellingProjectNature() {

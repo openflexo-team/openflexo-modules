@@ -61,7 +61,7 @@ public class FIBFreeModellingProjectBrowser extends FIBBrowserView<FlexoProject>
 	public static final Resource FIB_FILE = ResourceLocator.locateResource("Fib/Widget/FIBFreeModellingProjectBrowser.fib");
 
 	public FIBFreeModellingProjectBrowser(FlexoProject project, FMEController controller) {
-		super(project, controller, FIB_FILE);
+		super(project, controller, FIB_FILE, controller.getModuleLocales());
 		// System.out.println("Showing browser with " + project);
 	}
 

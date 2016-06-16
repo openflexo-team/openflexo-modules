@@ -76,8 +76,13 @@ public class VPMModule extends FlexoModule<VPMModule> {
 		// DiagramPalette.setModuleLoader(applicationContext.getModuleLoader());
 		// Hack removed : guillaume, what about that ?
 		// VPMPreferences.init();
-		ProgressWindow.setProgressInstance(FlexoLocalization.localizedForKey("build_editor"));
+		ProgressWindow.setProgressInstance(FlexoLocalization.getMainLocalizer().localizedForKey("build_editor"));
 
+	}
+
+	@Override
+	public String getLocalizationDirectory() {
+		return "FlexoLocalization/ViewPointModeller";
 	}
 
 	@Override

@@ -51,13 +51,15 @@ import org.openflexo.foundation.action.FlexoActionType;
 import org.openflexo.foundation.fml.rt.VirtualModelInstance;
 import org.openflexo.foundation.fml.rt.action.ModelSlotInstanceConfiguration.DefaultModelSlotInstanceConfigurationOption;
 import org.openflexo.foundation.resource.SaveResourceException;
+import org.openflexo.localization.LocalizedDelegate;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlotInstanceConfiguration;
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelNature;
 import org.openflexo.technologyadapter.diagram.fml.action.CreateFMLControlledDiagramVirtualModelInstance;
 import org.openflexo.toolbox.StringUtils;
 
-public class AbstractCreateFreeModelDiagram<A extends AbstractCreateFreeModelDiagram<A>> extends FlexoAction<A, FreeMetaModel, FlexoObject> {
+public class AbstractCreateFreeModelDiagram<A extends AbstractCreateFreeModelDiagram<A>>
+		extends FlexoAction<A, FreeMetaModel, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(AbstractCreateFreeModelDiagram.class.getPackage().getName());
 
@@ -68,6 +70,14 @@ public class AbstractCreateFreeModelDiagram<A extends AbstractCreateFreeModelDia
 	AbstractCreateFreeModelDiagram(FlexoActionType<A, FreeMetaModel, FlexoObject> actionType, FreeMetaModel focusedObject,
 			Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
+	}
+
+	@Override
+	public LocalizedDelegate getLocales() {
+		if (getFocusedObject() != null) {
+			return getFocusedObject().getFreeModellingProject().getLocales();
+		}
+		return super.getLocales();
 	}
 
 	@Override
@@ -83,15 +93,15 @@ public class AbstractCreateFreeModelDiagram<A extends AbstractCreateFreeModelDia
 		action.setNewVirtualModelInstanceTitle(getDiagramName());
 		action.setVirtualModel(getFocusedObject().getVirtualModel());
 
-		TypedDiagramModelSlot diagramModelSlot = FMLControlledDiagramVirtualModelNature.getTypedDiagramModelSlot(getFocusedObject()
-				.getVirtualModel());
+		TypedDiagramModelSlot diagramModelSlot = FMLControlledDiagramVirtualModelNature
+				.getTypedDiagramModelSlot(getFocusedObject().getVirtualModel());
 		TypedDiagramModelSlotInstanceConfiguration diagramModelSlotInstanceConfiguration = (TypedDiagramModelSlotInstanceConfiguration) action
 				.getModelSlotInstanceConfiguration(diagramModelSlot);
 		diagramModelSlotInstanceConfiguration.setOption(DefaultModelSlotInstanceConfigurationOption.CreatePrivateNewModel);
 		diagramModelSlotInstanceConfiguration.setFilename(getDiagramName() + ".diagram");
 		diagramModelSlotInstanceConfiguration.setRelativePath("Diagrams/");
-		diagramModelSlotInstanceConfiguration.setModelUri(FreeModel.getDiagramURI(
-				getFocusedObject().getFreeModellingProject().getProject(), getDiagramName()));
+		diagramModelSlotInstanceConfiguration
+				.setModelUri(FreeModel.getDiagramURI(getFocusedObject().getFreeModellingProject().getProject(), getDiagramName()));
 
 		System.out.println("action=" + action);
 		System.out.println("action.isValid()=" + action.isValid());

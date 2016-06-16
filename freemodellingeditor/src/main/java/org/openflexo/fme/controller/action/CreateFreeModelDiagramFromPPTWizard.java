@@ -44,7 +44,6 @@ import java.util.logging.Logger;
 import org.openflexo.fme.model.action.CreateFreeModelDiagramFromPPT;
 import org.openflexo.icon.IconFactory;
 import org.openflexo.icon.IconLibrary;
-import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.technologyadapter.diagram.gui.DiagramIconLibrary;
 import org.openflexo.technologyadapter.powerpoint.controller.ChoosePPTSlide;
 import org.openflexo.view.controller.FlexoController;
@@ -78,7 +77,7 @@ public class CreateFreeModelDiagramFromPPTWizard extends AbstractCreateFreeModel
 
 	@Override
 	public String getWizardTitle() {
-		return FlexoLocalization.localizedForKey("create_free_model_diagram_based_on_a_powerpoint_slide");
+		return getAction().getLocales().localizedForKey("create_free_model_diagram_based_on_a_powerpoint_slide");
 	}
 
 	@Override

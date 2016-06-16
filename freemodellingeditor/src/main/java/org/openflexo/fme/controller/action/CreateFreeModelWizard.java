@@ -45,7 +45,6 @@ import org.openflexo.fme.FMEIconLibrary;
 import org.openflexo.fme.model.action.CreateFreeModel;
 import org.openflexo.icon.IconFactory;
 import org.openflexo.icon.IconLibrary;
-import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.view.controller.FlexoController;
 
 public class CreateFreeModelWizard extends AbstractCreateFreeModelWizard<CreateFreeModel> {
@@ -59,7 +58,7 @@ public class CreateFreeModelWizard extends AbstractCreateFreeModelWizard<CreateF
 
 	@Override
 	public String getWizardTitle() {
-		return FlexoLocalization.localizedForKey("create_free_model");
+		return getAction().getLocales().localizedForKey("create_free_model");
 	}
 
 	@Override

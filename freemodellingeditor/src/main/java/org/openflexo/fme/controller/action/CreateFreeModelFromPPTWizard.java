@@ -45,7 +45,6 @@ import org.openflexo.fme.FMEIconLibrary;
 import org.openflexo.fme.model.action.CreateFreeModelFromPPT;
 import org.openflexo.icon.IconFactory;
 import org.openflexo.icon.IconLibrary;
-import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.technologyadapter.powerpoint.controller.ChoosePPTSlide;
 import org.openflexo.view.controller.FlexoController;
 
@@ -72,7 +71,7 @@ public class CreateFreeModelFromPPTWizard extends AbstractCreateFreeModelWizard<
 
 	@Override
 	public String getWizardTitle() {
-		return FlexoLocalization.localizedForKey("create_free_model_based_on_a_powerpoint_slide");
+		return getAction().getLocales().localizedForKey("create_free_model_based_on_a_powerpoint_slide");
 	}
 
 	@Override

@@ -72,7 +72,12 @@ public class VEModule extends FlexoModule<VEModule> {
 
 	public VEModule(ApplicationContext applicationContext) throws Exception {
 		super(applicationContext);
-		ProgressWindow.setProgressInstance(FlexoLocalization.localizedForKey("build_editor"));
+		ProgressWindow.setProgressInstance(FlexoLocalization.getMainLocalizer().localizedForKey("build_editor"));
+	}
+
+	@Override
+	public String getLocalizationDirectory() {
+		return "FlexoLocalization/ViewEditor";
 	}
 
 	@Override

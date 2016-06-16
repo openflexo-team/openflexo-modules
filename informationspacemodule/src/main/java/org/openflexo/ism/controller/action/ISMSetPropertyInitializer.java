@@ -47,7 +47,6 @@ import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
 import org.openflexo.foundation.action.FlexoExceptionHandler;
 import org.openflexo.foundation.action.SetPropertyAction;
-import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
@@ -86,15 +85,13 @@ public class ISMSetPropertyInitializer extends ActionInitializer {
 			@Override
 			public boolean handleException(FlexoException exception, SetPropertyAction action) {
 				exception.printStackTrace();
-				FlexoController.notify(FlexoLocalization.localizedForKey("could_not_set_property")
-						+ " "
+				FlexoController.notify(action.getLocales().localizedForKey("could_not_set_property") + " "
 						+ (action.getLocalizedPropertyName() != null ? "'" + action.getLocalizedPropertyName() + "' " : "")
-						+ FlexoLocalization.localizedForKey("to")
-						+ " "
-						+ (action.getValue() == null || action.getValue().equals("") ? FlexoLocalization.localizedForKey("empty_value")
+						+ action.getLocales().localizedForKey("to") + " "
+						+ (action.getValue() == null || action.getValue().equals("") ? action.getLocales().localizedForKey("empty_value")
 								: action.getValue())
-						+ (exception.getLocalizedMessage() != null ? "\n(" + FlexoLocalization.localizedForKey("details: ")
-								+ exception.getLocalizedMessage() + ")" : ""));
+						+ (exception.getLocalizedMessage() != null
+								? "\n(" + action.getLocales().localizedForKey("details: ") + exception.getLocalizedMessage() + ")" : ""));
 				return true;
 			}
 		};
