@@ -52,8 +52,10 @@ import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
 import org.openflexo.gina.controller.FIBController.Status;
+import org.openflexo.technologyadapter.powerpoint.PowerpointTechnologyAdapter;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
+import org.openflexo.view.controller.FlexoController;
 
 public class CreateFreeModelFromPPTInitializer extends ActionInitializer<CreateFreeModelFromPPT, FreeModellingProject, FlexoObject> {
 
@@ -73,7 +75,13 @@ public class CreateFreeModelFromPPTInitializer extends ActionInitializer<CreateF
 		return new FlexoActionInitializer<CreateFreeModelFromPPT>() {
 			@Override
 			public boolean run(EventObject e, CreateFreeModelFromPPT action) {
-				Wizard wizard = new CreateFreeModelFromPPTWizard(action, getController());
+				FlexoController ctrl = getController();
+				// We must activate PPT TA if it has not yet been done.
+				PowerpointTechnologyAdapter pptTa = ctrl.getTechnologyAdapter(PowerpointTechnologyAdapter.class);
+				if (pptTa !=null & !pptTa.isActivated()){
+					pptTa.activate();
+				}
+				Wizard wizard = new CreateFreeModelFromPPTWizard(action, ctrl);
 				WizardDialog dialog = new WizardDialog(wizard, getController());
 				dialog.showDialog();
 				if (dialog.getStatus() != Status.VALIDATED) {
