@@ -1,5 +1,14 @@
+a_diagram_with_that_name_already_exists=Il existe d\u00E9j\u00E0 un diagramme qui a ce nom
+configure_new_concept=Nouveau Concept
 create_free_model=Cr\u00E9er un mod\u00E8le libre
-describe_free_model=describe_free_model
-it_is_recommanded_to_describe_free_model=it_is_recommanded_to_describe_free_model
+create_free_model_diagram=Nouveau diagramme
+create_new_concept=Cr\u00E9er un nouveau concept
+describe_free_model=D\u00E9crire le nouvea mod\u00E8le libre
+describe_new_diagram=Description du nouveau diagramme
+it_is_recommanded_to_describe_free_model=Recommandation\: fournir un description du nouveau mod\u00E8le
+it_is_recommanded_to_describe_new_diagram=Recommandation\: fournir un description du nouveau diagramme
 new=Nouveau
-no_free_model_name_defined=no_free_model_name_defined
+no_concept_name_defined=Le concept n'a pas de nom
+no_diagram_name_defined=Le diagramme n'a pas de nom
+no_free_model_name_defined=Le mod\u00E8le n'a pas de nom
+opening_module_view_for_object=Ouverture de la vue d\u00E9di\u00E9e
