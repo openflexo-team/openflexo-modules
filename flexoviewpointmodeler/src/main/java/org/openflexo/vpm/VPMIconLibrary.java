@@ -44,7 +44,7 @@ import javax.swing.ImageIcon;
 
 import org.openflexo.icon.IconLibrary;
 import org.openflexo.rm.ResourceLocator;
-import org.openflexo.toolbox.ImageIconResource;
+import org.openflexo.icon.ImageIconResource;
 
 /**
  * Utility class containing all icons used in context of VPMModule

@@ -42,7 +42,7 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.openflexo.foundation.OpenflexoProjectAtRunTimeTestCase;
+import org.openflexo.foundation.test.OpenflexoProjectAtRunTimeTestCase;
 import org.openflexo.test.OrderedRunner;
 import org.openflexo.test.TestOrder;
 
@@ -61,8 +61,8 @@ public class TestFreeModellingProjectNature extends OpenflexoProjectAtRunTimeTes
 
 		instanciateTestServiceManager();
 
-		FreeModellingProjectNature FREE_MODELLING_NATURE = serviceManager.getProjectNatureService().getProjectNature(
-				FreeModellingProjectNature.class);
+		FreeModellingProjectNature FREE_MODELLING_NATURE = serviceManager.getProjectNatureService()
+				.getProjectNature(FreeModellingProjectNature.class);
 		assertNotNull(FREE_MODELLING_NATURE);
 
 	}
