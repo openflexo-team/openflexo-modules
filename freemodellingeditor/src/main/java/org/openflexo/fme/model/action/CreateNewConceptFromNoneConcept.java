@@ -50,6 +50,7 @@ import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
+import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
@@ -124,7 +125,7 @@ public class CreateNewConceptFromNoneConcept extends FlexoAction<CreateNewConcep
 	}
 
 	public FreeModellingProject getFreeModellingProject() {
-		return getFreeModellingProjectNature().getFreeModellingProject(getFocusedObject().getProject());
+		return getFreeModellingProjectNature().getFreeModellingProject((FlexoProject) getFocusedObject().getResourceCenter());
 	}
 
 	public FreeModel getFreeModel() throws InvalidArgumentException {
