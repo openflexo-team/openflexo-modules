@@ -73,9 +73,6 @@ public class VPMControllerActionInitializer extends ControllerActionInitializer 
 
 		new VPMSetPropertyInitializer(this);
 
-		// Misc
-		new ConvertViewPoint1ActionInitializer(this);
-
 	}
 
 }
