@@ -1,5 +1,9 @@
+configure_new_concept=Configure new concept
 create_free_model=Create a free model
+create_new_concept=Create new concept
 describe_free_model=Describe free model
 it_is_recommanded_to_describe_free_model=It is recommanded to describe free model
 new=New
+no_concept_name_defined=No concept name defined
 no_free_model_name_defined=No free model name defined
+opening_module_view_for_object=Opening module view for object
