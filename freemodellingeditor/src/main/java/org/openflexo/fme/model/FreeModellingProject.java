@@ -57,6 +57,7 @@ import org.openflexo.foundation.fml.rt.AbstractVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.View;
 import org.openflexo.foundation.fml.rt.VirtualModelInstance;
 import org.openflexo.foundation.fml.rt.rm.ViewResource;
+import org.openflexo.foundation.fml.rt.rm.VirtualModelInstanceResourceFactory;
 import org.openflexo.foundation.nature.ProjectWrapper;
 import org.openflexo.foundation.resource.RepositoryFolder;
 import org.openflexo.foundation.resource.ResourceLoadingCancelledException;
@@ -243,6 +244,9 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 	public FreeModel getFreeModel(String freeModelName) {
 		for (FreeModel freeModel : getFreeModels()) {
 			if (freeModel.getName().equals(freeModelName)) {
+				return freeModel;
+			}
+			if (freeModel.getName().equals(freeModelName + VirtualModelInstanceResourceFactory.VIRTUAL_MODEL_INSTANCE_SUFFIX)) {
 				return freeModel;
 			}
 		}
