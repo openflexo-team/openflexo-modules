@@ -48,8 +48,10 @@ import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.fml.FlexoRole;
 import org.openflexo.foundation.fml.ViewPoint;
+import org.openflexo.foundation.fml.rm.ViewPointResourceFactory;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.fml.rt.View;
+import org.openflexo.foundation.fml.rt.rm.ViewResourceFactory;
 import org.openflexo.foundation.nature.ProjectNature;
 import org.openflexo.foundation.nature.ProjectNatureService;
 import org.openflexo.logging.FlexoLogger;
@@ -72,9 +74,9 @@ public class FreeModellingProjectNature implements ProjectNature<FreeModellingPr
 
 	private ProjectNatureService projectNatureService;
 
-	public static final String FREE_MODELLING_VIEW_NAME = "FreeModellingView";
+	public static final String FREE_MODELLING_VIEW_NAME = "FreeModellingView" + ViewResourceFactory.VIEW_SUFFIX;
 	public static final String FREE_MODELLING_VIEW_RELATIVE_URI = "/" + FREE_MODELLING_VIEW_NAME;
-	public static final String FREE_MODELLING_VIEWPOINT_NAME = "FreeModellingViewPoint";
+	public static final String FREE_MODELLING_VIEWPOINT_NAME = "FreeModellingViewPoint" + ViewPointResourceFactory.VIEWPOINT_SUFFIX;
 	public static final String FREE_MODELLING_VIEWPOINT_RELATIVE_URI = "/" + FREE_MODELLING_VIEWPOINT_NAME;
 	public static final String DIAGRAM_SPECIFICATIONS_FOLDER = "DiagramSpecifications";
 
@@ -149,15 +151,15 @@ public class FreeModellingProjectNature implements ProjectNature<FreeModellingPr
 	/*public static List<FreeModel> getFreeModels(FlexoProject project) {
 		return INSTANCE._getFreeModels(project);
 	}
-
+	
 	public static List<FreeMetaModel> getFreeMetaModels(FlexoProject project) {
 		return INSTANCE._getFreeMetaModels(project);
 	}
-
+	
 	public static ViewPoint getFreeModellingViewPoint(FlexoProject project) {
 		return INSTANCE._getFreeModellingViewPoint(project);
 	}
-
+	
 	public static View getFreeModellingView(FlexoProject project) {
 		return INSTANCE._getFreeModellingView(project);
 	}*/
@@ -220,14 +222,14 @@ public class FreeModellingProjectNature implements ProjectNature<FreeModellingPr
 	}
 
 	public String getInstanceName(FlexoConceptInstance flexoConceptInstance) {
-		FlexoRole<String> nameRole = (FlexoRole<String>) flexoConceptInstance.getFlexoConcept().getAccessibleProperty(
-				FreeMetaModel.NAME_ROLE_NAME);
+		FlexoRole<String> nameRole = (FlexoRole<String>) flexoConceptInstance.getFlexoConcept()
+				.getAccessibleProperty(FreeMetaModel.NAME_ROLE_NAME);
 		return flexoConceptInstance.getFlexoActor(nameRole);
 	}
 
 	public void setInstanceName(FlexoConceptInstance flexoConceptInstance, String value) {
-		FlexoRole<String> nameRole = (FlexoRole<String>) flexoConceptInstance.getFlexoConcept().getAccessibleProperty(
-				FreeMetaModel.NAME_ROLE_NAME);
+		FlexoRole<String> nameRole = (FlexoRole<String>) flexoConceptInstance.getFlexoConcept()
+				.getAccessibleProperty(FreeMetaModel.NAME_ROLE_NAME);
 		flexoConceptInstance.setFlexoActor(value, nameRole);
 	}
 
