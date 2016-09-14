@@ -74,10 +74,11 @@ public class FreeModellingProjectNature implements ProjectNature<FreeModellingPr
 
 	private ProjectNatureService projectNatureService;
 
-	public static final String FREE_MODELLING_VIEW_NAME = "FreeModellingView" + ViewResourceFactory.VIEW_SUFFIX;
-	public static final String FREE_MODELLING_VIEW_RELATIVE_URI = "/" + FREE_MODELLING_VIEW_NAME;
-	public static final String FREE_MODELLING_VIEWPOINT_NAME = "FreeModellingViewPoint" + ViewPointResourceFactory.VIEWPOINT_SUFFIX;
-	public static final String FREE_MODELLING_VIEWPOINT_RELATIVE_URI = "/" + FREE_MODELLING_VIEWPOINT_NAME;
+	public static final String FREE_MODELLING_VIEW_NAME = "FreeModellingView";
+	public static final String FREE_MODELLING_VIEW_RELATIVE_URI = "/" + FREE_MODELLING_VIEW_NAME + ViewResourceFactory.VIEW_SUFFIX;
+	public static final String FREE_MODELLING_VIEWPOINT_NAME = "FreeModellingViewPoint";
+	public static final String FREE_MODELLING_VIEWPOINT_RELATIVE_URI = "/" + FREE_MODELLING_VIEWPOINT_NAME
+			+ ViewPointResourceFactory.VIEWPOINT_SUFFIX;
 	public static final String DIAGRAM_SPECIFICATIONS_FOLDER = "DiagramSpecifications";
 
 	private final Map<FlexoProject, FreeModellingProject> freeModellingProjects;
