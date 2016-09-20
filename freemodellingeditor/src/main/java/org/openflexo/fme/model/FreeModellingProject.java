@@ -57,6 +57,7 @@ import org.openflexo.foundation.fml.rt.AbstractVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.View;
 import org.openflexo.foundation.fml.rt.VirtualModelInstance;
 import org.openflexo.foundation.fml.rt.rm.ViewResource;
+import org.openflexo.foundation.fml.rt.rm.VirtualModelInstanceResourceFactory;
 import org.openflexo.foundation.nature.ProjectWrapper;
 import org.openflexo.foundation.resource.RepositoryFolder;
 import org.openflexo.foundation.resource.ResourceLoadingCancelledException;
@@ -87,7 +88,7 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 
 	private final DiagramTechnologyAdapter diagramTechnologyAdapter;
 	// private final DiagramSpecificationRepository dsRepository;
-	private RepositoryFolder<DiagramSpecificationResource> dsFolder;
+	private RepositoryFolder<DiagramSpecificationResource, ?> dsFolder;
 
 	private final FreeModellingProjectNature projectNature;
 
@@ -131,7 +132,7 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 
 		diagramTechnologyAdapter = project.getServiceManager().getTechnologyAdapterService()
 				.getTechnologyAdapter(DiagramTechnologyAdapter.class);
-		DiagramSpecificationRepository dsRepository = project.getRepository(DiagramSpecificationRepository.class, diagramTechnologyAdapter);
+		DiagramSpecificationRepository<?> dsRepository = diagramTechnologyAdapter.getDiagramSpecificationRepository(project);
 
 		dsFolder = dsRepository.getFolderWithName(FreeModellingProjectNature.DIAGRAM_SPECIFICATIONS_FOLDER);
 		if (dsFolder == null) {
@@ -245,6 +246,9 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 			if (freeModel.getName().equals(freeModelName)) {
 				return freeModel;
 			}
+			if (freeModel.getName().equals(freeModelName + VirtualModelInstanceResourceFactory.VIRTUAL_MODEL_INSTANCE_SUFFIX)) {
+				return freeModel;
+			}
 		}
 		return null;
 	}
@@ -262,7 +266,7 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 		return dsRepository;
 	}*/
 
-	public RepositoryFolder<DiagramSpecificationResource> getDiagramSpecificationsFolder() {
+	public RepositoryFolder<DiagramSpecificationResource, ?> getDiagramSpecificationsFolder() {
 		return dsFolder;
 	}
 

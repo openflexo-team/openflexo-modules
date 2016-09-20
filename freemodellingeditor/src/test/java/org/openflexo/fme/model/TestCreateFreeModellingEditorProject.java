@@ -67,6 +67,7 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 		assertNotNull(FREE_MODELLING_NATURE);
 
 		FlexoEditor editor = createProject("TestFMEProject", FREE_MODELLING_NATURE);
+
 		FlexoProject project = editor.getProject();
 		System.out.println("Created project " + project.getProjectDirectory());
 		assertTrue(project.getProjectDirectory().exists());
