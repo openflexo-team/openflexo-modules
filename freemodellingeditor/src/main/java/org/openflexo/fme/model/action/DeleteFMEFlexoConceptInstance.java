@@ -52,6 +52,7 @@ import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
+import org.openflexo.foundation.fml.DeletionScheme;
 import org.openflexo.foundation.fml.rt.AbstractVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.fml.rt.VirtualModelInstance;
@@ -73,7 +74,7 @@ public class DeleteFMEFlexoConceptInstance
 	private static final Logger logger = Logger.getLogger(DeleteFMEFlexoConceptInstance.class.getPackage().getName());
 
 	public static FlexoActionType<DeleteFMEFlexoConceptInstance, FlexoConceptInstance, VirtualModelInstanceObject> actionType = new FlexoActionType<DeleteFMEFlexoConceptInstance, FlexoConceptInstance, VirtualModelInstanceObject>(
-			"delete_flexo_concept_instance", FlexoActionType.defaultGroup, FlexoActionType.DELETE_ACTION_TYPE) {
+			"delete_flexo_concept_instance", FlexoActionType.editGroup, FlexoActionType.DELETE_ACTION_TYPE) {
 
 		/**
 		 * Factory method
@@ -121,23 +122,27 @@ public class DeleteFMEFlexoConceptInstance
 
 		try {
 			FreeModel freeModel = getFreeModel();
-			for (FlexoObject selection : getGlobalSelection()) {
-				if (selection instanceof FlexoConceptInstance) {
-					AbstractVirtualModelInstance<?, ?> vmi = ((FlexoConceptInstance) selection).getVirtualModelInstance();
-					DeletionSchemeActionType deletionSchemeActionType = new DeletionSchemeActionType(
-							((FlexoConceptInstance) selection).getFlexoConcept().getDefaultDeletionScheme(),
-							(FlexoConceptInstance) selection);
-					DeletionSchemeAction deletionSchemeAction = deletionSchemeActionType
-							.makeNewEmbeddedAction((FlexoConceptInstance) selection, getGlobalSelection(), this);
-					deletionSchemeAction.setVirtualModelInstance(vmi);
-					deletionSchemeAction.doAction();
-					vmi.removeFromFlexoConceptInstances(((FlexoConceptInstance) selection));
-					selection.delete(context);
-					// This is used to notify the deletion of an instance of a flexo concept
-					freeModel.getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", selection, null);
+			Vector<FlexoObject> globalSelection = getGlobalSelectionAndFocusedObject();
+			if (globalSelection != null) {
+				for (FlexoObject selection : globalSelection) {
+					if (selection instanceof FlexoConceptInstance) {
+						AbstractVirtualModelInstance<?, ?> vmi = ((FlexoConceptInstance) selection).getVirtualModelInstance();
+						DeletionScheme deletionScheme = ((FlexoConceptInstance) selection).getFlexoConcept().getDefaultDeletionScheme();
+						if (deletionScheme != null) {
+							DeletionSchemeActionType deletionSchemeActionType = new DeletionSchemeActionType(deletionScheme,
+									(FlexoConceptInstance) selection);
+							DeletionSchemeAction deletionSchemeAction = deletionSchemeActionType
+									.makeNewEmbeddedAction((FlexoConceptInstance) selection, getGlobalSelection(), this);
+							deletionSchemeAction.setVirtualModelInstance(vmi);
+							deletionSchemeAction.doAction();
+							vmi.removeFromFlexoConceptInstances(((FlexoConceptInstance) selection));
+							selection.delete(context);
+							// This is used to notify the deletion of an instance of a flexo concept
+							freeModel.getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", selection, null);
+						}
+					}
 				}
 			}
-
 			// TODO Delete concept if no instances??
 
 		} catch (InvalidArgumentException e) {
