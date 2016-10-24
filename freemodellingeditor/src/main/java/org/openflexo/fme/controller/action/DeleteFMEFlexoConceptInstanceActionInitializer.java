@@ -38,19 +38,24 @@
 
 package org.openflexo.fme.controller.action;
 
+import java.awt.event.KeyEvent;
 import java.util.EventObject;
 import java.util.logging.Logger;
+
+import javax.swing.Icon;
+import javax.swing.KeyStroke;
 
 import org.openflexo.fme.model.action.DeleteFMEFlexoConceptInstance;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.fml.rt.VirtualModelInstanceObject;
+import org.openflexo.icon.IconLibrary;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 
-public class DeleteFMEFlexoConceptInstanceActionInitializer extends
-		ActionInitializer<DeleteFMEFlexoConceptInstance, FlexoConceptInstance, VirtualModelInstanceObject> {
+public class DeleteFMEFlexoConceptInstanceActionInitializer
+		extends ActionInitializer<DeleteFMEFlexoConceptInstance, FlexoConceptInstance, VirtualModelInstanceObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
@@ -81,6 +86,16 @@ public class DeleteFMEFlexoConceptInstanceActionInitializer extends
 				return true;
 			}
 		};
+	}
+
+	@Override
+	protected Icon getEnabledIcon() {
+		return IconLibrary.DELETE_ICON;
+	}
+
+	@Override
+	protected KeyStroke getShortcut() {
+		return KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0);
 	}
 
 }
