@@ -118,15 +118,15 @@ public class CreateFreeModelDiagramFromPPT extends AbstractCreateFreeModelDiagra
 		super.doAction(context);
 
 		logger.info("Create free model from PPT slide : Import PPT Slide ");
-		CreateDiagramFromPPTSlide actionCreateDiagramFromPPTSlide = CreateDiagramFromPPTSlide.actionType.makeNewEmbeddedAction(
-				getFocusedObject().getFreeModellingProject().getDiagramSpecificationsFolder(), null, this);
+		CreateDiagramFromPPTSlide actionCreateDiagramFromPPTSlide = CreateDiagramFromPPTSlide.actionType
+				.makeNewEmbeddedAction(getFocusedObject().getFreeModellingProject().getDiagramSpecificationsFolder(), null, this);
 		if (getFreeModel() != null) {
 			actionCreateDiagramFromPPTSlide.setDiagram(getFreeModel().getDiagram());
 			actionCreateDiagramFromPPTSlide.setDiagramName(getDiagramName());
 			actionCreateDiagramFromPPTSlide.setDiagramTitle(getDiagramTitle());
 			actionCreateDiagramFromPPTSlide.setFile(getFile());
 			actionCreateDiagramFromPPTSlide.setSlide(getSlide());
-			actionCreateDiagramFromPPTSlide.setDiagram(getFreeModel().getDiagram());
+			// actionCreateDiagramFromPPTSlide.setDiagram(getFreeModel().getDiagram());
 
 			// System.out.println("actionCreateDiagramFromPPTSlide=" + actionCreateDiagramFromPPTSlide);
 			// System.out.println("valid=" + actionCreateDiagramFromPPTSlide.isValid());

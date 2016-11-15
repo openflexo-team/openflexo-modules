@@ -100,6 +100,11 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 
 		ViewPointResource freeModellingViewPointResource = project.getViewPointRepository()
 				.getResource(project.getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
+		// Attempt to retrieve viewpoints for old projects
+		if (freeModellingViewPointResource == null) {
+			freeModellingViewPointResource = project.getViewPointRepository()
+					.getResource(project.getURI() + "/" + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_NAME);
+		}
 
 		ViewResource freeModellingViewResource = project.getViewLibrary()
 				.getResource(project.getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEW_RELATIVE_URI);
