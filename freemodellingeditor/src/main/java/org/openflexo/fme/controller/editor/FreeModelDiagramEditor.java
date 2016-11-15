@@ -54,6 +54,7 @@ import org.openflexo.fme.model.FreeModel;
 import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.action.FlexoUndoManager.FlexoActionCompoundEdit;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
+import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.gina.model.FIBComponent;
 import org.openflexo.gina.swing.utils.JFIBDialog;
 import org.openflexo.gina.swing.view.SwingViewFactory;
@@ -216,6 +217,9 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 			FIBComponent fibComponent = getFIBLibrary().retrieveFIBComponent(DiagramCst.IMPORT_IMAGE_FILE_DIALOG_FIB);
 			JFIBDialog dialog = JFIBDialog.instanciateAndShowDialog(fibComponent, shapeGR, FlexoFrame.getActiveFrame(), true,
 					new FlexoFIBController(fibComponent, SwingViewFactory.INSTANCE, getFlexoController()));
+			if (dialog.getStatus() == Status.CANCELED) {
+				return false;
+			}
 		}
 
 		DropShape action = DropShape.actionType.makeNewAction(container, null, getFlexoController().getEditor());
