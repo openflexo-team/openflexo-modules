@@ -170,6 +170,7 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 
 	public List<FreeMetaModel> getFreeMetaModels() {
 		List<FreeMetaModel> returned = new ArrayList<FreeMetaModel>();
+		getFreeModellingViewPoint().loadVirtualModelsWhenUnloaded();
 		for (VirtualModel vm : getFreeModellingViewPoint().getVirtualModels()) {
 			try {
 				returned.add(getFreeMetaModel(vm));
