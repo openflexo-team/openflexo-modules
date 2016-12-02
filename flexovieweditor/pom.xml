@@ -7,7 +7,7 @@
 		<version>1.8.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>flexovieweditor</artifactId>
-	<name>Module :: FlexoViewEditor</name>
+	<name>FlexoViewEditor</name>
 	<build>
 		<plugins>
 			<plugin>
@@ -51,5 +51,7 @@
 		
 		
 	</dependencies>
+	<description>Module allowing to execute model federation. Provide generic run-time engine for contents built with the ViewPointModeller.</description>
+	<url>https://openflexo-modules.openflexo.org/SNAPSHOT/flexovieweditor/index.html</url>
 </project>
 

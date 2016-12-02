@@ -7,7 +7,7 @@
 		<version>1.8.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>flexoviewpointmodeler</artifactId>
-	<name>Module :: FlexoViewPointModeler</name>
+	<name>ViewPointModeler</name>
 	<build>
 		<plugins>
 			<plugin>
@@ -56,4 +56,6 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<description>Module allowing to design and edit FML contents (ViewPoint and VirtualModel). This is the Openflexo metamodel editor, designed for expert users.</description>
+	<url>https://openflexo-modules.openflexo.org/SNAPSHOT/flexoviewpointmodeler/index.html</url>
 </project>

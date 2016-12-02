@@ -7,7 +7,7 @@
 		<version>1.8.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>informationspacemodule</artifactId>
-	<name>Module :: InformationSpaceModule</name>
+	<name>InformationSpaceModule</name>
 	<build>
 		<plugins>
 			<plugin>
@@ -51,5 +51,7 @@
 		
 		
 	</dependencies>
+	<description>Module allowing to browse and edit resources of various technologies. This module provide browing, view and edit features for all TechnologyAdapters.</description>
+	<url>https://openflexo-modules.openflexo.org/SNAPSHOT/informationspacemodule/index.html</url>
 </project>
 
