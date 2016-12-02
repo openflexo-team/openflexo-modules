@@ -82,5 +82,7 @@
                 <version>1.1.0</version>
         </dependency>-->
 	</dependencies>
+	<description>Module allowing to design free models. Start from PowerPoint slide or begin drawing diagram to define your own business concepts.</description>
+	<url>https://openflexo-modules.openflexo.org/SNAPSHOT/free-modelling-editor/index.html</url>
 </project>
 
