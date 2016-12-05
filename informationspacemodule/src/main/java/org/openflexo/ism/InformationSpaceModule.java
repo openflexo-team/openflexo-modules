@@ -54,7 +54,7 @@ public class InformationSpaceModule extends Module<ISMModule> {
 
 	public InformationSpaceModule() {
 		super(ISMModule.ISM_MODULE_NAME, ISMModule.ISM_MODULE_SHORT_NAME, ISMModule.class, ISMPreferences.class,
-				"modules/informationspacemodule", "10721", "ism", ISMIconLibrary.ISM_SMALL_ICON, ISMIconLibrary.ISM_MEDIUM_ICON,
+				"modules/informationspacemodule", "10804", "ism", ISMIconLibrary.ISM_SMALL_ICON, ISMIconLibrary.ISM_MEDIUM_ICON,
 				ISMIconLibrary.ISM_MEDIUM_ICON_WITH_HOVER, ISMIconLibrary.ISM_BIG_ICON);
 
 		// WE set it now, because we are sure the ServiceManager did this call first

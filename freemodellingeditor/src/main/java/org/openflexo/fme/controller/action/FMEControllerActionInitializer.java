@@ -86,7 +86,8 @@ public class FMEControllerActionInitializer extends ControllerActionInitializer 
 		new CreateNewConceptFromDiagramElementInitializer(this);
 		new DeclareInstanceOfExistingConceptFromDiagramElementInitializer(this);
 
-		new DeleteFMEFlexoConceptInstanceActionInitializer(this);
+		new DeleteFlexoConceptObjectsInitializer(this);
+
 	}
 
 }
