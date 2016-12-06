@@ -38,10 +38,6 @@
 
 package org.openflexo.fme.model.action;
 
-import java.io.File;
-import java.util.Vector;
-import java.util.logging.Logger;
-
 import org.apache.poi.hslf.model.Slide;
 import org.openflexo.connie.DataBinding;
 import org.openflexo.fme.model.FreeMetaModel;
@@ -60,6 +56,10 @@ import org.openflexo.technologyadapter.diagram.fml.action.CreateDiagramFromPPTSl
 import org.openflexo.technologyadapter.diagram.model.DiagramContainerElement;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 import org.openflexo.toolbox.StringUtils;
+
+import java.io.File;
+import java.util.Vector;
+import java.util.logging.Logger;
 
 /**
  * This action is used to create a new {@link FreeModel} in a {@link FreeModellingProject}<br>
@@ -152,7 +152,11 @@ public class CreateFreeModelFromPPT extends AbstractCreateFreeModel<CreateFreeMo
 		newFlexoConceptInstance.setFlexoActor(diagramShape, shapeRole);
 		PrimitiveRole<String> nameRole = (PrimitiveRole<String>) none.getAccessibleProperty(FreeMetaModel.NAME_ROLE_NAME);
 		shapeRole.setLabel(new DataBinding(FreeMetaModel.NAME_ROLE_NAME));
-		newFlexoConceptInstance.setFlexoActor(diagramShape.getName(), nameRole);
+		String name = diagramShape.getName();
+		if (name == null || name.length() == 0) {
+			name = diagramShape.getGraphicalRepresentation().getShapeType().toString();
+		}
+		newFlexoConceptInstance.setFlexoActor(name, nameRole);
 		return newFlexoConceptInstance;
 	}
 
