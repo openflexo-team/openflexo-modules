@@ -41,8 +41,8 @@ package org.openflexo.fme;
 
 import javax.swing.ImageIcon;
 
+import org.openflexo.icon.ImageIconResource;
 import org.openflexo.rm.ResourceLocator;
-import org.openflexo.toolbox.ImageIconResource;
 
 public class FMEIconLibrary {
 

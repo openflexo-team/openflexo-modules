@@ -38,7 +38,7 @@
 
 package org.openflexo.ve.fib;
 
-import org.openflexo.gina.utils.GenericFIBInspectorTestCase;
+import org.openflexo.gina.test.GenericFIBInspectorTestCase;
 import org.openflexo.rm.FileResourceImpl;
 import org.openflexo.rm.ResourceLocator;
 

@@ -205,7 +205,7 @@ public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> exten
 			return false;
 		}
 
-		if (getFocusedObject().getFreeModel(freeModelName) != null) {
+		if (getFocusedObject() != null && getFocusedObject().getFreeModel(freeModelName) != null) {
 			return false;
 		}
 

@@ -38,7 +38,7 @@
 
 package org.openflexo.ve.fib;
 
-import org.openflexo.gina.utils.GenericFIBInspectorTestCase;
+import org.openflexo.gina.test.GenericFIBInspectorTestCase;
 import org.openflexo.rm.FileResourceImpl;
 import org.openflexo.rm.ResourceLocator;
 
@@ -46,7 +46,7 @@ public class TestVEInspectors extends GenericFIBInspectorTestCase {
 
 	/*
 	 * Use this method to print all
-	 * Then copy-paste 
+	 * Then copy-paste
 	 */
 
 	public static void main(String[] args) {

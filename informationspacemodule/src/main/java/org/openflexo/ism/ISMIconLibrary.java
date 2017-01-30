@@ -43,8 +43,8 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 import org.openflexo.icon.IconLibrary;
+import org.openflexo.icon.ImageIconResource;
 import org.openflexo.rm.ResourceLocator;
-import org.openflexo.toolbox.ImageIconResource;
 
 /**
  * Utility class containing all icons used in context of VEModule
