@@ -1,16 +1,16 @@
 dependencies {
   // openflexo dep
-  compile group: "org.openflexo", name: "flexo-foundation", version: "1.+"
-  compile group: "org.openflexo", name: "flexo-ui", version: "1.+"
-  compile group: "org.openflexo", name: "flexodiagram", version: "1.+"
-  compile group: "org.openflexo", name: "flexodiagram-ui", version: "1.+"
-  compile group: "org.openflexo", name: "powerpointconnector", version: "1.+"
-  compile group: "org.openflexo", name: "powerpointconnector-ui", version: "1.+"
+  compile flexoFoundation()
+  compile flexoUi()
+  compile flexoDiagram()
+  compile flexoDiagramUi()
+  compile powerpointConnector()
+  compile powerpointConnectorUi()
   // external dep
   // testing dep
-  testCompile group: "org.openflexo", name: "testutils", version: "1.+"
-  testCompile group: "org.openflexo", name: "gina-test", version: "1.+"
-  testCompile group: "org.openflexo", name: "flexo-foundation-test", version: "1.+"
-  testCompile group: "org.openflexo", name: "flexo-ui-test", version: "1.+"
-  testRuntime group: "org.openflexo", name: "flexo-test-resources", version: "1.+"
+  testCompile testUtils()
+  testCompile ginaTest()
+  testCompile flexoFoundationTest()
+  testCompile flexoUiTest()
+  testRuntime flexoTestResources()
 }
