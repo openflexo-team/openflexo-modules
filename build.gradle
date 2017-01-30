@@ -1,72 +1,12 @@
 buildscript {
   repositories {
-    jcenter()
+    maven { url uri('https://maven.openflexo.org/artifactory/openflexo-deps/') }
   }
-
   dependencies {
-    classpath "com.prezi.pride:gradle-pride-plugin:0.11"
+    classpath group: 'org.openflexo', name: 'buildplugin', version: '+'
+    classpath group: 'org.openflexo', name: 'buildconfig', version: '1.8.1-SNAPSHOT'
   }
 }
 
-subprojects {
-  group='org.openflexo'
-  apply plugin: 'java'
-  apply plugin: 'pride'
-
-  project.buildDir = 'target'
-  
-  repositories {
-    jcenter()
-
-    maven {
-      url "https://maven.openflexo.org/artifactory/openflexo-deps"
-    }
-}
- 
-  dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.+'
-  }
-
-  if (JavaVersion.current().isJava8Compatible()) {
-    allprojects {
-      tasks.withType(Javadoc) {
-	options.addBooleanOption('Xdoclint:none', true)
-      }
-    }
-  }
-
-  task testJar(type: Jar) {
-    classifier = 'tests'
-    from sourceSets.test.output
-  }
-
-  task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-  }
-
-  task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-  }
-
-  artifacts {
-    archives sourcesJar
-    archives javadocJar
-    archives testJar
-  }
-}
-
-apply plugin: 'maven'
-
-archivesBaseName = rootProject.name
-group = 'org.openflexo'
-version = '1.4-SNAPSHOT'
-
-uploadArchives {
-  repositories {
-    mavenDeployer {
-      repository(url: 'file:./maven')
-    }
-  }
-}
+apply plugin: 'org.openflexo.buildconfig'
+openflexo.version = "1.8.1-SNAPSHOT"
