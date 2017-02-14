@@ -71,7 +71,7 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 		FlexoProject project = editor.getProject();
 		System.out.println("Created project " + project.getProjectDirectory());
 		assertTrue(project.getProjectDirectory().exists());
-		assertTrue(project.getProjectDataResource().getFlexoIODelegate().exists());
+		assertTrue(project.getProjectDataResource().getIODelegate().exists());
 		assertTrue(project.hasNature(FREE_MODELLING_NATURE));
 	}
 
