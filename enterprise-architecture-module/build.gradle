@@ -2,6 +2,10 @@ dependencies {
   // openflexo dep
   compile flexoFoundation()
   compile flexoUi()
+  
+  // This resource center must always be present at run-time
+  runtime openflexo("modelers-rc")
+  
   // external dep
   // testing dep
   testCompile flexoUiTest()
