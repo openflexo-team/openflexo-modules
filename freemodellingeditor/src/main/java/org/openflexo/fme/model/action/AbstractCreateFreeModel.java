@@ -184,7 +184,6 @@ public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> exten
 		try {
 			newVirtualModel.getResource().save(null);
 		} catch (SaveResourceException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
