@@ -6,6 +6,8 @@ dependencies {
   compile flexoDiagramUi()
   compile powerpointConnector()
   compile powerpointConnectorUi()
+  runtime flexoOntology()
+  runtime flexoOntologyUi()
   // external dep
   // testing dep
   testCompile testUtils()
