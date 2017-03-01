@@ -59,7 +59,7 @@ import org.openflexo.logging.FlexoLogger;
 /**
  * Defines the nature of a project to be interpreted as a FreeModelProject<br>
  * 
- * Such project contains exactely one ViewPoint (the end-user never see it) where are defined all VirtualModel which are the basis of
+ * Such project contains exactly one ViewPoint (the end-user never see it) where are defined all VirtualModel which are the basis of
  * {@link FreeMetaModel}<br>
  * 
  * A {@link FlexoProject} which has this nature gives access to a list of {@link FreeModel} (where one {@link FreeModel} is conform to one
@@ -85,7 +85,7 @@ public class FreeModellingProjectNature implements ProjectNature<FreeModellingPr
 
 	// Never call this: this is done via services
 	public FreeModellingProjectNature() {
-		freeModellingProjects = new HashMap<FlexoProject, FreeModellingProject>();
+		freeModellingProjects = new HashMap<>();
 	}
 
 	@Override

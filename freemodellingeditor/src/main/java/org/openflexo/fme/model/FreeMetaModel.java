@@ -192,7 +192,8 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			CreateFlexoConcept action;
 			if (ownerAction != null) {
 				action = CreateFlexoConcept.actionType.makeNewEmbeddedAction(getVirtualModel(), null, ownerAction);
-			} else {
+			}
+			else {
 				action = CreateFlexoConcept.actionType.makeNewAction(getVirtualModel(), null, editor);
 			}
 			action.setNewFlexoConceptName(conceptName);
@@ -203,7 +204,8 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			CreateTechnologyRole createShapeRole = null;
 			if (ownerAction != null) {
 				createShapeRole = CreateTechnologyRole.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
-			} else {
+			}
+			else {
 				createShapeRole = CreateTechnologyRole.actionType.makeNewAction(returned, null, editor);
 			}
 			createShapeRole.setModelSlot(getTypedDiagramModelSlot());
@@ -216,7 +218,8 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			CreatePrimitiveRole createNameRole = null;
 			if (ownerAction != null) {
 				createNameRole = CreatePrimitiveRole.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
-			} else {
+			}
+			else {
 				createNameRole = CreatePrimitiveRole.actionType.makeNewAction(returned, null, editor);
 			}
 			createNameRole.setRoleName(NAME_ROLE_NAME);
@@ -224,7 +227,7 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			createNameRole.doAction();
 
 			// Bind shapes's label to name property
-			role.setLabel(new DataBinding("name"));
+			role.setLabel(new DataBinding<>("name"));
 
 			// Init a default GR
 			FMLModelFactory factory = returned.getFMLModelFactory();
@@ -239,7 +242,8 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			CreateFlexoBehaviour createDropScheme = null;
 			if (ownerAction != null) {
 				createDropScheme = CreateFlexoBehaviour.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
-			} else {
+			}
+			else {
 				createDropScheme = CreateFlexoBehaviour.actionType.makeNewAction(returned, null, editor);
 			}
 			createDropScheme.setFlexoBehaviourName("drop");
@@ -253,7 +257,8 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			CreateFlexoBehaviourParameter createDropSchemeParameter = null;
 			if (ownerAction != null) {
 				createDropSchemeParameter = CreateFlexoBehaviourParameter.actionType.makeNewEmbeddedAction(dropScheme, null, ownerAction);
-			} else {
+			}
+			else {
 				createDropSchemeParameter = CreateFlexoBehaviourParameter.actionType.makeNewAction(dropScheme, null, editor);
 			}
 			createDropSchemeParameter.setParameterName("conceptName");
@@ -265,13 +270,14 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			CreateEditionAction createAddShape = null;
 			if (ownerAction != null) {
 				createAddShape = CreateEditionAction.actionType.makeNewEmbeddedAction(dropScheme.getControlGraph(), null, ownerAction);
-			} else {
+			}
+			else {
 				createAddShape = CreateEditionAction.actionType.makeNewAction(dropScheme.getControlGraph(), null, editor);
 			}
 			// createAddShape.actionChoice = CreateEditionActionChoice.ModelSlotSpecificAction;
 			createAddShape.setModelSlot(getTypedDiagramModelSlot());
 			createAddShape.setEditionActionClass(AddShape.class);
-			createAddShape.setAssignation(new DataBinding(SHAPE_ROLE_NAME));
+			createAddShape.setAssignation(new DataBinding<>(SHAPE_ROLE_NAME));
 			createAddShape.doAction();
 
 			// AssignationAction<DiagramShape> addShapeAssigment = (AssignationAction<DiagramShape>) createAddShape.getNewEditionAction();
@@ -280,22 +286,24 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			CreateEditionAction givesNameAction = null;
 			if (ownerAction != null) {
 				givesNameAction = CreateEditionAction.actionType.makeNewEmbeddedAction(dropScheme.getControlGraph(), null, ownerAction);
-			} else {
+			}
+			else {
 				givesNameAction = CreateEditionAction.actionType.makeNewAction(dropScheme.getControlGraph(), null, editor);
 			}
 			// givesNameAction.actionChoice = CreateEditionActionChoice.BuiltInAction;
 			givesNameAction.setEditionActionClass(ExpressionAction.class);
-			givesNameAction.setAssignation(new DataBinding(NAME_ROLE_NAME));
+			givesNameAction.setAssignation(new DataBinding<>(NAME_ROLE_NAME));
 			givesNameAction.doAction();
 
 			AssignationAction<?> nameAssignation = (AssignationAction<?>) givesNameAction.getNewEditionAction();
-			((ExpressionAction) nameAssignation.getAssignableAction()).setExpression(new DataBinding("parameters.conceptName"));
+			((ExpressionAction<?>) nameAssignation.getAssignableAction()).setExpression(new DataBinding<>("parameters.conceptName"));
 
 			// Create new DeletionScheme
 			CreateFlexoBehaviour createDeletionScheme = null;
 			if (ownerAction != null) {
 				createDeletionScheme = CreateFlexoBehaviour.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
-			} else {
+			}
+			else {
 				createDeletionScheme = CreateFlexoBehaviour.actionType.makeNewAction(returned, null, editor);
 			}
 			createDeletionScheme.setFlexoBehaviourName("delete");
@@ -308,7 +316,8 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			if (ownerAction != null) {
 				createDeleteShape = CreateEditionAction.actionType.makeNewEmbeddedAction(deletionScheme.getControlGraph(), null,
 						ownerAction);
-			} else {
+			}
+			else {
 				createDeleteShape = CreateEditionAction.actionType.makeNewAction(deletionScheme.getControlGraph(), null, editor);
 			}
 			// createDeleteShape.actionChoice = CreateEditionActionChoice.BuiltInAction;
@@ -316,8 +325,8 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			createDeleteShape.setEditionActionClass(DeleteAction.class);
 			createDeleteShape.doAction();
 
-			DeleteAction deleteShape = (DeleteAction) createDeleteShape.getNewEditionAction();
-			deleteShape.setObject(new DataBinding(SHAPE_ROLE_NAME));
+			DeleteAction<?> deleteShape = (DeleteAction<?>) createDeleteShape.getNewEditionAction();
+			deleteShape.setObject(new DataBinding<>(SHAPE_ROLE_NAME));
 
 			// Create inspector
 			TextFieldInspectorEntry nameEntry = returned.getInspector().createNewTextField();
@@ -367,7 +376,8 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			paletteElementGR.setY(py * FreeMetaModel.PALETTE_GRID_HEIGHT + 10);
 			paletteElementGR.setWidth(30);
 			paletteElementGR.setHeight(30);
-		} else {
+		}
+		else {
 			paletteElementGR.setX(px * FreeMetaModel.PALETTE_GRID_WIDTH + 10);
 			paletteElementGR.setY(py * FreeMetaModel.PALETTE_GRID_HEIGHT + 10);
 			paletteElementGR.setWidth(40);
