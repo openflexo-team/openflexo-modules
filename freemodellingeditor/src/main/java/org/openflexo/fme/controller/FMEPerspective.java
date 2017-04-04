@@ -43,7 +43,6 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 import org.openflexo.fme.FMEIconLibrary;
-import org.openflexo.fme.controller.editor.FreeModelDiagramEditor;
 import org.openflexo.fme.model.FreeMetaModel;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.fme.view.FreeModelModuleView;
@@ -53,7 +52,6 @@ import org.openflexo.fme.widget.FIBRepresentedConceptBrowser;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.model.undo.CompoundEdit;
-import org.openflexo.technologyadapter.diagram.controller.DiagramTechnologyAdapterController;
 import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.controller.model.FlexoPerspective;
@@ -83,7 +81,7 @@ public class FMEPerspective extends FlexoPerspective {
 		setTopLeftView(freeModellingProjectBrowser);
 
 		/*MultiSplitLayoutFactory factory = new MultiSplitLayoutFactory.DefaultMultiSplitLayoutFactory();
-
+		
 		Leaf top = factory.makeLeaf("top");
 		Leaf bottom = factory.makeLeaf("bottom");
 		Split root = factory.makeRowSplit(top, factory.makeDivider(), bottom);
@@ -165,7 +163,8 @@ public class FMEPerspective extends FlexoPerspective {
 		// logger.info("ViewPointPerspective: object was double-clicked: " + object);
 		if (object instanceof FreeModel) {
 			controller.selectAndFocusObject((FreeModel) object);
-		} else {
+		}
+		else {
 			super.objectWasDoubleClicked(object, controller);
 		}
 	}
@@ -182,11 +181,11 @@ public class FMEPerspective extends FlexoPerspective {
 		return super.hasModuleViewForObject(object);
 	}
 
-	public void closeFreeModelBrowsers(){
+	public void closeFreeModelBrowsers() {
 		setMiddleLeftView(null);
 		setBottomLeftView(null);
 	}
-	
+
 	@Override
 	public ModuleView<?> createModuleViewForObject(FlexoObject object, boolean editable) {
 		if (object instanceof FreeModel) {
@@ -197,16 +196,12 @@ public class FMEPerspective extends FlexoPerspective {
 			if (getController().getEditor().getUndoManager() != null) {
 				edit = getController().getEditor().getUndoManager().startRecording("Initialize free diagram");
 			}
-			DiagramTechnologyAdapterController diagramTAC = getController().getApplicationContext().getTechnologyAdapterControllerService()
-					.getTechnologyAdapterController(DiagramTechnologyAdapterController.class);
-			FreeModelDiagramEditor editor = new FreeModelDiagramEditor((FreeModel) object, false, getController(),
-					diagramTAC.getToolFactory());
 			if (edit != null) {
 				getController().getEditor().getUndoManager().stopRecording(edit);
 				// Make this edit not-undoable
 				edit.die();
 			}
-			return new FreeModelModuleView(editor, this);
+			return new FreeModelModuleView(getController(), (FreeModel) object, this);
 		}
 		return super.createModuleViewForObject(object, editable);
 	}

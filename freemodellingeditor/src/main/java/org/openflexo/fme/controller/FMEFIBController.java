@@ -40,8 +40,6 @@ package org.openflexo.fme.controller;
 
 import java.util.logging.Logger;
 
-import org.openflexo.fme.controller.editor.FreeModelDiagramEditor;
-import org.openflexo.fme.view.FreeModelModuleView;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.gina.model.FIBComponent;
 import org.openflexo.gina.view.GinaViewFactory;
@@ -69,13 +67,6 @@ public class FMEFIBController extends FlexoFIBController {
 	@Override
 	public FMEController getFlexoController() {
 		return (FMEController) super.getFlexoController();
-	}
-
-	public FreeModelDiagramEditor getDiagramEditor() {
-		if (getFlexoController().getCurrentModuleView() instanceof FreeModelModuleView) {
-			return ((FreeModelModuleView) getFlexoController().getCurrentModuleView()).getEditor();
-		}
-		return null;
 	}
 
 	public void createConcept(String name) {

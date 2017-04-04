@@ -70,7 +70,7 @@ import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.menu.FlexoMenuBar;
 
 /**
- * This is the controller of ViewPointModeller module
+ * This is the controller of FreeModellingEditor module
  * 
  * @author sylvain
  */
@@ -158,7 +158,8 @@ public class FMEController extends FlexoController {
 				}
 			}
 			getSelectionManager().setSelectedObject(object);
-		} else {
+		}
+		else {
 			logger.warning("Cannot set focus on a NULL object");
 		}
 	}
@@ -189,9 +190,11 @@ public class FMEController extends FlexoController {
 	public ImageIcon iconForObject(Object object) {
 		if (object instanceof FreeModellingProject) {
 			return IconLibrary.OPENFLEXO_NOTEXT_16;
-		} else if (object instanceof FreeModel) {
+		}
+		else if (object instanceof FreeModel) {
 			return FMEIconLibrary.DIAGRAM_ICON;
-		} else if (object instanceof FreeMetaModel) {
+		}
+		else if (object instanceof FreeMetaModel) {
 			return FMEIconLibrary.FME_SMALL_ICON;
 		}
 		return super.iconForObject(object);
