@@ -138,7 +138,7 @@ public class VPMController extends FlexoController {
 				logger.info("setCurrentEditedObjectAsModuleView with " + object);
 				setCurrentEditedObjectAsModuleView(object);
 			}
-			System.out.println("et hop, on selectionne " + object);
+
 			getSelectionManager().setSelectedObject(object);
 		}
 		else {
