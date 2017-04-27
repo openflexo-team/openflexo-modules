@@ -38,12 +38,12 @@
 
 package org.openflexo.fme.model;
 
-import java.awt.Font;
+import java.awt.*;
 import java.io.FileNotFoundException;
 import java.util.List;
-
 import org.openflexo.connie.DataBinding;
 import org.openflexo.connie.type.PrimitiveType;
+import org.openflexo.fge.FGECoreUtils;
 import org.openflexo.fge.ShapeGraphicalRepresentation;
 import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
 import org.openflexo.foundation.DefaultFlexoObject;
@@ -53,7 +53,6 @@ import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.fml.DeletionScheme;
-import org.openflexo.foundation.fml.FMLModelFactory;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.TextFieldParameter;
 import org.openflexo.foundation.fml.VirtualModel;
@@ -230,8 +229,7 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			role.setLabel(new DataBinding<>("name"));
 
 			// Init a default GR
-			FMLModelFactory factory = returned.getFMLModelFactory();
-			ShapeGraphicalRepresentation shapeGR = factory.makeShapeGraphicalRepresentation(ShapeType.RECTANGLE);
+			ShapeGraphicalRepresentation shapeGR = FGECoreUtils.TOOLS_FACTORY.makeShapeGraphicalRepresentation(ShapeType.RECTANGLE);
 			shapeGR.setX(10);
 			shapeGR.setY(10);
 			shapeGR.setWidth(80);
