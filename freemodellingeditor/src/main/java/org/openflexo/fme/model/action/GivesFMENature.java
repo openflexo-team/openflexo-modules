@@ -51,10 +51,10 @@ import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
-import org.openflexo.foundation.fml.action.CreateViewPoint;
-import org.openflexo.foundation.fml.rm.ViewPointResource;
-import org.openflexo.foundation.fml.rt.action.CreateViewInFolder;
-import org.openflexo.foundation.fml.rt.rm.ViewResource;
+import org.openflexo.foundation.fml.action.CreateTopLevelVirtualModel;
+import org.openflexo.foundation.fml.rm.VirtualModelResource;
+import org.openflexo.foundation.fml.rt.action.CreateBasicVirtualModelInstance;
+import org.openflexo.foundation.fml.rt.rm.FMLRTVirtualModelInstanceResource;
 import org.openflexo.foundation.resource.InvalidFileNameException;
 import org.openflexo.foundation.resource.SaveResourceException;
 import org.openflexo.localization.LocalizedDelegate;
@@ -112,37 +112,37 @@ public class GivesFMENature extends FlexoAction<GivesFMENature, FlexoProject, Fl
 
 	@Override
 	protected void doAction(Object context) throws InvalidFileNameException, SaveResourceException, InvalidArgumentException {
-		if (getFocusedObject().getViewPointRepository() == null) {
-			logger.warning("Could not determine ViewPointRepository. Aborting operation.");
-			throw new InvalidArgumentException("Could not determine ViewPointRepository. Aborting operation.");
+		if (getFocusedObject().getVirtualModelRepository() == null) {
+			logger.warning("Could not determine VirtualModelRepository. Aborting operation.");
+			throw new InvalidArgumentException("Could not determine VirtualModelRepository. Aborting operation.");
 		}
 
-		ViewPointResource freeModellingViewPointResource = getFocusedObject().getViewPointRepository()
+		VirtualModelResource freeModellingViewPointResource = getFocusedObject().getVirtualModelRepository()
 				.getResource(getFocusedObject().getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
 
 		// Since CreateViewpoint/View are LongRunning actions, we call them as embedded actions, therefore we are ensure that Viewpoint and
 		// View are created after doAction() call.
 		if (freeModellingViewPointResource == null) {
-			CreateViewPoint action = CreateViewPoint.actionType
-					.makeNewEmbeddedAction(getFocusedObject().getViewPointRepository().getRootFolder(), null, this);
-			action.setNewViewPointName(FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_NAME);
-			action.setNewViewPointURI(getFocusedObject().getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
-			action.setNewViewPointDescription("This is the generic ViewPoint storing all FreeModelling meta-models");
+			CreateTopLevelVirtualModel action = CreateTopLevelVirtualModel.actionType
+					.makeNewEmbeddedAction(getFocusedObject().getVirtualModelRepository().getRootFolder(), null, this);
+			action.setNewVirtualModelName(FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_NAME);
+			action.setNewVirtualModelURI(getFocusedObject().getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
+			action.setNewVirtualModelDescription("This is the generic ViewPoint storing all FreeModelling meta-models");
 			action.doAction();
-			freeModellingViewPointResource = (ViewPointResource) action.getNewViewPoint().getResource();
+			freeModellingViewPointResource = (VirtualModelResource) action.getNewVirtualModel().getResource();
 		}
 
-		ViewResource freeModellingViewResource = getFocusedObject().getViewLibrary()
+		FMLRTVirtualModelInstanceResource freeModellingViewResource = getFocusedObject().getVirtualModelInstanceRepository()
 				.getResource(getFocusedObject().getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEW_RELATIVE_URI);
 
 		if (freeModellingViewResource == null) {
-			CreateViewInFolder action = CreateViewInFolder.actionType
-					.makeNewEmbeddedAction(getFocusedObject().getViewLibrary().getRootFolder(), null, this);
-			action.setNewViewName(FreeModellingProjectNature.FREE_MODELLING_VIEW_NAME);
-			action.setNewViewTitle(FreeModellingProjectNature.FREE_MODELLING_VIEW_NAME);
-			action.setViewpointResource(freeModellingViewPointResource);
+			CreateBasicVirtualModelInstance action = CreateBasicVirtualModelInstance.actionType
+					.makeNewEmbeddedAction(getFocusedObject().getVirtualModelInstanceRepository().getRootFolder(), null, this);
+			action.setNewVirtualModelInstanceName(FreeModellingProjectNature.FREE_MODELLING_VIEW_NAME);
+			action.setNewVirtualModelInstanceTitle(FreeModellingProjectNature.FREE_MODELLING_VIEW_NAME);
+			action.setVirtualModel(freeModellingViewPointResource.getVirtualModel());
 			action.doAction();
-			freeModellingViewResource = (ViewResource) action.getNewView().getResource();
+			freeModellingViewResource = (FMLRTVirtualModelInstanceResource) action.getNewVirtualModelInstance().getResource();
 		}
 
 		DiagramTechnologyAdapter diagramTechnologyAdapter = getFocusedObject().getServiceManager().getTechnologyAdapterService()

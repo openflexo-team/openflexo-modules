@@ -39,6 +39,7 @@
 package org.openflexo.fme.controller;
 
 import java.util.logging.Logger;
+
 import org.openflexo.fme.controller.editor.FreeModelDiagramEditor;
 import org.openflexo.fme.model.FreeModel;
 import org.openflexo.fme.model.FreeModellingProjectNature;
@@ -89,7 +90,8 @@ public class FreeModelPasteHandler extends FMLControlledDiagramPasteHandler {
 			if (leaderClipboard.getSingleContents() instanceof FlexoConceptInstance) {
 				translateName((FlexoConceptInstance) leaderClipboard.getSingleContents());
 			}
-		} else {
+		}
+		else {
 			for (Object o : leaderClipboard.getMultipleContents()) {
 				if (o instanceof FlexoConceptInstance) {
 					translateName((FlexoConceptInstance) o);
@@ -110,7 +112,8 @@ public class FreeModelPasteHandler extends FMLControlledDiagramPasteHandler {
 		String newName;
 		if (oldName.endsWith(COPY_SUFFIX)) {
 			newName = oldName + "2";
-		} else if (oldName.contains(COPY_SUFFIX)) {
+		}
+		else if (oldName.contains(COPY_SUFFIX)) {
 			try {
 				int currentIndex = Integer.parseInt(oldName.substring(oldName.lastIndexOf(COPY_SUFFIX) + COPY_SUFFIX.length()));
 				newName = oldName.substring(0, oldName.lastIndexOf(COPY_SUFFIX)) + COPY_SUFFIX + (currentIndex + 1);
@@ -118,7 +121,8 @@ public class FreeModelPasteHandler extends FMLControlledDiagramPasteHandler {
 				logger.warning("Could not parse as int " + oldName.substring(oldName.lastIndexOf(COPY_SUFFIX)));
 				newName = oldName + COPY_SUFFIX;
 			}
-		} else {
+		}
+		else {
 			newName = oldName + COPY_SUFFIX;
 		}
 		System.out.println("translating name from " + oldName + " to " + newName);

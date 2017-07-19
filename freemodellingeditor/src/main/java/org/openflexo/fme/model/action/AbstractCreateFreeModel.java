@@ -51,7 +51,7 @@ import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.action.CreateModelSlot;
-import org.openflexo.foundation.fml.action.CreateVirtualModel;
+import org.openflexo.foundation.fml.action.CreateContainedVirtualModel;
 import org.openflexo.foundation.fml.rt.VirtualModelInstance;
 import org.openflexo.foundation.fml.rt.action.ModelSlotInstanceConfiguration.DefaultModelSlotInstanceConfigurationOption;
 import org.openflexo.foundation.resource.SaveResourceException;
@@ -164,7 +164,7 @@ public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> exten
 
 		// Now we create the VirtualModel
 		System.out.println("Creating VirtualModel...");
-		CreateVirtualModel action = CreateVirtualModel.actionType.makeNewEmbeddedAction(getFocusedObject().getFreeModellingViewPoint(),
+		CreateContainedVirtualModel action = CreateContainedVirtualModel.actionType.makeNewEmbeddedAction(getFocusedObject().getFreeModellingViewPoint(),
 				null, this);
 		action.setNewVirtualModelName(metaModelName);
 		action.doAction();

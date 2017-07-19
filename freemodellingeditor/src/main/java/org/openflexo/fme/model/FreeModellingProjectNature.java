@@ -47,11 +47,11 @@ import org.openflexo.fme.model.action.GivesFMENature;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.fml.FlexoRole;
-import org.openflexo.foundation.fml.ViewPoint;
-import org.openflexo.foundation.fml.rm.ViewPointResourceFactory;
+import org.openflexo.foundation.fml.VirtualModel;
+import org.openflexo.foundation.fml.rm.VirtualModelResourceFactory;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
-import org.openflexo.foundation.fml.rt.View;
-import org.openflexo.foundation.fml.rt.rm.ViewResourceFactory;
+import org.openflexo.foundation.fml.rt.VirtualModelInstance;
+import org.openflexo.foundation.fml.rt.rm.FMLRTVirtualModelInstanceResourceFactory;
 import org.openflexo.foundation.nature.ProjectNature;
 import org.openflexo.foundation.nature.ProjectNatureService;
 import org.openflexo.logging.FlexoLogger;
@@ -75,10 +75,11 @@ public class FreeModellingProjectNature implements ProjectNature<FreeModellingPr
 	private ProjectNatureService projectNatureService;
 
 	public static final String FREE_MODELLING_VIEW_NAME = "FreeModellingView";
-	public static final String FREE_MODELLING_VIEW_RELATIVE_URI = "/" + FREE_MODELLING_VIEW_NAME + ViewResourceFactory.VIEW_SUFFIX;
+	public static final String FREE_MODELLING_VIEW_RELATIVE_URI = "/" + FREE_MODELLING_VIEW_NAME
+			+ FMLRTVirtualModelInstanceResourceFactory.FML_RT_SUFFIX;
 	public static final String FREE_MODELLING_VIEWPOINT_NAME = "FreeModellingViewPoint";
 	public static final String FREE_MODELLING_VIEWPOINT_RELATIVE_URI = "/" + FREE_MODELLING_VIEWPOINT_NAME
-			+ ViewPointResourceFactory.VIEWPOINT_SUFFIX;
+			+ VirtualModelResourceFactory.FML_SUFFIX;
 	public static final String DIAGRAM_SPECIFICATIONS_FOLDER = "DiagramSpecifications";
 
 	private final Map<FlexoProject, FreeModellingProject> freeModellingProjects;
@@ -109,13 +110,13 @@ public class FreeModellingProjectNature implements ProjectNature<FreeModellingPr
 		if (project == null) {
 			return false;
 		}
-		if (project.getViewPointRepository() == null) {
+		if (project.getVirtualModelRepository() == null) {
 			return false;
 		}
-		if (project.getViewPointRepository().getAllResources().size() == 0) {
+		if (project.getVirtualModelRepository().getAllResources().size() == 0) {
 			return false;
 		}
-		if (project.getViewLibrary().getAllResources().size() == 0) {
+		if (project.getVirtualModelInstanceRepository().getAllResources().size() == 0) {
 			return false;
 		}
 		FreeModellingProject factory = getFreeModellingProject(project);
@@ -192,7 +193,7 @@ public class FreeModellingProjectNature implements ProjectNature<FreeModellingPr
 		return freeModellingProject.getFreeMetaModels();
 	}
 
-	public ViewPoint getFreeModellingViewPoint(FlexoProject project) {
+	public VirtualModel getFreeModellingViewPoint(FlexoProject project) {
 		FreeModellingProject factory = getFreeModellingProject(project);
 		if (factory == null) {
 			return null;
@@ -200,7 +201,7 @@ public class FreeModellingProjectNature implements ProjectNature<FreeModellingPr
 		return factory.getFreeModellingViewPoint();
 	}
 
-	public View getFreeModellingView(FlexoProject project) {
+	public VirtualModelInstance getFreeModellingView(FlexoProject project) {
 		FreeModellingProject freeModellingProject = getFreeModellingProject(project);
 		if (freeModellingProject == null) {
 			return null;

@@ -137,9 +137,9 @@ public class VPMToolsMenu extends ToolsMenu {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			if (getVPMController().getCurrentViewPoint() != null) {
-				logger.info("Check consistency for " + getVPMController().getCurrentViewPoint());
-				getVPMController().consistencyCheck(getVPMController().getCurrentViewPoint());
+			if (getVPMController().getCurrentVirtualModel() != null) {
+				logger.info("Check consistency for " + getVPMController().getCurrentVirtualModel());
+				getVPMController().consistencyCheck(getVPMController().getCurrentVirtualModel());
 			}
 		}
 

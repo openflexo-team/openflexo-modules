@@ -38,9 +38,10 @@
 
 package org.openflexo.fme.model;
 
-import java.awt.*;
+import java.awt.Font;
 import java.io.FileNotFoundException;
 import java.util.List;
+
 import org.openflexo.connie.DataBinding;
 import org.openflexo.connie.type.PrimitiveType;
 import org.openflexo.fge.FGECoreUtils;
@@ -53,13 +54,13 @@ import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.fml.DeletionScheme;
+import org.openflexo.foundation.fml.FlexoBehaviourParameter;
 import org.openflexo.foundation.fml.FlexoConcept;
-import org.openflexo.foundation.fml.TextFieldParameter;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.action.CreateEditionAction;
 import org.openflexo.foundation.fml.action.CreateFlexoBehaviour;
-import org.openflexo.foundation.fml.action.CreateFlexoBehaviourParameter;
 import org.openflexo.foundation.fml.action.CreateFlexoConcept;
+import org.openflexo.foundation.fml.action.CreateGenericBehaviourParameter;
 import org.openflexo.foundation.fml.action.CreatePrimitiveRole;
 import org.openflexo.foundation.fml.action.CreateTechnologyRole;
 import org.openflexo.foundation.fml.editionaction.AssignationAction;
@@ -252,17 +253,17 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			dropScheme.setTopTarget(true);
 
 			// Create new DropScheme parameter
-			CreateFlexoBehaviourParameter createDropSchemeParameter = null;
+			CreateGenericBehaviourParameter createDropSchemeParameter = null;
 			if (ownerAction != null) {
-				createDropSchemeParameter = CreateFlexoBehaviourParameter.actionType.makeNewEmbeddedAction(dropScheme, null, ownerAction);
+				createDropSchemeParameter = CreateGenericBehaviourParameter.actionType.makeNewEmbeddedAction(dropScheme, null, ownerAction);
 			}
 			else {
-				createDropSchemeParameter = CreateFlexoBehaviourParameter.actionType.makeNewAction(dropScheme, null, editor);
+				createDropSchemeParameter = CreateGenericBehaviourParameter.actionType.makeNewAction(dropScheme, null, editor);
 			}
 			createDropSchemeParameter.setParameterName("conceptName");
-			createDropSchemeParameter.setFlexoBehaviourParameterClass(TextFieldParameter.class);
+			createDropSchemeParameter.setParameterType(String.class);
 			createDropSchemeParameter.doAction();
-			TextFieldParameter parameter = (TextFieldParameter) createDropSchemeParameter.getNewParameter();
+			FlexoBehaviourParameter parameter = createDropSchemeParameter.getNewParameter();
 			parameter.setDefaultValue(new DataBinding<String>("\"" + parameter.getName() + "\""));
 
 			CreateEditionAction createAddShape = null;

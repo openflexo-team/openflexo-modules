@@ -45,8 +45,8 @@ import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.fml.FMLObject;
 import org.openflexo.foundation.fml.FlexoConceptObject;
-import org.openflexo.foundation.fml.ViewPoint;
-import org.openflexo.foundation.fml.ViewPointLibrary;
+import org.openflexo.foundation.fml.VirtualModel;
+import org.openflexo.foundation.fml.VirtualModelLibrary;
 import org.openflexo.foundation.validation.FlexoValidationModel;
 import org.openflexo.module.FlexoModule;
 import org.openflexo.view.FlexoMainPane;
@@ -107,12 +107,12 @@ public class VPMController extends FlexoController {
 	}
 
 	/**
-	 * Return the ViewPointLibrary
+	 * Return the VirtualModelLibrary
 	 * 
 	 * @return
 	 */
-	public ViewPointLibrary getViewPointLibrary() {
-		return getApplicationContext().getService(ViewPointLibrary.class);
+	public VirtualModelLibrary getViewPointLibrary() {
+		return getApplicationContext().getService(VirtualModelLibrary.class);
 	}
 
 	@Override
@@ -146,9 +146,9 @@ public class VPMController extends FlexoController {
 		}
 	}
 
-	public ViewPoint getCurrentViewPoint() {
+	public VirtualModel getCurrentVirtualModel() {
 		if (getCurrentDisplayedObjectAsModuleView() instanceof FMLObject) {
-			return ((FMLObject) getCurrentDisplayedObjectAsModuleView()).getViewPoint();
+			return ((FMLObject) getCurrentDisplayedObjectAsModuleView()).getDeclaringVirtualModel();
 		}
 		return null;
 	}
@@ -156,7 +156,7 @@ public class VPMController extends FlexoController {
 	@Override
 	public FlexoValidationModel getValidationModelForObject(FlexoObject object) {
 		if (object instanceof FMLObject) {
-			return getApplicationContext().getViewPointLibrary().getViewPointValidationModel();
+			return getApplicationContext().getVirtualModelLibrary().getFMLValidationModel();
 		}
 		return super.getValidationModelForObject(object);
 	}

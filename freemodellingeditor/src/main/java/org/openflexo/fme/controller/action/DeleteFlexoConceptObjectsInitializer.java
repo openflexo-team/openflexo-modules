@@ -54,7 +54,7 @@ import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
-import org.openflexo.foundation.fml.AbstractVirtualModel;
+import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.FlexoConceptObject;
 import org.openflexo.foundation.fml.VirtualModel;
@@ -84,7 +84,7 @@ public class DeleteFlexoConceptObjectsInitializer
 					if (action.getGlobalSelection().size() >= 1) {
 						if (action.getFocusedObject() instanceof FlexoConcept) {
 							FlexoConcept concept = (FlexoConcept) action.getFocusedObject();
-							AbstractVirtualModel<?> vm = concept.getOwner();
+							VirtualModel vm = concept.getOwner();
 							FreeModellingProjectNature fmeNature = action.getServiceManager().getProjectNatureService()
 									.getProjectNature(FreeModellingProjectNature.class);
 							FreeModellingProject fmeProject = getProject().asNature(fmeNature);

@@ -44,7 +44,7 @@ import java.io.File;
 import org.openflexo.TestApplicationContext;
 import org.openflexo.fib.editor.FIBAbstractEditor;
 import org.openflexo.foundation.fml.ViewPoint;
-import org.openflexo.foundation.fml.ViewPointLibrary;
+import org.openflexo.foundation.fml.VirtualModelLibrary;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.action.CreateModelSlot;
 import org.openflexo.toolbox.FileResource;

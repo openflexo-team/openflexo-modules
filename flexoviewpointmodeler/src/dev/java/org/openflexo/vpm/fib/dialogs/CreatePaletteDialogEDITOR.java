@@ -45,7 +45,7 @@ import org.openflexo.TestApplicationContext;
 import org.openflexo.fib.editor.FIBAbstractEditor;
 import org.openflexo.foundation.fml.rt.diagram.viewpoint.action.CreateDiagramPalette;
 import org.openflexo.foundation.fml.ViewPoint;
-import org.openflexo.foundation.fml.ViewPointLibrary;
+import org.openflexo.foundation.fml.VirtualModelLibrary;
 import org.openflexo.toolbox.FileResource;
 import org.openflexo.vpm.VPMCst;
 

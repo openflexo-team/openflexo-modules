@@ -59,7 +59,7 @@ import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.fml.FMLObject;
-import org.openflexo.foundation.fml.ViewPoint;
+import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.validation.FlexoValidationModel;
 import org.openflexo.icon.IconLibrary;
 import org.openflexo.module.FlexoModule;
@@ -158,14 +158,15 @@ public class FMEController extends FlexoController {
 				}
 			}
 			getSelectionManager().setSelectedObject(object);
-		} else {
+		}
+		else {
 			logger.warning("Cannot set focus on a NULL object");
 		}
 	}
 
-	public ViewPoint getCurrentViewPoint() {
+	public VirtualModel getCurrentVirtualModel() {
 		if (getCurrentDisplayedObjectAsModuleView() instanceof FMLObject) {
-			return ((FMLObject) getCurrentDisplayedObjectAsModuleView()).getViewPoint();
+			return ((FMLObject) getCurrentDisplayedObjectAsModuleView()).getDeclaringVirtualModel();
 		}
 		return null;
 	}
@@ -173,7 +174,7 @@ public class FMEController extends FlexoController {
 	@Override
 	public FlexoValidationModel getValidationModelForObject(FlexoObject object) {
 		if (object instanceof FMLObject) {
-			return getApplicationContext().getViewPointLibrary().getViewPointValidationModel();
+			return getApplicationContext().getVirtualModelLibrary().getFMLValidationModel();
 		}
 		return super.getValidationModelForObject(object);
 	}
@@ -189,9 +190,11 @@ public class FMEController extends FlexoController {
 	public ImageIcon iconForObject(Object object) {
 		if (object instanceof FreeModellingProject) {
 			return IconLibrary.OPENFLEXO_NOTEXT_16;
-		} else if (object instanceof FreeModel) {
+		}
+		else if (object instanceof FreeModel) {
 			return FMEIconLibrary.DIAGRAM_ICON;
-		} else if (object instanceof FreeMetaModel) {
+		}
+		else if (object instanceof FreeMetaModel) {
 			return FMEIconLibrary.FME_SMALL_ICON;
 		}
 		return super.iconForObject(object);

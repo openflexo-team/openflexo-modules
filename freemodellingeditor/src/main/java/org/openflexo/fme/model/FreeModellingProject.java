@@ -50,14 +50,12 @@ import org.openflexo.foundation.DefaultFlexoObject;
 import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.InvalidArgumentException;
-import org.openflexo.foundation.fml.ViewPoint;
 import org.openflexo.foundation.fml.VirtualModel;
-import org.openflexo.foundation.fml.rm.ViewPointResource;
+import org.openflexo.foundation.fml.rm.VirtualModelResource;
 import org.openflexo.foundation.fml.rt.AbstractVirtualModelInstance;
-import org.openflexo.foundation.fml.rt.View;
 import org.openflexo.foundation.fml.rt.VirtualModelInstance;
-import org.openflexo.foundation.fml.rt.rm.ViewResource;
-import org.openflexo.foundation.fml.rt.rm.VirtualModelInstanceResourceFactory;
+import org.openflexo.foundation.fml.rt.rm.FMLRTVirtualModelInstanceResource;
+import org.openflexo.foundation.fml.rt.rm.FMLRTVirtualModelInstanceResourceFactory;
 import org.openflexo.foundation.nature.ProjectWrapper;
 import org.openflexo.foundation.resource.RepositoryFolder;
 import org.openflexo.foundation.resource.ResourceLoadingCancelledException;
@@ -81,8 +79,8 @@ import org.openflexo.technologyadapter.diagram.rm.DiagramSpecificationResource;
 public class FreeModellingProject extends DefaultFlexoObject implements ProjectWrapper<FreeModellingProjectNature> {
 
 	private final FlexoProject project;
-	private final ViewPoint freeModellingViewPoint;
-	private final View freeModellingView;
+	private final VirtualModel freeModellingViewPoint;
+	private final VirtualModelInstance freeModellingView;
 	private final Map<VirtualModel, FreeMetaModel> metaModels;
 	private final Map<VirtualModelInstance, FreeModel> models;
 
@@ -98,15 +96,15 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 		this.project = project;
 		this.projectNature = projectNature;
 
-		ViewPointResource freeModellingViewPointResource = project.getViewPointRepository()
+		VirtualModelResource freeModellingViewPointResource = project.getVirtualModelRepository()
 				.getResource(project.getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
 		// Attempt to retrieve viewpoints for old projects
 		if (freeModellingViewPointResource == null) {
-			freeModellingViewPointResource = project.getViewPointRepository()
+			freeModellingViewPointResource = project.getVirtualModelRepository()
 					.getResource(project.getURI() + "/" + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_NAME);
 		}
 
-		ViewResource freeModellingViewResource = project.getViewLibrary()
+		FMLRTVirtualModelInstanceResource freeModellingViewResource = project.getVirtualModelInstanceRepository()
 				.getResource(project.getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEW_RELATIVE_URI);
 
 		if (freeModellingViewPointResource == null) {
@@ -164,13 +162,13 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 		return project;
 	}
 
-	public ViewPoint getFreeModellingViewPoint() {
+	public VirtualModel getFreeModellingViewPoint() {
 		return freeModellingViewPoint;
 	}
 
 	public List<FreeMetaModel> getFreeMetaModels() {
 		List<FreeMetaModel> returned = new ArrayList<FreeMetaModel>();
-		getFreeModellingViewPoint().loadVirtualModelsWhenUnloaded();
+		getFreeModellingViewPoint().loadContainedVirtualModelsWhenUnloaded();
 		for (VirtualModel vm : getFreeModellingViewPoint().getVirtualModels()) {
 			try {
 				returned.add(getFreeMetaModel(vm));
@@ -205,7 +203,7 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 		return null;
 	}
 
-	public View getFreeModellingView() {
+	public VirtualModelInstance getFreeModellingView() {
 		return freeModellingView;
 	}
 
@@ -252,7 +250,7 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 			if (freeModel.getName().equals(freeModelName)) {
 				return freeModel;
 			}
-			if (freeModel.getName().equals(freeModelName + VirtualModelInstanceResourceFactory.VIRTUAL_MODEL_INSTANCE_SUFFIX)) {
+			if (freeModel.getName().equals(freeModelName + FMLRTVirtualModelInstanceResourceFactory.FML_RT_SUFFIX)) {
 				return freeModel;
 			}
 		}
@@ -267,10 +265,6 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 	public DiagramTechnologyAdapter getDiagramTechnologyAdapter() {
 		return diagramTechnologyAdapter;
 	}
-
-	/*public DiagramSpecificationRepository getDiagramSpecificationRepository() {
-		return dsRepository;
-	}*/
 
 	public RepositoryFolder<DiagramSpecificationResource, ?> getDiagramSpecificationsFolder() {
 		return dsFolder;
