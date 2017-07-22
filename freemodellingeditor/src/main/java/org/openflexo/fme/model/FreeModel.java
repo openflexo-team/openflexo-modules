@@ -49,16 +49,16 @@ import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.FlexoRole;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
-import org.openflexo.foundation.fml.rt.VirtualModelInstance;
+import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelInstanceNature;
 import org.openflexo.technologyadapter.diagram.model.Diagram;
 
 /**
  * Represents a {@link FreeModel} in the FreeModellingEditor<br>
  * 
- * The base of a {@link FreeModel} is a {@link VirtualModelInstance} with the specific
+ * The base of a {@link FreeModel} is a {@link FMLRTVirtualModelInstance} with the specific
  * {@link FMLControlledDiagramVirtualModelInstanceNature}<br>
- * From a technical point of view, a {@link FreeModel} is just a wrapper above a {@link VirtualModelInstance} located in project's
+ * From a technical point of view, a {@link FreeModel} is just a wrapper above a {@link FMLRTVirtualModelInstance} located in project's
  * freeModellingView
  * 
  * @author sylvain
@@ -66,7 +66,7 @@ import org.openflexo.technologyadapter.diagram.model.Diagram;
  */
 public class FreeModel extends DefaultFlexoObject implements PropertyChangeListener {
 
-	private final VirtualModelInstance virtualModelInstance;
+	private final FMLRTVirtualModelInstance virtualModelInstance;
 	private final FreeModellingProject fmProject;
 
 	/**
@@ -80,11 +80,11 @@ public class FreeModel extends DefaultFlexoObject implements PropertyChangeListe
 		return project.getURI() + "/Diagram/" + modelName;
 	}
 
-	public FreeModel(VirtualModelInstance virtualModelInstance, FreeModellingProject fmProject) throws InvalidArgumentException {
+	public FreeModel(FMLRTVirtualModelInstance virtualModelInstance, FreeModellingProject fmProject) throws InvalidArgumentException {
 		super();
 		this.fmProject = fmProject;
 		if (!virtualModelInstance.hasNature(FMLControlledDiagramVirtualModelInstanceNature.INSTANCE)) {
-			throw new InvalidArgumentException("VirtualModelInstance does not have the FMLControlledDiagramVirtualModelInstanceNature");
+			throw new InvalidArgumentException("FMLRTVirtualModelInstance does not have the FMLControlledDiagramVirtualModelInstanceNature");
 		}
 		this.virtualModelInstance = virtualModelInstance;
 		virtualModelInstance.getPropertyChangeSupport().addPropertyChangeListener(this);
@@ -98,7 +98,7 @@ public class FreeModel extends DefaultFlexoObject implements PropertyChangeListe
 		return getMetaModel().getVirtualModel();
 	}
 
-	public VirtualModelInstance getVirtualModelInstance() {
+	public FMLRTVirtualModelInstance getVirtualModelInstance() {
 		return virtualModelInstance;
 	}
 
@@ -148,7 +148,7 @@ public class FreeModel extends DefaultFlexoObject implements PropertyChangeListe
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getSource() == virtualModelInstance) {
-			if (evt.getPropertyName().equals(VirtualModelInstance.FLEXO_CONCEPT_INSTANCES_KEY)) {
+			if (evt.getPropertyName().equals(FMLRTVirtualModelInstance.FLEXO_CONCEPT_INSTANCES_KEY)) {
 				if (evt.getNewValue() instanceof FlexoConceptInstance) {
 					// A new FlexoConceptInstance has been created/added
 					FlexoConceptInstance fci = (FlexoConceptInstance) evt.getNewValue();

@@ -61,7 +61,7 @@ import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
-import org.openflexo.foundation.fml.rt.VirtualModelInstance;
+import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.logging.FlexoLogger;
 import org.openflexo.model.factory.AccessibleProxyObject;
 import org.openflexo.model.factory.ProxyMethodHandler;
@@ -333,7 +333,7 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 		if (paletteElement.getFlexoConcept() != null) {
 
 			DiagramContainerElement<?> rootContainer = (DiagramContainerElement<?>) target.getDrawable();
-			VirtualModelInstance vmi = getEditor().getVirtualModelInstance();
+			FMLRTVirtualModelInstance vmi = getEditor().getVirtualModelInstance();
 			DropShape action = DropShape.actionType.makeNewAction(rootContainer, null, getEditor().getFlexoController().getEditor());
 			action.setFreeModel(getEditor().getFreeModel());
 			action.setConcept(paletteElement.getFlexoConcept());

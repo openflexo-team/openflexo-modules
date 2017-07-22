@@ -47,7 +47,7 @@ import org.openflexo.components.wizard.WizardStep;
 import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.fme.model.action.AbstractCreateFreeModel;
 import org.openflexo.foundation.fml.VirtualModel;
-import org.openflexo.foundation.fml.rt.VirtualModelInstance;
+import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.gina.annotation.FIBPanel;
 import org.openflexo.toolbox.StringUtils;
 import org.openflexo.view.controller.FlexoController;
@@ -82,7 +82,7 @@ public abstract class AbstractCreateFreeModelWizard<A extends AbstractCreateFree
 	}
 
 	/**
-	 * This step is used to set {@link VirtualModel} to be used, as well as name and title of the {@link VirtualModelInstance}
+	 * This step is used to set {@link VirtualModel} to be used, as well as name and title of the {@link FMLRTVirtualModelInstance}
 	 * 
 	 * @author sylvain
 	 *

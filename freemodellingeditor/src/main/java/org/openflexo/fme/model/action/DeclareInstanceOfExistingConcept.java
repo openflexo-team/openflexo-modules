@@ -59,7 +59,7 @@ import org.openflexo.foundation.action.FlexoActionType;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
-import org.openflexo.foundation.fml.rt.VirtualModelInstance;
+import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.localization.LocalizedDelegate;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelNature;
@@ -136,7 +136,7 @@ public class DeclareInstanceOfExistingConcept extends FlexoAction<DeclareInstanc
 	}
 
 	public FreeModel getFreeModel() throws InvalidArgumentException {
-		return getFreeModellingProject().getFreeModel((VirtualModelInstance) getFocusedObject().getVirtualModelInstance());
+		return getFreeModellingProject().getFreeModel((FMLRTVirtualModelInstance) getFocusedObject().getVirtualModelInstance());
 	}
 
 	public FlexoConcept getConcept() {

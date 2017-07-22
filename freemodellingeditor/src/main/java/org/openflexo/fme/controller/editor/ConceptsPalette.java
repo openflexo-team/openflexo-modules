@@ -48,7 +48,7 @@ import org.openflexo.fme.controller.editor.DynamicPalette.GraphicalRepresentatio
 import org.openflexo.fme.model.FreeMetaModel;
 import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.fml.FlexoConcept;
-import org.openflexo.foundation.fml.rt.VirtualModelInstance;
+import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.ContextualPalette;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.DiagramEditor;
@@ -88,7 +88,7 @@ public class ConceptsPalette extends ContextualPalette implements PropertyChange
 		}
 
 		DiagramContainerElement<?> rootContainer = (DiagramContainerElement<?>) target.getDrawable();
-		VirtualModelInstance vmi = editor.getVirtualModelInstance();
+		FMLRTVirtualModelInstance vmi = editor.getVirtualModelInstance();
 		TypedDiagramModelSlot ms = FMLControlledDiagramVirtualModelNature.getTypedDiagramModelSlot(vmi.getVirtualModel());
 		FMLDiagramPaletteElementBinding binding = ms.getPaletteElementBinding(paletteElement);
 		// DropScheme dropScheme = binding.getDropScheme();
@@ -116,7 +116,7 @@ public class ConceptsPalette extends ContextualPalette implements PropertyChange
 	@Override
 	protected ContextualPaletteElement makePaletteElement(final DiagramPaletteElement element, DiagramEditor editor) {
 		if (editor instanceof FMLControlledDiagramEditor) {
-			VirtualModelInstance vmi = ((FMLControlledDiagramEditor) editor).getVirtualModelInstance();
+			FMLRTVirtualModelInstance vmi = ((FMLControlledDiagramEditor) editor).getVirtualModelInstance();
 			TypedDiagramModelSlot ms = FMLControlledDiagramVirtualModelNature.getTypedDiagramModelSlot(vmi.getVirtualModel());
 			if (ms != null) {
 				FMLDiagramPaletteElementBinding binding = ms.getPaletteElementBinding(element);

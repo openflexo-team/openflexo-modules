@@ -56,7 +56,7 @@ import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
-import org.openflexo.foundation.fml.rt.VirtualModelInstance;
+import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.localization.LocalizedDelegate;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
@@ -129,7 +129,7 @@ public class CreateNewConceptFromNoneConcept extends FlexoAction<CreateNewConcep
 	}
 
 	public FreeModel getFreeModel() throws InvalidArgumentException {
-		return getFreeModellingProject().getFreeModel((VirtualModelInstance) getFocusedObject().getVirtualModelInstance());
+		return getFreeModellingProject().getFreeModel((FMLRTVirtualModelInstance) getFocusedObject().getVirtualModelInstance());
 	}
 
 	@Override

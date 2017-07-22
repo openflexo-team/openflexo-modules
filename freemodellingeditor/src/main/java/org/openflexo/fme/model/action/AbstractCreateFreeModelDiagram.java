@@ -48,7 +48,7 @@ import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
-import org.openflexo.foundation.fml.rt.VirtualModelInstance;
+import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.action.ModelSlotInstanceConfiguration.DefaultModelSlotInstanceConfigurationOption;
 import org.openflexo.foundation.resource.SaveResourceException;
 import org.openflexo.localization.LocalizedDelegate;
@@ -108,7 +108,7 @@ public class AbstractCreateFreeModelDiagram<A extends AbstractCreateFreeModelDia
 
 		action.doAction();
 
-		VirtualModelInstance newVirtualModelInstance = action.getNewVirtualModelInstance();
+		FMLRTVirtualModelInstance newVirtualModelInstance = action.getNewVirtualModelInstance();
 
 		// Wrap into FreeModel
 		try {

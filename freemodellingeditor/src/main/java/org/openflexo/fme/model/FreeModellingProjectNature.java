@@ -50,7 +50,7 @@ import org.openflexo.foundation.fml.FlexoRole;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.rm.VirtualModelResourceFactory;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
-import org.openflexo.foundation.fml.rt.VirtualModelInstance;
+import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.rm.FMLRTVirtualModelInstanceResourceFactory;
 import org.openflexo.foundation.nature.ProjectNature;
 import org.openflexo.foundation.nature.ProjectNatureService;
@@ -201,7 +201,7 @@ public class FreeModellingProjectNature implements ProjectNature<FreeModellingPr
 		return factory.getFreeModellingViewPoint();
 	}
 
-	public VirtualModelInstance getFreeModellingView(FlexoProject project) {
+	public FMLRTVirtualModelInstance getFreeModellingView(FlexoProject project) {
 		FreeModellingProject freeModellingProject = getFreeModellingProject(project);
 		if (freeModellingProject == null) {
 			return null;
