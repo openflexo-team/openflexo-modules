@@ -51,6 +51,7 @@ import org.openflexo.fme.model.action.CreateFreeModelFromPPT;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionType;
 import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.technologyadapter.powerpoint.PowerpointTechnologyAdapter;
 import org.openflexo.view.controller.ActionInitializer;
@@ -105,7 +106,7 @@ public class CreateFreeModelFromPPTInitializer extends ActionInitializer<CreateF
 	}
 
 	@Override
-	protected Icon getEnabledIcon() {
+	protected Icon getEnabledIcon(FlexoActionType actionType) {
 		return FMEIconLibrary.FME_SMALL_ICON;
 	}
 
