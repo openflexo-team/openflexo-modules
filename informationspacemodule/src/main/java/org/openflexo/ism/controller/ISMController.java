@@ -43,6 +43,7 @@ import java.util.logging.Logger;
 
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
+import org.openflexo.foundation.technologyadapter.TechnologyAdapter;
 import org.openflexo.ism.ISMModule;
 import org.openflexo.ism.controller.action.ISMControllerActionInitializer;
 import org.openflexo.ism.view.ISMMainPane;
@@ -72,9 +73,19 @@ public class ISMController extends FlexoController {
 
 	@Override
 	protected void initializePerspectives() {
-		initializeFMLTechnologyPerspective();
-		initializeFMLRTTechnologyPerspective();
-		initializeAllAvailableTechnologyPerspectives(false, false);
+
+		installTechnologyPerspectives(getFMLTechnologyAdapter());
+		installTechnologyPerspectives(getFMLRTTechnologyAdapter());
+
+		for (TechnologyAdapter ta : getApplicationContext().getTechnologyAdapterService().getTechnologyAdapters()) {
+			if (ta != getFMLTechnologyAdapter() && ta != getFMLRTTechnologyAdapter()) {
+				installTechnologyPerspectives(ta);
+			}
+		}
+
+	}
+
+	protected void initializeAllAvailableTechnologyPerspectives(boolean includeFML, boolean includeFMLRT) {
 	}
 
 	@Override

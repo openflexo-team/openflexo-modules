@@ -74,7 +74,9 @@ public class VEController extends FlexoController {
 	@Override
 	protected void initializePerspectives() {
 
-		initializeFMLRTTechnologyAdapterPerspectives();
+		installTechnologyPerspectives(getFMLRTTechnologyAdapter());
+
+		// initializeFMLRTTechnologyAdapterPerspectives();
 
 		// addToPerspectives(RESOURCES_PERSPECTIVE = new ProjectResourcesPerspective(this));
 

@@ -77,7 +77,9 @@ public class VPMController extends FlexoController {
 	protected void initializePerspectives() {
 		// initializeAllAvailableTechnologyPerspectives();
 
-		initializeFMLTechnologyAdapterPerspectives();
+		installTechnologyPerspectives(getFMLTechnologyAdapter());
+
+		// initializeFMLTechnologyAdapterPerspectives();
 
 	}
 

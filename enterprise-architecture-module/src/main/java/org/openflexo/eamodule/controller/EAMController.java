@@ -71,9 +71,7 @@ public class EAMController extends FlexoController {
 
 	@Override
 	protected void initializePerspectives() {
-		initializeFMLTechnologyPerspective();
-		initializeFMLRTTechnologyPerspective();
-		initializeAllAvailableTechnologyPerspectives(false, false);
+		installTechnologyPerspectives(getFMLRTTechnologyAdapter());
 	}
 
 	@Override
