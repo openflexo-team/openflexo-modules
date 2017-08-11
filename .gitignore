@@ -6,3 +6,4 @@
 .settings
 *.iml
 /deps.log
+**/out/
