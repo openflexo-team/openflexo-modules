@@ -55,19 +55,20 @@ import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.fml.DeletionScheme;
 import org.openflexo.foundation.fml.FlexoBehaviourParameter;
+import org.openflexo.foundation.fml.FlexoBehaviourParameter.WidgetType;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.action.CreateEditionAction;
 import org.openflexo.foundation.fml.action.CreateFlexoBehaviour;
 import org.openflexo.foundation.fml.action.CreateFlexoConcept;
 import org.openflexo.foundation.fml.action.CreateGenericBehaviourParameter;
+import org.openflexo.foundation.fml.action.CreateInspectorEntry;
 import org.openflexo.foundation.fml.action.CreatePrimitiveRole;
 import org.openflexo.foundation.fml.action.CreateTechnologyRole;
 import org.openflexo.foundation.fml.editionaction.AssignationAction;
 import org.openflexo.foundation.fml.editionaction.DeleteAction;
 import org.openflexo.foundation.fml.editionaction.ExpressionAction;
-import org.openflexo.foundation.fml.inspector.TextAreaInspectorEntry;
-import org.openflexo.foundation.fml.inspector.TextFieldInspectorEntry;
+import org.openflexo.foundation.fml.inspector.InspectorEntry;
 import org.openflexo.foundation.resource.ResourceLoadingCancelledException;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
 import org.openflexo.technologyadapter.diagram.fml.DropScheme;
@@ -327,15 +328,24 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			DeleteAction<?> deleteShape = (DeleteAction<?>) createDeleteShape.getNewEditionAction();
 			deleteShape.setObject(new DataBinding<>(SHAPE_ROLE_NAME));
 
-			// Create inspector
-			TextFieldInspectorEntry nameEntry = returned.getInspector().createNewTextField();
-			nameEntry.setName(NAME_ROLE_NAME);
-			nameEntry.setLabel(NAME_ROLE_NAME);
-			nameEntry.setData(new DataBinding<String>("name"));
-			TextAreaInspectorEntry descriptionEntry = returned.getInspector().createNewTextArea();
-			descriptionEntry.setName(DESCRIPTION_ROLE_NAME);
-			descriptionEntry.setLabel(DESCRIPTION_ROLE_NAME);
-			descriptionEntry.setData(new DataBinding<String>("description"));
+			// Create inspector name entry
+			CreateInspectorEntry createNameEntry = CreateInspectorEntry.actionType.makeNewAction(returned.getInspector(), null, editor);
+			createNameEntry.setEntryName(NAME_ROLE_NAME);
+			createNameEntry.setEntryType(String.class);
+			createNameEntry.setWidgetType(WidgetType.TEXT_FIELD);
+			createNameEntry.setData(new DataBinding<String>("name"));
+			createNameEntry.doAction();
+			InspectorEntry nameEntry = createNameEntry.getNewEntry();
+
+			// Create inspector description entry
+			CreateInspectorEntry createDescriptionEntry = CreateInspectorEntry.actionType.makeNewAction(returned.getInspector(), null,
+					editor);
+			createDescriptionEntry.setEntryName(NAME_ROLE_NAME);
+			createDescriptionEntry.setEntryType(String.class);
+			createDescriptionEntry.setWidgetType(WidgetType.TEXT_FIELD);
+			createDescriptionEntry.setData(new DataBinding<String>("description"));
+			createDescriptionEntry.doAction();
+			InspectorEntry descriptionEntry = createDescriptionEntry.getNewEntry();
 
 			returned.getInspector().setRenderer(new DataBinding<String>("instance.name"));
 		}
