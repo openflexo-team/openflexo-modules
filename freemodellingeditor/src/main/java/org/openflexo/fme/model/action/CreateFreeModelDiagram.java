@@ -45,14 +45,14 @@ import org.openflexo.fme.model.FreeMetaModel;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
-import org.openflexo.foundation.action.FlexoActionType;
+import org.openflexo.foundation.action.FlexoActionFactory;
 
 public class CreateFreeModelDiagram extends AbstractCreateFreeModelDiagram<CreateFreeModelDiagram> {
 
 	private static final Logger logger = Logger.getLogger(CreateFreeModelDiagram.class.getPackage().getName());
 
-	public static FlexoActionType<CreateFreeModelDiagram, FreeMetaModel, FlexoObject> actionType = new FlexoActionType<CreateFreeModelDiagram, FreeMetaModel, FlexoObject>(
-			"create_diagram", FlexoActionType.newMenu, FlexoActionType.defaultGroup, FlexoActionType.ADD_ACTION_TYPE) {
+	public static FlexoActionFactory<CreateFreeModelDiagram, FreeMetaModel, FlexoObject> actionType = new FlexoActionFactory<CreateFreeModelDiagram, FreeMetaModel, FlexoObject>(
+			"create_diagram", FlexoActionFactory.newMenu, FlexoActionFactory.defaultGroup, FlexoActionFactory.ADD_ACTION_TYPE) {
 
 		/**
 		 * Factory method

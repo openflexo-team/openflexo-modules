@@ -49,7 +49,7 @@ import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
-import org.openflexo.foundation.action.FlexoActionType;
+import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.localization.LocalizedDelegate;
 import org.openflexo.toolbox.StringUtils;
@@ -64,8 +64,8 @@ public class CreateNewConcept extends FlexoAction<CreateNewConcept, FreeMetaMode
 
 	private static final Logger logger = Logger.getLogger(CreateNewConcept.class.getPackage().getName());
 
-	public static FlexoActionType<CreateNewConcept, FreeMetaModel, FlexoObject> actionType = new FlexoActionType<CreateNewConcept, FreeMetaModel, FlexoObject>(
-			"create_new_concept", FlexoActionType.defaultGroup, FlexoActionType.ADD_ACTION_TYPE) {
+	public static FlexoActionFactory<CreateNewConcept, FreeMetaModel, FlexoObject> actionType = new FlexoActionFactory<CreateNewConcept, FreeMetaModel, FlexoObject>(
+			"create_new_concept", FlexoActionFactory.defaultGroup, FlexoActionFactory.ADD_ACTION_TYPE) {
 
 		/**
 		 * Factory method

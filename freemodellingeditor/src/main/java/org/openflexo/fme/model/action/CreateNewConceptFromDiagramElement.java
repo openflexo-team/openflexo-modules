@@ -52,7 +52,7 @@ import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
-import org.openflexo.foundation.action.FlexoActionType;
+import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.PrimitiveRole;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
@@ -72,8 +72,8 @@ public class CreateNewConceptFromDiagramElement extends FlexoAction<CreateNewCon
 
 	private static final Logger logger = Logger.getLogger(CreateNewConceptFromDiagramElement.class.getPackage().getName());
 
-	public static FlexoActionType<CreateNewConceptFromDiagramElement, DiagramElement<?>, FlexoObject> actionType = new FlexoActionType<CreateNewConceptFromDiagramElement, DiagramElement<?>, FlexoObject>(
-			"create_new_concept_from_diagram_element", FlexoActionType.defaultGroup, FlexoActionType.ADD_ACTION_TYPE) {
+	public static FlexoActionFactory<CreateNewConceptFromDiagramElement, DiagramElement<?>, FlexoObject> actionType = new FlexoActionFactory<CreateNewConceptFromDiagramElement, DiagramElement<?>, FlexoObject>(
+			"create_new_concept_from_diagram_element", FlexoActionFactory.defaultGroup, FlexoActionFactory.ADD_ACTION_TYPE) {
 
 		/**
 		 * Factory method

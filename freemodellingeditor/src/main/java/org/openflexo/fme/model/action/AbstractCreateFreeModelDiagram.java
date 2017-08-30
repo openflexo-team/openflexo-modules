@@ -47,7 +47,7 @@ import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
-import org.openflexo.foundation.action.FlexoActionType;
+import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.action.ModelSlotInstanceConfiguration.DefaultModelSlotInstanceConfigurationOption;
 import org.openflexo.foundation.resource.SaveResourceException;
@@ -67,7 +67,7 @@ public class AbstractCreateFreeModelDiagram<A extends AbstractCreateFreeModelDia
 	private String diagramName;
 	private String description;
 
-	AbstractCreateFreeModelDiagram(FlexoActionType<A, FreeMetaModel, FlexoObject> actionType, FreeMetaModel focusedObject,
+	AbstractCreateFreeModelDiagram(FlexoActionFactory<A, FreeMetaModel, FlexoObject> actionType, FreeMetaModel focusedObject,
 			Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}

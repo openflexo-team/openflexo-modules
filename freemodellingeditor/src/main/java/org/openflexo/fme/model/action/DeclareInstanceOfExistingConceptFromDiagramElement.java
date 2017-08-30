@@ -52,7 +52,7 @@ import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
-import org.openflexo.foundation.action.FlexoActionType;
+import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.PrimitiveRole;
 import org.openflexo.foundation.fml.VirtualModel;
@@ -77,8 +77,8 @@ public class DeclareInstanceOfExistingConceptFromDiagramElement
 		GetConceptShape, RedefineShapeOfConcept, KeepShape
 	}
 
-	public static FlexoActionType<DeclareInstanceOfExistingConceptFromDiagramElement, DiagramElement<?>, FlexoObject> actionType = new FlexoActionType<DeclareInstanceOfExistingConceptFromDiagramElement, DiagramElement<?>, FlexoObject>(
-			"declare_instance_of_existing_concept_from_diagram_element", FlexoActionType.defaultGroup, FlexoActionType.ADD_ACTION_TYPE) {
+	public static FlexoActionFactory<DeclareInstanceOfExistingConceptFromDiagramElement, DiagramElement<?>, FlexoObject> actionType = new FlexoActionFactory<DeclareInstanceOfExistingConceptFromDiagramElement, DiagramElement<?>, FlexoObject>(
+			"declare_instance_of_existing_concept_from_diagram_element", FlexoActionFactory.defaultGroup, FlexoActionFactory.ADD_ACTION_TYPE) {
 
 		/**
 		 * Factory method

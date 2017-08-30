@@ -53,7 +53,7 @@ import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
-import org.openflexo.foundation.action.FlexoActionType;
+import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
@@ -72,8 +72,8 @@ public class CreateNewConceptFromNoneConcept extends FlexoAction<CreateNewConcep
 
 	private static final Logger logger = Logger.getLogger(CreateNewConceptFromNoneConcept.class.getPackage().getName());
 
-	public static FlexoActionType<CreateNewConceptFromNoneConcept, FlexoConceptInstance, FlexoObject> actionType = new FlexoActionType<CreateNewConceptFromNoneConcept, FlexoConceptInstance, FlexoObject>(
-			"create_new_concept", FlexoActionType.defaultGroup, FlexoActionType.ADD_ACTION_TYPE) {
+	public static FlexoActionFactory<CreateNewConceptFromNoneConcept, FlexoConceptInstance, FlexoObject> actionType = new FlexoActionFactory<CreateNewConceptFromNoneConcept, FlexoConceptInstance, FlexoObject>(
+			"create_new_concept", FlexoActionFactory.defaultGroup, FlexoActionFactory.ADD_ACTION_TYPE) {
 
 		/**
 		 * Factory method

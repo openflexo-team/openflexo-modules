@@ -49,7 +49,7 @@ import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.action.FlexoAction;
-import org.openflexo.foundation.action.FlexoActionType;
+import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.rt.action.DeleteVirtualModelInstance;
 import org.openflexo.foundation.resource.SaveResourceException;
 import org.openflexo.localization.LocalizedDelegate;
@@ -64,8 +64,8 @@ public class RemoveFreeModel extends FlexoAction<RemoveFreeModel, FreeModel, Fle
 
 	private static final Logger logger = Logger.getLogger(RemoveFreeModel.class.getPackage().getName());
 
-	public static FlexoActionType<RemoveFreeModel, FreeModel, FlexoObject> actionType = new FlexoActionType<RemoveFreeModel, FreeModel, FlexoObject>(
-			"remove_free_model", FlexoActionType.defaultGroup, FlexoActionType.DELETE_ACTION_TYPE) {
+	public static FlexoActionFactory<RemoveFreeModel, FreeModel, FlexoObject> actionType = new FlexoActionFactory<RemoveFreeModel, FreeModel, FlexoObject>(
+			"remove_free_model", FlexoActionFactory.defaultGroup, FlexoActionFactory.DELETE_ACTION_TYPE) {
 
 		/**
 		 * Factory method

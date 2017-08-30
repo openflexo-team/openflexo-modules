@@ -47,7 +47,7 @@ import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
-import org.openflexo.foundation.action.FlexoActionType;
+import org.openflexo.foundation.action.FlexoActionFactory;
 
 /**
  * This action is used to create a new {@link FreeModel} in a {@link FreeModellingProject}<br>
@@ -61,8 +61,8 @@ public class CreateFreeModel extends AbstractCreateFreeModel<CreateFreeModel> {
 
 	private static final Logger logger = Logger.getLogger(CreateFreeModel.class.getPackage().getName());
 
-	public static FlexoActionType<CreateFreeModel, FreeModellingProject, FlexoObject> actionType = new FlexoActionType<CreateFreeModel, FreeModellingProject, FlexoObject>(
-			"create_free_model", FlexoActionType.newMenu, FlexoActionType.defaultGroup, FlexoActionType.ADD_ACTION_TYPE) {
+	public static FlexoActionFactory<CreateFreeModel, FreeModellingProject, FlexoObject> actionType = new FlexoActionFactory<CreateFreeModel, FreeModellingProject, FlexoObject>(
+			"create_free_model", FlexoActionFactory.newMenu, FlexoActionFactory.defaultGroup, FlexoActionFactory.ADD_ACTION_TYPE) {
 
 		/**
 		 * Factory method

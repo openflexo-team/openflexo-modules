@@ -51,7 +51,7 @@ import org.openflexo.fme.model.action.CreateFreeModel;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
-import org.openflexo.foundation.action.FlexoActionType;
+import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
@@ -99,7 +99,7 @@ public class CreateFreeModelInitializer extends ActionInitializer<CreateFreeMode
 	}
 
 	@Override
-	protected Icon getEnabledIcon(FlexoActionType actionType) {
+	protected Icon getEnabledIcon(FlexoActionFactory actionType) {
 		return FMEIconLibrary.FME_SMALL_ICON;
 	}
 

@@ -49,7 +49,7 @@ import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
-import org.openflexo.foundation.action.FlexoActionType;
+import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.PrimitiveRole;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
@@ -72,8 +72,8 @@ public class CreateFreeModelDiagramFromPPT extends AbstractCreateFreeModelDiagra
 
 	private static final Logger logger = Logger.getLogger(CreateFreeModelDiagramFromPPT.class.getPackage().getName());
 
-	public static FlexoActionType<CreateFreeModelDiagramFromPPT, FreeMetaModel, FlexoObject> actionType = new FlexoActionType<CreateFreeModelDiagramFromPPT, FreeMetaModel, FlexoObject>(
-			"create_diagram_from_ppt", FlexoActionType.newMenu, FlexoActionType.defaultGroup, FlexoActionType.ADD_ACTION_TYPE) {
+	public static FlexoActionFactory<CreateFreeModelDiagramFromPPT, FreeMetaModel, FlexoObject> actionType = new FlexoActionFactory<CreateFreeModelDiagramFromPPT, FreeMetaModel, FlexoObject>(
+			"create_diagram_from_ppt", FlexoActionFactory.newMenu, FlexoActionFactory.defaultGroup, FlexoActionFactory.ADD_ACTION_TYPE) {
 
 		/**
 		 * Factory method

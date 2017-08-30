@@ -55,7 +55,7 @@ import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
-import org.openflexo.foundation.action.FlexoActionType;
+import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
@@ -83,8 +83,8 @@ public class DeclareInstanceOfExistingConcept extends FlexoAction<DeclareInstanc
 		GetConceptShape, RedefineShapeOfConcept, KeepShape
 	}
 
-	public static FlexoActionType<DeclareInstanceOfExistingConcept, FlexoConceptInstance, FlexoObject> actionType = new FlexoActionType<DeclareInstanceOfExistingConcept, FlexoConceptInstance, FlexoObject>(
-			"declare_instance_of_existing_concept", FlexoActionType.defaultGroup, FlexoActionType.ADD_ACTION_TYPE) {
+	public static FlexoActionFactory<DeclareInstanceOfExistingConcept, FlexoConceptInstance, FlexoObject> actionType = new FlexoActionFactory<DeclareInstanceOfExistingConcept, FlexoConceptInstance, FlexoObject>(
+			"declare_instance_of_existing_concept", FlexoActionFactory.defaultGroup, FlexoActionFactory.ADD_ACTION_TYPE) {
 
 		/**
 		 * Factory method

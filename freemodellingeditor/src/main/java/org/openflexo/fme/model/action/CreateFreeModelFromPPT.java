@@ -50,7 +50,7 @@ import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
-import org.openflexo.foundation.action.FlexoActionType;
+import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.PrimitiveRole;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
@@ -73,8 +73,8 @@ public class CreateFreeModelFromPPT extends AbstractCreateFreeModel<CreateFreeMo
 
 	private static final Logger logger = Logger.getLogger(CreateFreeModelFromPPT.class.getPackage().getName());
 
-	public static FlexoActionType<CreateFreeModelFromPPT, FreeModellingProject, FlexoObject> actionType = new FlexoActionType<CreateFreeModelFromPPT, FreeModellingProject, FlexoObject>(
-			"create_free_model_from_ppt", FlexoActionType.newMenu, FlexoActionType.defaultGroup, FlexoActionType.ADD_ACTION_TYPE) {
+	public static FlexoActionFactory<CreateFreeModelFromPPT, FreeModellingProject, FlexoObject> actionType = new FlexoActionFactory<CreateFreeModelFromPPT, FreeModellingProject, FlexoObject>(
+			"create_free_model_from_ppt", FlexoActionFactory.newMenu, FlexoActionFactory.defaultGroup, FlexoActionFactory.ADD_ACTION_TYPE) {
 
 		/**
 		 * Factory method

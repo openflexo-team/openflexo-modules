@@ -50,7 +50,7 @@ import org.openflexo.fme.model.action.CreateFreeModelDiagramFromPPT;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
-import org.openflexo.foundation.action.FlexoActionType;
+import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.technologyadapter.diagram.gui.DiagramIconLibrary;
 import org.openflexo.technologyadapter.powerpoint.PowerpointTechnologyAdapter;
@@ -106,7 +106,7 @@ public class CreateFreeModelDiagramFromPPTInitializer extends ActionInitializer<
 	}
 
 	@Override
-	protected Icon getEnabledIcon(FlexoActionType actionType) {
+	protected Icon getEnabledIcon(FlexoActionFactory actionType) {
 		return DiagramIconLibrary.DIAGRAM_ICON;
 	}
 

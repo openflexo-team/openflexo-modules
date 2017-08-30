@@ -50,7 +50,7 @@ import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
-import org.openflexo.foundation.action.FlexoActionType;
+import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.action.CreateTopLevelVirtualModel;
 import org.openflexo.foundation.fml.rm.VirtualModelResource;
 import org.openflexo.foundation.fml.rt.action.CreateBasicVirtualModelInstance;
@@ -70,7 +70,7 @@ public class GivesFMENature extends FlexoAction<GivesFMENature, FlexoProject, Fl
 
 	private static final Logger logger = Logger.getLogger(GivesFMENature.class.getPackage().getName());
 
-	public static FlexoActionType<GivesFMENature, FlexoProject, FlexoObject> actionType = new FlexoActionType<GivesFMENature, FlexoProject, FlexoObject>(
+	public static FlexoActionFactory<GivesFMENature, FlexoProject, FlexoObject> actionType = new FlexoActionFactory<GivesFMENature, FlexoProject, FlexoObject>(
 			"gives_fme_nature") {
 
 		/**

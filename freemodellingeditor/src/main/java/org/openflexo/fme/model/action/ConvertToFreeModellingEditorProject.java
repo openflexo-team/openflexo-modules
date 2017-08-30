@@ -49,7 +49,7 @@ import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.action.FlexoAction;
-import org.openflexo.foundation.action.FlexoActionType;
+import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.resource.SaveResourceException;
 import org.openflexo.localization.LocalizedDelegate;
 
@@ -64,8 +64,8 @@ public class ConvertToFreeModellingEditorProject extends FlexoAction<ConvertToFr
 
 	private static final Logger logger = Logger.getLogger(ConvertToFreeModellingEditorProject.class.getPackage().getName());
 
-	public static FlexoActionType<ConvertToFreeModellingEditorProject, FlexoProject, FlexoObject> actionType = new FlexoActionType<ConvertToFreeModellingEditorProject, FlexoProject, FlexoObject>(
-			"free_modelling_project", FlexoActionType.convertMenu, FlexoActionType.defaultGroup, FlexoActionType.NORMAL_ACTION_TYPE) {
+	public static FlexoActionFactory<ConvertToFreeModellingEditorProject, FlexoProject, FlexoObject> actionType = new FlexoActionFactory<ConvertToFreeModellingEditorProject, FlexoProject, FlexoObject>(
+			"free_modelling_project", FlexoActionFactory.convertMenu, FlexoActionFactory.defaultGroup, FlexoActionFactory.NORMAL_ACTION_TYPE) {
 
 		/**
 		 * Factory method

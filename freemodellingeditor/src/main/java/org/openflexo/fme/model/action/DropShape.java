@@ -54,7 +54,7 @@ import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.action.FlexoAction;
-import org.openflexo.foundation.action.FlexoActionType;
+import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.FlexoBehaviourParameter;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
@@ -76,8 +76,8 @@ public class DropShape extends FlexoAction<DropShape, DiagramContainerElement<?>
 
 	private static final Logger logger = Logger.getLogger(DropShape.class.getPackage().getName());
 
-	public static FlexoActionType<DropShape, DiagramContainerElement<?>, FlexoObject> actionType = new FlexoActionType<DropShape, DiagramContainerElement<?>, FlexoObject>(
-			"drop_free_shape", FlexoActionType.newMenu, FlexoActionType.defaultGroup, FlexoActionType.ADD_ACTION_TYPE) {
+	public static FlexoActionFactory<DropShape, DiagramContainerElement<?>, FlexoObject> actionType = new FlexoActionFactory<DropShape, DiagramContainerElement<?>, FlexoObject>(
+			"drop_free_shape", FlexoActionFactory.newMenu, FlexoActionFactory.defaultGroup, FlexoActionFactory.ADD_ACTION_TYPE) {
 
 		/**
 		 * Factory method

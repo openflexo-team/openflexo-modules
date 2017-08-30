@@ -48,7 +48,7 @@ import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
-import org.openflexo.foundation.action.FlexoActionType;
+import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.action.CreateModelSlot;
 import org.openflexo.foundation.fml.action.CreateContainedVirtualModel;
@@ -84,7 +84,7 @@ public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> exten
 	private String freeModelName;
 	private String freeModelDescription;
 
-	AbstractCreateFreeModel(FlexoActionType<A, FreeModellingProject, FlexoObject> actionType, FreeModellingProject focusedObject,
+	AbstractCreateFreeModel(FlexoActionFactory<A, FreeModellingProject, FlexoObject> actionType, FreeModellingProject focusedObject,
 			Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
