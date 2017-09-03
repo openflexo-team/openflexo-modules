@@ -172,7 +172,13 @@ public class FreeMetaModel extends DefaultFlexoObject {
 	}
 
 	public FlexoConcept getNoneFlexoConcept(FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction) {
-		return getFlexoConcept(NONE_FLEXO_CONCEPT, editor, ownerAction);
+		try {
+			return getFlexoConcept(NONE_FLEXO_CONCEPT, editor, ownerAction);
+		} catch (FlexoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	/**
@@ -182,8 +188,9 @@ public class FreeMetaModel extends DefaultFlexoObject {
 	 * @param editor
 	 * @param ownerAction
 	 * @return
+	 * @throws FlexoException
 	 */
-	public FlexoConcept getFlexoConcept(String conceptName, FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction) {
+	public FlexoConcept getFlexoConcept(String conceptName, FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction) throws FlexoException {
 
 		FlexoConcept returned = getVirtualModel().getFlexoConcept(conceptName);
 
@@ -198,7 +205,7 @@ public class FreeMetaModel extends DefaultFlexoObject {
 				action = CreateFlexoConcept.actionType.makeNewAction(getVirtualModel(), null, editor);
 			}
 			action.setNewFlexoConceptName(conceptName);
-			action.doAction();
+			action.doActionInContext();
 			returned = action.getNewFlexoConcept();
 
 			// Creates shape property
@@ -212,7 +219,7 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			createShapeRole.setModelSlot(getTypedDiagramModelSlot());
 			createShapeRole.setRoleName(SHAPE_ROLE_NAME);
 			createShapeRole.setFlexoRoleClass(ShapeRole.class);
-			createShapeRole.doAction();
+			createShapeRole.doActionInContext();
 			ShapeRole role = (ShapeRole) createShapeRole.getNewFlexoRole();
 
 			// Create new PrimitiveRole (String type) to store the name of this instance
@@ -225,7 +232,19 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			}
 			createNameRole.setRoleName(NAME_ROLE_NAME);
 			createNameRole.setPrimitiveType(PrimitiveType.String);
-			createNameRole.doAction();
+			createNameRole.doActionInContext();
+
+			// Create new PrimitiveRole (String type) to store the description of this instance
+			CreatePrimitiveRole createDescRole = null;
+			if (ownerAction != null) {
+				createDescRole = CreatePrimitiveRole.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
+			}
+			else {
+				createDescRole = CreatePrimitiveRole.actionType.makeNewAction(returned, null, editor);
+			}
+			createDescRole.setRoleName(DESCRIPTION_ROLE_NAME);
+			createDescRole.setPrimitiveType(PrimitiveType.String);
+			createDescRole.doActionInContext();
 
 			// Bind shapes's label to name property
 			role.setLabel(new DataBinding<>("name"));
@@ -248,7 +267,7 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			}
 			createDropScheme.setFlexoBehaviourName("drop");
 			createDropScheme.setFlexoBehaviourClass(DropScheme.class);
-			createDropScheme.doAction();
+			createDropScheme.doActionInContext();
 			DropScheme dropScheme = (DropScheme) createDropScheme.getNewFlexoBehaviour();
 			dropScheme.setSkipConfirmationPanel(false);
 			dropScheme.setTopTarget(true);
@@ -263,7 +282,7 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			}
 			createDropSchemeParameter.setParameterName("conceptName");
 			createDropSchemeParameter.setParameterType(String.class);
-			createDropSchemeParameter.doAction();
+			createDropSchemeParameter.doActionInContext();
 			FlexoBehaviourParameter parameter = createDropSchemeParameter.getNewParameter();
 			parameter.setDefaultValue(new DataBinding<String>("\"" + parameter.getName() + "\""));
 
@@ -278,7 +297,7 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			createAddShape.setModelSlot(getTypedDiagramModelSlot());
 			createAddShape.setEditionActionClass(AddShape.class);
 			createAddShape.setAssignation(new DataBinding<>(SHAPE_ROLE_NAME));
-			createAddShape.doAction();
+			createAddShape.doActionInContext();
 
 			// AssignationAction<DiagramShape> addShapeAssigment = (AssignationAction<DiagramShape>) createAddShape.getNewEditionAction();
 			// AddShape addShape = (AddShape)addShapeAssigment.getAssignableAction();
@@ -293,7 +312,7 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			// givesNameAction.actionChoice = CreateEditionActionChoice.BuiltInAction;
 			givesNameAction.setEditionActionClass(ExpressionAction.class);
 			givesNameAction.setAssignation(new DataBinding<>(NAME_ROLE_NAME));
-			givesNameAction.doAction();
+			givesNameAction.doActionInContext();
 
 			AssignationAction<?> nameAssignation = (AssignationAction<?>) givesNameAction.getNewEditionAction();
 			((ExpressionAction<?>) nameAssignation.getAssignableAction()).setExpression(new DataBinding<>("parameters.conceptName"));
@@ -308,7 +327,7 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			}
 			createDeletionScheme.setFlexoBehaviourName("delete");
 			createDeletionScheme.setFlexoBehaviourClass(DeletionScheme.class);
-			createDeletionScheme.doAction();
+			createDeletionScheme.doActionInContext();
 			DeletionScheme deletionScheme = (DeletionScheme) createDeletionScheme.getNewFlexoBehaviour();
 			deletionScheme.setSkipConfirmationPanel(true);
 
@@ -323,7 +342,7 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			// createDeleteShape.actionChoice = CreateEditionActionChoice.BuiltInAction;
 			// createDeleteShape.setModelSlot(getTypedDiagramModelSlot());
 			createDeleteShape.setEditionActionClass(DeleteAction.class);
-			createDeleteShape.doAction();
+			createDeleteShape.doActionInContext();
 
 			DeleteAction<?> deleteShape = (DeleteAction<?>) createDeleteShape.getNewEditionAction();
 			deleteShape.setObject(new DataBinding<>(SHAPE_ROLE_NAME));
@@ -334,17 +353,17 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			createNameEntry.setEntryType(String.class);
 			createNameEntry.setWidgetType(WidgetType.TEXT_FIELD);
 			createNameEntry.setData(new DataBinding<String>("name"));
-			createNameEntry.doAction();
+			createNameEntry.doActionInContext();
 			InspectorEntry nameEntry = createNameEntry.getNewEntry();
 
 			// Create inspector description entry
 			CreateInspectorEntry createDescriptionEntry = CreateInspectorEntry.actionType.makeNewAction(returned.getInspector(), null,
 					editor);
-			createDescriptionEntry.setEntryName(NAME_ROLE_NAME);
+			createDescriptionEntry.setEntryName(DESCRIPTION_ROLE_NAME);
 			createDescriptionEntry.setEntryType(String.class);
-			createDescriptionEntry.setWidgetType(WidgetType.TEXT_FIELD);
+			createDescriptionEntry.setWidgetType(WidgetType.TEXT_AREA);
 			createDescriptionEntry.setData(new DataBinding<String>("description"));
-			createDescriptionEntry.doAction();
+			createDescriptionEntry.doActionInContext();
 			InspectorEntry descriptionEntry = createDescriptionEntry.getNewEntry();
 
 			returned.getInspector().setRenderer(new DataBinding<String>("instance.name"));
@@ -352,19 +371,19 @@ public class FreeMetaModel extends DefaultFlexoObject {
 		return returned;
 	}
 
-	public DiagramPalette getConceptsPalette() {
+	public DiagramPalette getConceptsPalette() throws FlexoException {
 		if (getDiagramSpecification().getPalette(PALETTE_NAME) == null) {
 			// Should not happen, but...
 			CreateDiagramPalette createPalette = CreateDiagramPalette.actionType.makeNewAction(getDiagramSpecification(), null, null);
 			createPalette.setNewPaletteName(FreeMetaModel.PALETTE_NAME);
-			createPalette.doAction();
+			createPalette.doActionInContext();
 			System.out.println("Palette has been created: " + createPalette.getNewPalette());
 		}
 		return getDiagramSpecification().getPalette(PALETTE_NAME);
 	}
 
 	public DiagramPaletteElement createPaletteElementForConcept(FlexoConcept concept, ShapeGraphicalRepresentation gr,
-			FlexoAction<?, ?, ?> ownerAction) {
+			FlexoAction<?, ?, ?> ownerAction) throws FlexoException {
 
 		CreateFMLControlledDiagramPaletteElement action = CreateFMLControlledDiagramPaletteElement.actionType
 				.makeNewEmbeddedAction(concept.getOwningVirtualModel(), null, ownerAction);
@@ -400,7 +419,7 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			action.setDropScheme(concept.getFlexoBehaviours(DropScheme.class).get(0));
 		}
 
-		action.doAction();
+		action.doActionInContext();
 
 		return action.getNewElement();
 

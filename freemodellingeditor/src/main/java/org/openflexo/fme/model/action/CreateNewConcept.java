@@ -45,9 +45,9 @@ import org.openflexo.fme.model.FreeMetaModel;
 import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.FlexoEditor;
+import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
-import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
 import org.openflexo.foundation.fml.FlexoConcept;
@@ -119,7 +119,7 @@ public class CreateNewConcept extends FlexoAction<CreateNewConcept, FreeMetaMode
 	}
 
 	@Override
-	protected void doAction(Object context) throws InvalidArgumentException {
+	protected void doAction(Object context) throws FlexoException {
 
 		// Now we create the new concept
 		newFlexoConcept = getFocusedObject().getFlexoConcept(getNewConceptName(), getEditor(), this);

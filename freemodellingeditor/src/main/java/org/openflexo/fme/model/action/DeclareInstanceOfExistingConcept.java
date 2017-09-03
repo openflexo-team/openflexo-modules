@@ -50,6 +50,7 @@ import org.openflexo.fme.model.FreeModel;
 import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.FlexoEditor;
+import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.FlexoProject;
@@ -58,8 +59,8 @@ import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionType;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.VirtualModel;
-import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
+import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.localization.LocalizedDelegate;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelNature;
@@ -178,7 +179,7 @@ public class DeclareInstanceOfExistingConcept extends FlexoAction<DeclareInstanc
 	}
 
 	@Override
-	protected void doAction(Object context) throws InvalidArgumentException {
+	protected void doAction(Object context) throws FlexoException {
 
 		FreeModel freeModel = getFreeModel();
 		if (freeModel == null) {
