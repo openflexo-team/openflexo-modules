@@ -144,12 +144,10 @@ public class DropShape extends FlexoAction<DropShape, DiagramContainerElement<?>
 
 			DropScheme dropScheme = dsList.get(0);
 			FlexoBehaviourParameter nameParam = dropScheme.getParameters().size() > 0 ? dropScheme.getParameters().get(0) : null;
-			DropSchemeAction action = DropSchemeAction.actionType.makeNewEmbeddedAction(getFreeModel().getVirtualModelInstance(), null,
-					this);
+			DropSchemeAction action = new DropSchemeAction(dropScheme, getFreeModel().getVirtualModelInstance(), null, this);
 			if (nameParam != null) {
 				action.setParameterValue(nameParam, getFreeModel().getProposedName(concept));
 			}
-			action.setDropScheme(dropScheme);
 			// action.setParent(getParent());
 			action.setDropLocation(dropLocation);
 			action.doAction();
