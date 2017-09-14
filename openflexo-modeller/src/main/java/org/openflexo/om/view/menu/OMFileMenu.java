@@ -63,4 +63,14 @@ public class OMFileMenu extends FileMenu {
 	public OMController getController() {
 		return (OMController) super.getController();
 	}
+
+	/*@Override
+	public void quit() {
+		if (getController().getApplicationContext().getResourceManager().getUnsavedResources().size() == 0) {
+			super.quit();
+		} else if (getController().reviewModifiedResources()) {
+			super.quit();
+		}
+	}*/
+
 }

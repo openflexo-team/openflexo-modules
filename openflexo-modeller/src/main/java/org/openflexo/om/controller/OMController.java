@@ -44,13 +44,21 @@ import java.util.logging.Logger;
 import org.openflexo.fml.controller.FMLTechnologyPerspective;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
+import org.openflexo.foundation.fml.FMLObject;
+import org.openflexo.foundation.fml.FlexoConceptObject;
+import org.openflexo.foundation.fml.VirtualModel;
+import org.openflexo.foundation.fml.VirtualModelLibrary;
+import org.openflexo.foundation.technologyadapter.TechnologyAdapter;
+import org.openflexo.foundation.validation.FlexoValidationModel;
 import org.openflexo.om.OMModule;
 import org.openflexo.om.OpenflexoModeller;
 import org.openflexo.om.controller.action.OMControllerActionInitializer;
 import org.openflexo.om.view.OMMainPane;
 import org.openflexo.om.view.menu.OMMenuBar;
 import org.openflexo.selection.MouseSelectionManager;
+import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.technologyadapter.diagram.controller.FMLControlledDiagramNaturePerspective;
+import org.openflexo.technologyadapter.gina.GINATechnologyAdapter;
 import org.openflexo.technologyadapter.gina.controller.FMLControlledFIBNaturePerspective;
 import org.openflexo.view.FlexoMainPane;
 import org.openflexo.view.controller.ControllerActionInitializer;
@@ -65,7 +73,6 @@ import org.openflexo.view.menu.FlexoMenuBar;
  */
 public class OMController extends FlexoController {
 
-	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(OMController.class.getPackage().getName());
 
 	private GenericPerspective genericPerspective;
@@ -87,23 +94,16 @@ public class OMController extends FlexoController {
 		addToPerspectives(fmlPerspective = new FMLTechnologyPerspective(this));
 		addToPerspectives(diagramPerspective = new FMLControlledDiagramNaturePerspective(this));
 		addToPerspectives(ginaPerspective = new FMLControlledFIBNaturePerspective(this));
+	}
 
-		/*for (TechnologyAdapter ta : getApplicationContext().getTechnologyAdapterService().getTechnologyAdapters()) {
-			TechnologyAdapterController tac = getApplicationContext().getTechnologyAdapterControllerService().get
-		}*/
-
-		// addToPerspectives(fmlPerspective = new FMLControlledDi(this));
-
-		// installTechnologyPerspectives(getFMLRTTechnologyAdapter());
-
-		// initializeFMLRTTechnologyAdapterPerspectives();
-
-		// addToPerspectives(RESOURCES_PERSPECTIVE = new ProjectResourcesPerspective(this));
-
-		// initializeAllAvailableTechnologyPerspectives();
-
-		// Set the current Perspective to be the view library
-		// this.switchToPerspective(RESOURCES_PERSPECTIVE);
+	@Override
+	public void focusOnTechnologyAdapter(TechnologyAdapter technologyAdapter) {
+		if (technologyAdapter instanceof DiagramTechnologyAdapter) {
+			switchToPerspective(getDiagramPerspective());
+		}
+		else if (technologyAdapter instanceof GINATechnologyAdapter) {
+			switchToPerspective(getGinaPerspective());
+		}
 	}
 
 	public GenericPerspective getGenericPerspective() {
@@ -150,6 +150,56 @@ public class OMController extends FlexoController {
 	@Override
 	protected FlexoMainPane createMainPane() {
 		return new OMMainPane(this);
+	}
+
+	/**
+	 * Return the VirtualModelLibrary
+	 * 
+	 * @return
+	 */
+	public VirtualModelLibrary getVirtualModelLibrary() {
+		return getApplicationContext().getService(VirtualModelLibrary.class);
+	}
+
+	/**
+	 * Select the view representing supplied object, if this view exists. Try all to really display supplied object, even if required view
+	 * is not the current displayed view
+	 * 
+	 * @param object
+	 *            : the object to focus on
+	 */
+	@Override
+	public void selectAndFocusObject(FlexoObject object) {
+		if (object != null) {
+			logger.info("selectAndFocusObject " + object + "of " + object.getClass().getSimpleName());
+			if (object instanceof FlexoConceptObject) {
+				setCurrentEditedObjectAsModuleView(((FlexoConceptObject) object).getFlexoConcept());
+			}
+			else {
+				logger.info("setCurrentEditedObjectAsModuleView with " + object);
+				setCurrentEditedObjectAsModuleView(object);
+			}
+
+			getSelectionManager().setSelectedObject(object);
+		}
+		else {
+			logger.warning("Cannot set focus on a NULL object");
+		}
+	}
+
+	public VirtualModel getCurrentVirtualModel() {
+		if (getCurrentDisplayedObjectAsModuleView() instanceof FMLObject) {
+			return ((FMLObject) getCurrentDisplayedObjectAsModuleView()).getDeclaringVirtualModel();
+		}
+		return null;
+	}
+
+	@Override
+	public FlexoValidationModel getValidationModelForObject(FlexoObject object) {
+		if (object instanceof FMLObject) {
+			return getApplicationContext().getVirtualModelLibrary().getFMLValidationModel();
+		}
+		return super.getValidationModelForObject(object);
 	}
 
 }

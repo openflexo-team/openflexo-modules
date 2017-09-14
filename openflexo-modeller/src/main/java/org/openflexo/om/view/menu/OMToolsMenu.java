@@ -38,10 +38,14 @@
 
 package org.openflexo.om.view.menu;
 
+import java.awt.event.ActionEvent;
 import java.util.logging.Logger;
+
+import javax.swing.AbstractAction;
 
 import org.openflexo.om.OpenflexoModeller;
 import org.openflexo.om.controller.OMController;
+import org.openflexo.view.menu.FlexoMenuItem;
 import org.openflexo.view.menu.ToolsMenu;
 
 /**
@@ -55,6 +59,9 @@ public class OMToolsMenu extends ToolsMenu {
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(OMToolsMenu.class.getPackage().getName());
 
+	public FlexoMenuItem checkViewPointLibraryConsistencyItem;
+	public FlexoMenuItem checkViewPointConsistencyItem;
+
 	public OMToolsMenu(OMController controller) {
 		super(controller);
 	}
@@ -62,6 +69,66 @@ public class OMToolsMenu extends ToolsMenu {
 	@Override
 	public OMController getController() {
 		return (OMController) super.getController();
+	}
+
+	@Override
+	public void addSpecificItems() {
+		add(checkViewPointLibraryConsistencyItem = new CheckViewPointLibraryConsistencyItem());
+		add(checkViewPointConsistencyItem = new CheckViewPointConsistencyItem());
+		addSeparator();
+	}
+
+	// ==========================================================================
+	// ======================= CheckWorkflowConsistency
+	// =========================
+	// ==========================================================================
+
+	public class CheckViewPointLibraryConsistencyItem extends FlexoMenuItem {
+
+		public CheckViewPointLibraryConsistencyItem() {
+			super(new CheckViewPointLibraryConsistencyAction(), "check_all_virtual_model_consistency", null, getController(), true);
+		}
+
+	}
+
+	public class CheckViewPointLibraryConsistencyAction extends AbstractAction {
+		public CheckViewPointLibraryConsistencyAction() {
+			super();
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			logger.info("Check consistency for " + getController().getVirtualModelLibrary());
+			getController().consistencyCheck(getController().getVirtualModelLibrary());
+		}
+
+	}
+
+	// ==========================================================================
+	// ======================= CheckProcessConsistency =========================
+	// ==========================================================================
+
+	public class CheckViewPointConsistencyItem extends FlexoMenuItem {
+
+		public CheckViewPointConsistencyItem() {
+			super(new CheckViewPointConsistencyAction(), "check_viewpoint_consistency", null, getController(), true);
+		}
+
+	}
+
+	public class CheckViewPointConsistencyAction extends AbstractAction {
+		public CheckViewPointConsistencyAction() {
+			super();
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			if (getController().getCurrentVirtualModel() != null) {
+				logger.info("Check consistency for " + getController().getCurrentVirtualModel());
+				getController().consistencyCheck(getController().getCurrentVirtualModel());
+			}
+		}
+
 	}
 
 }
