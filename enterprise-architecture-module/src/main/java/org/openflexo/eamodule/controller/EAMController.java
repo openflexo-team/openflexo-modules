@@ -60,6 +60,7 @@ import org.openflexo.view.menu.FlexoMenuBar;
  */
 public class EAMController extends FlexoController {
 
+	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(EAMController.class.getPackage().getName());
 
 	/**
@@ -71,7 +72,6 @@ public class EAMController extends FlexoController {
 
 	@Override
 	protected void initializePerspectives() {
-		installTechnologyPerspectives(getFMLRTTechnologyAdapter());
 	}
 
 	@Override

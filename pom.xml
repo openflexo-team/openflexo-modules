@@ -29,9 +29,7 @@
 	  <tag>1.9.0</tag>
   </scm>
 	<modules>
-		<module>flexovieweditor</module>
-		<module>flexoviewpointmodeler</module>
-		<module>informationspacemodule</module>
+		<module>openflexo-modeller</module>
 		<module>freemodellingeditor</module>
 		<module>openflexo-module-archetype</module>
 	</modules>

@@ -36,10 +36,9 @@
 
 		<menu name="Openflexo Modules">
 			<item name="Home" href="index.html" />
+			<item name="OpenflexoModeller" href="openflexo-modeller/index.html" />
 			<item name="FreeModellingEditor" href="free-modelling-editor/index.html" />
-			<item name="InformationSpaceModule" href="informationspacemodule/index.html" />
-			<item name="ViewPointModeller" href="flexoviewpointmodeler/index.html" />
-			<item name="ViewEditor" href="flexovieweditor/index.html" />
+			<item name="FreeModellingEditor" href="enterprise-architecture-module/index.html" />
 			<item name="FAQ" href="faq.html" />
 		</menu>
 
