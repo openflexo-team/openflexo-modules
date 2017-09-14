@@ -47,7 +47,7 @@ import org.openflexo.model.annotations.XMLElement;
 import org.openflexo.prefs.ModulePreferences;
 
 /**
- * Contains preferences for EnterpriseArchitectureModule module
+ * Contains preferences for {@link EnterpriseArchitectureModule} module
  * 
  * @author sylvain
  * 

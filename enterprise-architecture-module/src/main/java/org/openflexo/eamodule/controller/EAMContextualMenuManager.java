@@ -39,13 +39,14 @@
 
 package org.openflexo.eamodule.controller;
 
+import org.openflexo.eamodule.EnterpriseArchitectureModule;
 import org.openflexo.selection.ContextualMenuManager;
 
 /**
  * 
- * Contextual menu manager for this module
+ * Contextual menu manager for {@link EnterpriseArchitectureModule} module
  * 
- * @author yourname
+ * @author sylvain
  */
 public class EAMContextualMenuManager extends ContextualMenuManager {
 

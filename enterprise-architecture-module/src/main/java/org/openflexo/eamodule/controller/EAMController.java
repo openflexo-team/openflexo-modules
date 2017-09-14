@@ -42,19 +42,23 @@ package org.openflexo.eamodule.controller;
 import java.util.logging.Logger;
 
 import org.openflexo.eamodule.EAModule;
+import org.openflexo.eamodule.EnterpriseArchitectureModule;
 import org.openflexo.eamodule.controller.action.EAMControllerActionInitializer;
 import org.openflexo.eamodule.view.EAMMainPane;
 import org.openflexo.eamodule.view.menu.EAMMenuBar;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.selection.MouseSelectionManager;
+import org.openflexo.technologyadapter.diagram.controller.FMLControlledDiagramNaturePerspective;
+import org.openflexo.technologyadapter.gina.controller.FMLControlledFIBNaturePerspective;
 import org.openflexo.view.FlexoMainPane;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
+import org.openflexo.view.controller.GenericPerspective;
 import org.openflexo.view.menu.FlexoMenuBar;
 
 /**
- * Controller for EnterpriseArchitectureModule module
+ * Controller for {@link EnterpriseArchitectureModule} module
  * 
  * @author sylvain
  */
@@ -62,6 +66,10 @@ public class EAMController extends FlexoController {
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(EAMController.class.getPackage().getName());
+
+	private GenericPerspective genericPerspective;
+	private FMLControlledDiagramNaturePerspective diagramPerspective;
+	private FMLControlledFIBNaturePerspective ginaPerspective;
 
 	/**
 	 * Default constructor
@@ -72,6 +80,22 @@ public class EAMController extends FlexoController {
 
 	@Override
 	protected void initializePerspectives() {
+
+		addToPerspectives(genericPerspective = new GenericPerspective(this));
+		addToPerspectives(diagramPerspective = new FMLControlledDiagramNaturePerspective(this));
+		addToPerspectives(ginaPerspective = new FMLControlledFIBNaturePerspective(this));
+	}
+
+	public GenericPerspective getGenericPerspective() {
+		return genericPerspective;
+	}
+
+	public FMLControlledDiagramNaturePerspective getDiagramPerspective() {
+		return diagramPerspective;
+	}
+
+	public FMLControlledFIBNaturePerspective getGinaPerspective() {
+		return ginaPerspective;
 	}
 
 	@Override

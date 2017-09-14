@@ -41,12 +41,13 @@ package org.openflexo.eamodule.controller;
 
 import java.util.logging.Logger;
 
+import org.openflexo.eamodule.EnterpriseArchitectureModule;
 import org.openflexo.eamodule.view.menu.EAMMenuBar;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.selection.MouseSelectionManager;
 
 /**
- * This is the selection manager responsible for selection in ViewEditor module
+ * This is the selection manager responsible for selection in {@link EnterpriseArchitectureModule} module
  * 
  * @author sylvain
  */

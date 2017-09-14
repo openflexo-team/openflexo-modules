@@ -39,14 +39,16 @@
 
 package org.openflexo.eamodule.view;
 
+import org.openflexo.eamodule.EnterpriseArchitectureModule;
 import org.openflexo.eamodule.controller.EAMController;
 import org.openflexo.view.FlexoMainPane;
 
 /**
- * Represents the main pane for ViewEditor module
+ * Represents the main pane for {@link EnterpriseArchitectureModule} module
  * 
  * @author sylvain
  */
+@SuppressWarnings("serial")
 public class EAMMainPane extends FlexoMainPane {
 
 	public EAMMainPane(EAMController controller) {

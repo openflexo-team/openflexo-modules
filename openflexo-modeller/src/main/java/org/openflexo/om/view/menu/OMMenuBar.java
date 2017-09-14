@@ -112,7 +112,8 @@ public class OMMenuBar extends FlexoMenuBar {
 	 * @param controller
 	 * @return
 	 */
-	public ToolsMenu getToolsMenu(FlexoController controller, Module<?> module) {
+	@Override
+	public ToolsMenu getToolsMenu(FlexoController controller) {
 		if (toolsMenu == null) {
 			toolsMenu = new OMToolsMenu((OMController) controller);
 		}

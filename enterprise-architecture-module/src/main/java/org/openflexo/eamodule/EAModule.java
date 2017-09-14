@@ -42,34 +42,25 @@ package org.openflexo.eamodule;
 import java.util.logging.Logger;
 
 import org.openflexo.ApplicationContext;
-import org.openflexo.components.ProgressWindow;
 import org.openflexo.eamodule.controller.EAMController;
-import org.openflexo.fge.swing.JDianaInteractiveEditor;
-import org.openflexo.fge.swing.view.JDrawingView;
-import org.openflexo.foundation.FlexoObject;
-import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.module.FlexoModule;
 import org.openflexo.view.controller.FlexoController;
 
 /**
- * EnterpriseArchitectureModule module
+ * {@link EnterpriseArchitectureModule} module
  * 
  * @author sylvain
  */
 public class EAModule extends FlexoModule<EAModule> {
+
+	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(EAModule.class.getPackage().getName());
 
 	public static final String EAM_MODULE_SHORT_NAME = "EAM";
 	public static final String EAM_MODULE_NAME = "entreprise_architecture_module";
 
-	private JDianaInteractiveEditor<?> screenshotController;
-	private JDrawingView<?> screenshot = null;
-	private boolean drawWorkingArea;
-	private FlexoObject screenshotObject;
-
 	public EAModule(ApplicationContext applicationContext) throws Exception {
 		super(applicationContext);
-		ProgressWindow.setProgressInstance(FlexoLocalization.getMainLocalizer().localizedForKey("build_editor"));
 	}
 
 	@Override

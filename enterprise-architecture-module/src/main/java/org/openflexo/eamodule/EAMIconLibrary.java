@@ -54,6 +54,7 @@ import org.openflexo.rm.ResourceLocator;
  */
 public class EAMIconLibrary extends IconLibrary {
 
+	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(EAMIconLibrary.class.getPackage().getName());
 
 	// Module icons

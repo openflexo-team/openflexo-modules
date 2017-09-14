@@ -41,7 +41,8 @@ package org.openflexo.eamodule;
 import org.openflexo.module.Module;
 
 /**
- * EnterpriseArchitectureModule module<br>
+ * {@link EnterpriseArchitectureModule} module<br>
+ * 
  * This class represents the static definition of the module<br>
  * You should never instantiate this class (never invoke constructor of this class): this will be done by the ModuleLoader during dynamic
  * service discovering

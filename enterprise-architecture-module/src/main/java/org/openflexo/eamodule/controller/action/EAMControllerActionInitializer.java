@@ -41,18 +41,20 @@ package org.openflexo.eamodule.controller.action;
 
 import java.util.logging.Logger;
 
+import org.openflexo.eamodule.EnterpriseArchitectureModule;
 import org.openflexo.eamodule.controller.EAMController;
 import org.openflexo.eamodule.controller.EAMSelectionManager;
 import org.openflexo.view.controller.ControllerActionInitializer;
 
 /**
  * 
- * Action initializing for this module
+ * Action initializing for {@link EnterpriseArchitectureModule} module
  * 
- * @author yourname
+ * @author sylvain
  */
 public class EAMControllerActionInitializer extends ControllerActionInitializer {
 
+	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
 	public EAMControllerActionInitializer(EAMController controller) {

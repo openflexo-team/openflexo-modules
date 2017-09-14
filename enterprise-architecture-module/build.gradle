@@ -2,6 +2,10 @@ dependencies {
   // openflexo dep
   compile flexoFoundation()
   compile flexoUi()
+  compile flexoDiagram()
+  compile flexoDiagramUi()
+  compile ginaConnector()
+  compile ginaConnectorUi()
   
   // This resource center must always be present at run-time
   runtime openflexo("modelers-rc")
