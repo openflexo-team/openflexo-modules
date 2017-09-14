@@ -41,6 +41,7 @@ package org.openflexo.om.controller;
 
 import java.util.logging.Logger;
 
+import org.openflexo.fml.controller.FMLTechnologyPerspective;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.om.OMModule;
@@ -49,9 +50,12 @@ import org.openflexo.om.controller.action.OMControllerActionInitializer;
 import org.openflexo.om.view.OMMainPane;
 import org.openflexo.om.view.menu.OMMenuBar;
 import org.openflexo.selection.MouseSelectionManager;
+import org.openflexo.technologyadapter.diagram.controller.FMLControlledDiagramNaturePerspective;
+import org.openflexo.technologyadapter.gina.controller.FMLControlledFIBNaturePerspective;
 import org.openflexo.view.FlexoMainPane;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
+import org.openflexo.view.controller.GenericPerspective;
 import org.openflexo.view.menu.FlexoMenuBar;
 
 /**
@@ -64,7 +68,10 @@ public class OMController extends FlexoController {
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(OMController.class.getPackage().getName());
 
-	// public ProjectResourcesPerspective RESOURCES_PERSPECTIVE;
+	private GenericPerspective genericPerspective;
+	private FMLTechnologyPerspective fmlPerspective;
+	private FMLControlledDiagramNaturePerspective diagramPerspective;
+	private FMLControlledFIBNaturePerspective ginaPerspective;
 
 	/**
 	 * Default constructor
@@ -76,7 +83,18 @@ public class OMController extends FlexoController {
 	@Override
 	protected void initializePerspectives() {
 
-		installTechnologyPerspectives(getFMLRTTechnologyAdapter());
+		addToPerspectives(genericPerspective = new GenericPerspective(this));
+		addToPerspectives(fmlPerspective = new FMLTechnologyPerspective(this));
+		addToPerspectives(diagramPerspective = new FMLControlledDiagramNaturePerspective(this));
+		addToPerspectives(ginaPerspective = new FMLControlledFIBNaturePerspective(this));
+
+		/*for (TechnologyAdapter ta : getApplicationContext().getTechnologyAdapterService().getTechnologyAdapters()) {
+			TechnologyAdapterController tac = getApplicationContext().getTechnologyAdapterControllerService().get
+		}*/
+
+		// addToPerspectives(fmlPerspective = new FMLControlledDi(this));
+
+		// installTechnologyPerspectives(getFMLRTTechnologyAdapter());
 
 		// initializeFMLRTTechnologyAdapterPerspectives();
 
@@ -86,6 +104,22 @@ public class OMController extends FlexoController {
 
 		// Set the current Perspective to be the view library
 		// this.switchToPerspective(RESOURCES_PERSPECTIVE);
+	}
+
+	public GenericPerspective getGenericPerspective() {
+		return genericPerspective;
+	}
+
+	public FMLTechnologyPerspective getFMLPerspective() {
+		return fmlPerspective;
+	}
+
+	public FMLControlledDiagramNaturePerspective getDiagramPerspective() {
+		return diagramPerspective;
+	}
+
+	public FMLControlledFIBNaturePerspective getGinaPerspective() {
+		return ginaPerspective;
 	}
 
 	@Override

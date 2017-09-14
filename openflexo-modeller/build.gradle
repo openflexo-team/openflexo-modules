@@ -2,7 +2,13 @@ dependencies {
   // openflexo dep
   compile flexoFoundation()
   compile flexoUi()
-
+  compile fmlTechnologyAdapterUi()
+  compile fmlRtTechnologyAdapterUi()
+  compile flexoDiagram()
+  compile flexoDiagramUi()
+  compile ginaConnector()
+  compile ginaConnectorUi()
+   
   // external dep
 
   // testing dep
