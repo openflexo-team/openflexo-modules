@@ -1,8 +1,0 @@
-dependencies {
-  // openflexo dep
-  compile flexoFoundation()
-  compile flexoUi()
-  // external dep
-  // testing dep
-  testCompile flexoUiTest()
-}
