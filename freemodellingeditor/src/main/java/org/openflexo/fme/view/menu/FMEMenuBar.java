@@ -104,10 +104,10 @@ public class FMEMenuBar extends FlexoMenuBar {
 	 */
 	@Override
 	public WindowMenu getWindowMenu(FlexoController controller, Module module) {
-		if (_windowMenu == null) {
-			_windowMenu = new FMEWindowMenu((FMEController) controller);
+		if (windowMenu == null) {
+			windowMenu = new FMEWindowMenu((FMEController) controller);
 		}
-		return _windowMenu;
+		return windowMenu;
 	}
 
 	/**

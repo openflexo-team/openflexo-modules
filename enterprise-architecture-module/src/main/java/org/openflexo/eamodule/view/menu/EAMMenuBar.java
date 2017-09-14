@@ -99,10 +99,10 @@ public class EAMMenuBar extends FlexoMenuBar {
 	 */
 	@Override
 	public WindowMenu getWindowMenu(FlexoController controller, Module module) {
-		if (_windowMenu == null) {
-			_windowMenu = new EAMWindowMenu((EAMController) controller);
+		if (windowMenu == null) {
+			windowMenu = new EAMWindowMenu((EAMController) controller);
 		}
-		return _windowMenu;
+		return windowMenu;
 	}
 
 	/**
