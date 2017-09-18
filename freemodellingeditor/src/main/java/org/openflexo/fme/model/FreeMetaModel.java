@@ -38,10 +38,9 @@
 
 package org.openflexo.fme.model;
 
-import java.awt.Font;
+import java.awt.*;
 import java.io.FileNotFoundException;
 import java.util.List;
-
 import org.openflexo.connie.DataBinding;
 import org.openflexo.connie.type.PrimitiveType;
 import org.openflexo.fge.FGECoreUtils;
@@ -255,7 +254,6 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			shapeGR.setY(10);
 			shapeGR.setWidth(80);
 			shapeGR.setHeight(60);
-			role.setGraphicalRepresentation(shapeGR);
 
 			// Create new DropScheme
 			CreateFlexoBehaviour createDropScheme = null;
