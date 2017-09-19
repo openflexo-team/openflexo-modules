@@ -38,14 +38,16 @@
 
 package org.openflexo.fme.model;
 
+import static org.junit.Assert.assertTrue;
+
 import java.awt.Font;
 import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.openflexo.connie.DataBinding;
 import org.openflexo.connie.type.PrimitiveType;
-import org.openflexo.fge.FGECoreUtils;
 import org.openflexo.fge.ShapeGraphicalRepresentation;
+import org.openflexo.fge.shapes.Rectangle;
 import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
 import org.openflexo.foundation.DefaultFlexoObject;
 import org.openflexo.foundation.FlexoEditor;
@@ -80,6 +82,10 @@ import org.openflexo.technologyadapter.diagram.fml.editionaction.AddShape;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramPalette;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramPaletteElement;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramSpecification;
+import org.openflexo.technologyadapter.diagram.model.Diagram;
+import org.openflexo.technologyadapter.diagram.model.DiagramFactory;
+import org.openflexo.technologyadapter.diagram.model.DiagramShape;
+import org.openflexo.technologyadapter.diagram.rm.DiagramResource;
 
 /**
  * Represents a {@link FreeMetaModel} in the FreeModellingEditor<br>
@@ -181,6 +187,30 @@ public class FreeMetaModel extends DefaultFlexoObject {
 		}
 	}
 
+	private DiagramShape createShape(String name, FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction) {
+		return createShapeInDiagram(getDiagramSpecification().getDefaultExampleDiagram(), name, editor, ownerAction);
+	}
+
+	private DiagramShape createShapeInDiagram(Diagram diagram, String name, FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction) {
+		org.openflexo.technologyadapter.diagram.model.action.AddShape addShapeAction;
+		if (ownerAction != null) {
+			addShapeAction = org.openflexo.technologyadapter.diagram.model.action.AddShape.actionType.makeNewEmbeddedAction(diagram, null,
+					ownerAction);
+		}
+		else {
+			addShapeAction = org.openflexo.technologyadapter.diagram.model.action.AddShape.actionType.makeNewAction(diagram, null, editor);
+		}
+		addShapeAction.setNewShapeName(name);
+		DiagramFactory factory = ((DiagramResource) diagram.getResource()).getFactory();
+		ShapeGraphicalRepresentation shapeGR = factory.newInstance(ShapeGraphicalRepresentation.class);
+		Rectangle rectangleShape = factory.newInstance(Rectangle.class);
+		shapeGR.setShapeSpecification(rectangleShape);
+		addShapeAction.setGraphicalRepresentation(shapeGR);
+		addShapeAction.doAction();
+		assertTrue(addShapeAction.hasActionExecutionSucceeded());
+		return addShapeAction.getNewShape();
+	}
+
 	/**
 	 * Return (creates when non-existant) a FlexoConcept (in the context of FreeModellingEditor)
 	 * 
@@ -250,12 +280,14 @@ public class FreeMetaModel extends DefaultFlexoObject {
 			role.setLabel(new DataBinding<>("name"));
 
 			// Init a default GR
-			ShapeGraphicalRepresentation shapeGR = FGECoreUtils.TOOLS_FACTORY.makeShapeGraphicalRepresentation(ShapeType.RECTANGLE);
+			/*ShapeGraphicalRepresentation shapeGR = FGECoreUtils.TOOLS_FACTORY.makeShapeGraphicalRepresentation(ShapeType.RECTANGLE);
 			shapeGR.setX(10);
 			shapeGR.setY(10);
 			shapeGR.setWidth(80);
 			shapeGR.setHeight(60);
-			role.setGraphicalRepresentation(shapeGR);
+			role.setGraphicalRepresentation(shapeGR);*/
+			DiagramShape newShape = createShape(conceptName, editor, ownerAction);
+			role.setMetamodelElement(newShape);
 
 			// Create new DropScheme
 			CreateFlexoBehaviour createDropScheme = null;

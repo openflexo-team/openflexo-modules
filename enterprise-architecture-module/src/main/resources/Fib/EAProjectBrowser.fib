@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Panel id="0" align="left" borderTop="0" borderLeft="0"
+	trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="0"
+	border="empty" sizeAdjustment="OriginalSize" layout="twocols"
+	borderRight="0"
+	controllerClassName="org.openflexo.eamodule.view.EAProjectBrowser$EAProjectBrowserFIBController">
+	<Browser id="1" backgroundSelectionColor="9,80,208"
+		visibleRowCount="5" boundToSelectionManager="true"
+		backgroundNonSelectionColor="255,255,255" iteratorClassName="java.lang.Object"
+		textSelectionColor="255,255,255" backgroundSecondarySelectionColor="178,215,255"
+		showRootsHandle="true" showFooter="true" textNonSelectionColor="0,0,0"
+		root="data" selectionMode="DiscontiguousTreeSelection"
+		rootVisible="true" rowHeight="18" localize="true" manageDynamicModel="true"
+		rightClickAction="controller.rightClick(ProjectBrowser.selected,event)"
+		doubleClickAction="controller.doubleClick(ProjectBrowser.selected)"
+		clickAction="controller.singleClick(ProjectBrowser.selected)"
+		index="0"
+		constraints="twocols(expandHorizontally=true;expandVertically=true;index=0;insetsBottom=0;insetsLeft=2;insetsRight=2;insetsTop=0;location=center)"
+		name="ProjectBrowser">
+		<BrowserElement 
+			dataClassName="org.openflexo.eamodule.model.EAProject"
+			icon="controller.iconForObject(project)" label="project.name"
+			isEditable="false" defaultVisible="false" name="project">
+		</BrowserElement>
+		<BrowserElement id="2"
+			dataClassName="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://geve.guyotenvironnement.com/GeveExploitation.viewpoint&gt;"
+			icon="controller.iconForObject(geveView)" label="geveView.resourceCenter.name"
+			isEditable="false" defaultVisible="false" name="geveView">
+			<Children id="3" data="geveView.donneesReferentiel" name="rootElement" />
+			<Children id="4" data="geveView.referentielsTiers" name="referentielsTiers" />
+			<Children id="5" data="geveView.caracterisations" name="caracterisations" />
+		</BrowserElement>
+	</Browser>
+	<FIBVariable id="82" type="org.openflexo.eamodule.model.EAProject"
+		name="data" />
+	<FIBVariable id="83"
+		type="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://openflexo.org/modellers/resources/BPMN/FML/BPMNEditor.fml&gt;"
+		value="data.BPMNVirtualModelInstance" name="bpmnVMI" />
+	<LocalizedDictionary id="84" />
+</Panel>
