@@ -1,40 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Panel id="0" align="left" borderTop="0" borderLeft="0"
-	trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="0"
-	border="empty" sizeAdjustment="OriginalSize" layout="twocols"
-	borderRight="0"
-	controllerClassName="org.openflexo.eamodule.view.EAProjectBrowser$EAProjectBrowserFIBController">
-	<Browser id="1" backgroundSelectionColor="9,80,208"
-		visibleRowCount="5" boundToSelectionManager="true"
-		backgroundNonSelectionColor="255,255,255" iteratorClassName="java.lang.Object"
-		textSelectionColor="255,255,255" backgroundSecondarySelectionColor="178,215,255"
-		showRootsHandle="true" showFooter="true" textNonSelectionColor="0,0,0"
-		root="data" selectionMode="DiscontiguousTreeSelection"
-		rootVisible="true" rowHeight="18" localize="true" manageDynamicModel="true"
-		rightClickAction="controller.rightClick(ProjectBrowser.selected,event)"
-		doubleClickAction="controller.doubleClick(ProjectBrowser.selected)"
-		clickAction="controller.singleClick(ProjectBrowser.selected)"
-		index="0"
-		constraints="twocols(expandHorizontally=true;expandVertically=true;index=0;insetsBottom=0;insetsLeft=2;insetsRight=2;insetsTop=0;location=center)"
-		name="ProjectBrowser">
-		<BrowserElement 
-			dataClassName="org.openflexo.eamodule.model.EAProject"
-			icon="controller.iconForObject(project)" label="project.name"
-			isEditable="false" defaultVisible="false" name="project">
-		</BrowserElement>
-		<BrowserElement id="2"
-			dataClassName="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://geve.guyotenvironnement.com/GeveExploitation.viewpoint&gt;"
-			icon="controller.iconForObject(geveView)" label="geveView.resourceCenter.name"
-			isEditable="false" defaultVisible="false" name="geveView">
-			<Children id="3" data="geveView.donneesReferentiel" name="rootElement" />
-			<Children id="4" data="geveView.referentielsTiers" name="referentielsTiers" />
-			<Children id="5" data="geveView.caracterisations" name="caracterisations" />
-		</BrowserElement>
-	</Browser>
-	<FIBVariable id="82" type="org.openflexo.eamodule.model.EAProject"
-		name="data" />
-	<FIBVariable id="83"
-		type="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://openflexo.org/modellers/resources/BPMN/FML/BPMNEditor.fml&gt;"
-		value="data.BPMNVirtualModelInstance" name="bpmnVMI" />
-	<LocalizedDictionary id="84" />
+<Panel id="0" align="left" borderTop="0" borderLeft="0" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="0" border="empty" sizeAdjustment="OriginalSize" layout="twocols" borderRight="0" controllerClassName="org.openflexo.eamodule.view.EAProjectBrowser$EAProjectBrowserFIBController">
+  <Browser id="1" backgroundSelectionColor="9,80,208" visibleRowCount="5" boundToSelectionManager="true" backgroundNonSelectionColor="255,255,255" iteratorClassName="java.lang.Object" textSelectionColor="255,255,255" backgroundSecondarySelectionColor="178,215,255" showRootsHandle="true" showFooter="true" textNonSelectionColor="0,0,0" root="data" selectionMode="DiscontiguousTreeSelection" rowHeight="18" localize="true" manageDynamicModel="true" rightClickAction="controller.rightClick(ProjectBrowser.selected,event)" doubleClickAction="controller.doubleClick(ProjectBrowser.selected)" clickAction="controller.singleClick(ProjectBrowser.selected)" constraints="twocols(expandHorizontally=true;expandVertically=true;index=0;insetsBottom=0;insetsLeft=2;insetsRight=2;insetsTop=0;location=center)" index="0" name="ProjectBrowser">
+    <BrowserElement id="2" dataClassName="org.openflexo.eamodule.model.EAProject" icon="controller.iconForObject(project)" label="project.name" isEditable="false" defaultVisible="false" name="project">
+      <Children id="3" data="project.bPMNVirtualModelInstance" name="bpmn" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="4" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="copy" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="5" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="cut" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="6" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="paste" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="7" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="select_all" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="8" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="submit_documentation" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="9" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="inspect" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="10" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="load_resource" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="11" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="help" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="12" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="set_property" />
+    </BrowserElement>
+    <BrowserElement id="13" dataClassName="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://openflexo.org/modellers/resources/BPMN/FML/BPMNEditor.fml&gt;" icon="controller.iconForObject(bpmn)" label="&quot;Processes / BPMN&quot;" isEditable="false" name="bpmn">
+      <Children id="14" data="bpmn.rootProcesses" name="rootProcesses" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="15" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="copy" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="16" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="cut" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="17" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="paste" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="18" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="select_all" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="19" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="submit_documentation" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="20" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="inspect" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="21" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="load_resource" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="22" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="help" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="23" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="set_property" />
+    </BrowserElement>
+    <BrowserElement id="24" dataClassName="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://openflexo.org/modellers/resources/BPMN/FML/BPMNEditor.fml/ProcessDiagram.fml&gt;" icon="controller.iconForObject(process)" label="process.process.name" isEditable="false" name="process">
+      <Children id="25" cast="process.container.getProcessDiagram(child)" data="process.process.childProcesses" name="children" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="26" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="copy" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="27" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="cut" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="28" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="paste" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="29" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="select_all" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="30" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="submit_documentation" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="31" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="inspect" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="32" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="load_resource" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="33" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="help" />
+      <FIBBrowserActionAdapter xmlns:p="http://www.openflexo.org/pamela/" id="34" p:modelEntity="org.openflexo.view.FIBBrowserActionAdapter" isAvailable="action.isAvailable(selected)" method="action.performAction(selected)" name="set_property" />
+    </BrowserElement>
+  </Browser>
+  <LocalizedDictionary id="35" />
+  <FIBVariable id="36" type="org.openflexo.eamodule.model.EAProject" name="data" />
+  <FIBVariable id="37" type="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://openflexo.org/modellers/resources/BPMN/FML/BPMNEditor.fml&gt;" value="data.BPMNVirtualModelInstance" name="bpmnVMI" />
 </Panel>

@@ -119,6 +119,9 @@ public interface EAProject extends FlexoObject, ProjectWrapper<EAProjectNature>,
 
 		@Override
 		public FMLRTVirtualModelInstance getBPMNVirtualModelInstance() {
+
+			System.out.println("On me demande le BPMN VMI");
+
 			return getProjectNature().getBPMNVirtualModelInstance(getProject());
 		}
 

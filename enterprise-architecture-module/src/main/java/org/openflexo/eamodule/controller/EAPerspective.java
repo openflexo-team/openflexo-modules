@@ -49,6 +49,10 @@ import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
+import org.openflexo.technologyadapter.diagram.controller.DiagramTechnologyAdapterController;
+import org.openflexo.technologyadapter.diagram.controller.diagrameditor.FMLControlledDiagramEditor;
+import org.openflexo.technologyadapter.diagram.controller.diagrameditor.FMLControlledDiagramModuleView;
+import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelInstanceNature;
 import org.openflexo.technologyadapter.gina.fml.FMLControlledFIBFlexoConceptInstanceNature;
 import org.openflexo.technologyadapter.gina.fml.FMLControlledFIBVirtualModelInstanceNature;
 import org.openflexo.technologyadapter.gina.view.FMLControlledFIBFlexoConceptInstanceModuleView;
@@ -57,9 +61,9 @@ import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.controller.model.FlexoPerspective;
 
-public class BPMNPerspective extends FlexoPerspective {
+public class EAPerspective extends FlexoPerspective {
 
-	static final Logger logger = Logger.getLogger(BPMNPerspective.class.getPackage().getName());
+	static final Logger logger = Logger.getLogger(EAPerspective.class.getPackage().getName());
 
 	private final EAProjectBrowser browser;
 
@@ -67,7 +71,7 @@ public class BPMNPerspective extends FlexoPerspective {
 	 * @param controller
 	 * @param name
 	 */
-	public BPMNPerspective(FlexoController controller) {
+	public EAPerspective(FlexoController controller) {
 		super("geve_perspective", controller);
 
 		browser = new EAProjectBrowser(controller);
@@ -145,9 +149,18 @@ public class BPMNPerspective extends FlexoPerspective {
 		}*/
 
 		if (object instanceof FMLRTVirtualModelInstance) {
-			if (((FMLRTVirtualModelInstance) object).hasNature(FMLControlledFIBVirtualModelInstanceNature.INSTANCE)) {
-				return new FMLControlledFIBVirtualModelInstanceModuleView((FMLRTVirtualModelInstance) object, getController(), this,
-						getController().getModuleLocales());
+
+			FMLRTVirtualModelInstance vmi = (FMLRTVirtualModelInstance) object;
+
+			if (vmi.hasNature(FMLControlledDiagramVirtualModelInstanceNature.INSTANCE)) {
+				DiagramTechnologyAdapterController diagramTAC = ((EAMController) getController()).getDiagramTAC();
+				FMLControlledDiagramEditor editor = new FMLControlledDiagramEditor(vmi, false, getController(),
+						diagramTAC.getToolFactory());
+				return new FMLControlledDiagramModuleView(editor, this);
+			}
+
+			if (vmi.hasNature(FMLControlledFIBVirtualModelInstanceNature.INSTANCE)) {
+				return new FMLControlledFIBVirtualModelInstanceModuleView(vmi, getController(), this, getController().getModuleLocales());
 			}
 		}
 
@@ -166,6 +179,9 @@ public class BPMNPerspective extends FlexoPerspective {
 	@Override
 	public boolean hasModuleViewForObject(FlexoObject object) {
 		if (object instanceof FMLRTVirtualModelInstance) {
+			if (((FMLRTVirtualModelInstance) object).hasNature(FMLControlledDiagramVirtualModelInstanceNature.INSTANCE)) {
+				return true;
+			}
 			if (((FMLRTVirtualModelInstance) object).hasNature(FMLControlledFIBVirtualModelInstanceNature.INSTANCE)) {
 				return true;
 			}

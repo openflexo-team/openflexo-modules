@@ -41,6 +41,9 @@ package org.openflexo.eamodule.controller;
 
 import java.util.logging.Logger;
 
+import javax.swing.ImageIcon;
+
+import org.openflexo.eamodule.EAMIconLibrary;
 import org.openflexo.eamodule.EAModule;
 import org.openflexo.eamodule.EnterpriseArchitectureModule;
 import org.openflexo.eamodule.controller.action.EAMControllerActionInitializer;
@@ -51,7 +54,11 @@ import org.openflexo.eamodule.view.menu.EAMMenuBar;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
+import org.openflexo.foundation.fml.VirtualModel;
+import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.selection.MouseSelectionManager;
+import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
+import org.openflexo.technologyadapter.diagram.controller.DiagramTechnologyAdapterController;
 import org.openflexo.view.FlexoMainPane;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
@@ -67,7 +74,7 @@ public class EAMController extends FlexoController {
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(EAMController.class.getPackage().getName());
 
-	private BPMNPerspective bpmnPerspective;
+	private EAPerspective bpmnPerspective;
 
 	/**
 	 * Default constructor
@@ -79,7 +86,7 @@ public class EAMController extends FlexoController {
 	@Override
 	protected void initializePerspectives() {
 
-		addToPerspectives(bpmnPerspective = new BPMNPerspective(this));
+		addToPerspectives(bpmnPerspective = new EAPerspective(this));
 	}
 
 	@Override
@@ -125,6 +132,77 @@ public class EAMController extends FlexoController {
 		super.updateEditor(from, to);
 		FlexoProject project = (to != null ? to.getProject() : null);
 		bpmnPerspective.setProject(project);
+	}
+
+	@Override
+	public ImageIcon iconForObject(final Object object) {
+		if (object instanceof EAProject) {
+			return EAMIconLibrary.EAM_SMALL_ICON;
+		}
+
+		if (object instanceof FMLRTVirtualModelInstance) {
+			VirtualModel type = ((FMLRTVirtualModelInstance) object).getVirtualModel();
+			if (type.getName().equals("BPMNEditor")) {
+				return EAMIconLibrary.BPMN_SMALL_ICON;
+			}
+			else if (type.getName().equals("ProcessDiagram")) {
+				return EAMIconLibrary.BPMN_PROCESS_ICON;
+			}
+			return super.iconForObject(object);
+		}
+
+		/*if (getGEVEProject() != null) {
+			if (object == getGEVEProject().getGEVEView()) {
+				return GEVEIconLibrary.GEVE_SMALL_ICON;
+			}
+		}
+		
+		if (object instanceof FMLRTVirtualModelInstance) {
+			VirtualModel type = ((FMLRTVirtualModelInstance) object).getVirtualModel();
+			if (type.getName().equals("DonneesReferentiel")) {
+				return FMLIconLibrary.INFO_ICON;
+			}
+			if (type.getName().equals("ReferentielTiers")) {
+				return GEVEIconLibrary.TIERS_ICON;
+			}
+			if (type.getName().equals("Caracterisations")) {
+				return GEVEIconLibrary.CARACTERISATIONS_ICON;
+			}
+			return super.iconForObject(object);
+		}
+		
+		if (object instanceof FlexoConceptInstance) {
+			FlexoConcept type = ((FlexoConceptInstance) object).getFlexoConcept();
+			if (type.getName().equals("TypeDeFlux")) {
+				return GEVEIconLibrary.TYPE_FLUX_ICON;
+			}
+			if (type.getName().equals("Matiere")) {
+				return GEVEIconLibrary.MATIERE_ICON;
+			}
+			if (type.getName().equals("Tiers")) {
+				return GEVEIconLibrary.TIERS_ICON;
+			}
+			if (type.getName().equals("Caracterisation")) {
+				return GEVEIconLibrary.CARACTERISATION_ICON;
+			}
+		}*/
+
+		return super.iconForObject(object);
+	}
+
+	private DiagramTechnologyAdapterController diagramTAC;
+
+	/**
+	 * Helper functio to ease access to DiagramTAController
+	 * 
+	 * @return
+	 */
+	public DiagramTechnologyAdapterController getDiagramTAC() {
+		if (diagramTAC == null) {
+			DiagramTechnologyAdapter diagramTA = this.getTechnologyAdapter(DiagramTechnologyAdapter.class);
+			diagramTAC = (DiagramTechnologyAdapterController) getTechnologyAdapterController(diagramTA);
+		}
+		return this.diagramTAC;
 	}
 
 }
