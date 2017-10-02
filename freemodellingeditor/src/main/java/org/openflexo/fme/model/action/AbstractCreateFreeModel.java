@@ -53,18 +53,19 @@ import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.action.CreateContainedVirtualModel;
 import org.openflexo.foundation.fml.action.CreateModelSlot;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
-import org.openflexo.foundation.fml.rt.action.ModelSlotInstanceConfiguration.DefaultModelSlotInstanceConfigurationOption;
+import org.openflexo.foundation.resource.RepositoryFolder;
 import org.openflexo.foundation.resource.SaveResourceException;
 import org.openflexo.localization.LocalizedDelegate;
 import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
-import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlotInstanceConfiguration;
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelNature;
 import org.openflexo.technologyadapter.diagram.fml.action.CreateDiagramPalette;
 import org.openflexo.technologyadapter.diagram.fml.action.CreateDiagramSpecification;
 import org.openflexo.technologyadapter.diagram.fml.action.CreateExampleDiagram;
 import org.openflexo.technologyadapter.diagram.fml.action.CreateFMLControlledDiagramVirtualModelInstance;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramSpecification;
+import org.openflexo.technologyadapter.diagram.model.action.CreateDiagram;
+import org.openflexo.technologyadapter.diagram.rm.DiagramResource;
 import org.openflexo.toolbox.StringUtils;
 
 /**
@@ -122,7 +123,7 @@ public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> exten
 		action.setNewVirtualModelInstanceTitle(getFreeModelName());
 		action.setVirtualModel(freeMetaModel.getVirtualModel());
 
-		TypedDiagramModelSlot diagramModelSlot = FMLControlledDiagramVirtualModelNature
+		/*TypedDiagramModelSlot diagramModelSlot = FMLControlledDiagramVirtualModelNature
 				.getTypedDiagramModelSlot(freeMetaModel.getVirtualModel());
 		TypedDiagramModelSlotInstanceConfiguration diagramModelSlotInstanceConfiguration = (TypedDiagramModelSlotInstanceConfiguration) action
 				.getModelSlotInstanceConfiguration(diagramModelSlot);
@@ -130,9 +131,28 @@ public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> exten
 		diagramModelSlotInstanceConfiguration.setFilename(getFreeModelName() + ".diagram");
 		diagramModelSlotInstanceConfiguration.setRelativePath("Diagrams/");
 		diagramModelSlotInstanceConfiguration.setModelUri(FreeModel.getDiagramURI(getFocusedObject().getProject(), getFreeModelName()));
+		*/
+
 		action.doAction();
 
 		FMLRTVirtualModelInstance newVirtualModelInstance = action.getNewVirtualModelInstance();
+
+		DiagramTechnologyAdapter diagramTA = getServiceManager().getTechnologyAdapterService()
+				.getTechnologyAdapter(DiagramTechnologyAdapter.class);
+
+		RepositoryFolder<DiagramResource, ?> rootFolder = diagramTA.getDiagramRepository(getFocusedObject().getProject()).getRootFolder();
+		RepositoryFolder<DiagramResource, ?> diagramFolder = rootFolder.getFolderNamed("Diagrams");
+		CreateDiagram createDiagram = CreateDiagram.actionType.makeNewEmbeddedAction(diagramFolder, null, this);
+		createDiagram.setDiagramName(getFreeModelName() + ".diagram");
+		createDiagram.setDiagramTitle(getFreeModelDescription());
+
+		createDiagram.doAction();
+
+		DiagramResource newDiagramResource = createDiagram.getNewDiagramResource();
+		TypedDiagramModelSlot diagramModelSlot = FMLControlledDiagramVirtualModelNature
+				.getTypedDiagramModelSlot(freeMetaModel.getVirtualModel());
+
+		newVirtualModelInstance.setFlexoPropertyValue(diagramModelSlot, newDiagramResource.getLoadedResourceData());
 
 		// Wrap into FreeModel
 		try {
