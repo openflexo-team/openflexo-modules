@@ -50,8 +50,8 @@ import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.VirtualModel;
-import org.openflexo.foundation.fml.action.CreateModelSlot;
 import org.openflexo.foundation.fml.action.CreateContainedVirtualModel;
+import org.openflexo.foundation.fml.action.CreateModelSlot;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.action.ModelSlotInstanceConfiguration.DefaultModelSlotInstanceConfigurationOption;
 import org.openflexo.foundation.resource.SaveResourceException;
@@ -62,6 +62,7 @@ import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlotInstanceConf
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelNature;
 import org.openflexo.technologyadapter.diagram.fml.action.CreateDiagramPalette;
 import org.openflexo.technologyadapter.diagram.fml.action.CreateDiagramSpecification;
+import org.openflexo.technologyadapter.diagram.fml.action.CreateExampleDiagram;
 import org.openflexo.technologyadapter.diagram.fml.action.CreateFMLControlledDiagramVirtualModelInstance;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramSpecification;
 import org.openflexo.toolbox.StringUtils;
@@ -157,6 +158,11 @@ public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> exten
 		DiagramSpecification diagramSpecification = createDS.getNewDiagramSpecification();
 		System.out.println("DiagramSpecification has been created: " + diagramSpecification);
 
+		CreateExampleDiagram createExampleDiagram = CreateExampleDiagram.actionType.makeNewEmbeddedAction(diagramSpecification, null, this);
+		createExampleDiagram.setNewDiagramName("Default");
+		createExampleDiagram.setNewDiagramTitle("Default example diagram");
+		createExampleDiagram.doAction();
+
 		CreateDiagramPalette createPalette = CreateDiagramPalette.actionType.makeNewEmbeddedAction(diagramSpecification, null, this);
 		createPalette.setNewPaletteName(FreeMetaModel.PALETTE_NAME);
 		createPalette.doAction();
@@ -164,8 +170,8 @@ public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> exten
 
 		// Now we create the VirtualModel
 		System.out.println("Creating VirtualModel...");
-		CreateContainedVirtualModel action = CreateContainedVirtualModel.actionType.makeNewEmbeddedAction(getFocusedObject().getFreeModellingViewPoint(),
-				null, this);
+		CreateContainedVirtualModel action = CreateContainedVirtualModel.actionType
+				.makeNewEmbeddedAction(getFocusedObject().getFreeModellingViewPoint(), null, this);
 		action.setNewVirtualModelName(metaModelName);
 		action.doAction();
 		VirtualModel newVirtualModel = action.getNewVirtualModel();
