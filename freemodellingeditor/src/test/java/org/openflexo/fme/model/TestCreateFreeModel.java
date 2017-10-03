@@ -52,6 +52,7 @@ import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.resource.ResourceLoadingCancelledException;
+import org.openflexo.foundation.resource.SaveResourceException;
 import org.openflexo.foundation.test.OpenflexoProjectAtRunTimeTestCase;
 import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.test.OrderedRunner;
@@ -95,7 +96,7 @@ public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 
 	@Test
 	@TestOrder(2)
-	public void testCreateFreeModel() {
+	public void testCreateFreeModel() throws SaveResourceException {
 		CreateFreeModel action = CreateFreeModel.actionType.makeNewAction(fmProject, null, editor);
 		action.setFreeModelName("FreeModel1");
 		assertTrue(action.isValid());
@@ -105,6 +106,8 @@ public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 		assertNotNull(freeMetaModel);
 		freeModel1 = action.getFreeModel();
 		assertNotNull(freeModel1);
+
+		freeModel1.getVirtualModelInstance().getResource().save(null);
 	}
 
 	@Test
@@ -117,7 +120,7 @@ public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 
 	@Test
 	@TestOrder(4)
-	public void testCreateFreeModelWithSameMetaModel() {
+	public void testCreateFreeModelWithSameMetaModel() throws SaveResourceException {
 		CreateFreeModel action = CreateFreeModel.actionType.makeNewAction(fmProject, null, editor);
 		action.setFreeModelName("FreeModel2");
 		action.setFreeMetaModel(freeMetaModel);
@@ -125,6 +128,10 @@ public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 		assertTrue(action.isValid());
 		action.doAction();
 		assertTrue(action.hasActionExecutionSucceeded());
+		freeModel2 = action.getFreeModel();
+		assertNotNull(freeModel2);
+
+		freeModel2.getVirtualModelInstance().getResource().save(null);
 	}
 
 	/**
@@ -154,6 +161,8 @@ public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 
 		assertNotNull(fmProject.getFreeModellingViewPoint());
 		assertNotNull(fmProject.getFreeModellingView());
+
+		System.out.println("Project dir = " + project.getDirectory());
 
 		assertEquals(1, fmProject.getFreeMetaModels().size());
 		assertEquals(2, fmProject.getFreeModels().size());

@@ -38,6 +38,7 @@
 
 package org.openflexo.fme.model.action;
 
+import java.io.File;
 import java.util.Vector;
 import java.util.logging.Logger;
 
@@ -65,6 +66,7 @@ import org.openflexo.technologyadapter.diagram.fml.action.CreateExampleDiagram;
 import org.openflexo.technologyadapter.diagram.fml.action.CreateFMLControlledDiagramVirtualModelInstance;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramSpecification;
 import org.openflexo.technologyadapter.diagram.model.action.CreateDiagram;
+import org.openflexo.technologyadapter.diagram.rm.DiagramRepository;
 import org.openflexo.technologyadapter.diagram.rm.DiagramResource;
 import org.openflexo.toolbox.StringUtils;
 
@@ -140,17 +142,35 @@ public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> exten
 		DiagramTechnologyAdapter diagramTA = getServiceManager().getTechnologyAdapterService()
 				.getTechnologyAdapter(DiagramTechnologyAdapter.class);
 
-		RepositoryFolder<DiagramResource, ?> rootFolder = diagramTA.getDiagramRepository(getFocusedObject().getProject()).getRootFolder();
+		DiagramRepository diagramRepository = diagramTA.getDiagramRepository(getFocusedObject().getProject());
+		RepositoryFolder<DiagramResource, ?> rootFolder = diagramRepository.getRootFolder();
+
+		if (rootFolder.getSerializationArtefact() instanceof File) {
+			File prjDir = (File) rootFolder.getSerializationArtefact();
+			File diagramDir = new File(prjDir, "Diagrams");
+			if (!diagramDir.exists()) {
+				diagramDir.mkdirs();
+			}
+		}
+
 		RepositoryFolder<DiagramResource, ?> diagramFolder = rootFolder.getFolderNamed("Diagrams");
+		if (diagramFolder == null) {
+			diagramFolder = diagramRepository.createNewFolder("Diagrams", rootFolder);
+		}
+
 		CreateDiagram createDiagram = CreateDiagram.actionType.makeNewEmbeddedAction(diagramFolder, null, this);
 		createDiagram.setDiagramName(getFreeModelName() + ".diagram");
 		createDiagram.setDiagramTitle(getFreeModelDescription());
+		createDiagram.setDiagramSpecification(freeMetaModel.getDiagramSpecification());
 
 		createDiagram.doAction();
 
 		DiagramResource newDiagramResource = createDiagram.getNewDiagramResource();
 		TypedDiagramModelSlot diagramModelSlot = FMLControlledDiagramVirtualModelNature
 				.getTypedDiagramModelSlot(freeMetaModel.getVirtualModel());
+
+		System.out.println("Le nouveau diagramme res : " + newDiagramResource);
+		System.out.println("Le nouveau diagramme : " + newDiagramResource.getLoadedResourceData());
 
 		newVirtualModelInstance.setFlexoPropertyValue(diagramModelSlot, newDiagramResource.getLoadedResourceData());
 
