@@ -88,7 +88,7 @@ public class EAFIBController extends FMLControlledFIBController {
 	}
 
 	@Override
-	public ImageIcon iconForObject(Object object) {
+	public ImageIcon retrieveIconForObject(Object object) {
 		if (getFlexoController() != null) {
 			return getFlexoController().iconForObject(object);
 		}
