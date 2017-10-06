@@ -159,8 +159,8 @@ public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> exten
 		}
 
 		CreateDiagram createDiagram = CreateDiagram.actionType.makeNewEmbeddedAction(diagramFolder, null, this);
-		createDiagram.setDiagramName(getFreeModelName() + ".diagram");
-		createDiagram.setDiagramTitle(getFreeModelDescription());
+		createDiagram.setDiagramName(getFreeModelName());
+		createDiagram.setDiagramTitle(StringUtils.isNotEmpty(getFreeModelDescription()) ? getFreeModelDescription() : getFreeModelName());
 		createDiagram.setDiagramSpecification(freeMetaModel.getDiagramSpecification());
 
 		createDiagram.doAction();
@@ -168,9 +168,6 @@ public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> exten
 		DiagramResource newDiagramResource = createDiagram.getNewDiagramResource();
 		TypedDiagramModelSlot diagramModelSlot = FMLControlledDiagramVirtualModelNature
 				.getTypedDiagramModelSlot(freeMetaModel.getVirtualModel());
-
-		System.out.println("Le nouveau diagramme res : " + newDiagramResource);
-		System.out.println("Le nouveau diagramme : " + newDiagramResource.getLoadedResourceData());
 
 		newVirtualModelInstance.setFlexoPropertyValue(diagramModelSlot, newDiagramResource.getLoadedResourceData());
 

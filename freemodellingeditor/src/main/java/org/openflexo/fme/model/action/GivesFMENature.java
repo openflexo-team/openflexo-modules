@@ -117,6 +117,9 @@ public class GivesFMENature extends FlexoAction<GivesFMENature, FlexoProject, Fl
 			throw new InvalidArgumentException("Could not determine VirtualModelRepository. Aborting operation.");
 		}
 
+		FreeModellingProjectNature FREE_MODELLING_NATURE = getServiceManager().getProjectNatureService()
+				.getProjectNature(FreeModellingProjectNature.class);
+
 		VirtualModelResource freeModellingViewPointResource = getFocusedObject().getVirtualModelRepository()
 				.getResource(getFocusedObject().getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
 
@@ -153,6 +156,7 @@ public class GivesFMENature extends FlexoAction<GivesFMENature, FlexoProject, Fl
 		// We have now to notify project of nature modifications
 		getFocusedObject().getPropertyChangeSupport().firePropertyChange("asNature(String)", false, true);
 		getFocusedObject().getPropertyChangeSupport().firePropertyChange("hasNature(String)", false, true);
+
 	}
 
 	@Override
