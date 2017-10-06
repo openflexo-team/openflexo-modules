@@ -42,14 +42,15 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
+import org.openflexo.connie.annotations.NotificationUnsafe;
 import org.openflexo.foundation.DefaultFlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.FlexoRole;
 import org.openflexo.foundation.fml.VirtualModel;
-import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
+import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelInstanceNature;
 import org.openflexo.technologyadapter.diagram.model.Diagram;
 
@@ -84,7 +85,8 @@ public class FreeModel extends DefaultFlexoObject implements PropertyChangeListe
 		super();
 		this.fmProject = fmProject;
 		if (!virtualModelInstance.hasNature(FMLControlledDiagramVirtualModelInstanceNature.INSTANCE)) {
-			throw new InvalidArgumentException("FMLRTVirtualModelInstance does not have the FMLControlledDiagramVirtualModelInstanceNature");
+			throw new InvalidArgumentException(
+					"FMLRTVirtualModelInstance does not have the FMLControlledDiagramVirtualModelInstanceNature");
 		}
 		this.virtualModelInstance = virtualModelInstance;
 		virtualModelInstance.getPropertyChangeSupport().addPropertyChangeListener(this);
@@ -132,6 +134,7 @@ public class FreeModel extends DefaultFlexoObject implements PropertyChangeListe
 	 * 
 	 * @return
 	 */
+	@NotificationUnsafe
 	public List<FlexoConcept> getUsedFlexoConcepts() {
 		return virtualModelInstance.getUsedFlexoConcepts();
 	}
@@ -141,6 +144,7 @@ public class FreeModel extends DefaultFlexoObject implements PropertyChangeListe
 	 * 
 	 * @return
 	 */
+	@NotificationUnsafe
 	public List<FlexoConceptInstance> getInstances(FlexoConcept concept) {
 		return virtualModelInstance.getFlexoConceptInstances(concept);
 	}
@@ -154,7 +158,8 @@ public class FreeModel extends DefaultFlexoObject implements PropertyChangeListe
 					FlexoConceptInstance fci = (FlexoConceptInstance) evt.getNewValue();
 					getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null, fci);
 					getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", null, fci);
-				} else if (evt.getOldValue() instanceof FlexoConceptInstance) {
+				}
+				else if (evt.getOldValue() instanceof FlexoConceptInstance) {
 					// A FlexoConceptInstance has been removed
 					FlexoConceptInstance fci = (FlexoConceptInstance) evt.getOldValue();
 					getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", fci, null);
@@ -169,7 +174,8 @@ public class FreeModel extends DefaultFlexoObject implements PropertyChangeListe
 		String baseName;
 		if (concept.getName().equals(FreeMetaModel.NONE_FLEXO_CONCEPT)) {
 			baseName = "unnamed";
-		} else {
+		}
+		else {
 			baseName = concept.getName().toLowerCase();
 		}
 

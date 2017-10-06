@@ -219,7 +219,7 @@ public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> exten
 		createMS.setTechnologyAdapter(
 				getServiceManager().getTechnologyAdapterService().getTechnologyAdapter(DiagramTechnologyAdapter.class));
 		createMS.setModelSlotClass(TypedDiagramModelSlot.class);
-		createMS.setModelSlotName("diagram");
+		createMS.setModelSlotName(FreeMetaModel.DIAGRAM_MODEL_SLOT_NAME);
 		createMS.setMmRes(diagramSpecification.getResource());
 		createMS.doAction();
 

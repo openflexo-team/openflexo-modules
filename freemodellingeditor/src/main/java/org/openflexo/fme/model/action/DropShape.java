@@ -145,19 +145,24 @@ public class DropShape extends FlexoAction<DropShape, DiagramContainerElement<?>
 			DropScheme dropScheme = dsList.get(0);
 			FlexoBehaviourParameter nameParam = dropScheme.getParameters().size() > 0 ? dropScheme.getParameters().get(0) : null;
 			DropSchemeAction action = new DropSchemeAction(dropScheme, getFreeModel().getVirtualModelInstance(), null, this);
+			addToEmbeddedActions(action);
 			if (nameParam != null) {
 				action.setParameterValue(nameParam, getFreeModel().getProposedName(concept));
 			}
-			// action.setParent(getParent());
 			action.setDropLocation(dropLocation);
+
 			action.doAction();
 			newFlexoConceptInstance = action.getFlexoConceptInstance();
+
+			if (newFlexoConceptInstance == null) {
+				return;
+			}
 
 			ShapeRole shapeRole = (ShapeRole) concept.getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
 			DiagramShape shape = newFlexoConceptInstance.getFlexoActor(shapeRole);
 
 			// If another GR was defined (overriding the one from ShapeRole)
-			if (getGraphicalRepresentation() != null) {
+			if (getGraphicalRepresentation() != null && shape.getGraphicalRepresentation() != null) {
 				shape.getGraphicalRepresentation().setsWith(getGraphicalRepresentation());
 				shape.getGraphicalRepresentation().setIsReadOnly(false);
 				shape.getGraphicalRepresentation().setIsFocusable(true);
