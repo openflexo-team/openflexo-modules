@@ -92,7 +92,7 @@ public class EAFIBController extends FMLControlledFIBController {
 		if (getFlexoController() != null) {
 			return getFlexoController().iconForObject(object);
 		}
-		return super.iconForObject(object);
+		return super.retrieveIconForObject(object);
 	}
 
 }
