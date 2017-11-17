@@ -121,7 +121,7 @@ public class FreeMetaModel extends DefaultFlexoObject {
 	 * @return
 	 */
 	public static String getDiagramSpecificationURI(FlexoProject project, String metaModelName) {
-		return project.getURI() + "/DiagramSpecification/" + metaModelName;
+		return project.getProjectURI() + "/DiagramSpecification/" + metaModelName;
 	}
 
 	public FreeMetaModel(VirtualModel virtualModel, FreeModellingProject fmProject) throws InvalidArgumentException {

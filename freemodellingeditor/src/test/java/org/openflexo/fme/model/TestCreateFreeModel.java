@@ -43,6 +43,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 
 import org.junit.Test;
@@ -68,7 +69,7 @@ import org.openflexo.test.TestOrder;
 public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 
 	static FlexoEditor editor;
-	static FlexoProject project;
+	static FlexoProject<File> project;
 	static FreeModellingProject fmProject;
 	static FreeModel freeModel1;
 	static FreeModel freeModel2;
@@ -84,11 +85,10 @@ public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 				.getProjectNature(FreeModellingProjectNature.class);
 		assertNotNull(FREE_MODELLING_NATURE);
 
-		editor = createProject("TestFMEProject", FREE_MODELLING_NATURE);
-		project = editor.getProject();
+		editor = createStandaloneProject("TestFMEProject", FREE_MODELLING_NATURE);
+		project = (FlexoProject<File>) editor.getProject();
 		System.out.println("Created project " + project.getProjectDirectory());
 		assertTrue(project.getProjectDirectory().exists());
-		assertTrue(project.getProjectDataResource().getIODelegate().exists());
 		assertTrue(project.hasNature(FREE_MODELLING_NATURE));
 		fmProject = FREE_MODELLING_NATURE.getFreeModellingProject(project);
 		assertNotNull(fmProject);
@@ -146,8 +146,8 @@ public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 	public void testReloadProject() throws FileNotFoundException, ResourceLoadingCancelledException, FlexoException {
 
 		instanciateTestServiceManager(DiagramTechnologyAdapter.class);
-		editor = reloadProject(project.getDirectory());
-		project = editor.getProject();
+		editor = loadProject(project.getProjectDirectory());
+		project = (FlexoProject<File>) editor.getProject();
 		assertNotNull(editor);
 		assertNotNull(project);
 
@@ -162,7 +162,7 @@ public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 		assertNotNull(fmProject.getFreeModellingViewPoint());
 		assertNotNull(fmProject.getFreeModellingView());
 
-		System.out.println("Project dir = " + project.getDirectory());
+		System.out.println("Project dir = " + project.getProjectDirectory());
 
 		assertEquals(1, fmProject.getFreeMetaModels().size());
 		assertEquals(2, fmProject.getFreeModels().size());

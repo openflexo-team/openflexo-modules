@@ -78,7 +78,7 @@ public class FreeModel extends DefaultFlexoObject implements PropertyChangeListe
 	 * @return
 	 */
 	public static String getDiagramURI(FlexoProject project, String modelName) {
-		return project.getURI() + "/Diagram/" + modelName;
+		return project.getProjectURI() + "/Diagram/" + modelName;
 	}
 
 	public FreeModel(FMLRTVirtualModelInstance virtualModelInstance, FreeModellingProject fmProject) throws InvalidArgumentException {
@@ -117,7 +117,7 @@ public class FreeModel extends DefaultFlexoObject implements PropertyChangeListe
 	}
 
 	public String getURI() {
-		return fmProject.getProject().getURI() + "/" + getName();
+		return fmProject.getProject().getProjectURI() + "/" + getName();
 	}
 
 	public FreeMetaModel getMetaModel() {

@@ -144,7 +144,7 @@ public class EAProjectNature implements ProjectNature<EAProjectNature, EAProject
 		return returned;
 	}
 
-	public FMLRTVirtualModelInstance getBPMNVirtualModelInstance(final FlexoProject project) {
+	public FMLRTVirtualModelInstance getBPMNVirtualModelInstance(final FlexoProject<?> project) {
 		if (project != null && project.hasNature(this)) {
 			VirtualModel bpmnVM = getBPMNVirtualModel(project.getServiceManager());
 			if (bpmnVM == null) {

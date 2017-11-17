@@ -55,7 +55,6 @@ import org.openflexo.foundation.fml.action.CreateTopLevelVirtualModel;
 import org.openflexo.foundation.fml.rm.VirtualModelResource;
 import org.openflexo.foundation.fml.rt.action.CreateBasicVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.rm.FMLRTVirtualModelInstanceResource;
-import org.openflexo.foundation.resource.InvalidFileNameException;
 import org.openflexo.foundation.resource.SaveResourceException;
 import org.openflexo.localization.LocalizedDelegate;
 import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
@@ -66,28 +65,28 @@ import org.openflexo.technologyadapter.diagram.rm.DiagramSpecificationRepository
  * 
  * @author vincent
  */
-public class GivesFMENature extends FlexoAction<GivesFMENature, FlexoProject, FlexoObject> {
+public class GivesFMENature extends FlexoAction<GivesFMENature, FlexoProject<?>, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(GivesFMENature.class.getPackage().getName());
 
-	public static FlexoActionFactory<GivesFMENature, FlexoProject, FlexoObject> actionType = new FlexoActionFactory<GivesFMENature, FlexoProject, FlexoObject>(
+	public static FlexoActionFactory<GivesFMENature, FlexoProject<?>, FlexoObject> actionType = new FlexoActionFactory<GivesFMENature, FlexoProject<?>, FlexoObject>(
 			"gives_fme_nature") {
 
 		/**
 		 * Factory method
 		 */
 		@Override
-		public GivesFMENature makeNewAction(FlexoProject focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+		public GivesFMENature makeNewAction(FlexoProject<?> focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 			return new GivesFMENature(focusedObject, globalSelection, editor);
 		}
 
 		@Override
-		public boolean isVisibleForSelection(FlexoProject object, Vector<FlexoObject> globalSelection) {
+		public boolean isVisibleForSelection(FlexoProject<?> object, Vector<FlexoObject> globalSelection) {
 			return false;
 		}
 
 		@Override
-		public boolean isEnabledForSelection(FlexoProject object, Vector<FlexoObject> globalSelection) {
+		public boolean isEnabledForSelection(FlexoProject<?> object, Vector<FlexoObject> globalSelection) {
 			return object != null;
 		}
 
@@ -97,7 +96,7 @@ public class GivesFMENature extends FlexoAction<GivesFMENature, FlexoProject, Fl
 		FlexoObjectImpl.addActionForClass(GivesFMENature.actionType, FlexoProject.class);
 	}
 
-	GivesFMENature(FlexoProject focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+	GivesFMENature(FlexoProject<?> focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 
@@ -111,7 +110,7 @@ public class GivesFMENature extends FlexoAction<GivesFMENature, FlexoProject, Fl
 	}
 
 	@Override
-	protected void doAction(Object context) throws InvalidFileNameException, SaveResourceException, InvalidArgumentException {
+	protected void doAction(Object context) throws SaveResourceException, InvalidArgumentException {
 		if (getFocusedObject().getVirtualModelRepository() == null) {
 			logger.warning("Could not determine VirtualModelRepository. Aborting operation.");
 			throw new InvalidArgumentException("Could not determine VirtualModelRepository. Aborting operation.");
@@ -121,7 +120,7 @@ public class GivesFMENature extends FlexoAction<GivesFMENature, FlexoProject, Fl
 				.getProjectNature(FreeModellingProjectNature.class);
 
 		VirtualModelResource freeModellingViewPointResource = getFocusedObject().getVirtualModelRepository()
-				.getResource(getFocusedObject().getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
+				.getResource(getFocusedObject().getProjectURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
 
 		// Since CreateViewpoint/View are LongRunning actions, we call them as embedded actions, therefore we are ensure that Viewpoint and
 		// View are created after doAction() call.
@@ -129,14 +128,15 @@ public class GivesFMENature extends FlexoAction<GivesFMENature, FlexoProject, Fl
 			CreateTopLevelVirtualModel action = CreateTopLevelVirtualModel.actionType
 					.makeNewEmbeddedAction(getFocusedObject().getVirtualModelRepository().getRootFolder(), null, this);
 			action.setNewVirtualModelName(FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_NAME);
-			action.setNewVirtualModelURI(getFocusedObject().getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
+			action.setNewVirtualModelURI(
+					getFocusedObject().getProjectURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
 			action.setNewVirtualModelDescription("This is the generic ViewPoint storing all FreeModelling meta-models");
 			action.doAction();
 			freeModellingViewPointResource = (VirtualModelResource) action.getNewVirtualModel().getResource();
 		}
 
 		FMLRTVirtualModelInstanceResource freeModellingViewResource = getFocusedObject().getVirtualModelInstanceRepository()
-				.getResource(getFocusedObject().getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEW_RELATIVE_URI);
+				.getResource(getFocusedObject().getProjectURI() + FreeModellingProjectNature.FREE_MODELLING_VIEW_RELATIVE_URI);
 
 		if (freeModellingViewResource == null) {
 			CreateBasicVirtualModelInstance action = CreateBasicVirtualModelInstance.actionType

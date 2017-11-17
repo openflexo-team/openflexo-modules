@@ -52,8 +52,8 @@ import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.rm.VirtualModelResource;
-import org.openflexo.foundation.fml.rt.VirtualModelInstance;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
+import org.openflexo.foundation.fml.rt.VirtualModelInstance;
 import org.openflexo.foundation.fml.rt.rm.FMLRTVirtualModelInstanceResource;
 import org.openflexo.foundation.fml.rt.rm.FMLRTVirtualModelInstanceResourceFactory;
 import org.openflexo.foundation.nature.ProjectWrapper;
@@ -91,29 +91,29 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 	private final FreeModellingProjectNature projectNature;
 
 	// Do never instanciate this class but ask it to FreeModellingProjectNature
-	protected FreeModellingProject(FlexoProject project, FreeModellingProjectNature projectNature)
+	protected FreeModellingProject(FlexoProject<?> project, FreeModellingProjectNature projectNature)
 			throws FileNotFoundException, ResourceLoadingCancelledException, InvalidArgumentException, FlexoException {
 		this.project = project;
 		this.projectNature = projectNature;
 
 		VirtualModelResource freeModellingViewPointResource = project.getVirtualModelRepository()
-				.getResource(project.getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
+				.getResource(project.getProjectURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
 		// Attempt to retrieve viewpoints for old projects
 		if (freeModellingViewPointResource == null) {
 			freeModellingViewPointResource = project.getVirtualModelRepository()
-					.getResource(project.getURI() + "/" + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_NAME);
+					.getResource(project.getProjectURI() + "/" + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_NAME);
 		}
 
 		FMLRTVirtualModelInstanceResource freeModellingViewResource = project.getVirtualModelInstanceRepository()
-				.getResource(project.getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEW_RELATIVE_URI);
+				.getResource(project.getProjectURI() + FreeModellingProjectNature.FREE_MODELLING_VIEW_RELATIVE_URI);
 
 		if (freeModellingViewPointResource == null) {
 			throw new InvalidArgumentException("Could not retrieve FreeModellingViewPoint resource (searched uri="
-					+ (project.getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI) + ")");
+					+ (project.getProjectURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI) + ")");
 		}
 		if (freeModellingViewResource == null) {
 			throw new InvalidArgumentException("Could not retrieve FreeModellingView resource (searched uri="
-					+ (project.getURI() + FreeModellingProjectNature.FREE_MODELLING_VIEW_RELATIVE_URI) + ")");
+					+ (project.getProjectURI() + FreeModellingProjectNature.FREE_MODELLING_VIEW_RELATIVE_URI) + ")");
 		}
 
 		try {

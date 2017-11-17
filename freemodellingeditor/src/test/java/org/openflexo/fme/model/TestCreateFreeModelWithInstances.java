@@ -44,6 +44,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.util.List;
 
 import org.junit.Test;
@@ -70,7 +71,7 @@ import org.openflexo.test.TestOrder;
 public class TestCreateFreeModelWithInstances extends OpenflexoProjectAtRunTimeTestCase {
 
 	static FlexoEditor editor;
-	static FlexoProject project;
+	static FlexoProject<File> project;
 	static FreeModellingProject fmProject;
 	static FreeModel freeModel1;
 	static FreeModel freeModel2;
@@ -86,11 +87,10 @@ public class TestCreateFreeModelWithInstances extends OpenflexoProjectAtRunTimeT
 				.getProjectNature(FreeModellingProjectNature.class);
 		assertNotNull(FREE_MODELLING_NATURE);
 
-		editor = createProject("TestFMEProject", FREE_MODELLING_NATURE);
-		project = editor.getProject();
+		editor = createStandaloneProject("TestFMEProject", FREE_MODELLING_NATURE);
+		project = (FlexoProject<File>) editor.getProject();
 		System.out.println("Created project " + project.getProjectDirectory());
 		assertTrue(project.getProjectDirectory().exists());
-		assertTrue(project.getProjectDataResource().getIODelegate().exists());
 		assertTrue(project.hasNature(FREE_MODELLING_NATURE));
 		fmProject = FREE_MODELLING_NATURE.getFreeModellingProject(project);
 		assertNotNull(fmProject);

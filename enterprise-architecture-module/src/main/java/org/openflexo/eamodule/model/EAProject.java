@@ -64,10 +64,10 @@ public interface EAProject extends FlexoObject, ProjectWrapper<EAProjectNature>,
 
 	@Override
 	@Getter(value = PROJECT_KEY, ignoreType = true)
-	public FlexoProject getProject();
+	public FlexoProject<?> getProject();
 
 	@Setter(PROJECT_KEY)
-	public void setProject(FlexoProject project);
+	public void setProject(FlexoProject<?> project);
 
 	@Override
 	@Getter(value = PROJECT_NATURE_KEY, ignoreType = true)
@@ -78,7 +78,7 @@ public interface EAProject extends FlexoObject, ProjectWrapper<EAProjectNature>,
 
 	public FMLRTVirtualModelInstance getBPMNVirtualModelInstance();
 
-	public void init(FlexoProject project, EAProjectNature nature);
+	public void init(FlexoProject<?> project, EAProjectNature nature);
 
 	public String getName();
 

@@ -41,6 +41,8 @@ package org.openflexo.fme.model;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+
 import org.junit.Test;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoProject;
@@ -66,12 +68,11 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 				.getProjectNature(FreeModellingProjectNature.class);
 		assertNotNull(FREE_MODELLING_NATURE);
 
-		FlexoEditor editor = createProject("TestFMEProject", FREE_MODELLING_NATURE);
+		FlexoEditor editor = createStandaloneProject("TestFMEProject", FREE_MODELLING_NATURE);
 
-		FlexoProject project = editor.getProject();
+		FlexoProject<File> project = (FlexoProject<File>) editor.getProject();
 		System.out.println("Created project " + project.getProjectDirectory());
 		assertTrue(project.getProjectDirectory().exists());
-		assertTrue(project.getProjectDataResource().getIODelegate().exists());
 		assertTrue(project.hasNature(FREE_MODELLING_NATURE));
 	}
 
