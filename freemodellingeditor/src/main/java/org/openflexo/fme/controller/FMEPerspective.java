@@ -83,7 +83,7 @@ public class FMEPerspective extends FlexoPerspective {
 		setTopLeftView(freeModellingProjectBrowser);
 
 		/*MultiSplitLayoutFactory factory = new MultiSplitLayoutFactory.DefaultMultiSplitLayoutFactory();
-
+		
 		Leaf top = factory.makeLeaf("top");
 		Leaf bottom = factory.makeLeaf("bottom");
 		Split root = factory.makeRowSplit(top, factory.makeDivider(), bottom);
@@ -165,7 +165,8 @@ public class FMEPerspective extends FlexoPerspective {
 		// logger.info("ViewPointPerspective: object was double-clicked: " + object);
 		if (object instanceof FreeModel) {
 			controller.selectAndFocusObject((FreeModel) object);
-		} else {
+		}
+		else {
 			super.objectWasDoubleClicked(object, controller);
 		}
 	}
@@ -182,11 +183,11 @@ public class FMEPerspective extends FlexoPerspective {
 		return super.hasModuleViewForObject(object);
 	}
 
-	public void closeFreeModelBrowsers(){
+	public void closeFreeModelBrowsers() {
 		setMiddleLeftView(null);
 		setBottomLeftView(null);
 	}
-	
+
 	@Override
 	public ModuleView<?> createModuleViewForObject(FlexoObject object, boolean editable) {
 		if (object instanceof FreeModel) {

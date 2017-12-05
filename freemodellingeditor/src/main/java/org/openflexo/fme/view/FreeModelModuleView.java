@@ -63,7 +63,7 @@ public class FreeModelModuleView extends JPanel implements ModuleView<FreeModel>
 	private static final Logger logger = Logger.getLogger(FreeModelModuleView.class.getPackage().getName());
 
 	private final FreeModelDiagramEditor editor;
-	private final FlexoPerspective perspective;
+	private final FMEPerspective perspective;
 
 	private final JPanel bottomPanel;
 
@@ -121,6 +121,12 @@ public class FreeModelModuleView extends JPanel implements ModuleView<FreeModel>
 		getEditor().getFlexoController().getEditingContext().unregisterPasteHandler(getEditor().getPasteHandler());
 
 		bottomPanel.remove(getDiagramTechnologyAdapterController(getEditor().getFlexoController()).getScaleSelector().getComponent());
+
+		perspective.closeFreeModelBrowsers();
+		perspective.setTopRightView(null);
+		perspective.setBottomRightView(null);
+		getEditor().getFlexoController().getControllerModel().setRightViewVisible(false);
+
 	}
 
 	@Override
@@ -132,6 +138,11 @@ public class FreeModelModuleView extends JPanel implements ModuleView<FreeModel>
 
 		bottomPanel.add(getDiagramTechnologyAdapterController(getEditor().getFlexoController()).getScaleSelector().getComponent(),
 				BorderLayout.EAST);
+
+		perspective.setTopRightView(getEditor().getPaletteView());
+		perspective.setBottomRightView(
+				getDiagramTechnologyAdapterController(getEditor().getFlexoController()).getInspectors().getPanelGroup());
+		getEditor().getFlexoController().getControllerModel().setRightViewVisible(true);
 
 		getPerspective().focusOnObject(getRepresentedObject());
 	}
