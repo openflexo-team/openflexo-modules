@@ -62,7 +62,7 @@ public class OMModule extends FlexoModule<OMModule> {
 	private static final Logger logger = Logger.getLogger(OMModule.class.getPackage().getName());
 
 	public static final String OM_MODULE_SHORT_NAME = "OM";
-	public static final String OM_MODULE_NAME = "openflexo_modeller_module_name";
+	public static final String OM_MODULE_NAME = "Openflexo Modeller"; // Not localized
 
 	private JDianaInteractiveEditor<?> screenshotController;
 	private JDrawingView<?> screenshot = null;

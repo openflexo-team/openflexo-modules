@@ -64,7 +64,7 @@ public class FMEModule extends FlexoModule<FMEModule> {
 	private static final Logger logger = Logger.getLogger(FMEModule.class.getPackage().getName());
 
 	public static final String FME_MODULE_SHORT_NAME = "FME";
-	public static final String FME_MODULE_NAME = "free_modelling_editor";
+	public static final String FME_MODULE_NAME = "Free Modelling Editor";
 
 	private JDianaInteractiveEditor<?> screenshotController;
 	private JDrawingView<?> screenshot = null;

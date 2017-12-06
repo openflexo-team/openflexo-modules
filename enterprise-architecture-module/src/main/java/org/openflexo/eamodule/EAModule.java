@@ -57,7 +57,7 @@ public class EAModule extends FlexoModule<EAModule> {
 	private static final Logger logger = Logger.getLogger(EAModule.class.getPackage().getName());
 
 	public static final String EAM_MODULE_SHORT_NAME = "EAM";
-	public static final String EAM_MODULE_NAME = "entreprise_architecture_module";
+	public static final String EAM_MODULE_NAME = "Entreprise Architecture Editor";
 
 	public EAModule(ApplicationContext applicationContext) throws Exception {
 		super(applicationContext);
