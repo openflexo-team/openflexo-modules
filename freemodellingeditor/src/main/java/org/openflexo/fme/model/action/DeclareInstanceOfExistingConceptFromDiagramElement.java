@@ -51,7 +51,6 @@ import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.InvalidArgumentException;
-import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.PrimitiveRole;
@@ -69,7 +68,7 @@ import org.openflexo.technologyadapter.diagram.model.DiagramElement;
  * 
  */
 public class DeclareInstanceOfExistingConceptFromDiagramElement
-		extends FlexoAction<DeclareInstanceOfExistingConceptFromDiagramElement, DiagramElement<?>, FlexoObject> {
+		extends FMEAction<DeclareInstanceOfExistingConceptFromDiagramElement, DiagramElement<?>, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(DeclareInstanceOfExistingConceptFromDiagramElement.class.getPackage().getName());
 
@@ -78,7 +77,8 @@ public class DeclareInstanceOfExistingConceptFromDiagramElement
 	}
 
 	public static FlexoActionFactory<DeclareInstanceOfExistingConceptFromDiagramElement, DiagramElement<?>, FlexoObject> actionType = new FlexoActionFactory<DeclareInstanceOfExistingConceptFromDiagramElement, DiagramElement<?>, FlexoObject>(
-			"declare_instance_of_existing_concept_from_diagram_element", FlexoActionFactory.defaultGroup, FlexoActionFactory.ADD_ACTION_TYPE) {
+			"declare_instance_of_existing_concept_from_diagram_element", FlexoActionFactory.defaultGroup,
+			FlexoActionFactory.ADD_ACTION_TYPE) {
 
 		/**
 		 * Factory method

@@ -49,7 +49,6 @@ import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.InvalidArgumentException;
-import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.action.CreateTopLevelVirtualModel;
 import org.openflexo.foundation.fml.rm.VirtualModelResource;
@@ -65,7 +64,7 @@ import org.openflexo.technologyadapter.diagram.rm.DiagramSpecificationRepository
  * 
  * @author vincent
  */
-public class GivesFMENature extends FlexoAction<GivesFMENature, FlexoProject<?>, FlexoObject> {
+public class GivesFMENature extends FMEAction<GivesFMENature, FlexoProject<?>, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(GivesFMENature.class.getPackage().getName());
 

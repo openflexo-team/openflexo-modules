@@ -51,7 +51,6 @@ import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.InvalidArgumentException;
-import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.PrimitiveRole;
@@ -68,7 +67,7 @@ import org.openflexo.technologyadapter.diagram.model.DiagramShape;
  * @author vincent
  * 
  */
-public class CreateNewConceptFromDiagramElement extends FlexoAction<CreateNewConceptFromDiagramElement, DiagramElement<?>, FlexoObject> {
+public class CreateNewConceptFromDiagramElement extends FMEAction<CreateNewConceptFromDiagramElement, DiagramElement<?>, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(CreateNewConceptFromDiagramElement.class.getPackage().getName());
 

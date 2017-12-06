@@ -53,7 +53,6 @@ import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.InvalidArgumentException;
-import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
@@ -69,7 +68,7 @@ import org.openflexo.toolbox.StringUtils;
  * @author sylvain
  * 
  */
-public class CreateNewConceptFromNoneConcept extends FlexoAction<CreateNewConceptFromNoneConcept, FlexoConceptInstance, FlexoObject> {
+public class CreateNewConceptFromNoneConcept extends FMEAction<CreateNewConceptFromNoneConcept, FlexoConceptInstance, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(CreateNewConceptFromNoneConcept.class.getPackage().getName());
 

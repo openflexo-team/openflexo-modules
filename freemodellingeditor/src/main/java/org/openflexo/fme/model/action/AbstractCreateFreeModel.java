@@ -48,7 +48,6 @@ import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.InvalidArgumentException;
-import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.action.CreateContainedVirtualModel;
@@ -78,7 +77,7 @@ import org.openflexo.toolbox.StringUtils;
  * @author sylvain
  * 
  */
-public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> extends FlexoAction<A, FreeModellingProject, FlexoObject> {
+public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> extends FMEAction<A, FreeModellingProject, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(AbstractCreateFreeModel.class.getPackage().getName());
 

@@ -46,7 +46,6 @@ import org.openflexo.fme.model.FreeModel;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.InvalidArgumentException;
-import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.resource.RepositoryFolder;
@@ -60,8 +59,7 @@ import org.openflexo.technologyadapter.diagram.model.action.CreateDiagram;
 import org.openflexo.technologyadapter.diagram.rm.DiagramResource;
 import org.openflexo.toolbox.StringUtils;
 
-public class AbstractCreateFreeModelDiagram<A extends AbstractCreateFreeModelDiagram<A>>
-		extends FlexoAction<A, FreeMetaModel, FlexoObject> {
+public class AbstractCreateFreeModelDiagram<A extends AbstractCreateFreeModelDiagram<A>> extends FMEAction<A, FreeMetaModel, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(AbstractCreateFreeModelDiagram.class.getPackage().getName());
 

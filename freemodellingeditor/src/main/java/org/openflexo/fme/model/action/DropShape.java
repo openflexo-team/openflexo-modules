@@ -53,7 +53,6 @@ import org.openflexo.fme.model.FreeModel;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
-import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.FlexoBehaviourParameter;
 import org.openflexo.foundation.fml.FlexoConcept;
@@ -72,7 +71,7 @@ import org.openflexo.technologyadapter.diagram.model.action.DropSchemeAction;
  * @author sylvain
  * 
  */
-public class DropShape extends FlexoAction<DropShape, DiagramContainerElement<?>, FlexoObject> {
+public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(DropShape.class.getPackage().getName());
 

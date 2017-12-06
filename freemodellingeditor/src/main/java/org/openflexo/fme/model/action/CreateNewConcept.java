@@ -48,7 +48,6 @@ import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
-import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.localization.LocalizedDelegate;
@@ -60,7 +59,7 @@ import org.openflexo.toolbox.StringUtils;
  * @author sylvain
  * 
  */
-public class CreateNewConcept extends FlexoAction<CreateNewConcept, FreeMetaModel, FlexoObject> {
+public class CreateNewConcept extends FMEAction<CreateNewConcept, FreeMetaModel, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(CreateNewConcept.class.getPackage().getName());
 

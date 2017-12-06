@@ -55,7 +55,6 @@ import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.InvalidArgumentException;
-import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.VirtualModel;
@@ -76,7 +75,7 @@ import org.openflexo.technologyadapter.diagram.model.DiagramShape;
  * @author sylvain
  * 
  */
-public class DeclareInstanceOfExistingConcept extends FlexoAction<DeclareInstanceOfExistingConcept, FlexoConceptInstance, FlexoObject> {
+public class DeclareInstanceOfExistingConcept extends FMEAction<DeclareInstanceOfExistingConcept, FlexoConceptInstance, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(DeclareInstanceOfExistingConcept.class.getPackage().getName());
 
@@ -133,7 +132,7 @@ public class DeclareInstanceOfExistingConcept extends FlexoAction<DeclareInstanc
 	}
 
 	public FreeModellingProject getFreeModellingProject() {
-		return getFreeModellingProjectNature().getFreeModellingProject((FlexoProject)getFocusedObject().getResourceCenter());
+		return getFreeModellingProjectNature().getFreeModellingProject((FlexoProject) getFocusedObject().getResourceCenter());
 	}
 
 	public FreeModel getFreeModel() throws InvalidArgumentException {
