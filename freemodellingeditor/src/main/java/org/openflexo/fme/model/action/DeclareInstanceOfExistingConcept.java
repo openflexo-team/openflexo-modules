@@ -132,7 +132,19 @@ public class DeclareInstanceOfExistingConcept extends FMEAction<DeclareInstanceO
 	}
 
 	public FreeModellingProject getFreeModellingProject() {
-		return getFreeModellingProjectNature().getFreeModellingProject((FlexoProject) getFocusedObject().getResourceCenter());
+		FlexoProject<?> project = null;
+		if (getFocusedObject().getResourceCenter() instanceof FlexoProject) {
+			project = (FlexoProject<?>) getFocusedObject().getResourceCenter();
+		}
+		else if (getFocusedObject().getResourceCenter().getDelegatingProjectResource() != null) {
+			project = getFocusedObject().getResourceCenter().getDelegatingProjectResource().getFlexoProject();
+		}
+		else {
+			logger.warning("Could not access to FlexoProject from " + getFocusedObject());
+			return null;
+		}
+
+		return getFreeModellingProjectNature().getFreeModellingProject(project);
 	}
 
 	public FreeModel getFreeModel() throws InvalidArgumentException {
