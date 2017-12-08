@@ -88,7 +88,7 @@ public abstract class FMEAction<A extends FlexoAction<A, T1, T2>, T1 extends Fle
 	}
 
 	@Override
-	public LocalizedDelegate getLocales() {
+	public final LocalizedDelegate getLocales() {
 		try {
 			return ((ApplicationContext) getServiceManager()).getModuleLoader().getModuleInstance(FMEModule.class).getLocales();
 		} catch (ModuleLoadingException e) {

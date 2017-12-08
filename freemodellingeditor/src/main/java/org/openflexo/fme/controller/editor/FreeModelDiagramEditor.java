@@ -50,7 +50,7 @@ import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
 import org.openflexo.fge.swing.control.SwingToolFactory;
 import org.openflexo.fge.swing.control.tools.JDianaPalette;
 import org.openflexo.fme.controller.FreeModelPasteHandler;
-import org.openflexo.fme.model.FreeModel;
+import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.action.FlexoUndoManager.FlexoActionCompoundEdit;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
@@ -80,7 +80,7 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 
 	private static final Logger logger = Logger.getLogger(FreeModelDiagramEditor.class.getPackage().getName());
 
-	private final FreeModel freeModel;
+	private final FMEFreeModelInstance freeModel;
 
 	private String conceptFilter;
 
@@ -89,7 +89,7 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 	private final DynamicPalette dynamicPalette;
 	private final JDianaPalette dynamicPaletteComponent;
 
-	public FreeModelDiagramEditor(FreeModel freeModel, boolean readOnly, FlexoController controller, SwingToolFactory swingToolFactory) {
+	public FreeModelDiagramEditor(FMEFreeModelInstance freeModel, boolean readOnly, FlexoController controller, SwingToolFactory swingToolFactory) {
 		super(freeModel.getVirtualModelInstance(), readOnly, controller, swingToolFactory);
 		this.freeModel = freeModel;
 		dynamicPalette = new DynamicPalette(this);
@@ -112,7 +112,7 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 		super.delete();
 	}
 
-	public FreeModel getFreeModel() {
+	public FMEFreeModelInstance getFreeModel() {
 		return freeModel;
 	}
 

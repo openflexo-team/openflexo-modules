@@ -44,7 +44,7 @@ import java.util.logging.Logger;
 import org.openflexo.ApplicationContext;
 import org.openflexo.components.wizard.FlexoWizard;
 import org.openflexo.components.wizard.WizardStep;
-import org.openflexo.fme.model.FreeMetaModel;
+import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.action.AbstractCreateFreeModelDiagram;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
@@ -112,7 +112,7 @@ public abstract class AbstractCreateFreeModelDiagramWizard<A extends AbstractCre
 			return action.getLocales().localizedForKey("describe_new_diagram");
 		}
 
-		public FreeMetaModel getFreeMetaModel() {
+		public FMEFreeModel getFreeMetaModel() {
 			return getAction().getFocusedObject();
 		}
 

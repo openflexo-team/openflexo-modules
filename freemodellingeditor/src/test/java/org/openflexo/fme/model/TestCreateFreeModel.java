@@ -41,6 +41,7 @@ package org.openflexo.fme.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -48,7 +49,8 @@ import java.io.FileNotFoundException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.openflexo.fme.model.action.CreateFreeModel;
+import org.openflexo.fme.model.action.CreateFMEDiagramFreeModel;
+import org.openflexo.fme.model.action.InstantiateFMEDiagramFreeModel;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.FlexoProject;
@@ -70,10 +72,10 @@ public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 
 	static FlexoEditor editor;
 	static FlexoProject<File> project;
-	static FreeModellingProject fmProject;
-	static FreeModel freeModel1;
-	static FreeModel freeModel2;
-	static FreeMetaModel freeMetaModel;
+	static FreeModellingProjectNature nature;
+	static FMEDiagramFreeModelInstance freeModelInstance1;
+	static FMEDiagramFreeModelInstance freeModelInstance2;
+	static FMEDiagramFreeModel freeModel;
 
 	@Test
 	@TestOrder(1)
@@ -81,57 +83,68 @@ public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 
 		instanciateTestServiceManager(DiagramTechnologyAdapter.class);
 
-		FreeModellingProjectNature FREE_MODELLING_NATURE = serviceManager.getProjectNatureService()
-				.getProjectNature(FreeModellingProjectNature.class);
-		assertNotNull(FREE_MODELLING_NATURE);
-
-		editor = createStandaloneProject("TestFMEProject", FREE_MODELLING_NATURE);
+		editor = createStandaloneProject("TestFMEProject", FreeModellingProjectNature.class);
 		project = (FlexoProject<File>) editor.getProject();
 		System.out.println("Created project " + project.getProjectDirectory());
 		assertTrue(project.getProjectDirectory().exists());
-		assertTrue(project.hasNature(FREE_MODELLING_NATURE));
-		fmProject = FREE_MODELLING_NATURE.getFreeModellingProject(project);
-		assertNotNull(fmProject);
+		assertTrue(project.hasNature(FreeModellingProjectNature.class));
+		assertNotNull(nature = project.getNature(FreeModellingProjectNature.class));
 	}
 
 	@Test
 	@TestOrder(2)
 	public void testCreateFreeModel() throws SaveResourceException {
-		CreateFreeModel action = CreateFreeModel.actionType.makeNewAction(fmProject, null, editor);
-		action.setFreeModelName("FreeModel1");
-		assertTrue(action.isValid());
+
+		CreateFMEDiagramFreeModel action = CreateFMEDiagramFreeModel.actionType.makeNewAction(nature, null, editor);
+		action.setFreeModelName("FreeModel");
+		action.setFreeModelDescription("A description");
 		action.doAction();
 		assertTrue(action.hasActionExecutionSucceeded());
-		freeMetaModel = action.getFreeMetaModel();
-		assertNotNull(freeMetaModel);
-		freeModel1 = action.getFreeModel();
-		assertNotNull(freeModel1);
-
-		freeModel1.getVirtualModelInstance().getResource().save(null);
+		freeModel = action.getNewFreeModel();
+		assertNotNull(freeModel);
+		freeModel.getAccessedVirtualModelResource().save(null);
 	}
 
 	@Test
 	@TestOrder(3)
 	public void testAvoidDuplicatedFreeModel() {
-		CreateFreeModel action = CreateFreeModel.actionType.makeNewAction(fmProject, null, editor);
-		action.setFreeModelName("FreeModel1");
+		CreateFMEDiagramFreeModel action = CreateFMEDiagramFreeModel.actionType.makeNewAction(nature, null, editor);
+		action.setFreeModelName("FreeModel");
 		assertFalse(action.isValid());
 	}
 
 	@Test
 	@TestOrder(4)
-	public void testCreateFreeModelWithSameMetaModel() throws SaveResourceException {
-		CreateFreeModel action = CreateFreeModel.actionType.makeNewAction(fmProject, null, editor);
-		action.setFreeModelName("FreeModel2");
-		action.setFreeMetaModel(freeMetaModel);
-		action.setCreateNewMetaModel(false);
-		assertTrue(action.isValid());
-		action.doAction();
-		assertTrue(action.hasActionExecutionSucceeded());
-		freeModel2 = action.getFreeModel();
-		assertNotNull(freeModel2);
+	public void testInstantiateFreeModel1() throws SaveResourceException {
 
-		freeModel2.getVirtualModelInstance().getResource().save(null);
+		InstantiateFMEDiagramFreeModel action = InstantiateFMEDiagramFreeModel.actionType.makeNewAction(freeModel, null, editor);
+		action.setFreeModelInstanceName("FreeModelInstance1");
+		action.setFreeModelInstanceDescription("A description");
+		action.doAction();
+
+		freeModelInstance1 = action.getNewFreeModelInstance();
+		assertNotNull(freeModelInstance1);
+		assertSame(freeModel.getFreeModelInstances().get(0), freeModelInstance1);
+
+		freeModelInstance1.getAccessedVirtualModelInstance().getResource().save(null);
+	}
+
+	@Test
+	@TestOrder(5)
+	public void testInstantiateFreeModel2() throws SaveResourceException {
+		InstantiateFMEDiagramFreeModel action = InstantiateFMEDiagramFreeModel.actionType.makeNewAction(freeModel, null, editor);
+		action.setFreeModelInstanceName("FreeModelInstance2");
+		action.setFreeModelInstanceDescription("A description");
+		action.doAction();
+
+		freeModelInstance2 = action.getNewFreeModelInstance();
+		assertNotNull(freeModelInstance2);
+		assertSame(freeModel.getFreeModelInstances().get(1), freeModelInstance2);
+
+		freeModelInstance2.getAccessedVirtualModelInstance().getResource().save(null);
+
+		project.save();
+		project.saveModifiedResources(null);
 	}
 
 	/**
@@ -150,33 +163,28 @@ public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 		project = (FlexoProject<File>) editor.getProject();
 		assertNotNull(editor);
 		assertNotNull(project);
+		assertTrue(project.hasNature(FreeModellingProjectNature.class));
 
-		FreeModellingProjectNature FREE_MODELLING_NATURE = serviceManager.getProjectNatureService()
-				.getProjectNature(FreeModellingProjectNature.class);
-		assertNotNull(FREE_MODELLING_NATURE);
+		nature = project.getNature(FreeModellingProjectNature.class);
+		assertNotNull(nature);
 
-		assertTrue(project.hasNature(FREE_MODELLING_NATURE));
-		fmProject = FREE_MODELLING_NATURE.getFreeModellingProject(project);
-		assertNotNull(fmProject);
-
-		assertNotNull(fmProject.getFreeModellingViewPoint());
-		assertNotNull(fmProject.getFreeModellingView());
+		assertNotNull(nature.getConceptualModel());
+		assertNotNull(nature.getSampleData());
 
 		System.out.println("Project dir = " + project.getProjectDirectory());
 
-		assertEquals(1, fmProject.getFreeMetaModels().size());
-		assertEquals(2, fmProject.getFreeModels().size());
+		assertEquals(1, nature.getFreeModels().size());
+		freeModel = (FMEDiagramFreeModel) nature.getFreeModel("FreeModel");
+		assertSame(nature.getFreeModels().get(0), freeModel);
 
-		freeMetaModel = fmProject.getFreeMetaModel("FreeModel1");
-		assertNotNull(freeMetaModel);
+		assertEquals(2, freeModel.getFreeModelInstances().size());
 
-		freeModel1 = fmProject.getFreeModel("FreeModel1");
-		assertNotNull(freeModel1);
-		assertEquals(freeMetaModel, freeModel1.getMetaModel());
-
-		freeModel2 = fmProject.getFreeModel("FreeModel2");
-		assertNotNull(freeModel1);
-		assertEquals(freeMetaModel, freeModel2.getMetaModel());
+		freeModelInstance1 = (FMEDiagramFreeModelInstance) freeModel.getFreeModelInstance("FreeModelInstance1");
+		assertNotNull(freeModelInstance1);
+		assertSame(freeModel.getFreeModelInstances().get(0), freeModelInstance1);
+		freeModelInstance2 = (FMEDiagramFreeModelInstance) freeModel.getFreeModelInstance("FreeModelInstance2");
+		assertNotNull(freeModelInstance2);
+		assertSame(freeModel.getFreeModelInstances().get(1), freeModelInstance2);
 
 	}
 }

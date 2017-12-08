@@ -36,35 +36,45 @@
  * 
  */
 
-package org.openflexo.fme.widget;
+package org.openflexo.fme.model;
 
 import java.util.logging.Logger;
 
-import org.openflexo.fme.controller.FMEController;
-import org.openflexo.fme.model.FMEFreeModelInstance;
-import org.openflexo.foundation.FlexoProject;
-import org.openflexo.rm.Resource;
-import org.openflexo.rm.ResourceLocator;
-import org.openflexo.view.FIBBrowserView;
+import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
+import org.openflexo.logging.FlexoLogger;
+import org.openflexo.model.annotations.ImplementationClass;
+import org.openflexo.model.annotations.ModelEntity;
+import org.openflexo.model.annotations.XMLElement;
+import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelInstanceNature;
+import org.openflexo.technologyadapter.diagram.model.Diagram;
 
 /**
- * Browser allowing to browse all resources of a {@link FlexoProject}<br>
+ * Represents a {@link FMEDiagramFreeModelInstance} in the FreeModellingEditor<br>
  * 
- * @author sguerin
+ * The base of a {@link FMEDiagramFreeModelInstance} is a {@link FMLRTVirtualModelInstance} with the specific
+ * {@link FMLControlledDiagramVirtualModelInstanceNature}<br>
+ * From a technical point of view, a {@link FMEDiagramFreeModelInstance} is just a wrapper above a {@link FMLRTVirtualModelInstance} located
+ * in project's freeModellingView
+ * 
+ * @author sylvain
  * 
  */
-@SuppressWarnings("serial")
-public class FIBRepresentedConceptBrowser extends FIBBrowserView<FMEFreeModelInstance> {
-	static final Logger logger = Logger.getLogger(FIBRepresentedConceptBrowser.class.getPackage().getName());
+@ModelEntity
+@XMLElement
+@ImplementationClass(FMEDiagramFreeModelInstance.FMEDiagramFreeModelInstanceImpl.class)
+public interface FMEDiagramFreeModelInstance extends FMEFreeModelInstance {
 
-	public static final Resource FIB_FILE = ResourceLocator.locateResource("Fib/Widget/FIBRepresentedConceptBrowser.fib");
+	public static final String DEFAULT_DIAGRAM_FOLDER = "Diagram";
 
-	public FIBRepresentedConceptBrowser(FMEFreeModelInstance freeModel, FMEController controller) {
-		super(freeModel, controller, FIB_FILE, controller.getModuleLocales());
-		// System.out.println("Showing browser with " + project);
-	}
+	public Diagram getDiagram();
 
-	public void setFreeModel(FMEFreeModelInstance freeModel) {
-		setDataObject(freeModel);
+	public abstract class FMEDiagramFreeModelInstanceImpl extends FMEFreeModelInstanceImpl implements FMEDiagramFreeModelInstance {
+
+		private static final Logger logger = FlexoLogger.getLogger(FMEDiagramFreeModelInstance.class.getPackage().getName());
+
+		@Override
+		public Diagram getDiagram() {
+			return FMLControlledDiagramVirtualModelInstanceNature.getDiagram(getAccessedVirtualModelInstance());
+		}
 	}
 }

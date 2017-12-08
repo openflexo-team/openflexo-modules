@@ -36,50 +36,38 @@
  * 
  */
 
-package org.openflexo.fme.model.action;
+package org.openflexo.fme.model;
 
-import java.util.Vector;
 import java.util.logging.Logger;
 
-import org.openflexo.fme.model.FreeMetaModel;
+import org.openflexo.fme.model.action.GivesFMENature;
 import org.openflexo.foundation.FlexoEditor;
-import org.openflexo.foundation.FlexoObject;
-import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
-import org.openflexo.foundation.action.FlexoActionFactory;
+import org.openflexo.foundation.FlexoProject;
+import org.openflexo.foundation.nature.DefaultProjectNatureFactoryImpl;
+import org.openflexo.logging.FlexoLogger;
 
-public class CreateFreeModelDiagram extends AbstractCreateFreeModelDiagram<CreateFreeModelDiagram> {
+/**
+ * Factory for {@link FreeModellingProjectNature}
+ * 
+ * @author sylvain
+ * 
+ */
+public class FreeModellingProjectNatureFactory extends DefaultProjectNatureFactoryImpl<FreeModellingProjectNature> {
 
-	private static final Logger logger = Logger.getLogger(CreateFreeModelDiagram.class.getPackage().getName());
+	static final Logger logger = FlexoLogger.getLogger(FreeModellingProjectNatureFactory.class.getPackage().getName());
 
-	public static FlexoActionFactory<CreateFreeModelDiagram, FreeMetaModel, FlexoObject> actionType = new FlexoActionFactory<CreateFreeModelDiagram, FreeMetaModel, FlexoObject>(
-			"create_diagram", FlexoActionFactory.newMenu, FlexoActionFactory.defaultGroup, FlexoActionFactory.ADD_ACTION_TYPE) {
-
-		/**
-		 * Factory method
-		 */
-		@Override
-		public CreateFreeModelDiagram makeNewAction(FreeMetaModel focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
-			return new CreateFreeModelDiagram(focusedObject, globalSelection, editor);
-		}
-
-		@Override
-		public boolean isVisibleForSelection(FreeMetaModel object, Vector<FlexoObject> globalSelection) {
-			return true;
-		}
-
-		@Override
-		public boolean isEnabledForSelection(FreeMetaModel object, Vector<FlexoObject> globalSelection) {
-			return true;
-		}
-
-	};
-
-	static {
-		FlexoObjectImpl.addActionForClass(CreateFreeModelDiagram.actionType, FreeMetaModel.class);
+	public FreeModellingProjectNatureFactory() {
+		super(FreeModellingProjectNature.class);
 	}
 
-	CreateFreeModelDiagram(FreeMetaModel focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
-		super(actionType, focusedObject, globalSelection, editor);
+	@Override
+	public FreeModellingProjectNature givesNature(FlexoProject<?> project, FlexoEditor editor) {
+		System.out.println("Tiens, faudrait donner la nature FME au projet " + project);
+
+		GivesFMENature givesFMENature = GivesFMENature.actionType.makeNewAction(project, null, editor);
+		givesFMENature.doAction();
+
+		return givesFMENature.getNewNature();
 	}
 
 }

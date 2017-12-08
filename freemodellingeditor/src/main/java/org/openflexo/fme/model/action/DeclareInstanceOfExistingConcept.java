@@ -41,12 +41,10 @@ package org.openflexo.fme.model.action;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import org.openflexo.ApplicationContext;
 import org.openflexo.fge.ShapeGraphicalRepresentation;
-import org.openflexo.fme.FreeModellingEditor;
 import org.openflexo.fme.controller.editor.DynamicPalette.GraphicalRepresentationSet;
-import org.openflexo.fme.model.FreeMetaModel;
-import org.openflexo.fme.model.FreeModel;
+import org.openflexo.fme.model.FMEFreeModel;
+import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.FlexoEditor;
@@ -60,7 +58,6 @@ import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
-import org.openflexo.localization.LocalizedDelegate;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelNature;
 import org.openflexo.technologyadapter.diagram.fml.FMLDiagramPaletteElementBinding;
@@ -118,15 +115,6 @@ public class DeclareInstanceOfExistingConcept extends FMEAction<DeclareInstanceO
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 
-	@Override
-	public LocalizedDelegate getLocales() {
-		if (getServiceManager() instanceof ApplicationContext) {
-			return ((ApplicationContext) getServiceManager()).getModuleLoader().getModule(FreeModellingEditor.class)
-					.getLoadedModuleInstance().getLocales();
-		}
-		return super.getLocales();
-	}
-
 	public FreeModellingProjectNature getFreeModellingProjectNature() {
 		return getServiceManager().getProjectNatureService().getProjectNature(FreeModellingProjectNature.class);
 	}
@@ -147,7 +135,7 @@ public class DeclareInstanceOfExistingConcept extends FMEAction<DeclareInstanceO
 		return getFreeModellingProjectNature().getFreeModellingProject(project);
 	}
 
-	public FreeModel getFreeModel() throws InvalidArgumentException {
+	public FMEFreeModelInstance getFreeModel() throws InvalidArgumentException {
 		return getFreeModellingProject().getFreeModel((FMLRTVirtualModelInstance) getFocusedObject().getVirtualModelInstance());
 	}
 
@@ -192,7 +180,7 @@ public class DeclareInstanceOfExistingConcept extends FMEAction<DeclareInstanceO
 	@Override
 	protected void doAction(Object context) throws FlexoException {
 
-		FreeModel freeModel = getFreeModel();
+		FMEFreeModelInstance freeModel = getFreeModel();
 		if (freeModel == null) {
 			throw new InvalidArgumentException("FlexoConceptInstance does not belong to any FreeModel");
 		}
@@ -200,13 +188,12 @@ public class DeclareInstanceOfExistingConcept extends FMEAction<DeclareInstanceO
 		FlexoConceptInstance flexoConceptInstance = getFocusedObject();
 
 		// Retrieve shape property of this FC
-		ShapeRole currentShapeRole = (ShapeRole) flexoConceptInstance.getFlexoConcept()
-				.getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
+		ShapeRole currentShapeRole = (ShapeRole) flexoConceptInstance.getFlexoConcept().getAccessibleProperty(FMEFreeModel.SHAPE_ROLE_NAME);
 
 		// Retrieve actual shape element
 		DiagramShape shapeElement = flexoConceptInstance.getFlexoActor(currentShapeRole);
 
-		ShapeRole newShapeRole = (ShapeRole) getConcept().getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
+		ShapeRole newShapeRole = (ShapeRole) getConcept().getAccessibleProperty(FMEFreeModel.SHAPE_ROLE_NAME);
 
 		switch (getGrStrategy()) {
 			case RedefineShapeOfConcept:

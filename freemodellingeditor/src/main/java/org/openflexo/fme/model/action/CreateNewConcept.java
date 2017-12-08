@@ -41,8 +41,7 @@ package org.openflexo.fme.model.action;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import org.openflexo.fme.model.FreeMetaModel;
-import org.openflexo.fme.model.FreeModellingProject;
+import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoException;
@@ -50,7 +49,6 @@ import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.FlexoConcept;
-import org.openflexo.localization.LocalizedDelegate;
 import org.openflexo.toolbox.StringUtils;
 
 /**
@@ -59,69 +57,62 @@ import org.openflexo.toolbox.StringUtils;
  * @author sylvain
  * 
  */
-public class CreateNewConcept extends FMEAction<CreateNewConcept, FreeMetaModel, FlexoObject> {
+public class CreateNewConcept extends FMEAction<CreateNewConcept, FMEFreeModel, FlexoObject> {
 
+	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(CreateNewConcept.class.getPackage().getName());
 
-	public static FlexoActionFactory<CreateNewConcept, FreeMetaModel, FlexoObject> actionType = new FlexoActionFactory<CreateNewConcept, FreeMetaModel, FlexoObject>(
+	public static FlexoActionFactory<CreateNewConcept, FMEFreeModel, FlexoObject> actionType = new FlexoActionFactory<CreateNewConcept, FMEFreeModel, FlexoObject>(
 			"create_new_concept", FlexoActionFactory.defaultGroup, FlexoActionFactory.ADD_ACTION_TYPE) {
 
 		/**
 		 * Factory method
 		 */
 		@Override
-		public CreateNewConcept makeNewAction(FreeMetaModel focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+		public CreateNewConcept makeNewAction(FMEFreeModel focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 			return new CreateNewConcept(focusedObject, globalSelection, editor);
 		}
 
 		@Override
-		public boolean isVisibleForSelection(FreeMetaModel object, Vector<FlexoObject> globalSelection) {
+		public boolean isVisibleForSelection(FMEFreeModel object, Vector<FlexoObject> globalSelection) {
 			return true;
 		}
 
 		@Override
-		public boolean isEnabledForSelection(FreeMetaModel object, Vector<FlexoObject> globalSelection) {
+		public boolean isEnabledForSelection(FMEFreeModel object, Vector<FlexoObject> globalSelection) {
 			return true;
 		}
 
 	};
 
 	static {
-		FlexoObjectImpl.addActionForClass(CreateNewConcept.actionType, FreeMetaModel.class);
+		FlexoObjectImpl.addActionForClass(CreateNewConcept.actionType, FMEFreeModel.class);
 	}
 
 	private String newConceptName;
 	private String newConceptDescription;
 
 	private FlexoConcept newFlexoConcept;
+	private FlexoConcept newGRFlexoConcept;
 
 	// private FlexoConceptInstance newFlexoConceptInstance;
 
-	CreateNewConcept(FreeMetaModel focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+	CreateNewConcept(FMEFreeModel focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 
-	@Override
-	public LocalizedDelegate getLocales() {
-		if (getFocusedObject() != null) {
-			return getFocusedObject().getFreeModellingProject().getLocales();
-		}
-		return super.getLocales();
-	}
-
 	public FreeModellingProjectNature getFreeModellingProjectNature() {
-		return getServiceManager().getProjectNatureService().getProjectNature(FreeModellingProjectNature.class);
-	}
-
-	public FreeModellingProject getFreeModellingProject() {
-		return getFocusedObject().getFreeModellingProject();
+		return getFocusedObject().getNature();
 	}
 
 	@Override
 	protected void doAction(Object context) throws FlexoException {
 
 		// Now we create the new concept
-		newFlexoConcept = getFocusedObject().getFlexoConcept(getNewConceptName(), getEditor(), this);
+		newFlexoConcept = getFreeModellingProjectNature().getConceptualModel().getFlexoConcept(getNewConceptName(), getEditor(), this);
+
+		// Now we create the new concept GR
+		newGRFlexoConcept = getFocusedObject().getGRFlexoConcept(newFlexoConcept, getEditor(), this);
 	}
 
 	public String getNewConceptName() {
@@ -150,6 +141,10 @@ public class CreateNewConcept extends FMEAction<CreateNewConcept, FreeMetaModel,
 		return newFlexoConcept;
 	}
 
+	public FlexoConcept getNewGRFlexoConcept() {
+		return newGRFlexoConcept;
+	}
+
 	@Override
 	public boolean isValid() {
 
@@ -157,7 +152,7 @@ public class CreateNewConcept extends FMEAction<CreateNewConcept, FreeMetaModel,
 			return false;
 		}
 
-		if (getFocusedObject().getVirtualModel().getFlexoConcept(newConceptName) != null) {
+		if (getFocusedObject().getAccessedVirtualModel().getFlexoConcept(newConceptName) != null) {
 			// a_concept_with_that_name_already_exists
 			return false;
 		}

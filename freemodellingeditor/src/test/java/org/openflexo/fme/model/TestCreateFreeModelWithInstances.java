@@ -73,9 +73,9 @@ public class TestCreateFreeModelWithInstances extends OpenflexoProjectAtRunTimeT
 	static FlexoEditor editor;
 	static FlexoProject<File> project;
 	static FreeModellingProject fmProject;
-	static FreeModel freeModel1;
-	static FreeModel freeModel2;
-	static FreeMetaModel freeMetaModel;
+	static FMEFreeModelInstance freeModel1;
+	static FMEFreeModelInstance freeModel2;
+	static FMEFreeModel freeMetaModel;
 
 	@Test
 	@TestOrder(1)
@@ -130,7 +130,7 @@ public class TestCreateFreeModelWithInstances extends OpenflexoProjectAtRunTimeT
 		assertEquals(1, result.size());
 		FlexoConceptInstance tutu = result.get(0);
 		assertNotNull(tutu);
-		DiagramShape laShapeDeLinstance = tutu.getFlexoActor(FreeMetaModel.SHAPE_ROLE_NAME);
+		DiagramShape laShapeDeLinstance = tutu.getFlexoActor(FMEFreeModel.SHAPE_ROLE_NAME);
 		assertNotNull(laShapeDeLinstance);
 		List<DiagramShape> lesShapes = freeModel1.getDiagram().getShapes();
 		assertNotNull(lesShapes);

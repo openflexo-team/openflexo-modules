@@ -45,7 +45,7 @@ import javax.swing.Icon;
 
 import org.openflexo.fme.FMEIconLibrary;
 import org.openflexo.fme.controller.FMEController;
-import org.openflexo.fme.model.FreeModel;
+import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.model.action.RemoveFreeModel;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
@@ -54,7 +54,7 @@ import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 
-public class RemoveFreeModelInitializer extends ActionInitializer<RemoveFreeModel, FreeModel, FlexoObject> {
+public class RemoveFreeModelInitializer extends ActionInitializer<RemoveFreeModel, FMEFreeModelInstance, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
