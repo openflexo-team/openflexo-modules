@@ -43,8 +43,8 @@ import java.util.logging.Logger;
 
 import org.openflexo.ApplicationContext;
 import org.openflexo.fme.FreeModellingEditor;
-import org.openflexo.fme.model.FreeMetaModel;
-import org.openflexo.fme.model.FreeModel;
+import org.openflexo.fme.model.FMEFreeModel;
+import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.FlexoEditor;
@@ -91,7 +91,7 @@ public class CreateNewConceptFromNoneConcept extends FMEAction<CreateNewConceptF
 
 		@Override
 		public boolean isEnabledForSelection(FlexoConceptInstance object, Vector<FlexoObject> globalSelection) {
-			return object.getFlexoConcept().getName().equals(FreeMetaModel.NONE_FLEXO_CONCEPT);
+			return object.getFlexoConcept().getName().equals(FMEFreeModel.NONE_FLEXO_CONCEPT);
 		}
 
 	};
@@ -139,14 +139,14 @@ public class CreateNewConceptFromNoneConcept extends FMEAction<CreateNewConceptF
 		return getFreeModellingProjectNature().getFreeModellingProject(project);
 	}
 
-	public FreeModel getFreeModel() throws InvalidArgumentException {
+	public FMEFreeModelInstance getFreeModel() throws InvalidArgumentException {
 		return getFreeModellingProject().getFreeModel((FMLRTVirtualModelInstance) getFocusedObject().getVirtualModelInstance());
 	}
 
 	@Override
 	protected void doAction(Object context) throws FlexoException {
 
-		FreeModel freeModel = getFreeModel();
+		FMEFreeModelInstance freeModel = getFreeModel();
 		if (freeModel == null) {
 			throw new InvalidArgumentException("FlexoConceptInstance does not belong to any FreeModel");
 		}
@@ -154,7 +154,7 @@ public class CreateNewConceptFromNoneConcept extends FMEAction<CreateNewConceptF
 		FlexoConceptInstance flexoConceptInstance = getFocusedObject();
 
 		// Retrieve shape property of None FC
-		ShapeRole noneShapeRole = (ShapeRole) flexoConceptInstance.getFlexoConcept().getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
+		ShapeRole noneShapeRole = (ShapeRole) flexoConceptInstance.getFlexoConcept().getAccessibleProperty(FMEFreeModel.SHAPE_ROLE_NAME);
 
 		// Retrieve actual shape element
 		DiagramShape shapeElement = flexoConceptInstance.getFlexoActor(noneShapeRole);
@@ -213,7 +213,7 @@ public class CreateNewConceptFromNoneConcept extends FMEAction<CreateNewConceptF
 		*/
 
 		// Sets new concept GR with actual shape GR
-		ShapeRole shapeRole = (ShapeRole) newFlexoConcept.getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
+		ShapeRole shapeRole = (ShapeRole) newFlexoConcept.getAccessibleProperty(FMEFreeModel.SHAPE_ROLE_NAME);
 		shapeRole.getGraphicalRepresentation().setsWith(shapeElement.getGraphicalRepresentation());
 		shapeRole.getGraphicalRepresentation().setX(10);
 		shapeRole.getGraphicalRepresentation().setY(10);

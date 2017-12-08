@@ -43,7 +43,7 @@ import java.util.logging.Logger;
 
 import org.openflexo.components.wizard.Wizard;
 import org.openflexo.components.wizard.WizardDialog;
-import org.openflexo.fme.model.FreeMetaModel;
+import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.action.CreateNewConcept;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
@@ -52,7 +52,7 @@ import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 
-public class CreateNewConceptInitializer extends ActionInitializer<CreateNewConcept, FreeMetaModel, FlexoObject> {
+public class CreateNewConceptInitializer extends ActionInitializer<CreateNewConcept, FMEFreeModel, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 

@@ -81,8 +81,8 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 	private final FlexoProject project;
 	private final VirtualModel freeModellingViewPoint;
 	private final FMLRTVirtualModelInstance freeModellingView;
-	private final Map<VirtualModel, FreeMetaModel> metaModels;
-	private final Map<FMLRTVirtualModelInstance, FreeModel> models;
+	private final Map<VirtualModel, FMEFreeModel> metaModels;
+	private final Map<FMLRTVirtualModelInstance, FMEFreeModelInstance> models;
 
 	private final DiagramTechnologyAdapter diagramTechnologyAdapter;
 	// private final DiagramSpecificationRepository dsRepository;
@@ -130,8 +130,8 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 			throw new InvalidArgumentException("Could not load FreeModellingView");
 		}
 
-		metaModels = new HashMap<VirtualModel, FreeMetaModel>();
-		models = new HashMap<FMLRTVirtualModelInstance, FreeModel>();
+		metaModels = new HashMap<VirtualModel, FMEFreeModel>();
+		models = new HashMap<FMLRTVirtualModelInstance, FMEFreeModelInstance>();
 
 		diagramTechnologyAdapter = project.getServiceManager().getTechnologyAdapterService()
 				.getTechnologyAdapter(DiagramTechnologyAdapter.class);
@@ -166,8 +166,8 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 		return freeModellingViewPoint;
 	}
 
-	public List<FreeMetaModel> getFreeMetaModels() {
-		List<FreeMetaModel> returned = new ArrayList<FreeMetaModel>();
+	public List<FMEFreeModel> getFreeMetaModels() {
+		List<FMEFreeModel> returned = new ArrayList<FMEFreeModel>();
 		getFreeModellingViewPoint().loadContainedVirtualModelsWhenUnloaded();
 		for (VirtualModel vm : getFreeModellingViewPoint().getVirtualModels()) {
 			try {
@@ -179,11 +179,11 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 		return returned;
 	}
 
-	public FreeMetaModel getFreeMetaModel(VirtualModel virtualModel) throws InvalidArgumentException {
+	public FMEFreeModel getFreeMetaModel(VirtualModel virtualModel) throws InvalidArgumentException {
 		if (virtualModel.hasNature(FMLControlledDiagramVirtualModelNature.INSTANCE)) {
-			FreeMetaModel returned = metaModels.get(virtualModel);
+			FMEFreeModel returned = metaModels.get(virtualModel);
 			if (returned == null) {
-				returned = new FreeMetaModel(virtualModel, this);
+				returned = new FMEFreeModel(virtualModel, this);
 				metaModels.put(virtualModel, returned);
 			}
 			return returned;
@@ -194,8 +194,8 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 		}
 	}
 
-	public FreeMetaModel getFreeMetaModel(String freeMetaModelName) {
-		for (FreeMetaModel freeMetaModel : getFreeMetaModels()) {
+	public FMEFreeModel getFreeMetaModel(String freeMetaModelName) {
+		for (FMEFreeModel freeMetaModel : getFreeMetaModels()) {
 			if (freeMetaModel.getName().equals(freeMetaModelName)) {
 				return freeMetaModel;
 			}
@@ -207,8 +207,8 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 		return freeModellingView;
 	}
 
-	public List<FreeModel> getFreeModels() {
-		List<FreeModel> returned = new ArrayList<FreeModel>();
+	public List<FMEFreeModelInstance> getFreeModels() {
+		List<FMEFreeModelInstance> returned = new ArrayList<FMEFreeModelInstance>();
 		for (VirtualModelInstance<?, ?> vmi : getFreeModellingView().getVirtualModelInstances()) {
 			try {
 				if (vmi instanceof FMLRTVirtualModelInstance) {
@@ -221,8 +221,8 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 		return returned;
 	}
 
-	public List<FreeModel> getFreeModels(FreeMetaModel metamodel) {
-		List<FreeModel> returned = new ArrayList<FreeModel>();
+	public List<FMEFreeModelInstance> getFreeModels(FMEFreeModel metamodel) {
+		List<FMEFreeModelInstance> returned = new ArrayList<FMEFreeModelInstance>();
 		for (VirtualModelInstance<?, ?> vmi : getFreeModellingView().getVirtualModelInstances()) {
 			try {
 				if (vmi instanceof FMLRTVirtualModelInstance && vmi.getVirtualModel().equals(metamodel.getVirtualModel())) {
@@ -235,18 +235,18 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 		return returned;
 	}
 
-	public FreeModel getFreeModel(FMLRTVirtualModelInstance virtualModelInstance) throws InvalidArgumentException {
-		FreeModel returned = models.get(virtualModelInstance);
+	public FMEFreeModelInstance getFreeModel(FMLRTVirtualModelInstance virtualModelInstance) throws InvalidArgumentException {
+		FMEFreeModelInstance returned = models.get(virtualModelInstance);
 		if (returned == null) {
-			returned = new FreeModel(virtualModelInstance, this);
+			returned = new FMEFreeModelInstance(virtualModelInstance, this);
 			models.put(virtualModelInstance, returned);
 			getPropertyChangeSupport().firePropertyChange("freeModels", null, models);
 		}
 		return returned;
 	}
 
-	public FreeModel getFreeModel(String freeModelName) {
-		for (FreeModel freeModel : getFreeModels()) {
+	public FMEFreeModelInstance getFreeModel(String freeModelName) {
+		for (FMEFreeModelInstance freeModel : getFreeModels()) {
 			if (freeModel.getName().equals(freeModelName)) {
 				return freeModel;
 			}
@@ -257,7 +257,7 @@ public class FreeModellingProject extends DefaultFlexoObject implements ProjectW
 		return null;
 	}
 
-	public void removeFreeModel(FreeModel model) {
+	public void removeFreeModel(FMEFreeModelInstance model) {
 		models.remove(model.getVirtualModelInstance());
 		getFreeModellingView().removeFromVirtualModelInstances(model.getVirtualModelInstance());
 	}

@@ -45,7 +45,7 @@ import javax.swing.Icon;
 
 import org.openflexo.components.wizard.Wizard;
 import org.openflexo.components.wizard.WizardDialog;
-import org.openflexo.fme.model.FreeMetaModel;
+import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.action.CreateFreeModelDiagramFromPPT;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
@@ -58,7 +58,7 @@ import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
 
-public class CreateFreeModelDiagramFromPPTInitializer extends ActionInitializer<CreateFreeModelDiagramFromPPT, FreeMetaModel, FlexoObject> {
+public class CreateFreeModelDiagramFromPPTInitializer extends ActionInitializer<CreateFreeModelDiagramFromPPT, FMEFreeModel, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 

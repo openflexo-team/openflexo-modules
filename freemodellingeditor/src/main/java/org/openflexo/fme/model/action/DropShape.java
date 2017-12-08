@@ -48,8 +48,8 @@ import org.openflexo.fge.ShapeGraphicalRepresentation;
 import org.openflexo.fge.ShapeGraphicalRepresentation.LocationConstraints;
 import org.openflexo.fge.geom.FGEPoint;
 import org.openflexo.fme.FreeModellingEditor;
-import org.openflexo.fme.model.FreeMetaModel;
-import org.openflexo.fme.model.FreeModel;
+import org.openflexo.fme.model.FMEFreeModel;
+import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
@@ -102,7 +102,7 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 		FlexoObjectImpl.addActionForClass(DropShape.actionType, DiagramContainerElement.class);
 	}
 
-	private FreeModel freeModel;
+	private FMEFreeModelInstance freeModel;
 	private DiagramContainerElement<?> parent;
 	private ShapeGraphicalRepresentation graphicalRepresentation;
 	private FlexoConcept concept;
@@ -133,7 +133,7 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 
 		// When non concept supplied, use (eventually creates) None concept
 		if (concept == null) {
-			noneConceptIsExisting = freeModel.getMetaModel().getVirtualModel().getFlexoConcept(FreeMetaModel.NONE_FLEXO_CONCEPT) != null;
+			noneConceptIsExisting = freeModel.getMetaModel().getVirtualModel().getFlexoConcept(FMEFreeModel.NONE_FLEXO_CONCEPT) != null;
 			concept = freeModel.getMetaModel().getNoneFlexoConcept(getEditor(), this);
 		}
 
@@ -157,7 +157,7 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 				return;
 			}
 
-			ShapeRole shapeRole = (ShapeRole) concept.getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
+			ShapeRole shapeRole = (ShapeRole) concept.getAccessibleProperty(FMEFreeModel.SHAPE_ROLE_NAME);
 			DiagramShape shape = newFlexoConceptInstance.getFlexoActor(shapeRole);
 
 			// If another GR was defined (overriding the one from ShapeRole)
@@ -194,11 +194,11 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 		}
 	}
 
-	public FreeModel getFreeModel() {
+	public FMEFreeModelInstance getFreeModel() {
 		return freeModel;
 	}
 
-	public void setFreeModel(FreeModel freeModel) {
+	public void setFreeModel(FMEFreeModelInstance freeModel) {
 		this.freeModel = freeModel;
 	}
 

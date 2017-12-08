@@ -44,8 +44,8 @@ import javax.swing.ImageIcon;
 
 import org.openflexo.fme.FMEIconLibrary;
 import org.openflexo.fme.controller.editor.FreeModelDiagramEditor;
-import org.openflexo.fme.model.FreeMetaModel;
-import org.openflexo.fme.model.FreeModel;
+import org.openflexo.fme.model.FMEFreeModel;
+import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.view.FreeModelModuleView;
 import org.openflexo.fme.widget.FIBConceptBrowser;
 import org.openflexo.fme.widget.FIBFreeModellingProjectBrowser;
@@ -117,11 +117,11 @@ public class FMEPerspective extends FlexoPerspective {
 
 	@Override
 	public String getWindowTitleforObject(FlexoObject object, FlexoController controller) {
-		if (object instanceof FreeModel) {
-			return ((FreeModel) object).getName();
+		if (object instanceof FMEFreeModelInstance) {
+			return ((FMEFreeModelInstance) object).getName();
 		}
-		if (object instanceof FreeMetaModel) {
-			return ((FreeMetaModel) object).getName();
+		if (object instanceof FMEFreeModel) {
+			return ((FMEFreeModel) object).getName();
 		}
 		if (object != null) {
 			return object.toString();
@@ -129,7 +129,7 @@ public class FMEPerspective extends FlexoPerspective {
 		return "null";
 	}
 
-	public void focusOnFreeModel(FreeModel freeModel) {
+	public void focusOnFreeModel(FMEFreeModelInstance freeModel) {
 		logger.info("focusOnFreeModel " + freeModel);
 
 		representedConceptBrowser.setFreeModel(freeModel);
@@ -142,8 +142,8 @@ public class FMEPerspective extends FlexoPerspective {
 
 	@Override
 	public void focusOnObject(FlexoObject object) {
-		if (object instanceof FreeModel) {
-			focusOnFreeModel((FreeModel) object);
+		if (object instanceof FMEFreeModelInstance) {
+			focusOnFreeModel((FMEFreeModelInstance) object);
 		}
 	};
 
@@ -163,8 +163,8 @@ public class FMEPerspective extends FlexoPerspective {
 	@Override
 	public void objectWasDoubleClicked(Object object, FlexoController controller) {
 		// logger.info("ViewPointPerspective: object was double-clicked: " + object);
-		if (object instanceof FreeModel) {
-			controller.selectAndFocusObject((FreeModel) object);
+		if (object instanceof FMEFreeModelInstance) {
+			controller.selectAndFocusObject((FMEFreeModelInstance) object);
 		}
 		else {
 			super.objectWasDoubleClicked(object, controller);
@@ -177,7 +177,7 @@ public class FMEPerspective extends FlexoPerspective {
 
 	@Override
 	public boolean hasModuleViewForObject(FlexoObject object) {
-		if (object instanceof FreeModel) {
+		if (object instanceof FMEFreeModelInstance) {
 			return true;
 		}
 		return super.hasModuleViewForObject(object);
@@ -190,7 +190,7 @@ public class FMEPerspective extends FlexoPerspective {
 
 	@Override
 	public ModuleView<?> createModuleViewForObject(FlexoObject object, boolean editable) {
-		if (object instanceof FreeModel) {
+		if (object instanceof FMEFreeModelInstance) {
 			// Initialization of Diagram representation may rise PAMELA edits
 			// The goal is here to embed all those edits in a special edit record
 			// Which is to be discarded as undoable action at the end of this initialization
@@ -200,7 +200,7 @@ public class FMEPerspective extends FlexoPerspective {
 			}
 			DiagramTechnologyAdapterController diagramTAC = getController().getApplicationContext().getTechnologyAdapterControllerService()
 					.getTechnologyAdapterController(DiagramTechnologyAdapterController.class);
-			FreeModelDiagramEditor editor = new FreeModelDiagramEditor((FreeModel) object, false, getController(),
+			FreeModelDiagramEditor editor = new FreeModelDiagramEditor((FMEFreeModelInstance) object, false, getController(),
 					diagramTAC.getToolFactory());
 			if (edit != null) {
 				getController().getEditor().getUndoManager().stopRecording(edit);

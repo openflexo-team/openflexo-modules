@@ -44,8 +44,8 @@ import java.util.logging.Logger;
 
 import org.apache.poi.hslf.model.Slide;
 import org.openflexo.connie.DataBinding;
-import org.openflexo.fme.model.FreeMetaModel;
-import org.openflexo.fme.model.FreeModel;
+import org.openflexo.fme.model.FMEFreeModel;
+import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
@@ -62,9 +62,9 @@ import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 import org.openflexo.toolbox.StringUtils;
 
 /**
- * This action is used to create a new {@link FreeModel} in a {@link FreeModellingProject}<br>
+ * This action is used to create a new {@link FMEFreeModelInstance} in a {@link FreeModellingProject}<br>
  * 
- * New {@link FreeModel} might be created while a new associated {@link FreeMetaModel} is created, or using an existing one.
+ * New {@link FMEFreeModelInstance} might be created while a new associated {@link FMEFreeModel} is created, or using an existing one.
  * 
  * @author sylvain
  * 
@@ -148,10 +148,10 @@ public class CreateFreeModelFromPPT extends AbstractCreateFreeModel<CreateFreeMo
 
 	private FlexoConceptInstance createFlexoConceptInstanceFromDiagramShape(DiagramShape diagramShape) {
 		FlexoConceptInstance newFlexoConceptInstance = freeModel.getVirtualModelInstance().makeNewFlexoConceptInstance(none);
-		ShapeRole shapeRole = (ShapeRole) none.getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
+		ShapeRole shapeRole = (ShapeRole) none.getAccessibleProperty(FMEFreeModel.SHAPE_ROLE_NAME);
 		newFlexoConceptInstance.setFlexoActor(diagramShape, shapeRole);
-		PrimitiveRole<String> nameRole = (PrimitiveRole<String>) none.getAccessibleProperty(FreeMetaModel.NAME_ROLE_NAME);
-		shapeRole.setLabel(new DataBinding<>(FreeMetaModel.NAME_ROLE_NAME));
+		PrimitiveRole<String> nameRole = (PrimitiveRole<String>) none.getAccessibleProperty(FMEFreeModel.NAME_ROLE_NAME);
+		shapeRole.setLabel(new DataBinding<>(FMEFreeModel.NAME_ROLE_NAME));
 		String name = diagramShape.getName();
 		if (name == null || name.length() == 0) {
 			name = diagramShape.getGraphicalRepresentation().getShapeType().toString();

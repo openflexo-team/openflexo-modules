@@ -49,7 +49,7 @@ import javax.swing.SwingUtilities;
 
 import org.openflexo.fme.controller.FMEPerspective;
 import org.openflexo.fme.controller.editor.FreeModelDiagramEditor;
-import org.openflexo.fme.model.FreeModel;
+import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.technologyadapter.diagram.controller.DiagramTechnologyAdapterController;
 import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.FlexoController;
@@ -57,7 +57,7 @@ import org.openflexo.view.controller.TechnologyAdapterControllerService;
 import org.openflexo.view.controller.model.FlexoPerspective;
 
 @SuppressWarnings("serial")
-public class FreeModelModuleView extends JPanel implements ModuleView<FreeModel>, PropertyChangeListener {
+public class FreeModelModuleView extends JPanel implements ModuleView<FMEFreeModelInstance>, PropertyChangeListener {
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(FreeModelModuleView.class.getPackage().getName());
@@ -104,7 +104,7 @@ public class FreeModelModuleView extends JPanel implements ModuleView<FreeModel>
 	}
 
 	@Override
-	public FreeModel getRepresentedObject() {
+	public FMEFreeModelInstance getRepresentedObject() {
 		return editor.getFreeModel();
 	}
 

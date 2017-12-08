@@ -71,9 +71,9 @@ public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 	static FlexoEditor editor;
 	static FlexoProject<File> project;
 	static FreeModellingProject fmProject;
-	static FreeModel freeModel1;
-	static FreeModel freeModel2;
-	static FreeMetaModel freeMetaModel;
+	static FMEFreeModelInstance freeModel1;
+	static FMEFreeModelInstance freeModel2;
+	static FMEFreeModel freeMetaModel;
 
 	@Test
 	@TestOrder(1)

@@ -43,30 +43,34 @@ import java.util.logging.Logger;
 
 import org.openflexo.ApplicationContext;
 import org.openflexo.fme.FreeModellingEditor;
+import org.openflexo.fme.model.FMEConceptualModel;
+import org.openflexo.fme.model.FMESampleData;
 import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.FlexoProject;
-import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.action.CreateTopLevelVirtualModel;
 import org.openflexo.foundation.fml.rm.VirtualModelResource;
 import org.openflexo.foundation.fml.rt.action.CreateBasicVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.rm.FMLRTVirtualModelInstanceResource;
-import org.openflexo.foundation.resource.SaveResourceException;
+import org.openflexo.foundation.nature.GivesNatureAction;
+import org.openflexo.foundation.resource.FlexoResourceCenter;
 import org.openflexo.localization.LocalizedDelegate;
-import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
-import org.openflexo.technologyadapter.diagram.rm.DiagramSpecificationRepository;
+import org.openflexo.toolbox.StringUtils;
 
 /**
  * This action is called to gives a new FME nature to a project
  * 
  * @author vincent
  */
-public class GivesFMENature extends FMEAction<GivesFMENature, FlexoProject<?>, FlexoObject> {
+public class GivesFMENature extends GivesNatureAction<GivesFMENature, FreeModellingProjectNature> {
 
 	private static final Logger logger = Logger.getLogger(GivesFMENature.class.getPackage().getName());
+
+	public static final String DEFAULT_CONCEPTUAL_MODEL_NAME = "ConceptualModel";
+	public static final String DEFAULT_SAMPLE_DATA_NAME = "SampleData";
 
 	public static FlexoActionFactory<GivesFMENature, FlexoProject<?>, FlexoObject> actionType = new FlexoActionFactory<GivesFMENature, FlexoProject<?>, FlexoObject>(
 			"gives_fme_nature") {
@@ -80,13 +84,13 @@ public class GivesFMENature extends FMEAction<GivesFMENature, FlexoProject<?>, F
 		}
 
 		@Override
-		public boolean isVisibleForSelection(FlexoProject<?> object, Vector<FlexoObject> globalSelection) {
-			return false;
+		public boolean isVisibleForSelection(FlexoProject<?> project, Vector<FlexoObject> globalSelection) {
+			return true;
 		}
 
 		@Override
-		public boolean isEnabledForSelection(FlexoProject<?> object, Vector<FlexoObject> globalSelection) {
-			return object != null;
+		public boolean isEnabledForSelection(FlexoProject<?> project, Vector<FlexoObject> globalSelection) {
+			return project != null && !project.hasNature(FreeModellingProjectNature.class);
 		}
 
 	};
@@ -94,6 +98,19 @@ public class GivesFMENature extends FMEAction<GivesFMENature, FlexoProject<?>, F
 	static {
 		FlexoObjectImpl.addActionForClass(GivesFMENature.actionType, FlexoProject.class);
 	}
+
+	private enum ConceptualModelChoice {
+		CreateNewVirtualModel, SelectExistingVirtualModel
+	}
+
+	private ConceptualModelChoice conceptualModelChoice = ConceptualModelChoice.CreateNewVirtualModel;
+	private VirtualModelResource existingConceptualModelResource;
+	private String newConceptualModelName;
+	private String newConceptualModelRelativePath;
+	private FlexoResourceCenter<?> conceptualModelRC;
+
+	private String sampleDataName;
+	private String sampleDataRelativePath;
 
 	GivesFMENature(FlexoProject<?> focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
@@ -108,19 +125,19 @@ public class GivesFMENature extends FMEAction<GivesFMENature, FlexoProject<?>, F
 		return super.getLocales();
 	}
 
-	@Override
+	/*@Override
 	protected void doAction(Object context) throws SaveResourceException, InvalidArgumentException {
 		if (getFocusedObject().getVirtualModelRepository() == null) {
 			logger.warning("Could not determine VirtualModelRepository. Aborting operation.");
 			throw new InvalidArgumentException("Could not determine VirtualModelRepository. Aborting operation.");
 		}
-
+	
 		FreeModellingProjectNature FREE_MODELLING_NATURE = getServiceManager().getProjectNatureService()
 				.getProjectNature(FreeModellingProjectNature.class);
-
+	
 		VirtualModelResource freeModellingViewPointResource = getFocusedObject().getVirtualModelRepository()
 				.getResource(getFocusedObject().getProjectURI() + FreeModellingProjectNature.FREE_MODELLING_VIEWPOINT_RELATIVE_URI);
-
+	
 		// Since CreateViewpoint/View are LongRunning actions, we call them as embedded actions, therefore we are ensure that Viewpoint and
 		// View are created after doAction() call.
 		if (freeModellingViewPointResource == null) {
@@ -133,10 +150,10 @@ public class GivesFMENature extends FMEAction<GivesFMENature, FlexoProject<?>, F
 			action.doAction();
 			freeModellingViewPointResource = (VirtualModelResource) action.getNewVirtualModel().getResource();
 		}
-
+	
 		FMLRTVirtualModelInstanceResource freeModellingViewResource = getFocusedObject().getVirtualModelInstanceRepository()
 				.getResource(getFocusedObject().getProjectURI() + FreeModellingProjectNature.FREE_MODELLING_VIEW_RELATIVE_URI);
-
+	
 		if (freeModellingViewResource == null) {
 			CreateBasicVirtualModelInstance action = CreateBasicVirtualModelInstance.actionType
 					.makeNewEmbeddedAction(getFocusedObject().getVirtualModelInstanceRepository().getRootFolder(), null, this);
@@ -146,21 +163,178 @@ public class GivesFMENature extends FMEAction<GivesFMENature, FlexoProject<?>, F
 			action.doAction();
 			freeModellingViewResource = (FMLRTVirtualModelInstanceResource) action.getNewVirtualModelInstance().getResource();
 		}
-
+	
 		DiagramTechnologyAdapter diagramTechnologyAdapter = getFocusedObject().getServiceManager().getTechnologyAdapterService()
 				.getTechnologyAdapter(DiagramTechnologyAdapter.class);
 		DiagramSpecificationRepository<?> dsRepository = diagramTechnologyAdapter.getDiagramSpecificationRepository(getFocusedObject());
 		dsRepository.createNewFolder(FreeModellingProjectNature.DIAGRAM_SPECIFICATIONS_FOLDER);
-
+	
 		// We have now to notify project of nature modifications
 		getFocusedObject().getPropertyChangeSupport().firePropertyChange("asNature(String)", false, true);
 		getFocusedObject().getPropertyChangeSupport().firePropertyChange("hasNature(String)", false, true);
-
-	}
+	
+	}*/
 
 	@Override
-	public boolean isValid() {
-		return true;
+	public FreeModellingProjectNature makeNewNature() {
+
+		FreeModellingProjectNature nature = getFocusedObject().getModelFactory().newInstance(FreeModellingProjectNature.class);
+
+		FMEConceptualModel conceptualModel = makeFMEConceptualModel();
+		nature.setConceptualModel(conceptualModel);
+		nature.setSampleData(makeFMESampleData(conceptualModel));
+
+		return nature;
+	}
+
+	private FMEConceptualModel makeFMEConceptualModel() {
+		FMEConceptualModel conceptualModel = getFocusedObject().getModelFactory().newInstance(FMEConceptualModel.class);
+
+		switch (getConceptualModelChoice()) {
+			case CreateNewVirtualModel:
+				// RepositoryFolder<?, ?> folder = getFocusedObject().getVirtualModelRepository().get
+				CreateTopLevelVirtualModel action = CreateTopLevelVirtualModel.actionType
+						.makeNewEmbeddedAction(getFocusedObject().getVirtualModelRepository().getRootFolder(), null, this);
+				action.setNewVirtualModelName(getNewConceptualModelName());
+				action.setNewVirtualModelDescription("Conceptual model for " + getFocusedObject().getDisplayableName());
+				action.doAction();
+				VirtualModelResource newVirtualModelResource = (VirtualModelResource) action.getNewVirtualModel().getResource();
+				conceptualModel.setAccessedVirtualModelResource(newVirtualModelResource);
+				break;
+			case SelectExistingVirtualModel:
+				conceptualModel.setAccessedVirtualModelResource(getExistingConceptualModelResource());
+				break;
+
+			default:
+				break;
+		}
+
+		return conceptualModel;
+	}
+
+	public ConceptualModelChoice getConceptualModelChoice() {
+		if (conceptualModelChoice == null) {
+			return ConceptualModelChoice.CreateNewVirtualModel;
+		}
+		return conceptualModelChoice;
+	}
+
+	public void setConceptualModelChoice(ConceptualModelChoice conceptualModelChoice) {
+		if (conceptualModelChoice != getConceptualModelChoice()) {
+			ConceptualModelChoice oldValue = this.conceptualModelChoice;
+			this.conceptualModelChoice = conceptualModelChoice;
+			getPropertyChangeSupport().firePropertyChange("conceptualModelChoice", oldValue, conceptualModelChoice);
+		}
+	}
+
+	public VirtualModelResource getExistingConceptualModelResource() {
+		return existingConceptualModelResource;
+	}
+
+	public void setExistingConceptualModelResource(VirtualModelResource existingConceptualModelResource) {
+		if ((existingConceptualModelResource == null && this.existingConceptualModelResource != null)
+				|| (existingConceptualModelResource != null
+						&& !existingConceptualModelResource.equals(this.existingConceptualModelResource))) {
+			VirtualModelResource oldValue = this.existingConceptualModelResource;
+			this.existingConceptualModelResource = existingConceptualModelResource;
+			getPropertyChangeSupport().firePropertyChange("existingConceptualModelResource", oldValue, existingConceptualModelResource);
+		}
+	}
+
+	public String getNewConceptualModelName() {
+		if (StringUtils.isEmpty(newConceptualModelName)) {
+			return DEFAULT_CONCEPTUAL_MODEL_NAME;
+		}
+		return newConceptualModelName;
+	}
+
+	public void setNewConceptualModelName(String newConceptualModelName) {
+		if ((newConceptualModelName == null && this.newConceptualModelName != null)
+				|| (newConceptualModelName != null && !newConceptualModelName.equals(this.newConceptualModelName))) {
+			String oldValue = this.newConceptualModelName;
+			this.newConceptualModelName = newConceptualModelName;
+			getPropertyChangeSupport().firePropertyChange("newConceptualModelName", oldValue, newConceptualModelName);
+		}
+	}
+
+	public String getNewConceptualModelRelativePath() {
+		if (newConceptualModelRelativePath == null) {
+			return "ConceptualModel";
+		}
+		return newConceptualModelRelativePath;
+	}
+
+	public void setNewConceptualModelRelativePath(String newConceptualModelRelativePath) {
+		if ((newConceptualModelRelativePath == null && this.newConceptualModelRelativePath != null)
+				|| (newConceptualModelRelativePath != null
+						&& !newConceptualModelRelativePath.equals(this.newConceptualModelRelativePath))) {
+			String oldValue = this.newConceptualModelRelativePath;
+			this.newConceptualModelRelativePath = newConceptualModelRelativePath;
+			getPropertyChangeSupport().firePropertyChange("newConceptualModelRelativePath", oldValue, newConceptualModelRelativePath);
+		}
+	}
+
+	public FlexoResourceCenter<?> getConceptualModelRC() {
+		if (conceptualModelRC != null) {
+			return getFocusedObject();
+		}
+		return conceptualModelRC;
+	}
+
+	public void setConceptualModelRC(FlexoResourceCenter<?> conceptualModelRC) {
+		if ((conceptualModelRC == null && this.conceptualModelRC != null)
+				|| (conceptualModelRC != null && !conceptualModelRC.equals(this.conceptualModelRC))) {
+			FlexoResourceCenter<?> oldValue = this.conceptualModelRC;
+			this.conceptualModelRC = conceptualModelRC;
+			getPropertyChangeSupport().firePropertyChange("conceptualModelRC", oldValue, conceptualModelRC);
+		}
+	}
+
+	private FMESampleData makeFMESampleData(FMEConceptualModel conceptualModel) {
+		FMESampleData sampleData = getFocusedObject().getModelFactory().newInstance(FMESampleData.class);
+
+		// RepositoryFolder<?, ?> folder = getFocusedObject().getVirtualModelRepository().get
+
+		CreateBasicVirtualModelInstance action = CreateBasicVirtualModelInstance.actionType
+				.makeNewEmbeddedAction(getFocusedObject().getVirtualModelInstanceRepository().getRootFolder(), null, this);
+
+		action.setNewVirtualModelInstanceName(getSampleDataName());
+		action.setVirtualModel(conceptualModel.getAccessedVirtualModel());
+		action.doAction();
+		FMLRTVirtualModelInstanceResource newVirtualModelInstanceResource = (FMLRTVirtualModelInstanceResource) action
+				.getNewVirtualModelInstance().getResource();
+		sampleData.setAccessedVirtualModelInstanceResource(newVirtualModelInstanceResource);
+
+		return sampleData;
+	}
+
+	public String getSampleDataName() {
+		if (StringUtils.isEmpty(sampleDataName)) {
+			return DEFAULT_SAMPLE_DATA_NAME;
+		}
+		return sampleDataName;
+	}
+
+	public void setSampleDataName(String sampleDataName) {
+		if ((sampleDataName == null && this.sampleDataName != null)
+				|| (sampleDataName != null && !sampleDataName.equals(this.sampleDataName))) {
+			String oldValue = this.sampleDataName;
+			this.sampleDataName = sampleDataName;
+			getPropertyChangeSupport().firePropertyChange("sampleDataName", oldValue, sampleDataName);
+		}
+	}
+
+	public String getSampleDataRelativePath() {
+		return sampleDataRelativePath;
+	}
+
+	public void setSampleDataRelativePath(String sampleDataRelativePath) {
+		if ((sampleDataRelativePath == null && this.sampleDataRelativePath != null)
+				|| (sampleDataRelativePath != null && !sampleDataRelativePath.equals(this.sampleDataRelativePath))) {
+			String oldValue = this.sampleDataRelativePath;
+			this.sampleDataRelativePath = sampleDataRelativePath;
+			getPropertyChangeSupport().firePropertyChange("sampleDataRelativePath", oldValue, sampleDataRelativePath);
+		}
 	}
 
 }

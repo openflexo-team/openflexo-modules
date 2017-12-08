@@ -43,7 +43,7 @@ import java.util.logging.Logger;
 
 import org.openflexo.ApplicationContext;
 import org.openflexo.fme.FreeModellingEditor;
-import org.openflexo.fme.model.FreeModel;
+import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
@@ -54,43 +54,43 @@ import org.openflexo.foundation.resource.SaveResourceException;
 import org.openflexo.localization.LocalizedDelegate;
 
 /**
- * This action is used to remove a {@link FreeModel} from a {@link FreeModellingProject}<br>
+ * This action is used to remove a {@link FMEFreeModelInstance} from a {@link FreeModellingProject}<br>
  * 
  * @author vincent
  * 
  */
-public class RemoveFreeModel extends FMEAction<RemoveFreeModel, FreeModel, FlexoObject> {
+public class RemoveFreeModel extends FMEAction<RemoveFreeModel, FMEFreeModelInstance, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(RemoveFreeModel.class.getPackage().getName());
 
-	public static FlexoActionFactory<RemoveFreeModel, FreeModel, FlexoObject> actionType = new FlexoActionFactory<RemoveFreeModel, FreeModel, FlexoObject>(
+	public static FlexoActionFactory<RemoveFreeModel, FMEFreeModelInstance, FlexoObject> actionType = new FlexoActionFactory<RemoveFreeModel, FMEFreeModelInstance, FlexoObject>(
 			"remove_free_model", FlexoActionFactory.defaultGroup, FlexoActionFactory.DELETE_ACTION_TYPE) {
 
 		/**
 		 * Factory method
 		 */
 		@Override
-		public RemoveFreeModel makeNewAction(FreeModel focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+		public RemoveFreeModel makeNewAction(FMEFreeModelInstance focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 			return new RemoveFreeModel(focusedObject, globalSelection, editor);
 		}
 
 		@Override
-		public boolean isVisibleForSelection(FreeModel object, Vector<FlexoObject> globalSelection) {
+		public boolean isVisibleForSelection(FMEFreeModelInstance object, Vector<FlexoObject> globalSelection) {
 			return true;
 		}
 
 		@Override
-		public boolean isEnabledForSelection(FreeModel object, Vector<FlexoObject> globalSelection) {
+		public boolean isEnabledForSelection(FMEFreeModelInstance object, Vector<FlexoObject> globalSelection) {
 			return true;
 		}
 
 	};
 
 	static {
-		FlexoObjectImpl.addActionForClass(RemoveFreeModel.actionType, FreeModel.class);
+		FlexoObjectImpl.addActionForClass(RemoveFreeModel.actionType, FMEFreeModelInstance.class);
 	}
 
-	RemoveFreeModel(FreeModel focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+	RemoveFreeModel(FMEFreeModelInstance focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 

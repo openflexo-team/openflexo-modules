@@ -41,7 +41,7 @@ package org.openflexo.fme.model.action;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import org.openflexo.fme.model.FreeMetaModel;
+import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
@@ -51,34 +51,34 @@ public class CreateFreeModelDiagram extends AbstractCreateFreeModelDiagram<Creat
 
 	private static final Logger logger = Logger.getLogger(CreateFreeModelDiagram.class.getPackage().getName());
 
-	public static FlexoActionFactory<CreateFreeModelDiagram, FreeMetaModel, FlexoObject> actionType = new FlexoActionFactory<CreateFreeModelDiagram, FreeMetaModel, FlexoObject>(
+	public static FlexoActionFactory<CreateFreeModelDiagram, FMEFreeModel, FlexoObject> actionType = new FlexoActionFactory<CreateFreeModelDiagram, FMEFreeModel, FlexoObject>(
 			"create_diagram", FlexoActionFactory.newMenu, FlexoActionFactory.defaultGroup, FlexoActionFactory.ADD_ACTION_TYPE) {
 
 		/**
 		 * Factory method
 		 */
 		@Override
-		public CreateFreeModelDiagram makeNewAction(FreeMetaModel focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+		public CreateFreeModelDiagram makeNewAction(FMEFreeModel focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 			return new CreateFreeModelDiagram(focusedObject, globalSelection, editor);
 		}
 
 		@Override
-		public boolean isVisibleForSelection(FreeMetaModel object, Vector<FlexoObject> globalSelection) {
+		public boolean isVisibleForSelection(FMEFreeModel object, Vector<FlexoObject> globalSelection) {
 			return true;
 		}
 
 		@Override
-		public boolean isEnabledForSelection(FreeMetaModel object, Vector<FlexoObject> globalSelection) {
+		public boolean isEnabledForSelection(FMEFreeModel object, Vector<FlexoObject> globalSelection) {
 			return true;
 		}
 
 	};
 
 	static {
-		FlexoObjectImpl.addActionForClass(CreateFreeModelDiagram.actionType, FreeMetaModel.class);
+		FlexoObjectImpl.addActionForClass(CreateFreeModelDiagram.actionType, FMEFreeModel.class);
 	}
 
-	CreateFreeModelDiagram(FreeMetaModel focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+	CreateFreeModelDiagram(FMEFreeModel focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 

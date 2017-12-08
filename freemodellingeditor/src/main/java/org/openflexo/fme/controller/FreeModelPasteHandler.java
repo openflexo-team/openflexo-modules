@@ -41,7 +41,7 @@ package org.openflexo.fme.controller;
 import java.util.logging.Logger;
 
 import org.openflexo.fme.controller.editor.FreeModelDiagramEditor;
-import org.openflexo.fme.model.FreeModel;
+import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.action.copypaste.FlexoClipboard;
 import org.openflexo.foundation.action.copypaste.PastingContext;
@@ -63,14 +63,14 @@ public class FreeModelPasteHandler extends FMLControlledDiagramPasteHandler {
 
 	public static final String COPY_SUFFIX = "-copy";
 
-	private final FreeModel freeModel;
+	private final FMEFreeModelInstance freeModel;
 
-	public FreeModelPasteHandler(FreeModel freeModel, FreeModelDiagramEditor editor) {
+	public FreeModelPasteHandler(FMEFreeModelInstance freeModel, FreeModelDiagramEditor editor) {
 		super(freeModel.getVirtualModelInstance(), editor);
 		this.freeModel = freeModel;
 	}
 
-	public FreeModel getFreeModel() {
+	public FMEFreeModelInstance getFreeModel() {
 		return freeModel;
 	}
 

@@ -41,8 +41,8 @@ package org.openflexo.fme.model.action;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import org.openflexo.fme.model.FreeMetaModel;
-import org.openflexo.fme.model.FreeModel;
+import org.openflexo.fme.model.FMEFreeModel;
+import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.InvalidArgumentException;
@@ -59,15 +59,15 @@ import org.openflexo.technologyadapter.diagram.model.action.CreateDiagram;
 import org.openflexo.technologyadapter.diagram.rm.DiagramResource;
 import org.openflexo.toolbox.StringUtils;
 
-public class AbstractCreateFreeModelDiagram<A extends AbstractCreateFreeModelDiagram<A>> extends FMEAction<A, FreeMetaModel, FlexoObject> {
+public class AbstractCreateFreeModelDiagram<A extends AbstractCreateFreeModelDiagram<A>> extends FMEAction<A, FMEFreeModel, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(AbstractCreateFreeModelDiagram.class.getPackage().getName());
 
-	private FreeModel freeModel;
+	private FMEFreeModelInstance freeModel;
 	private String diagramName;
 	private String description;
 
-	AbstractCreateFreeModelDiagram(FlexoActionFactory<A, FreeMetaModel, FlexoObject> actionType, FreeMetaModel focusedObject,
+	AbstractCreateFreeModelDiagram(FlexoActionFactory<A, FMEFreeModel, FlexoObject> actionType, FMEFreeModel focusedObject,
 			Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
@@ -159,7 +159,7 @@ public class AbstractCreateFreeModelDiagram<A extends AbstractCreateFreeModelDia
 	 * 
 	 * @return
 	 */
-	public FreeModel getFreeModel() {
+	public FMEFreeModelInstance getFreeModel() {
 		return freeModel;
 	}
 

@@ -45,7 +45,7 @@ import javax.swing.Icon;
 
 import org.openflexo.components.wizard.Wizard;
 import org.openflexo.components.wizard.WizardDialog;
-import org.openflexo.fme.model.FreeMetaModel;
+import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.action.CreateFreeModelDiagram;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
@@ -56,7 +56,7 @@ import org.openflexo.technologyadapter.diagram.gui.DiagramIconLibrary;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 
-public class CreateFreeModelDiagramInitializer extends ActionInitializer<CreateFreeModelDiagram, FreeMetaModel, FlexoObject> {
+public class CreateFreeModelDiagramInitializer extends ActionInitializer<CreateFreeModelDiagram, FMEFreeModel, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 

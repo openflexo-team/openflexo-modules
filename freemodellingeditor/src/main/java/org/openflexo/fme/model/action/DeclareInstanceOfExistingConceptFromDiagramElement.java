@@ -43,8 +43,8 @@ import java.util.logging.Logger;
 
 import org.openflexo.ApplicationContext;
 import org.openflexo.fme.FreeModellingEditor;
-import org.openflexo.fme.model.FreeMetaModel;
-import org.openflexo.fme.model.FreeModel;
+import org.openflexo.fme.model.FMEFreeModel;
+import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.FlexoEditor;
@@ -127,8 +127,8 @@ public class DeclareInstanceOfExistingConceptFromDiagramElement
 		return getFreeModellingProjectNature().getFreeModellingProject(getEditor().getProject());
 	}
 
-	public FreeModel getFreeModel() {
-		for (FreeModel freeModel : getFreeModellingProject().getFreeModels()) {
+	public FMEFreeModelInstance getFreeModel() {
+		for (FMEFreeModelInstance freeModel : getFreeModellingProject().getFreeModels()) {
 			if (freeModel.getDiagram().equals(getFocusedObject().getDiagram())) {
 				return freeModel;
 			}
@@ -168,9 +168,9 @@ public class DeclareInstanceOfExistingConceptFromDiagramElement
 
 	private FlexoConceptInstance createFlexoConceptInstanceFromDiagramShape(DiagramElement<?> diagramElement) {
 		FlexoConceptInstance newFlexoConceptInstance = getFreeModel().getVirtualModelInstance().makeNewFlexoConceptInstance(none);
-		GraphicalElementRole geRole = (ShapeRole) none.getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
+		GraphicalElementRole geRole = (ShapeRole) none.getAccessibleProperty(FMEFreeModel.SHAPE_ROLE_NAME);
 		newFlexoConceptInstance.setFlexoActor(diagramElement, geRole);
-		PrimitiveRole<String> nameRole = (PrimitiveRole<String>) none.getAccessibleProperty(FreeMetaModel.NAME_ROLE_NAME);
+		PrimitiveRole<String> nameRole = (PrimitiveRole<String>) none.getAccessibleProperty(FMEFreeModel.NAME_ROLE_NAME);
 		newFlexoConceptInstance.setFlexoActor(diagramElement.getName(), nameRole);
 		return newFlexoConceptInstance;
 	}

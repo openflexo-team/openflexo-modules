@@ -51,8 +51,8 @@ import javax.swing.ImageIcon;
 
 import org.openflexo.fme.FMEIconLibrary;
 import org.openflexo.fme.controller.action.FMEControllerActionInitializer;
-import org.openflexo.fme.model.FreeMetaModel;
-import org.openflexo.fme.model.FreeModel;
+import org.openflexo.fme.model.FMEFreeModel;
+import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.fme.view.menu.FMEMenuBar;
 import org.openflexo.foundation.FlexoEditor;
@@ -149,12 +149,12 @@ public class FMEController extends FlexoController {
 	public void selectAndFocusObject(FlexoObject object) {
 		if (object != null) {
 			logger.info("selectAndFocusObject " + object + "of " + object.getClass().getSimpleName());
-			if (object instanceof FreeModel) {
+			if (object instanceof FMEFreeModelInstance) {
 				setCurrentEditedObjectAsModuleView(object);
 			}
 			if (getCurrentPerspective() == FREE_MODELLING_PERSPECTIVE) {
-				if (object instanceof FreeModel) {
-					FREE_MODELLING_PERSPECTIVE.focusOnFreeModel((FreeModel) object);
+				if (object instanceof FMEFreeModelInstance) {
+					FREE_MODELLING_PERSPECTIVE.focusOnFreeModel((FMEFreeModelInstance) object);
 				}
 			}
 			getSelectionManager().setSelectedObject(object);
@@ -191,10 +191,10 @@ public class FMEController extends FlexoController {
 		if (object instanceof FreeModellingProject) {
 			return IconLibrary.OPENFLEXO_NOTEXT_16;
 		}
-		else if (object instanceof FreeModel) {
+		else if (object instanceof FMEFreeModelInstance) {
 			return FMEIconLibrary.DIAGRAM_ICON;
 		}
-		else if (object instanceof FreeMetaModel) {
+		else if (object instanceof FMEFreeModel) {
 			return FMEIconLibrary.FME_SMALL_ICON;
 		}
 		return super.iconForObject(object);

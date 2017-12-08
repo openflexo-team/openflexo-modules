@@ -47,8 +47,8 @@ import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.KeyStroke;
 
-import org.openflexo.fme.model.FreeMetaModel;
-import org.openflexo.fme.model.FreeModel;
+import org.openflexo.fme.model.FMEFreeModel;
+import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.InvalidArgumentException;
@@ -89,7 +89,7 @@ public class DeleteFlexoConceptObjectsInitializer
 							FreeModellingProjectNature fmeNature = action.getServiceManager().getProjectNatureService()
 									.getProjectNature(FreeModellingProjectNature.class);
 							FreeModellingProject fmeProject = getProject().asNature(fmeNature);
-							FreeMetaModel freeMM = fmeProject.getFreeMetaModel((VirtualModel) vm);
+							FMEFreeModel freeMM = fmeProject.getFreeMetaModel((VirtualModel) vm);
 							if (freeMM == null) {
 								// this concept belongs to a VirtualModel which is not a FreeMetaModel
 								// abort
@@ -101,7 +101,7 @@ public class DeleteFlexoConceptObjectsInitializer
 							}
 							// Lets see if there are instances of this concept in the project
 							List<FlexoConceptInstance> fciToBeDeleted = new ArrayList<>();
-							for (FreeModel freeModel : fmeProject.getFreeModels()) {
+							for (FMEFreeModelInstance freeModel : fmeProject.getFreeModels()) {
 								fciToBeDeleted.addAll(freeModel.getInstances(concept));
 							}
 
@@ -146,7 +146,7 @@ public class DeleteFlexoConceptObjectsInitializer
 								.getProjectNature(FreeModellingProjectNature.class);
 						FreeModellingProject fmeProject = getProject().asNature(fmeNature);
 						// This concept has been deleted
-						for (FreeModel freeModel : fmeProject.getFreeModels()) {
+						for (FMEFreeModelInstance freeModel : fmeProject.getFreeModels()) {
 							freeModel.getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null,
 									freeModel.getUsedFlexoConcepts());
 						}

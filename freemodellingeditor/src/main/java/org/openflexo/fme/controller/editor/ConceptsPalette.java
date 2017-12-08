@@ -45,7 +45,7 @@ import java.util.logging.Logger;
 import org.openflexo.fge.Drawing.DrawingTreeNode;
 import org.openflexo.fge.geom.FGEPoint;
 import org.openflexo.fme.controller.editor.DynamicPalette.GraphicalRepresentationSet;
-import org.openflexo.fme.model.FreeMetaModel;
+import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
@@ -122,7 +122,7 @@ public class ConceptsPalette extends ContextualPalette implements PropertyChange
 				FMLDiagramPaletteElementBinding binding = ms.getPaletteElementBinding(element);
 				if (binding != null) {
 					FlexoConcept concept = binding.getBoundFlexoConcept();
-					final ShapeRole conceptShapeRole = (ShapeRole) concept.getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
+					final ShapeRole conceptShapeRole = (ShapeRole) concept.getAccessibleProperty(FMEFreeModel.SHAPE_ROLE_NAME);
 					if (conceptShapeRole != null) {
 						conceptShapeRole.getGraphicalRepresentation().getPropertyChangeSupport()
 								.addPropertyChangeListener(new PropertyChangeListener() {

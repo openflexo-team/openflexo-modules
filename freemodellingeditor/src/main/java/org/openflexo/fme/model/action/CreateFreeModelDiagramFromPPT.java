@@ -43,8 +43,8 @@ import java.util.Vector;
 import java.util.logging.Logger;
 
 import org.apache.poi.hslf.model.Slide;
-import org.openflexo.fme.model.FreeMetaModel;
-import org.openflexo.fme.model.FreeModel;
+import org.openflexo.fme.model.FMEFreeModel;
+import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
@@ -61,9 +61,9 @@ import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 import org.openflexo.toolbox.StringUtils;
 
 /**
- * This action is used to create a new {@link FreeModel} in a {@link FreeModellingProject}<br>
+ * This action is used to create a new {@link FMEFreeModelInstance} in a {@link FreeModellingProject}<br>
  * 
- * New {@link FreeModel} might be created while a new associated {@link FreeMetaModel} is created, or using an existing one.
+ * New {@link FMEFreeModelInstance} might be created while a new associated {@link FMEFreeModel} is created, or using an existing one.
  * 
  * @author sylvain
  * 
@@ -72,35 +72,35 @@ public class CreateFreeModelDiagramFromPPT extends AbstractCreateFreeModelDiagra
 
 	private static final Logger logger = Logger.getLogger(CreateFreeModelDiagramFromPPT.class.getPackage().getName());
 
-	public static FlexoActionFactory<CreateFreeModelDiagramFromPPT, FreeMetaModel, FlexoObject> actionType = new FlexoActionFactory<CreateFreeModelDiagramFromPPT, FreeMetaModel, FlexoObject>(
+	public static FlexoActionFactory<CreateFreeModelDiagramFromPPT, FMEFreeModel, FlexoObject> actionType = new FlexoActionFactory<CreateFreeModelDiagramFromPPT, FMEFreeModel, FlexoObject>(
 			"create_diagram_from_ppt", FlexoActionFactory.newMenu, FlexoActionFactory.defaultGroup, FlexoActionFactory.ADD_ACTION_TYPE) {
 
 		/**
 		 * Factory method
 		 */
 		@Override
-		public CreateFreeModelDiagramFromPPT makeNewAction(FreeMetaModel focusedObject, Vector<FlexoObject> globalSelection,
+		public CreateFreeModelDiagramFromPPT makeNewAction(FMEFreeModel focusedObject, Vector<FlexoObject> globalSelection,
 				FlexoEditor editor) {
 			return new CreateFreeModelDiagramFromPPT(focusedObject, globalSelection, editor);
 		}
 
 		@Override
-		public boolean isVisibleForSelection(FreeMetaModel object, Vector<FlexoObject> globalSelection) {
+		public boolean isVisibleForSelection(FMEFreeModel object, Vector<FlexoObject> globalSelection) {
 			return true;
 		}
 
 		@Override
-		public boolean isEnabledForSelection(FreeMetaModel object, Vector<FlexoObject> globalSelection) {
+		public boolean isEnabledForSelection(FMEFreeModel object, Vector<FlexoObject> globalSelection) {
 			return true;
 		}
 
 	};
 
 	static {
-		FlexoObjectImpl.addActionForClass(CreateFreeModelDiagramFromPPT.actionType, FreeMetaModel.class);
+		FlexoObjectImpl.addActionForClass(CreateFreeModelDiagramFromPPT.actionType, FMEFreeModel.class);
 	}
 
-	CreateFreeModelDiagramFromPPT(FreeMetaModel focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+	CreateFreeModelDiagramFromPPT(FMEFreeModel focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 
@@ -153,9 +153,9 @@ public class CreateFreeModelDiagramFromPPT extends AbstractCreateFreeModelDiagra
 
 	private FlexoConceptInstance createFlexoConceptInstanceFromDiagramShape(DiagramShape diagramShape) {
 		FlexoConceptInstance newFlexoConceptInstance = getFreeModel().getVirtualModelInstance().makeNewFlexoConceptInstance(none);
-		ShapeRole shapeRole = (ShapeRole) none.getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
+		ShapeRole shapeRole = (ShapeRole) none.getAccessibleProperty(FMEFreeModel.SHAPE_ROLE_NAME);
 		newFlexoConceptInstance.setFlexoActor(diagramShape, shapeRole);
-		PrimitiveRole<String> nameRole = (PrimitiveRole<String>) none.getAccessibleProperty(FreeMetaModel.NAME_ROLE_NAME);
+		PrimitiveRole<String> nameRole = (PrimitiveRole<String>) none.getAccessibleProperty(FMEFreeModel.NAME_ROLE_NAME);
 		newFlexoConceptInstance.setFlexoActor(diagramShape.getName(), nameRole);
 		return newFlexoConceptInstance;
 	}

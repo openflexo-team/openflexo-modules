@@ -41,8 +41,8 @@ package org.openflexo.fme.model.action;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import org.openflexo.fme.model.FreeMetaModel;
-import org.openflexo.fme.model.FreeModel;
+import org.openflexo.fme.model.FMEFreeModel;
+import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
@@ -50,9 +50,9 @@ import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.action.FlexoActionFactory;
 
 /**
- * This action is used to create a new {@link FreeModel} in a {@link FreeModellingProject}<br>
+ * This action is used to create a new {@link FMEFreeModelInstance} in a {@link FreeModellingProject}<br>
  * 
- * New {@link FreeModel} might be created while a new associated {@link FreeMetaModel} is created, or using an existing one.
+ * New {@link FMEFreeModelInstance} might be created while a new associated {@link FMEFreeModel} is created, or using an existing one.
  * 
  * @author sylvain
  * 

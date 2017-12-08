@@ -45,8 +45,8 @@ import org.openflexo.ApplicationContext;
 import org.openflexo.fge.ShapeGraphicalRepresentation;
 import org.openflexo.fme.FreeModellingEditor;
 import org.openflexo.fme.controller.editor.DynamicPalette.GraphicalRepresentationSet;
-import org.openflexo.fme.model.FreeMetaModel;
-import org.openflexo.fme.model.FreeModel;
+import org.openflexo.fme.model.FMEFreeModel;
+import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.FlexoEditor;
@@ -147,7 +147,7 @@ public class DeclareInstanceOfExistingConcept extends FMEAction<DeclareInstanceO
 		return getFreeModellingProjectNature().getFreeModellingProject(project);
 	}
 
-	public FreeModel getFreeModel() throws InvalidArgumentException {
+	public FMEFreeModelInstance getFreeModel() throws InvalidArgumentException {
 		return getFreeModellingProject().getFreeModel((FMLRTVirtualModelInstance) getFocusedObject().getVirtualModelInstance());
 	}
 
@@ -192,7 +192,7 @@ public class DeclareInstanceOfExistingConcept extends FMEAction<DeclareInstanceO
 	@Override
 	protected void doAction(Object context) throws FlexoException {
 
-		FreeModel freeModel = getFreeModel();
+		FMEFreeModelInstance freeModel = getFreeModel();
 		if (freeModel == null) {
 			throw new InvalidArgumentException("FlexoConceptInstance does not belong to any FreeModel");
 		}
@@ -201,12 +201,12 @@ public class DeclareInstanceOfExistingConcept extends FMEAction<DeclareInstanceO
 
 		// Retrieve shape property of this FC
 		ShapeRole currentShapeRole = (ShapeRole) flexoConceptInstance.getFlexoConcept()
-				.getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
+				.getAccessibleProperty(FMEFreeModel.SHAPE_ROLE_NAME);
 
 		// Retrieve actual shape element
 		DiagramShape shapeElement = flexoConceptInstance.getFlexoActor(currentShapeRole);
 
-		ShapeRole newShapeRole = (ShapeRole) getConcept().getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
+		ShapeRole newShapeRole = (ShapeRole) getConcept().getAccessibleProperty(FMEFreeModel.SHAPE_ROLE_NAME);
 
 		switch (getGrStrategy()) {
 			case RedefineShapeOfConcept:

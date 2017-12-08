@@ -42,8 +42,8 @@ import java.io.File;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import org.openflexo.fme.model.FreeMetaModel;
-import org.openflexo.fme.model.FreeModel;
+import org.openflexo.fme.model.FMEFreeModel;
+import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
@@ -70,9 +70,9 @@ import org.openflexo.technologyadapter.diagram.rm.DiagramResource;
 import org.openflexo.toolbox.StringUtils;
 
 /**
- * This action is used to create a new {@link FreeModel} in a {@link FreeModellingProject}<br>
+ * This action is used to create a new {@link FMEFreeModelInstance} in a {@link FreeModellingProject}<br>
  * 
- * New {@link FreeModel} might be created while a new associated {@link FreeMetaModel} is created, or using an existing one.
+ * New {@link FMEFreeModelInstance} might be created while a new associated {@link FMEFreeModel} is created, or using an existing one.
  * 
  * @author sylvain
  * 
@@ -81,8 +81,8 @@ public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> exten
 
 	private static final Logger logger = Logger.getLogger(AbstractCreateFreeModel.class.getPackage().getName());
 
-	private FreeMetaModel freeMetaModel;
-	protected FreeModel freeModel;
+	private FMEFreeModel freeMetaModel;
+	protected FMEFreeModelInstance freeModel;
 	private boolean createNewMetaModel = true;
 	private String freeModelName;
 	private String freeModelDescription;
@@ -106,9 +106,9 @@ public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> exten
 		freeModel = createNewFreeModel();
 	}
 
-	protected FreeModel createNewFreeModel() {
+	protected FMEFreeModelInstance createNewFreeModel() {
 
-		FreeModel returned = null;
+		FMEFreeModelInstance returned = null;
 
 		logger.info("Create free model");
 
@@ -182,14 +182,14 @@ public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> exten
 		return returned;
 	}
 
-	private FreeMetaModel createNewMetaModel(String metaModelName) {
+	private FMEFreeModel createNewMetaModel(String metaModelName) {
 
 		// First we create the diagram specification
 		System.out.println("Creating DiagramSpecification...");
 		CreateDiagramSpecification createDS = CreateDiagramSpecification.actionType
 				.makeNewEmbeddedAction(getFocusedObject().getDiagramSpecificationsFolder(), null, this);
 		createDS.setNewDiagramSpecificationName(metaModelName);
-		createDS.setNewDiagramSpecificationURI(FreeMetaModel.getDiagramSpecificationURI(getFocusedObject().getProject(), metaModelName));
+		createDS.setNewDiagramSpecificationURI(FMEFreeModel.getDiagramSpecificationURI(getFocusedObject().getProject(), metaModelName));
 		createDS.doAction();
 		DiagramSpecification diagramSpecification = createDS.getNewDiagramSpecification();
 		System.out.println("DiagramSpecification has been created: " + diagramSpecification);
@@ -200,7 +200,7 @@ public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> exten
 		createExampleDiagram.doAction();
 
 		CreateDiagramPalette createPalette = CreateDiagramPalette.actionType.makeNewEmbeddedAction(diagramSpecification, null, this);
-		createPalette.setNewPaletteName(FreeMetaModel.PALETTE_NAME);
+		createPalette.setNewPaletteName(FMEFreeModel.PALETTE_NAME);
 		createPalette.doAction();
 		System.out.println("Palette has been created: " + createPalette.getNewPalette());
 
@@ -218,7 +218,7 @@ public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> exten
 		createMS.setTechnologyAdapter(
 				getServiceManager().getTechnologyAdapterService().getTechnologyAdapter(DiagramTechnologyAdapter.class));
 		createMS.setModelSlotClass(TypedDiagramModelSlot.class);
-		createMS.setModelSlotName(FreeMetaModel.DIAGRAM_MODEL_SLOT_NAME);
+		createMS.setModelSlotName(FMEFreeModel.DIAGRAM_MODEL_SLOT_NAME);
 		createMS.setMmRes(diagramSpecification.getResource());
 		createMS.doAction();
 
@@ -262,15 +262,15 @@ public class AbstractCreateFreeModel<A extends AbstractCreateFreeModel<A>> exten
 	 * 
 	 * @return
 	 */
-	public FreeModel getFreeModel() {
+	public FMEFreeModelInstance getFreeModel() {
 		return freeModel;
 	}
 
-	public FreeMetaModel getFreeMetaModel() {
+	public FMEFreeModel getFreeMetaModel() {
 		return freeMetaModel;
 	}
 
-	public void setFreeMetaModel(FreeMetaModel freeMetaModel) {
+	public void setFreeMetaModel(FMEFreeModel freeMetaModel) {
 		boolean wasValid = isValid();
 		this.freeMetaModel = freeMetaModel;
 		getPropertyChangeSupport().firePropertyChange("freeMetaModel", null, freeMetaModel);

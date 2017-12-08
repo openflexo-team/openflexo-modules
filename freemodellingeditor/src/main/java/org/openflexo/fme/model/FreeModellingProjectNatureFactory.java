@@ -36,35 +36,38 @@
  * 
  */
 
-package org.openflexo.fme.widget;
+package org.openflexo.fme.model;
 
 import java.util.logging.Logger;
 
-import org.openflexo.fme.controller.FMEController;
-import org.openflexo.fme.model.FMEFreeModelInstance;
+import org.openflexo.fme.model.action.GivesFMENature;
+import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoProject;
-import org.openflexo.rm.Resource;
-import org.openflexo.rm.ResourceLocator;
-import org.openflexo.view.FIBBrowserView;
+import org.openflexo.foundation.nature.DefaultProjectNatureFactoryImpl;
+import org.openflexo.logging.FlexoLogger;
 
 /**
- * Browser allowing to browse all resources of a {@link FlexoProject}<br>
+ * Factory for {@link FreeModellingProjectNature}
  * 
- * @author sguerin
+ * @author sylvain
  * 
  */
-@SuppressWarnings("serial")
-public class FIBRepresentedConceptBrowser extends FIBBrowserView<FMEFreeModelInstance> {
-	static final Logger logger = Logger.getLogger(FIBRepresentedConceptBrowser.class.getPackage().getName());
+public class FreeModellingProjectNatureFactory extends DefaultProjectNatureFactoryImpl<FreeModellingProjectNature> {
 
-	public static final Resource FIB_FILE = ResourceLocator.locateResource("Fib/Widget/FIBRepresentedConceptBrowser.fib");
+	static final Logger logger = FlexoLogger.getLogger(FreeModellingProjectNatureFactory.class.getPackage().getName());
 
-	public FIBRepresentedConceptBrowser(FMEFreeModelInstance freeModel, FMEController controller) {
-		super(freeModel, controller, FIB_FILE, controller.getModuleLocales());
-		// System.out.println("Showing browser with " + project);
+	public FreeModellingProjectNatureFactory() {
+		super(FreeModellingProjectNature.class);
 	}
 
-	public void setFreeModel(FMEFreeModelInstance freeModel) {
-		setDataObject(freeModel);
+	@Override
+	public FreeModellingProjectNature givesNature(FlexoProject<?> project, FlexoEditor editor) {
+		System.out.println("Tiens, faudrait donner la nature FME au projet " + project);
+
+		GivesFMENature givesFMENature = GivesFMENature.actionType.makeNewAction(project, null, editor);
+		givesFMENature.doAction();
+
+		return givesFMENature.getNewNature();
 	}
+
 }

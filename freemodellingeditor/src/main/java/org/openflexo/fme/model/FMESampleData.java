@@ -36,35 +36,36 @@
  * 
  */
 
-package org.openflexo.fme.widget;
+package org.openflexo.fme.model;
 
 import java.util.logging.Logger;
 
-import org.openflexo.fme.controller.FMEController;
-import org.openflexo.fme.model.FMEFreeModelInstance;
-import org.openflexo.foundation.FlexoProject;
-import org.openflexo.rm.Resource;
-import org.openflexo.rm.ResourceLocator;
-import org.openflexo.view.FIBBrowserView;
+import org.openflexo.foundation.fml.rt.VirtualModelInstance;
+import org.openflexo.foundation.nature.VirtualModelInstanceBasedNatureObject;
+import org.openflexo.logging.FlexoLogger;
+import org.openflexo.model.annotations.ImplementationClass;
+import org.openflexo.model.annotations.ModelEntity;
+import org.openflexo.model.annotations.XMLElement;
 
 /**
- * Browser allowing to browse all resources of a {@link FlexoProject}<br>
+ * Defines container of sample data discovered during free-modelling<br>
  * 
- * @author sguerin
+ * Rely on a {@link VirtualModelInstance}
+ * 
+ * Note that in a {@link FreeModellingProjectNature}, {@link FMESampleData} is conform to {@link FMEConceptualModel}
+ * 
+ * @author sylvain
  * 
  */
-@SuppressWarnings("serial")
-public class FIBRepresentedConceptBrowser extends FIBBrowserView<FMEFreeModelInstance> {
-	static final Logger logger = Logger.getLogger(FIBRepresentedConceptBrowser.class.getPackage().getName());
+@ModelEntity
+@XMLElement
+@ImplementationClass(FMESampleData.FMEConceptualModelImpl.class)
+public interface FMESampleData extends VirtualModelInstanceBasedNatureObject<FreeModellingProjectNature> {
 
-	public static final Resource FIB_FILE = ResourceLocator.locateResource("Fib/Widget/FIBRepresentedConceptBrowser.fib");
+	public abstract class FMEConceptualModelImpl extends VirtualModelInstanceBasedNatureObjectImpl<FreeModellingProjectNature>
+			implements FMESampleData {
 
-	public FIBRepresentedConceptBrowser(FMEFreeModelInstance freeModel, FMEController controller) {
-		super(freeModel, controller, FIB_FILE, controller.getModuleLocales());
-		// System.out.println("Showing browser with " + project);
-	}
+		private static final Logger logger = FlexoLogger.getLogger(FMESampleData.class.getPackage().getName());
 
-	public void setFreeModel(FMEFreeModelInstance freeModel) {
-		setDataObject(freeModel);
 	}
 }
