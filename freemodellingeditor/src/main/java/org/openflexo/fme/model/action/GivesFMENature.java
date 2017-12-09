@@ -99,7 +99,7 @@ public class GivesFMENature extends GivesNatureAction<GivesFMENature, FreeModell
 		FlexoObjectImpl.addActionForClass(GivesFMENature.actionType, FlexoProject.class);
 	}
 
-	private enum ConceptualModelChoice {
+	public enum ConceptualModelChoice {
 		CreateNewVirtualModel, SelectExistingVirtualModel
 	}
 
@@ -259,7 +259,7 @@ public class GivesFMENature extends GivesNatureAction<GivesFMENature, FreeModell
 
 	public String getNewConceptualModelRelativePath() {
 		if (newConceptualModelRelativePath == null) {
-			return "ConceptualModel";
+			return "";
 		}
 		return newConceptualModelRelativePath;
 	}

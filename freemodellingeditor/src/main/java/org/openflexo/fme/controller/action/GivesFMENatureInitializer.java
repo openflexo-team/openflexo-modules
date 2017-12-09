@@ -43,24 +43,26 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
+import org.openflexo.components.wizard.Wizard;
+import org.openflexo.components.wizard.WizardDialog;
 import org.openflexo.fme.FMEIconLibrary;
 import org.openflexo.fme.controller.FMEPerspective;
-import org.openflexo.fme.model.action.ConvertToFreeModellingEditorProject;
+import org.openflexo.fme.model.action.GivesFMENature;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
+import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
-import org.openflexo.foundation.action.FlexoActionFactory;
+import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 
-public class ConvertToFreeModellingEditorProjectInitializer extends
-		ActionInitializer<ConvertToFreeModellingEditorProject, FlexoProject, FlexoObject> {
+public class GivesFMENatureInitializer extends ActionInitializer<GivesFMENature, FlexoProject<?>, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
-	ConvertToFreeModellingEditorProjectInitializer(FMEControllerActionInitializer actionInitializer) {
-		super(ConvertToFreeModellingEditorProject.actionType, actionInitializer);
+	GivesFMENatureInitializer(FMEControllerActionInitializer actionInitializer) {
+		super(GivesFMENature.actionType, actionInitializer);
 	}
 
 	@Override
@@ -69,25 +71,32 @@ public class ConvertToFreeModellingEditorProjectInitializer extends
 	}
 
 	@Override
-	protected FlexoActionInitializer<ConvertToFreeModellingEditorProject> getDefaultInitializer() {
-		return new FlexoActionInitializer<ConvertToFreeModellingEditorProject>() {
+	protected FlexoActionInitializer<GivesFMENature> getDefaultInitializer() {
+		return new FlexoActionInitializer<GivesFMENature>() {
 			@Override
-			public boolean run(EventObject e, ConvertToFreeModellingEditorProject action) {
+			public boolean run(EventObject e, GivesFMENature action) {
+				Wizard wizard = new GivesFMENatureWizard(action, getController());
+				WizardDialog dialog = new WizardDialog(wizard, getController());
+				dialog.showDialog();
+				if (dialog.getStatus() != Status.VALIDATED) {
+					// Operation cancelled
+					return false;
+				}
 				return true;
 			}
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<ConvertToFreeModellingEditorProject> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<ConvertToFreeModellingEditorProject>() {
+	protected FlexoActionFinalizer<GivesFMENature> getDefaultFinalizer() {
+		return new FlexoActionFinalizer<GivesFMENature>() {
 			@Override
-			public boolean run(EventObject e, ConvertToFreeModellingEditorProject action) {
+			public boolean run(EventObject e, GivesFMENature action) {
 				if (getController().getCurrentPerspective() instanceof FMEPerspective) {
 					((FMEPerspective) getController().getCurrentPerspective()).setProject(action.getFocusedObject());
 				}
-				getController().selectAndFocusObject(
-						action.getFreeModellingProjectNature().getFreeModellingProject(action.getFocusedObject()));
+				// getController()
+				// .selectAndFocusObject(action.getFreeModellingProjectNature().getFreeModellingProject(action.getFocusedObject()));
 				return true;
 			}
 		};

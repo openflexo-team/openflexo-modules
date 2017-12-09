@@ -39,7 +39,6 @@
 package org.openflexo.fme.model;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -50,11 +49,16 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openflexo.fge.geom.FGEPoint;
-import org.openflexo.fme.model.action.CreateFreeModel;
+import org.openflexo.fme.model.action.CreateFMEDiagramFreeModel;
+import org.openflexo.fme.model.action.CreateNewConceptFromNoneConcept;
+import org.openflexo.fme.model.action.DeclareInstanceOfExistingConcept;
 import org.openflexo.fme.model.action.DropShape;
+import org.openflexo.fme.model.action.InstantiateFMEDiagramFreeModel;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoProject;
+import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
+import org.openflexo.foundation.resource.SaveResourceException;
 import org.openflexo.foundation.test.OpenflexoProjectAtRunTimeTestCase;
 import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
@@ -70,12 +74,14 @@ import org.openflexo.test.TestOrder;
 @RunWith(OrderedRunner.class)
 public class TestCreateFreeModelWithInstances extends OpenflexoProjectAtRunTimeTestCase {
 
-	static FlexoEditor editor;
-	static FlexoProject<File> project;
-	static FreeModellingProject fmProject;
-	static FMEFreeModelInstance freeModel1;
-	static FMEFreeModelInstance freeModel2;
-	static FMEFreeModel freeMetaModel;
+	private static FlexoEditor editor;
+	private static FlexoProject<File> project;
+	private static FreeModellingProjectNature nature;
+	private static FMEDiagramFreeModelInstance freeModelInstance;
+	private static FMEDiagramFreeModel freeModel;
+
+	private static FlexoConceptInstance tutu;
+	private static FlexoConceptInstance tutu2;
 
 	@Test
 	@TestOrder(1)
@@ -83,58 +89,155 @@ public class TestCreateFreeModelWithInstances extends OpenflexoProjectAtRunTimeT
 
 		instanciateTestServiceManager(DiagramTechnologyAdapter.class);
 
-		FreeModellingProjectNature FREE_MODELLING_NATURE = serviceManager.getProjectNatureService()
-				.getProjectNature(FreeModellingProjectNature.class);
-		assertNotNull(FREE_MODELLING_NATURE);
-
-		editor = createStandaloneProject("TestFMEProject", FREE_MODELLING_NATURE);
+		editor = createStandaloneProject("TestFMEProject", FreeModellingProjectNature.class);
 		project = (FlexoProject<File>) editor.getProject();
 		System.out.println("Created project " + project.getProjectDirectory());
 		assertTrue(project.getProjectDirectory().exists());
-		assertTrue(project.hasNature(FREE_MODELLING_NATURE));
-		fmProject = FREE_MODELLING_NATURE.getFreeModellingProject(project);
-		assertNotNull(fmProject);
+		assertTrue(project.hasNature(FreeModellingProjectNature.class));
+		assertNotNull(nature = project.getNature(FreeModellingProjectNature.class));
 	}
 
 	@Test
 	@TestOrder(2)
-	public void testCreateFreeModel() {
-		CreateFreeModel action = CreateFreeModel.actionType.makeNewAction(fmProject, null, editor);
-		action.setFreeModelName("FreeModel1");
-		assertTrue(action.isValid());
+	public void testCreateFreeModel() throws SaveResourceException {
+
+		CreateFMEDiagramFreeModel action = CreateFMEDiagramFreeModel.actionType.makeNewAction(nature, null, editor);
+		action.setFreeModelName("FreeModel");
+		action.setFreeModelDescription("A description");
 		action.doAction();
 		assertTrue(action.hasActionExecutionSucceeded());
-		freeMetaModel = action.getFreeMetaModel();
-		assertNotNull(freeMetaModel);
-		freeModel1 = action.getFreeModel();
-		assertNotNull(freeModel1);
-	}
-
-	@Test
-	@TestOrder(3)
-	public void testAvoidDuplicatedFreeModel() {
-		CreateFreeModel action = CreateFreeModel.actionType.makeNewAction(fmProject, null, editor);
-		action.setFreeModelName("FreeModel1");
-		assertFalse(action.isValid());
+		freeModel = action.getNewFreeModel();
+		assertNotNull(freeModel);
+		freeModel.getAccessedVirtualModelResource().save(null);
 	}
 
 	@Test
 	@TestOrder(4)
-	public void testCreateInstance() {
-		DropShape action = DropShape.actionType.makeNewAction(freeModel1.getDiagram(), null, editor);
-		action.setFreeModel(freeModel1);
+	public void testInstantiateFreeModel() throws SaveResourceException {
+
+		InstantiateFMEDiagramFreeModel action = InstantiateFMEDiagramFreeModel.actionType.makeNewAction(freeModel, null, editor);
+		action.setFreeModelInstanceName("FreeModelInstance");
+		action.setFreeModelInstanceDescription("A description");
+		action.doAction();
+
+		freeModelInstance = action.getNewFreeModelInstance();
+		assertNotNull(freeModelInstance);
+		assertSame(freeModel.getFreeModelInstances().get(0), freeModelInstance);
+
+		freeModelInstance.getAccessedVirtualModelInstance().getResource().save(null);
+	}
+
+	@Test
+	@TestOrder(5)
+	public void testCreateInstance() throws SaveResourceException {
+		DropShape action = DropShape.actionType.makeNewAction(freeModelInstance.getDiagram(), null, editor);
+		action.setDiagramFreeModelInstance(freeModelInstance);
 		action.setDropLocation(new FGEPoint(12, 34));
 		action.doAction();
 		assertTrue(action.hasActionExecutionSucceeded());
-		List<FlexoConceptInstance> result = freeModel1.getInstances(freeModel1.getMetaModel().getNoneFlexoConcept(editor, action));
+		List<FlexoConceptInstance> result = freeModelInstance
+				.getInstances(freeModelInstance.getFreeModel().getNoneFlexoConcept(editor, action));
 		assertEquals(1, result.size());
-		FlexoConceptInstance tutu = result.get(0);
+		tutu = result.get(0);
 		assertNotNull(tutu);
-		DiagramShape laShapeDeLinstance = tutu.getFlexoActor(FMEFreeModel.SHAPE_ROLE_NAME);
+		DiagramShape laShapeDeLinstance = tutu.getFlexoActor(FMEDiagramFreeModel.SHAPE_ROLE_NAME);
 		assertNotNull(laShapeDeLinstance);
-		List<DiagramShape> lesShapes = freeModel1.getDiagram().getShapes();
+		List<DiagramShape> lesShapes = freeModelInstance.getDiagram().getShapes();
 		assertNotNull(lesShapes);
 		assertEquals(1, lesShapes.size());
 		assertSame(laShapeDeLinstance, lesShapes.get(0));
+
+		assertEquals(FMEFreeModel.NONE_FLEXO_CONCEPT_NAME, tutu.getFlexoConcept().getName());
+
+	}
+
+	private static FlexoConcept tutuConcept;
+
+	@Test
+	@TestOrder(6)
+	public void testMakeNewConceptFromTutu() throws SaveResourceException {
+
+		assertEquals(1, freeModelInstance.getInstances(freeModelInstance.getFreeModel().getNoneFlexoConcept(editor, null)).size());
+
+		CreateNewConceptFromNoneConcept action = CreateNewConceptFromNoneConcept.actionType.makeNewAction(tutu, null, editor);
+		action.setNewConceptName("TutuConcept");
+		action.setNewConceptDescription("This is the description for TutuConcept");
+
+		assertEquals(nature, action.getFreeModellingProjectNature());
+		assertEquals(freeModel, action.getFMEFreeModel());
+		assertEquals(freeModelInstance, action.getFMEFreeModelInstance());
+
+		action.doAction();
+		assertTrue(action.hasActionExecutionSucceeded());
+
+		assertEquals("TutuConceptGR", tutu.getFlexoConcept().getName());
+
+		assertEquals(0, freeModelInstance.getInstances(freeModelInstance.getFreeModel().getNoneFlexoConcept(editor, null)).size());
+
+		System.out.println("concepts: " + nature.getConceptualModel().getAccessedVirtualModel().getFlexoConcepts());
+		assertEquals(1, nature.getConceptualModel().getAccessedVirtualModel().getFlexoConcepts().size());
+		tutuConcept = nature.getConceptualModel().getAccessedVirtualModel().getFlexoConcepts().get(0);
+
+		System.out.println("concepts GR: " + freeModel.getAccessedVirtualModel().getFlexoConcepts());
+		assertEquals(2, freeModel.getAccessedVirtualModel().getFlexoConcepts().size());
+
+		System.out.println("concepts instances: " + nature.getSampleData().getAccessedVirtualModelInstance().getFlexoConceptInstances());
+		assertEquals(1, nature.getSampleData().getAccessedVirtualModelInstance().getFlexoConceptInstances().size());
+
+		System.out.println("GR concepts instances: " + freeModelInstance.getAccessedVirtualModelInstance().getFlexoConceptInstances());
+		assertEquals(1, freeModelInstance.getAccessedVirtualModelInstance().getFlexoConceptInstances().size());
+
+		project.save();
+		project.saveModifiedResources(null);
+
+	}
+
+	@Test
+	@TestOrder(7)
+	public void testCreateTutu2Instance() throws SaveResourceException {
+
+		assertEquals(0, freeModelInstance.getInstances(freeModelInstance.getFreeModel().getNoneFlexoConcept(editor, null)).size());
+
+		// Create the shape as an instance of NoneGR
+		DropShape action = DropShape.actionType.makeNewAction(freeModelInstance.getDiagram(), null, editor);
+		action.setDiagramFreeModelInstance(freeModelInstance);
+		action.setDropLocation(new FGEPoint(56, 78));
+		action.doAction();
+		assertTrue(action.hasActionExecutionSucceeded());
+		tutu2 = action.getNewFlexoConceptInstance();
+
+		List<FlexoConceptInstance> result = freeModelInstance
+				.getInstances(freeModelInstance.getFreeModel().getNoneFlexoConcept(editor, action));
+		assertEquals(1, result.size());
+		assertSame(tutu2, result.get(0));
+
+		DeclareInstanceOfExistingConcept declareAction = DeclareInstanceOfExistingConcept.actionType.makeNewAction(tutu2, null, editor);
+		declareAction.setConcept(tutuConcept);
+
+		assertEquals(nature, declareAction.getFreeModellingProjectNature());
+		assertEquals(freeModel, declareAction.getFMEFreeModel());
+		assertEquals(freeModelInstance, declareAction.getFMEFreeModelInstance());
+
+		declareAction.doAction();
+		assertTrue(declareAction.hasActionExecutionSucceeded());
+
+		assertEquals("TutuConceptGR", tutu.getFlexoConcept().getName());
+		assertEquals(0, freeModelInstance.getInstances(freeModelInstance.getFreeModel().getNoneFlexoConcept(editor, null)).size());
+
+		System.out.println("concepts: " + nature.getConceptualModel().getAccessedVirtualModel().getFlexoConcepts());
+		assertEquals(1, nature.getConceptualModel().getAccessedVirtualModel().getFlexoConcepts().size());
+
+		System.out.println("concepts GR: " + freeModel.getAccessedVirtualModel().getFlexoConcepts());
+		assertEquals(2, freeModel.getAccessedVirtualModel().getFlexoConcepts().size());
+
+		System.out.println("concepts instances: " + nature.getSampleData().getAccessedVirtualModelInstance().getFlexoConceptInstances());
+		assertEquals(2, nature.getSampleData().getAccessedVirtualModelInstance().getFlexoConceptInstances().size());
+
+		System.out.println("GR concepts instances: " + freeModelInstance.getAccessedVirtualModelInstance().getFlexoConceptInstances());
+		assertEquals(2, freeModelInstance.getAccessedVirtualModelInstance().getFlexoConceptInstances().size());
+
+		project.save();
+		project.saveModifiedResources(null);
+
 	}
 }

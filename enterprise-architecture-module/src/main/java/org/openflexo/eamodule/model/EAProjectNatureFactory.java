@@ -51,7 +51,7 @@ import org.openflexo.foundation.FlexoServiceManager;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.rm.FMLRTVirtualModelInstanceResource;
-import org.openflexo.foundation.nature.ProjectNature;
+import org.openflexo.foundation.nature.DefaultProjectNatureFactoryImpl;
 import org.openflexo.foundation.nature.ProjectNatureService;
 import org.openflexo.foundation.resource.ResourceLoadingCancelledException;
 import org.openflexo.model.exceptions.ModelDefinitionException;
@@ -66,7 +66,7 @@ import org.openflexo.modelers.ModelersConstants;
  * 
  * @author sylvain
  */
-public class EAProjectNatureFactory implements ProjectNature<EAProjectNatureFactory, EAProject> {
+public class EAProjectNatureFactory implements DefaultProjectNatureFactoryImpl<EAProjectNature> {
 
 	private static final Logger LOGGER = Logger.getLogger(EAProjectNatureFactory.class.getPackage().getName());
 

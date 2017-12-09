@@ -1,4 +1,5 @@
 a_diagram_with_that_name_already_exists=A diagram with that name already exists
+configure_conceptual_model=Configure conceptual model
 configure_new_concept=Configure new concept
 create_diagram_from_ppt=Create diagram from PowerPoint
 create_diagram_from_ppt_slide=Create a diagram from a powerpoint slide
@@ -9,6 +10,7 @@ create_new_concept=Create new concept
 declare_instance_of_existing_concept=Declare as an instance of existing concept
 describe_free_model=Describe free model
 describe_new_diagram=Describe new diagram
+gives_project_free_modelling_nature=Gives project free modelling nature
 it_is_recommanded_to_describe_free_model=It is recommanded to describe free model
 it_is_recommanded_to_describe_new_diagram=It is recommanded to describe new diagram
 new=New

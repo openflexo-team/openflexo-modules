@@ -134,7 +134,7 @@ public class FreeShapesPalette extends CommonPalette {
 		}
 
 		DropShape action = DropShape.actionType.makeNewAction(container, null, getEditor().getFlexoController().getEditor());
-		action.setFreeModel(getEditor().getFreeModel());
+		action.setDiagramFreeModelInstance(getEditor().getDiagramFreeModelInstance());
 		action.setGraphicalRepresentation(shapeGR);
 		action.setDropLocation(dropLocation);
 

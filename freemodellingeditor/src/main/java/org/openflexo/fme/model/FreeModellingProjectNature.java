@@ -43,7 +43,9 @@ import java.util.logging.Logger;
 
 import org.openflexo.ApplicationContext;
 import org.openflexo.fme.FreeModellingEditor;
+import org.openflexo.foundation.fml.FlexoRole;
 import org.openflexo.foundation.fml.rm.VirtualModelResourceFactory;
+import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.nature.ProjectNature;
 import org.openflexo.localization.LocalizedDelegate;
 import org.openflexo.logging.FlexoLogger;
@@ -110,6 +112,10 @@ public interface FreeModellingProjectNature extends ProjectNature {
 
 	public FMEFreeModel getFreeModel(String freeModelName);
 
+	public String getInstanceName(FlexoConceptInstance flexoConceptInstance);
+
+	public void setInstanceName(FlexoConceptInstance flexoConceptInstance, String value);
+
 	public abstract class FreeModellingProjectNatureImpl extends ProjectNatureImpl implements FreeModellingProjectNature {
 
 		@SuppressWarnings("unused")
@@ -135,6 +141,22 @@ public interface FreeModellingProjectNature extends ProjectNature {
 						.getLoadedModuleInstance().getLocales();
 			}
 			return super.getLocales();
+		}
+
+		@Override
+		public String getInstanceName(FlexoConceptInstance flexoConceptInstance) {
+			System.out.println("TODO: refactor this");
+			FlexoRole<String> nameRole = (FlexoRole<String>) flexoConceptInstance.getFlexoConcept()
+					.getAccessibleProperty(FMEFreeModel.NAME_ROLE_NAME);
+			return flexoConceptInstance.getFlexoActor(nameRole);
+		}
+
+		@Override
+		public void setInstanceName(FlexoConceptInstance flexoConceptInstance, String value) {
+			System.out.println("TODO: refactor this");
+			FlexoRole<String> nameRole = (FlexoRole<String>) flexoConceptInstance.getFlexoConcept()
+					.getAccessibleProperty(FMEFreeModel.NAME_ROLE_NAME);
+			flexoConceptInstance.setFlexoActor(value, nameRole);
 		}
 
 	}

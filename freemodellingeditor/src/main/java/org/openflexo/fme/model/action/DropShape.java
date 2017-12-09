@@ -43,13 +43,12 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import org.openflexo.ApplicationContext;
 import org.openflexo.fge.ShapeGraphicalRepresentation;
 import org.openflexo.fge.ShapeGraphicalRepresentation.LocationConstraints;
 import org.openflexo.fge.geom.FGEPoint;
-import org.openflexo.fme.FreeModellingEditor;
+import org.openflexo.fme.model.FMEDiagramFreeModel;
+import org.openflexo.fme.model.FMEDiagramFreeModelInstance;
 import org.openflexo.fme.model.FMEFreeModel;
-import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
@@ -58,7 +57,6 @@ import org.openflexo.foundation.fml.FlexoBehaviourParameter;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.resource.SaveResourceException;
-import org.openflexo.localization.LocalizedDelegate;
 import org.openflexo.technologyadapter.diagram.fml.DropScheme;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
 import org.openflexo.technologyadapter.diagram.model.DiagramContainerElement;
@@ -102,7 +100,7 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 		FlexoObjectImpl.addActionForClass(DropShape.actionType, DiagramContainerElement.class);
 	}
 
-	private FMEFreeModelInstance freeModel;
+	private FMEDiagramFreeModelInstance diagramFreeModelInstance;
 	private DiagramContainerElement<?> parent;
 	private ShapeGraphicalRepresentation graphicalRepresentation;
 	private FlexoConcept concept;
@@ -116,15 +114,6 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 	}
 
 	@Override
-	public LocalizedDelegate getLocales() {
-		if (getServiceManager() instanceof ApplicationContext) {
-			return ((ApplicationContext) getServiceManager()).getModuleLoader().getModule(FreeModellingEditor.class)
-					.getLoadedModuleInstance().getLocales();
-		}
-		return super.getLocales();
-	}
-
-	@Override
 	protected void doAction(Object context) throws SaveResourceException {
 
 		FlexoConcept concept = getConcept();
@@ -133,8 +122,9 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 
 		// When non concept supplied, use (eventually creates) None concept
 		if (concept == null) {
-			noneConceptIsExisting = freeModel.getMetaModel().getVirtualModel().getFlexoConcept(FMEFreeModel.NONE_FLEXO_CONCEPT) != null;
-			concept = freeModel.getMetaModel().getNoneFlexoConcept(getEditor(), this);
+			noneConceptIsExisting = diagramFreeModelInstance.getFreeModel().getAccessedVirtualModel()
+					.getFlexoConcept(FMEFreeModel.NONE_FLEXO_CONCEPT_NAME) != null;
+			concept = diagramFreeModelInstance.getFreeModel().getNoneFlexoConcept(getEditor(), this);
 		}
 
 		List<DropScheme> dsList = concept.getFlexoBehaviours(DropScheme.class);
@@ -143,10 +133,11 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 
 			DropScheme dropScheme = dsList.get(0);
 			FlexoBehaviourParameter nameParam = dropScheme.getParameters().size() > 0 ? dropScheme.getParameters().get(0) : null;
-			DropSchemeAction action = new DropSchemeAction(dropScheme, getFreeModel().getVirtualModelInstance(), null, this);
+			DropSchemeAction action = new DropSchemeAction(dropScheme, getDiagramFreeModelInstance().getAccessedVirtualModelInstance(),
+					null, this);
 			addToEmbeddedActions(action);
 			if (nameParam != null) {
-				action.setParameterValue(nameParam, getFreeModel().getProposedName(concept));
+				action.setParameterValue(nameParam, getDiagramFreeModelInstance().getProposedName(concept));
 			}
 			action.setDropLocation(dropLocation);
 
@@ -157,7 +148,7 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 				return;
 			}
 
-			ShapeRole shapeRole = (ShapeRole) concept.getAccessibleProperty(FMEFreeModel.SHAPE_ROLE_NAME);
+			ShapeRole shapeRole = (ShapeRole) concept.getAccessibleProperty(FMEDiagramFreeModel.SHAPE_ROLE_NAME);
 			DiagramShape shape = newFlexoConceptInstance.getFlexoActor(shapeRole);
 
 			// If another GR was defined (overriding the one from ShapeRole)
@@ -179,11 +170,12 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 			if (!noneConceptIsExisting) {
 				// This means that None FlexoConcept was not existing and has been created
 				// We should notify this
-				freeModel.getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null, concept);
+				diagramFreeModelInstance.getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null, concept);
 			}
 
 			// This is used to notify the adding of a new instance of a flexo concept
-			freeModel.getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", null, newFlexoConceptInstance);
+			diagramFreeModelInstance.getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", null,
+					newFlexoConceptInstance);
 
 			// This is used to notify the adding of a new shape, will be used in DynamicPalette
 			// freeModel.getPropertyChangeSupport().firePropertyChange(DynamicPalette.SHAPE_ADDED, null, newFlexoConceptInstance);
@@ -194,24 +186,13 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 		}
 	}
 
-	public FMEFreeModelInstance getFreeModel() {
-		return freeModel;
+	public FMEDiagramFreeModelInstance getDiagramFreeModelInstance() {
+		return diagramFreeModelInstance;
 	}
 
-	public void setFreeModel(FMEFreeModelInstance freeModel) {
-		this.freeModel = freeModel;
+	public void setDiagramFreeModelInstance(FMEDiagramFreeModelInstance diagramFreeModelInstance) {
+		this.diagramFreeModelInstance = diagramFreeModelInstance;
 	}
-
-	/*public DiagramContainerElement<?> getParent() {
-		if (parent == null) {
-			parent = getFocusedObject();
-		}
-		return parent;
-	}
-	
-	public void setParent(DiagramContainerElement<?> parent) {
-		this.parent = parent;
-	}*/
 
 	public ShapeGraphicalRepresentation getGraphicalRepresentation() {
 		return graphicalRepresentation;

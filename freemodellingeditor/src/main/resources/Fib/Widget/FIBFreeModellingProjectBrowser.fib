@@ -12,7 +12,7 @@
 		                isEditable="false" filtered="false" defaultVisible="true" name="project">
 		</BrowserElement>
 	</Browser>
-	<Browser root="data.asNature('org.openflexo.fme.model.FreeModellingProjectNature')" iteratorClassName="java.lang.Object"
+	<Browser root="data.getNature('org.openflexo.fme.model.FreeModellingProjectNature')" iteratorClassName="java.lang.Object"
 	         visibleRowCount="5" rowHeight="18" boundToSelectionManager="true" selectionMode="DiscontiguousTreeSelection" selected=""
 	         showFooter="true" rootVisible="true" showRootsHandle="true" localize="true" manageDynamicModel="true"
 	         clickAction="controller.singleClick(FreeModellingProjectBrowser.selected)"
@@ -21,16 +21,21 @@
 	         index="0"
 	         constraints="twocols(expandHorizontally=true;expandVertically=true;index=0;insetsBottom=0;insetsLeft=2;insetsRight=2;insetsTop=0;location=center)"
 	         visible="data.hasNature('org.openflexo.fme.model.FreeModellingProjectNature')">
-		<BrowserElement dataClassName="org.openflexo.fme.model.FreeModellingProject" label="project.name"
-		                icon="controller.iconForObject(project)" isEditable="false" filtered="false" defaultVisible="true" name="project">
-			<Children data="project.freeMetaModels" name="freeMetaModels"/>
+		<BrowserElement dataClassName="org.openflexo.fme.model.FreeModellingProjectNature" label="nature.owner.name"
+		                icon="controller.iconForObject(nature)" isEditable="false" filtered="false" defaultVisible="true" name="nature">
+			<Children data="nature.conceptualModel" name="conceptualModel"/>
+			<Children data="nature.sampleData" name="sampleData"/>
+			<Children data="nature.freeModels" name="freeModels"/>
 		</BrowserElement>
-		<BrowserElement dataClassName="org.openflexo.fme.model.FreeMetaModel" label="freeMetaModel.name" icon="controller.iconForObject(freeMetaModel)"
-		                isEditable="false" filtered="false" defaultVisible="true" name="freeMetaModel">
-		                <Children data="freeMetaModel.getFreeModels()" name="freeModels"/>
+		<BrowserElement dataClassName="org.openflexo.fme.model.FMEConceptualModel" label="conceptualModel.name" icon="controller.iconForObject(conceptualModel)"
+		                isEditable="false" filtered="false" defaultVisible="true" name="conceptualModel">
 		</BrowserElement>
-		<BrowserElement dataClassName="org.openflexo.fme.model.FreeModel" label="freeModel.name" icon="controller.iconForObject(freeModel)"
+		<BrowserElement dataClassName="org.openflexo.fme.model.FMEFreeModel" label="freeModel.name" icon="controller.iconForObject(freeModel)"
 		                isEditable="false" filtered="false" defaultVisible="true" name="freeModel">
+		                <Children data="freeModel.freeModelInstances" name="freeModels"/>
+		</BrowserElement>
+		<BrowserElement dataClassName="org.openflexo.fme.model.FMEFreeModelInstance" label="freeModelInstance.name" icon="controller.iconForObject(freeModelInstance)"
+		                isEditable="false" filtered="false" defaultVisible="true" name="freeModelInstance">
 		</BrowserElement>
 	
 

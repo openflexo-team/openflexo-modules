@@ -66,7 +66,7 @@ import org.openflexo.modelers.ModelersConstants;
  * 
  * @author sylvain
  */
-public class EAProjectNature implements ProjectNature<EAProjectNature, EAProject> {
+public class EAProjectNature implements ProjectNature {
 
 	private static final Logger LOGGER = Logger.getLogger(EAProjectNature.class.getPackage().getName());
 

@@ -43,9 +43,15 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 import org.openflexo.fme.FMEIconLibrary;
+import org.openflexo.fme.FMEModule;
 import org.openflexo.fme.controller.editor.FreeModelDiagramEditor;
+import org.openflexo.fme.model.FMEDiagramFreeModelInstance;
 import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.FMEFreeModelInstance;
+import org.openflexo.fme.model.FreeModellingProjectNature;
+import org.openflexo.fme.view.ConvertToFMEProjectView;
+import org.openflexo.fme.view.FMEProjectNatureModuleView;
+import org.openflexo.fme.view.FMEWelcomePanelModuleView;
 import org.openflexo.fme.view.FreeModelModuleView;
 import org.openflexo.fme.widget.FIBConceptBrowser;
 import org.openflexo.fme.widget.FIBFreeModellingProjectBrowser;
@@ -53,6 +59,7 @@ import org.openflexo.fme.widget.FIBRepresentedConceptBrowser;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.model.undo.CompoundEdit;
+import org.openflexo.module.FlexoModule.WelcomePanel;
 import org.openflexo.technologyadapter.diagram.controller.DiagramTechnologyAdapterController;
 import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.FlexoController;
@@ -115,20 +122,6 @@ public class FMEPerspective extends FlexoPerspective {
 		return FMEIconLibrary.FME_SMALL_ICON;
 	}
 
-	@Override
-	public String getWindowTitleforObject(FlexoObject object, FlexoController controller) {
-		if (object instanceof FMEFreeModelInstance) {
-			return ((FMEFreeModelInstance) object).getName();
-		}
-		if (object instanceof FMEFreeModel) {
-			return ((FMEFreeModel) object).getName();
-		}
-		if (object != null) {
-			return object.toString();
-		}
-		return "null";
-	}
-
 	public void focusOnFreeModel(FMEFreeModelInstance freeModel) {
 		logger.info("focusOnFreeModel " + freeModel);
 
@@ -177,10 +170,42 @@ public class FMEPerspective extends FlexoPerspective {
 
 	@Override
 	public boolean hasModuleViewForObject(FlexoObject object) {
+		if (object instanceof WelcomePanel) {
+			return true;
+		}
+		if (object instanceof FlexoProject) {
+			return true;
+		}
+		if (object instanceof FreeModellingProjectNature) {
+			return true;
+		}
 		if (object instanceof FMEFreeModelInstance) {
 			return true;
 		}
 		return super.hasModuleViewForObject(object);
+	}
+
+	@Override
+	public String getWindowTitleforObject(FlexoObject object, FlexoController controller) {
+		if (object instanceof WelcomePanel) {
+			return "Welcome";
+		}
+		if (object instanceof FlexoProject) {
+			return ((FlexoProject<?>) object).getName();
+		}
+		if (object instanceof FreeModellingProjectNature) {
+			return ((FreeModellingProjectNature) object).getOwner().getName();
+		}
+		if (object instanceof FMEFreeModelInstance) {
+			return ((FMEFreeModelInstance) object).getName();
+		}
+		if (object instanceof FMEFreeModel) {
+			return ((FMEFreeModel) object).getName();
+		}
+		if (object != null) {
+			return object.toString();
+		}
+		return "null";
 	}
 
 	public void closeFreeModelBrowsers() {
@@ -190,7 +215,16 @@ public class FMEPerspective extends FlexoPerspective {
 
 	@Override
 	public ModuleView<?> createModuleViewForObject(FlexoObject object, boolean editable) {
-		if (object instanceof FMEFreeModelInstance) {
+		if (object instanceof WelcomePanel) {
+			return new FMEWelcomePanelModuleView((WelcomePanel<FMEModule>) object, getController(), this);
+		}
+		if (object instanceof FlexoProject) {
+			return new ConvertToFMEProjectView((FlexoProject<?>) object, getController(), this);
+		}
+		if (object instanceof FreeModellingProjectNature) {
+			return new FMEProjectNatureModuleView((FreeModellingProjectNature) object, getController(), this);
+		}
+		if (object instanceof FMEDiagramFreeModelInstance) {
 			// Initialization of Diagram representation may rise PAMELA edits
 			// The goal is here to embed all those edits in a special edit record
 			// Which is to be discarded as undoable action at the end of this initialization
@@ -200,7 +234,7 @@ public class FMEPerspective extends FlexoPerspective {
 			}
 			DiagramTechnologyAdapterController diagramTAC = getController().getApplicationContext().getTechnologyAdapterControllerService()
 					.getTechnologyAdapterController(DiagramTechnologyAdapterController.class);
-			FreeModelDiagramEditor editor = new FreeModelDiagramEditor((FMEFreeModelInstance) object, false, getController(),
+			FreeModelDiagramEditor editor = new FreeModelDiagramEditor((FMEDiagramFreeModelInstance) object, false, getController(),
 					diagramTAC.getToolFactory());
 			if (edit != null) {
 				getController().getEditor().getUndoManager().stopRecording(edit);

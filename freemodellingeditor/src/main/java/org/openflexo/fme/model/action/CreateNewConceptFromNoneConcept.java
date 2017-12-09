@@ -41,34 +41,32 @@ package org.openflexo.fme.model.action;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import org.openflexo.ApplicationContext;
-import org.openflexo.fme.FreeModellingEditor;
+import org.openflexo.fme.model.FMEDiagramFreeModel;
+import org.openflexo.fme.model.FMEDiagramFreeModelInstance;
 import org.openflexo.fme.model.FMEFreeModel;
-import org.openflexo.fme.model.FMEFreeModelInstance;
-import org.openflexo.fme.model.FreeModellingProject;
-import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
-import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoActionFactory;
+import org.openflexo.foundation.fml.CreationScheme;
 import org.openflexo.foundation.fml.FlexoConcept;
-import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
-import org.openflexo.localization.LocalizedDelegate;
+import org.openflexo.foundation.fml.rt.action.CreateFlexoConceptInstance;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 import org.openflexo.toolbox.StringUtils;
 
 /**
- * This action is used to create a new FlexoConcept
+ * This action is used to create a new conceptual concept<br>
+ * 
+ * Focused object is here a {@link FlexoConceptInstance} of the NoneGR
  * 
  * @author sylvain
  * 
  */
-public class CreateNewConceptFromNoneConcept extends FMEAction<CreateNewConceptFromNoneConcept, FlexoConceptInstance, FlexoObject> {
+public class CreateNewConceptFromNoneConcept extends AbstractInstantiateConcept<CreateNewConceptFromNoneConcept> {
 
 	private static final Logger logger = Logger.getLogger(CreateNewConceptFromNoneConcept.class.getPackage().getName());
 
@@ -91,7 +89,7 @@ public class CreateNewConceptFromNoneConcept extends FMEAction<CreateNewConceptF
 
 		@Override
 		public boolean isEnabledForSelection(FlexoConceptInstance object, Vector<FlexoObject> globalSelection) {
-			return object.getFlexoConcept().getName().equals(FMEFreeModel.NONE_FLEXO_CONCEPT);
+			return object.getFlexoConcept().getName().equals(FMEFreeModel.NONE_FLEXO_CONCEPT_NAME);
 		}
 
 	};
@@ -104,66 +102,58 @@ public class CreateNewConceptFromNoneConcept extends FMEAction<CreateNewConceptF
 	private String newConceptDescription;
 
 	private FlexoConcept newFlexoConcept;
-
-	// private FlexoConceptInstance newFlexoConceptInstance;
+	private FlexoConcept newGRFlexoConcept;
 
 	CreateNewConceptFromNoneConcept(FlexoConceptInstance focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 
 	@Override
-	public LocalizedDelegate getLocales() {
-		if (getServiceManager() instanceof ApplicationContext) {
-			return ((ApplicationContext) getServiceManager()).getModuleLoader().getModule(FreeModellingEditor.class)
-					.getLoadedModuleInstance().getLocales();
-		}
-		return super.getLocales();
-	}
-
-	public FreeModellingProjectNature getFreeModellingProjectNature() {
-		return getServiceManager().getProjectNatureService().getProjectNature(FreeModellingProjectNature.class);
-	}
-
-	public FreeModellingProject getFreeModellingProject() {
-		FlexoProject<?> project = null;
-		if (getFocusedObject().getResourceCenter() instanceof FlexoProject) {
-			project = (FlexoProject<?>) getFocusedObject().getResourceCenter();
-		}
-		else if (getFocusedObject().getResourceCenter().getDelegatingProjectResource() != null) {
-			project = getFocusedObject().getResourceCenter().getDelegatingProjectResource().getFlexoProject();
-		}
-		else {
-			logger.warning("Could not access to FlexoProject from " + getFocusedObject());
-			return null;
-		}
-		return getFreeModellingProjectNature().getFreeModellingProject(project);
-	}
-
-	public FMEFreeModelInstance getFreeModel() throws InvalidArgumentException {
-		return getFreeModellingProject().getFreeModel((FMLRTVirtualModelInstance) getFocusedObject().getVirtualModelInstance());
-	}
-
-	@Override
 	protected void doAction(Object context) throws FlexoException {
 
-		FMEFreeModelInstance freeModel = getFreeModel();
-		if (freeModel == null) {
+		FMEDiagramFreeModelInstance freeModelInstance = getFMEFreeModelInstance();
+		if (freeModelInstance == null) {
 			throw new InvalidArgumentException("FlexoConceptInstance does not belong to any FreeModel");
 		}
 
 		FlexoConceptInstance flexoConceptInstance = getFocusedObject();
 
+		String actualName = flexoConceptInstance.getFlexoPropertyValue(FMEFreeModel.NAME_ROLE_NAME);
+
 		// Retrieve shape property of None FC
-		ShapeRole noneShapeRole = (ShapeRole) flexoConceptInstance.getFlexoConcept().getAccessibleProperty(FMEFreeModel.SHAPE_ROLE_NAME);
+		ShapeRole noneShapeRole = (ShapeRole) flexoConceptInstance.getFlexoConcept()
+				.getAccessibleProperty(FMEDiagramFreeModel.SHAPE_ROLE_NAME);
 
 		// Retrieve actual shape element
 		DiagramShape shapeElement = flexoConceptInstance.getFlexoActor(noneShapeRole);
 
-		// Now we create the new concept
-		newFlexoConcept = freeModel.getMetaModel().getFlexoConcept(getNewConceptName(), getEditor(), this);
+		// Now we create the new conceptual concept
+		CreateNewConcept createNewConcept = CreateNewConcept.actionType.makeNewEmbeddedAction(getFMEFreeModel(), null, this);
+		createNewConcept.setNewConceptName(getNewConceptName());
+		createNewConcept.setNewConceptDescription(getNewConceptDescription());
+		createNewConcept.doAction();
+		newFlexoConcept = createNewConcept.getNewFlexoConcept();
+		newGRFlexoConcept = createNewConcept.getNewGRFlexoConcept();
+
+		System.out.println("Hop, je cree le concept: ");
+		System.out.println(newFlexoConcept.getFMLRepresentation());
+		System.out.println("Et sa GR: ");
+		System.out.println(newGRFlexoConcept.getFMLRepresentation());
+
+		// Now we instantiate that concept
+		CreateFlexoConceptInstance instantiateConcept = CreateFlexoConceptInstance.actionType
+				.makeNewEmbeddedAction(getFreeModellingProjectNature().getSampleData().getAccessedVirtualModelInstance(), null, this);
+		instantiateConcept.setFlexoConcept(newFlexoConcept);
+		CreationScheme cs = newFlexoConcept.getCreationSchemes().get(0);
+		instantiateConcept.setCreationScheme(cs);
+		instantiateConcept.setParameterValue(cs.getParameters().get(0), actualName);
+		instantiateConcept.doAction();
+		FlexoConceptInstance conceptInstance = instantiateConcept.getNewFlexoConceptInstance();
+
+		System.out.println("J'ai instancie: " + conceptInstance);
 
 		// Add entry in palette
-		freeModel.getMetaModel().createPaletteElementForConcept(newFlexoConcept, shapeElement.getGraphicalRepresentation(), this);
+		freeModelInstance.getFreeModel().createPaletteElementForConcept(newFlexoConcept, shapeElement.getGraphicalRepresentation(), this);
 
 		/*
 		CreateDiagramPaletteElement createDiagramPaletteElement = CreateDiagramPaletteElement.actionType.makeNewEmbeddedAction(freeModel
@@ -213,19 +203,20 @@ public class CreateNewConceptFromNoneConcept extends FMEAction<CreateNewConceptF
 		*/
 
 		// Sets new concept GR with actual shape GR
-		ShapeRole shapeRole = (ShapeRole) newFlexoConcept.getAccessibleProperty(FMEFreeModel.SHAPE_ROLE_NAME);
+		ShapeRole shapeRole = (ShapeRole) newGRFlexoConcept.getAccessibleProperty(FMEDiagramFreeModel.SHAPE_ROLE_NAME);
 		shapeRole.getGraphicalRepresentation().setsWith(shapeElement.getGraphicalRepresentation());
 		shapeRole.getGraphicalRepresentation().setX(10);
 		shapeRole.getGraphicalRepresentation().setY(10);
 
 		// We will here bypass the classical DropScheme
-		flexoConceptInstance.setFlexoConcept(newFlexoConcept);
+		flexoConceptInstance.setFlexoConcept(newGRFlexoConcept);
+		flexoConceptInstance.setFlexoPropertyValue(FMEFreeModel.CONCEPT_ROLE_NAME, conceptInstance);
 
 		// We should notify the creation of a new FlexoConcept
-		freeModel.getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null, newFlexoConcept);
+		freeModelInstance.getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null, newFlexoConcept);
 
 		// This is used to notify the adding of a new instance of a flexo concept
-		freeModel.getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", null, getFocusedObject());
+		freeModelInstance.getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", null, getFocusedObject());
 	}
 
 	public String getNewConceptName() {

@@ -66,6 +66,9 @@ public interface FMEDiagramFreeModelInstance extends FMEFreeModelInstance {
 
 	public static final String DEFAULT_DIAGRAM_FOLDER = "Diagram";
 
+	@Override
+	public FMEDiagramFreeModel getFreeModel();
+
 	public Diagram getDiagram();
 
 	public abstract class FMEDiagramFreeModelInstanceImpl extends FMEFreeModelInstanceImpl implements FMEDiagramFreeModelInstance {
@@ -76,5 +79,11 @@ public interface FMEDiagramFreeModelInstance extends FMEFreeModelInstance {
 		public Diagram getDiagram() {
 			return FMLControlledDiagramVirtualModelInstanceNature.getDiagram(getAccessedVirtualModelInstance());
 		}
+
+		@Override
+		public FMEDiagramFreeModel getFreeModel() {
+			return (FMEDiagramFreeModel) performSuperGetter(FREE_MODEL);
+		}
 	}
+
 }

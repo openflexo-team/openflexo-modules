@@ -45,8 +45,8 @@ import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.action.copypaste.FlexoClipboard;
 import org.openflexo.foundation.action.copypaste.PastingContext;
-import org.openflexo.foundation.fml.rt.VirtualModelInstance;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
+import org.openflexo.foundation.fml.rt.VirtualModelInstance;
 import org.openflexo.model.factory.Clipboard;
 import org.openflexo.technologyadapter.diagram.controller.action.FMLControlledDiagramPasteHandler;
 import org.openflexo.toolbox.StringUtils;
@@ -63,19 +63,19 @@ public class FreeModelPasteHandler extends FMLControlledDiagramPasteHandler {
 
 	public static final String COPY_SUFFIX = "-copy";
 
-	private final FMEFreeModelInstance freeModel;
+	private final FMEFreeModelInstance freeModelInstance;
 
-	public FreeModelPasteHandler(FMEFreeModelInstance freeModel, FreeModelDiagramEditor editor) {
-		super(freeModel.getVirtualModelInstance(), editor);
-		this.freeModel = freeModel;
+	public FreeModelPasteHandler(FMEFreeModelInstance freeModelInstance, FreeModelDiagramEditor editor) {
+		super(freeModelInstance.getAccessedVirtualModelInstance(), editor);
+		this.freeModelInstance = freeModelInstance;
 	}
 
-	public FMEFreeModelInstance getFreeModel() {
-		return freeModel;
+	public FMEFreeModelInstance getFreeModelInstance() {
+		return freeModelInstance;
 	}
 
 	public FreeModellingProjectNature getProjectNature() {
-		return freeModel.getProjectNature();
+		return freeModelInstance.getNature();
 	}
 
 	@Override

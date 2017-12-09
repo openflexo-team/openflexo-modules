@@ -52,8 +52,8 @@ import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 
-public class CreateNewConceptFromNoneInitializer extends
-		ActionInitializer<CreateNewConceptFromNoneConcept, FlexoConceptInstance, FlexoObject> {
+public class CreateNewConceptFromNoneInitializer
+		extends ActionInitializer<CreateNewConceptFromNoneConcept, FlexoConceptInstance, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
@@ -66,7 +66,6 @@ public class CreateNewConceptFromNoneInitializer extends
 		return new FlexoActionInitializer<CreateNewConceptFromNoneConcept>() {
 			@Override
 			public boolean run(EventObject e, CreateNewConceptFromNoneConcept action) {
-				logger.info("CreateNewConceptFromNoneConcept initializer");
 				Wizard wizard = new CreateNewConceptFromNoneConceptWizard(action, getController());
 				WizardDialog dialog = new WizardDialog(wizard, getController());
 				dialog.showDialog();

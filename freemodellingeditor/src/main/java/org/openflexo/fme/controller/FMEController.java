@@ -53,7 +53,7 @@ import org.openflexo.fme.FMEIconLibrary;
 import org.openflexo.fme.controller.action.FMEControllerActionInitializer;
 import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.FMEFreeModelInstance;
-import org.openflexo.fme.model.FreeModellingProject;
+import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.fme.view.menu.FMEMenuBar;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
@@ -134,7 +134,7 @@ public class FMEController extends FlexoController {
 	}
 
 	@Override
-	public FlexoObject getDefaultObjectToSelect(FlexoProject project) {
+	public FlexoObject getDefaultObjectToSelect(FlexoProject<?> project) {
 		return project;
 	}
 
@@ -149,6 +149,12 @@ public class FMEController extends FlexoController {
 	public void selectAndFocusObject(FlexoObject object) {
 		if (object != null) {
 			logger.info("selectAndFocusObject " + object + "of " + object.getClass().getSimpleName());
+			if (object instanceof FlexoProject) {
+				setCurrentEditedObjectAsModuleView(object);
+			}
+			else if (object instanceof FreeModellingProjectNature) {
+				setCurrentEditedObjectAsModuleView(object);
+			}
 			if (object instanceof FMEFreeModelInstance) {
 				setCurrentEditedObjectAsModuleView(object);
 			}
@@ -188,7 +194,7 @@ public class FMEController extends FlexoController {
 
 	@Override
 	public ImageIcon iconForObject(Object object) {
-		if (object instanceof FreeModellingProject) {
+		if (object instanceof FreeModellingProjectNature) {
 			return IconLibrary.OPENFLEXO_NOTEXT_16;
 		}
 		else if (object instanceof FMEFreeModelInstance) {

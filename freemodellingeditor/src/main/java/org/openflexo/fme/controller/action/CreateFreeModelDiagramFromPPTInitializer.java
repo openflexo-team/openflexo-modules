@@ -99,7 +99,7 @@ public class CreateFreeModelDiagramFromPPTInitializer extends ActionInitializer<
 		return new FlexoActionFinalizer<CreateFreeModelDiagramFromPPT>() {
 			@Override
 			public boolean run(EventObject e, CreateFreeModelDiagramFromPPT action) {
-				getController().selectAndFocusObject(action.getFreeModel());
+				getController().selectAndFocusObject(action.getFreeModelInstance());
 				return true;
 			}
 		};

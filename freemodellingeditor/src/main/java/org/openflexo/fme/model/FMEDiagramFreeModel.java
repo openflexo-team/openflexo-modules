@@ -60,7 +60,9 @@ import org.openflexo.foundation.fml.action.CreateEditionAction;
 import org.openflexo.foundation.fml.action.CreateFlexoBehaviour;
 import org.openflexo.foundation.fml.action.CreateGenericBehaviourParameter;
 import org.openflexo.foundation.fml.action.CreateTechnologyRole;
+import org.openflexo.foundation.fml.editionaction.AssignationAction;
 import org.openflexo.foundation.fml.editionaction.DeleteAction;
+import org.openflexo.foundation.fml.editionaction.ExpressionAction;
 import org.openflexo.foundation.fml.rt.editionaction.AddFlexoConceptInstance;
 import org.openflexo.foundation.fml.rt.editionaction.AddFlexoConceptInstanceParameter;
 import org.openflexo.foundation.resource.ResourceLoadingCancelledException;
@@ -110,6 +112,11 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 	public TypedDiagramModelSlot getTypedDiagramModelSlot();
 
 	public DiagramSpecification getDiagramSpecification();
+
+	public DiagramPaletteElement createPaletteElementForConcept(FlexoConcept concept, ShapeGraphicalRepresentation gr,
+			FlexoAction<?, ?, ?> ownerAction) throws FlexoException;
+
+	public DiagramPalette getConceptsPalette() throws FlexoException;
 
 	public abstract class FMEDiagramFreeModelImpl extends FMEFreeModelImpl implements FMEDiagramFreeModel {
 
@@ -162,6 +169,7 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 			return addShapeAction.getNewShape();
 		}
 
+		@Override
 		public DiagramPalette getConceptsPalette() throws FlexoException {
 			if (getDiagramSpecification().getPalette(PALETTE_NAME) == null) {
 				// Should not happen, but...
@@ -173,6 +181,7 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 			return getDiagramSpecification().getPalette(PALETTE_NAME);
 		}
 
+		@Override
 		public DiagramPaletteElement createPaletteElementForConcept(FlexoConcept concept, ShapeGraphicalRepresentation gr,
 				FlexoAction<?, ?, ?> ownerAction) throws FlexoException {
 
@@ -235,7 +244,14 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 			ShapeRole role = (ShapeRole) createShapeRole.getNewFlexoRole();
 
 			// Bind shapes's label to name property
-			role.setLabel(new DataBinding<>("concept.name"));
+			if (concept != null) {
+				// If we are bound to a concept instance, use that name
+				role.setLabel(new DataBinding<>("concept.name"));
+			}
+			else {
+				// Otherwise, this is the NoneGR, use primitive name
+				role.setLabel(new DataBinding<>("name"));
+			}
 
 			// Init a default GR
 			DiagramShape newShape = createShape("Prout", editor, ownerAction);
@@ -272,28 +288,44 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 			FlexoBehaviourParameter parameter = createDropSchemeParameter.getNewParameter();
 			parameter.setDefaultValue(new DataBinding<String>("\"" + parameter.getName() + "\""));
 
-			//
+			if (concept != null) {
 
-			CreateEditionAction createAddFlexoConceptInstance = null;
-			if (ownerAction != null) {
-				createAddFlexoConceptInstance = CreateEditionAction.actionType.makeNewEmbeddedAction(dropScheme.getControlGraph(), null,
-						ownerAction);
+				CreateEditionAction createAddFlexoConceptInstance = null;
+				if (ownerAction != null) {
+					createAddFlexoConceptInstance = CreateEditionAction.actionType.makeNewEmbeddedAction(dropScheme.getControlGraph(), null,
+							ownerAction);
+				}
+				else {
+					createAddFlexoConceptInstance = CreateEditionAction.actionType.makeNewAction(dropScheme.getControlGraph(), null,
+							editor);
+				}
+				createAddFlexoConceptInstance.setModelSlot(getSampleDataModelSlot());
+				createAddFlexoConceptInstance.setEditionActionClass(AddFlexoConceptInstance.class);
+				createAddFlexoConceptInstance.setAssignation(new DataBinding<>(CONCEPT_ROLE_NAME));
+				createAddFlexoConceptInstance.doAction();
+				AddFlexoConceptInstance<?> addFCI = (AddFlexoConceptInstance<?>) createAddFlexoConceptInstance.getBaseEditionAction();
+				addFCI.setCreationScheme(concept.getCreationSchemes().get(0));
+				AddFlexoConceptInstanceParameter addFCINameParam = addFCI.getParameter(FMEConceptualModel.CONCEPT_NAME_PARAMETER);
+				addFCINameParam.setValue(new DataBinding<>("parameters.conceptName"));
+				addFCI.setContainer(new DataBinding<>(SAMPLE_DATA_MODEL_SLOT_NAME));
 			}
 			else {
-				createAddFlexoConceptInstance = CreateEditionAction.actionType.makeNewAction(dropScheme.getControlGraph(), null, editor);
-			}
-			// createAddShape.actionChoice = CreateEditionActionChoice.ModelSlotSpecificAction;
-			createAddFlexoConceptInstance.setModelSlot(getSampleDataModelSlot());
-			createAddFlexoConceptInstance.setEditionActionClass(AddFlexoConceptInstance.class);
-			createAddFlexoConceptInstance.setAssignation(new DataBinding<>(CONCEPT_ROLE_NAME));
-			createAddFlexoConceptInstance.doAction();
+				CreateEditionAction givesNameAction = null;
+				if (ownerAction != null) {
+					givesNameAction = CreateEditionAction.actionType.makeNewEmbeddedAction(dropScheme.getControlGraph(), null, ownerAction);
+				}
+				else {
+					givesNameAction = CreateEditionAction.actionType.makeNewAction(dropScheme.getControlGraph(), null, editor);
+				}
+				// givesNameAction.actionChoice = CreateEditionActionChoice.BuiltInAction;
+				givesNameAction.setEditionActionClass(ExpressionAction.class);
+				givesNameAction.setAssignation(new DataBinding<>(FMEFreeModel.NAME_ROLE_NAME));
+				givesNameAction.doAction();
 
-			AddFlexoConceptInstance<?> addFCI = (AddFlexoConceptInstance<?>) createAddFlexoConceptInstance.getBaseEditionAction();
-			addFCI.setCreationScheme(concept.getCreationSchemes().get(0));
-			AddFlexoConceptInstanceParameter addFCINameParam = addFCI.getParameter(FMEConceptualModel.CONCEPT_NAME_PARAMETER);
-			addFCINameParam.setValue(new DataBinding<>("parameters.conceptName"));
-			addFCI.setContainer(new DataBinding<>(SAMPLE_DATA_MODEL_SLOT_NAME));
-			//
+				AssignationAction<?> nameAssignation = (AssignationAction<?>) givesNameAction.getNewEditionAction();
+				((ExpressionAction<?>) nameAssignation.getAssignableAction()).setExpression(new DataBinding<>("parameters.conceptName"));
+
+			}
 
 			CreateEditionAction createAddShape = null;
 			if (ownerAction != null) {
@@ -312,22 +344,6 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 			// createAddShape.getNewEditionAction();
 			AddShape addShape = (AddShape) createAddShape.getBaseEditionAction();
 			addShape.setContainer(new DataBinding<>(DIAGRAM_MODEL_SLOT_NAME));
-
-			/*CreateEditionAction givesNameAction = null;
-			if (ownerAction != null) {
-				givesNameAction = CreateEditionAction.actionType.makeNewEmbeddedAction(dropScheme.getControlGraph(), null, ownerAction);
-			}
-			else {
-				givesNameAction = CreateEditionAction.actionType.makeNewAction(dropScheme.getControlGraph(), null, editor);
-			}
-			// givesNameAction.actionChoice = CreateEditionActionChoice.BuiltInAction;
-			givesNameAction.setEditionActionClass(ExpressionAction.class);
-			givesNameAction.setAssignation(new DataBinding<>(FMEConceptualModel.NAME_ROLE_NAME));
-			givesNameAction.doAction();
-			
-			AssignationAction<?> nameAssignation = (AssignationAction<?>) givesNameAction.getNewEditionAction();
-			((ExpressionAction<?>) nameAssignation.getAssignableAction()).setExpression(new DataBinding<>("parameters.conceptName"));
-			 */
 
 			DeletionScheme deletionScheme = returned.getDefaultDeletionScheme();
 

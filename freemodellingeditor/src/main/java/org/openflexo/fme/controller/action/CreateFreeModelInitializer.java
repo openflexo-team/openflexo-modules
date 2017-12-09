@@ -92,7 +92,7 @@ public class CreateFreeModelInitializer extends ActionInitializer<CreateFreeMode
 		return new FlexoActionFinalizer<CreateFreeModel>() {
 			@Override
 			public boolean run(EventObject e, CreateFreeModel action) {
-				getController().selectAndFocusObject(action.getFreeModel());
+				getController().selectAndFocusObject(action.getFreeModelInstance());
 				return true;
 			}
 		};

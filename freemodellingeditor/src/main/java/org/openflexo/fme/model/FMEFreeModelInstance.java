@@ -86,6 +86,14 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 
 	public String getURI();
 
+	public List<FlexoConceptInstance> getInstances(FlexoConcept flexoConcept);
+
+	public String getProposedName(FlexoConcept concept);
+
+	public FlexoConceptInstance getFlexoConceptInstanceNamed(String name, FlexoConcept concept);
+
+	public List<FlexoConcept> getUsedFlexoConcepts();
+
 	public abstract class FMEFreeModelInstanceImpl extends VirtualModelInstanceBasedNatureObjectImpl<FreeModellingProjectNature>
 			implements FMEFreeModelInstance {
 
@@ -124,6 +132,7 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 		 * 
 		 * @return
 		 */
+		@Override
 		@NotificationUnsafe
 		public List<FlexoConcept> getUsedFlexoConcepts() {
 			return getAccessedVirtualModelInstance().getUsedFlexoConcepts();
@@ -134,6 +143,7 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 		 * 
 		 * @return
 		 */
+		@Override
 		@NotificationUnsafe
 		public List<FlexoConceptInstance> getInstances(FlexoConcept concept) {
 			return getAccessedVirtualModelInstance().getFlexoConceptInstances(concept);
@@ -159,10 +169,11 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 			}
 		}
 
+		@Override
 		public String getProposedName(FlexoConcept concept) {
 
 			String baseName;
-			if (concept.getName().equals(FMEFreeModel.NONE_FLEXO_CONCEPT)) {
+			if (concept.getName().equals(FMEFreeModel.NONE_FLEXO_CONCEPT_NAME)) {
 				baseName = "unnamed";
 			}
 			else {
@@ -181,6 +192,7 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 
 		}
 
+		@Override
 		public FlexoConceptInstance getFlexoConceptInstanceNamed(String name, FlexoConcept concept) {
 			FlexoRole<?> nameRole = (FlexoRole<?>) concept.getAccessibleProperty(FMEConceptualModel.NAME_ROLE_NAME);
 			for (FlexoConceptInstance fci : getAccessedVirtualModelInstance().getFlexoConceptInstances(concept)) {

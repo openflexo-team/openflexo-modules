@@ -49,6 +49,7 @@ import javax.swing.SwingUtilities;
 
 import org.openflexo.fme.controller.FMEPerspective;
 import org.openflexo.fme.controller.editor.FreeModelDiagramEditor;
+import org.openflexo.fme.model.FMEDiagramFreeModelInstance;
 import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.technologyadapter.diagram.controller.DiagramTechnologyAdapterController;
 import org.openflexo.view.ModuleView;
@@ -104,8 +105,8 @@ public class FreeModelModuleView extends JPanel implements ModuleView<FMEFreeMod
 	}
 
 	@Override
-	public FMEFreeModelInstance getRepresentedObject() {
-		return editor.getFreeModel();
+	public FMEDiagramFreeModelInstance getRepresentedObject() {
+		return editor.getDiagramFreeModelInstance();
 	}
 
 	@Override

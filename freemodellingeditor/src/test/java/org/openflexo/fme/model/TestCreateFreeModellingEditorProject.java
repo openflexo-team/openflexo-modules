@@ -144,6 +144,10 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 
 		System.out.println(diagramModel1.getAccessedVirtualModel().getFMLRepresentation());
 
+		FlexoConcept noneFlexoConceptGR = diagramModel1.getNoneFlexoConcept(editor, null);
+		assertNotNull(noneFlexoConceptGR);
+
+		System.out.println(diagramModel1.getAccessedVirtualModel().getFMLRepresentation());
 		assertVirtualModelIsValid(diagramModel1.getAccessedVirtualModel());
 
 	}

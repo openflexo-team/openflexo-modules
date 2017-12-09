@@ -91,7 +91,7 @@ public class CreateFreeModelDiagramInitializer extends ActionInitializer<CreateF
 		return new FlexoActionFinalizer<CreateFreeModelDiagram>() {
 			@Override
 			public boolean run(EventObject e, CreateFreeModelDiagram action) {
-				getController().selectAndFocusObject(action.getFreeModel());
+				getController().selectAndFocusObject(action.getFreeModelInstance());
 				return true;
 			}
 		};

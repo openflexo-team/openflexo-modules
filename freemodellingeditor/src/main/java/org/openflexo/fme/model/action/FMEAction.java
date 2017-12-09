@@ -55,7 +55,7 @@ import org.openflexo.module.ModuleLoadingException;
  * 
  * @author sylvain
  */
-public abstract class FMEAction<A extends FlexoAction<A, T1, T2>, T1 extends FlexoObject, T2 extends FlexoObject>
+public abstract class FMEAction<A extends FMEAction<A, T1, T2>, T1 extends FlexoObject, T2 extends FlexoObject>
 		extends FlexoAction<A, T1, T2> implements ModuleSpecificFlexoAction<FMEModule> {
 
 	/**

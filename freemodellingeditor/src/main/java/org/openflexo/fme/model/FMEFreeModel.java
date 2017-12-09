@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.openflexo.connie.DataBinding;
+import org.openflexo.connie.type.PrimitiveType;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.action.FlexoAction;
@@ -49,12 +50,15 @@ import org.openflexo.foundation.fml.DeletionScheme;
 import org.openflexo.foundation.fml.FlexoBehaviourParameter.WidgetType;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.VirtualModel;
+import org.openflexo.foundation.fml.action.CreateEditionAction;
 import org.openflexo.foundation.fml.action.CreateFlexoBehaviour;
 import org.openflexo.foundation.fml.action.CreateFlexoConcept;
 import org.openflexo.foundation.fml.action.CreateFlexoConceptInstanceRole;
 import org.openflexo.foundation.fml.action.CreateInspectorEntry;
+import org.openflexo.foundation.fml.action.CreatePrimitiveRole;
 import org.openflexo.foundation.fml.inspector.InspectorEntry;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstanceModelSlot;
+import org.openflexo.foundation.fml.rt.editionaction.DeleteFlexoConceptInstance;
 import org.openflexo.foundation.fml.rt.rm.FMLRTVirtualModelInstanceResourceFactory;
 import org.openflexo.foundation.nature.VirtualModelBasedNatureObject;
 import org.openflexo.logging.FlexoLogger;
@@ -85,8 +89,9 @@ import org.openflexo.model.annotations.XMLElement;
 @Imports({ @Import(FMEDiagramFreeModel.class) })
 public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellingProjectNature> {
 
-	public static final String NONE_FLEXO_CONCEPT = "None";
+	public static final String NONE_FLEXO_CONCEPT_NAME = "NoneGR";
 	public static final String CONCEPT_ROLE_NAME = "concept";
+	public static final String NAME_ROLE_NAME = "name";
 	public static final String SAMPLE_DATA_MODEL_SLOT_NAME = "sampleData";
 
 	@PropertyIdentifier(type = FMEFreeModelInstance.class, cardinality = Cardinality.LIST)
@@ -123,7 +128,7 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 	 * @return
 	 * @throws FlexoException
 	 */
-	public FlexoConcept getGRFlexoConcept(FlexoConcept concept, FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction) throws FlexoException;
+	public FlexoConcept getGRFlexoConcept(FlexoConcept concept, FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction);
 
 	public abstract class FMEFreeModelImpl extends VirtualModelBasedNatureObjectImpl<FreeModellingProjectNature> implements FMEFreeModel {
 
@@ -141,13 +146,7 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 
 		@Override
 		public FlexoConcept getNoneFlexoConcept(FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction) {
-			try {
-				return getGRFlexoConcept(null, editor, ownerAction);
-			} catch (FlexoException e) {
-				// TODO
-				e.printStackTrace();
-				return null;
-			}
+			return getGRFlexoConcept(null, editor, ownerAction);
 		}
 
 		/**
@@ -160,10 +159,10 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 		 * @throws FlexoException
 		 */
 		@Override
-		public FlexoConcept getGRFlexoConcept(FlexoConcept concept, FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction)
-				throws FlexoException {
+		public FlexoConcept getGRFlexoConcept(FlexoConcept concept, FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction) {
 
-			FlexoConcept returned = getAccessedVirtualModel().getFlexoConcept(concept != null ? concept.getName() + "GR" : "None");
+			FlexoConcept returned = getAccessedVirtualModel()
+					.getFlexoConcept(concept != null ? concept.getName() + "GR" : NONE_FLEXO_CONCEPT_NAME);
 
 			if (returned == null) {
 
@@ -175,12 +174,12 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 				else {
 					action = CreateFlexoConcept.actionType.makeNewAction(getAccessedVirtualModel(), null, editor);
 				}
-				action.setNewFlexoConceptName(concept != null ? concept.getName() + "GR" : "None");
+				action.setNewFlexoConceptName(concept != null ? concept.getName() + "GR" : NONE_FLEXO_CONCEPT_NAME);
 				action.doAction();
 				returned = action.getNewFlexoConcept();
 
-				// Create new FlexoConceptInstanceRole to store the concept
 				if (concept != null) {
+					// Create new FlexoConceptInstanceRole to store the concept
 					CreateFlexoConceptInstanceRole createConceptRole = null;
 					if (ownerAction != null) {
 						createConceptRole = CreateFlexoConceptInstanceRole.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
@@ -191,6 +190,19 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 					createConceptRole.setRoleName(CONCEPT_ROLE_NAME);
 					createConceptRole.setFlexoConceptInstanceType(concept);
 					createConceptRole.doAction();
+				}
+				else {
+					// Create new PrimitiveRole (String type) to store the name of this instance
+					CreatePrimitiveRole createNameRole = null;
+					if (ownerAction != null) {
+						createNameRole = CreatePrimitiveRole.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
+					}
+					else {
+						createNameRole = CreatePrimitiveRole.actionType.makeNewAction(returned, null, editor);
+					}
+					createNameRole.setRoleName(NAME_ROLE_NAME);
+					createNameRole.setPrimitiveType(PrimitiveType.String);
+					createNameRole.doAction();
 				}
 
 				// Create new DeletionScheme
@@ -206,6 +218,22 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 				createDeletionScheme.doAction();
 				DeletionScheme deletionScheme = (DeletionScheme) createDeletionScheme.getNewFlexoBehaviour();
 				deletionScheme.setSkipConfirmationPanel(true);
+
+				if (concept != null) {
+					CreateEditionAction deleteConceptAction = null;
+					if (ownerAction != null) {
+						deleteConceptAction = CreateEditionAction.actionType.makeNewEmbeddedAction(deletionScheme.getControlGraph(), null,
+								ownerAction);
+					}
+					else {
+						deleteConceptAction = CreateEditionAction.actionType.makeNewAction(deletionScheme.getControlGraph(), null, editor);
+					}
+					deleteConceptAction.setEditionActionClass(DeleteFlexoConceptInstance.class);
+					deleteConceptAction.doAction();
+
+					DeleteFlexoConceptInstance<?> deleteConcept = (DeleteFlexoConceptInstance<?>) deleteConceptAction.getNewEditionAction();
+					deleteConcept.setObject(new DataBinding<>(CONCEPT_ROLE_NAME));
+				}
 
 				// Create inspector name entry
 				CreateInspectorEntry createNameEntry = null;

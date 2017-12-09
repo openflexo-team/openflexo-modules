@@ -93,10 +93,17 @@ public interface FMEConceptualModel extends VirtualModelBasedNatureObject<FreeMo
 	 */
 	public FlexoConcept getFlexoConcept(String conceptName, FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction) throws FlexoException;
 
+	public String getName();
+
 	public abstract class FMEConceptualModelImpl extends VirtualModelBasedNatureObjectImpl<FreeModellingProjectNature>
 			implements FMEConceptualModel {
 
 		private static final Logger logger = FlexoLogger.getLogger(FMEConceptualModel.class.getPackage().getName());
+
+		@Override
+		public String getName() {
+			return getAccessedVirtualModel().getName();
+		}
 
 		/**
 		 * Return (creates when non-existant) a conceptual FlexoConcept in {@link VirtualModel} considered as conceptual model

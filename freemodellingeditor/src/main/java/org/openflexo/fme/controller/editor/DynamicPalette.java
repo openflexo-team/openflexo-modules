@@ -60,8 +60,8 @@ import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
 import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.fml.FlexoConcept;
-import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
+import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.logging.FlexoLogger;
 import org.openflexo.model.factory.AccessibleProxyObject;
 import org.openflexo.model.factory.ProxyMethodHandler;
@@ -96,7 +96,7 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 
 	@Override
 	public void delete() {
-		getEditor().getFreeModel().getPropertyChangeSupport().removePropertyChangeListener(this);
+		getEditor().getDiagramFreeModelInstance().getPropertyChangeSupport().removePropertyChangeListener(this);
 		super.delete();
 	}
 
@@ -237,7 +237,7 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 		GraphicalRepresentationSet<DiagramElement<?>> diagramGRs = new GraphicalRepresentationSet<DiagramElement<?>>();
 
 		// For each existing DiagramElement which is not deleted:
-		for (DiagramElement<?> e : getEditor().getFreeModel().getDiagram().getDescendants()) {
+		for (DiagramElement<?> e : getEditor().getDiagramFreeModelInstance().getDiagram().getDescendants()) {
 			if (!e.isDeleted()) {
 				diagramGRs.put(e.getGraphicalRepresentation(), e);
 			}
@@ -289,8 +289,8 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 
 			if (e.getGraphicalRepresentation() != null) {
 				if (e.getGraphicalRepresentation().getShapeSpecification() != null
-						&& (e.getGraphicalRepresentation().getShapeSpecification().getShapeType() == ShapeType.SQUARE || e
-								.getGraphicalRepresentation().getShapeSpecification().getShapeType() == ShapeType.CIRCLE)) {
+						&& (e.getGraphicalRepresentation().getShapeSpecification().getShapeType() == ShapeType.SQUARE
+								|| e.getGraphicalRepresentation().getShapeSpecification().getShapeType() == ShapeType.CIRCLE)) {
 					e.getGraphicalRepresentation().setX(px * GRID_WIDTH + 15);
 					e.getGraphicalRepresentation().setY(py * GRID_HEIGHT + 10);
 					e.getGraphicalRepresentation().setWidth(30);
@@ -335,7 +335,7 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 			DiagramContainerElement<?> rootContainer = (DiagramContainerElement<?>) target.getDrawable();
 			FMLRTVirtualModelInstance vmi = getEditor().getVirtualModelInstance();
 			DropShape action = DropShape.actionType.makeNewAction(rootContainer, null, getEditor().getFlexoController().getEditor());
-			action.setFreeModel(getEditor().getFreeModel());
+			action.setDiagramFreeModelInstance(getEditor().getDiagramFreeModelInstance());
 			action.setConcept(paletteElement.getFlexoConcept());
 			action.setDropLocation(dropLocation);
 			action.setGraphicalRepresentation(paletteElement.getGraphicalRepresentation());
