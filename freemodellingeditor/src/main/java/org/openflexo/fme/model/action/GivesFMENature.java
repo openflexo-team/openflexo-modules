@@ -42,6 +42,8 @@ import java.util.Vector;
 import java.util.logging.Logger;
 
 import org.openflexo.ApplicationContext;
+import org.openflexo.action.ModuleSpecificFlexoAction;
+import org.openflexo.fme.FMEModule;
 import org.openflexo.fme.FreeModellingEditor;
 import org.openflexo.fme.model.FMEConceptualModel;
 import org.openflexo.fme.model.FMESampleData;
@@ -65,7 +67,8 @@ import org.openflexo.toolbox.StringUtils;
  * 
  * @author vincent
  */
-public class GivesFMENature extends GivesNatureAction<GivesFMENature, FreeModellingProjectNature> {
+public class GivesFMENature extends GivesNatureAction<GivesFMENature, FreeModellingProjectNature>
+		implements ModuleSpecificFlexoAction<FMEModule> {
 
 	private static final Logger logger = Logger.getLogger(GivesFMENature.class.getPackage().getName());
 
@@ -123,6 +126,11 @@ public class GivesFMENature extends GivesNatureAction<GivesFMENature, FreeModell
 					.getLoadedModuleInstance().getLocales();
 		}
 		return super.getLocales();
+	}
+
+	@Override
+	public Class<FMEModule> getFlexoModuleClass() {
+		return FMEModule.class;
 	}
 
 	/*@Override

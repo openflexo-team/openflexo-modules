@@ -67,6 +67,7 @@ import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.view.FlexoMainPane;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
+import org.openflexo.view.controller.model.FlexoPerspective;
 import org.openflexo.view.menu.FlexoMenuBar;
 
 /**
@@ -98,6 +99,11 @@ public class FMEController extends FlexoController {
 	@Override
 	protected void initializePerspectives() {
 		addToPerspectives(FREE_MODELLING_PERSPECTIVE = new FMEPerspective(this));
+	}
+
+	@Override
+	public FlexoPerspective getDefaultPerspective() {
+		return FREE_MODELLING_PERSPECTIVE;
 	}
 
 	@Override
