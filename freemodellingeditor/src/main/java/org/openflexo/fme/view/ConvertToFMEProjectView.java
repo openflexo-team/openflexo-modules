@@ -20,11 +20,15 @@
 
 package org.openflexo.fme.view;
 
+import org.openflexo.fme.model.action.GivesFMENature;
 import org.openflexo.foundation.FlexoProject;
+import org.openflexo.gina.model.FIBComponent;
+import org.openflexo.gina.view.GinaViewFactory;
 import org.openflexo.rm.Resource;
 import org.openflexo.rm.ResourceLocator;
 import org.openflexo.view.FIBModuleView;
 import org.openflexo.view.controller.FlexoController;
+import org.openflexo.view.controller.FlexoFIBController;
 import org.openflexo.view.controller.model.FlexoPerspective;
 
 /**
@@ -45,5 +49,27 @@ public class ConvertToFMEProjectView extends FIBModuleView<FlexoProject<?>> {
 	@Override
 	public FlexoPerspective getPerspective() {
 		return perspective;
+	}
+
+	/*@Override
+	protected ConvertToFMEProjectViewFIBController createFibController(FIBComponent fibComponent, FlexoController controller, LocalizedDelegate locales) {
+		// TODO Auto-generated method stub
+		return (ConvertToFMEProjectViewFIBController)super.createFibController(fibComponent, controller, locales);
+	}*/
+
+	public static class ConvertToFMEProjectViewFIBController extends FlexoFIBController {
+		public ConvertToFMEProjectViewFIBController(FIBComponent component, GinaViewFactory<?> viewFactory) {
+			super(component, viewFactory);
+		}
+
+		public ConvertToFMEProjectViewFIBController(FIBComponent component, GinaViewFactory<?> viewFactory, FlexoController controller) {
+			super(component, viewFactory, controller);
+		}
+
+		public void givesFMENature(FlexoProject<?> project) {
+			GivesFMENature action = GivesFMENature.actionType.makeNewAction(project, null, getEditor());
+			action.doAction();
+		}
+
 	}
 }

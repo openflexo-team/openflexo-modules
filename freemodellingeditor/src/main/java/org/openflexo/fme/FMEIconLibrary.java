@@ -41,6 +41,7 @@ package org.openflexo.fme;
 
 import javax.swing.ImageIcon;
 
+import org.openflexo.icon.IconMarker;
 import org.openflexo.icon.ImageIconResource;
 import org.openflexo.rm.ResourceLocator;
 
@@ -63,6 +64,9 @@ public class FMEIconLibrary {
 			ResourceLocator.locateResource("Icons/FreeModel_32x32.png"));
 	public static final ImageIconResource FREE_MODEL_BIG_ICON = new ImageIconResource(
 			ResourceLocator.locateResource("Icons/FreeModel_64x64.png"));
+
+	public static final IconMarker FME_MARKER = new IconMarker(
+			new ImageIconResource(ResourceLocator.locateResource("Icons/FreeModelMarker.png")), 8, 0);
 
 	public static final ImageIcon CONCEPT_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/EClass.gif"));
 	public static final ImageIcon INSTANCE_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/EObject.gif"));

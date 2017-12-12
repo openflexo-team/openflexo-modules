@@ -164,7 +164,11 @@ public class FMEPerspective extends FlexoPerspective {
 		}
 	}
 
-	public void setProject(FlexoProject project) {
+	public void setProject(FlexoProject<?> project) {
+		/*if (project.hasNature(FreeModellingProjectNature.class)) {
+			freeModellingProjectBrowser.setRootObject(project.getNature(FreeModellingProjectNature.class));
+		}*/
+
 		freeModellingProjectBrowser.setRootObject(project);
 	}
 
@@ -214,11 +218,22 @@ public class FMEPerspective extends FlexoPerspective {
 	}
 
 	@Override
+	public FlexoObject getDefaultObject(FlexoObject proposedObject) {
+		if (proposedObject instanceof FlexoProject && ((FlexoProject<?>) proposedObject).hasNature(FreeModellingProjectNature.class)) {
+			return ((FlexoProject<?>) proposedObject).getNature(FreeModellingProjectNature.class);
+		}
+
+		return super.getDefaultObject(proposedObject);
+	}
+
+	@Override
 	public ModuleView<?> createModuleViewForObject(FlexoObject object, boolean editable) {
 		if (object instanceof WelcomePanel) {
 			return new FMEWelcomePanelModuleView((WelcomePanel<FMEModule>) object, getController(), this);
 		}
 		if (object instanceof FlexoProject) {
+			System.out.println("Ca vient de la");
+			Thread.dumpStack();
 			return new ConvertToFMEProjectView((FlexoProject<?>) object, getController(), this);
 		}
 		if (object instanceof FreeModellingProjectNature) {

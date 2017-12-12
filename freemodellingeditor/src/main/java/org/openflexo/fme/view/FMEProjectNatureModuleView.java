@@ -21,10 +21,14 @@
 package org.openflexo.fme.view;
 
 import org.openflexo.fme.model.FreeModellingProjectNature;
+import org.openflexo.fme.model.action.InstantiateFMEDiagramFreeModel;
+import org.openflexo.gina.model.FIBComponent;
+import org.openflexo.gina.view.GinaViewFactory;
 import org.openflexo.rm.Resource;
 import org.openflexo.rm.ResourceLocator;
 import org.openflexo.view.FIBModuleView;
 import org.openflexo.view.controller.FlexoController;
+import org.openflexo.view.controller.FlexoFIBController;
 import org.openflexo.view.controller.model.FlexoPerspective;
 
 /**
@@ -46,4 +50,22 @@ public class FMEProjectNatureModuleView extends FIBModuleView<FreeModellingProje
 	public FlexoPerspective getPerspective() {
 		return perspective;
 	}
+
+	public static class FMEProjectNatureModuleViewFIBController extends FlexoFIBController {
+		public FMEProjectNatureModuleViewFIBController(FIBComponent component, GinaViewFactory<?> viewFactory) {
+			super(component, viewFactory);
+		}
+
+		public FMEProjectNatureModuleViewFIBController(FIBComponent component, GinaViewFactory<?> viewFactory, FlexoController controller) {
+			super(component, viewFactory, controller);
+		}
+
+		public void createNewDiagram(FreeModellingProjectNature projectNature) {
+			InstantiateFMEDiagramFreeModel action = InstantiateFMEDiagramFreeModel.actionType.makeNewAction(projectNature, null,
+					getEditor());
+			action.doAction();
+		}
+
+	}
+
 }

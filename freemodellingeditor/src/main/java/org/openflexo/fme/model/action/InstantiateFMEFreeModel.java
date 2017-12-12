@@ -43,9 +43,11 @@ import java.util.logging.Logger;
 
 import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.FMEFreeModelInstance;
+import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFactory;
+import org.openflexo.foundation.nature.NatureObject;
 import org.openflexo.foundation.resource.SaveResourceException;
 import org.openflexo.toolbox.StringUtils;
 
@@ -58,23 +60,119 @@ import org.openflexo.toolbox.StringUtils;
  * 
  */
 public abstract class InstantiateFMEFreeModel<A extends InstantiateFMEFreeModel<A, FM>, FM extends FMEFreeModel>
-		extends FMEAction<A, FM, FlexoObject> {
+		extends FMEAction<A, NatureObject<FreeModellingProjectNature>, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(InstantiateFMEFreeModel.class.getPackage().getName());
 
+	private FM newFreeModel;
 	private FMEFreeModelInstance freeModelInstance;
 	private String freeModelInstanceName;
 	private String freeModelInstanceDescription;
 
-	InstantiateFMEFreeModel(FlexoActionFactory<A, FM, FlexoObject> actionType, FM focusedObject, Vector<FlexoObject> globalSelection,
-			FlexoEditor editor) {
+	private CreateFMEFreeModel<?> createFreeModelAction;
+
+	public enum FreeModelChoice {
+		CreateNewFreeModel, SelectExistingFreeModel
+	}
+
+	private FreeModelChoice freeModelChoice = FreeModelChoice.CreateNewFreeModel;
+
+	private FM existingFreeModel;
+
+	InstantiateFMEFreeModel(FlexoActionFactory<A, NatureObject<FreeModellingProjectNature>, FlexoObject> actionType,
+			NatureObject<FreeModellingProjectNature> focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
+
+		// If no FreeModel was defined as metamodel of instance to be created, create a new one
+		if (getFreeModel() == null) {
+			createFreeModelAction = CreateFMEDiagramFreeModel.actionType.makeNewEmbeddedAction(getNature(), null, this);
+		}
+
+	}
+
+	public abstract CreateFMEFreeModel<?> makeCreateFreeModelAction();
+
+	public FreeModelChoice getFreeModelChoice() {
+		if (getFocusedObject() instanceof FMEFreeModel) {
+			return FreeModelChoice.SelectExistingFreeModel;
+		}
+
+		return freeModelChoice;
+	}
+
+	public void setFreeModelChoice(FreeModelChoice freeModelChoice) {
+		if (freeModelChoice != this.freeModelChoice) {
+			FreeModelChoice oldValue = this.freeModelChoice;
+			this.freeModelChoice = freeModelChoice;
+			getPropertyChangeSupport().firePropertyChange("freeModelChoice", oldValue, freeModelChoice);
+		}
+	}
+
+	public CreateFMEFreeModel<?> getCreateFreeModelAction() {
+		return createFreeModelAction;
+	}
+
+	public FreeModellingProjectNature getNature() {
+		if (getFocusedObject() != null) {
+			return getFocusedObject().getNature();
+		}
+		return null;
+	}
+
+	public FM getExistingFreeModel() {
+		return existingFreeModel;
+	}
+
+	public void setExistingFreeModel(FM existingFreeModel) {
+		if ((existingFreeModel == null && this.existingFreeModel != null)
+				|| (existingFreeModel != null && !existingFreeModel.equals(this.existingFreeModel))) {
+			FM oldValue = this.existingFreeModel;
+			this.existingFreeModel = existingFreeModel;
+			getPropertyChangeSupport().firePropertyChange("existingFreeModel", oldValue, existingFreeModel);
+		}
+	}
+
+	public FM getFreeModel() {
+		if (getFreeModelChoice() == null) {
+			return null;
+		}
+		switch (getFreeModelChoice()) {
+			case CreateNewFreeModel:
+				return newFreeModel;
+			case SelectExistingFreeModel:
+				if (getFocusedObject() instanceof FMEFreeModel) {
+					return (FM) getFocusedObject();
+				}
+				return getExistingFreeModel();
+			default:
+				break;
+		}
+
+		if (getFocusedObject() instanceof FMEFreeModel) {
+			return (FM) getFocusedObject();
+		}
+		return newFreeModel;
+	}
+
+	public FM makeFreeModel() {
+		getCreateFreeModelAction().doAction();
+		return (FM) getCreateFreeModelAction().getNewFreeModel();
 	}
 
 	@Override
 	protected void doAction(Object context) throws SaveResourceException {
 
-		logger.info("Instantiate free model " + getFocusedObject());
+		System.out.println("OK on execute le Instantiate !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		if (getFreeModelChoice() == FreeModelChoice.CreateNewFreeModel) {
+			System.out.println("On cree un nouveau FreeModel");
+			newFreeModel = makeFreeModel();
+		}
+
+		if (getFreeModel() == null) {
+			return;
+		}
+
+		logger.info("Instantiate free model " + getFreeModel());
 
 		// Create FreeMetaModel when not existant
 		// Use the same name
@@ -89,11 +187,12 @@ public abstract class InstantiateFMEFreeModel<A extends InstantiateFMEFreeModel<
 	@Override
 	public boolean isValid() {
 
-		if (StringUtils.isEmpty(freeModelInstanceName)) {
+		if (StringUtils.isEmpty(getFreeModelInstanceName())) {
 			return false;
 		}
 
-		if (getFocusedObject() != null && getFocusedObject().getFreeModelInstance(freeModelInstanceName) != null) {
+		if (getFocusedObject() != null && getFreeModel() != null
+				&& getFreeModel().getFreeModelInstance(getFreeModelInstanceName()) != null) {
 			return false;
 		}
 
@@ -110,8 +209,26 @@ public abstract class InstantiateFMEFreeModel<A extends InstantiateFMEFreeModel<
 	}
 
 	public String getFreeModelInstanceName() {
+		if (freeModelInstanceName == null) {
+			if (defaultFreeModelInstanceName == null) {
+				String baseName = "Example";
+				if (getFreeModel() != null && getFreeModel().getFreeModelInstance(baseName) != null) {
+					int i = 2;
+					while (getFreeModel().getFreeModelInstance(baseName + i) != null) {
+						i++;
+					}
+					defaultFreeModelInstanceName = baseName + i;
+				}
+				else {
+					defaultFreeModelInstanceName = baseName;
+				}
+			}
+			return defaultFreeModelInstanceName;
+		}
 		return freeModelInstanceName;
 	}
+
+	private String defaultFreeModelInstanceName = null;
 
 	public void setFreeModelInstanceName(String freeModelInstanceName) {
 		boolean wasValid = isValid();

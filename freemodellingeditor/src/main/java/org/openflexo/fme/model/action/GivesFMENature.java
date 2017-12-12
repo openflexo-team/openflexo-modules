@@ -112,8 +112,14 @@ public class GivesFMENature extends GivesNatureAction<GivesFMENature, FreeModell
 	private String newConceptualModelRelativePath;
 	private FlexoResourceCenter<?> conceptualModelRC;
 
+	public enum SampleDataChoice {
+		CreateNewVirtualModelInstance, SelectExistingVirtualModelInstance
+	}
+
+	private SampleDataChoice sampleDataChoice = SampleDataChoice.CreateNewVirtualModelInstance;
 	private String sampleDataName;
 	private String sampleDataRelativePath;
+	private FMLRTVirtualModelInstanceResource existingSampleDataResource;
 
 	GivesFMENature(FlexoProject<?> focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
@@ -229,7 +235,7 @@ public class GivesFMENature extends GivesNatureAction<GivesFMENature, FreeModell
 
 	public void setConceptualModelChoice(ConceptualModelChoice conceptualModelChoice) {
 		if (conceptualModelChoice != getConceptualModelChoice()) {
-			ConceptualModelChoice oldValue = this.conceptualModelChoice;
+			ConceptualModelChoice oldValue = getConceptualModelChoice();
 			this.conceptualModelChoice = conceptualModelChoice;
 			getPropertyChangeSupport().firePropertyChange("conceptualModelChoice", oldValue, conceptualModelChoice);
 		}
@@ -301,19 +307,44 @@ public class GivesFMENature extends GivesNatureAction<GivesFMENature, FreeModell
 	private FMESampleData makeFMESampleData(FMEConceptualModel conceptualModel) {
 		FMESampleData sampleData = getFocusedObject().getModelFactory().newInstance(FMESampleData.class);
 
-		// RepositoryFolder<?, ?> folder = getFocusedObject().getVirtualModelRepository().get
+		switch (getSampleDataChoice()) {
+			case CreateNewVirtualModelInstance:
+				// RepositoryFolder<?, ?> folder = getFocusedObject().getVirtualModelRepository().get
+				CreateBasicVirtualModelInstance action = CreateBasicVirtualModelInstance.actionType
+						.makeNewEmbeddedAction(getFocusedObject().getVirtualModelInstanceRepository().getRootFolder(), null, this);
 
-		CreateBasicVirtualModelInstance action = CreateBasicVirtualModelInstance.actionType
-				.makeNewEmbeddedAction(getFocusedObject().getVirtualModelInstanceRepository().getRootFolder(), null, this);
+				action.setNewVirtualModelInstanceName(getSampleDataName());
+				action.setVirtualModel(conceptualModel.getAccessedVirtualModel());
+				action.doAction();
+				FMLRTVirtualModelInstanceResource newVirtualModelInstanceResource = (FMLRTVirtualModelInstanceResource) action
+						.getNewVirtualModelInstance().getResource();
 
-		action.setNewVirtualModelInstanceName(getSampleDataName());
-		action.setVirtualModel(conceptualModel.getAccessedVirtualModel());
-		action.doAction();
-		FMLRTVirtualModelInstanceResource newVirtualModelInstanceResource = (FMLRTVirtualModelInstanceResource) action
-				.getNewVirtualModelInstance().getResource();
-		sampleData.setAccessedVirtualModelInstanceResource(newVirtualModelInstanceResource);
+				System.out.println("Made new resource: " + newVirtualModelInstanceResource);
+
+				sampleData.setAccessedVirtualModelInstanceResource(newVirtualModelInstanceResource);
+				break;
+			case SelectExistingVirtualModelInstance:
+				sampleData.setAccessedVirtualModelInstanceResource(getExistingSampleDataResource());
+				break;
+
+			default:
+				break;
+		}
 
 		return sampleData;
+
+	}
+
+	public SampleDataChoice getSampleDataChoice() {
+		return sampleDataChoice;
+	}
+
+	public void setSampleDataChoice(SampleDataChoice sampleDataChoice) {
+		if (sampleDataChoice != getSampleDataChoice()) {
+			SampleDataChoice oldValue = getSampleDataChoice();
+			this.sampleDataChoice = sampleDataChoice;
+			getPropertyChangeSupport().firePropertyChange("sampleDataChoice", oldValue, sampleDataChoice);
+		}
 	}
 
 	public String getSampleDataName() {
@@ -342,6 +373,19 @@ public class GivesFMENature extends GivesNatureAction<GivesFMENature, FreeModell
 			String oldValue = this.sampleDataRelativePath;
 			this.sampleDataRelativePath = sampleDataRelativePath;
 			getPropertyChangeSupport().firePropertyChange("sampleDataRelativePath", oldValue, sampleDataRelativePath);
+		}
+	}
+
+	public FMLRTVirtualModelInstanceResource getExistingSampleDataResource() {
+		return existingSampleDataResource;
+	}
+
+	public void setExistingSampleDataResource(FMLRTVirtualModelInstanceResource existingSampleDataResource) {
+		if ((existingSampleDataResource == null && this.existingSampleDataResource != null)
+				|| (existingSampleDataResource != null && !existingSampleDataResource.equals(this.existingSampleDataResource))) {
+			FMLRTVirtualModelInstanceResource oldValue = this.existingSampleDataResource;
+			this.existingSampleDataResource = existingSampleDataResource;
+			getPropertyChangeSupport().firePropertyChange("existingSampleDataResource", oldValue, existingSampleDataResource);
 		}
 	}
 

@@ -41,6 +41,7 @@ package org.openflexo.fme.model.action;
 import java.util.Vector;
 import java.util.logging.Logger;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openflexo.connie.DataBinding;
 import org.openflexo.fme.model.FMEDiagramFreeModel;
 import org.openflexo.fme.model.FreeModellingProjectNature;
@@ -107,27 +108,64 @@ public class CreateFMEDiagramFreeModel extends CreateFMEFreeModel<CreateFMEDiagr
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 
-	private String diagramSpecificationFolder;
+	private String diagramSpecificationFolderName;
+	private RepositoryFolder<?, ?> diagramSpecificationFolder;
 
 	CreateFMEDiagramFreeModel(FlexoActionFactory<CreateFMEDiagramFreeModel, FreeModellingProjectNature, FlexoObject> actionType,
 			FreeModellingProjectNature focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 
-	public String getDiagramSpecificationFolder() {
-		if (diagramSpecificationFolder == null) {
+	public String getDiagramSpecificationFolderName() {
+		if (diagramSpecificationFolderName == null) {
 			return FMEDiagramFreeModel.DEFAULT_DIAGRAM_SPECIFICATION_FOLDER;
+		}
+		return diagramSpecificationFolderName;
+	}
+
+	public void setDiagramSpecificationFolderName(String diagramSpecificationFolderName) {
+		if ((diagramSpecificationFolderName == null && this.diagramSpecificationFolderName != null)
+				|| (diagramSpecificationFolderName != null
+						&& !diagramSpecificationFolderName.equals(this.diagramSpecificationFolderName))) {
+			String oldValue = this.diagramSpecificationFolderName;
+			this.diagramSpecificationFolderName = diagramSpecificationFolderName;
+			getPropertyChangeSupport().firePropertyChange("diagramSpecificationFolderName", oldValue, diagramSpecificationFolderName);
+		}
+	}
+
+	public RepositoryFolder<?, ?> getDiagramSpecificationFolder() {
+		if (diagramSpecificationFolder == null && StringUtils.isNotEmpty(getDiagramSpecificationFolderName())) {
+			DiagramTechnologyAdapter diagramTechnologyAdapter = getServiceManager().getTechnologyAdapterService()
+					.getTechnologyAdapter(DiagramTechnologyAdapter.class);
+			DiagramSpecificationRepository<?> dsRepository = diagramTechnologyAdapter
+					.getDiagramSpecificationRepository(getFocusedObject().getOwner());
+
+			diagramSpecificationFolder = dsRepository.getFolderWithName(getDiagramSpecificationFolderName());
+			if (diagramSpecificationFolder == null) {
+				diagramSpecificationFolder = dsRepository.createNewFolder(getDiagramSpecificationFolderName());
+			}
 		}
 		return diagramSpecificationFolder;
 	}
 
-	public void setDiagramSpecificationFolder(String diagramSpecificationFolder) {
+	public void setDiagramSpecificationFolder(RepositoryFolder<?, ?> diagramSpecificationFolder) {
 		if ((diagramSpecificationFolder == null && this.diagramSpecificationFolder != null)
 				|| (diagramSpecificationFolder != null && !diagramSpecificationFolder.equals(this.diagramSpecificationFolder))) {
-			String oldValue = this.diagramSpecificationFolder;
+			RepositoryFolder<?, ?> oldValue = this.diagramSpecificationFolder;
 			this.diagramSpecificationFolder = diagramSpecificationFolder;
 			getPropertyChangeSupport().firePropertyChange("diagramSpecificationFolder", oldValue, diagramSpecificationFolder);
 		}
+	}
+
+	@Override
+	public boolean isValid() {
+		if (!super.isValid()) {
+			return false;
+		}
+		if (getDiagramSpecificationFolder() == null) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -136,34 +174,41 @@ public class CreateFMEDiagramFreeModel extends CreateFMEFreeModel<CreateFMEDiagr
 		// First we create the diagram specification
 		System.out.println("Creating DiagramSpecification...");
 
-		DiagramTechnologyAdapter diagramTechnologyAdapter = getServiceManager().getTechnologyAdapterService()
-				.getTechnologyAdapter(DiagramTechnologyAdapter.class);
-		DiagramSpecificationRepository<?> dsRepository = diagramTechnologyAdapter
-				.getDiagramSpecificationRepository(getFocusedObject().getOwner());
-
-		RepositoryFolder<?, ?> dsFolder = dsRepository.getFolderWithName(getDiagramSpecificationFolder());
-		if (dsFolder == null) {
-			dsFolder = dsRepository.createNewFolder(getDiagramSpecificationFolder());
-		}
-
-		CreateDiagramSpecification createDS = CreateDiagramSpecification.actionType.makeNewEmbeddedAction(dsFolder, null, this);
+		CreateDiagramSpecification createDS = CreateDiagramSpecification.actionType.makeNewEmbeddedAction(getDiagramSpecificationFolder(),
+				null, this);
 		createDS.setNewDiagramSpecificationName(metaModelName);
 		createDS.doAction();
 		DiagramSpecification diagramSpecification = createDS.getNewDiagramSpecification();
 		System.out.println("DiagramSpecification has been created: " + diagramSpecification);
+
+		if (diagramSpecification == null) {
+			return null;
+		}
 
 		CreateExampleDiagram createExampleDiagram = CreateExampleDiagram.actionType.makeNewEmbeddedAction(diagramSpecification, null, this);
 		createExampleDiagram.setNewDiagramName("Default");
 		createExampleDiagram.setNewDiagramTitle("Default example diagram");
 		createExampleDiagram.doAction();
 
+		if (createExampleDiagram == null) {
+			return null;
+		}
+
 		CreateDiagramPalette createPalette = CreateDiagramPalette.actionType.makeNewEmbeddedAction(diagramSpecification, null, this);
 		createPalette.setNewPaletteName(FMEDiagramFreeModel.PALETTE_NAME);
 		createPalette.doAction();
 		System.out.println("Palette has been created: " + createPalette.getNewPalette());
 
+		if (createPalette == null) {
+			return null;
+		}
+
 		// Now we create the VirtualModel
 		VirtualModel newVirtualModel = createVirtualModel(metaModelName);
+
+		if (newVirtualModel == null) {
+			return null;
+		}
 
 		// Now we create the diagram model slot
 		CreateModelSlot createMS = CreateModelSlot.actionType.makeNewEmbeddedAction(newVirtualModel, null, this);

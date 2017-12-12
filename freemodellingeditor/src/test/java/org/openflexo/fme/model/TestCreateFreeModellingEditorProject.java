@@ -79,6 +79,7 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 	private static FMESampleData sampleData;
 	private static FlexoConcept conceptA, conceptB;
 	private static FMEDiagramFreeModel diagramModel1;
+	private static FMEDiagramFreeModel diagramModel2;
 
 	@Test
 	@TestOrder(1)
@@ -173,6 +174,35 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 		Diagram newDiagram = instance1.getAccessedVirtualModelInstance().execute("diagram");
 		assertNotNull(newDiagram);
 		assertEquals(diagramModel1.getDiagramSpecification(), newDiagram.getDiagramSpecification());
+
+	}
+
+	@Test
+	@TestOrder(7)
+	public void instantiateNewFMEDiagramFreeModelWhileCreatingNewFreeModel()
+			throws FlexoException, TypeMismatchException, NullReferenceException, InvocationTargetException, InvalidBindingException {
+
+		InstantiateFMEDiagramFreeModel action = InstantiateFMEDiagramFreeModel.actionType.makeNewAction(nature, null, editor);
+		action.setFreeModelInstanceName("Instance2");
+		action.setFreeModelInstanceDescription("A description");
+		action.getCreateFreeModelAction().setFreeModelName("DiagramModel2");
+
+		action.doAction();
+
+		diagramModel2 = action.getFreeModel();
+		assertNotNull(diagramModel2);
+
+		FMEDiagramFreeModelInstance instance2 = action.getNewFreeModelInstance();
+		assertNotNull(instance2);
+
+		project.save();
+		project.saveModifiedResources(null);
+
+		assertEquals(sampleData.getAccessedVirtualModelInstance(), instance2.getAccessedVirtualModelInstance().execute("sampleData"));
+
+		Diagram newDiagram2 = instance2.getAccessedVirtualModelInstance().execute("diagram");
+		assertNotNull(newDiagram2);
+		assertEquals(diagramModel2.getDiagramSpecification(), newDiagram2.getDiagramSpecification());
 
 	}
 

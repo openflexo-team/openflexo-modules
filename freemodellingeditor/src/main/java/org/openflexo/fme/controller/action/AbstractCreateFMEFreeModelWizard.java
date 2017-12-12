@@ -44,28 +44,25 @@ import java.util.logging.Logger;
 import org.openflexo.ApplicationContext;
 import org.openflexo.components.wizard.FlexoWizard;
 import org.openflexo.components.wizard.WizardStep;
-import org.openflexo.fme.model.FreeModellingProject;
-import org.openflexo.fme.model.action.AbstractCreateFreeModel;
-import org.openflexo.foundation.fml.VirtualModel;
-import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
-import org.openflexo.gina.annotation.FIBPanel;
+import org.openflexo.fme.model.FreeModellingProjectNature;
+import org.openflexo.fme.model.action.CreateFMEFreeModel;
 import org.openflexo.toolbox.StringUtils;
 import org.openflexo.view.controller.FlexoController;
 
-public abstract class AbstractCreateFreeModelWizard<A extends AbstractCreateFreeModel<?>> extends FlexoWizard {
+public abstract class AbstractCreateFMEFreeModelWizard<A extends CreateFMEFreeModel<A>> extends FlexoWizard {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger.getLogger(AbstractCreateFreeModelWizard.class.getPackage().getName());
+	private static final Logger logger = Logger.getLogger(AbstractCreateFMEFreeModelWizard.class.getPackage().getName());
 
 	private final A action;
 	private final DescribeFreeModel describeFreeModel;
 
-	private static final Dimension DIMENSIONS = new Dimension(800, 600);
+	private static final Dimension DIMENSIONS = new Dimension(750, 500);
 
-	public AbstractCreateFreeModelWizard(A action, FlexoController controller) {
+	public AbstractCreateFMEFreeModelWizard(A action, FlexoController controller) {
 		super(controller);
 		this.action = action;
-		addStep(describeFreeModel = new DescribeFreeModel());
+		addStep(describeFreeModel = makeDescribeFreeModel());
 	}
 
 	public A getAction() {
@@ -77,25 +74,20 @@ public abstract class AbstractCreateFreeModelWizard<A extends AbstractCreateFree
 		return DIMENSIONS;
 	}
 
+	public abstract DescribeFreeModel makeDescribeFreeModel();
+
 	public DescribeFreeModel getDescribeFreeModel() {
 		return describeFreeModel;
 	}
 
-	/**
-	 * This step is used to set {@link VirtualModel} to be used, as well as name and title of the {@link FMLRTVirtualModelInstance}
-	 * 
-	 * @author sylvain
-	 *
-	 */
-	@FIBPanel("Fib/Wizard/DescribeFreeModel.fib")
-	public class DescribeFreeModel extends WizardStep {
+	public abstract class DescribeFreeModel extends WizardStep {
 
 		public ApplicationContext getServiceManager() {
 			return getController().getApplicationContext();
 		}
 
 		public A getAction() {
-			return AbstractCreateFreeModelWizard.this.getAction();
+			return AbstractCreateFMEFreeModelWizard.this.getAction();
 		}
 
 		@Override
@@ -103,7 +95,7 @@ public abstract class AbstractCreateFreeModelWizard<A extends AbstractCreateFree
 			return action.getLocales().localizedForKey("describe_free_model");
 		}
 
-		public FreeModellingProject getFreeModellingProject() {
+		public FreeModellingProjectNature getFreeModellingProjectNature() {
 			return getAction().getFocusedObject();
 		}
 
@@ -115,13 +107,8 @@ public abstract class AbstractCreateFreeModelWizard<A extends AbstractCreateFree
 				return false;
 			}
 
-			else if (getFreeModellingProject().getFreeModel(getFreeModelName()) != null) {
+			else if (getFreeModellingProjectNature().getFreeModel(getFreeModelName()) != null) {
 				setIssueMessage(action.getLocales().localizedForKey("a_free_model_with_that_name_already_exists"), IssueMessageType.ERROR);
-				return false;
-			}
-
-			else if (!getAction().getCreateNewMetaModel() && getAction().getFreeMetaModel() == null) {
-				setIssueMessage(action.getLocales().localizedForKey("no_meta_model_defined"), IssueMessageType.ERROR);
 				return false;
 			}
 

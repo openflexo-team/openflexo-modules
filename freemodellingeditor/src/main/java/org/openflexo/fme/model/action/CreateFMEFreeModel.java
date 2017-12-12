@@ -93,8 +93,9 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 		// Use the same name
 		freeModel = createNewFreeModel(getFreeModelName());
 
-		getFocusedObject().getPropertyChangeSupport().firePropertyChange("freeModels", null, null);
+		getFocusedObject().addToFreeModels(freeModel);
 
+		getFocusedObject().getOwner().setIsModified();
 	}
 
 	protected VirtualModel createVirtualModel(String metaModelName) {
@@ -127,6 +128,7 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 				.makeNewEmbeddedAction(creationScheme, null, this);
 		createSampleDataParameter.setParameterName("sampleData");
 		createSampleDataParameter.setParameterType(getConceptualVirtualModelResource().getVirtualModel().getInstanceType());
+
 		createSampleDataParameter.doAction();
 
 		CreateEditionAction assignSampleDataAction = CreateEditionAction.actionType.makeNewEmbeddedAction(creationScheme.getControlGraph(),
@@ -155,11 +157,11 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 	@Override
 	public boolean isValid() {
 
-		if (StringUtils.isEmpty(freeModelName)) {
+		if (StringUtils.isEmpty(getFreeModelName())) {
 			return false;
 		}
 
-		if (getFocusedObject() != null && getFocusedObject().getFreeModel(freeModelName) != null) {
+		if (getFocusedObject() != null && getFocusedObject().getFreeModel(getFreeModelName()) != null) {
 			return false;
 		}
 
@@ -175,7 +177,25 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 		return freeModel;
 	}
 
+	private String defaultFreeModelName = null;
+
 	public String getFreeModelName() {
+		if (freeModelName == null) {
+			if (defaultFreeModelName == null) {
+				String baseName = "FreeModel";
+				if (getFocusedObject().getFreeModel(baseName) != null) {
+					int i = 2;
+					while (getFocusedObject().getFreeModel(baseName + i) != null) {
+						i++;
+					}
+					defaultFreeModelName = baseName + i;
+				}
+				else {
+					defaultFreeModelName = baseName;
+				}
+			}
+			return defaultFreeModelName;
+		}
 		return freeModelName;
 	}
 

@@ -51,8 +51,11 @@ import javax.swing.ImageIcon;
 
 import org.openflexo.fme.FMEIconLibrary;
 import org.openflexo.fme.controller.action.FMEControllerActionInitializer;
-import org.openflexo.fme.model.FMEFreeModel;
+import org.openflexo.fme.model.FMEConceptualModel;
+import org.openflexo.fme.model.FMEDiagramFreeModel;
+import org.openflexo.fme.model.FMEDiagramFreeModelInstance;
 import org.openflexo.fme.model.FMEFreeModelInstance;
+import org.openflexo.fme.model.FMESampleData;
 import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.fme.view.menu.FMEMenuBar;
 import org.openflexo.foundation.FlexoEditor;
@@ -61,6 +64,9 @@ import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.fml.FMLObject;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.validation.FlexoValidationModel;
+import org.openflexo.icon.FMLIconLibrary;
+import org.openflexo.icon.FMLRTIconLibrary;
+import org.openflexo.icon.IconFactory;
 import org.openflexo.icon.IconLibrary;
 import org.openflexo.module.FlexoModule;
 import org.openflexo.selection.MouseSelectionManager;
@@ -141,6 +147,9 @@ public class FMEController extends FlexoController {
 
 	@Override
 	public FlexoObject getDefaultObjectToSelect(FlexoProject<?> project) {
+		if (project != null && project.hasNature(FreeModellingProjectNature.class)) {
+			return project.getNature(FreeModellingProjectNature.class);
+		}
 		return project;
 	}
 
@@ -201,13 +210,19 @@ public class FMEController extends FlexoController {
 	@Override
 	public ImageIcon iconForObject(Object object) {
 		if (object instanceof FreeModellingProjectNature) {
-			return IconLibrary.OPENFLEXO_NOTEXT_16;
+			return IconFactory.getImageIcon(IconLibrary.OPENFLEXO_NOTEXT_16, FMEIconLibrary.FME_MARKER);
 		}
-		else if (object instanceof FMEFreeModelInstance) {
+		else if (object instanceof FMEConceptualModel) {
+			return FMLIconLibrary.VIRTUAL_MODEL_ICON;
+		}
+		else if (object instanceof FMESampleData) {
+			return FMLRTIconLibrary.VIRTUAL_MODEL_INSTANCE_ICON;
+		}
+		else if (object instanceof FMEDiagramFreeModelInstance) {
 			return FMEIconLibrary.DIAGRAM_ICON;
 		}
-		else if (object instanceof FMEFreeModel) {
-			return FMEIconLibrary.FME_SMALL_ICON;
+		else if (object instanceof FMEDiagramFreeModel) {
+			return IconFactory.getImageIcon(FMEIconLibrary.DIAGRAM_ICON, FMEIconLibrary.FME_MARKER);
 		}
 		return super.iconForObject(object);
 	}

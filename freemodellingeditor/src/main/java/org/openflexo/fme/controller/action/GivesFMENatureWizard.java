@@ -48,9 +48,11 @@ import org.openflexo.components.wizard.WizardStep;
 import org.openflexo.fme.FMEIconLibrary;
 import org.openflexo.fme.model.action.GivesFMENature;
 import org.openflexo.fme.model.action.GivesFMENature.ConceptualModelChoice;
+import org.openflexo.fme.model.action.GivesFMENature.SampleDataChoice;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.rm.VirtualModelResource;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
+import org.openflexo.foundation.fml.rt.rm.FMLRTVirtualModelInstanceResource;
 import org.openflexo.gina.annotation.FIBPanel;
 import org.openflexo.icon.IconFactory;
 import org.openflexo.icon.IconLibrary;
@@ -65,13 +67,15 @@ public class GivesFMENatureWizard extends FlexoWizard {
 	private final GivesFMENature action;
 
 	private final ConfigureConceptualModel configureConceptualModel;
+	private final ConfigureSampleData configureSampleData;
 
-	private static final Dimension DIMENSIONS = new Dimension(800, 600);
+	private static final Dimension DIMENSIONS = new Dimension(750, 500);
 
 	public GivesFMENatureWizard(GivesFMENature action, FlexoController controller) {
 		super(controller);
 		this.action = action;
 		addStep(configureConceptualModel = new ConfigureConceptualModel());
+		addStep(configureSampleData = new ConfigureSampleData());
 	}
 
 	@Override
@@ -91,6 +95,10 @@ public class GivesFMENatureWizard extends FlexoWizard {
 
 	public ConfigureConceptualModel getConfigureConceptualModel() {
 		return configureConceptualModel;
+	}
+
+	public ConfigureSampleData getConfigureSampleData() {
+		return configureSampleData;
 	}
 
 	/**
@@ -197,6 +205,117 @@ public class GivesFMENatureWizard extends FlexoWizard {
 				String oldValue = getNewConceptualModelRelativePath();
 				action.setNewConceptualModelRelativePath(newConceptualModelRelativePath);
 				getPropertyChangeSupport().firePropertyChange("newConceptualModelRelativePath", oldValue, newConceptualModelRelativePath);
+				checkValidity();
+			}
+		}
+
+	}
+
+	/**
+	 * This step is used to set {@link VirtualModel} to be used, as well as name and title of the {@link FMLRTVirtualModelInstance}
+	 * 
+	 * @author sylvain
+	 *
+	 */
+	@FIBPanel("Fib/Wizard/ConfigureSampleData.fib")
+	public class ConfigureSampleData extends WizardStep {
+
+		public ApplicationContext getServiceManager() {
+			return getController().getApplicationContext();
+		}
+
+		public GivesFMENature getAction() {
+			return action;
+		}
+
+		@Override
+		public String getTitle() {
+			return action.getLocales().localizedForKey("configure_sample_data");
+		}
+
+		@Override
+		public boolean isValid() {
+
+			if (getSampleDataChoice() == null) {
+				setIssueMessage(action.getLocales().localizedForKey("please_chose_an_option"), IssueMessageType.ERROR);
+				return false;
+			}
+
+			switch (getSampleDataChoice()) {
+				case CreateNewVirtualModelInstance:
+					if (StringUtils.isEmpty(getSampleDataName())) {
+						setIssueMessage(action.getLocales().localizedForKey("no_virtual_model_instance_name_defined"),
+								IssueMessageType.ERROR);
+						return false;
+					}
+					/*if (StringUtils.isEmpty(getNewConceptualModelRelativePath())) {
+						setIssueMessage(action.getLocales().localizedForKey("no_relative_path_defined"), IssueMessageType.ERROR);
+						return false;
+					}*/
+					break;
+				case SelectExistingVirtualModelInstance:
+					if (getExistingSampleDataResource() == null) {
+						setIssueMessage(action.getLocales().localizedForKey("please_select_a_virtual_model_instance"),
+								IssueMessageType.ERROR);
+						return false;
+					}
+					break;
+			}
+
+			return true;
+
+		}
+
+		public SampleDataChoice getSampleDataChoice() {
+			return action.getSampleDataChoice();
+		}
+
+		public void setSampleDataChoice(SampleDataChoice sampleDataChoice) {
+			if (sampleDataChoice != getSampleDataChoice()) {
+				SampleDataChoice oldValue = getSampleDataChoice();
+				action.setSampleDataChoice(sampleDataChoice);
+				getPropertyChangeSupport().firePropertyChange("sampleDataChoice", oldValue, sampleDataChoice);
+				checkValidity();
+			}
+		}
+
+		public FMLRTVirtualModelInstanceResource getExistingSampleDataResource() {
+			return action.getExistingSampleDataResource();
+		}
+
+		public void setExistingConceptualModelResource(FMLRTVirtualModelInstanceResource existingSampleDataResource) {
+			if (existingSampleDataResource != getExistingSampleDataResource()) {
+				FMLRTVirtualModelInstanceResource oldValue = getExistingSampleDataResource();
+				action.setExistingSampleDataResource(existingSampleDataResource);
+				getPropertyChangeSupport().firePropertyChange("existingSampleDataResource", oldValue, existingSampleDataResource);
+				checkValidity();
+			}
+		}
+
+		public String getSampleDataName() {
+			return action.getSampleDataName();
+		}
+
+		public void setSampleDataName(String sampleDataName) {
+			if ((sampleDataName == null && getSampleDataName() != null)
+					|| (sampleDataName != null && !sampleDataName.equals(getSampleDataName()))) {
+				String oldValue = getSampleDataName();
+				action.setSampleDataName(sampleDataName);
+				getPropertyChangeSupport().firePropertyChange("sampleDataName", oldValue, sampleDataName);
+				checkValidity();
+			}
+		}
+
+		public String getSampleDataRelativePath() {
+			return action.getSampleDataRelativePath();
+		}
+
+		public void setSampleDataRelativePath(String sampleDataRelativePath) {
+			if ((sampleDataRelativePath == null && getSampleDataRelativePath() != null)
+					|| (sampleDataRelativePath != null && !sampleDataRelativePath.equals(getSampleDataRelativePath()))) {
+				String oldValue = getSampleDataRelativePath();
+				action.setSampleDataRelativePath(sampleDataRelativePath);
+				getPropertyChangeSupport().firePropertyChange("sampleDataRelativePath", oldValue, sampleDataRelativePath);
 				checkValidity();
 			}
 		}

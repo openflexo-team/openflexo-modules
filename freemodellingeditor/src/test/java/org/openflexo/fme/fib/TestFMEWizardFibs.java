@@ -51,6 +51,16 @@ public class TestFMEWizardFibs extends GenericFIBTestCase {
 	}
 
 	@Test
+	public void testChooseDiagramFreeModel() {
+		validateFIB("Fib/Wizard/ChooseDiagramFreeModel.fib");
+	}
+
+	@Test
+	public void testConfigureConceptualModel() {
+		validateFIB("Fib/Wizard/ConfigureConceptualModel.fib");
+	}
+
+	@Test
 	public void testConfigureNewConcept() {
 		validateFIB("Fib/Wizard/ConfigureNewConcept.fib");
 	}
@@ -61,13 +71,18 @@ public class TestFMEWizardFibs extends GenericFIBTestCase {
 	}
 
 	@Test
-	public void testDescribeFreeModel() {
-		validateFIB("Fib/Wizard/DescribeFreeModel.fib");
+	public void testConfigureSampleData() {
+		validateFIB("Fib/Wizard/ConfigureSampleData.fib");
 	}
 
 	@Test
-	public void testDescribeFreeModelDiagram() {
-		validateFIB("Fib/Wizard/DescribeFreeModelDiagram.fib");
+	public void testDescribeDiagramFreeModel() {
+		validateFIB("Fib/Wizard/DescribeDiagramFreeModel.fib");
+	}
+
+	@Test
+	public void testDescribeDiagramFreeModelInstance() {
+		validateFIB("Fib/Wizard/DescribeDiagramFreeModelInstance.fib");
 	}
 
 }

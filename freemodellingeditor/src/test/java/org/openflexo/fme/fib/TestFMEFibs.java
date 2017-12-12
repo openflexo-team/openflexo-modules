@@ -36,47 +36,16 @@
  * 
  */
 
-package org.openflexo.fme.model;
+package org.openflexo.fme.fib;
 
-import java.util.logging.Logger;
+import org.openflexo.gina.test.GenericFIBTestCase;
+import org.openflexo.rm.FileResourceImpl;
+import org.openflexo.rm.ResourceLocator;
 
-import org.openflexo.foundation.fml.rt.VirtualModelInstance;
-import org.openflexo.foundation.fml.rt.rm.FMLRTVirtualModelInstanceResourceFactory;
-import org.openflexo.foundation.nature.VirtualModelInstanceBasedNatureObject;
-import org.openflexo.logging.FlexoLogger;
-import org.openflexo.model.annotations.ImplementationClass;
-import org.openflexo.model.annotations.ModelEntity;
-import org.openflexo.model.annotations.XMLElement;
+public class TestFMEFibs extends GenericFIBTestCase {
 
-/**
- * Defines container of sample data discovered during free-modelling<br>
- * 
- * Rely on a {@link VirtualModelInstance}
- * 
- * Note that in a {@link FreeModellingProjectNature}, {@link FMESampleData} is conform to {@link FMEConceptualModel}
- * 
- * @author sylvain
- * 
- */
-@ModelEntity
-@XMLElement
-@ImplementationClass(FMESampleData.FMESampleDataImpl.class)
-public interface FMESampleData extends VirtualModelInstanceBasedNatureObject<FreeModellingProjectNature> {
-
-	public String getName();
-
-	public abstract class FMESampleDataImpl extends VirtualModelInstanceBasedNatureObjectImpl<FreeModellingProjectNature>
-			implements FMESampleData {
-
-		private static final Logger logger = FlexoLogger.getLogger(FMESampleData.class.getPackage().getName());
-
-		@Override
-		public String getName() {
-			if (getAccessedVirtualModelInstance() != null) {
-				return getAccessedVirtualModelInstance().getName() + FMLRTVirtualModelInstanceResourceFactory.FML_RT_SUFFIX;
-			}
-			return "<SampleData>";
-		}
-
+	public static void main(String[] args) {
+		System.out.println(generateFIBTestCaseClass(((FileResourceImpl) ResourceLocator.locateResource("Fib")).getFile(), "Fib/"));
 	}
+
 }

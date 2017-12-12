@@ -46,23 +46,24 @@ import javax.swing.Icon;
 import org.openflexo.components.wizard.Wizard;
 import org.openflexo.components.wizard.WizardDialog;
 import org.openflexo.fme.FMEIconLibrary;
-import org.openflexo.fme.model.action.GivesFMENature;
-import org.openflexo.fme.view.ConvertToFMEProjectView;
+import org.openflexo.fme.model.FreeModellingProjectNature;
+import org.openflexo.fme.model.action.CreateFMEDiagramFreeModel;
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
 import org.openflexo.gina.controller.FIBController.Status;
+import org.openflexo.icon.IconFactory;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 
-public class GivesFMENatureInitializer extends ActionInitializer<GivesFMENature, FlexoProject<?>, FlexoObject> {
+public class CreateFMEDiagramFreeModelInitializer
+		extends ActionInitializer<CreateFMEDiagramFreeModel, FreeModellingProjectNature, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
-	GivesFMENatureInitializer(FMEControllerActionInitializer actionInitializer) {
-		super(GivesFMENature.actionType, actionInitializer);
+	CreateFMEDiagramFreeModelInitializer(FMEControllerActionInitializer actionInitializer) {
+		super(CreateFMEDiagramFreeModel.actionType, actionInitializer);
 	}
 
 	@Override
@@ -71,11 +72,11 @@ public class GivesFMENatureInitializer extends ActionInitializer<GivesFMENature,
 	}
 
 	@Override
-	protected FlexoActionInitializer<GivesFMENature> getDefaultInitializer() {
-		return new FlexoActionInitializer<GivesFMENature>() {
+	protected FlexoActionInitializer<CreateFMEDiagramFreeModel> getDefaultInitializer() {
+		return new FlexoActionInitializer<CreateFMEDiagramFreeModel>() {
 			@Override
-			public boolean run(EventObject e, GivesFMENature action) {
-				Wizard wizard = new GivesFMENatureWizard(action, getController());
+			public boolean run(EventObject e, CreateFMEDiagramFreeModel action) {
+				Wizard wizard = new CreateFMEDiagramFreeModelWizard(action, getController());
 				WizardDialog dialog = new WizardDialog(wizard, getController());
 				dialog.showDialog();
 				if (dialog.getStatus() != Status.VALIDATED) {
@@ -88,17 +89,11 @@ public class GivesFMENatureInitializer extends ActionInitializer<GivesFMENature,
 	}
 
 	@Override
-	protected FlexoActionFinalizer<GivesFMENature> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<GivesFMENature>() {
+	protected FlexoActionFinalizer<CreateFMEDiagramFreeModel> getDefaultFinalizer() {
+		return new FlexoActionFinalizer<CreateFMEDiagramFreeModel>() {
 			@Override
-			public boolean run(EventObject e, GivesFMENature action) {
-				/*if (getController().getCurrentPerspective() instanceof FMEPerspective) {
-					((FMEPerspective) getController().getCurrentPerspective()).setProject(action.getFocusedObject());
-				}*/
-				if (getController().getCurrentModuleView() instanceof ConvertToFMEProjectView) {
-					getController().getCurrentModuleView().deleteModuleView();
-				}
-				getController().selectAndFocusObject(action.getNewNature());
+			public boolean run(EventObject e, CreateFMEDiagramFreeModel action) {
+				getController().selectAndFocusObject(action.getNewFreeModel());
 				return true;
 			}
 		};
@@ -106,7 +101,7 @@ public class GivesFMENatureInitializer extends ActionInitializer<GivesFMENature,
 
 	@Override
 	protected Icon getEnabledIcon(FlexoActionFactory actionType) {
-		return FMEIconLibrary.FME_SMALL_ICON;
+		return IconFactory.getImageIcon(FMEIconLibrary.DIAGRAM_ICON, FMEIconLibrary.FME_MARKER);
 	}
 
 }

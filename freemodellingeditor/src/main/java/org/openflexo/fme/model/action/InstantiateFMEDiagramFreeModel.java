@@ -43,9 +43,11 @@ import static org.junit.Assert.assertTrue;
 import java.util.Vector;
 import java.util.logging.Logger;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openflexo.fme.model.FMEDiagramFreeModel;
 import org.openflexo.fme.model.FMEDiagramFreeModelInstance;
 import org.openflexo.fme.model.FMEFreeModelInstance;
+import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
@@ -53,6 +55,7 @@ import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.CreationScheme;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.action.CreateBasicVirtualModelInstance;
+import org.openflexo.foundation.nature.NatureObject;
 import org.openflexo.foundation.resource.RepositoryFolder;
 import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.technologyadapter.diagram.model.action.CreateDiagram;
@@ -69,7 +72,7 @@ public class InstantiateFMEDiagramFreeModel extends InstantiateFMEFreeModel<Inst
 
 	private static final Logger logger = Logger.getLogger(InstantiateFMEDiagramFreeModel.class.getPackage().getName());
 
-	public static FlexoActionFactory<InstantiateFMEDiagramFreeModel, FMEDiagramFreeModel, FlexoObject> actionType = new FlexoActionFactory<InstantiateFMEDiagramFreeModel, FMEDiagramFreeModel, FlexoObject>(
+	public static FlexoActionFactory<InstantiateFMEDiagramFreeModel, NatureObject<FreeModellingProjectNature>, FlexoObject> actionType = new FlexoActionFactory<InstantiateFMEDiagramFreeModel, NatureObject<FreeModellingProjectNature>, FlexoObject>(
 			"instantiate_diagram_free_model", FlexoActionFactory.newMenu, FlexoActionFactory.defaultGroup,
 			FlexoActionFactory.ADD_ACTION_TYPE) {
 
@@ -77,59 +80,54 @@ public class InstantiateFMEDiagramFreeModel extends InstantiateFMEFreeModel<Inst
 		 * Factory method
 		 */
 		@Override
-		public InstantiateFMEDiagramFreeModel makeNewAction(FMEDiagramFreeModel focusedObject, Vector<FlexoObject> globalSelection,
-				FlexoEditor editor) {
+		public InstantiateFMEDiagramFreeModel makeNewAction(NatureObject<FreeModellingProjectNature> focusedObject,
+				Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 			return new InstantiateFMEDiagramFreeModel(focusedObject, globalSelection, editor);
 		}
 
 		@Override
-		public boolean isVisibleForSelection(FMEDiagramFreeModel object, Vector<FlexoObject> globalSelection) {
+		public boolean isVisibleForSelection(NatureObject<FreeModellingProjectNature> object, Vector<FlexoObject> globalSelection) {
 			return true;
 		}
 
 		@Override
-		public boolean isEnabledForSelection(FMEDiagramFreeModel object, Vector<FlexoObject> globalSelection) {
+		public boolean isEnabledForSelection(NatureObject<FreeModellingProjectNature> object, Vector<FlexoObject> globalSelection) {
 			return true;
 		}
 
 	};
 
 	static {
+		FlexoObjectImpl.addActionForClass(InstantiateFMEDiagramFreeModel.actionType, FreeModellingProjectNature.class);
 		FlexoObjectImpl.addActionForClass(InstantiateFMEDiagramFreeModel.actionType, FMEDiagramFreeModel.class);
 	}
 
 	private String diagramName;
+	private RepositoryFolder<?, ?> diagramFolder;
 
-	InstantiateFMEDiagramFreeModel(FMEDiagramFreeModel focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+	InstantiateFMEDiagramFreeModel(NatureObject<FreeModellingProjectNature> focusedObject, Vector<FlexoObject> globalSelection,
+			FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
+	}
+
+	@Override
+	public CreateFMEDiagramFreeModel makeCreateFreeModelAction() {
+		return CreateFMEDiagramFreeModel.actionType.makeNewEmbeddedAction(getNature(), null, this);
+	}
+
+	@Override
+	public CreateFMEDiagramFreeModel getCreateFreeModelAction() {
+		return (CreateFMEDiagramFreeModel) super.getCreateFreeModelAction();
 	}
 
 	@Override
 	protected FMEFreeModelInstance instantiateFreeModel(String freeModelInstanceName) {
 
-		DiagramTechnologyAdapter diagramTA = getServiceManager().getTechnologyAdapterService()
-				.getTechnologyAdapter(DiagramTechnologyAdapter.class);
-
-		System.out.println("diagramTA=" + diagramTA);
-		System.out.println("getFocusedObject()=" + getFocusedObject());
-		System.out.println("getFocusedObject().getNature()=" + getFocusedObject().getNature());
-		System.out.println("getFocusedObject().getNature().getProject()=" + getFocusedObject().getNature().getProject());
-		System.out.println("diagramTA.getDiagramRepository(getFocusedObject().getNature().getProject())="
-				+ diagramTA.getDiagramRepository(getFocusedObject().getNature().getProject()));
-
-		DiagramRepository<?> diagramRepository = diagramTA.getDiagramRepository(getFocusedObject().getNature().getProject());
-		RepositoryFolder<DiagramResource, ?> rootFolder = diagramTA.getDiagramRepository(getFocusedObject().getNature().getProject())
-				.getRootFolder();
-		RepositoryFolder<DiagramResource, ?> diagramFolder = rootFolder.getFolderNamed(getDiagramFolder());
-		if (diagramFolder == null) {
-			diagramFolder = diagramRepository.createNewFolder(getDiagramFolder());
-		}
-
-		System.out.println("diagramFolder=" + diagramFolder);
-		CreateDiagram createDiagram = CreateDiagram.actionType.makeNewEmbeddedAction(diagramFolder, null, this);
+		System.out.println("diagramFolder=" + getDiagramFolder());
+		CreateDiagram createDiagram = CreateDiagram.actionType.makeNewEmbeddedAction(getDiagramFolder(), null, this);
 		createDiagram.setDiagramName(getDiagramName() + ".diagram");
 		createDiagram.setDiagramTitle(getFreeModelInstanceDescription());
-		createDiagram.setDiagramSpecification(getFocusedObject().getDiagramSpecification());
+		createDiagram.setDiagramSpecification(getFreeModel().getDiagramSpecification());
 
 		createDiagram.doAction();
 
@@ -137,32 +135,37 @@ public class InstantiateFMEDiagramFreeModel extends InstantiateFMEFreeModel<Inst
 		System.out.println("newDiagramResource=" + newDiagramResource);
 
 		CreateBasicVirtualModelInstance action = CreateBasicVirtualModelInstance.actionType.makeNewEmbeddedAction(
-				getFocusedObject().getNature().getProject().getVirtualModelInstanceRepository().getRootFolder(), null, this);
+				getFreeModel().getNature().getProject().getVirtualModelInstanceRepository().getRootFolder(), null, this);
 		action.setNewVirtualModelInstanceName(getFreeModelInstanceName());
-		action.setVirtualModel(getFocusedObject().getAccessedVirtualModel());
-		CreationScheme creationScheme = getFocusedObject().getAccessedVirtualModel().getCreationSchemes().get(0);
+		action.setVirtualModel(getFreeModel().getAccessedVirtualModel());
+		CreationScheme creationScheme = getFreeModel().getAccessedVirtualModel().getCreationSchemes().get(0);
 		action.setCreationScheme(creationScheme);
 
 		System.out.println("Found: " + creationScheme.getFMLRepresentation());
 
 		action.setParameterValue(creationScheme.getParameter("sampleData"),
-				getFocusedObject().getNature().getSampleData().getAccessedVirtualModelInstance());
+				getFreeModel().getNature().getSampleData().getAccessedVirtualModelInstance());
 
-		System.out.println("Les sample data: " + getFocusedObject().getNature().getSampleData().getAccessedVirtualModelInstance());
+		System.out.println("Les sample data: " + getFreeModel().getNature().getSampleData().getAccessedVirtualModelInstance());
 
 		action.setParameterValue(creationScheme.getParameter("diagram"), newDiagramResource.getDiagram());
 
 		System.out.println("Le diagram: " + newDiagramResource.getDiagram());
+
+		System.out.println("On execute donc " + creationScheme.getFMLRepresentation());
+		System.out.println("avec " + action.getCreationSchemeAction().getParametersValues());
 
 		action.doAction();
 		assertTrue(action.hasActionExecutionSucceeded());
 
 		FMLRTVirtualModelInstance newVirtualModelInstance = action.getNewVirtualModelInstance();
 
-		FMEDiagramFreeModelInstance newFreeModelInstance = getFocusedObject().getNature().getOwner().getModelFactory()
+		System.out.println(newVirtualModelInstance.getFactory().stringRepresentation(newVirtualModelInstance));
+
+		FMEDiagramFreeModelInstance newFreeModelInstance = getFreeModel().getNature().getOwner().getModelFactory()
 				.newInstance(FMEDiagramFreeModelInstance.class);
 		newFreeModelInstance.setAccessedVirtualModelInstance(newVirtualModelInstance);
-		getFocusedObject().addToFreeModelInstances(newFreeModelInstance);
+		getFreeModel().addToFreeModelInstances(newFreeModelInstance);
 
 		return newFreeModelInstance;
 	}
@@ -177,18 +180,41 @@ public class InstantiateFMEDiagramFreeModel extends InstantiateFMEFreeModel<Inst
 		return (FMEDiagramFreeModelInstance) super.getNewFreeModelInstance();
 	}
 
-	private String diagramFolder;
+	private String diagramFolderName;
 
-	public String getDiagramFolder() {
-		if (diagramFolder == null) {
+	public String getDiagramFolderName() {
+		if (diagramFolderName == null) {
 			return FMEDiagramFreeModelInstance.DEFAULT_DIAGRAM_FOLDER;
+		}
+		return diagramFolderName;
+	}
+
+	public void setDiagramFolderName(String diagramFolderName) {
+		if ((diagramFolderName == null && this.diagramFolderName != null)
+				|| (diagramFolderName != null && !diagramFolderName.equals(this.diagramFolderName))) {
+			String oldValue = this.diagramFolderName;
+			this.diagramFolderName = diagramFolderName;
+			getPropertyChangeSupport().firePropertyChange("diagramFolderName", oldValue, diagramFolderName);
+		}
+	}
+
+	public RepositoryFolder<?, ?> getDiagramFolder() {
+		if (diagramFolder == null && StringUtils.isNotEmpty(getDiagramFolderName())) {
+			DiagramTechnologyAdapter diagramTechnologyAdapter = getServiceManager().getTechnologyAdapterService()
+					.getTechnologyAdapter(DiagramTechnologyAdapter.class);
+			DiagramRepository<?> dsRepository = diagramTechnologyAdapter.getDiagramRepository(getNature().getOwner());
+
+			diagramFolder = dsRepository.getFolderWithName(getDiagramFolderName());
+			if (diagramFolder == null) {
+				diagramFolder = dsRepository.createNewFolder(getDiagramFolderName());
+			}
 		}
 		return diagramFolder;
 	}
 
-	public void setDiagramFolder(String diagramFolder) {
+	public void setDiagramFolder(RepositoryFolder<?, ?> diagramFolder) {
 		if ((diagramFolder == null && this.diagramFolder != null) || (diagramFolder != null && !diagramFolder.equals(this.diagramFolder))) {
-			String oldValue = this.diagramFolder;
+			RepositoryFolder<?, ?> oldValue = this.diagramFolder;
 			this.diagramFolder = diagramFolder;
 			getPropertyChangeSupport().firePropertyChange("diagramFolder", oldValue, diagramFolder);
 		}
