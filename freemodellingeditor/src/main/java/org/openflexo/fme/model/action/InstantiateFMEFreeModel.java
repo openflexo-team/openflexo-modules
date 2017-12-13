@@ -96,6 +96,9 @@ public abstract class InstantiateFMEFreeModel<A extends InstantiateFMEFreeModel<
 		if (getFocusedObject() instanceof FMEFreeModel) {
 			return FreeModelChoice.SelectExistingFreeModel;
 		}
+		if (getNature().getFreeModels().size() == 0) {
+			return FreeModelChoice.CreateNewFreeModel;
+		}
 
 		return freeModelChoice;
 	}
@@ -133,6 +136,7 @@ public abstract class InstantiateFMEFreeModel<A extends InstantiateFMEFreeModel<
 	}
 
 	public FM getFreeModel() {
+
 		if (getFreeModelChoice() == null) {
 			return null;
 		}

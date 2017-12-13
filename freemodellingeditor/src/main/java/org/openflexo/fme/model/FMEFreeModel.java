@@ -99,6 +99,10 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 
 	public String getName();
 
+	public String getDescription();
+
+	public void setDescription(String description);
+
 	public FMLRTVirtualModelInstanceModelSlot getSampleDataModelSlot();
 
 	@Getter(value = FREE_MODELS_INSTANCES, cardinality = Cardinality.LIST, inverse = FMEFreeModelInstance.FREE_MODEL)
@@ -136,7 +140,25 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 
 		@Override
 		public String getName() {
-			return getAccessedVirtualModel().getName();
+			if (getAccessedVirtualModel() != null) {
+				return getAccessedVirtualModel().getName();
+			}
+			return null;
+		}
+
+		@Override
+		public String getDescription() {
+			if (getAccessedVirtualModel() != null) {
+				return getAccessedVirtualModel().getDescription();
+			}
+			return null;
+		}
+
+		@Override
+		public void setDescription(String description) {
+			if (getAccessedVirtualModel() != null) {
+				getAccessedVirtualModel().setDescription(description);
+			}
 		}
 
 		@Override

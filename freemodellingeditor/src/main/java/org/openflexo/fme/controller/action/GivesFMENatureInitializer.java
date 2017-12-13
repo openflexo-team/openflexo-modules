@@ -53,6 +53,7 @@ import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.task.Progress;
 import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
@@ -75,9 +76,11 @@ public class GivesFMENatureInitializer extends ActionInitializer<GivesFMENature,
 		return new FlexoActionInitializer<GivesFMENature>() {
 			@Override
 			public boolean run(EventObject e, GivesFMENature action) {
+				Progress.forceHideTaskBar();
 				Wizard wizard = new GivesFMENatureWizard(action, getController());
 				WizardDialog dialog = new WizardDialog(wizard, getController());
 				dialog.showDialog();
+				Progress.stopForceHideTaskBar();
 				if (dialog.getStatus() != Status.VALIDATED) {
 					// Operation cancelled
 					return false;

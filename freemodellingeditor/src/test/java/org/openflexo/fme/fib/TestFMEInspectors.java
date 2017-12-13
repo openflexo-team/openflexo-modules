@@ -57,7 +57,7 @@ public class TestFMEInspectors extends GenericFIBInspectorTestCase {
 
 	@Test
 	public void testFreeModelInspector() {
-		validateFIB("Inspectors/FME/FreeModel.inspector");
+		validateFIB("Inspectors/FME/FMEFreeModel.inspector");
 	}
 
 }

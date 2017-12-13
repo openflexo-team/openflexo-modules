@@ -20,10 +20,17 @@
 
 package org.openflexo.fme.view;
 
+import javax.swing.ImageIcon;
+
+import org.openflexo.fme.FMEIconLibrary;
+import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.FreeModellingProjectNature;
+import org.openflexo.fme.model.action.CreateFMEDiagramFreeModel;
 import org.openflexo.fme.model.action.InstantiateFMEDiagramFreeModel;
 import org.openflexo.gina.model.FIBComponent;
 import org.openflexo.gina.view.GinaViewFactory;
+import org.openflexo.icon.IconFactory;
+import org.openflexo.icon.IconLibrary;
 import org.openflexo.rm.Resource;
 import org.openflexo.rm.ResourceLocator;
 import org.openflexo.view.FIBModuleView;
@@ -60,10 +67,23 @@ public class FMEProjectNatureModuleView extends FIBModuleView<FreeModellingProje
 			super(component, viewFactory, controller);
 		}
 
+		public void createNewDiagramFreeModel(FreeModellingProjectNature projectNature) {
+			CreateFMEDiagramFreeModel action = CreateFMEDiagramFreeModel.actionType.makeNewAction(projectNature, null, getEditor());
+			action.doAction();
+		}
+
 		public void createNewDiagram(FreeModellingProjectNature projectNature) {
 			InstantiateFMEDiagramFreeModel action = InstantiateFMEDiagramFreeModel.actionType.makeNewAction(projectNature, null,
 					getEditor());
 			action.doAction();
+		}
+
+		public ImageIcon getProjectIcon() {
+			return IconFactory.getImageIcon(IconLibrary.OPENFLEXO_NOTEXT_64, FMEIconLibrary.FME_BIG_MARKER);
+		}
+
+		public void selectFreeModel(FMEFreeModel model) {
+			getFlexoController().selectAndFocusObject(model);
 		}
 
 	}

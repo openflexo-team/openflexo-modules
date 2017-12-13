@@ -73,8 +73,7 @@ public class InstantiateFMEDiagramFreeModel extends InstantiateFMEFreeModel<Inst
 	private static final Logger logger = Logger.getLogger(InstantiateFMEDiagramFreeModel.class.getPackage().getName());
 
 	public static FlexoActionFactory<InstantiateFMEDiagramFreeModel, NatureObject<FreeModellingProjectNature>, FlexoObject> actionType = new FlexoActionFactory<InstantiateFMEDiagramFreeModel, NatureObject<FreeModellingProjectNature>, FlexoObject>(
-			"instantiate_diagram_free_model", FlexoActionFactory.newMenu, FlexoActionFactory.defaultGroup,
-			FlexoActionFactory.ADD_ACTION_TYPE) {
+			"instantiate_diagram_free_model", FlexoActionFactory.defaultGroup, FlexoActionFactory.ADD_ACTION_TYPE) {
 
 		/**
 		 * Factory method

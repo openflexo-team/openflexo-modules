@@ -38,13 +38,16 @@
 
 package org.openflexo.fme.controller.action;
 
+import java.awt.Image;
 import java.lang.reflect.Type;
 import java.util.logging.Logger;
 
+import org.openflexo.fme.FMEIconLibrary;
 import org.openflexo.fme.model.action.CreateFMEDiagramFreeModel;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.resource.RepositoryFolder;
 import org.openflexo.gina.annotation.FIBPanel;
+import org.openflexo.icon.IconFactory;
 import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramSpecification;
 import org.openflexo.view.controller.FlexoController;
@@ -61,6 +64,11 @@ public class CreateFMEDiagramFreeModelWizard extends AbstractCreateFMEFreeModelW
 	@Override
 	public String getWizardTitle() {
 		return getAction().getLocales().localizedForKey("create_diagram_free_model");
+	}
+
+	@Override
+	public Image getDefaultPageImage() {
+		return IconFactory.getImageIcon(FMEIconLibrary.DIAGRAM_BIG_ICON, FMEIconLibrary.FME_BIG_MARKER).getImage();
 	}
 
 	@Override

@@ -266,12 +266,12 @@ public abstract class AbstractInstantiateFMEFreeModelWizard<A extends Instantiat
 				return false;
 			}
 
-			if (getAction().getFreeModel() == null) {
+			/*if (getAction().getFreeModel() == null) {
 				setIssueMessage(action.getLocales().localizedForKey("no_free_model_defined"), IssueMessageType.ERROR);
 				return false;
-			}
+			}*/
 
-			if (getAction().getFreeModel().getFreeModelInstance(getFreeModelInstanceName()) != null) {
+			if (getAction().getFreeModel() != null && getAction().getFreeModel().getFreeModelInstance(getFreeModelInstanceName()) != null) {
 				setIssueMessage(action.getLocales().localizedForKey("a_free_model_instance_with_that_name_already_exists"),
 						IssueMessageType.ERROR);
 				return false;
