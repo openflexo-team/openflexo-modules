@@ -90,7 +90,7 @@ import org.openflexo.model.annotations.XMLElement;
 public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellingProjectNature> {
 
 	public static final String NONE_FLEXO_CONCEPT_NAME = "NoneGR";
-	public static final String CONCEPT_ROLE_NAME = "concept";
+	public static final String CONCEPT_ROLE_NAME = "fmeConcept";
 	public static final String NAME_ROLE_NAME = "name";
 	public static final String SAMPLE_DATA_MODEL_SLOT_NAME = "sampleData";
 
@@ -133,6 +133,8 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 	 * @throws FlexoException
 	 */
 	public FlexoConcept getGRFlexoConcept(FlexoConcept concept, FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction);
+
+	public FMEConceptualModel getConceptualModel();
 
 	public abstract class FMEFreeModelImpl extends VirtualModelBasedNatureObjectImpl<FreeModellingProjectNature> implements FMEFreeModel {
 
@@ -268,7 +270,7 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 				createNameEntry.setEntryName(FMEConceptualModel.NAME_ROLE_NAME);
 				createNameEntry.setEntryType(String.class);
 				createNameEntry.setWidgetType(WidgetType.TEXT_FIELD);
-				createNameEntry.setData(new DataBinding<String>("concept.name"));
+				createNameEntry.setData(new DataBinding<String>(CONCEPT_ROLE_NAME + ".name"));
 
 				createNameEntry.doAction();
 				InspectorEntry nameEntry = createNameEntry.getNewEntry();
@@ -285,11 +287,19 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 				createDescriptionEntry.setEntryName(FMEConceptualModel.DESCRIPTION_ROLE_NAME);
 				createDescriptionEntry.setEntryType(String.class);
 				createDescriptionEntry.setWidgetType(WidgetType.TEXT_AREA);
-				createDescriptionEntry.setData(new DataBinding<String>("concept.description"));
+				createDescriptionEntry.setData(new DataBinding<String>(CONCEPT_ROLE_NAME + ".description"));
 				createDescriptionEntry.doAction();
 				InspectorEntry descriptionEntry = createDescriptionEntry.getNewEntry();
 
-				returned.getInspector().setRenderer(new DataBinding<String>("instance.name"));
+				// Bind shapes's label to name property
+				if (concept != null) {
+					// If we are bound to a concept instance, use name of concept
+					returned.getInspector().setRenderer(new DataBinding<String>("instance." + CONCEPT_ROLE_NAME + ".name"));
+				}
+				else {
+					// Otherwise, this is the NoneGR, use primitive name
+					returned.getInspector().setRenderer(new DataBinding<String>("instance.name"));
+				}
 
 				configureGRFlexoConcept(returned, concept, editor, ownerAction);
 			}
@@ -311,6 +321,11 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 				}
 			}
 			return null;
+		}
+
+		@Override
+		public FMEConceptualModel getConceptualModel() {
+			return getNature().getConceptualModel();
 		}
 
 	}

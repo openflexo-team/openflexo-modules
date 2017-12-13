@@ -40,12 +40,21 @@ package org.openflexo.fme.controller;
 
 import java.util.logging.Logger;
 
+import javax.swing.ImageIcon;
+
+import org.openflexo.fme.FMEModule;
 import org.openflexo.fme.controller.editor.FreeModelDiagramEditor;
+import org.openflexo.fme.model.FMEFreeModel;
+import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.fme.view.FreeModelModuleView;
 import org.openflexo.foundation.fml.FlexoConcept;
+import org.openflexo.foundation.fml.FlexoConceptInstanceRole;
 import org.openflexo.gina.model.FIBComponent;
 import org.openflexo.gina.view.GinaViewFactory;
+import org.openflexo.icon.FMLIconLibrary;
 import org.openflexo.localization.FlexoLocalization;
+import org.openflexo.localization.LocalizedDelegate;
+import org.openflexo.module.ModuleLoadingException;
 import org.openflexo.view.controller.FlexoFIBController;
 
 /**
@@ -66,6 +75,15 @@ public class FMEFIBController extends FlexoFIBController {
 		setParentLocalizer(FlexoLocalization.getMainLocalizer());
 	}
 
+	public final LocalizedDelegate getLocales() {
+		try {
+			return getServiceManager().getModuleLoader().getModuleInstance(FMEModule.class).getLocales();
+		} catch (ModuleLoadingException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	@Override
 	public FMEController getFlexoController() {
 		return (FMEController) super.getFlexoController();
@@ -76,6 +94,34 @@ public class FMEFIBController extends FlexoFIBController {
 			return ((FreeModelModuleView) getFlexoController().getCurrentModuleView()).getEditor();
 		}
 		return null;
+	}
+
+	public FreeModellingProjectNature getFreeModellingProjectNature() {
+		if (getEditor() != null && getEditor().getProject() != null) {
+			return getEditor().getProject().getNature(FreeModellingProjectNature.class);
+		}
+		return null;
+	}
+
+	public String getFlexoConceptName(FlexoConcept concept) {
+		if (getFreeModellingProjectNature() != null) {
+			if (concept.getName().equals(FMEFreeModel.NONE_FLEXO_CONCEPT_NAME)) {
+				return getLocales().localizedForKey("unclassified");
+			}
+			FlexoConceptInstanceRole conceptRole = (FlexoConceptInstanceRole) concept.getAccessibleRole(FMEFreeModel.CONCEPT_ROLE_NAME);
+			if (conceptRole != null && conceptRole.getFlexoConceptType() != null) {
+				return conceptRole.getFlexoConceptType().getName();
+			}
+		}
+		return concept.getName();
+	}
+
+	@Override
+	protected ImageIcon retrieveIconForObject(Object object) {
+		if (object instanceof FlexoConcept && ((FlexoConcept) object).getName().equals(FMEFreeModel.NONE_FLEXO_CONCEPT_NAME)) {
+			return FMLIconLibrary.UNKNOWN_ICON;
+		}
+		return super.retrieveIconForObject(object);
 	}
 
 	public void createConcept(String name) {

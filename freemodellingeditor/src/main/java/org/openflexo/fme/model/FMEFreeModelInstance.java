@@ -109,6 +109,8 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 
 		private static final Logger logger = FlexoLogger.getLogger(FMEFreeModel.class.getPackage().getName());
 
+		private FMLRTVirtualModelInstance virtualModelInstance = null;
+
 		@Override
 		public FreeModellingProjectNature getNature() {
 			if (getFreeModel() != null) {
@@ -119,7 +121,13 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 
 		@Override
 		public void fireVirtualModelInstanceConnected(FMLRTVirtualModelInstance aVirtualModelInstance) {
-			aVirtualModelInstance.getPropertyChangeSupport().addPropertyChangeListener(this);
+			if (virtualModelInstance != aVirtualModelInstance) {
+				if (virtualModelInstance != null) {
+					virtualModelInstance.getPropertyChangeSupport().removePropertyChangeListener(this);
+				}
+				virtualModelInstance = aVirtualModelInstance;
+				aVirtualModelInstance.getPropertyChangeSupport().addPropertyChangeListener(this);
+			}
 		}
 
 		@Override

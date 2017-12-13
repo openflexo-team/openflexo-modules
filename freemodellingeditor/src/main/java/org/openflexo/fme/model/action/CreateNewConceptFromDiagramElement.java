@@ -120,4 +120,7 @@ public class CreateNewConceptFromDiagramElement extends AbstractInstantiateConce
 		this.flexoConcept = flexoConcept;
 	}
 
+	public FlexoConceptInstance getFlexoConceptInstance() {
+		return flexoConceptInstance;
+	}
 }
