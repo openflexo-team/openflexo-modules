@@ -50,6 +50,7 @@ import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.fme.view.ConvertToFMEProjectView;
+import org.openflexo.fme.view.FMEFreeModelModuleView;
 import org.openflexo.fme.view.FMEProjectNatureModuleView;
 import org.openflexo.fme.view.FMEWelcomePanelModuleView;
 import org.openflexo.fme.view.FreeModelModuleView;
@@ -183,6 +184,9 @@ public class FMEPerspective extends FlexoPerspective {
 		if (object instanceof FreeModellingProjectNature) {
 			return true;
 		}
+		if (object instanceof FMEFreeModel) {
+			return true;
+		}
 		if (object instanceof FMEFreeModelInstance) {
 			return true;
 		}
@@ -200,11 +204,11 @@ public class FMEPerspective extends FlexoPerspective {
 		if (object instanceof FreeModellingProjectNature) {
 			return ((FreeModellingProjectNature) object).getOwner().getName();
 		}
-		if (object instanceof FMEFreeModelInstance) {
-			return ((FMEFreeModelInstance) object).getName();
-		}
 		if (object instanceof FMEFreeModel) {
 			return ((FMEFreeModel) object).getName();
+		}
+		if (object instanceof FMEFreeModelInstance) {
+			return ((FMEFreeModelInstance) object).getName();
 		}
 		if (object != null) {
 			return object.toString();
@@ -232,12 +236,13 @@ public class FMEPerspective extends FlexoPerspective {
 			return new FMEWelcomePanelModuleView((WelcomePanel<FMEModule>) object, getController(), this);
 		}
 		if (object instanceof FlexoProject) {
-			System.out.println("Ca vient de la");
-			Thread.dumpStack();
 			return new ConvertToFMEProjectView((FlexoProject<?>) object, getController(), this);
 		}
 		if (object instanceof FreeModellingProjectNature) {
 			return new FMEProjectNatureModuleView((FreeModellingProjectNature) object, getController(), this);
+		}
+		if (object instanceof FMEFreeModel) {
+			return new FMEFreeModelModuleView((FMEFreeModel) object, getController(), this);
 		}
 		if (object instanceof FMEDiagramFreeModelInstance) {
 			// Initialization of Diagram representation may rise PAMELA edits

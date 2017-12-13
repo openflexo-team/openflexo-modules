@@ -54,7 +54,6 @@ import org.openflexo.fme.controller.action.FMEControllerActionInitializer;
 import org.openflexo.fme.model.FMEConceptualModel;
 import org.openflexo.fme.model.FMEDiagramFreeModel;
 import org.openflexo.fme.model.FMEDiagramFreeModelInstance;
-import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.model.FMESampleData;
 import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.fme.view.menu.FMEMenuBar;
@@ -160,7 +159,7 @@ public class FMEController extends FlexoController {
 	 * @param object
 	 *            : the object to focus on
 	 */
-	@Override
+	/*@Override
 	public void selectAndFocusObject(FlexoObject object) {
 		if (object != null) {
 			logger.info("selectAndFocusObject " + object + "of " + object.getClass().getSimpleName());
@@ -168,6 +167,9 @@ public class FMEController extends FlexoController {
 				setCurrentEditedObjectAsModuleView(object);
 			}
 			else if (object instanceof FreeModellingProjectNature) {
+				setCurrentEditedObjectAsModuleView(object);
+			}
+			if (object instanceof FMEFreeModel) {
 				setCurrentEditedObjectAsModuleView(object);
 			}
 			if (object instanceof FMEFreeModelInstance) {
@@ -183,7 +185,7 @@ public class FMEController extends FlexoController {
 		else {
 			logger.warning("Cannot set focus on a NULL object");
 		}
-	}
+	}*/
 
 	public VirtualModel getCurrentVirtualModel() {
 		if (getCurrentDisplayedObjectAsModuleView() instanceof FMLObject) {
