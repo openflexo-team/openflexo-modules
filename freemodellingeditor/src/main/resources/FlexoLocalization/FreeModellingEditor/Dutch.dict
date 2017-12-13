@@ -32,4 +32,5 @@ please_select_a_virtual_model=please_select_a_virtual_model
 please_select_a_virtual_model_instance=please_select_a_virtual_model_instance
 remove_free_model=remove_free_model
 select_default_object=select_default_object
+unclassified=unclassified
 would_you_really_like_to_delete_this_concept_and_all_existing_instances_of_that_concept_(($0)_instances_found)_?=Would you really like to delete this concept and all existing instances of that concept (($0) instances found) ?

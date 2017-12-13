@@ -35,4 +35,5 @@ please_select_a_virtual_model=Veuillez choisir un VirtualModel
 please_select_a_virtual_model_instance=Veuillez choisir un VirtualModelInstance
 remove_free_model=Supprimer le mod\u00E8le libre
 select_default_object=S\u00E9lection de l'objet par d\u00E9faut
+unclassified=unclassified
 would_you_really_like_to_delete_this_concept_and_all_existing_instances_of_that_concept_(($0)_instances_found)_?=Voulez vous vraiment supprimer ce concept (($0) instancesexistent) ?
