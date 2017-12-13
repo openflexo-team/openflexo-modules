@@ -43,6 +43,7 @@ import java.util.List;
 import org.openflexo.ApplicationContext;
 import org.openflexo.action.ModuleSpecificFlexoAction;
 import org.openflexo.fme.FMEModule;
+import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoAction;
@@ -95,6 +96,15 @@ public abstract class FMEAction<A extends FMEAction<A, T1, T2>, T1 extends Flexo
 			e.printStackTrace();
 			return super.getLocales();
 		}
+	}
+
+	public FreeModellingProjectNature getFreeModellingProjectNature() {
+
+		if (getEditor() != null && getEditor().getProject() != null
+				&& getEditor().getProject().hasNature(FreeModellingProjectNature.class)) {
+			return getEditor().getProject().getNature(FreeModellingProjectNature.class);
+		}
+		return null;
 	}
 
 }

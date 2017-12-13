@@ -101,7 +101,7 @@ public class CreateNewConceptWizard extends FlexoWizard {
 			return action;
 		}
 
-		public FMEFreeModel getFreeMetaModel() {
+		public FMEFreeModel getFreeModel() {
 			return getAction().getFocusedObject();
 		}
 
@@ -118,7 +118,7 @@ public class CreateNewConceptWizard extends FlexoWizard {
 				return false;
 			}
 
-			if (getFreeMetaModel().getVirtualModel().getFlexoConcept(getNewConceptName()) != null) {
+			if (getFreeModel().getAccessedVirtualModel().getFlexoConcept(getNewConceptName()) != null) {
 				setIssueMessage(action.getLocales().localizedForKey("a_concept_with_that_name_already_exists"), IssueMessageType.ERROR);
 				return false;
 			}

@@ -42,7 +42,6 @@ import java.util.Vector;
 import java.util.logging.Logger;
 
 import org.openflexo.fme.model.FMEFreeModelInstance;
-import org.openflexo.fme.model.FreeModellingProject;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
@@ -56,19 +55,20 @@ import org.openflexo.foundation.resource.SaveResourceException;
  * @author vincent
  * 
  */
-public class RemoveFreeModel extends FMEAction<RemoveFreeModel, FMEFreeModelInstance, FlexoObject> {
+public class DeleteFreeModelInstance extends FMEAction<DeleteFreeModelInstance, FMEFreeModelInstance, FlexoObject> {
 
-	private static final Logger logger = Logger.getLogger(RemoveFreeModel.class.getPackage().getName());
+	private static final Logger logger = Logger.getLogger(DeleteFreeModelInstance.class.getPackage().getName());
 
-	public static FlexoActionFactory<RemoveFreeModel, FMEFreeModelInstance, FlexoObject> actionType = new FlexoActionFactory<RemoveFreeModel, FMEFreeModelInstance, FlexoObject>(
-			"remove_free_model", FlexoActionFactory.defaultGroup, FlexoActionFactory.DELETE_ACTION_TYPE) {
+	public static FlexoActionFactory<DeleteFreeModelInstance, FMEFreeModelInstance, FlexoObject> actionType = new FlexoActionFactory<DeleteFreeModelInstance, FMEFreeModelInstance, FlexoObject>(
+			"delete_free_model_instance", FlexoActionFactory.defaultGroup, FlexoActionFactory.DELETE_ACTION_TYPE) {
 
 		/**
 		 * Factory method
 		 */
 		@Override
-		public RemoveFreeModel makeNewAction(FMEFreeModelInstance focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
-			return new RemoveFreeModel(focusedObject, globalSelection, editor);
+		public DeleteFreeModelInstance makeNewAction(FMEFreeModelInstance focusedObject, Vector<FlexoObject> globalSelection,
+				FlexoEditor editor) {
+			return new DeleteFreeModelInstance(focusedObject, globalSelection, editor);
 		}
 
 		@Override
@@ -84,10 +84,10 @@ public class RemoveFreeModel extends FMEAction<RemoveFreeModel, FMEFreeModelInst
 	};
 
 	static {
-		FlexoObjectImpl.addActionForClass(RemoveFreeModel.actionType, FMEFreeModelInstance.class);
+		FlexoObjectImpl.addActionForClass(DeleteFreeModelInstance.actionType, FMEFreeModelInstance.class);
 	}
 
-	RemoveFreeModel(FMEFreeModelInstance focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+	DeleteFreeModelInstance(FMEFreeModelInstance focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 
@@ -96,19 +96,12 @@ public class RemoveFreeModel extends FMEAction<RemoveFreeModel, FMEFreeModelInst
 
 		logger.info("Remove free model action started ...");
 		logger.info("Delete virtual model instance");
-		getFocusedObject().getFreeModellingProject().removeFreeModel(getFocusedObject());
+		getFocusedObject().getFreeModel().removeFromFreeModelInstances(getFocusedObject());
 		DeleteVirtualModelInstance deleteVm = DeleteVirtualModelInstance.actionType
-				.makeNewEmbeddedAction(getFocusedObject().getVirtualModelInstance(), null, this);
+				.makeNewEmbeddedAction(getFocusedObject().getAccessedVirtualModelInstance(), null, this);
 		deleteVm.doAction();
 		logger.info("Delete free model");
 		getFocusedObject().delete();
-		if (getFocusedObject().isDeleted()) {
-			logger.info("Free Model " + getFocusedObject().getName() + " Deleted");
-		}
-		else {
-			logger.warning("Free Model " + getFocusedObject().getName() + " Not Deleted");
-		}
-		getFocusedObject().getFreeModellingProject().getPropertyChangeSupport().firePropertyChange("freeModels", null, null);
 	}
 
 }

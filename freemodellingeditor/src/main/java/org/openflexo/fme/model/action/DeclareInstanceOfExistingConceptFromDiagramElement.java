@@ -41,24 +41,14 @@ package org.openflexo.fme.model.action;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import org.openflexo.ApplicationContext;
-import org.openflexo.fme.FreeModellingEditor;
-import org.openflexo.fme.model.FMEFreeModel;
-import org.openflexo.fme.model.FMEFreeModelInstance;
-import org.openflexo.fme.model.FreeModellingProject;
-import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.FlexoConcept;
-import org.openflexo.foundation.fml.PrimitiveRole;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
-import org.openflexo.localization.LocalizedDelegate;
-import org.openflexo.technologyadapter.diagram.fml.GraphicalElementRole;
-import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
 import org.openflexo.technologyadapter.diagram.model.DiagramElement;
 
 /**
@@ -68,7 +58,7 @@ import org.openflexo.technologyadapter.diagram.model.DiagramElement;
  * 
  */
 public class DeclareInstanceOfExistingConceptFromDiagramElement
-		extends FMEAction<DeclareInstanceOfExistingConceptFromDiagramElement, DiagramElement<?>, FlexoObject> {
+		extends AbstractInstantiateConceptFromDiagramElement<DeclareInstanceOfExistingConceptFromDiagramElement> {
 
 	private static final Logger logger = Logger.getLogger(DeclareInstanceOfExistingConceptFromDiagramElement.class.getPackage().getName());
 
@@ -110,33 +100,6 @@ public class DeclareInstanceOfExistingConceptFromDiagramElement
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 
-	@Override
-	public LocalizedDelegate getLocales() {
-		if (getServiceManager() instanceof ApplicationContext) {
-			return ((ApplicationContext) getServiceManager()).getModuleLoader().getModule(FreeModellingEditor.class)
-					.getLoadedModuleInstance().getLocales();
-		}
-		return super.getLocales();
-	}
-
-	public FreeModellingProjectNature getFreeModellingProjectNature() {
-		return getServiceManager().getProjectNatureService().getProjectNature(FreeModellingProjectNature.class);
-	}
-
-	public FreeModellingProject getFreeModellingProject() {
-		return getFreeModellingProjectNature().getFreeModellingProject(getEditor().getProject());
-	}
-
-	public FMEFreeModelInstance getFreeModel() {
-		for (FMEFreeModelInstance freeModel : getFreeModellingProject().getFreeModels()) {
-			if (freeModel.getDiagram().equals(getFocusedObject().getDiagram())) {
-				return freeModel;
-			}
-		}
-		return null;
-	}
-
-	private FlexoConcept none;
 	private FlexoConceptInstance flexoConceptInstance;
 	private FlexoConcept concept;
 	private GRStrategy grStrategy = GRStrategy.GetConceptShape;
@@ -145,7 +108,7 @@ public class DeclareInstanceOfExistingConceptFromDiagramElement
 	protected void doAction(Object context) throws InvalidArgumentException {
 
 		logger.info("Create new instance of created concept from diagram element ");
-		none = getFreeModel().getMetaModel().getNoneFlexoConcept(getEditor(), this);
+		getNoneFlexoConcept();
 		flexoConceptInstance = createFlexoConceptInstanceFromDiagramShape(getFocusedObject());
 
 		logger.info("Create new concept from diagram element ");
@@ -164,15 +127,6 @@ public class DeclareInstanceOfExistingConceptFromDiagramElement
 		}
 		actionDeclareInstanceOfExistingConcept.setConcept(concept);
 		actionDeclareInstanceOfExistingConcept.doAction();
-	}
-
-	private FlexoConceptInstance createFlexoConceptInstanceFromDiagramShape(DiagramElement<?> diagramElement) {
-		FlexoConceptInstance newFlexoConceptInstance = getFreeModel().getVirtualModelInstance().makeNewFlexoConceptInstance(none);
-		GraphicalElementRole geRole = (ShapeRole) none.getAccessibleProperty(FMEFreeModel.SHAPE_ROLE_NAME);
-		newFlexoConceptInstance.setFlexoActor(diagramElement, geRole);
-		PrimitiveRole<String> nameRole = (PrimitiveRole<String>) none.getAccessibleProperty(FMEFreeModel.NAME_ROLE_NAME);
-		newFlexoConceptInstance.setFlexoActor(diagramElement.getName(), nameRole);
-		return newFlexoConceptInstance;
 	}
 
 	public FlexoConcept getConcept() {
@@ -203,7 +157,7 @@ public class DeclareInstanceOfExistingConceptFromDiagramElement
 	}
 
 	public VirtualModel getVirtualModel() {
-		return getFreeModel().getVirtualModel();
+		return getFreeModelInstance().getFreeModel().getAccessedVirtualModel();
 	}
 
 	private String errorMessage;

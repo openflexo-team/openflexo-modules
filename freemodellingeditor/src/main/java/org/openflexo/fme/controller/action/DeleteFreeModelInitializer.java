@@ -43,23 +43,24 @@ import java.util.logging.Logger;
 
 import javax.swing.Icon;
 
-import org.openflexo.fme.FMEIconLibrary;
 import org.openflexo.fme.controller.FMEController;
-import org.openflexo.fme.model.FMEFreeModelInstance;
-import org.openflexo.fme.model.action.RemoveFreeModel;
+import org.openflexo.fme.model.FMEFreeModel;
+import org.openflexo.fme.model.action.DeleteFreeModel;
 import org.openflexo.foundation.FlexoObject;
+import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
-import org.openflexo.foundation.action.FlexoActionFactory;
+import org.openflexo.icon.IconLibrary;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
+import org.openflexo.view.controller.FlexoController;
 
-public class RemoveFreeModelInitializer extends ActionInitializer<RemoveFreeModel, FMEFreeModelInstance, FlexoObject> {
+public class DeleteFreeModelInitializer extends ActionInitializer<DeleteFreeModel, FMEFreeModel, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
-	RemoveFreeModelInitializer(FMEControllerActionInitializer actionInitializer) {
-		super(RemoveFreeModel.actionType, actionInitializer);
+	DeleteFreeModelInitializer(FMEControllerActionInitializer actionInitializer) {
+		super(DeleteFreeModel.actionType, actionInitializer);
 	}
 
 	@Override
@@ -68,27 +69,27 @@ public class RemoveFreeModelInitializer extends ActionInitializer<RemoveFreeMode
 	}
 
 	@Override
-	protected FlexoActionInitializer<RemoveFreeModel> getDefaultInitializer() {
-		return new FlexoActionInitializer<RemoveFreeModel>() {
+	protected FlexoActionInitializer<DeleteFreeModel> getDefaultInitializer() {
+		return new FlexoActionInitializer<DeleteFreeModel>() {
 			@Override
-			public boolean run(EventObject e, RemoveFreeModel action) {
-				return true;
+			public boolean run(EventObject e, DeleteFreeModel action) {
+				return FlexoController.confirm(action.getLocales().localizedForKey("would_you_really_like_to_delete_this_free_model"));
 			}
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<RemoveFreeModel> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<RemoveFreeModel>() {
+	protected FlexoActionFinalizer<DeleteFreeModel> getDefaultFinalizer() {
+		return new FlexoActionFinalizer<DeleteFreeModel>() {
 			@Override
-			public boolean run(EventObject e, RemoveFreeModel action) {
+			public boolean run(EventObject e, DeleteFreeModel action) {
 				FMEController fmeController = (FMEController) getController();
-				if (action.getFocusedObject().getFreeModellingProject().getFreeModels().size() > 0) {
-					fmeController.selectAndFocusObject(action.getFocusedObject().getFreeModellingProject().getFreeModels().get(0));
+				if (action.getFocusedObject().getNature().getFreeModels().size() > 0) {
+					fmeController.selectAndFocusObject(action.getFocusedObject().getNature().getFreeModels().get(0));
 				}
 				else {
-					fmeController.selectAndFocusObject(action.getFocusedObject().getFreeModellingProject());
-					fmeController.FREE_MODELLING_PERSPECTIVE.closeFreeModelBrowsers();
+					fmeController.selectAndFocusObject(action.getFocusedObject().getNature());
+					// fmeController.FREE_MODELLING_PERSPECTIVE.closeFreeModelBrowsers();
 				}
 				return true;
 			}
@@ -97,7 +98,7 @@ public class RemoveFreeModelInitializer extends ActionInitializer<RemoveFreeMode
 
 	@Override
 	protected Icon getEnabledIcon(FlexoActionFactory actionType) {
-		return FMEIconLibrary.FME_SMALL_ICON;
+		return IconLibrary.DELETE_ICON;
 	}
 
 }

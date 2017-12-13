@@ -44,6 +44,7 @@ import java.util.logging.Logger;
 import org.openflexo.ApplicationContext;
 import org.openflexo.fme.FreeModellingEditor;
 import org.openflexo.foundation.fml.FlexoRole;
+import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.rm.VirtualModelResourceFactory;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.nature.NatureObject;
@@ -117,6 +118,13 @@ public interface FreeModellingProjectNature extends ProjectNature<FreeModellingP
 
 	public void setInstanceName(FlexoConceptInstance flexoConceptInstance, String value);
 
+	/**
+	 * Return {@link FMEFreeModel} which access to supplied {@link VirtualModel} or null if no such free model exists
+	 * 
+	 * @return
+	 */
+	public FMEFreeModel getFreeModel(VirtualModel virtualModel);
+
 	public abstract class FreeModellingProjectNatureImpl extends ProjectNatureImpl<FreeModellingProjectNature>
 			implements FreeModellingProjectNature {
 
@@ -159,6 +167,21 @@ public interface FreeModellingProjectNature extends ProjectNature<FreeModellingP
 			FlexoRole<String> nameRole = (FlexoRole<String>) flexoConceptInstance.getFlexoConcept()
 					.getAccessibleProperty(FMEFreeModel.NAME_ROLE_NAME);
 			flexoConceptInstance.setFlexoActor(value, nameRole);
+		}
+
+		/**
+		 * Return {@link FMEFreeModel} which access to supplied {@link VirtualModel} or null if no such free model exists
+		 * 
+		 * @return
+		 */
+		@Override
+		public FMEFreeModel getFreeModel(VirtualModel virtualModel) {
+			for (FMEFreeModel freeModel : getFreeModels()) {
+				if (freeModel.getAccessedVirtualModel() == virtualModel) {
+					return freeModel;
+				}
+			}
+			return null;
 		}
 
 	}
