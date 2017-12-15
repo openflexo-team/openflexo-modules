@@ -95,13 +95,16 @@ public class GivesFMENatureInitializer extends ActionInitializer<GivesFMENature,
 		return new FlexoActionFinalizer<GivesFMENature>() {
 			@Override
 			public boolean run(EventObject e, GivesFMENature action) {
-				/*if (getController().getCurrentPerspective() instanceof FMEPerspective) {
-					((FMEPerspective) getController().getCurrentPerspective()).setProject(action.getFocusedObject());
-				}*/
+				// We store the eventual ModuleView to remove, but we must remove it AFTER selection of new object
+				// Otherwise, focus on FlexoProject will be lost
+				ConvertToFMEProjectView viewToRemove = null;
 				if (getController().getCurrentModuleView() instanceof ConvertToFMEProjectView) {
-					getController().getCurrentModuleView().deleteModuleView();
+					viewToRemove = (ConvertToFMEProjectView) getController().getCurrentModuleView();
 				}
 				getController().selectAndFocusObject(action.getNewNature());
+				if (viewToRemove != null) {
+					viewToRemove.deleteModuleView();
+				}
 				return true;
 			}
 		};
