@@ -43,6 +43,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 import org.openflexo.icon.IconLibrary;
+import org.openflexo.icon.IconMarker;
 import org.openflexo.icon.ImageIconResource;
 import org.openflexo.rm.ResourceLocator;
 
@@ -69,5 +70,9 @@ public class EAMIconLibrary extends IconLibrary {
 	public static final ImageIcon BPMN_BIG_ICON = new ImageIconResource(ResourceLocator.locateResource("BPMN/Icons/BPMN_64x64.png"));
 
 	public static final ImageIcon BPMN_PROCESS_ICON = new ImageIconResource(ResourceLocator.locateResource("BPMN/Icons/Process.png"));
+
+	public static final IconMarker EAM_MARKER = new IconMarker(
+			new ImageIconResource(ResourceLocator.locateResource("Icons/EAM/EAMarker.png")), 8, 0);
+	public static final IconMarker EAM_BIG_MARKER = new IconMarker(EAM_MEDIUM_ICON, 32, 0);
 
 }

@@ -49,8 +49,8 @@ public class TestEAMInspectors extends GenericFIBInspectorTestCase {
 	 * Then copy-paste 
 	 */
 	public static void main(String[] args) {
-		System.out.println(generateInspectorTestCaseClass(((FileResourceImpl) ResourceLocator.locateResource("Inspectors/EnterpriseArchitectureModule")).getFile(),
-				"Inspectors/EnterpriseArchitectureModule/"));
+		System.out.println(generateInspectorTestCaseClass(((FileResourceImpl) ResourceLocator.locateResource("Inspectors/EAM")).getFile(),
+				"Inspectors/EAM/"));
 	}
 
 }

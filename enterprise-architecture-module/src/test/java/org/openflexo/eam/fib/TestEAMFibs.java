@@ -38,6 +38,7 @@
 
 package org.openflexo.eam.fib;
 
+import org.junit.Test;
 import org.openflexo.gina.test.GenericFIBTestCase;
 import org.openflexo.rm.FileResourceImpl;
 import org.openflexo.rm.ResourceLocator;
@@ -52,6 +53,31 @@ public class TestEAMFibs extends GenericFIBTestCase {
 	public static void main(String[] args) {
 		System.out.println(generateFIBTestCaseClass(((FileResourceImpl) ResourceLocator.locateResource("Fib")).getFile(), "Fib/"));
 		// System.out.println(generateFIBTestCaseClass(new File(System.getProperty("user.dir") + "/src/main/resources/Fib"), "Fib/"));
+	}
+
+	@Test
+	public void testConvertToEAMProjectPanel() {
+		validateFIB("Fib/ConvertToEAMProjectPanel.fib");
+	}
+
+	@Test
+	public void testEAMProjectNaturePanel() {
+		validateFIB("Fib/EAMProjectNaturePanel.fib");
+	}
+
+	@Test
+	public void testEAMWelcomePanel() {
+		validateFIB("Fib/EAMWelcomePanel.fib");
+	}
+
+	@Test
+	public void testEAProjectBrowser() {
+		validateFIB("Fib/EAProjectBrowser.fib");
+	}
+
+	@Test
+	public void testFMEFreeModelPanel() {
+		validateFIB("Fib/FMEFreeModelPanel.fib");
 	}
 
 }

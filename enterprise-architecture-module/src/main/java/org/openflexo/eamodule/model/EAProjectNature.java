@@ -38,136 +38,42 @@
 
 package org.openflexo.eamodule.model;
 
-import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.openflexo.foundation.FlexoEditor;
-import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.FlexoProject;
-import org.openflexo.foundation.FlexoServiceManager;
-import org.openflexo.foundation.fml.VirtualModel;
-import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
-import org.openflexo.foundation.fml.rt.rm.FMLRTVirtualModelInstanceResource;
 import org.openflexo.foundation.nature.ProjectNature;
-import org.openflexo.foundation.nature.ProjectNatureService;
-import org.openflexo.foundation.resource.ResourceLoadingCancelledException;
-import org.openflexo.model.exceptions.ModelDefinitionException;
-import org.openflexo.model.factory.ModelFactory;
-import org.openflexo.modelers.ModelersConstants;
+import org.openflexo.model.annotations.Getter;
+import org.openflexo.model.annotations.ImplementationClass;
+import org.openflexo.model.annotations.ModelEntity;
+import org.openflexo.model.annotations.PropertyIdentifier;
+import org.openflexo.model.annotations.Setter;
+import org.openflexo.model.annotations.XMLElement;
 
 /**
  * This class is used to interpret a {@link FlexoProject} as a {@link EAProject}<br>
- * 
- * A {@link FlexoProject} has the {@link EAProject} nature if it contains at least a view conform to formose viewpoint<br>
- * The first found view will be considered as the Formose View
+ *
  * 
  * @author sylvain
  */
-public class EAProjectNature implements ProjectNature {
+@ModelEntity
+@XMLElement
+@ImplementationClass(EAProjectNature.EAProjectNatureImpl.class)
+public interface EAProjectNature extends ProjectNature<EAProjectNature> {
 
-	private static final Logger LOGGER = Logger.getLogger(EAProjectNature.class.getPackage().getName());
+	@PropertyIdentifier(type = BPMNVirtualModelInstance.class)
+	public static final String BPMN_VIRTUAL_MODEL_INSTANCE = "BPMNVirtualModelInstance";
 
-	private ProjectNatureService projectNatureService;
+	@Getter(value = BPMN_VIRTUAL_MODEL_INSTANCE, inverse = BPMNVirtualModelInstance.NATURE)
+	@XMLElement
+	public BPMNVirtualModelInstance getBPMNVirtualModelInstance();
 
-	private final Map<FlexoProject, EAProject> projectsMap;
+	@Setter(BPMN_VIRTUAL_MODEL_INSTANCE)
+	public void setBPMNVirtualModelInstance(BPMNVirtualModelInstance bpmnVirtualModelInstance);
 
-	public EAProjectNature() {
-		projectsMap = new HashMap<FlexoProject, EAProject>();
-	}
+	public abstract class EAProjectNatureImpl extends ProjectNatureImpl<EAProjectNature> implements EAProjectNature {
 
-	@Override
-	public void givesNature(final FlexoProject project, final FlexoEditor editor) {
-		// Nothing to do
-	}
+		private static final Logger LOGGER = Logger.getLogger(EAProjectNature.class.getPackage().getName());
 
-	@Override
-	public EAProject getProjectWrapper(final FlexoProject project) {
-		return getEAProject(project);
-	}
-
-	@Override
-	public ProjectNatureService getProjectNatureService() {
-		return this.projectNatureService;
-	}
-
-	@Override
-	public void setProjectNatureService(ProjectNatureService projectNatureService) {
-		this.projectNatureService = projectNatureService;
-	}
-
-	/**
-	 * Return boolean indicating if supplied concept might be interpreted according to this nature<br>
-	 * Always return true
-	 * 
-	 * @param project
-	 * @return
-	 */
-	@Override
-	public boolean hasNature(final FlexoProject project) {
-		return true;
-	}
-
-	public VirtualModel getBPMNVirtualModel(FlexoServiceManager serviceManager) {
-		try {
-			return serviceManager.getVirtualModelLibrary().getVirtualModel(ModelersConstants.BPMN_EDITOR_URI);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	/**
-	 * If project has nature and is not already referenced, will reference it. Either way return CEContext.
-	 * 
-	 * @param project
-	 *            with or without a set context
-	 * @return Context associated to project
-	 */
-	public EAProject getEAProject(FlexoProject project) {
-		if (project == null) {
-			return null;
-		}
-		EAProject returned = projectsMap.get(project);
-		if (returned == null) {
-			try {
-				ModelFactory factory = new ModelFactory(EAProject.class);
-				returned = factory.newInstance(EAProject.class);
-				returned.init(project, this);
-				projectsMap.put(project, returned);
-			} catch (ModelDefinitionException e) {
-				LOGGER.log(Level.SEVERE, "Error while initializing new EAProject", e);
-			}
-		}
-		return returned;
-	}
-
-	public FMLRTVirtualModelInstance getBPMNVirtualModelInstance(final FlexoProject<?> project) {
-		if (project != null && project.hasNature(this)) {
-			VirtualModel bpmnVM = getBPMNVirtualModel(project.getServiceManager());
-			if (bpmnVM == null) {
-				return null;
-			}
-			for (FMLRTVirtualModelInstanceResource viewResource : project.getVirtualModelInstanceRepository().getAllResources()) {
-				if (viewResource.getVirtualModelResource() != null && viewResource.getVirtualModelResource() == bpmnVM.getResource()) {
-					try {
-						return viewResource.getResourceData(null);
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ResourceLoadingCancelledException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (FlexoException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-		return null;
 	}
 
 }

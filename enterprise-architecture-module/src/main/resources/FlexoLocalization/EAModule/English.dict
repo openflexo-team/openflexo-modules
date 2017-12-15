@@ -1,4 +1,11 @@
+configure_enterprise_architecture_nature=Configure enterprise architecture nature
+geve_perspective=Geve perspective
+gives_enterprise_architecture_nature=Gives enterprise architecture nature
+gives_project_enterprise_architecture_nature=Gives project enterprise architecture nature
+gives_project_free_modelling_nature=Gives project free modelling nature
+gives_your_project_enterprise_architecture_nature=Gives your project enterprise architecture nature
 instantiate_flexo_concept=Instantiate flexo concept
 newProcess=NewProcess
 newSubProcess=NewSubProcess
 opening_module_view_for_object=Opening module view for object
+select_default_object=Select default object

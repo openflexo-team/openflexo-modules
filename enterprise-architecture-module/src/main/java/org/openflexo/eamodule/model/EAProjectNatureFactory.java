@@ -38,25 +38,13 @@
 
 package org.openflexo.eamodule.model;
 
-import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.openflexo.eamodule.model.action.GivesEANature;
 import org.openflexo.foundation.FlexoEditor;
-import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.FlexoProject;
-import org.openflexo.foundation.FlexoServiceManager;
-import org.openflexo.foundation.fml.VirtualModel;
-import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
-import org.openflexo.foundation.fml.rt.rm.FMLRTVirtualModelInstanceResource;
 import org.openflexo.foundation.nature.DefaultProjectNatureFactoryImpl;
-import org.openflexo.foundation.nature.ProjectNatureService;
-import org.openflexo.foundation.resource.ResourceLoadingCancelledException;
-import org.openflexo.model.exceptions.ModelDefinitionException;
-import org.openflexo.model.factory.ModelFactory;
-import org.openflexo.modelers.ModelersConstants;
+import org.openflexo.logging.FlexoLogger;
 
 /**
  * This class is used to interpret a {@link FlexoProject} as a {@link EAProject}<br>
@@ -66,108 +54,22 @@ import org.openflexo.modelers.ModelersConstants;
  * 
  * @author sylvain
  */
-public class EAProjectNatureFactory implements DefaultProjectNatureFactoryImpl<EAProjectNature> {
+public class EAProjectNatureFactory extends DefaultProjectNatureFactoryImpl<EAProjectNature> {
 
 	private static final Logger LOGGER = Logger.getLogger(EAProjectNatureFactory.class.getPackage().getName());
 
-	private ProjectNatureService projectNatureService;
-
-	private final Map<FlexoProject, EAProject> projectsMap;
+	static final Logger logger = FlexoLogger.getLogger(EAProjectNatureFactory.class.getPackage().getName());
 
 	public EAProjectNatureFactory() {
-		projectsMap = new HashMap<FlexoProject, EAProject>();
+		super(EAProjectNature.class);
 	}
 
 	@Override
-	public void givesNature(final FlexoProject project, final FlexoEditor editor) {
-		// Nothing to do
-	}
+	public EAProjectNature givesNature(FlexoProject<?> project, FlexoEditor editor) {
+		GivesEANature givesEANature = GivesEANature.actionType.makeNewAction(project, null, editor);
+		givesEANature.doAction();
 
-	@Override
-	public EAProject getProjectWrapper(final FlexoProject project) {
-		return getEAProject(project);
-	}
-
-	@Override
-	public ProjectNatureService getProjectNatureService() {
-		return this.projectNatureService;
-	}
-
-	@Override
-	public void setProjectNatureService(ProjectNatureService projectNatureService) {
-		this.projectNatureService = projectNatureService;
-	}
-
-	/**
-	 * Return boolean indicating if supplied concept might be interpreted according to this nature<br>
-	 * Always return true
-	 * 
-	 * @param project
-	 * @return
-	 */
-	@Override
-	public boolean hasNature(final FlexoProject project) {
-		return true;
-	}
-
-	public VirtualModel getBPMNVirtualModel(FlexoServiceManager serviceManager) {
-		try {
-			return serviceManager.getVirtualModelLibrary().getVirtualModel(ModelersConstants.BPMN_EDITOR_URI);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	/**
-	 * If project has nature and is not already referenced, will reference it. Either way return CEContext.
-	 * 
-	 * @param project
-	 *            with or without a set context
-	 * @return Context associated to project
-	 */
-	public EAProject getEAProject(FlexoProject project) {
-		if (project == null) {
-			return null;
-		}
-		EAProject returned = projectsMap.get(project);
-		if (returned == null) {
-			try {
-				ModelFactory factory = new ModelFactory(EAProject.class);
-				returned = factory.newInstance(EAProject.class);
-				returned.init(project, this);
-				projectsMap.put(project, returned);
-			} catch (ModelDefinitionException e) {
-				LOGGER.log(Level.SEVERE, "Error while initializing new EAProject", e);
-			}
-		}
-		return returned;
-	}
-
-	public FMLRTVirtualModelInstance getBPMNVirtualModelInstance(final FlexoProject<?> project) {
-		if (project != null && project.hasNature(this)) {
-			VirtualModel bpmnVM = getBPMNVirtualModel(project.getServiceManager());
-			if (bpmnVM == null) {
-				return null;
-			}
-			for (FMLRTVirtualModelInstanceResource viewResource : project.getVirtualModelInstanceRepository().getAllResources()) {
-				if (viewResource.getVirtualModelResource() != null && viewResource.getVirtualModelResource() == bpmnVM.getResource()) {
-					try {
-						return viewResource.getResourceData(null);
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ResourceLoadingCancelledException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (FlexoException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-		return null;
+		return givesEANature.getNewNature();
 	}
 
 }

@@ -43,12 +43,18 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 import org.openflexo.eamodule.EAMIconLibrary;
-import org.openflexo.eamodule.model.EAProject;
-import org.openflexo.eamodule.view.EAProjectBrowser;
+import org.openflexo.eamodule.EAModule;
+import org.openflexo.eamodule.model.BPMNVirtualModelInstance;
+import org.openflexo.eamodule.model.EAProjectNature;
+import org.openflexo.eamodule.view.ConvertToEAMProjectView;
+import org.openflexo.eamodule.view.EAMProjectNatureModuleView;
+import org.openflexo.eamodule.view.EAMWelcomePanelModuleView;
+import org.openflexo.eamodule.widget.FIBEAMProjectBrowser;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
+import org.openflexo.module.FlexoModule.WelcomePanel;
 import org.openflexo.technologyadapter.diagram.controller.DiagramTechnologyAdapterController;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.FMLControlledDiagramEditor;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.FMLControlledDiagramModuleView;
@@ -65,16 +71,16 @@ public class EAPerspective extends FlexoPerspective {
 
 	static final Logger logger = Logger.getLogger(EAPerspective.class.getPackage().getName());
 
-	private final EAProjectBrowser browser;
+	private final FIBEAMProjectBrowser browser;
 
 	/**
 	 * @param controller
 	 * @param name
 	 */
-	public EAPerspective(FlexoController controller) {
+	public EAPerspective(EAMController controller) {
 		super("geve_perspective", controller);
 
-		browser = new EAProjectBrowser(controller);
+		browser = new FIBEAMProjectBrowser(controller.getProject(), controller);
 
 		setTopLeftView(browser);
 
@@ -84,70 +90,94 @@ public class EAPerspective extends FlexoPerspective {
 	}
 
 	@Override
-	public void willShow() {
-		super.willShow();
-		// updateBrowser(getController().getProject(), false);
-
-		/*if (getController().getProject() != null && getController().getProject().hasNature(FormoseProjectNature.class.getName())
-			&& projectBrowser != null) {
-		projectBrowser.setRootObject((FormoseProject) getController().getProject().asNature(FormoseProjectNature.class.getName()));
-		setTopLeftView(projectBrowser);
-		}
-		else if (genericBrowser != null) {
-		genericBrowser.setRootObject(getController().getProject());
-		setTopLeftView(genericBrowser);
-		}*/
-	}
-
-	@Override
-	public String getWindowTitleforObject(final FlexoObject object, final FlexoController controller) {
-		if (object instanceof EAProject) {
-			return ((EAProject) object).getName();
-		}
-		else if (object instanceof FMLRTVirtualModelInstance) {
-			return ((FMLRTVirtualModelInstance) object).getTitle();
-		}
-		else if (object instanceof FlexoConceptInstance) {
-			return ((FlexoConceptInstance) object).getStringRepresentation();
-		}
-		else {
-			return "Object has no title";
-		}
-	}
-
-	public EAProject getEAProject() {
-		if (getController() instanceof EAMController) {
-			return ((EAMController) getController()).getEAProject();
-		}
-		return null;
-	}
-
-	public void setProject(final FlexoProject project) {
-		// browser.setRootObject(getGEVEProject());
-
-		System.out.println("Et hop, on set le project " + project);
-		System.out.println("EAProject=" + getEAProject());
-
-		browser.setDataObject(getEAProject());
-	}
-
-	public EAProjectBrowser getBrowser() {
-		return browser;
-	}
-
-	@Override
 	public ImageIcon getActiveIcon() {
 		return EAMIconLibrary.EAM_SMALL_ICON;
 	}
 
-	@Override
-	public ModuleView<?> createModuleViewForObject(FlexoObject object) {
-
-		/*if (object instanceof GEVEProject) {
-			return new FMLControlledFIBVirtualModelInstanceModuleView(((GEVEProject) object).getGEVEView(), getController(), this,
-					getController().getModuleLocales());
+	public void setProject(FlexoProject<?> project) {
+		/*if (project.hasNature(FreeModellingProjectNature.class)) {
+			freeModellingProjectBrowser.setRootObject(project.getNature(FreeModellingProjectNature.class));
 		}*/
 
+		browser.setRootObject(project);
+	}
+
+	@Override
+	public boolean hasModuleViewForObject(FlexoObject object) {
+		if (object instanceof WelcomePanel) {
+			return true;
+		}
+		if (object instanceof FlexoProject) {
+			return true;
+		}
+		if (object instanceof EAProjectNature) {
+			return true;
+		}
+		if (object instanceof BPMNVirtualModelInstance) {
+			return true;
+		}
+		if (object instanceof FMLRTVirtualModelInstance) {
+			if (((FMLRTVirtualModelInstance) object).hasNature(FMLControlledDiagramVirtualModelInstanceNature.INSTANCE)) {
+				return true;
+			}
+			if (((FMLRTVirtualModelInstance) object).hasNature(FMLControlledFIBVirtualModelInstanceNature.INSTANCE)) {
+				return true;
+			}
+			return false;
+		}
+		if (object instanceof FlexoConceptInstance) {
+			if (((FlexoConceptInstance) object).hasNature(FMLControlledFIBFlexoConceptInstanceNature.INSTANCE)) {
+				return true;
+			}
+		}
+
+		return super.hasModuleViewForObject(object);
+	}
+
+	@Override
+	public String getWindowTitleforObject(FlexoObject object, FlexoController controller) {
+		if (object instanceof WelcomePanel) {
+			return "Welcome";
+		}
+		if (object instanceof FlexoProject) {
+			return ((FlexoProject<?>) object).getName();
+		}
+		if (object instanceof EAProjectNature) {
+			return ((EAProjectNature) object).getOwner().getName();
+		}
+		if (object instanceof BPMNVirtualModelInstance) {
+			return ((BPMNVirtualModelInstance) object).getName();
+		}
+		if (object != null) {
+			return object.toString();
+		}
+		return "null";
+	}
+
+	@Override
+	public FlexoObject getDefaultObject(FlexoObject proposedObject) {
+		if (proposedObject instanceof FlexoProject && ((FlexoProject<?>) proposedObject).hasNature(EAProjectNature.class)) {
+			return ((FlexoProject<?>) proposedObject).getNature(EAProjectNature.class);
+		}
+
+		return super.getDefaultObject(proposedObject);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ModuleView<?> createModuleViewForObject(FlexoObject object, boolean editable) {
+		if (object instanceof WelcomePanel) {
+			return new EAMWelcomePanelModuleView((WelcomePanel<EAModule>) object, getController(), this);
+		}
+		if (object instanceof FlexoProject) {
+			return new ConvertToEAMProjectView((FlexoProject<?>) object, getController(), this);
+		}
+		if (object instanceof EAProjectNature) {
+			return new EAMProjectNatureModuleView((EAProjectNature) object, getController(), this);
+		}
+		if (object instanceof BPMNVirtualModelInstance) {
+			// TODO
+		}
 		if (object instanceof FMLRTVirtualModelInstance) {
 
 			FMLRTVirtualModelInstance vmi = (FMLRTVirtualModelInstance) object;
@@ -170,29 +200,7 @@ public class EAPerspective extends FlexoPerspective {
 						getController().getModuleLocales());
 			}
 		}
-
-		// In all other cases...
-		return super.createModuleViewForObject(object);
-
-	}
-
-	@Override
-	public boolean hasModuleViewForObject(FlexoObject object) {
-		if (object instanceof FMLRTVirtualModelInstance) {
-			if (((FMLRTVirtualModelInstance) object).hasNature(FMLControlledDiagramVirtualModelInstanceNature.INSTANCE)) {
-				return true;
-			}
-			if (((FMLRTVirtualModelInstance) object).hasNature(FMLControlledFIBVirtualModelInstanceNature.INSTANCE)) {
-				return true;
-			}
-			return false;
-		}
-		if (object instanceof FlexoConceptInstance) {
-			if (((FlexoConceptInstance) object).hasNature(FMLControlledFIBFlexoConceptInstanceNature.INSTANCE)) {
-				return true;
-			}
-		}
-		return super.hasModuleViewForObject(object);
+		return super.createModuleViewForObject(object, editable);
 	}
 
 }

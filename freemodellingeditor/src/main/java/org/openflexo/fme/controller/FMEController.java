@@ -50,6 +50,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 import org.openflexo.fme.FMEIconLibrary;
+import org.openflexo.fme.FMEModule;
 import org.openflexo.fme.controller.action.FMEControllerActionInitializer;
 import org.openflexo.fme.model.FMEConceptualModel;
 import org.openflexo.fme.model.FMEDiagramFreeModel;
@@ -69,7 +70,6 @@ import org.openflexo.icon.FMLIconLibrary;
 import org.openflexo.icon.FMLRTIconLibrary;
 import org.openflexo.icon.IconFactory;
 import org.openflexo.icon.IconLibrary;
-import org.openflexo.module.FlexoModule;
 import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.view.FlexoMainPane;
 import org.openflexo.view.controller.ControllerActionInitializer;
@@ -91,16 +91,8 @@ public class FMEController extends FlexoController {
 	/**
 	 * Default constructor
 	 */
-	public FMEController(FlexoModule module) {
+	public FMEController(FMEModule module) {
 		super(module);
-
-		/*SwingUtilities.invokeLater(new Runnable() {
-		
-			@Override
-			public void run() {
-				setCurrentEditedObjectAsModuleView(getApplicationContext().getViewPointLibrary(), FREE_MODELLING_PERSPECTIVE);
-			}
-		});*/
 	}
 
 	@Override
@@ -207,7 +199,7 @@ public class FMEController extends FlexoController {
 	@Override
 	public void updateEditor(FlexoEditor from, FlexoEditor to) {
 		super.updateEditor(from, to);
-		FlexoProject project = (to != null ? to.getProject() : null);
+		FlexoProject<?> project = (to != null ? to.getProject() : null);
 		FREE_MODELLING_PERSPECTIVE.setProject(project);
 	}
 

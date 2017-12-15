@@ -36,50 +36,48 @@
  * 
  */
 
-package org.openflexo.fme.widget;
+package org.openflexo.eamodule.model;
 
 import java.util.logging.Logger;
 
-import org.openflexo.fme.controller.FMEController;
-import org.openflexo.foundation.FlexoProject;
-import org.openflexo.gina.model.FIBContainer;
-import org.openflexo.gina.model.widget.FIBBrowser;
-import org.openflexo.rm.Resource;
-import org.openflexo.rm.ResourceLocator;
-import org.openflexo.view.FIBBrowserView;
+import org.openflexo.foundation.fml.VirtualModel;
+import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
+import org.openflexo.foundation.nature.VirtualModelInstanceBasedNatureObject;
+import org.openflexo.logging.FlexoLogger;
+import org.openflexo.model.annotations.ImplementationClass;
+import org.openflexo.model.annotations.ModelEntity;
+import org.openflexo.model.annotations.XMLElement;
 
 /**
- * Browser allowing to browse all resources of a {@link FlexoProject}<br>
+ * Represents instance of BPMN {@link VirtualModel} in the context of a {@link EAProjectNature} From a technical point of view, a
+ * {@link BPMNVirtualModelInstance} is just a wrapper above a {@link FMLRTVirtualModelInstance}
  * 
- * @author sguerin
+ * @author sylvain
  * 
  */
-@SuppressWarnings("serial")
-public class FIBFreeModellingProjectBrowser extends FIBBrowserView<FlexoProject<?>> {
-	static final Logger logger = Logger.getLogger(FIBFreeModellingProjectBrowser.class.getPackage().getName());
+@ModelEntity
+@XMLElement
+@ImplementationClass(BPMNVirtualModelInstance.BPMNVirtualModelInstanceImpl.class)
+public interface BPMNVirtualModelInstance extends VirtualModelInstanceBasedNatureObject<EAProjectNature> {
 
-	public static final Resource FIB_FILE = ResourceLocator.locateResource("Fib/Widget/FIBFreeModellingProjectBrowser.fib");
+	public String getName();
 
-	public FIBFreeModellingProjectBrowser(FlexoProject<?> project, FMEController controller) {
-		super(project, controller, FIB_FILE, controller.getModuleLocales());
-		// System.out.println("Showing browser with " + project);
-	}
+	public String getURI();
 
-	@Override
-	public void initializeFIBComponent() {
+	public abstract class BPMNVirtualModelInstanceImpl extends VirtualModelInstanceBasedNatureObjectImpl<EAProjectNature>
+			implements BPMNVirtualModelInstance {
 
-		FIBBrowser projectBrowser = retrieveFIBBrowserNamed((FIBContainer) getFIBComponent(), "ProjectBrowser");
+		private static final Logger logger = FlexoLogger.getLogger(BPMNVirtualModelInstance.class.getPackage().getName());
 
-		if (projectBrowser != null) {
-			bindFlexoActionsToBrowser(projectBrowser);
+		@Override
+		public String getName() {
+			return getAccessedVirtualModelInstance().getName();
 		}
 
-		FIBBrowser freeModellingProjectBrowser = retrieveFIBBrowserNamed((FIBContainer) getFIBComponent(), "FreeModellingProjectBrowser");
-
-		if (freeModellingProjectBrowser != null) {
-			bindFlexoActionsToBrowser(freeModellingProjectBrowser);
+		@Override
+		public String getURI() {
+			return getAccessedVirtualModelInstance().getURI();
 		}
 
 	}
-
 }

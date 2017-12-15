@@ -47,15 +47,15 @@ import org.openflexo.eamodule.EAMIconLibrary;
 import org.openflexo.eamodule.EAModule;
 import org.openflexo.eamodule.EnterpriseArchitectureModule;
 import org.openflexo.eamodule.controller.action.EAMControllerActionInitializer;
-import org.openflexo.eamodule.model.EAProject;
+import org.openflexo.eamodule.model.BPMNVirtualModelInstance;
 import org.openflexo.eamodule.model.EAProjectNature;
 import org.openflexo.eamodule.view.EAMMainPane;
 import org.openflexo.eamodule.view.menu.EAMMenuBar;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
-import org.openflexo.foundation.fml.VirtualModel;
-import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
+import org.openflexo.icon.IconFactory;
+import org.openflexo.icon.IconLibrary;
 import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.technologyadapter.diagram.controller.DiagramTechnologyAdapterController;
@@ -74,7 +74,7 @@ public class EAMController extends FlexoController {
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(EAMController.class.getPackage().getName());
 
-	private EAPerspective bpmnPerspective;
+	private EAPerspective eaPerspective;
 
 	/**
 	 * Default constructor
@@ -86,7 +86,7 @@ public class EAMController extends FlexoController {
 	@Override
 	protected void initializePerspectives() {
 
-		addToPerspectives(bpmnPerspective = new EAPerspective(this));
+		addToPerspectives(eaPerspective = new EAPerspective(this));
 	}
 
 	@Override
@@ -110,7 +110,7 @@ public class EAMController extends FlexoController {
 	}
 
 	@Override
-	public FlexoObject getDefaultObjectToSelect(FlexoProject project) {
+	public FlexoObject getDefaultObjectToSelect(FlexoProject<?> project) {
 		return project;
 	}
 
@@ -119,74 +119,21 @@ public class EAMController extends FlexoController {
 		return new EAMMainPane(this);
 	}
 
-	public EAProjectNature getEANature() {
-		return getApplicationContext().getProjectNatureService().getProjectNature(EAProjectNature.class);
-	}
-
-	public EAProject getEAProject() {
-		return getEANature().getEAProject(getProject());
-	}
-
 	@Override
 	protected void updateEditor(final FlexoEditor from, final FlexoEditor to) {
 		super.updateEditor(from, to);
-		FlexoProject project = (to != null ? to.getProject() : null);
-		bpmnPerspective.setProject(project);
+		FlexoProject<?> project = (to != null ? to.getProject() : null);
+		eaPerspective.setProject(project);
 	}
 
 	@Override
 	public ImageIcon iconForObject(final Object object) {
-		if (object instanceof EAProject) {
-			return EAMIconLibrary.EAM_SMALL_ICON;
+		if (object instanceof EAProjectNature) {
+			return IconFactory.getImageIcon(IconLibrary.OPENFLEXO_NOTEXT_16, EAMIconLibrary.EAM_MARKER);
 		}
-
-		if (object instanceof FMLRTVirtualModelInstance) {
-			VirtualModel type = ((FMLRTVirtualModelInstance) object).getVirtualModel();
-			if (type.getName().equals("BPMNEditor")) {
-				return EAMIconLibrary.BPMN_SMALL_ICON;
-			}
-			else if (type.getName().equals("ProcessDiagram")) {
-				return EAMIconLibrary.BPMN_PROCESS_ICON;
-			}
-			return super.iconForObject(object);
+		else if (object instanceof BPMNVirtualModelInstance) {
+			return EAMIconLibrary.BPMN_SMALL_ICON;
 		}
-
-		/*if (getGEVEProject() != null) {
-			if (object == getGEVEProject().getGEVEView()) {
-				return GEVEIconLibrary.GEVE_SMALL_ICON;
-			}
-		}
-		
-		if (object instanceof FMLRTVirtualModelInstance) {
-			VirtualModel type = ((FMLRTVirtualModelInstance) object).getVirtualModel();
-			if (type.getName().equals("DonneesReferentiel")) {
-				return FMLIconLibrary.INFO_ICON;
-			}
-			if (type.getName().equals("ReferentielTiers")) {
-				return GEVEIconLibrary.TIERS_ICON;
-			}
-			if (type.getName().equals("Caracterisations")) {
-				return GEVEIconLibrary.CARACTERISATIONS_ICON;
-			}
-			return super.iconForObject(object);
-		}
-		
-		if (object instanceof FlexoConceptInstance) {
-			FlexoConcept type = ((FlexoConceptInstance) object).getFlexoConcept();
-			if (type.getName().equals("TypeDeFlux")) {
-				return GEVEIconLibrary.TYPE_FLUX_ICON;
-			}
-			if (type.getName().equals("Matiere")) {
-				return GEVEIconLibrary.MATIERE_ICON;
-			}
-			if (type.getName().equals("Tiers")) {
-				return GEVEIconLibrary.TIERS_ICON;
-			}
-			if (type.getName().equals("Caracterisation")) {
-				return GEVEIconLibrary.CARACTERISATION_ICON;
-			}
-		}*/
-
 		return super.iconForObject(object);
 	}
 

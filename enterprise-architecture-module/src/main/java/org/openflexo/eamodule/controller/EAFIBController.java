@@ -42,11 +42,13 @@ import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 
-import org.openflexo.eamodule.model.EAProject;
+import org.openflexo.eamodule.EAModule;
 import org.openflexo.eamodule.model.EAProjectNature;
 import org.openflexo.gina.model.FIBComponent;
 import org.openflexo.gina.swing.view.SwingViewFactory;
 import org.openflexo.localization.FlexoLocalization;
+import org.openflexo.localization.LocalizedDelegate;
+import org.openflexo.module.ModuleLoadingException;
 import org.openflexo.technologyadapter.gina.controller.FMLControlledFIBController;
 
 /**
@@ -72,19 +74,13 @@ public class EAFIBController extends FMLControlledFIBController {
 		return (EAMController) super.getFlexoController();
 	}
 
-	public EAProjectNature getEnterpriseArchitectureNature() {
-		if (getFlexoController() != null && getFlexoController().getApplicationContext() != null
-				&& getFlexoController().getApplicationContext().getProjectNatureService() != null) {
-			return getFlexoController().getApplicationContext().getProjectNatureService().getProjectNature(EAProjectNature.class);
+	public final LocalizedDelegate getLocales() {
+		try {
+			return getServiceManager().getModuleLoader().getModuleInstance(EAModule.class).getLocales();
+		} catch (ModuleLoadingException e) {
+			e.printStackTrace();
+			return null;
 		}
-		return null;
-	}
-
-	public EAProject getEAProject() {
-		if (getEnterpriseArchitectureNature() != null) {
-			return getEnterpriseArchitectureNature().getEAProject(getFlexoController().getProject());
-		}
-		return null;
 	}
 
 	@Override
@@ -93,6 +89,13 @@ public class EAFIBController extends FMLControlledFIBController {
 			return getFlexoController().iconForObject(object);
 		}
 		return super.retrieveIconForObject(object);
+	}
+
+	public EAProjectNature getEAProjectNature() {
+		if (getEditor() != null && getEditor().getProject() != null) {
+			return getEditor().getProject().getNature(EAProjectNature.class);
+		}
+		return null;
 	}
 
 }

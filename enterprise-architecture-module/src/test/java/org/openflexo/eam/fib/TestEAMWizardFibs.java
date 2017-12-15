@@ -2,7 +2,7 @@
  * 
  * Copyright (c) 2014, Openflexo
  * 
- * This file is part of Flexovieweditor, a component of the software infrastructure 
+ * This file is part of Freemodellingeditor, a component of the software infrastructure 
  * developed at Openflexo.
  * 
  * 
@@ -38,19 +38,21 @@
 
 package org.openflexo.eam.fib;
 
+import org.junit.Test;
 import org.openflexo.gina.test.GenericFIBTestCase;
 import org.openflexo.rm.FileResourceImpl;
 import org.openflexo.rm.ResourceLocator;
 
-public class TestEAMDialogFibs extends GenericFIBTestCase {
-
-	/*
-	 * Use this method to print all
-	 * Then copy-paste 
-	 */
+public class TestEAMWizardFibs extends GenericFIBTestCase {
 
 	public static void main(String[] args) {
 		System.out.println(
-				generateFIBTestCaseClass(((FileResourceImpl) ResourceLocator.locateResource("Fib/Dialog")).getFile(), "Fib/Dialog/"));
+				generateFIBTestCaseClass(((FileResourceImpl) ResourceLocator.locateResource("Fib/Wizard")).getFile(), "Fib/Wizard/"));
 	}
+
+	@Test
+	public void testConfigureEANature() {
+		validateFIB("Fib/Wizard/ConfigureEANature.fib");
+	}
+
 }

@@ -62,8 +62,6 @@ public class FreeModellingProjectNatureFactory extends DefaultProjectNatureFacto
 
 	@Override
 	public FreeModellingProjectNature givesNature(FlexoProject<?> project, FlexoEditor editor) {
-		System.out.println("Tiens, faudrait donner la nature FME au projet " + project);
-
 		GivesFMENature givesFMENature = GivesFMENature.actionType.makeNewAction(project, null, editor);
 		givesFMENature.doAction();
 
