@@ -56,7 +56,6 @@ import org.openflexo.model.annotations.Imports;
 import org.openflexo.model.annotations.ModelEntity;
 import org.openflexo.model.annotations.PropertyIdentifier;
 import org.openflexo.model.annotations.Setter;
-import org.openflexo.model.annotations.XMLAttribute;
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelInstanceNature;
 
 /**
@@ -76,8 +75,6 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 
 	@PropertyIdentifier(type = FMEFreeModel.class)
 	public static final String FREE_MODEL = "freeModel";
-	@PropertyIdentifier(type = String.class)
-	String DESCRIPTION_KEY = "description";
 
 	@Getter(value = FREE_MODEL)
 	public FMEFreeModel getFreeModel();
@@ -85,16 +82,11 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 	@Setter(FREE_MODEL)
 	public void setFreeModel(FMEFreeModel freeModel);
 
+	@Override
 	public String getName();
 
+	@Override
 	public String getURI();
-
-	@Getter(value = DESCRIPTION_KEY)
-	@XMLAttribute
-	public String getDescription();
-
-	@Setter(DESCRIPTION_KEY)
-	public void setDescription(String description);
 
 	public List<FlexoConceptInstance> getInstances(FlexoConcept flexoConcept);
 
@@ -121,6 +113,7 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 
 		@Override
 		public void fireVirtualModelInstanceConnected(FMLRTVirtualModelInstance aVirtualModelInstance) {
+			super.fireVirtualModelInstanceConnected(aVirtualModelInstance);
 			if (virtualModelInstance != aVirtualModelInstance) {
 				if (virtualModelInstance != null) {
 					virtualModelInstance.getPropertyChangeSupport().removePropertyChangeListener(this);
@@ -132,17 +125,8 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 
 		@Override
 		public void fireVirtualModelInstanceDisconnected(FMLRTVirtualModelInstance aVirtualModelInstance) {
+			super.fireVirtualModelInstanceDisconnected(aVirtualModelInstance);
 			aVirtualModelInstance.getPropertyChangeSupport().removePropertyChangeListener(this);
-		}
-
-		@Override
-		public String getName() {
-			return getAccessedVirtualModelInstance().getName();
-		}
-
-		@Override
-		public String getURI() {
-			return getAccessedVirtualModelInstance().getURI();
 		}
 
 		/**

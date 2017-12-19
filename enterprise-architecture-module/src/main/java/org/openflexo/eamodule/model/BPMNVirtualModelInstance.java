@@ -60,24 +60,16 @@ import org.openflexo.model.annotations.XMLElement;
 @ImplementationClass(BPMNVirtualModelInstance.BPMNVirtualModelInstanceImpl.class)
 public interface BPMNVirtualModelInstance extends VirtualModelInstanceBasedNatureObject<EAProjectNature> {
 
+	@Override
 	public String getName();
 
+	@Override
 	public String getURI();
 
 	public abstract class BPMNVirtualModelInstanceImpl extends VirtualModelInstanceBasedNatureObjectImpl<EAProjectNature>
 			implements BPMNVirtualModelInstance {
 
 		private static final Logger logger = FlexoLogger.getLogger(BPMNVirtualModelInstance.class.getPackage().getName());
-
-		@Override
-		public String getName() {
-			return getAccessedVirtualModelInstance().getName();
-		}
-
-		@Override
-		public String getURI() {
-			return getAccessedVirtualModelInstance().getURI();
-		}
 
 	}
 }

@@ -51,6 +51,11 @@ public class TestEAMWizardFibs extends GenericFIBTestCase {
 	}
 
 	@Test
+	public void testConfigureBPMN() {
+		validateFIB("Fib/Wizard/ConfigureBPMN.fib");
+	}
+
+	@Test
 	public void testConfigureEANature() {
 		validateFIB("Fib/Wizard/ConfigureEANature.fib");
 	}

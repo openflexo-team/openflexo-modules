@@ -77,6 +77,7 @@ public class EAMControllerActionInitializer extends ControllerActionInitializer 
 		new EAMSetPropertyInitializer(this);
 
 		new GivesEANatureInitializer(this);
+		new CreateBPMNVirtualModelInstanceInitializer(this);
 
 	}
 

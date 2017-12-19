@@ -176,7 +176,10 @@ public class EAPerspective extends FlexoPerspective {
 			return new EAMProjectNatureModuleView((EAProjectNature) object, getController(), this);
 		}
 		if (object instanceof BPMNVirtualModelInstance) {
-			// TODO
+			FMLRTVirtualModelInstance vmi = ((BPMNVirtualModelInstance) object).getAccessedVirtualModelInstance();
+			if (vmi != null && vmi.hasNature(FMLControlledFIBVirtualModelInstanceNature.INSTANCE)) {
+				return new FMLControlledFIBVirtualModelInstanceModuleView(vmi, getController(), this, getController().getModuleLocales());
+			}
 		}
 		if (object instanceof FMLRTVirtualModelInstance) {
 

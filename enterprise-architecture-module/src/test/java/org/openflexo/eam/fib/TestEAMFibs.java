@@ -75,9 +75,4 @@ public class TestEAMFibs extends GenericFIBTestCase {
 		validateFIB("Fib/EAProjectBrowser.fib");
 	}
 
-	@Test
-	public void testFMEFreeModelPanel() {
-		validateFIB("Fib/FMEFreeModelPanel.fib");
-	}
-
 }

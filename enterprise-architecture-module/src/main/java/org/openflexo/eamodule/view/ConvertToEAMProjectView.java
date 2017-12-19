@@ -61,9 +61,6 @@ public class ConvertToEAMProjectView extends FIBModuleView<FlexoProject<?>> {
 		}
 
 		public void givesEAMNature(FlexoProject<?> project) {
-
-			System.out.println("Hop, on donne la nature EAM");
-
 			GivesEANature action = GivesEANature.actionType.makeNewAction(project, null, getEditor());
 			action.doAction();
 		}

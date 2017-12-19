@@ -43,7 +43,11 @@ import java.util.logging.Logger;
 
 import org.openflexo.ApplicationContext;
 import org.openflexo.eamodule.controller.EAMController;
+import org.openflexo.foundation.fml.FMLTechnologyAdapter;
+import org.openflexo.foundation.fml.rt.FMLRTTechnologyAdapter;
+import org.openflexo.foundation.technologyadapter.TechnologyAdapterService;
 import org.openflexo.module.FlexoModule;
+import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.view.controller.FlexoController;
 
 /**
@@ -85,6 +89,15 @@ public class EAModule extends FlexoModule<EAModule> {
 	@Override
 	public EAMPreferences getPreferences() {
 		return (EAMPreferences) super.getPreferences();
+	}
+
+	@Override
+	public void initModule() {
+		super.initModule();
+		TechnologyAdapterService taService = getApplicationContext().getTechnologyAdapterService();
+		taService.activateTechnologyAdapter(taService.getTechnologyAdapter(FMLTechnologyAdapter.class));
+		taService.activateTechnologyAdapter(taService.getTechnologyAdapter(FMLRTTechnologyAdapter.class));
+		taService.activateTechnologyAdapter(taService.getTechnologyAdapter(DiagramTechnologyAdapter.class));
 	}
 
 	@Override

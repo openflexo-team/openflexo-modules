@@ -132,7 +132,7 @@ public class EAMController extends FlexoController {
 			return IconFactory.getImageIcon(IconLibrary.OPENFLEXO_NOTEXT_16, EAMIconLibrary.EAM_MARKER);
 		}
 		else if (object instanceof BPMNVirtualModelInstance) {
-			return EAMIconLibrary.BPMN_SMALL_ICON;
+			return EAMIconLibrary.BPMN_MEDIUM_ICON;
 		}
 		return super.iconForObject(object);
 	}

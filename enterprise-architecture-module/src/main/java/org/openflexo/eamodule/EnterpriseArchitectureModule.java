@@ -38,7 +38,8 @@
 
 package org.openflexo.eamodule;
 
-import org.openflexo.module.Module;
+import org.openflexo.eamodule.model.EAProjectNature;
+import org.openflexo.module.NatureSpecificModule;
 
 /**
  * {@link EnterpriseArchitectureModule} module<br>
@@ -49,14 +50,14 @@ import org.openflexo.module.Module;
  * 
  * @author sylvain
  */
-public class EnterpriseArchitectureModule extends Module<EAModule> {
+public class EnterpriseArchitectureModule extends NatureSpecificModule<EAModule, EAProjectNature> {
 
 	public static EnterpriseArchitectureModule INSTANCE;
 
 	public EnterpriseArchitectureModule() {
 		super(EAModule.EAM_MODULE_NAME, EAModule.EAM_MODULE_SHORT_NAME, EAModule.class, EAMPreferences.class, "modules/eammodule", "10804",
 				"eam", EAMIconLibrary.EAM_SMALL_ICON, EAMIconLibrary.EAM_MEDIUM_ICON, EAMIconLibrary.EAM_MEDIUM_ICON_WITH_HOVER,
-				EAMIconLibrary.EAM_BIG_ICON);
+				EAMIconLibrary.EAM_BIG_ICON, EAProjectNature.class);
 
 		// WE set it now, because we are sure the ServiceManager did this call first
 		// WE want to avoid twice defined objects

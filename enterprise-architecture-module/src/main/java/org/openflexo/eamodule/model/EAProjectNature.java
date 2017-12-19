@@ -38,10 +38,12 @@
 
 package org.openflexo.eamodule.model;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.nature.ProjectNature;
+import org.openflexo.foundation.nature.VirtualModelInstanceBasedNatureObject;
 import org.openflexo.model.annotations.Getter;
 import org.openflexo.model.annotations.ImplementationClass;
 import org.openflexo.model.annotations.ModelEntity;
@@ -70,10 +72,17 @@ public interface EAProjectNature extends ProjectNature<EAProjectNature> {
 	@Setter(BPMN_VIRTUAL_MODEL_INSTANCE)
 	public void setBPMNVirtualModelInstance(BPMNVirtualModelInstance bpmnVirtualModelInstance);
 
+	public List<VirtualModelInstanceBasedNatureObject<?>> getModels();
+
 	public abstract class EAProjectNatureImpl extends ProjectNatureImpl<EAProjectNature> implements EAProjectNature {
 
 		private static final Logger LOGGER = Logger.getLogger(EAProjectNature.class.getPackage().getName());
 
+		@Override
+		public List<VirtualModelInstanceBasedNatureObject<?>> getModels() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 
 }
