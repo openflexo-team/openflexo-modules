@@ -38,12 +38,15 @@
 
 package org.openflexo.eamodule.controller;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 
 import org.openflexo.eamodule.EAModule;
 import org.openflexo.eamodule.model.EAProjectNature;
+import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
+import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.gina.model.FIBComponent;
 import org.openflexo.gina.swing.view.SwingViewFactory;
 import org.openflexo.localization.FlexoLocalization;
@@ -98,4 +101,30 @@ public class EAFIBController extends FMLControlledFIBController {
 		return null;
 	}
 
+	public String getProcessName(FlexoConceptInstance process) {
+		try {
+			return (String) process.execute("name");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "???";
+		}
+	}
+
+	public List<FlexoConceptInstance> getChildProcesses(FlexoConceptInstance process) {
+		try {
+			return (List<FlexoConceptInstance>) process.execute("childProcesses");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public FMLRTVirtualModelInstance getProcessDiagram(FlexoConceptInstance process) {
+		try {
+			return (FMLRTVirtualModelInstance) process.execute("container.container.getProcessDiagram(this)");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

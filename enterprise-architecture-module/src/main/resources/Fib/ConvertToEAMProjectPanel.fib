@@ -26,9 +26,9 @@
     <Localized id="22" lang="English" value="Want to work with the &quot;Free Modelling Editor&quot; ?" key="gives_your_project_free_modelling_nature" />
     <Localized id="23" lang="Dutch" value="gives_your_project_free_modelling_nature" key="gives_your_project_free_modelling_nature" />
     <Localized id="24" lang="French" value="Voulez you travailler avec le &quot;Free Modelling Editor&quot; ?" key="gives_your_project_free_modelling_nature" />
-    <Localized id="25" lang="English" value="Gives your project the &quot;Free Modelling&quot; nature" key="convert_your_project" />
+    <Localized id="25" lang="English" value="Gives your project the &quot;Enterprise Architecture&quot; nature" key="convert_your_project" />
     <Localized id="26" lang="Dutch" value="convert_your_project" key="convert_your_project" />
-    <Localized id="27" lang="French" value="Donnez à votre projet la nature &quot;Free Modelling&quot;" key="convert_your_project" />
+    <Localized id="27" lang="French" value="Donnez à votre projet la nature &quot;Enterprise Architecture&quot;" key="convert_your_project" />
     <Localized id="28" lang="English" value="Label" key="label" />
     <Localized id="29" lang="Dutch" value="Label" key="label" />
     <Localized id="30" lang="French" value="label" key="label" />

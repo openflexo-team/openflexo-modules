@@ -1,8 +1,8 @@
 /**
  * 
- * Copyright (c) 2014, Openflexo
+ * Copyright (c) 2013-2015, Openflexo
  * 
- * This file is part of Flexovieweditor, a component of the software infrastructure 
+ * This file is part of Integration-tests, a component of the software infrastructure 
  * developed at Openflexo.
  * 
  * 
@@ -36,54 +36,67 @@
  * 
  */
 
-package org.openflexo.eam.fib;
+package org.openflexo.eam.model;
+
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.openflexo.foundation.fml.FMLTechnologyAdapter;
-import org.openflexo.gina.test.OpenflexoFIBTestCase;
-import org.openflexo.rm.FileResourceImpl;
-import org.openflexo.rm.ResourceLocator;
+import org.openflexo.OpenflexoProjectAtRunTimeTestCaseWithGUI;
+import org.openflexo.foundation.fml.VirtualModel;
+import org.openflexo.foundation.fml.rm.VirtualModelResource;
+import org.openflexo.modelers.ModelersConstants;
 import org.openflexo.test.OrderedRunner;
 import org.openflexo.test.TestOrder;
 
+/**
+ * We test here Formose viewpoints
+ * 
+ * 
+ * @author sylvain
+ *
+ */
 @RunWith(OrderedRunner.class)
-public class TestEAMWidgetFibs extends OpenflexoFIBTestCase {
+public class TestBPMNEditorVirtualModel extends OpenflexoProjectAtRunTimeTestCaseWithGUI {
+
+	private static VirtualModel formoseVP;
 
 	/**
 	 * Instantiate test resource center
 	 */
 	@Test
 	@TestOrder(1)
-	public void instantiateServiceManager() {
+	public void instantiateResourceCenter() {
 
 		log("testInstantiateResourceCenter()");
 
-		instanciateTestServiceManager(FMLTechnologyAdapter.class);
+		instanciateTestServiceManager();
 
-		/*for (FlexoResourceCenter<?> rc : serviceManager.getResourceCenterService().getResourceCenters()) {
-			System.out.println(" > rc: " + rc);
-			for (FlexoResource<?> r : rc.getAllResources()) {
-				System.out.println(" >> " + r);
-			}
-		}*/
-
-	}
-
-	/*
-	 * Use this method to print all
-	 * Then copy-paste 
-	 */
-
-	public static void main(String[] args) {
-		System.out.println(
-				generateFIBTestCaseClass(((FileResourceImpl) ResourceLocator.locateResource("Fib/Widget")).getFile(), "Fib/Widget/"));
 	}
 
 	@Test
-	@TestOrder(2)
-	public void testFIBEAMProjectBrowser() throws InterruptedException {
-		validateFIB("Fib/Widget/FIBEAMProjectBrowser.fib");
+	@TestOrder(10)
+	public void testBPMNEditorVirtualModel() {
+
+		log("testBPMNEditorVirtualModel");
+
+		VirtualModelResource bmpnVirtualModelResource = serviceManager.getVirtualModelLibrary()
+				.getVirtualModelResource(ModelersConstants.BPMN_EDITOR_URI);
+		assertNotNull(bmpnVirtualModelResource);
+
+		VirtualModel bpmnVP;
+
+		assertNotNull(bpmnVP = bmpnVirtualModelResource.getVirtualModel());
+
+		assertNotNull(bpmnVP);
+		System.out.println("Found view point in " + ((VirtualModelResource) bpmnVP.getResource()).getIODelegate().toString());
+		assertVirtualModelIsValid(bpmnVP);
+
+		for (VirtualModel vm : bpmnVP.getVirtualModels()) {
+			System.out.println(vm.getFMLRepresentation());
+			assertObjectIsValid(vm);
+		}
+
 	}
 
 }

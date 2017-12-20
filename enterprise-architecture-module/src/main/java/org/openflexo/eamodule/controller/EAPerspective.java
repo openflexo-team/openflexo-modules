@@ -129,9 +129,24 @@ public class EAPerspective extends FlexoPerspective {
 			if (((FlexoConceptInstance) object).hasNature(FMLControlledFIBFlexoConceptInstanceNature.INSTANCE)) {
 				return true;
 			}
+			if (((FlexoConceptInstance) object).getFlexoConcept().getName().equals("Process")) {
+				FMLRTVirtualModelInstance processDiagram = getProcessDiagram((FlexoConceptInstance) object);
+				if (processDiagram != null) {
+					return true;
+				}
+			}
 		}
 
 		return super.hasModuleViewForObject(object);
+	}
+
+	public FMLRTVirtualModelInstance getProcessDiagram(FlexoConceptInstance process) {
+		try {
+			return (FMLRTVirtualModelInstance) process.execute("container.container.getProcessDiagram(this)");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
@@ -147,6 +162,14 @@ public class EAPerspective extends FlexoPerspective {
 		}
 		if (object instanceof BPMNVirtualModelInstance) {
 			return ((BPMNVirtualModelInstance) object).getName();
+		}
+		if (object instanceof FlexoConceptInstance && ((FlexoConceptInstance) object).getFlexoConcept().getName().equals("Process")) {
+			try {
+				return (String) ((FlexoConceptInstance) object).execute("name");
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
 		}
 		if (object != null) {
 			return object.toString();
@@ -202,7 +225,17 @@ public class EAPerspective extends FlexoPerspective {
 				return new FMLControlledFIBFlexoConceptInstanceModuleView((FlexoConceptInstance) object, getController(), this,
 						getController().getModuleLocales());
 			}
+			if (((FlexoConceptInstance) object).getFlexoConcept().getName().equals("Process")) {
+				FMLRTVirtualModelInstance processDiagram = getProcessDiagram((FlexoConceptInstance) object);
+				if (processDiagram != null) {
+					DiagramTechnologyAdapterController diagramTAC = ((EAMController) getController()).getDiagramTAC();
+					FMLControlledDiagramEditor editor = new FMLControlledDiagramEditor(processDiagram, false, getController(),
+							diagramTAC.getToolFactory());
+					return new FMLControlledDiagramModuleView(editor, this);
+				}
+			}
 		}
+
 		return super.createModuleViewForObject(object, editable);
 	}
 

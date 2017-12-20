@@ -38,10 +38,16 @@
 
 package org.openflexo.eamodule.model;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.logging.Logger;
 
+import org.openflexo.connie.exception.InvalidBindingException;
+import org.openflexo.connie.exception.NullReferenceException;
+import org.openflexo.connie.exception.TypeMismatchException;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
+import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.nature.VirtualModelInstanceBasedNatureObject;
 import org.openflexo.logging.FlexoLogger;
 import org.openflexo.model.annotations.ImplementationClass;
@@ -66,10 +72,32 @@ public interface BPMNVirtualModelInstance extends VirtualModelInstanceBasedNatur
 	@Override
 	public String getURI();
 
+	public List<FlexoConceptInstance> getRootProcesses();
+
 	public abstract class BPMNVirtualModelInstanceImpl extends VirtualModelInstanceBasedNatureObjectImpl<EAProjectNature>
 			implements BPMNVirtualModelInstance {
 
 		private static final Logger logger = FlexoLogger.getLogger(BPMNVirtualModelInstance.class.getPackage().getName());
 
+		@Override
+		public List<FlexoConceptInstance> getRootProcesses() {
+			System.out.println("On cherche les root processes");
+			try {
+				return getAccessedVirtualModelInstance().execute("model.rootProcesses");
+			} catch (TypeMismatchException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NullReferenceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidBindingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
 	}
 }
