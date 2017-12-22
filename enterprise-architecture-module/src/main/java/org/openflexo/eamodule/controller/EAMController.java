@@ -111,6 +111,9 @@ public class EAMController extends FlexoController {
 
 	@Override
 	public FlexoObject getDefaultObjectToSelect(FlexoProject<?> project) {
+		if (project != null && project.hasNature(EAProjectNature.class)) {
+			return project.getNature(EAProjectNature.class);
+		}
 		return project;
 	}
 
