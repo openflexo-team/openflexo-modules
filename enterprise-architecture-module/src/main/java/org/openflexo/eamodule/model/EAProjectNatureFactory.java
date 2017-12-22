@@ -56,8 +56,6 @@ import org.openflexo.logging.FlexoLogger;
  */
 public class EAProjectNatureFactory extends DefaultProjectNatureFactoryImpl<EAProjectNature> {
 
-	private static final Logger LOGGER = Logger.getLogger(EAProjectNatureFactory.class.getPackage().getName());
-
 	static final Logger logger = FlexoLogger.getLogger(EAProjectNatureFactory.class.getPackage().getName());
 
 	public EAProjectNatureFactory() {
