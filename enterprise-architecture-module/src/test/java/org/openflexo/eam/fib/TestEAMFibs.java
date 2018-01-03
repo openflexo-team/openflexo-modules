@@ -70,9 +70,4 @@ public class TestEAMFibs extends GenericFIBTestCase {
 		validateFIB("Fib/EAMWelcomePanel.fib");
 	}
 
-	@Test
-	public void testEAProjectBrowser() {
-		validateFIB("Fib/EAProjectBrowser.fib");
-	}
-
 }
