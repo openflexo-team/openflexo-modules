@@ -65,9 +65,9 @@ import org.openflexo.technologyadapter.gina.view.FMLControlledFIBFlexoConceptIns
 import org.openflexo.technologyadapter.gina.view.FMLControlledFIBVirtualModelInstanceModuleView;
 import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.FlexoController;
-import org.openflexo.view.controller.model.FlexoPerspective;
+import org.openflexo.view.controller.model.NaturePerspective;
 
-public class EAPerspective extends FlexoPerspective {
+public class EAPerspective extends NaturePerspective<EAProjectNature> {
 
 	static final Logger logger = Logger.getLogger(EAPerspective.class.getPackage().getName());
 
@@ -87,6 +87,11 @@ public class EAPerspective extends FlexoPerspective {
 		if (controller.getProject() != null) {
 			setProject(controller.getProject());
 		}
+	}
+
+	@Override
+	public Class<EAProjectNature> getNatureClass() {
+		return EAProjectNature.class;
 	}
 
 	@Override
@@ -188,7 +193,7 @@ public class EAPerspective extends FlexoPerspective {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public ModuleView<?> createModuleViewForObject(FlexoObject object, boolean editable) {
+	public ModuleView<?> createModuleViewForObject(FlexoObject object) {
 		if (object instanceof WelcomePanel) {
 			return new EAMWelcomePanelModuleView((WelcomePanel<EAModule>) object, getController(), this);
 		}
@@ -236,7 +241,7 @@ public class EAPerspective extends FlexoPerspective {
 			}
 		}
 
-		return super.createModuleViewForObject(object, editable);
+		return super.createModuleViewForObject(object);
 	}
 
 }

@@ -64,9 +64,9 @@ import org.openflexo.module.FlexoModule.WelcomePanel;
 import org.openflexo.technologyadapter.diagram.controller.DiagramTechnologyAdapterController;
 import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.FlexoController;
-import org.openflexo.view.controller.model.FlexoPerspective;
+import org.openflexo.view.controller.model.NaturePerspective;
 
-public class FMEPerspective extends FlexoPerspective {
+public class FMEPerspective extends NaturePerspective<FreeModellingProjectNature> {
 
 	protected static final Logger logger = Logger.getLogger(FMEPerspective.class.getPackage().getName());
 
@@ -107,6 +107,11 @@ public class FMEPerspective extends FlexoPerspective {
 		// splitPane.add(representedConceptBrowser, "top");
 		// splitPane.add(conceptBrowser, "bottom");
 
+	}
+
+	@Override
+	public Class<FreeModellingProjectNature> getNatureClass() {
+		return FreeModellingProjectNature.class;
 	}
 
 	public ModuleView<?> getCurrentModuleView(FlexoController controller) {
@@ -231,7 +236,7 @@ public class FMEPerspective extends FlexoPerspective {
 	}
 
 	@Override
-	public ModuleView<?> createModuleViewForObject(FlexoObject object, boolean editable) {
+	public ModuleView<?> createModuleViewForObject(FlexoObject object) {
 		if (object instanceof WelcomePanel) {
 			return new FMEWelcomePanelModuleView((WelcomePanel<FMEModule>) object, getController(), this);
 		}
@@ -263,6 +268,6 @@ public class FMEPerspective extends FlexoPerspective {
 			}
 			return new FreeModelModuleView(editor, this);
 		}
-		return super.createModuleViewForObject(object, editable);
+		return super.createModuleViewForObject(object);
 	}
 }

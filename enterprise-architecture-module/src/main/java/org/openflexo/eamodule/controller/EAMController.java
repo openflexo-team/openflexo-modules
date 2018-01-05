@@ -49,19 +49,24 @@ import org.openflexo.eamodule.EnterpriseArchitectureModule;
 import org.openflexo.eamodule.controller.action.EAMControllerActionInitializer;
 import org.openflexo.eamodule.model.BPMNVirtualModelInstance;
 import org.openflexo.eamodule.model.EAProjectNature;
+import org.openflexo.eamodule.view.ConvertToEAMProjectView;
 import org.openflexo.eamodule.view.EAMMainPane;
+import org.openflexo.eamodule.view.EAMWelcomePanelModuleView;
 import org.openflexo.eamodule.view.menu.EAMMenuBar;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.icon.IconFactory;
 import org.openflexo.icon.IconLibrary;
+import org.openflexo.module.FlexoModule.WelcomePanel;
 import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.technologyadapter.diagram.controller.DiagramTechnologyAdapterController;
 import org.openflexo.view.FlexoMainPane;
+import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
+import org.openflexo.view.controller.model.FlexoPerspective;
 import org.openflexo.view.menu.FlexoMenuBar;
 
 /**
@@ -153,6 +158,16 @@ public class EAMController extends FlexoController {
 			diagramTAC = (DiagramTechnologyAdapterController) getTechnologyAdapterController(diagramTA);
 		}
 		return this.diagramTAC;
+	}
+
+	@Override
+	public ModuleView<?> makeWelcomePanel(WelcomePanel<?> welcomePanel, FlexoPerspective perspective) {
+		return new EAMWelcomePanelModuleView((WelcomePanel<EAModule>) welcomePanel, this, perspective);
+	}
+
+	@Override
+	public ModuleView<?> makeDefaultProjectView(FlexoProject<?> project, FlexoPerspective perspective) {
+		return new ConvertToEAMProjectView(project, this, perspective);
 	}
 
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Panel id="0" align="left" borderTop="0" flowAlignment="LEADING" borderLeft="0" imageFile="../Icons/OM/OMBackground.jpg" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="0" border="empty" imageWidth="626" sizeAdjustment="FitToAvailableSize" imageHeight="417" layout="gridbag" borderRight="0" vGap="5" hGap="5" controllerClassName="org.openflexo.fme.view.ConvertToFMEProjectView$ConvertToFMEProjectViewFIBController">
+  <Panel id="1" align="left" borderTop="0" borderTitle="Panel" flowAlignment="CENTER" borderLeft="0" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="0" border="empty" sizeAdjustment="OriginalSize" layout="twocols" borderRight="0" vGap="5" hGap="5" constraints="gridbag(anchor=south;fill=both;gridHeight=1;gridWidth=0;gridX=-1;gridY=-1;insetsBottom=0;insetsLeft=10;insetsRight=10;insetsTop=50;location=center;padX=0;padY=0;weightX=1.0;weightY=0.0)" height="200" width="100" name="FIBPanel2">
+    <Image id="2" imageWidth="80" sizeAdjustment="OriginalSize" imageFile="../Icons/OM/module-om-64.png" align="left" imageHeight="46" constraints="twocols(expandHorizontally=false;expandVertically=false;insetsBottom=0;insetsLeft=20;insetsRight=0;insetsTop=0;location=left)" name="Image2" />
+    <Label id="3" label="label" align="left" data="(data.name + &quot;.prj&quot;)" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=right)" font="ArialMT,0,30" name="Label3" />
+  </Panel>
+  <Image id="4" imageWidth="80" sizeAdjustment="OriginalSize" align="right" imageHeight="46" constraints="gridbag(anchor=east;fill=vertical;gridHeight=1;gridWidth=1;gridX=-1;gridY=-1;insetsBottom=0;insetsLeft=50;insetsRight=0;insetsTop=20;padX=0;padY=0;weightX=0.0;weightY=1.0)" name="Image" />
+  <Label id="5" label="welcome_informations" align="left" localize="true" constraints="gridbag(anchor=center;fill=horizontal;gridHeight=1;gridWidth=0;gridX=-1;gridY=-1;insetsBottom=0;insetsLeft=20;insetsRight=30;insetsTop=20;padX=0;padY=0;weightX=1.0;weightY=1.0)" opaque="false" name="Label2" />
+  <Panel id="6" align="left" borderTop="0" borderTitle="Panel" flowAlignment="CENTER" borderLeft="0" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="0" border="empty" sizeAdjustment="OriginalSize" layout="flow" borderRight="0" vGap="5" hGap="5" constraints="gridbag(anchor=east;fill=both;gridHeight=-1;gridWidth=0;gridX=-1;gridY=-1;insetsBottom=30;insetsLeft=20;insetsRight=20;insetsTop=0;location=center;padX=0;padY=0;weightX=1.0;weightY=0.1)" name="FIBPanel">
+    <Button id="7" buttonType="Trigger" action="controller.givesFMENature(data)" label="convert_your_project" localize="true" constraints="flow()" height="50" width="350" name="Button2" />
+  </Panel>
+  <LocalizedDictionary id="8" />
+  <FIBVariable id="9" type="org.openflexo.foundation.FlexoProject" name="data" />
+</Panel>

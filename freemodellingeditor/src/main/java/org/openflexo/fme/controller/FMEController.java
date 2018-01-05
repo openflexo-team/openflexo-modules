@@ -59,6 +59,8 @@ import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.model.FMESampleData;
 import org.openflexo.fme.model.FreeModellingProjectNature;
+import org.openflexo.fme.view.ConvertToFMEProjectView;
+import org.openflexo.fme.view.FMEWelcomePanelModuleView;
 import org.openflexo.fme.view.menu.FMEMenuBar;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
@@ -70,8 +72,10 @@ import org.openflexo.icon.FMLIconLibrary;
 import org.openflexo.icon.FMLRTIconLibrary;
 import org.openflexo.icon.IconFactory;
 import org.openflexo.icon.IconLibrary;
+import org.openflexo.module.FlexoModule.WelcomePanel;
 import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.view.FlexoMainPane;
+import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.controller.model.FlexoPerspective;
@@ -221,6 +225,16 @@ public class FMEController extends FlexoController {
 			return IconFactory.getImageIcon(FMEIconLibrary.DIAGRAM_ICON, FMEIconLibrary.FME_MARKER);
 		}
 		return super.iconForObject(object);
+	}
+
+	@Override
+	public ModuleView<?> makeWelcomePanel(WelcomePanel<?> welcomePanel, FlexoPerspective perspective) {
+		return new FMEWelcomePanelModuleView((WelcomePanel<FMEModule>) welcomePanel, this, perspective);
+	}
+
+	@Override
+	public ModuleView<?> makeDefaultProjectView(FlexoProject<?> project, FlexoPerspective perspective) {
+		return new ConvertToFMEProjectView(project, this, perspective);
 	}
 
 }

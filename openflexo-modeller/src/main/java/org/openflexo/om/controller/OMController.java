@@ -50,10 +50,13 @@ import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.VirtualModelLibrary;
 import org.openflexo.foundation.technologyadapter.TechnologyAdapter;
 import org.openflexo.foundation.validation.FlexoValidationModel;
+import org.openflexo.module.FlexoModule.WelcomePanel;
 import org.openflexo.om.OMModule;
 import org.openflexo.om.OpenflexoModeller;
 import org.openflexo.om.controller.action.OMControllerActionInitializer;
+import org.openflexo.om.view.OMDefaultProjectView;
 import org.openflexo.om.view.OMMainPane;
+import org.openflexo.om.view.OMWelcomePanelModuleView;
 import org.openflexo.om.view.menu.OMMenuBar;
 import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
@@ -61,9 +64,11 @@ import org.openflexo.technologyadapter.diagram.controller.FMLControlledDiagramNa
 import org.openflexo.technologyadapter.gina.GINATechnologyAdapter;
 import org.openflexo.technologyadapter.gina.controller.FMLControlledFIBNaturePerspective;
 import org.openflexo.view.FlexoMainPane;
+import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.controller.GenericPerspective;
+import org.openflexo.view.controller.model.FlexoPerspective;
 import org.openflexo.view.menu.FlexoMenuBar;
 
 /**
@@ -202,4 +207,13 @@ public class OMController extends FlexoController {
 		return super.getValidationModelForObject(object);
 	}
 
+	@Override
+	public ModuleView<?> makeWelcomePanel(WelcomePanel<?> welcomePanel, FlexoPerspective perspective) {
+		return new OMWelcomePanelModuleView((WelcomePanel<OMModule>) welcomePanel, this, perspective);
+	}
+
+	@Override
+	public ModuleView<?> makeDefaultProjectView(FlexoProject<?> project, FlexoPerspective perspective) {
+		return new OMDefaultProjectView(project, this, perspective);
+	}
 }
