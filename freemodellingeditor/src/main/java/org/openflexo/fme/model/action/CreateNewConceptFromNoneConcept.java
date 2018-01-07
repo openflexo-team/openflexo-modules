@@ -153,7 +153,8 @@ public class CreateNewConceptFromNoneConcept extends AbstractInstantiateConcept<
 		System.out.println("J'ai instancie: " + conceptInstance);
 
 		// Add entry in palette
-		freeModelInstance.getFreeModel().createPaletteElementForConcept(newFlexoConcept, shapeElement.getGraphicalRepresentation(), this);
+		freeModelInstance.getFreeModel().createPaletteElementForConcept(newGRFlexoConcept, newFlexoConcept,
+				shapeElement.getGraphicalRepresentation(), this);
 
 		/*
 		CreateDiagramPaletteElement createDiagramPaletteElement = CreateDiagramPaletteElement.actionType.makeNewEmbeddedAction(freeModel

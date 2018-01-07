@@ -58,6 +58,7 @@ import org.openflexo.foundation.fml.action.CreateInspectorEntry;
 import org.openflexo.foundation.fml.action.CreatePrimitiveRole;
 import org.openflexo.foundation.fml.inspector.InspectorEntry;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstanceModelSlot;
+import org.openflexo.foundation.fml.rt.VirtualModelInstance;
 import org.openflexo.foundation.fml.rt.editionaction.DeleteFlexoConceptInstance;
 import org.openflexo.foundation.fml.rt.rm.FMLRTVirtualModelInstanceResourceFactory;
 import org.openflexo.foundation.nature.VirtualModelBasedNatureObject;
@@ -165,7 +166,11 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 
 		@Override
 		public FMLRTVirtualModelInstanceModelSlot getSampleDataModelSlot() {
-			return getAccessedVirtualModel().getModelSlots(FMLRTVirtualModelInstanceModelSlot.class).get(0);
+			if (getAccessedVirtualModel() != null
+					&& getAccessedVirtualModel().getModelSlots(FMLRTVirtualModelInstanceModelSlot.class).size() > 0) {
+				return getAccessedVirtualModel().getModelSlots(FMLRTVirtualModelInstanceModelSlot.class).get(0);
+			}
+			return null;
 		}
 
 		@Override
@@ -213,6 +218,7 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 					}
 					createConceptRole.setRoleName(CONCEPT_ROLE_NAME);
 					createConceptRole.setFlexoConceptInstanceType(concept);
+					createConceptRole.setVirtualModelInstance(new DataBinding<VirtualModelInstance<?, ?>>(SAMPLE_DATA_MODEL_SLOT_NAME));
 					createConceptRole.doAction();
 				}
 				else {

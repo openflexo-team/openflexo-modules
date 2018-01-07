@@ -113,8 +113,8 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 
 	public DiagramSpecification getDiagramSpecification();
 
-	public DiagramPaletteElement createPaletteElementForConcept(FlexoConcept concept, ShapeGraphicalRepresentation gr,
-			FlexoAction<?, ?, ?> ownerAction) throws FlexoException;
+	public DiagramPaletteElement createPaletteElementForConcept(FlexoConcept grConcept, FlexoConcept concept,
+			ShapeGraphicalRepresentation gr, FlexoAction<?, ?, ?> ownerAction) throws FlexoException;
 
 	public DiagramPalette getConceptsPalette() throws FlexoException;
 
@@ -182,11 +182,13 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 		}
 
 		@Override
-		public DiagramPaletteElement createPaletteElementForConcept(FlexoConcept concept, ShapeGraphicalRepresentation gr,
-				FlexoAction<?, ?, ?> ownerAction) throws FlexoException {
+		public DiagramPaletteElement createPaletteElementForConcept(FlexoConcept grConcept, FlexoConcept concept,
+				ShapeGraphicalRepresentation gr, FlexoAction<?, ?, ?> ownerAction) throws FlexoException {
+
+			System.out.println("Hop, on cree le palette element maintenant");
 
 			CreateFMLControlledDiagramPaletteElement action = CreateFMLControlledDiagramPaletteElement.actionType
-					.makeNewEmbeddedAction(concept.getOwningVirtualModel(), null, ownerAction);
+					.makeNewEmbeddedAction(grConcept.getOwningVirtualModel(), null, ownerAction);
 			action.setPalette(getConceptsPalette());
 
 			ShapeGraphicalRepresentation paletteElementGR = (ShapeGraphicalRepresentation) gr.cloneObject();
@@ -212,12 +214,19 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 				paletteElementGR.setHeight(30);
 			}
 			paletteElementGR.setText(concept.getName());
+			action.setNewElementName(concept.getName());
 
 			action.setGraphicalRepresentation(paletteElementGR);
-			action.setConcept(concept);
-			if (concept.getFlexoBehaviours(DropScheme.class).size() > 0) {
-				action.setDropScheme(concept.getFlexoBehaviours(DropScheme.class).get(0));
+			action.setConcept(grConcept);
+			if (grConcept.getFlexoBehaviours(DropScheme.class).size() > 0) {
+				action.setDropScheme(grConcept.getFlexoBehaviours(DropScheme.class).get(0));
 			}
+
+			System.out.println("On cree le palette element");
+			System.out.println("paletteElementGR=" + paletteElementGR);
+			System.out.println("concept=" + concept);
+			System.out.println("grConcept=" + grConcept);
+			System.out.println("ds=" + action.getDropScheme());
 
 			action.doAction();
 

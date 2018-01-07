@@ -49,6 +49,7 @@ import org.openflexo.foundation.fml.FlexoRole;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.nature.VirtualModelInstanceBasedNatureObject;
+import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.logging.FlexoLogger;
 import org.openflexo.model.annotations.Getter;
 import org.openflexo.model.annotations.Import;
@@ -175,8 +176,8 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 		public String getProposedName(FlexoConcept concept) {
 
 			String baseName;
-			if (concept.getName().equals(FMEFreeModel.NONE_FLEXO_CONCEPT_NAME)) {
-				baseName = "unnamed";
+			if (concept == null || concept.getName().equals(FMEFreeModel.NONE_FLEXO_CONCEPT_NAME)) {
+				baseName = FlexoLocalization.getMainLocalizer().localizedForKey("unnamed");
 			}
 			else {
 				baseName = concept.getName().toLowerCase();
@@ -185,9 +186,11 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 			String returned = baseName;
 			int index = 2;
 
-			while (getFlexoConceptInstanceNamed(returned, concept) != null) {
-				returned = baseName + index;
-				index++;
+			if (concept != null) {
+				while (getFlexoConceptInstanceNamed(returned, concept) != null) {
+					returned = baseName + index;
+					index++;
+				}
 			}
 
 			return returned;

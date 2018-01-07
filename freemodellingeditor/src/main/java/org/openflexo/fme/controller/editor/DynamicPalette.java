@@ -336,7 +336,7 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 			FMLRTVirtualModelInstance vmi = getEditor().getVirtualModelInstance();
 			DropShape action = DropShape.actionType.makeNewAction(rootContainer, null, getEditor().getFlexoController().getEditor());
 			action.setDiagramFreeModelInstance(getEditor().getDiagramFreeModelInstance());
-			action.setConcept(paletteElement.getFlexoConcept());
+			action.setGRConcept(paletteElement.getFlexoConcept());
 			action.setDropLocation(dropLocation);
 			action.setGraphicalRepresentation(paletteElement.getGraphicalRepresentation());
 			action.setTargetSize(paletteElement.getInitialDimensions());

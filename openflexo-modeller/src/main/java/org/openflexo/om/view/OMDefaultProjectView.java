@@ -20,7 +20,15 @@
 
 package org.openflexo.om.view;
 
+import java.io.FileNotFoundException;
+
+import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.FlexoProject;
+import org.openflexo.foundation.fml.action.CreateTopLevelVirtualModel;
+import org.openflexo.foundation.fml.rm.VirtualModelResource;
+import org.openflexo.foundation.fml.rt.action.CreateBasicVirtualModelInstance;
+import org.openflexo.foundation.fml.rt.rm.FMLRTVirtualModelInstanceResource;
+import org.openflexo.foundation.resource.ResourceLoadingCancelledException;
 import org.openflexo.gina.model.FIBComponent;
 import org.openflexo.gina.view.GinaViewFactory;
 import org.openflexo.rm.Resource;
@@ -51,12 +59,90 @@ public class OMDefaultProjectView extends FIBModuleView<FlexoProject<?>> {
 	}
 
 	public static class OMDefaultProjectViewFIBController extends FlexoFIBController {
+
+		private VirtualModelResource selectedVirtualModelResource;
+		private FMLRTVirtualModelInstanceResource selectedVirtualModelInstanceResource;
+
 		public OMDefaultProjectViewFIBController(FIBComponent component, GinaViewFactory<?> viewFactory) {
 			super(component, viewFactory);
 		}
 
 		public OMDefaultProjectViewFIBController(FIBComponent component, GinaViewFactory<?> viewFactory, FlexoController controller) {
 			super(component, viewFactory, controller);
+		}
+
+		public VirtualModelResource getSelectedVirtualModelResource() {
+			return selectedVirtualModelResource;
+		}
+
+		public void setSelectedVirtualModelResource(VirtualModelResource selectedVirtualModelResource) {
+			if ((selectedVirtualModelResource == null && this.selectedVirtualModelResource != null)
+					|| (selectedVirtualModelResource != null && !selectedVirtualModelResource.equals(this.selectedVirtualModelResource))) {
+				VirtualModelResource oldValue = this.selectedVirtualModelResource;
+				this.selectedVirtualModelResource = selectedVirtualModelResource;
+				getPropertyChangeSupport().firePropertyChange("selectedVirtualModelResource", oldValue, selectedVirtualModelResource);
+			}
+		}
+
+		public FMLRTVirtualModelInstanceResource getSelectedVirtualModelInstanceResource() {
+			return selectedVirtualModelInstanceResource;
+		}
+
+		public void setSelectedVirtualModelInstanceResource(FMLRTVirtualModelInstanceResource selectedVirtualModelInstanceResource) {
+			if ((selectedVirtualModelInstanceResource == null && this.selectedVirtualModelInstanceResource != null)
+					|| (selectedVirtualModelInstanceResource != null
+							&& !selectedVirtualModelInstanceResource.equals(this.selectedVirtualModelInstanceResource))) {
+				FMLRTVirtualModelInstanceResource oldValue = this.selectedVirtualModelInstanceResource;
+				this.selectedVirtualModelInstanceResource = selectedVirtualModelInstanceResource;
+				getPropertyChangeSupport().firePropertyChange("selectedVirtualModelInstanceResource", oldValue,
+						selectedVirtualModelInstanceResource);
+			}
+		}
+
+		public FlexoProject<?> getFlexoProject() {
+			return (FlexoProject<?>) getDataObject();
+		}
+
+		public void openVirtualModel() {
+			try {
+				getFlexoController().selectAndFocusObject(getSelectedVirtualModelResource().getResourceData(null));
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ResourceLoadingCancelledException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (FlexoException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		public void newVirtualModel() {
+			CreateTopLevelVirtualModel createVirtualModelAction = CreateTopLevelVirtualModel.actionType
+					.makeNewAction(getFlexoProject().getVirtualModelRepository().getRootFolder(), null, getFlexoController().getEditor());
+			createVirtualModelAction.doAction();
+		}
+
+		public void openVirtualModelInstance() {
+			try {
+				getFlexoController().selectAndFocusObject(getSelectedVirtualModelInstanceResource().getResourceData(null));
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ResourceLoadingCancelledException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (FlexoException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		public void newVirtualModelInstance() {
+			CreateBasicVirtualModelInstance createVirtualModelInstanceAction = CreateBasicVirtualModelInstance.actionType.makeNewAction(
+					getFlexoProject().getVirtualModelInstanceRepository().getRootFolder(), null, getFlexoController().getEditor());
+			createVirtualModelInstanceAction.doAction();
 		}
 
 	}

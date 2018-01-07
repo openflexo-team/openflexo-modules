@@ -55,6 +55,8 @@ import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.FlexoBehaviourParameter;
 import org.openflexo.foundation.fml.FlexoConcept;
+import org.openflexo.foundation.fml.FlexoConceptInstanceRole;
+import org.openflexo.foundation.fml.FlexoProperty;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.resource.SaveResourceException;
 import org.openflexo.technologyadapter.diagram.fml.DropScheme;
@@ -103,7 +105,7 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 	private FMEDiagramFreeModelInstance diagramFreeModelInstance;
 	private DiagramContainerElement<?> parent;
 	private ShapeGraphicalRepresentation graphicalRepresentation;
-	private FlexoConcept concept;
+	private FlexoConcept grConcept;
 	private FGEPoint dropLocation;
 	private Dimension targetSize;
 
@@ -116,18 +118,19 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 	@Override
 	protected void doAction(Object context) throws SaveResourceException {
 
+		FlexoConcept grConcept = getGRConcept();
 		FlexoConcept concept = getConcept();
 
 		boolean noneConceptIsExisting = true;
 
 		// When non concept supplied, use (eventually creates) None concept
-		if (concept == null) {
+		if (grConcept == null) {
 			noneConceptIsExisting = diagramFreeModelInstance.getFreeModel().getAccessedVirtualModel()
 					.getFlexoConcept(FMEFreeModel.NONE_FLEXO_CONCEPT_NAME) != null;
-			concept = diagramFreeModelInstance.getFreeModel().getNoneFlexoConcept(getEditor(), this);
+			grConcept = diagramFreeModelInstance.getFreeModel().getNoneFlexoConcept(getEditor(), this);
 		}
 
-		List<DropScheme> dsList = concept.getFlexoBehaviours(DropScheme.class);
+		List<DropScheme> dsList = grConcept.getFlexoBehaviours(DropScheme.class);
 
 		if (dsList.size() == 1) {
 
@@ -148,7 +151,7 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 				return;
 			}
 
-			ShapeRole shapeRole = (ShapeRole) concept.getAccessibleProperty(FMEDiagramFreeModel.SHAPE_ROLE_NAME);
+			ShapeRole shapeRole = (ShapeRole) grConcept.getAccessibleProperty(FMEDiagramFreeModel.SHAPE_ROLE_NAME);
 			DiagramShape shape = newFlexoConceptInstance.getFlexoActor(shapeRole);
 
 			// If another GR was defined (overriding the one from ShapeRole)
@@ -170,7 +173,7 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 			if (!noneConceptIsExisting) {
 				// This means that None FlexoConcept was not existing and has been created
 				// We should notify this
-				diagramFreeModelInstance.getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null, concept);
+				diagramFreeModelInstance.getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null, grConcept);
 			}
 
 			// This is used to notify the adding of a new instance of a flexo concept
@@ -182,7 +185,7 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 
 		}
 		else {
-			logger.warning("Could not find DropScheme in " + concept);
+			logger.warning("Could not find DropScheme in " + grConcept);
 		}
 	}
 
@@ -206,12 +209,23 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 		return newFlexoConceptInstance;
 	}
 
-	public FlexoConcept getConcept() {
-		return concept;
+	public FlexoConcept getGRConcept() {
+		return grConcept;
 	}
 
-	public void setConcept(FlexoConcept concept) {
-		this.concept = concept;
+	public void setGRConcept(FlexoConcept grConcept) {
+		this.grConcept = grConcept;
+	}
+
+	public FlexoConcept getConcept() {
+		if (getGRConcept() != null) {
+			FlexoProperty<?> p = getGRConcept().getAccessibleProperty(FMEFreeModel.CONCEPT_ROLE_NAME);
+			if (p instanceof FlexoConceptInstanceRole) {
+				FlexoConceptInstanceRole fciRole = (FlexoConceptInstanceRole) p;
+				return fciRole.getFlexoConceptType();
+			}
+		}
+		return null;
 	}
 
 	public FGEPoint getDropLocation() {

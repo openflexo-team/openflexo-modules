@@ -133,7 +133,6 @@ public class DeclareInstanceOfExistingConcept extends AbstractInstantiateConcept
 		getPropertyChangeSupport().firePropertyChange("concept", null, concept);
 		getPropertyChangeSupport().firePropertyChange("grStrategy", null, concept);
 		getPropertyChangeSupport().firePropertyChange("isValid", wasValid, isValid());
-		getPropertyChangeSupport().firePropertyChange("errorMessage", null, getErrorMessage());
 	}
 
 	public FlexoConcept getGRConcept() {
@@ -155,7 +154,6 @@ public class DeclareInstanceOfExistingConcept extends AbstractInstantiateConcept
 		this.grStrategy = grStrategy;
 		getPropertyChangeSupport().firePropertyChange("grStrategy", null, grStrategy);
 		getPropertyChangeSupport().firePropertyChange("isValid", wasValid, isValid());
-		getPropertyChangeSupport().firePropertyChange("errorMessage", null, getErrorMessage());
 	}
 
 	@Override
@@ -233,7 +231,8 @@ public class DeclareInstanceOfExistingConcept extends AbstractInstantiateConcept
 			}
 			if (existingElement == null) {
 				// No palette element matching related concept was found
-				freeModelInstance.getFreeModel().createPaletteElementForConcept(concept, shapeElement.getGraphicalRepresentation(), this);
+				freeModelInstance.getFreeModel().createPaletteElementForConcept(getGRConcept(), concept,
+						shapeElement.getGraphicalRepresentation(), this);
 			}
 		}
 
@@ -244,27 +243,10 @@ public class DeclareInstanceOfExistingConcept extends AbstractInstantiateConcept
 		freeModelInstance.getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", null, getFocusedObject());
 	}
 
-	/*public VirtualModel getVirtualModel() {
-		try {
-			return getFreeModel().getVirtualModel();
-		} catch (InvalidArgumentException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}*/
-
-	private String errorMessage;
-
-	public String getErrorMessage() {
-		isValid();
-		return errorMessage;
-	}
-
 	@Override
 	public boolean isValid() {
 
 		if (getConcept() == null) {
-			errorMessage = getLocales().localizedForKey("no_concept_defined");
 			return false;
 		}
 

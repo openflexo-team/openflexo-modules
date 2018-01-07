@@ -95,7 +95,7 @@ public class ConceptsPalette extends ContextualPalette implements PropertyChange
 
 		DropShape action = DropShape.actionType.makeNewAction(rootContainer, null, getEditor().getFlexoController().getEditor());
 		action.setDiagramFreeModelInstance(getEditor().getDiagramFreeModelInstance());
-		action.setConcept(binding.getBoundFlexoConcept());
+		action.setGRConcept(binding.getBoundFlexoConcept());
 		action.setDropLocation(dropLocation);
 
 		action.doAction();
