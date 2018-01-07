@@ -3,6 +3,7 @@ a_free_model_instance_with_that_name_already_exists=Une instance de FreeModel av
 choose_free_model_to_instantiate_or_create_new_one=Choisir le FreeModel \u00E0 instancier ou \u00E0 cr\u00E9er
 configure_conceptual_model=D\u00E9finition du mod\u00E8le conceptuel
 configure_new_concept=Configurer le nouveau concept
+configure_new_instance=configure_new_instance
 configure_sample_data=D\u00E9finir le jeu de donn\u00E9es
 create_diagram_free_model=Cr\u00E9er un FreeModel de type diagramme
 create_diagram_from_ppt=Cr\u00E9er un diagramme depuis PowerPoint

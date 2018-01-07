@@ -3,6 +3,7 @@ a_free_model_instance_with_that_name_already_exists=A free model instance with t
 choose_free_model_to_instantiate_or_create_new_one=Choose free model to instantiate or create new one
 configure_conceptual_model=Configure conceptual model
 configure_new_concept=Configure new concept
+configure_new_instance=Configure new instance
 configure_sample_data=Configure sample data
 create_diagram_free_model=Create diagram free model
 create_diagram_from_ppt=Create diagram from PowerPoint
