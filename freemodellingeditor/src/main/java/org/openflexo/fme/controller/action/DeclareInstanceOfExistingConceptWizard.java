@@ -66,7 +66,7 @@ public class DeclareInstanceOfExistingConceptWizard extends FlexoWizard {
 
 	private final ConfigureNewInstanceOfExistingConcept configureNewInstanceOfExistingConcept;
 
-	private static final Dimension DIMENSIONS = new Dimension(500, 300);
+	private static final Dimension DIMENSIONS = new Dimension(600, 400);
 
 	public DeclareInstanceOfExistingConceptWizard(DeclareInstanceOfExistingConcept action, FlexoController controller) {
 		super(controller);
