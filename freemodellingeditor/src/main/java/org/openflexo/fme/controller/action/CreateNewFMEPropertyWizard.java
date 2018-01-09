@@ -45,8 +45,9 @@ import java.util.logging.Logger;
 import org.openflexo.ApplicationContext;
 import org.openflexo.components.wizard.FlexoWizard;
 import org.openflexo.components.wizard.WizardStep;
-import org.openflexo.connie.type.PrimitiveType;
-import org.openflexo.fme.model.action.CreateNewPrimitiveProperty;
+import org.openflexo.fme.model.FMEType;
+import org.openflexo.fme.model.action.CreateNewFMEProperty;
+import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.gina.annotation.FIBPanel;
@@ -56,21 +57,21 @@ import org.openflexo.icon.IconLibrary;
 import org.openflexo.toolbox.StringUtils;
 import org.openflexo.view.controller.FlexoController;
 
-public class CreateNewPrimitivePropertyWizard extends FlexoWizard {
+public class CreateNewFMEPropertyWizard extends FlexoWizard {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger.getLogger(CreateNewPrimitivePropertyWizard.class.getPackage().getName());
+	private static final Logger logger = Logger.getLogger(CreateNewFMEPropertyWizard.class.getPackage().getName());
 
 	private static final Dimension DIMENSIONS = new Dimension(600, 400);
 
-	private final CreateNewPrimitiveProperty action;
+	private final CreateNewFMEProperty action;
 
-	private final ConfigureNewPrimitiveProperty configureNewPrimitiveProperty;
+	private final ConfigureNewFMEProperty configureNewFMEProperty;
 
-	public CreateNewPrimitivePropertyWizard(CreateNewPrimitiveProperty action, FlexoController controller) {
+	public CreateNewFMEPropertyWizard(CreateNewFMEProperty action, FlexoController controller) {
 		super(controller);
 		this.action = action;
-		addStep(configureNewPrimitiveProperty = new ConfigureNewPrimitiveProperty());
+		addStep(configureNewFMEProperty = new ConfigureNewFMEProperty());
 	}
 
 	@Override
@@ -88,8 +89,8 @@ public class CreateNewPrimitivePropertyWizard extends FlexoWizard {
 		return IconFactory.getImageIcon(FMLIconLibrary.FLEXO_ROLE_BIG_ICON, IconLibrary.NEW_32_32).getImage();
 	}
 
-	public ConfigureNewPrimitiveProperty getConfigureNewPrimitiveProperty() {
-		return configureNewPrimitiveProperty;
+	public ConfigureNewFMEProperty getConfigureNewPrimitiveProperty() {
+		return configureNewFMEProperty;
 	}
 
 	/**
@@ -98,14 +99,14 @@ public class CreateNewPrimitivePropertyWizard extends FlexoWizard {
 	 * @author sylvain
 	 *
 	 */
-	@FIBPanel("Fib/Wizard/ConfigureNewPrimitiveProperty.fib")
-	public class ConfigureNewPrimitiveProperty extends WizardStep {
+	@FIBPanel("Fib/Wizard/ConfigureNewFMEProperty.fib")
+	public class ConfigureNewFMEProperty extends WizardStep {
 
 		public ApplicationContext getServiceManager() {
 			return getController().getApplicationContext();
 		}
 
-		public CreateNewPrimitiveProperty getAction() {
+		public CreateNewFMEProperty getAction() {
 			return action;
 		}
 
@@ -122,13 +123,24 @@ public class CreateNewPrimitivePropertyWizard extends FlexoWizard {
 				return false;
 			}
 
-			if (getPrimitiveType() == null) {
+			if (getFMEType() == null) {
 				setIssueMessage(action.getLocales().localizedForKey("no_property_type_defined"), IssueMessageType.ERROR);
 				return false;
 			}
 
 			if (getAction().getConcept().getAccessibleProperty(getPropertyName()) != null) {
 				setIssueMessage(action.getLocales().localizedForKey("a_property_with_that_name_already_exists"), IssueMessageType.ERROR);
+				return false;
+			}
+
+			if (getFMEType() == FMEType.Enumeration && StringUtils.isEmpty(getEnumValues())) {
+				setIssueMessage(action.getLocales().localizedForKey("no_enum_values_defined"), IssueMessageType.ERROR);
+				return false;
+			}
+
+			if (getFMEType() == FMEType.Reference && getReferenceType() == null) {
+				setIssueMessage(action.getLocales().localizedForKey("please_choose_a_concept_as_type_for_property"),
+						IssueMessageType.ERROR);
 				return false;
 			}
 
@@ -154,15 +166,41 @@ public class CreateNewPrimitivePropertyWizard extends FlexoWizard {
 			}
 		}
 
-		public PrimitiveType getPrimitiveType() {
-			return action.getPrimitiveType();
+		public FMEType getFMEType() {
+			return action.getFMEType();
 		}
 
-		public void setPrimitiveType(PrimitiveType primitiveType) {
-			if (primitiveType != getPrimitiveType()) {
-				PrimitiveType oldValue = getPrimitiveType();
-				action.setPrimitiveType(primitiveType);
-				getPropertyChangeSupport().firePropertyChange("primitiveType", null, primitiveType);
+		public void setFMEType(FMEType fmeType) {
+			if (fmeType != getFMEType()) {
+				FMEType oldValue = getFMEType();
+				action.setFMEType(fmeType);
+				getPropertyChangeSupport().firePropertyChange("FMEType", oldValue, fmeType);
+				checkValidity();
+			}
+		}
+
+		public String getEnumValues() {
+			return action.getEnumValues();
+		}
+
+		public void setEnumValues(String enumValues) {
+			if ((enumValues == null && getEnumValues() != null) || (enumValues != null && !enumValues.equals(getEnumValues()))) {
+				String oldValue = getEnumValues();
+				action.setEnumValues(enumValues);
+				getPropertyChangeSupport().firePropertyChange("enumValues", oldValue, enumValues);
+				checkValidity();
+			}
+		}
+
+		public FlexoConcept getReferenceType() {
+			return action.getReferenceType();
+		}
+
+		public void setReferenceType(FlexoConcept referenceType) {
+			if (referenceType != getReferenceType()) {
+				FlexoConcept oldValue = getReferenceType();
+				action.setReferenceType(referenceType);
+				getPropertyChangeSupport().firePropertyChange("referenceType", oldValue, referenceType);
 				checkValidity();
 			}
 		}

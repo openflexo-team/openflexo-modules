@@ -98,7 +98,7 @@ public class DeclareInstanceOfExistingConcept extends AbstractInstantiateConcept
 
 		@Override
 		public boolean isEnabledForSelection(FlexoConceptInstance object, Vector<FlexoObject> globalSelection) {
-			return true;
+			return object.getFlexoConcept().getName().equals(FMEFreeModel.NONE_FLEXO_CONCEPT_NAME);
 		}
 
 	};

@@ -19,8 +19,12 @@
           <Children data="conceptualModel.accessedVirtualModel.allRootFlexoConcepts" name="children" />
         </BrowserElement>
         <BrowserElement dataClassName="org.openflexo.foundation.fml.FlexoConcept" label="flexoConcept.name" icon="controller.iconForObject(flexoConcept)" tooltip="" enabled="" visible="" isEditable="false" editableLabel="" filtered="false" defaultVisible="true" dynamicFont="" name="flexoConcept">
-          <Children data="flexoConcept.embeddedFlexoConcepts" visible="" cast="" name="children" />
+          <Children data="flexoConcept.embeddedFlexoConcepts" name="children" />
+ 			<Children data="flexoConcept.flexoProperties"
+				name="flexoProperties" />
         </BrowserElement>
+		<BrowserElement dataClassName="org.openflexo.foundation.fml.FlexoProperty"
+			label="flexoProperty.name" icon="controller.iconForObject(flexoProperty)" name="flexoProperty" />
       </Browser>
     </Panel>
     <Label label="all_concepts" align="center" constraints="border(location=north)" localize="true" />

@@ -43,7 +43,7 @@ import java.util.logging.Logger;
 
 import org.openflexo.components.wizard.Wizard;
 import org.openflexo.components.wizard.WizardDialog;
-import org.openflexo.fme.model.action.CreateNewPrimitiveProperty;
+import org.openflexo.fme.model.action.CreateNewFMEProperty;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
@@ -52,21 +52,20 @@ import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 
-public class CreateNewPrimitivePropertyInitializer extends ActionInitializer<CreateNewPrimitiveProperty, FlexoConcept, FlexoObject> {
+public class CreateNewFMEPropertyInitializer extends ActionInitializer<CreateNewFMEProperty, FlexoConcept, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
-	public CreateNewPrimitivePropertyInitializer(ControllerActionInitializer actionInitializer) {
-		super(CreateNewPrimitiveProperty.actionType, actionInitializer);
+	public CreateNewFMEPropertyInitializer(ControllerActionInitializer actionInitializer) {
+		super(CreateNewFMEProperty.actionType, actionInitializer);
 	}
 
 	@Override
-	protected FlexoActionInitializer<CreateNewPrimitiveProperty> getDefaultInitializer() {
-		return new FlexoActionInitializer<CreateNewPrimitiveProperty>() {
+	protected FlexoActionInitializer<CreateNewFMEProperty> getDefaultInitializer() {
+		return new FlexoActionInitializer<CreateNewFMEProperty>() {
 			@Override
-			public boolean run(EventObject e, CreateNewPrimitiveProperty action) {
-				logger.info("CreateNewConcept initializer");
-				Wizard wizard = new CreateNewPrimitivePropertyWizard(action, getController());
+			public boolean run(EventObject e, CreateNewFMEProperty action) {
+				Wizard wizard = new CreateNewFMEPropertyWizard(action, getController());
 				WizardDialog dialog = new WizardDialog(wizard, getController());
 				dialog.showDialog();
 				if (dialog.getStatus() != Status.VALIDATED) {
@@ -80,10 +79,10 @@ public class CreateNewPrimitivePropertyInitializer extends ActionInitializer<Cre
 	}
 
 	@Override
-	protected FlexoActionFinalizer<CreateNewPrimitiveProperty> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<CreateNewPrimitiveProperty>() {
+	protected FlexoActionFinalizer<CreateNewFMEProperty> getDefaultFinalizer() {
+		return new FlexoActionFinalizer<CreateNewFMEProperty>() {
 			@Override
-			public boolean run(EventObject e, CreateNewPrimitiveProperty action) {
+			public boolean run(EventObject e, CreateNewFMEProperty action) {
 				logger.info("CreateNewConcept finalizer");
 				getController().selectAndFocusObject(action.getFocusedObject());
 				return true;
