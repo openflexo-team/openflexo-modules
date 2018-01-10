@@ -73,6 +73,6 @@ public class FMEIconLibrary {
 	public static final ImageIcon INSTANCE_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/EObject.gif"));
 
 	public static final ImageIcon DIAGRAM_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/Diagram.png"));
-	public static final ImageIcon DIAGRAM_MEDIUM_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/Diagram32X32.png"));
+	public static final ImageIcon DIAGRAM_MEDIUM_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/Diagram32x32.png"));
 	public static final ImageIcon DIAGRAM_BIG_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/Diagram64x64.png"));
 }
