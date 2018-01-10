@@ -38,8 +38,6 @@
 
 package org.openflexo.fme.model.action;
 
-import static org.junit.Assert.assertNotNull;
-
 import java.util.Vector;
 import java.util.logging.Logger;
 
@@ -122,7 +120,6 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 		createCreationScheme.setFlexoBehaviourClass(CreationScheme.class);
 		createCreationScheme.doAction();
 		CreationScheme creationScheme = (CreationScheme) createCreationScheme.getNewFlexoBehaviour();
-		assertNotNull(creationScheme);
 
 		CreateGenericBehaviourParameter createSampleDataParameter = CreateGenericBehaviourParameter.actionType
 				.makeNewEmbeddedAction(creationScheme, null, this);
