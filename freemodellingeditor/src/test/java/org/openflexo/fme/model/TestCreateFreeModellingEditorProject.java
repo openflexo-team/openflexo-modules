@@ -113,13 +113,13 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 	@TestOrder(3)
 	public void checkConceptualModelEditing() throws FlexoException {
 
-		conceptA = conceptualModel.getFlexoConcept("ConceptA", editor, null);
+		conceptA = conceptualModel.getFlexoConcept("ConceptA", null, editor, null);
 		assertNotNull(conceptA);
 
-		conceptB = conceptualModel.getFlexoConcept("ConceptB", editor, null);
+		conceptB = conceptualModel.getFlexoConcept("ConceptB", null, editor, null);
 		assertNotNull(conceptB);
 
-		FlexoConcept conceptAbis = conceptualModel.getFlexoConcept("ConceptA", editor, null);
+		FlexoConcept conceptAbis = conceptualModel.getFlexoConcept("ConceptA", null, editor, null);
 		assertNotNull(conceptAbis);
 		assertSame(conceptA, conceptAbis);
 
@@ -140,7 +140,7 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 		diagramModel1 = action.getNewFreeModel();
 		assertNotNull(diagramModel1);
 
-		FlexoConcept conceptAGR = diagramModel1.getGRFlexoConcept(conceptA, editor, null);
+		FlexoConcept conceptAGR = diagramModel1.getGRFlexoConcept(conceptA, null, editor, null);
 		assertNotNull(conceptAGR);
 
 		System.out.println(diagramModel1.getAccessedVirtualModel().getFMLRepresentation());

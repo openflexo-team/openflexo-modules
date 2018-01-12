@@ -91,6 +91,8 @@ public class CreateNewConcept extends FMEAction<CreateNewConcept, FMEFreeModel, 
 
 	private String newConceptName;
 	private String newConceptDescription;
+	private FlexoConcept containerConcept;
+	private FlexoConcept containerGRConcept;
 
 	private FlexoConcept newFlexoConcept;
 	private FlexoConcept newGRFlexoConcept;
@@ -101,6 +103,7 @@ public class CreateNewConcept extends FMEAction<CreateNewConcept, FMEFreeModel, 
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 
+	@Override
 	public FreeModellingProjectNature getFreeModellingProjectNature() {
 		return getFocusedObject().getNature();
 	}
@@ -109,10 +112,11 @@ public class CreateNewConcept extends FMEAction<CreateNewConcept, FMEFreeModel, 
 	protected void doAction(Object context) throws FlexoException {
 
 		// Now we create the new concept
-		newFlexoConcept = getFreeModellingProjectNature().getConceptualModel().getFlexoConcept(getNewConceptName(), getEditor(), this);
+		newFlexoConcept = getFreeModellingProjectNature().getConceptualModel().getFlexoConcept(getNewConceptName(), getContainerConcept(),
+				getEditor(), this);
 
 		// Now we create the new concept GR
-		newGRFlexoConcept = getFocusedObject().getGRFlexoConcept(newFlexoConcept, getEditor(), this);
+		newGRFlexoConcept = getFocusedObject().getGRFlexoConcept(newFlexoConcept, getContainerGRConcept(), getEditor(), this);
 	}
 
 	public String getNewConceptName() {
@@ -135,6 +139,31 @@ public class CreateNewConcept extends FMEAction<CreateNewConcept, FMEFreeModel, 
 		this.newConceptDescription = newConceptDescription;
 		getPropertyChangeSupport().firePropertyChange("newConceptDescription", null, newConceptDescription);
 		getPropertyChangeSupport().firePropertyChange("isValid", wasValid, isValid());
+	}
+
+	public FlexoConcept getContainerConcept() {
+		return containerConcept;
+	}
+
+	public void setContainerConcept(FlexoConcept containerConcept) {
+		if (containerConcept != this.containerConcept) {
+			FlexoConcept oldValue = this.containerConcept;
+			this.containerConcept = containerConcept;
+			getPropertyChangeSupport().firePropertyChange("containerConcept", oldValue, containerConcept);
+		}
+	}
+
+	public FlexoConcept getContainerGRConcept() {
+		return containerGRConcept;
+	}
+
+	public void setContainerGRConcept(FlexoConcept containerGRConcept) {
+		if ((containerGRConcept == null && this.containerGRConcept != null)
+				|| (containerGRConcept != null && !containerGRConcept.equals(this.containerGRConcept))) {
+			FlexoConcept oldValue = this.containerGRConcept;
+			this.containerGRConcept = containerGRConcept;
+			getPropertyChangeSupport().firePropertyChange("containerGRConcept", oldValue, containerGRConcept);
+		}
 	}
 
 	public FlexoConcept getNewFlexoConcept() {

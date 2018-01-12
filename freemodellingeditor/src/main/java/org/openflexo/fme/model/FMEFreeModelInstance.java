@@ -40,6 +40,7 @@ package org.openflexo.fme.model;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -48,6 +49,7 @@ import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.FlexoRole;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
+import org.openflexo.foundation.fml.rt.VirtualModelInstance.ObjectLookupResult;
 import org.openflexo.foundation.nature.VirtualModelInstanceBasedNatureObject;
 import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.logging.FlexoLogger;
@@ -91,11 +93,15 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 
 	public List<FlexoConceptInstance> getInstances(FlexoConcept flexoConcept);
 
+	public List<FlexoConceptInstance> getEmbeddedInstances(FlexoConceptInstance flexoConceptInstance);
+
 	public String getProposedName(FlexoConcept concept);
 
 	public FlexoConceptInstance getFlexoConceptInstanceNamed(String name, FlexoConcept concept);
 
 	public List<FlexoConcept> getUsedFlexoConcepts();
+
+	public List<FlexoConcept> getUsedTopLevelFlexoConcepts();
 
 	public abstract class FMEFreeModelInstanceImpl extends VirtualModelInstanceBasedNatureObjectImpl<FreeModellingProjectNature>
 			implements FMEFreeModelInstance {
@@ -148,8 +154,37 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 		 */
 		@Override
 		@NotificationUnsafe
+		public List<FlexoConcept> getUsedTopLevelFlexoConcepts() {
+			return getAccessedVirtualModelInstance().getUsedFlexoConcepts();
+		}
+
+		/**
+		 * Return a new list of FlexoConcept, which are all concepts used in this FreeModel
+		 * 
+		 * @return
+		 */
+		@Override
+		@NotificationUnsafe
 		public List<FlexoConceptInstance> getInstances(FlexoConcept concept) {
 			return getAccessedVirtualModelInstance().getFlexoConceptInstances(concept);
+		}
+
+		@Override
+		@NotificationUnsafe
+		public List<FlexoConceptInstance> getEmbeddedInstances(FlexoConceptInstance flexoConceptInstance) {
+			FlexoConceptInstance conceptFCI = flexoConceptInstance.getFlexoActor(FMEFreeModel.CONCEPT_ROLE_NAME);
+			if (conceptFCI != null) {
+				List<FlexoConceptInstance> conceptualInstances = conceptFCI.getEmbeddedFlexoConceptInstances();
+				List<FlexoConceptInstance> returned = new ArrayList<>();
+				for (FlexoConceptInstance fci : conceptualInstances) {
+					ObjectLookupResult lookup = getAccessedVirtualModelInstance().lookup(fci);
+					if (lookup != null) {
+						returned.add(lookup.flexoConceptInstance);
+					}
+				}
+				return returned;
+			}
+			return null;
 		}
 
 		@Override

@@ -92,7 +92,8 @@ public interface FMEConceptualModel extends VirtualModelBasedNatureObject<FreeMo
 	 * @return
 	 * @throws FlexoException
 	 */
-	public FlexoConcept getFlexoConcept(String conceptName, FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction) throws FlexoException;
+	public FlexoConcept getFlexoConcept(String conceptName, FlexoConcept containerConcept, FlexoEditor editor,
+			FlexoAction<?, ?, ?> ownerAction) throws FlexoException;
 
 	public String getName();
 
@@ -119,8 +120,8 @@ public interface FMEConceptualModel extends VirtualModelBasedNatureObject<FreeMo
 		 * @throws FlexoException
 		 */
 		@Override
-		public FlexoConcept getFlexoConcept(String conceptName, FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction)
-				throws FlexoException {
+		public FlexoConcept getFlexoConcept(String conceptName, FlexoConcept containerConcept, FlexoEditor editor,
+				FlexoAction<?, ?, ?> ownerAction) throws FlexoException {
 
 			FlexoConcept returned = getAccessedVirtualModel().getFlexoConcept(conceptName);
 
@@ -135,6 +136,7 @@ public interface FMEConceptualModel extends VirtualModelBasedNatureObject<FreeMo
 					action = CreateFlexoConcept.actionType.makeNewAction(getAccessedVirtualModel(), null, editor);
 				}
 				action.setNewFlexoConceptName(conceptName);
+				action.setContainerFlexoConcept(containerConcept);
 				action.doAction();
 				returned = action.getNewFlexoConcept();
 

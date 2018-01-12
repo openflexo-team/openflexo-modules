@@ -52,7 +52,10 @@ import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.CreationScheme;
 import org.openflexo.foundation.fml.FlexoConcept;
+import org.openflexo.foundation.fml.FlexoConceptInstanceRole;
+import org.openflexo.foundation.fml.FlexoProperty;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
+import org.openflexo.foundation.fml.rt.VirtualModelInstance.ObjectLookupResult;
 import org.openflexo.foundation.fml.rt.action.CreateFlexoConceptInstance;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
@@ -100,6 +103,7 @@ public class CreateNewConceptFromNoneConcept extends AbstractInstantiateConcept<
 
 	private String newConceptName;
 	private String newConceptDescription;
+	private FlexoConcept containerConcept;
 
 	private FlexoConcept newFlexoConcept;
 	private FlexoConcept newGRFlexoConcept;
@@ -131,6 +135,8 @@ public class CreateNewConceptFromNoneConcept extends AbstractInstantiateConcept<
 		CreateNewConcept createNewConcept = CreateNewConcept.actionType.makeNewEmbeddedAction(getFMEFreeModel(), null, this);
 		createNewConcept.setNewConceptName(getNewConceptName());
 		createNewConcept.setNewConceptDescription(getNewConceptDescription());
+		createNewConcept.setContainerConcept(getContainerConcept());
+		createNewConcept.setContainerGRConcept(retrieveContainerGRFlexoConcept());
 		createNewConcept.doAction();
 		newFlexoConcept = createNewConcept.getNewFlexoConcept();
 		newGRFlexoConcept = createNewConcept.getNewGRFlexoConcept();
@@ -144,6 +150,11 @@ public class CreateNewConceptFromNoneConcept extends AbstractInstantiateConcept<
 		CreateFlexoConceptInstance instantiateConcept = CreateFlexoConceptInstance.actionType
 				.makeNewEmbeddedAction(getFreeModellingProjectNature().getSampleData().getAccessedVirtualModelInstance(), null, this);
 		instantiateConcept.setFlexoConcept(newFlexoConcept);
+		FlexoConceptInstance containerFCI = retrieveContainerFlexoConceptInstance();
+		System.out.println("le container FCI: " + containerFCI);
+		if (containerFCI != null) {
+			instantiateConcept.setContainer(containerFCI);
+		}
 		CreationScheme cs = newFlexoConcept.getCreationSchemes().get(0);
 		instantiateConcept.setCreationScheme(cs);
 		instantiateConcept.setParameterValue(cs.getParameters().get(0), actualName);
@@ -218,6 +229,8 @@ public class CreateNewConceptFromNoneConcept extends AbstractInstantiateConcept<
 
 		// This is used to notify the adding of a new instance of a flexo concept
 		freeModelInstance.getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", null, getFocusedObject());
+		freeModelInstance.getPropertyChangeSupport().firePropertyChange("getEmbeddedInstances(FlexoConceptInstance)", null,
+				getFocusedObject());
 	}
 
 	public String getNewConceptName() {
@@ -258,6 +271,70 @@ public class CreateNewConceptFromNoneConcept extends AbstractInstantiateConcept<
 		}
 
 		return true;
+	}
+
+	private FlexoConceptInstance retrieveContainerFlexoConceptInstance() {
+
+		DiagramShape shape = getFocusedObject().getFlexoActor(FMEDiagramFreeModel.SHAPE_ROLE_NAME);
+
+		if (shape.getParent() instanceof DiagramShape) {
+			ObjectLookupResult lookup = getFocusedObject().getVirtualModelInstance().lookup(shape.getParent());
+			if (lookup != null) {
+				FlexoConceptInstance containerGRFCI = lookup.flexoConceptInstance;
+				return containerGRFCI.getFlexoActor(FMEFreeModel.CONCEPT_ROLE_NAME);
+			}
+		}
+		return null;
+	}
+
+	private FlexoConcept retrieveContainerGRFlexoConcept() {
+
+		DiagramShape shape = getFocusedObject().getFlexoActor(FMEDiagramFreeModel.SHAPE_ROLE_NAME);
+
+		if (shape.getParent() instanceof DiagramShape) {
+			ObjectLookupResult lookup = getFocusedObject().getVirtualModelInstance().lookup(shape.getParent());
+			if (lookup != null) {
+				return lookup.flexoConceptInstance.getFlexoConcept();
+			}
+		}
+		return null;
+	}
+
+	private FlexoConcept retrieveContainerFlexoConcept() {
+
+		DiagramShape shape = getFocusedObject().getFlexoActor(FMEDiagramFreeModel.SHAPE_ROLE_NAME);
+
+		if (shape.getParent() instanceof DiagramShape) {
+			ObjectLookupResult lookup = getFocusedObject().getVirtualModelInstance().lookup(shape.getParent());
+			if (lookup != null) {
+				FlexoConcept containerConceptGR = lookup.flexoConceptInstance.getFlexoConcept();
+				FlexoProperty<?> p = containerConceptGR.getAccessibleProperty(FMEFreeModel.CONCEPT_ROLE_NAME);
+				FlexoConcept containerConcept = null;
+				if (p instanceof FlexoConceptInstanceRole) {
+					FlexoConceptInstanceRole fciRole = (FlexoConceptInstanceRole) p;
+					containerConcept = fciRole.getFlexoConceptType();
+				}
+				return containerConcept;
+			}
+		}
+		return null;
+	}
+
+	public FlexoConcept getContainerConcept() {
+
+		if (containerConcept == null) {
+			return retrieveContainerFlexoConcept();
+		}
+
+		return containerConcept;
+	}
+
+	public void setContainerConcept(FlexoConcept containerConcept) {
+		if (containerConcept != this.containerConcept) {
+			FlexoConcept oldValue = this.containerConcept;
+			this.containerConcept = containerConcept;
+			getPropertyChangeSupport().firePropertyChange("containerConcept", oldValue, containerConcept);
+		}
 	}
 
 }

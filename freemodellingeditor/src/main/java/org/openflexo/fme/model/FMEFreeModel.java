@@ -133,7 +133,8 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 	 * @return
 	 * @throws FlexoException
 	 */
-	public FlexoConcept getGRFlexoConcept(FlexoConcept concept, FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction);
+	public FlexoConcept getGRFlexoConcept(FlexoConcept concept, FlexoConcept containerConceptGR, FlexoEditor editor,
+			FlexoAction<?, ?, ?> ownerAction);
 
 	public FMEConceptualModel getConceptualModel();
 
@@ -175,7 +176,7 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 
 		@Override
 		public FlexoConcept getNoneFlexoConcept(FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction) {
-			return getGRFlexoConcept(null, editor, ownerAction);
+			return getGRFlexoConcept(null, null, editor, ownerAction);
 		}
 
 		/**
@@ -188,7 +189,8 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 		 * @throws FlexoException
 		 */
 		@Override
-		public FlexoConcept getGRFlexoConcept(FlexoConcept concept, FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction) {
+		public FlexoConcept getGRFlexoConcept(FlexoConcept concept, FlexoConcept containerConceptGR, FlexoEditor editor,
+				FlexoAction<?, ?, ?> ownerAction) {
 
 			FlexoConcept returned = getAccessedVirtualModel()
 					.getFlexoConcept(concept != null ? concept.getName() + "GR" : NONE_FLEXO_CONCEPT_NAME);
@@ -307,14 +309,14 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 					returned.getInspector().setRenderer(new DataBinding<String>("instance.name"));
 				}
 
-				configureGRFlexoConcept(returned, concept, editor, ownerAction);
+				configureGRFlexoConcept(returned, concept, containerConceptGR, editor, ownerAction);
 			}
 
 			return returned;
 		}
 
-		protected abstract void configureGRFlexoConcept(FlexoConcept returned, FlexoConcept concept, FlexoEditor editor,
-				FlexoAction<?, ?, ?> ownerAction);
+		protected abstract void configureGRFlexoConcept(FlexoConcept returned, FlexoConcept concept, FlexoConcept containerConceptGR,
+				FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction);
 
 		@Override
 		public FMEFreeModelInstance getFreeModelInstance(String freeModelName) {

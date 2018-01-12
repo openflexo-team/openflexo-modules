@@ -41,13 +41,17 @@ package org.openflexo.fme.model.action;
 import java.util.Vector;
 import java.util.logging.Logger;
 
+import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.FlexoConcept;
+import org.openflexo.foundation.fml.FlexoConceptInstanceRole;
+import org.openflexo.foundation.fml.FlexoProperty;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
+import org.openflexo.foundation.fml.rt.VirtualModelInstance.ObjectLookupResult;
 import org.openflexo.technologyadapter.diagram.model.DiagramElement;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 
@@ -62,7 +66,7 @@ public class CreateNewConceptFromDiagramElement extends AbstractInstantiateConce
 	private static final Logger logger = Logger.getLogger(CreateNewConceptFromDiagramElement.class.getPackage().getName());
 
 	public static FlexoActionFactory<CreateNewConceptFromDiagramElement, DiagramElement<?>, FlexoObject> actionType = new FlexoActionFactory<CreateNewConceptFromDiagramElement, DiagramElement<?>, FlexoObject>(
-			"create_new_concept_from_diagram_element", FlexoActionFactory.defaultGroup, FlexoActionFactory.ADD_ACTION_TYPE) {
+			"create_new_concept", FlexoActionFactory.defaultGroup, FlexoActionFactory.ADD_ACTION_TYPE) {
 
 		/**
 		 * Factory method
@@ -100,6 +104,21 @@ public class CreateNewConceptFromDiagramElement extends AbstractInstantiateConce
 
 	@Override
 	protected void doAction(Object context) throws InvalidArgumentException {
+
+		FlexoConcept containerConcept = null;
+		if (getFocusedObject().getParent() != null) {
+			System.out.println("Attention, y'a un parent");
+			ObjectLookupResult lookup = getFreeModelInstance().getAccessedVirtualModelInstance().lookup(getFocusedObject().getParent());
+			if (lookup != null) {
+				System.out.println("lookup: " + lookup.flexoConceptInstance + " pty=" + lookup.property);
+				FlexoConcept containerConceptGR = lookup.flexoConceptInstance.getFlexoConcept();
+				FlexoProperty<?> p = containerConceptGR.getAccessibleProperty(FMEFreeModel.CONCEPT_ROLE_NAME);
+				if (p instanceof FlexoConceptInstanceRole) {
+					FlexoConceptInstanceRole fciRole = (FlexoConceptInstanceRole) p;
+					containerConcept = fciRole.getFlexoConceptType();
+				}
+			}
+		}
 
 		logger.info("Create new instance of created concept from diagram element ");
 		getNoneFlexoConcept();

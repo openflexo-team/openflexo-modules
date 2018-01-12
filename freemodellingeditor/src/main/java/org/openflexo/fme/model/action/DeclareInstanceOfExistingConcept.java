@@ -136,7 +136,7 @@ public class DeclareInstanceOfExistingConcept extends AbstractInstantiateConcept
 	}
 
 	public FlexoConcept getGRConcept() {
-		return getFMEFreeModel().getGRFlexoConcept(getConcept(), getEditor(), this);
+		return getFMEFreeModel().getGRFlexoConcept(getConcept(), null, getEditor(), this);
 	}
 
 	public GRStrategy getGrStrategy() {

@@ -235,8 +235,8 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 		}
 
 		@Override
-		protected void configureGRFlexoConcept(FlexoConcept returned, FlexoConcept concept, FlexoEditor editor,
-				FlexoAction<?, ?, ?> ownerAction) {
+		protected void configureGRFlexoConcept(FlexoConcept returned, FlexoConcept concept, FlexoConcept containerConceptGR,
+				FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction) {
 
 			// Creates shape property
 			CreateTechnologyRole createShapeRole = null;
@@ -279,7 +279,12 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 			createDropScheme.doAction();
 			DropScheme dropScheme = (DropScheme) createDropScheme.getNewFlexoBehaviour();
 			dropScheme.setSkipConfirmationPanel(false);
-			dropScheme.setTopTarget(true);
+			if (containerConceptGR == null) {
+				dropScheme.setTopTarget(true);
+			}
+			else {
+				dropScheme.setTargetFlexoConcept(containerConceptGR);
+			}
 
 			// Create new DropScheme parameter
 			CreateGenericBehaviourParameter createDropSchemeParameter = null;
@@ -316,7 +321,13 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 				addFCI.setCreationScheme(concept.getCreationSchemes().get(0));
 				AddFlexoConceptInstanceParameter addFCINameParam = addFCI.getParameter(FMEConceptualModel.CONCEPT_NAME_PARAMETER);
 				addFCINameParam.setValue(new DataBinding<>("parameters.conceptName"));
-				addFCI.setContainer(new DataBinding<>(SAMPLE_DATA_MODEL_SLOT_NAME));
+				addFCI.setReceiver(new DataBinding<>(SAMPLE_DATA_MODEL_SLOT_NAME));
+				if (containerConceptGR == null) {
+					addFCI.setContainer(new DataBinding<>(SAMPLE_DATA_MODEL_SLOT_NAME));
+				}
+				else {
+					addFCI.setContainer(new DataBinding<>(DropScheme.TARGET_KEY + "." + FMEFreeModel.CONCEPT_ROLE_NAME));
+				}
 			}
 			else {
 				CreateEditionAction givesNameAction = null;
@@ -352,7 +363,13 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 			// AssignationAction<DiagramShape> addShapeAssigment = (AssignationAction<DiagramShape>)
 			// createAddShape.getNewEditionAction();
 			AddShape addShape = (AddShape) createAddShape.getBaseEditionAction();
-			addShape.setContainer(new DataBinding<>(DIAGRAM_MODEL_SLOT_NAME));
+
+			if (containerConceptGR == null) {
+				addShape.setContainer(new DataBinding<>(DIAGRAM_MODEL_SLOT_NAME));
+			}
+			else {
+				addShape.setContainer(new DataBinding<>(DropScheme.TARGET_KEY + "." + FMEDiagramFreeModel.SHAPE_ROLE_NAME));
+			}
 
 			DeletionScheme deletionScheme = returned.getDefaultDeletionScheme();
 

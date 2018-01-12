@@ -45,9 +45,10 @@ import org.openflexo.ApplicationContext;
 import org.openflexo.components.wizard.FlexoWizard;
 import org.openflexo.components.wizard.WizardStep;
 import org.openflexo.fme.model.action.CreateNewConceptFromNoneConcept;
+import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.VirtualModel;
-import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
+import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.gina.annotation.FIBPanel;
 import org.openflexo.icon.FMLIconLibrary;
 import org.openflexo.icon.IconFactory;
@@ -149,6 +150,19 @@ public class CreateNewConceptFromNoneConceptWizard extends FlexoWizard {
 				String oldValue = getNewConceptDescription();
 				action.setNewConceptDescription(newConceptDescription);
 				getPropertyChangeSupport().firePropertyChange("newConceptDescription", oldValue, newConceptDescription);
+				checkValidity();
+			}
+		}
+
+		public FlexoConcept getContainerConcept() {
+			return action.getContainerConcept();
+		}
+
+		public void setContainerConcept(FlexoConcept containerConcept) {
+			if (containerConcept != getContainerConcept()) {
+				FlexoConcept oldValue = getContainerConcept();
+				action.setContainerConcept(containerConcept);
+				getPropertyChangeSupport().firePropertyChange("containerConcept", oldValue, containerConcept);
 				checkValidity();
 			}
 		}

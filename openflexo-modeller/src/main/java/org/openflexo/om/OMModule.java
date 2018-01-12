@@ -44,6 +44,7 @@ import java.util.logging.Logger;
 import org.openflexo.ApplicationContext;
 import org.openflexo.fge.swing.JDianaInteractiveEditor;
 import org.openflexo.fge.swing.view.JDrawingView;
+import org.openflexo.fml.controller.FMLTechnologyAdapterController;
 import org.openflexo.foundation.fml.FMLTechnologyAdapter;
 import org.openflexo.foundation.fml.rt.FMLRTTechnologyAdapter;
 import org.openflexo.foundation.technologyadapter.TechnologyAdapterService;
@@ -84,6 +85,10 @@ public class OMModule extends FlexoModule<OMModule> {
 		TechnologyAdapterService taService = getApplicationContext().getTechnologyAdapterService();
 		taService.activateTechnologyAdapter(taService.getTechnologyAdapter(FMLTechnologyAdapter.class));
 		taService.activateTechnologyAdapter(taService.getTechnologyAdapter(FMLRTTechnologyAdapter.class));
+
+		FMLTechnologyAdapterController fmlTAC = getApplicationContext().getTechnologyAdapterControllerService()
+				.getTechnologyAdapterController(FMLTechnologyAdapterController.class);
+		fmlTAC.initializeAdvancedActions(getFlexoController().getControllerActionInitializer());
 	}
 
 	@Override
