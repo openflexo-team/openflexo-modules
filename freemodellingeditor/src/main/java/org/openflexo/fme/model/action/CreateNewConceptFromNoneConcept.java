@@ -58,6 +58,7 @@ import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.fml.rt.VirtualModelInstance.ObjectLookupResult;
 import org.openflexo.foundation.fml.rt.action.CreateFlexoConceptInstance;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
+import org.openflexo.technologyadapter.diagram.model.DiagramElement;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 import org.openflexo.toolbox.StringUtils;
 
@@ -141,17 +142,11 @@ public class CreateNewConceptFromNoneConcept extends AbstractInstantiateConcept<
 		newFlexoConcept = createNewConcept.getNewFlexoConcept();
 		newGRFlexoConcept = createNewConcept.getNewGRFlexoConcept();
 
-		System.out.println("Hop, je cree le concept: ");
-		System.out.println(newFlexoConcept.getFMLRepresentation());
-		System.out.println("Et sa GR: ");
-		System.out.println(newGRFlexoConcept.getFMLRepresentation());
-
 		// Now we instantiate that concept
 		CreateFlexoConceptInstance instantiateConcept = CreateFlexoConceptInstance.actionType
 				.makeNewEmbeddedAction(getFreeModellingProjectNature().getSampleData().getAccessedVirtualModelInstance(), null, this);
 		instantiateConcept.setFlexoConcept(newFlexoConcept);
 		FlexoConceptInstance containerFCI = retrieveContainerFlexoConceptInstance();
-		System.out.println("le container FCI: " + containerFCI);
 		if (containerFCI != null) {
 			instantiateConcept.setContainer(containerFCI);
 		}
@@ -161,58 +156,9 @@ public class CreateNewConceptFromNoneConcept extends AbstractInstantiateConcept<
 		instantiateConcept.doAction();
 		FlexoConceptInstance conceptInstance = instantiateConcept.getNewFlexoConceptInstance();
 
-		System.out.println("J'ai instancie: " + conceptInstance);
-
 		// Add entry in palette
 		freeModelInstance.getFreeModel().createPaletteElementForConcept(newGRFlexoConcept, newFlexoConcept,
 				shapeElement.getGraphicalRepresentation(), this);
-
-		/*
-		CreateDiagramPaletteElement createDiagramPaletteElement = CreateDiagramPaletteElement.actionType.makeNewEmbeddedAction(freeModel
-				.getMetaModel().getConceptsPalette(), null, this);
-		ShapeGraphicalRepresentation paletteElementGR = (ShapeGraphicalRepresentation) shapeElement.getGraphicalRepresentation()
-				.cloneObject();
-		paletteElementGR.setX(10);
-		paletteElementGR.setY(10);
-		paletteElementGR.setText(getNewConceptName());
-		paletteElementGR.setIsFloatingLabel(false);
-		createDiagramPaletteElement.setGraphicalRepresentation(paletteElementGR);
-		createDiagramPaletteElement.setNewElementName(getNewConceptName());
-		createDiagramPaletteElement.doAction();
-		
-		DiagramPaletteElement paletteElement = createDiagramPaletteElement.getNewElement();
-		
-		System.out.println("Created palette element: " + paletteElement);
-		int px, py;
-		int index = freeModel.getMetaModel().getConceptsPalette().getElements().indexOf(createDiagramPaletteElement.getNewElement());
-		px = index % 3;
-		py = index / 3;
-		
-		// FACTORY.applyDefaultProperties(gr);
-		if (paletteElementGR.getShapeSpecification().getShapeType() == ShapeType.SQUARE
-				|| paletteElementGR.getShapeSpecification().getShapeType() == ShapeType.CIRCLE) {
-			paletteElementGR.setX(10);
-			paletteElementGR.setY(10);
-			paletteElementGR.setX(px * FreeMetaModel.PALETTE_GRID_WIDTH + 15);
-			paletteElementGR.setY(py * FreeMetaModel.PALETTE_GRID_HEIGHT + 10);
-			paletteElementGR.setWidth(30);
-			paletteElementGR.setHeight(30);
-		} else {
-			paletteElementGR.setX(px * FreeMetaModel.PALETTE_GRID_WIDTH + 10);
-			paletteElementGR.setY(py * FreeMetaModel.PALETTE_GRID_HEIGHT + 10);
-			paletteElementGR.setWidth(40);
-			paletteElementGR.setHeight(30);
-		}
-		
-		// Create binding and associate it
-		DropScheme dropScheme = newFlexoConcept.getFlexoBehaviours(DropScheme.class).get(0);
-		FMLDiagramPaletteElementBinding newBinding = newFlexoConcept.getVirtualModel().getFMLModelFactory()
-				.newInstance(FMLDiagramPaletteElementBinding.class);
-		newBinding.setPaletteElement(paletteElement);
-		newBinding.setFlexoConcept(newFlexoConcept);
-		newBinding.setDropScheme(dropScheme);
-		freeModel.getMetaModel().getTypedDiagramModelSlot().addToPaletteElementBindings(newBinding);
-		*/
 
 		// Sets new concept GR with actual shape GR
 		ShapeRole shapeRole = (ShapeRole) newGRFlexoConcept.getAccessibleProperty(FMEDiagramFreeModel.SHAPE_ROLE_NAME);
@@ -226,11 +172,20 @@ public class CreateNewConceptFromNoneConcept extends AbstractInstantiateConcept<
 
 		// We should notify the creation of a new FlexoConcept
 		freeModelInstance.getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null, newFlexoConcept);
+		freeModelInstance.getPropertyChangeSupport().firePropertyChange("usedTopLevelFlexoConcepts", null, newFlexoConcept);
 
 		// This is used to notify the adding of a new instance of a flexo concept
 		freeModelInstance.getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", null, getFocusedObject());
 		freeModelInstance.getPropertyChangeSupport().firePropertyChange("getEmbeddedInstances(FlexoConceptInstance)", null,
 				getFocusedObject());
+
+		// The new shape has well be added to the diagram, and the drawing (which listen to the diagram) has well received the event
+		// The drawing is now up-to-date... but there is something wrong if we are in FML-controlled mode.
+		// Since the shape has been added BEFORE the FlexoConceptInstance has been set, the drawing only knows about the DiagamShape,
+		// and not about an FMLControlledDiagramShape. That's why we need to notify again the new diagram element's parent, to be
+		// sure that the Drawing can discover that the new shape is FML-controlled
+		shapeElement.getParent().getPropertyChangeSupport().firePropertyChange(DiagramElement.INVALIDATE, null, shapeElement.getParent());
+
 	}
 
 	public String getNewConceptName() {

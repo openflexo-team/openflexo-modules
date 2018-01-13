@@ -46,6 +46,7 @@ import java.util.logging.Logger;
 
 import org.openflexo.connie.annotations.NotificationUnsafe;
 import org.openflexo.foundation.fml.FlexoConcept;
+import org.openflexo.foundation.fml.FlexoConceptInstanceRole;
 import org.openflexo.foundation.fml.FlexoRole;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
@@ -155,7 +156,20 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 		@Override
 		@NotificationUnsafe
 		public List<FlexoConcept> getUsedTopLevelFlexoConcepts() {
-			return getAccessedVirtualModelInstance().getUsedFlexoConcepts();
+
+			List<FlexoConcept> returned = new ArrayList<>();
+			for (FlexoConcept concept : getUsedFlexoConcepts()) {
+				if (concept.getContainerFlexoConcept() == null) {
+					if (concept.getAccessibleProperty(FMEFreeModel.CONCEPT_ROLE_NAME) instanceof FlexoConceptInstanceRole) {
+						FlexoConcept conceptualConcept = ((FlexoConceptInstanceRole) concept
+								.getAccessibleProperty(FMEFreeModel.CONCEPT_ROLE_NAME)).getFlexoConceptType();
+						if (conceptualConcept != null && conceptualConcept.getContainerFlexoConcept() == null) {
+							returned.add(concept);
+						}
+					}
+				}
+			}
+			return returned;
 		}
 
 		/**
@@ -189,10 +203,12 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
+			System.out.println("Received " + evt.getPropertyName() + " evt=" + evt);
 			if (evt.getSource() == getAccessedVirtualModelInstance()) {
 				if (evt.getPropertyName().equals(FMLRTVirtualModelInstance.FLEXO_CONCEPT_INSTANCES_KEY)) {
 					if (evt.getNewValue() instanceof FlexoConceptInstance) {
 						// A new FlexoConceptInstance has been created/added
+						System.out.println("On notifie");
 						FlexoConceptInstance fci = (FlexoConceptInstance) evt.getNewValue();
 						getPropertyChangeSupport().firePropertyChange("usedTopLevelFlexoConcepts", null, fci);
 						getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null, fci);
