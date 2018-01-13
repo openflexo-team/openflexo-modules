@@ -90,9 +90,9 @@ public class FMEModule extends FlexoModule<FMEModule> {
 	public void initModule() {
 		super.initModule();
 		TechnologyAdapterService taService = getApplicationContext().getTechnologyAdapterService();
-		taService.activateTechnologyAdapter(taService.getTechnologyAdapter(FMLTechnologyAdapter.class));
-		taService.activateTechnologyAdapter(taService.getTechnologyAdapter(FMLRTTechnologyAdapter.class));
-		taService.activateTechnologyAdapter(taService.getTechnologyAdapter(DiagramTechnologyAdapter.class));
+		taService.activateTechnologyAdapter(taService.getTechnologyAdapter(FMLTechnologyAdapter.class), true);
+		taService.activateTechnologyAdapter(taService.getTechnologyAdapter(FMLRTTechnologyAdapter.class), true);
+		taService.activateTechnologyAdapter(taService.getTechnologyAdapter(DiagramTechnologyAdapter.class), true);
 		// Put here a code to display default view
 		// getFMEController().setCurrentEditedObjectAsModuleView(getFMEController().getViewPointLibrary());
 	}
