@@ -51,11 +51,6 @@ public class TestFMEDialogFibs extends GenericFIBTestCase {
 	}
 
 	@Test
-	public void testDeclareInstanceOfExistingConceptDialog() {
-		validateFIB("Fib/Dialog/DeclareInstanceOfExistingConceptDialog.fib");
-	}
-
-	@Test
 	public void testDeclareInstanceOfExistingConceptFromDiagramElementDialog() {
 		validateFIB("Fib/Dialog/DeclareInstanceOfExistingConceptFromDiagramElementDialog.fib");
 	}
