@@ -53,6 +53,7 @@ import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.ContextualPalette;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.DiagramEditor;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.FMLControlledDiagramEditor;
+import org.openflexo.technologyadapter.diagram.controller.diagrameditor.FMLControlledDiagramShape;
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelNature;
 import org.openflexo.technologyadapter.diagram.fml.FMLDiagramPaletteElementBinding;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
@@ -87,7 +88,25 @@ public class ConceptsPalette extends ContextualPalette implements PropertyChange
 			return false;
 		}
 
-		DiagramContainerElement<?> rootContainer = (DiagramContainerElement<?>) target.getDrawable();
+		Object targetObject = target.getDrawable();
+
+		if (targetObject instanceof DiagramContainerElement) {
+			DiagramContainerElement<?> rootContainer = (DiagramContainerElement<?>) target.getDrawable();
+			return handleFMLControlledDropInDiagramContainerElement(rootContainer, paletteElement, dropLocation, editor);
+		}
+
+		if (targetObject instanceof FMLControlledDiagramShape) {
+			FMLControlledDiagramShape container = (FMLControlledDiagramShape) target.getDrawable();
+			return handleFMLControlledDropInFMLControlledDiagramShape(container, paletteElement, dropLocation, editor);
+		}
+
+		return false;
+
+	}
+
+	private boolean handleFMLControlledDropInDiagramContainerElement(DiagramContainerElement<?> rootContainer,
+			DiagramPaletteElement paletteElement, FGEPoint dropLocation, FMLControlledDiagramEditor editor) {
+
 		FMLRTVirtualModelInstance vmi = editor.getVirtualModelInstance();
 		TypedDiagramModelSlot ms = FMLControlledDiagramVirtualModelNature.getTypedDiagramModelSlot(vmi.getVirtualModel());
 		FMLDiagramPaletteElementBinding binding = ms.getPaletteElementBinding(paletteElement);
@@ -106,6 +125,36 @@ public class ConceptsPalette extends ContextualPalette implements PropertyChange
 		// and not about an FMLControlledDiagramShape. That's why we need to notify again the new diagram element's parent, to be
 		// sure that the Drawing can discover that the new shape is FML-controlled
 		rootContainer.getPropertyChangeSupport().firePropertyChange(DiagramElement.INVALIDATE, null, rootContainer);
+		// FlexoConceptInstance newFlexoConceptInstance = action.getNewFlexoConceptInstance();
+		// System.out.println("Created newFlexoConceptInstance:" + newFlexoConceptInstance);
+
+		return action.hasActionExecutionSucceeded();
+
+	}
+
+	private boolean handleFMLControlledDropInFMLControlledDiagramShape(FMLControlledDiagramShape container,
+			DiagramPaletteElement paletteElement, FGEPoint dropLocation, FMLControlledDiagramEditor editor) {
+
+		FMLRTVirtualModelInstance vmi = editor.getVirtualModelInstance();
+		TypedDiagramModelSlot ms = FMLControlledDiagramVirtualModelNature.getTypedDiagramModelSlot(vmi.getVirtualModel());
+		FMLDiagramPaletteElementBinding binding = ms.getPaletteElementBinding(paletteElement);
+		// DropScheme dropScheme = binding.getDropScheme();
+
+		DropShape action = DropShape.actionType.makeNewAction(container.getDiagramElement(), null,
+				getEditor().getFlexoController().getEditor());
+		action.setDiagramFreeModelInstance(getEditor().getDiagramFreeModelInstance());
+		action.setGRConcept(binding.getBoundFlexoConcept());
+		action.setDropLocation(dropLocation);
+
+		action.doAction();
+
+		// The new shape has well be added to the diagram, and the drawing (which listen to the diagram) has well received the event
+		// The drawing is now up-to-date... but there is something wrong if we are in FML-controlled mode.
+		// Since the shape has been added BEFORE the FlexoConceptInstance has been set, the drawing only knows about the DiagamShape,
+		// and not about an FMLControlledDiagramShape. That's why we need to notify again the new diagram element's parent, to be
+		// sure that the Drawing can discover that the new shape is FML-controlled
+		container.getDiagramElement().getPropertyChangeSupport().firePropertyChange(DiagramElement.INVALIDATE, null,
+				container.getDiagramElement());
 		// FlexoConceptInstance newFlexoConceptInstance = action.getNewFlexoConceptInstance();
 		// System.out.println("Created newFlexoConceptInstance:" + newFlexoConceptInstance);
 

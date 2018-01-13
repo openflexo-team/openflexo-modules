@@ -194,12 +194,14 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 					if (evt.getNewValue() instanceof FlexoConceptInstance) {
 						// A new FlexoConceptInstance has been created/added
 						FlexoConceptInstance fci = (FlexoConceptInstance) evt.getNewValue();
+						getPropertyChangeSupport().firePropertyChange("usedTopLevelFlexoConcepts", null, fci);
 						getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null, fci);
 						getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", null, fci);
 					}
 					else if (evt.getOldValue() instanceof FlexoConceptInstance) {
 						// A FlexoConceptInstance has been removed
 						FlexoConceptInstance fci = (FlexoConceptInstance) evt.getOldValue();
+						getPropertyChangeSupport().firePropertyChange("usedTopLevelFlexoConcepts", fci, null);
 						getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", fci, null);
 						getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", fci, null);
 					}

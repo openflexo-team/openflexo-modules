@@ -108,6 +108,7 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 	private FlexoConcept grConcept;
 	private FGEPoint dropLocation;
 	private Dimension targetSize;
+	private FlexoConceptInstance container;
 
 	private FlexoConceptInstance newFlexoConceptInstance;
 
@@ -242,6 +243,18 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 
 	public void setTargetSize(Dimension targetSize) {
 		this.targetSize = targetSize;
+	}
+
+	public FlexoConceptInstance getContainer() {
+		return container;
+	}
+
+	public void setContainer(FlexoConceptInstance container) {
+		if ((container == null && this.container != null) || (container != null && !container.equals(this.container))) {
+			FlexoConceptInstance oldValue = this.container;
+			this.container = container;
+			getPropertyChangeSupport().firePropertyChange("container", oldValue, container);
+		}
 	}
 
 }

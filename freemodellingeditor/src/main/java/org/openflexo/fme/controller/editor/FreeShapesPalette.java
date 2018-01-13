@@ -76,11 +76,6 @@ public class FreeShapesPalette extends CommonPalette {
 
 	@Override
 	public boolean shouldAcceptDrop(DrawingTreeNode<?, ?> target) {
-		System.out.println("J'accepte ?? target=" + target);
-		if (target != null) {
-			System.out.println("drawable=" + target.getDrawable());
-		}
-
 		return getEditor() != null && target instanceof ContainerNode && (target.getDrawable() instanceof Diagram
 				|| target.getDrawable() instanceof DiagramShape || target.getDrawable() instanceof FMLControlledDiagramShape);
 	}
