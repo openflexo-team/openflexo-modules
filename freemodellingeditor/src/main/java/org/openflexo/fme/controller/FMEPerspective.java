@@ -59,6 +59,7 @@ import org.openflexo.fme.widget.FIBFreeModellingProjectBrowser;
 import org.openflexo.fme.widget.FIBRepresentedConceptBrowser;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
+import org.openflexo.inspector.FIBFlexoConceptInstanceInspectorPanel;
 import org.openflexo.model.undo.CompoundEdit;
 import org.openflexo.module.FlexoModule.WelcomePanel;
 import org.openflexo.technologyadapter.diagram.controller.DiagramTechnologyAdapterController;
@@ -79,35 +80,19 @@ public class FMEPerspective extends NaturePerspective<FreeModellingProjectNature
 	 */
 	public FMEPerspective(FMEController controller) {
 		super("free_modelling_perspective", controller);
-		// _controller = controller;
 
 		freeModellingProjectBrowser = new FIBFreeModellingProjectBrowser(controller.getProject(), controller);
 
-		/*viewPointBrowser = new FIBViewPointBrowser(null, controller);
-		virtualModelBrowser = new FIBVirtualModelBrowser(null, controller);
-		exampleDiagramBrowser = new FIBExampleDiagramBrowser(null, controller);
-		diagramPaletteBrowser = new FIBDiagramPaletteBrowser(null, controller);*/
-
 		setTopLeftView(freeModellingProjectBrowser);
-
-		/*MultiSplitLayoutFactory factory = new MultiSplitLayoutFactory.DefaultMultiSplitLayoutFactory();
-		
-		Leaf top = factory.makeLeaf("top");
-		Leaf bottom = factory.makeLeaf("bottom");
-		Split root = factory.makeRowSplit(top, factory.makeDivider(), bottom);
-		final MultiSplitLayout layout = new MultiSplitLayout(factory);
-		layout.setModel(root);
-		layout.setLayoutByWeight(false);
-		layout.setFloatingDividers(false);
-		JXMultiSplitPane splitPane = new JXMultiSplitPane(layout);*/
 
 		representedConceptBrowser = new FIBRepresentedConceptBrowser(null, controller);
 		conceptBrowser = new FIBConceptBrowser(null, controller);
 
-		// splitPane.add(representedConceptBrowser, "top");
-		// splitPane.add(conceptBrowser, "bottom");
+		inspectorPanel = new FIBFlexoConceptInstanceInspectorPanel(getController().getModuleInspectorController());
 
 	}
+
+	private FIBFlexoConceptInstanceInspectorPanel inspectorPanel;
 
 	@Override
 	public Class<FreeModellingProjectNature> getNatureClass() {
@@ -137,6 +122,8 @@ public class FMEPerspective extends NaturePerspective<FreeModellingProjectNature
 		setMiddleLeftView(representedConceptBrowser);
 		setBottomLeftView(conceptBrowser);
 
+		setMiddleRightView(inspectorPanel);
+
 	}
 
 	@Override
@@ -161,7 +148,6 @@ public class FMEPerspective extends NaturePerspective<FreeModellingProjectNature
 
 	@Override
 	public void objectWasDoubleClicked(Object object, FlexoController controller) {
-		// logger.info("ViewPointPerspective: object was double-clicked: " + object);
 		if (object instanceof FMEFreeModelInstance) {
 			controller.selectAndFocusObject((FMEFreeModelInstance) object);
 		}
@@ -171,10 +157,6 @@ public class FMEPerspective extends NaturePerspective<FreeModellingProjectNature
 	}
 
 	public void setProject(FlexoProject<?> project) {
-		/*if (project.hasNature(FreeModellingProjectNature.class)) {
-			freeModellingProjectBrowser.setRootObject(project.getNature(FreeModellingProjectNature.class));
-		}*/
-
 		freeModellingProjectBrowser.setRootObject(project);
 	}
 

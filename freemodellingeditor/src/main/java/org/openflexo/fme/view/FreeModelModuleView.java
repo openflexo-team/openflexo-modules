@@ -93,7 +93,7 @@ public class FreeModelModuleView extends JPanel implements ModuleView<FMEFreeMod
 	}
 
 	@Override
-	public FlexoPerspective getPerspective() {
+	public FMEPerspective getPerspective() {
 		return perspective;
 	}
 
