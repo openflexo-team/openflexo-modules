@@ -139,6 +139,7 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 			FlexoBehaviourParameter nameParam = dropScheme.getParameters().size() > 0 ? dropScheme.getParameters().get(0) : null;
 			DropSchemeAction action = new DropSchemeAction(dropScheme, getDiagramFreeModelInstance().getAccessedVirtualModelInstance(),
 					null, this);
+			action.setParentInformations(getContainer(), null);
 			addToEmbeddedActions(action);
 			if (nameParam != null) {
 				action.setParameterValue(nameParam, getDiagramFreeModelInstance().getProposedName(concept));
@@ -245,10 +246,20 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 		this.targetSize = targetSize;
 	}
 
+	/**
+	 * Return the {@link FlexoConceptInstance} in which we "drop"
+	 * 
+	 * @return
+	 */
 	public FlexoConceptInstance getContainer() {
 		return container;
 	}
 
+	/**
+	 * Sets the {@link FlexoConceptInstance} in which we "drop"
+	 * 
+	 * @param container
+	 */
 	public void setContainer(FlexoConceptInstance container) {
 		if ((container == null && this.container != null) || (container != null && !container.equals(this.container))) {
 			FlexoConceptInstance oldValue = this.container;

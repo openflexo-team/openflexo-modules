@@ -46,6 +46,7 @@ import org.openflexo.fge.Drawing.DrawingTreeNode;
 import org.openflexo.fge.geom.FGEPoint;
 import org.openflexo.fme.controller.editor.DynamicPalette.GraphicalRepresentationSet;
 import org.openflexo.fme.model.FMEDiagramFreeModel;
+import org.openflexo.fme.model.FMEDiagramFreeModelInstance;
 import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
@@ -66,8 +67,24 @@ public class ConceptsPalette extends ContextualPalette implements PropertyChange
 
 	private static final Logger logger = Logger.getLogger(ConceptsPalette.class.getPackage().getName());
 
-	public ConceptsPalette(DiagramPalette diagramPalette, FreeModelDiagramEditor editor) {
+	private FMEDiagramFreeModelInstance freeModelInstance;
+
+	public ConceptsPalette(DiagramPalette diagramPalette, FreeModelDiagramEditor editor, FMEDiagramFreeModelInstance freeModelInstance) {
 		super(diagramPalette, editor);
+		this.freeModelInstance = freeModelInstance;
+	}
+
+	public FMEDiagramFreeModelInstance getFreeModelInstance() {
+		return freeModelInstance;
+	}
+
+	public void setFreeModelInstance(FMEDiagramFreeModelInstance freeModelInstance) {
+		if ((freeModelInstance == null && this.freeModelInstance != null)
+				|| (freeModelInstance != null && !freeModelInstance.equals(this.freeModelInstance))) {
+			FMEDiagramFreeModelInstance oldValue = this.freeModelInstance;
+			this.freeModelInstance = freeModelInstance;
+			getPropertyChangeSupport().firePropertyChange("freeModelInstance", oldValue, freeModelInstance);
+		}
 	}
 
 	@Override
@@ -145,8 +162,12 @@ public class ConceptsPalette extends ContextualPalette implements PropertyChange
 		action.setDiagramFreeModelInstance(getEditor().getDiagramFreeModelInstance());
 		action.setGRConcept(binding.getBoundFlexoConcept());
 		action.setDropLocation(dropLocation);
+		action.setContainer(container.getFlexoConceptInstance());
 
 		action.doAction();
+
+		freeModelInstance.getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", false, true);
+		freeModelInstance.getPropertyChangeSupport().firePropertyChange("getEmbeddedInstances(FlexoConceptInstance)", false, true);
 
 		// The new shape has well be added to the diagram, and the drawing (which listen to the diagram) has well received the event
 		// The drawing is now up-to-date... but there is something wrong if we are in FML-controlled mode.

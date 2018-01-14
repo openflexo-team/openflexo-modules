@@ -40,14 +40,17 @@ package org.openflexo.fme.model;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 import org.openflexo.connie.annotations.NotificationUnsafe;
+import org.openflexo.connie.exception.InvalidBindingException;
+import org.openflexo.connie.exception.NullReferenceException;
+import org.openflexo.connie.exception.TypeMismatchException;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.FlexoConceptInstanceRole;
-import org.openflexo.foundation.fml.FlexoRole;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.fml.rt.VirtualModelInstance.ObjectLookupResult;
@@ -203,12 +206,11 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
-			System.out.println("Received " + evt.getPropertyName() + " evt=" + evt);
+			// System.out.println("Received " + evt.getPropertyName() + " evt=" + evt);
 			if (evt.getSource() == getAccessedVirtualModelInstance()) {
 				if (evt.getPropertyName().equals(FMLRTVirtualModelInstance.FLEXO_CONCEPT_INSTANCES_KEY)) {
 					if (evt.getNewValue() instanceof FlexoConceptInstance) {
 						// A new FlexoConceptInstance has been created/added
-						System.out.println("On notifie");
 						FlexoConceptInstance fci = (FlexoConceptInstance) evt.getNewValue();
 						getPropertyChangeSupport().firePropertyChange("usedTopLevelFlexoConcepts", null, fci);
 						getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null, fci);
@@ -228,6 +230,7 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 		@Override
 		public String getProposedName(FlexoConcept concept) {
 
+			System.out.println("on cherche un nouveau nom pour " + concept);
 			String baseName;
 			if (concept == null || concept.getName().equals(FMEFreeModel.NONE_FLEXO_CONCEPT_NAME)) {
 				baseName = FlexoLocalization.getMainLocalizer().localizedForKey("unnamed");
@@ -250,13 +253,31 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 
 		}
 
+		public FMESampleData getSampleData() {
+			return getNature().getSampleData();
+		}
+
 		@Override
 		public FlexoConceptInstance getFlexoConceptInstanceNamed(String name, FlexoConcept concept) {
-			FlexoRole<?> nameRole = (FlexoRole<?>) concept.getAccessibleProperty(FMEConceptualModel.NAME_ROLE_NAME);
-			for (FlexoConceptInstance fci : getAccessedVirtualModelInstance().getFlexoConceptInstances(concept)) {
-				String fciName = (String) fci.getFlexoActor(nameRole);
-				if (fciName != null && fciName.equals(name)) {
-					return fci;
+			for (FlexoConceptInstance fci : getSampleData().getAccessedVirtualModelInstance().getFlexoConceptInstances(concept)) {
+				String fciName;
+				try {
+					fciName = fci.execute(FMEConceptualModel.NAME_ROLE_NAME);
+					if (fciName != null && fciName.equals(name)) {
+						return fci;
+					}
+				} catch (TypeMismatchException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NullReferenceException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvalidBindingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 			return null;

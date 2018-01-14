@@ -96,6 +96,14 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 		dynamicPalette = new DynamicPalette(this);
 		dynamicPaletteComponent = swingToolFactory.makeDianaPalette(dynamicPalette);
 		dynamicPaletteComponent.attachToEditor(this);
+
+		for (ContextualPalette contextualPalette : getContextualPalettes()) {
+			if (contextualPalette instanceof ConceptsPalette) {
+				((ConceptsPalette) contextualPalette).setFreeModelInstance(diagramFreeModelInstance);
+			}
+
+		}
+
 		conceptFilter = "*";
 		// We have to switch properly between those paste handlers
 		// AND do not forget to destroy them
@@ -129,7 +137,7 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 
 	@Override
 	public ContextualPalette makeContextualPalette(DiagramPalette palette) {
-		return new ConceptsPalette(palette, this);
+		return new ConceptsPalette(palette, this, getDiagramFreeModelInstance());
 	}
 
 	@Override
