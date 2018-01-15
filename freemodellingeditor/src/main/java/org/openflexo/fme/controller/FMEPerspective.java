@@ -40,6 +40,7 @@ package org.openflexo.fme.controller;
 
 import java.util.logging.Logger;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 
 import org.openflexo.fme.FMEIconLibrary;
@@ -89,6 +90,7 @@ public class FMEPerspective extends NaturePerspective<FreeModellingProjectNature
 		conceptBrowser = new FIBConceptBrowser(null, controller);
 
 		inspectorPanel = new FIBFlexoConceptInstanceInspectorPanel(getController().getModuleInspectorController());
+		inspectorPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
 
 	}
 

@@ -267,6 +267,22 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 					deleteConcept.setObject(new DataBinding<>(CONCEPT_ROLE_NAME));
 				}
 
+				// Create inspector type entry
+				CreateInspectorEntry createTypeEntry = null;
+				if (ownerAction != null) {
+					createTypeEntry = CreateInspectorEntry.actionType.makeNewEmbeddedAction(returned.getInspector(), null, ownerAction);
+				}
+				else {
+					createTypeEntry = CreateInspectorEntry.actionType.makeNewAction(returned.getInspector(), null, editor);
+				}
+				createTypeEntry.setEntryName("Type");
+				createTypeEntry.setEntryType(String.class);
+				createTypeEntry.setWidgetType(WidgetType.TEXT_FIELD);
+				createTypeEntry.setData(new DataBinding<String>(CONCEPT_ROLE_NAME + ".concept.name"));
+				createTypeEntry.setIsReadOnly(true);
+				createTypeEntry.doAction();
+				InspectorEntry typeEntry = createTypeEntry.getNewEntry();
+
 				// Create inspector name entry
 				CreateInspectorEntry createNameEntry = null;
 				if (ownerAction != null) {

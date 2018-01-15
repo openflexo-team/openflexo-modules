@@ -92,6 +92,7 @@ public class FMEControllerActionInitializer extends ControllerActionInitializer 
 		new DeleteFlexoConceptObjectsInitializer(this);
 
 		new CreateNewFMEPropertyInitializer(this);
+		new InstantiateNewFMEPropertyInitializer(this);
 	}
 
 }

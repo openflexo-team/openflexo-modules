@@ -38,6 +38,8 @@
 
 package org.openflexo.fme.model.action;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.logging.Logger;
@@ -106,6 +108,8 @@ public class CreateNewFMEProperty extends FMEAction<CreateNewFMEProperty, FlexoC
 	private FlexoConcept referenceType;
 	private FMEType fmeType = FMEType.String;
 
+	private FlexoEnum newEnum;
+
 	// private FlexoConceptInstance newFlexoConceptInstance;
 
 	CreateNewFMEProperty(FlexoConcept focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
@@ -134,7 +138,7 @@ public class CreateNewFMEProperty extends FMEAction<CreateNewFMEProperty, FlexoC
 				createEnumAction.setNewFlexoEnumName(getPropertyName().substring(0, 1).toUpperCase() + getPropertyName().substring(1));
 				createEnumAction.setNewFlexoEnumDescription(getDescription());
 				createEnumAction.doAction();
-				FlexoEnum newEnum = createEnumAction.getNewFlexoConcept();
+				newEnum = createEnumAction.getNewFlexoConcept();
 
 				StringTokenizer st = new StringTokenizer(getEnumValues(), ",");
 				while (st.hasMoreTokens()) {
@@ -241,8 +245,28 @@ public class CreateNewFMEProperty extends FMEAction<CreateNewFMEProperty, FlexoC
 		if ((enumValues == null && this.enumValues != null) || (enumValues != null && !enumValues.equals(this.enumValues))) {
 			String oldValue = this.enumValues;
 			this.enumValues = enumValues;
+			computeEnumValues();
 			getPropertyChangeSupport().firePropertyChange("enumValues", oldValue, enumValues);
+			getPropertyChangeSupport().firePropertyChange("enumValuesAsList", null, getEnumValuesAsList());
 		}
+	}
+
+	private List<String> enumValuesAsList = new ArrayList();
+
+	public List<String> getEnumValuesAsList() {
+		if (enumValuesAsList == null) {
+			computeEnumValues();
+		}
+		return enumValuesAsList;
+	}
+
+	private void computeEnumValues() {
+		enumValuesAsList.clear();
+		StringTokenizer st = new StringTokenizer(getEnumValues(), ",");
+		while (st.hasMoreTokens()) {
+			enumValuesAsList.add(st.nextToken());
+		}
+
 	}
 
 	public FlexoConcept getReferenceType() {
@@ -255,6 +279,10 @@ public class CreateNewFMEProperty extends FMEAction<CreateNewFMEProperty, FlexoC
 			this.referenceType = referenceType;
 			getPropertyChangeSupport().firePropertyChange("referenceType", oldValue, referenceType);
 		}
+	}
+
+	public FlexoEnum getNewEnum() {
+		return newEnum;
 	}
 
 	@Override
