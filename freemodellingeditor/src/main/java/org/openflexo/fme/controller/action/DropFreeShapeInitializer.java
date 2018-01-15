@@ -74,11 +74,11 @@ public class DropFreeShapeInitializer extends ActionInitializer<DropShape, Diagr
 			@Override
 			public boolean run(EventObject e, DropShape action) {
 				logger.info("DropShape finalizer");
-				System.out.println("On selectionne: " + action.getNewFlexoConceptInstance());
-				System.out.println("Of " + action.getNewFlexoConceptInstance().getFlexoConcept());
-				if (action.getNewFlexoConceptInstance() != null) {
+				// System.out.println("On selectionne: " + action.getNewFlexoConceptInstance());
+				// System.out.println("Of " + action.getNewFlexoConceptInstance().getFlexoConcept());
+				/*if (action.getNewFlexoConceptInstance() != null) {
 					System.out.println("vmi: " + action.getNewFlexoConceptInstance().getVirtualModelInstance());
-				}
+				}*/
 				getController().selectAndFocusObject(action.getNewFlexoConceptInstance());
 				return true;
 			}
