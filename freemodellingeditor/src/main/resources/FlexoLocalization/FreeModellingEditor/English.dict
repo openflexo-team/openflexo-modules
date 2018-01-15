@@ -16,6 +16,7 @@ create_free_model_diagram_based_on_a_powerpoint_slide=Create free model diagram 
 create_new_concept=Create new concept
 create_new_property=Create new property
 declare_instance_of_existing_concept=Declare as an instance of existing concept
+define_new_property=Define new property
 delete_free_model=Delete free model
 delete_free_model_instance=Delete free model instance
 describe_free_model=Describe free model
