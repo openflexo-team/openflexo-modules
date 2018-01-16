@@ -1,7 +1,9 @@
+Panel=Panel
 a_diagram_with_that_name_already_exists=A diagram with that name already exists
 a_free_model_instance_with_that_name_already_exists=A free model instance with that name already exists
 a_property_with_that_name_already_exists=A property with that name already exists
 choose_free_model_to_instantiate_or_create_new_one=Choose free model to instantiate or create new one
+conceptual_model=Conceptual model
 configure_conceptual_model=Configure conceptual model
 configure_new_concept=Configure new concept
 configure_new_instance=Configure new instance
@@ -45,6 +47,7 @@ please_select_a_free_model=Please select a free model
 please_select_a_virtual_model=Please select a virtual model
 please_select_a_virtual_model_instance=Please select a virtual model instance
 remove_free_model=Remove free model
+sample_data=Sample data
 select_default_object=Select default object
 unclassified=Unclassified
 would_you_really_like_to_delete_this_concept_and_all_existing_instances_of_that_concept_(($0)_instances_found)_?=Would you really like to delete this concept and all existing instances of that concept (($0) instances found) ?

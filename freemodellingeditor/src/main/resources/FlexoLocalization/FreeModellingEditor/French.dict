@@ -1,7 +1,9 @@
+Panel=Panel
 a_diagram_with_that_name_already_exists=Un diagramme avec ce nom existe d\u00E9j\u00E0
 a_free_model_instance_with_that_name_already_exists=Une instance de FreeModel avec ce nom existe d\u00E9j\u00E0
 a_property_with_that_name_already_exists=Il existe d\u00E9j\u00E0 une propri\u00E9t\u00E9 avec ce nom
 choose_free_model_to_instantiate_or_create_new_one=Choisir le FreeModel \u00E0 instancier ou \u00E0 cr\u00E9er
+conceptual_model=conceptual_model
 configure_conceptual_model=D\u00E9finition du mod\u00E8le conceptuel
 configure_new_concept=Configurer le nouveau concept
 configure_new_instance=Configurer la nouvelle instance
@@ -45,6 +47,7 @@ please_select_a_free_model=Veuillez choisir un FreeModel
 please_select_a_virtual_model=Veuillez choisir un VirtualModel
 please_select_a_virtual_model_instance=Veuillez choisir un VirtualModelInstance
 remove_free_model=Supprimer le mod\u00E8le libre
+sample_data=sample_data
 select_default_object=S\u00E9lection de l'objet par d\u00E9faut
 unclassified=Non classifi\u00E9
 would_you_really_like_to_delete_this_concept_and_all_existing_instances_of_that_concept_(($0)_instances_found)_?=Voulez vous vraiment supprimer ce concept (($0) instancesexistent) ?

@@ -64,6 +64,7 @@ import org.openflexo.foundation.fml.rt.rm.FMLRTVirtualModelInstanceResourceFacto
 import org.openflexo.foundation.nature.VirtualModelBasedNatureObject;
 import org.openflexo.logging.FlexoLogger;
 import org.openflexo.model.annotations.Adder;
+import org.openflexo.model.annotations.DeserializationFinalizer;
 import org.openflexo.model.annotations.Embedded;
 import org.openflexo.model.annotations.Getter;
 import org.openflexo.model.annotations.Getter.Cardinality;
@@ -98,6 +99,11 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 	@PropertyIdentifier(type = FMEFreeModelInstance.class, cardinality = Cardinality.LIST)
 	public static final String FREE_MODELS_INSTANCES = "freeModelInstances";
 
+	@PropertyIdentifier(type = FMEConceptualModel.class)
+	public static final String CONCEPTUAL_MODEL = "conceptualModel";
+	@PropertyIdentifier(type = FMESampleData.class)
+	public static final String SAMPLE_DATA = "sampleData";
+
 	public String getName();
 
 	public String getDescription();
@@ -105,6 +111,37 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 	public void setDescription(String description);
 
 	public FMLRTVirtualModelInstanceModelSlot getSampleDataModelSlot();
+
+	/**
+	 * Return conceptual model addressed by this {@link FMEFreeModel}.<br>
+	 * If none specific supplied, return {@link FMEConceptualModel} of the {@link FreeModellingProjectNature}
+	 * 
+	 * @return
+	 */
+	@Getter(value = CONCEPTUAL_MODEL)
+	@XMLElement
+	public FMEConceptualModel getConceptualModel();
+
+	/**
+	 * Sets conceptual model addressed by this {@link FMEFreeModel}.<br>
+	 * 
+	 * @param conceptualModel
+	 */
+	@Setter(CONCEPTUAL_MODEL)
+	public void setConceptualModel(FMEConceptualModel conceptualModel);
+
+	/**
+	 * Return sample data addressed by this {@link FMEFreeModel}.<br>
+	 * If none specific supplied, return {@link FMESampleData} of the {@link FreeModellingProjectNature}
+	 * 
+	 * @return
+	 */
+	@Getter(value = SAMPLE_DATA)
+	@XMLElement
+	public FMESampleData getSampleData();
+
+	@Setter(SAMPLE_DATA)
+	public void setSampleData(FMESampleData sampleData);
 
 	@Getter(value = FREE_MODELS_INSTANCES, cardinality = Cardinality.LIST, inverse = FMEFreeModelInstance.FREE_MODEL)
 	@XMLElement
@@ -136,7 +173,8 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 	public FlexoConcept getGRFlexoConcept(FlexoConcept concept, FlexoConcept containerConceptGR, FlexoEditor editor,
 			FlexoAction<?, ?, ?> ownerAction);
 
-	public FMEConceptualModel getConceptualModel();
+	@DeserializationFinalizer
+	public void finalizeDeserialization();
 
 	public abstract class FMEFreeModelImpl extends VirtualModelBasedNatureObjectImpl<FreeModellingProjectNature> implements FMEFreeModel {
 
@@ -359,7 +397,51 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 
 		@Override
 		public FMEConceptualModel getConceptualModel() {
-			return getNature().getConceptualModel();
+			FMEConceptualModel returned = (FMEConceptualModel) performSuperGetter(CONCEPTUAL_MODEL);
+			if (returned != null) {
+				return returned;
+			}
+			if (getNature() != null) {
+				return getNature().getConceptualModel();
+			}
+			return null;
+		}
+
+		@Override
+		public void setConceptualModel(FMEConceptualModel conceptualModel) {
+			performSuperSetter(CONCEPTUAL_MODEL, conceptualModel);
+			System.out.println("hop1, nature=" + getNature());
+			conceptualModel.setNature(getNature());
+		}
+
+		@Override
+		public FMESampleData getSampleData() {
+			FMESampleData returned = (FMESampleData) performSuperGetter(SAMPLE_DATA);
+			if (returned != null) {
+				return returned;
+			}
+			if (getNature() != null) {
+				System.out.println("hop2, nature=" + getNature());
+				return getNature().getSampleData();
+			}
+			return null;
+		}
+
+		@Override
+		public void setSampleData(FMESampleData sampleData) {
+			performSuperSetter(SAMPLE_DATA, sampleData);
+			sampleData.setNature(getNature());
+		}
+
+		@Override
+		public void finalizeDeserialization() {
+			System.out.println("a la fin, " + getNature());
+			if (performSuperGetter(CONCEPTUAL_MODEL) != null) {
+				getConceptualModel().setNature(getNature());
+			}
+			if (performSuperGetter(SAMPLE_DATA) != null) {
+				getSampleData().setNature(getNature());
+			}
 		}
 
 	}
