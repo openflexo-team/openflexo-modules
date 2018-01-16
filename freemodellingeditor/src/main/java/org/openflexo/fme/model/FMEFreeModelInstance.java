@@ -162,7 +162,10 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 
 			List<FlexoConcept> returned = new ArrayList<>();
 			for (FlexoConcept concept : getUsedFlexoConcepts()) {
-				if (concept.getContainerFlexoConcept() == null) {
+				if (concept.getName().equals(FMEFreeModel.NONE_FLEXO_CONCEPT_NAME)) {
+					returned.add(concept);
+				}
+				else if (concept.getContainerFlexoConcept() == null) {
 					if (concept.getAccessibleProperty(FMEFreeModel.CONCEPT_ROLE_NAME) instanceof FlexoConceptInstanceRole) {
 						FlexoConcept conceptualConcept = ((FlexoConceptInstanceRole) concept
 								.getAccessibleProperty(FMEFreeModel.CONCEPT_ROLE_NAME)).getFlexoConceptType();

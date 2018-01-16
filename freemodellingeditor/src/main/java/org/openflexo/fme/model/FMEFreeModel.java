@@ -278,7 +278,12 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 				createTypeEntry.setEntryName("Type");
 				createTypeEntry.setEntryType(String.class);
 				createTypeEntry.setWidgetType(WidgetType.TEXT_FIELD);
-				createTypeEntry.setData(new DataBinding<String>(CONCEPT_ROLE_NAME + ".concept.name"));
+				if (concept == null) {
+					createTypeEntry.setData(new DataBinding<String>('"' + getLocales().localizedForKey("unclassified") + '"'));
+				}
+				else {
+					createTypeEntry.setData(new DataBinding<String>(CONCEPT_ROLE_NAME + ".concept.name"));
+				}
 				createTypeEntry.setIsReadOnly(true);
 				createTypeEntry.doAction();
 				InspectorEntry typeEntry = createTypeEntry.getNewEntry();
@@ -294,7 +299,12 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 				createNameEntry.setEntryName(FMEConceptualModel.NAME_ROLE_NAME);
 				createNameEntry.setEntryType(String.class);
 				createNameEntry.setWidgetType(WidgetType.TEXT_FIELD);
-				createNameEntry.setData(new DataBinding<String>(CONCEPT_ROLE_NAME + ".name"));
+				if (concept == null) {
+					createNameEntry.setData(new DataBinding<String>(FMEConceptualModel.NAME_ROLE_NAME));
+				}
+				else {
+					createNameEntry.setData(new DataBinding<String>(CONCEPT_ROLE_NAME + ".name"));
+				}
 
 				createNameEntry.doAction();
 				InspectorEntry nameEntry = createNameEntry.getNewEntry();
