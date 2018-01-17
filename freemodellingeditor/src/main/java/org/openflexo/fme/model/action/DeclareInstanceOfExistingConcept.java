@@ -122,8 +122,8 @@ public class DeclareInstanceOfExistingConcept extends AbstractInstantiateConcept
 	 */
 	public FlexoConcept getConcept() {
 		if (concept == null && getFreeModellingProjectNature() != null
-				&& getFreeModellingProjectNature().getConceptualModel().getAccessedVirtualModel().getFlexoConcepts().size() > 0) {
-			return getFreeModellingProjectNature().getConceptualModel().getAccessedVirtualModel().getFlexoConcepts().get(0);
+				&& getFMEFreeModel().getConceptualModel().getAccessedVirtualModel().getFlexoConcepts().size() > 0) {
+			return getFMEFreeModel().getConceptualModel().getAccessedVirtualModel().getFlexoConcepts().get(0);
 		}
 		return concept;
 	}
@@ -170,7 +170,7 @@ public class DeclareInstanceOfExistingConcept extends AbstractInstantiateConcept
 
 		// Now we instantiate that concept
 		CreateFlexoConceptInstance instantiateConcept = CreateFlexoConceptInstance.actionType
-				.makeNewEmbeddedAction(getFreeModellingProjectNature().getSampleData().getAccessedVirtualModelInstance(), null, this);
+				.makeNewEmbeddedAction(getFMEFreeModel().getSampleData().getAccessedVirtualModelInstance(), null, this);
 		instantiateConcept.setFlexoConcept(getConcept());
 		CreationScheme cs = getConcept().getCreationSchemes().get(0);
 		instantiateConcept.setCreationScheme(cs);

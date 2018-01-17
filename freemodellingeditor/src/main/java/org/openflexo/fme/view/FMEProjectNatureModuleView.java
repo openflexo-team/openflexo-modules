@@ -78,6 +78,11 @@ public class FMEProjectNatureModuleView extends FIBModuleView<FreeModellingProje
 			action.doAction();
 		}
 
+		public void instantiateNewDiagram(FMEFreeModel freeModel) {
+			InstantiateFMEDiagramFreeModel action = InstantiateFMEDiagramFreeModel.actionType.makeNewAction(freeModel, null, getEditor());
+			action.doAction();
+		}
+
 		public ImageIcon getProjectIcon() {
 			return IconFactory.getImageIcon(IconLibrary.OPENFLEXO_NOTEXT_64, FMEIconLibrary.FME_BIG_MARKER);
 		}

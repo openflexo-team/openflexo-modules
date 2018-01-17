@@ -120,6 +120,7 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 			FMEConceptualModel conceptualModel = makeFMEConceptualModel();
 			freeModel.setConceptualModel(conceptualModel);
 			if (getSampleDataChoice() != SampleDataChoice.UseGeneralSampleData) {
+				System.out.println("On cree de nouvelles sample data");
 				freeModel.setSampleData(makeFMESampleData(conceptualModel));
 			}
 		}
@@ -312,9 +313,13 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 		}
 	}
 
+	public String getDefaultNewConceptualModelName() {
+		return (StringUtils.isNotEmpty(getFreeModelName()) ? getFreeModelName() + "ConceptualModel" : "NewConceptualModel");
+	}
+
 	public String getNewConceptualModelName() {
 		if (StringUtils.isEmpty(newConceptualModelName)) {
-			return GivesFMENature.DEFAULT_CONCEPTUAL_MODEL_NAME;
+			return getDefaultNewConceptualModelName();
 		}
 		return newConceptualModelName;
 	}
@@ -364,17 +369,38 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 	private FMESampleData makeFMESampleData(FMEConceptualModel conceptualModel) {
 		FMESampleData sampleData = getFocusedObject().getNature().getProject().getModelFactory().newInstance(FMESampleData.class);
 
+		FMLRTVirtualModelInstanceResource newVirtualModelInstanceResource = null;
 		switch (getSampleDataChoice()) {
 			case CreateNewVirtualModelInstance:
-				// RepositoryFolder<?, ?> folder = getFocusedObject().getVirtualModelRepository().get
-				CreateBasicVirtualModelInstance action = CreateBasicVirtualModelInstance.actionType.makeNewEmbeddedAction(
-						getFocusedObject().getNature().getProject().getVirtualModelInstanceRepository().getRootFolder(), null, this);
-
-				action.setNewVirtualModelInstanceName(getSampleDataName());
-				action.setVirtualModel(conceptualModel.getAccessedVirtualModel());
-				action.doAction();
-				FMLRTVirtualModelInstanceResource newVirtualModelInstanceResource = (FMLRTVirtualModelInstanceResource) action
-						.getNewVirtualModelInstance().getResource();
+				switch (getConceptualModelChoice()) {
+					case CreateNewTopLevelVirtualModel:
+						// Create new top-level VMI
+						System.out.println("Nouvelles sample data top level");
+						CreateBasicVirtualModelInstance action1 = CreateBasicVirtualModelInstance.actionType.makeNewEmbeddedAction(
+								getFocusedObject().getNature().getProject().getVirtualModelInstanceRepository().getRootFolder(), null,
+								this);
+						action1.setNewVirtualModelInstanceName(getSampleDataName());
+						action1.setVirtualModel(conceptualModel.getAccessedVirtualModel());
+						action1.doAction();
+						newVirtualModelInstanceResource = (FMLRTVirtualModelInstanceResource) action1.getNewVirtualModelInstance()
+								.getResource();
+						break;
+					case CreateContainedVirtualModel:
+						// Create new VMI with general sample data as container
+						System.out.println("Nouvelles sample data dans " + getFocusedObject().getSampleData());
+						CreateBasicVirtualModelInstance action2 = CreateBasicVirtualModelInstance.actionType
+								.makeNewEmbeddedAction(getFocusedObject().getSampleData().getAccessedVirtualModelInstance(), null, this);
+						action2.setNewVirtualModelInstanceName(getSampleDataName());
+						action2.setVirtualModel(conceptualModel.getAccessedVirtualModel());
+						action2.doAction();
+						newVirtualModelInstanceResource = (FMLRTVirtualModelInstanceResource) action2.getNewVirtualModelInstance()
+								.getResource();
+						break;
+					case SelectExistingVirtualModel:
+						// TODO
+						System.out.println("Not implemented");
+						break;
+				}
 
 				System.out.println("Made new resource: " + newVirtualModelInstanceResource);
 
@@ -404,9 +430,13 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 		}
 	}
 
+	public String getDefaultNewSampleDataName() {
+		return (StringUtils.isNotEmpty(getFreeModelName()) ? getFreeModelName() + "SampleData" : "SampleData");
+	}
+
 	public String getSampleDataName() {
 		if (StringUtils.isEmpty(sampleDataName)) {
-			return GivesFMENature.DEFAULT_SAMPLE_DATA_NAME;
+			return getDefaultNewSampleDataName();
 		}
 		return sampleDataName;
 	}

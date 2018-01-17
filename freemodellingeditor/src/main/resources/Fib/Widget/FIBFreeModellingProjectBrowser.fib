@@ -29,9 +29,11 @@
 		</BrowserElement>
 		<BrowserElement dataClassName="org.openflexo.fme.model.FMEConceptualModel" label="conceptualModel.name" icon="controller.iconForObject(conceptualModel)"
 		                isEditable="false" filtered="false" defaultVisible="true" name="conceptualModel">
+			<Children data="conceptualModel.children" name="children"/>
 		</BrowserElement>
 		<BrowserElement dataClassName="org.openflexo.fme.model.FMESampleData" label="sampleData.name" icon="controller.iconForObject(sampleData)"
 		                isEditable="false" filtered="false" defaultVisible="true" name="sampleData">
+			<Children data="sampleData.children" name="children"/>
 		</BrowserElement>
 		<BrowserElement dataClassName="org.openflexo.fme.model.FMEFreeModel" label="freeModel.name" icon="controller.iconForObject(freeModel)"
 		                isEditable="false" filtered="false" defaultVisible="true" name="freeModel">

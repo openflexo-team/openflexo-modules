@@ -309,17 +309,28 @@ public abstract class AbstractCreateFMEFreeModelWizard<A extends CreateFMEFreeMo
 				return false;
 			}
 
+			if (getConfigureConceptualModel().getConceptualModelChoice() == ConceptualModelChoice.UseGeneralConceptualModel) {
+				if (getSampleDataChoice() != SampleDataChoice.UseGeneralSampleData) {
+					setIssueMessage(
+							action.getLocales().localizedForKey("you_cannot_specialize_sample_data_if_conceptual_model_is_not_specialized"),
+							IssueMessageType.ERROR);
+					return false;
+				}
+			}
+
 			switch (getSampleDataChoice()) {
+				case UseGeneralSampleData:
+					if (getConfigureConceptualModel().getConceptualModelChoice() != ConceptualModelChoice.UseGeneralConceptualModel) {
+						setIssueMessage(action.getLocales().localizedForKey(
+								"you_cannot_use_general_sample_data_as_you_specialized_conceptual_model"), IssueMessageType.ERROR);
+						return false;
+					}
 				case CreateNewVirtualModelInstance:
 					if (StringUtils.isEmpty(getSampleDataName())) {
 						setIssueMessage(action.getLocales().localizedForKey("no_virtual_model_instance_name_defined"),
 								IssueMessageType.ERROR);
 						return false;
 					}
-					/*if (StringUtils.isEmpty(getNewConceptualModelRelativePath())) {
-						setIssueMessage(action.getLocales().localizedForKey("no_relative_path_defined"), IssueMessageType.ERROR);
-						return false;
-					}*/
 					break;
 				case SelectExistingVirtualModelInstance:
 					if (getExistingSampleDataResource() == null) {

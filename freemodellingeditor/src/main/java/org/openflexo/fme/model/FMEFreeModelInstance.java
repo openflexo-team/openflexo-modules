@@ -107,6 +107,10 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 
 	public List<FlexoConcept> getUsedTopLevelFlexoConcepts();
 
+	public FMEConceptualModel getConceptualModel();
+
+	public FMESampleData getSampleData();
+
 	public abstract class FMEFreeModelInstanceImpl extends VirtualModelInstanceBasedNatureObjectImpl<FreeModellingProjectNature>
 			implements FMEFreeModelInstance {
 
@@ -256,8 +260,14 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 
 		}
 
+		@Override
+		public FMEConceptualModel getConceptualModel() {
+			return getFreeModel().getConceptualModel();
+		}
+
+		@Override
 		public FMESampleData getSampleData() {
-			return getNature().getSampleData();
+			return getFreeModel().getSampleData();
 		}
 
 		@Override

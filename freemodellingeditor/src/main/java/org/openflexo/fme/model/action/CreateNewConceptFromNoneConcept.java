@@ -144,7 +144,7 @@ public class CreateNewConceptFromNoneConcept extends AbstractInstantiateConcept<
 
 		// Now we instantiate that concept
 		CreateFlexoConceptInstance instantiateConcept = CreateFlexoConceptInstance.actionType
-				.makeNewEmbeddedAction(getFreeModellingProjectNature().getSampleData().getAccessedVirtualModelInstance(), null, this);
+				.makeNewEmbeddedAction(getFMEFreeModel().getSampleData().getAccessedVirtualModelInstance(), null, this);
 		instantiateConcept.setFlexoConcept(newFlexoConcept);
 		FlexoConceptInstance containerFCI = retrieveContainerFlexoConceptInstance();
 		if (containerFCI != null) {

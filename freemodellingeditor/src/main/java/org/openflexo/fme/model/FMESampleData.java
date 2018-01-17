@@ -38,14 +38,21 @@
 
 package org.openflexo.fme.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.openflexo.foundation.fml.rt.VirtualModelInstance;
 import org.openflexo.foundation.fml.rt.rm.FMLRTVirtualModelInstanceResourceFactory;
+import org.openflexo.foundation.nature.NatureObject;
 import org.openflexo.foundation.nature.VirtualModelInstanceBasedNatureObject;
 import org.openflexo.logging.FlexoLogger;
+import org.openflexo.model.annotations.Getter;
 import org.openflexo.model.annotations.ImplementationClass;
 import org.openflexo.model.annotations.ModelEntity;
+import org.openflexo.model.annotations.PropertyIdentifier;
+import org.openflexo.model.annotations.Setter;
 import org.openflexo.model.annotations.XMLElement;
 
 /**
@@ -63,7 +70,21 @@ import org.openflexo.model.annotations.XMLElement;
 @ImplementationClass(FMESampleData.FMESampleDataImpl.class)
 public interface FMESampleData extends VirtualModelInstanceBasedNatureObject<FreeModellingProjectNature> {
 
+	@PropertyIdentifier(type = NatureObject.class)
+	public static final String OWNER_KEY = "owner";
+
+	@Override
 	public String getName();
+
+	@Getter(value = OWNER_KEY)
+	public NatureObject<FreeModellingProjectNature> getOwner();
+
+	@Setter(OWNER_KEY)
+	public void setOwner(NatureObject<FreeModellingProjectNature> owner);
+
+	public FMESampleData getParent();
+
+	public List<FMESampleData> getChildren();
 
 	public abstract class FMESampleDataImpl extends VirtualModelInstanceBasedNatureObjectImpl<FreeModellingProjectNature>
 			implements FMESampleData {
@@ -76,6 +97,46 @@ public interface FMESampleData extends VirtualModelInstanceBasedNatureObject<Fre
 				return getAccessedVirtualModelInstance().getName() + FMLRTVirtualModelInstanceResourceFactory.FML_RT_SUFFIX;
 			}
 			return "<SampleData>";
+		}
+
+		@Override
+		public FreeModellingProjectNature getNature() {
+			if (getOwner() != null) {
+				return getOwner().getNature();
+			}
+			return null;
+		}
+
+		private List<FMESampleData> children = null;
+
+		@Override
+		public FMESampleData getParent() {
+			if (getOwner() instanceof FreeModellingProjectNature) {
+				return null;
+			}
+			else if (getOwner() instanceof FMEFreeModel) {
+				return getOwner().getNature().getSampleData();
+			}
+			else {
+				return null;
+			}
+		}
+
+		@Override
+		public List<FMESampleData> getChildren() {
+			if (getOwner() instanceof FMEFreeModel) {
+				return Collections.emptyList();
+			}
+			else if (getOwner() instanceof FreeModellingProjectNature) {
+				if (children == null) {
+					children = new ArrayList<>();
+					for (FMEFreeModel freeModel : getNature().getFreeModels()) {
+						children.add(freeModel.getSampleData());
+					}
+				}
+				return children;
+			}
+			return null;
 		}
 
 	}

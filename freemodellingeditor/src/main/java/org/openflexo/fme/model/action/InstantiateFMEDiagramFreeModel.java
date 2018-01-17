@@ -143,9 +143,9 @@ public class InstantiateFMEDiagramFreeModel extends InstantiateFMEFreeModel<Inst
 		System.out.println("Found: " + creationScheme.getFMLRepresentation());
 
 		action.setParameterValue(creationScheme.getParameter("sampleData"),
-				getFreeModel().getNature().getSampleData().getAccessedVirtualModelInstance());
+				getFreeModel().getSampleData().getAccessedVirtualModelInstance());
 
-		System.out.println("Les sample data: " + getFreeModel().getNature().getSampleData().getAccessedVirtualModelInstance());
+		System.out.println("Les sample data: " + getFreeModel().getSampleData().getAccessedVirtualModelInstance());
 
 		action.setParameterValue(creationScheme.getParameter("diagram"), newDiagramResource.getDiagram());
 

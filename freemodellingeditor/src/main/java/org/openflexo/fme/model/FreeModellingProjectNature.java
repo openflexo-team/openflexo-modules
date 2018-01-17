@@ -84,14 +84,14 @@ public interface FreeModellingProjectNature extends ProjectNature<FreeModellingP
 	@PropertyIdentifier(type = FMESampleData.class)
 	public static final String SAMPLE_DATA = "sampleData";
 
-	@Getter(value = CONCEPTUAL_MODEL, inverse = FMEConceptualModel.NATURE)
+	@Getter(value = CONCEPTUAL_MODEL, inverse = FMEConceptualModel.OWNER_KEY)
 	@XMLElement
 	public FMEConceptualModel getConceptualModel();
 
 	@Setter(CONCEPTUAL_MODEL)
 	public void setConceptualModel(FMEConceptualModel conceptualModel);
 
-	@Getter(value = SAMPLE_DATA, inverse = FMESampleData.NATURE)
+	@Getter(value = SAMPLE_DATA, inverse = FMESampleData.OWNER_KEY)
 	@XMLElement
 	public FMESampleData getSampleData();
 

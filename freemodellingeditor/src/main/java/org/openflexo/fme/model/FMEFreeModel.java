@@ -118,7 +118,7 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 	 * 
 	 * @return
 	 */
-	@Getter(value = CONCEPTUAL_MODEL)
+	@Getter(value = CONCEPTUAL_MODEL, inverse = FMEConceptualModel.OWNER_KEY)
 	@XMLElement
 	public FMEConceptualModel getConceptualModel();
 
@@ -136,7 +136,7 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 	 * 
 	 * @return
 	 */
-	@Getter(value = SAMPLE_DATA)
+	@Getter(value = SAMPLE_DATA, inverse = FMESampleData.OWNER_KEY)
 	@XMLElement
 	public FMESampleData getSampleData();
 

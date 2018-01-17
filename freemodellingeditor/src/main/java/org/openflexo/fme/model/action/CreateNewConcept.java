@@ -112,8 +112,8 @@ public class CreateNewConcept extends FMEAction<CreateNewConcept, FMEFreeModel, 
 	protected void doAction(Object context) throws FlexoException {
 
 		// Now we create the new concept
-		newFlexoConcept = getFreeModellingProjectNature().getConceptualModel().getFlexoConcept(getNewConceptName(), getContainerConcept(),
-				getEditor(), this);
+		newFlexoConcept = getFocusedObject().getConceptualModel().getFlexoConcept(getNewConceptName(), getContainerConcept(), getEditor(),
+				this);
 
 		// Now we create the new concept GR
 		newGRFlexoConcept = getFocusedObject().getGRFlexoConcept(newFlexoConcept, getContainerGRConcept(), getEditor(), this);

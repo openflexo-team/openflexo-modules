@@ -38,6 +38,9 @@
 
 package org.openflexo.fme.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.openflexo.connie.DataBinding;
@@ -60,10 +63,14 @@ import org.openflexo.foundation.fml.editionaction.AssignationAction;
 import org.openflexo.foundation.fml.editionaction.ExpressionAction;
 import org.openflexo.foundation.fml.inspector.InspectorEntry;
 import org.openflexo.foundation.fml.rm.VirtualModelResourceFactory;
+import org.openflexo.foundation.nature.NatureObject;
 import org.openflexo.foundation.nature.VirtualModelBasedNatureObject;
 import org.openflexo.logging.FlexoLogger;
+import org.openflexo.model.annotations.Getter;
 import org.openflexo.model.annotations.ImplementationClass;
 import org.openflexo.model.annotations.ModelEntity;
+import org.openflexo.model.annotations.PropertyIdentifier;
+import org.openflexo.model.annotations.Setter;
 import org.openflexo.model.annotations.XMLElement;
 
 /**
@@ -83,6 +90,9 @@ public interface FMEConceptualModel extends VirtualModelBasedNatureObject<FreeMo
 	public static final String DESCRIPTION_ROLE_NAME = "description";
 	public static final String CONCEPT_NAME_PARAMETER = "conceptName";
 
+	@PropertyIdentifier(type = NatureObject.class)
+	public static final String OWNER_KEY = "owner";
+
 	/**
 	 * Return (creates when non-existant) a conceptual FlexoConcept in {@link VirtualModel} considered as conceptual model
 	 * 
@@ -96,6 +106,16 @@ public interface FMEConceptualModel extends VirtualModelBasedNatureObject<FreeMo
 			FlexoAction<?, ?, ?> ownerAction) throws FlexoException;
 
 	public String getName();
+
+	@Getter(value = OWNER_KEY)
+	public NatureObject<FreeModellingProjectNature> getOwner();
+
+	@Setter(OWNER_KEY)
+	public void setOwner(NatureObject<FreeModellingProjectNature> owner);
+
+	public FMEConceptualModel getParent();
+
+	public List<FMEConceptualModel> getChildren();
 
 	public abstract class FMEConceptualModelImpl extends VirtualModelBasedNatureObjectImpl<FreeModellingProjectNature>
 			implements FMEConceptualModel {
@@ -257,6 +277,46 @@ public interface FMEConceptualModel extends VirtualModelBasedNatureObject<FreeMo
 				returned.getInspector().setRenderer(new DataBinding<String>("instance.name"));
 			}
 			return returned;
+		}
+
+		@Override
+		public FreeModellingProjectNature getNature() {
+			if (getOwner() != null) {
+				return getOwner().getNature();
+			}
+			return null;
+		}
+
+		private List<FMEConceptualModel> children = null;
+
+		@Override
+		public FMEConceptualModel getParent() {
+			if (getOwner() instanceof FreeModellingProjectNature) {
+				return null;
+			}
+			else if (getOwner() instanceof FMEFreeModel) {
+				return getOwner().getNature().getConceptualModel();
+			}
+			else {
+				return null;
+			}
+		}
+
+		@Override
+		public List<FMEConceptualModel> getChildren() {
+			if (getOwner() instanceof FMEFreeModel) {
+				return Collections.emptyList();
+			}
+			else if (getOwner() instanceof FreeModellingProjectNature) {
+				if (children == null) {
+					children = new ArrayList<>();
+					for (FMEFreeModel freeModel : getNature().getFreeModels()) {
+						children.add(freeModel.getConceptualModel());
+					}
+				}
+				return children;
+			}
+			return null;
 		}
 
 	}
