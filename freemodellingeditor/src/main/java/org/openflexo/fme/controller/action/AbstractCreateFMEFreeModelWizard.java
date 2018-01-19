@@ -48,6 +48,7 @@ import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.fme.model.action.CreateFMEFreeModel;
 import org.openflexo.fme.model.action.CreateFMEFreeModel.ConceptualModelChoice;
 import org.openflexo.fme.model.action.CreateFMEFreeModel.SampleDataChoice;
+import org.openflexo.foundation.fml.FlexoConceptInstanceType;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.rm.VirtualModelResource;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
@@ -362,13 +363,20 @@ public abstract class AbstractCreateFMEFreeModelWizard<A extends CreateFMEFreeMo
 			return action.getExistingSampleDataResource();
 		}
 
-		public void setExistingConceptualModelResource(FMLRTVirtualModelInstanceResource existingSampleDataResource) {
+		public void setExistingSampleDataResource(FMLRTVirtualModelInstanceResource existingSampleDataResource) {
 			if (existingSampleDataResource != getExistingSampleDataResource()) {
 				FMLRTVirtualModelInstanceResource oldValue = getExistingSampleDataResource();
 				action.setExistingSampleDataResource(existingSampleDataResource);
 				getPropertyChangeSupport().firePropertyChange("existingSampleDataResource", oldValue, existingSampleDataResource);
 				checkValidity();
 			}
+		}
+
+		public FlexoConceptInstanceType getExpectedType() {
+			if (getConfigureConceptualModel().getConceptualModelChoice() == ConceptualModelChoice.SelectExistingVirtualModel) {
+				return getConfigureConceptualModel().getExistingConceptualModelResource().getVirtualModel().getInstanceType();
+			}
+			return null;
 		}
 
 		public String getSampleDataName() {

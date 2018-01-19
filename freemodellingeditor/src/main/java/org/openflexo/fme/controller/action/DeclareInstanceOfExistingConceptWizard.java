@@ -48,6 +48,7 @@ import org.openflexo.components.wizard.WizardStep;
 import org.openflexo.fme.model.action.DeclareInstanceOfExistingConcept;
 import org.openflexo.fme.model.action.DeclareInstanceOfExistingConcept.GRStrategy;
 import org.openflexo.foundation.fml.FlexoConcept;
+import org.openflexo.foundation.fml.FlexoConceptInstanceType;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
@@ -127,6 +128,18 @@ public class DeclareInstanceOfExistingConceptWizard extends FlexoWizard {
 				return false;
 			}
 
+			if (getConcept().getContainerFlexoConcept() != null) {
+				if (getContainer() == null) {
+					setIssueMessage(action.getLocales().localizedForKey("please_select_a_container_for_new_concept_instance"),
+							IssueMessageType.ERROR);
+					return false;
+				}
+				if (!getConcept().getContainerFlexoConcept().isAssignableFrom(getContainer().getFlexoConcept())) {
+					setIssueMessage(action.getLocales().localizedForKey("container_is_not_of_right_type"), IssueMessageType.ERROR);
+					return false;
+				}
+			}
+
 			if (getGrStrategy() == null) {
 				setIssueMessage(action.getLocales().localizedForKey("please_choose_a_strategy_for_graphical_representation"),
 						IssueMessageType.ERROR);
@@ -146,6 +159,7 @@ public class DeclareInstanceOfExistingConceptWizard extends FlexoWizard {
 				FlexoConcept oldValue = getConcept();
 				action.setConcept(concept);
 				getPropertyChangeSupport().firePropertyChange("concept", oldValue, concept);
+				getPropertyChangeSupport().firePropertyChange("expectedContainerType", null, getExpectedContainerType());
 				checkValidity();
 			}
 		}
@@ -161,6 +175,23 @@ public class DeclareInstanceOfExistingConceptWizard extends FlexoWizard {
 				getPropertyChangeSupport().firePropertyChange("grStrategy", oldValue, strategy);
 				checkValidity();
 			}
+		}
+
+		public FlexoConceptInstance getContainer() {
+			return action.getContainer();
+		}
+
+		public void setContainer(FlexoConceptInstance container) {
+			if ((container == null && getContainer() != null) || (container != null && !container.equals(getContainer()))) {
+				FlexoConceptInstance oldValue = getContainer();
+				action.setContainer(container);
+				getPropertyChangeSupport().firePropertyChange("container", oldValue, container);
+				checkValidity();
+			}
+		}
+
+		public FlexoConceptInstanceType getExpectedContainerType() {
+			return getConcept().getContainerFlexoConcept().getInstanceType();
 		}
 
 	}

@@ -112,15 +112,17 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 
 		logger.info("Create free model");
 
-		// Create FreeMetaModel when not existant
-		// Use the same name
-		freeModel = createNewFreeModel(getFreeModelName());
+		FMEConceptualModel conceptualModel = getFocusedObject().getConceptualModel();
 
 		if (getConceptualModelChoice() != ConceptualModelChoice.UseGeneralConceptualModel) {
-			FMEConceptualModel conceptualModel = makeFMEConceptualModel();
+			conceptualModel = makeFMEConceptualModel();
+		}
+
+		freeModel = createNewFreeModel(getFreeModelName(), conceptualModel);
+
+		if (getConceptualModelChoice() != ConceptualModelChoice.UseGeneralConceptualModel) {
 			freeModel.setConceptualModel(conceptualModel);
 			if (getSampleDataChoice() != SampleDataChoice.UseGeneralSampleData) {
-				System.out.println("On cree de nouvelles sample data");
 				freeModel.setSampleData(makeFMESampleData(conceptualModel));
 			}
 		}
@@ -130,22 +132,23 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 		getFocusedObject().getOwner().setIsModified();
 	}
 
-	protected VirtualModel createVirtualModel(String metaModelName) {
+	protected VirtualModel createVirtualModel(String metaModelName, VirtualModelResource conceptualVM) {
 		// Now we create the VirtualModel
-		System.out.println("Creating VirtualModel...");
+		//System.out.println("Creating VirtualModel...");
 		CreateTopLevelVirtualModel action = CreateTopLevelVirtualModel.actionType
 				.makeNewEmbeddedAction(getFocusedObject().getOwner().getVirtualModelRepository().getRootFolder(), null, this);
 		action.setNewVirtualModelName(metaModelName);
 		action.doAction();
 		VirtualModel newVirtualModel = action.getNewVirtualModel();
-		System.out.println("VirtualModel has been created: " + newVirtualModel);
+		//System.out.println("VirtualModel has been created: " + newVirtualModel);
 
 		// Now we create the sample data model slot
 		CreateModelSlot createMS = CreateModelSlot.actionType.makeNewEmbeddedAction(newVirtualModel, null, this);
 		createMS.setTechnologyAdapter(getServiceManager().getTechnologyAdapterService().getTechnologyAdapter(FMLRTTechnologyAdapter.class));
 		createMS.setModelSlotClass(FMLRTVirtualModelInstanceModelSlot.class);
 		createMS.setModelSlotName(FMEFreeModel.SAMPLE_DATA_MODEL_SLOT_NAME);
-		createMS.setVmRes(getConceptualVirtualModelResource());
+		createMS.setVmRes(conceptualVM);
+
 		createMS.doAction();
 		FMLRTVirtualModelInstanceModelSlot sampleDataModelSlot = (FMLRTVirtualModelInstanceModelSlot) createMS.getNewModelSlot();
 
@@ -158,7 +161,7 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 		CreateGenericBehaviourParameter createSampleDataParameter = CreateGenericBehaviourParameter.actionType
 				.makeNewEmbeddedAction(creationScheme, null, this);
 		createSampleDataParameter.setParameterName("sampleData");
-		createSampleDataParameter.setParameterType(getConceptualVirtualModelResource().getVirtualModel().getInstanceType());
+		createSampleDataParameter.setParameterType(conceptualVM.getVirtualModel().getInstanceType());
 
 		createSampleDataParameter.doAction();
 
@@ -179,11 +182,7 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 		return newVirtualModel;
 	}
 
-	protected abstract FMEFreeModel createNewFreeModel(String metaModelName);
-
-	protected VirtualModelResource getConceptualVirtualModelResource() {
-		return (VirtualModelResource) getFocusedObject().getConceptualModel().getAccessedVirtualModel().getResource();
-	}
+	protected abstract FMEFreeModel createNewFreeModel(String metaModelName, FMEConceptualModel conceptualModel);
 
 	@Override
 	public boolean isValid() {

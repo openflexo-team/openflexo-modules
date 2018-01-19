@@ -140,7 +140,7 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 		diagramModel1 = action.getNewFreeModel();
 		assertNotNull(diagramModel1);
 
-		FlexoConcept conceptAGR = diagramModel1.getGRFlexoConcept(conceptA, null, editor, null);
+		FlexoConcept conceptAGR = diagramModel1.getGRFlexoConcept(conceptA, null, editor, null, true);
 		assertNotNull(conceptAGR);
 
 		System.out.println(diagramModel1.getAccessedVirtualModel().getFMLRepresentation());

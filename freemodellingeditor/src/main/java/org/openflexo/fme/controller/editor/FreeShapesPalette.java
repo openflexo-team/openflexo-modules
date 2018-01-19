@@ -40,6 +40,7 @@ package org.openflexo.fme.controller.editor;
 
 import java.util.logging.Logger;
 
+import org.openflexo.fge.BackgroundImageBackgroundStyle;
 import org.openflexo.fge.Drawing.ContainerNode;
 import org.openflexo.fge.Drawing.DrawingTreeNode;
 import org.openflexo.fge.ShapeGraphicalRepresentation;
@@ -51,7 +52,12 @@ import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.action.FlexoUndoManager.FlexoActionCompoundEdit;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
+import org.openflexo.gina.controller.FIBController.Status;
+import org.openflexo.gina.model.FIBComponent;
+import org.openflexo.gina.swing.utils.JFIBDialog;
+import org.openflexo.gina.swing.view.SwingViewFactory;
 import org.openflexo.logging.FlexoLogger;
+import org.openflexo.technologyadapter.diagram.controller.DiagramCst;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.CommonPalette;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.FMLControlledDiagramShape;
 import org.openflexo.technologyadapter.diagram.model.Diagram;
@@ -59,6 +65,8 @@ import org.openflexo.technologyadapter.diagram.model.DiagramContainerElement;
 import org.openflexo.technologyadapter.diagram.model.DiagramElement;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 import org.openflexo.technologyadapter.diagram.model.action.AddShape;
+import org.openflexo.view.FlexoFrame;
+import org.openflexo.view.controller.FlexoFIBController;
 
 public class FreeShapesPalette extends CommonPalette {
 
@@ -91,15 +99,31 @@ public class FreeShapesPalette extends CommonPalette {
 
 		Object targetObject = target.getDrawable();
 
+		ShapeGraphicalRepresentation clonedGR = (ShapeGraphicalRepresentation) gr.cloneObject();
+
+		if (isImage) {
+
+			if (clonedGR.getBackground() instanceof BackgroundImageBackgroundStyle) {
+				((BackgroundImageBackgroundStyle) clonedGR.getBackground()).setImageFile(null);
+			}
+
+			FIBComponent fibComponent = getEditor().getFIBLibrary().retrieveFIBComponent(DiagramCst.IMPORT_IMAGE_FILE_DIALOG_FIB);
+			JFIBDialog dialog = JFIBDialog.instanciateAndShowDialog(fibComponent, clonedGR, FlexoFrame.getActiveFrame(), true,
+					new FlexoFIBController(fibComponent, SwingViewFactory.INSTANCE, getEditor().getFlexoController()));
+			if (dialog.getStatus() != Status.VALIDATED) {
+				return false;
+			}
+		}
+
 		if (targetObject instanceof DiagramContainerElement) {
 			DiagramContainerElement<?> container = (DiagramContainerElement<?>) target.getDrawable();
-			return handleDropInDiagramContainerElement(container, gr, dropLocation, applyCurrentForeground, applyCurrentBackground,
+			return handleDropInDiagramContainerElement(container, clonedGR, dropLocation, applyCurrentForeground, applyCurrentBackground,
 					applyCurrentTextStyle, applyCurrentShadowStyle, isImage, resize);
 		}
 
 		if (targetObject instanceof FMLControlledDiagramShape) {
 			FMLControlledDiagramShape container = (FMLControlledDiagramShape) target.getDrawable();
-			return handleDropInFMLControlledDiagramShape(container, gr, dropLocation, applyCurrentForeground, applyCurrentBackground,
+			return handleDropInFMLControlledDiagramShape(container, clonedGR, dropLocation, applyCurrentForeground, applyCurrentBackground,
 					applyCurrentTextStyle, applyCurrentShadowStyle, isImage, resize);
 		}
 

@@ -111,6 +111,8 @@ public class DeclareInstanceOfExistingConcept extends AbstractInstantiateConcept
 	private FlexoConcept concept;
 	private GRStrategy grStrategy = null; // GRStrategy.GetConceptShape;
 
+	private FlexoConceptInstance container;
+
 	DeclareInstanceOfExistingConcept(FlexoConceptInstance focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
@@ -132,17 +134,22 @@ public class DeclareInstanceOfExistingConcept extends AbstractInstantiateConcept
 		boolean wasValid = isValid();
 		this.concept = concept;
 		getPropertyChangeSupport().firePropertyChange("concept", null, concept);
+		getPropertyChangeSupport().firePropertyChange("hasGRConcept", !hasGRConcept(), hasGRConcept());
 		getPropertyChangeSupport().firePropertyChange("grStrategy", null, concept);
 		getPropertyChangeSupport().firePropertyChange("isValid", wasValid, isValid());
 	}
 
-	public FlexoConcept getGRConcept() {
-		return getFMEFreeModel().getGRFlexoConcept(getConcept(), null, getEditor(), this);
+	public boolean hasGRConcept() {
+		return getGRConcept(false) != null;
+	}
+
+	public FlexoConcept getGRConcept(boolean createWhenUnexistant) {
+		return getFMEFreeModel().getGRFlexoConcept(getConcept(), null, getEditor(), this, createWhenUnexistant);
 	}
 
 	public GRStrategy getGrStrategy() {
 		if (grStrategy == null) {
-			if (getFMEFreeModelInstance().getInstances(getGRConcept()).size() > 0) {
+			if (getFMEFreeModelInstance().getInstances(getGRConcept(false)).size() > 0) {
 				return GRStrategy.GetConceptShape;
 			}
 			return GRStrategy.RedefineShapeOfConcept;
@@ -160,6 +167,8 @@ public class DeclareInstanceOfExistingConcept extends AbstractInstantiateConcept
 	@Override
 	protected void doAction(Object context) throws FlexoException {
 
+		logger.info("Declare " + getFocusedObject() + " as instance of existing concept " + getConcept());
+
 		FMEDiagramFreeModelInstance freeModelInstance = getFMEFreeModelInstance();
 		if (freeModelInstance == null) {
 			throw new InvalidArgumentException("FlexoConceptInstance does not belong to any FreeModel");
@@ -172,13 +181,21 @@ public class DeclareInstanceOfExistingConcept extends AbstractInstantiateConcept
 		CreateFlexoConceptInstance instantiateConcept = CreateFlexoConceptInstance.actionType
 				.makeNewEmbeddedAction(getFMEFreeModel().getSampleData().getAccessedVirtualModelInstance(), null, this);
 		instantiateConcept.setFlexoConcept(getConcept());
+		instantiateConcept.setContainer(getContainer());
 		CreationScheme cs = getConcept().getCreationSchemes().get(0);
 		instantiateConcept.setCreationScheme(cs);
 		instantiateConcept.setParameterValue(cs.getParameters().get(0), actualName);
 		instantiateConcept.doAction();
 		FlexoConceptInstance conceptInstance = instantiateConcept.getNewFlexoConceptInstance();
 
-		System.out.println("J'ai instancie: " + conceptInstance);
+		// System.out.println("Instantiated: " + conceptInstance + " container=");
+
+		boolean grConceptWasExisting = hasGRConcept();
+
+		// Create or retrieve the GR concept
+		FlexoConcept grConcept = getGRConcept(true);
+
+		// System.out.println("Concept GR: " + grConcept);
 
 		// Retrieve shape property of this FC
 		ShapeRole currentShapeRole = (ShapeRole) flexoConceptInstance.getFlexoConcept()
@@ -187,35 +204,44 @@ public class DeclareInstanceOfExistingConcept extends AbstractInstantiateConcept
 		// Retrieve actual shape element
 		DiagramShape shapeElement = flexoConceptInstance.getFlexoActor(currentShapeRole);
 
-		ShapeRole newShapeRole = (ShapeRole) getGRConcept().getAccessibleProperty(FMEDiagramFreeModel.SHAPE_ROLE_NAME);
+		ShapeRole newShapeRole = (ShapeRole) grConcept.getAccessibleProperty(FMEDiagramFreeModel.SHAPE_ROLE_NAME);
 
-		switch (getGrStrategy()) {
-			case RedefineShapeOfConcept:
-				// Sets concept GR with actual shape GR
-				newShapeRole.getGraphicalRepresentation().setsWith(shapeElement.getGraphicalRepresentation(),
-						ShapeGraphicalRepresentation.X, ShapeGraphicalRepresentation.Y);
-				// Look at the palette element
-				// DiagramPalette palette = freeModel.getMetaModel().getConceptsPalette();
-				break;
-			case GetConceptShape:
-				// Sets actual shape GR with concept GR
-				shapeElement.getGraphicalRepresentation().setsWith(newShapeRole.getGraphicalRepresentation(),
-						ShapeGraphicalRepresentation.X, ShapeGraphicalRepresentation.Y);
-				break;
-			case KeepShape:
-				// Nothing to do
-				break;
+		if (grConceptWasExisting) {
+
+			switch (getGrStrategy()) {
+				case RedefineShapeOfConcept:
+					// Sets concept GR with actual shape GR
+					newShapeRole.getGraphicalRepresentation().setsWith(shapeElement.getGraphicalRepresentation(),
+							ShapeGraphicalRepresentation.X, ShapeGraphicalRepresentation.Y);
+					// Look at the palette element
+					// DiagramPalette palette = freeModel.getMetaModel().getConceptsPalette();
+					break;
+				case GetConceptShape:
+					// Sets actual shape GR with concept GR
+					shapeElement.getGraphicalRepresentation().setsWith(newShapeRole.getGraphicalRepresentation(),
+							ShapeGraphicalRepresentation.X, ShapeGraphicalRepresentation.Y);
+					break;
+				case KeepShape:
+					// Nothing to do
+					break;
+			}
 		}
 
 		// We will here bypass the classical DropScheme
-		flexoConceptInstance.setFlexoConcept(getGRConcept());
+		flexoConceptInstance.setFlexoConcept(grConcept);
 		flexoConceptInstance.setFlexoPropertyValue(FMEFreeModel.CONCEPT_ROLE_NAME, conceptInstance);
 
 		// In case of GRStrategy is to redefine concept shape, we now need to set GR of all instances
-		if (getGrStrategy() == GRStrategy.RedefineShapeOfConcept) {
-			for (FlexoConceptInstance fci : freeModelInstance.getInstances(concept)) {
-				fci.getFlexoActor(newShapeRole).getGraphicalRepresentation().setsWith(newShapeRole.getGraphicalRepresentation(),
-						GraphicalRepresentationSet.IGNORED_PROPERTIES);
+		if (grConceptWasExisting) {
+			if (getGrStrategy() == GRStrategy.RedefineShapeOfConcept) {
+				for (FlexoConceptInstance fci : freeModelInstance.getInstances(grConcept)) {
+					DiagramShape fciShapeElement = fci.getFlexoActor(newShapeRole);
+					fciShapeElement.getGraphicalRepresentation().setsWith(newShapeRole.getGraphicalRepresentation(),
+							GraphicalRepresentationSet.IGNORED_PROPERTIES);
+					fciShapeElement.getParent().getPropertyChangeSupport().firePropertyChange(DiagramElement.INVALIDATE, null,
+							fciShapeElement.getParent());
+
+				}
 			}
 		}
 
@@ -232,7 +258,7 @@ public class DeclareInstanceOfExistingConcept extends AbstractInstantiateConcept
 			}
 			if (existingElement == null) {
 				// No palette element matching related concept was found
-				freeModelInstance.getFreeModel().createPaletteElementForConcept(getGRConcept(), concept,
+				freeModelInstance.getFreeModel().createPaletteElementForConcept(grConcept, concept,
 						shapeElement.getGraphicalRepresentation(), this);
 			}
 		}
@@ -261,6 +287,18 @@ public class DeclareInstanceOfExistingConcept extends AbstractInstantiateConcept
 		}
 
 		return true;
+	}
+
+	public FlexoConceptInstance getContainer() {
+		return container;
+	}
+
+	public void setContainer(FlexoConceptInstance container) {
+		if ((container == null && this.container != null) || (container != null && !container.equals(this.container))) {
+			FlexoConceptInstance oldValue = this.container;
+			this.container = container;
+			getPropertyChangeSupport().firePropertyChange("container", oldValue, container);
+		}
 	}
 
 }

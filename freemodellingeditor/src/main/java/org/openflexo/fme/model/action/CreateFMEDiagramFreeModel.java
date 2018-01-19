@@ -43,6 +43,7 @@ import java.util.logging.Logger;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openflexo.connie.DataBinding;
+import org.openflexo.fme.model.FMEConceptualModel;
 import org.openflexo.fme.model.FMEDiagramFreeModel;
 import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.FlexoEditor;
@@ -169,17 +170,17 @@ public class CreateFMEDiagramFreeModel extends CreateFMEFreeModel<CreateFMEDiagr
 	}
 
 	@Override
-	protected FMEDiagramFreeModel createNewFreeModel(String metaModelName) {
+	protected FMEDiagramFreeModel createNewFreeModel(String metaModelName, FMEConceptualModel conceptualModel) {
 
 		// First we create the diagram specification
-		System.out.println("Creating DiagramSpecification...");
+		// System.out.println("Creating DiagramSpecification...");
 
 		CreateDiagramSpecification createDS = CreateDiagramSpecification.actionType.makeNewEmbeddedAction(getDiagramSpecificationFolder(),
 				null, this);
 		createDS.setNewDiagramSpecificationName(metaModelName);
 		createDS.doAction();
 		DiagramSpecification diagramSpecification = createDS.getNewDiagramSpecification();
-		System.out.println("DiagramSpecification has been created: " + diagramSpecification);
+		// System.out.println("DiagramSpecification has been created: " + diagramSpecification);
 
 		if (diagramSpecification == null) {
 			return null;
@@ -197,14 +198,14 @@ public class CreateFMEDiagramFreeModel extends CreateFMEFreeModel<CreateFMEDiagr
 		CreateDiagramPalette createPalette = CreateDiagramPalette.actionType.makeNewEmbeddedAction(diagramSpecification, null, this);
 		createPalette.setNewPaletteName(FMEDiagramFreeModel.PALETTE_NAME);
 		createPalette.doAction();
-		System.out.println("Palette has been created: " + createPalette.getNewPalette());
+		//System.out.println("Palette has been created: " + createPalette.getNewPalette());
 
 		if (createPalette == null) {
 			return null;
 		}
 
 		// Now we create the VirtualModel
-		VirtualModel newVirtualModel = createVirtualModel(metaModelName);
+		VirtualModel newVirtualModel = createVirtualModel(metaModelName, conceptualModel.getAccessedVirtualModelResource());
 
 		if (newVirtualModel == null) {
 			return null;

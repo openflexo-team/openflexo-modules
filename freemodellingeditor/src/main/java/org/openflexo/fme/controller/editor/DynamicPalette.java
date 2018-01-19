@@ -232,77 +232,85 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 		element.delete();
 	};
 
+	private boolean isUpdating = false;
+
 	public void update() {
 
-		GraphicalRepresentationSet<DiagramElement<?>> diagramGRs = new GraphicalRepresentationSet<DiagramElement<?>>();
+		isUpdating = true;
 
-		// For each existing DiagramElement which is not deleted:
-		for (DiagramElement<?> e : getEditor().getDiagramFreeModelInstance().getDiagram().getDescendants()) {
-			if (!e.isDeleted()) {
-				diagramGRs.put(e.getGraphicalRepresentation(), e);
+		try {
+			GraphicalRepresentationSet<DiagramElement<?>> diagramGRs = new GraphicalRepresentationSet<DiagramElement<?>>();
+
+			// For each existing DiagramElement which is not deleted:
+			for (DiagramElement<?> e : getEditor().getDiagramFreeModelInstance().getDiagram().getDescendants()) {
+				if (!e.isDeleted()) {
+					diagramGRs.put(e.getGraphicalRepresentation(), e);
+				}
 			}
-		}
 
-		List<PaletteElement> elementsToAdd = new ArrayList<PaletteElement>();
-		List<PaletteElement> elementsToRemove = new ArrayList<PaletteElement>(getElements());
+			List<PaletteElement> elementsToAdd = new ArrayList<PaletteElement>();
+			List<PaletteElement> elementsToRemove = new ArrayList<PaletteElement>(getElements());
 
-		for (GraphicalRepresentation key : diagramGRs.keySet()) {
-			// We iterate here on each different Shape GR
-			if (key instanceof ShapeGraphicalRepresentation) {
-				PaletteElement existingElement = null;
-				for (PaletteElement e : getElements()) {
-					if (GraphicalRepresentationSet.equals(e.getGraphicalRepresentation(), key)) {
-						existingElement = e;
-						break;
+			for (GraphicalRepresentation key : diagramGRs.keySet()) {
+				// We iterate here on each different Shape GR
+				if (key instanceof ShapeGraphicalRepresentation) {
+					PaletteElement existingElement = null;
+					for (PaletteElement e : getElements()) {
+						if (GraphicalRepresentationSet.equals(e.getGraphicalRepresentation(), key)) {
+							existingElement = e;
+							break;
+						}
+					}
+					if (existingElement != null) {
+						// Fine, nothing to do for this one
+						elementsToRemove.remove(existingElement);
+						// System.out.println("Found existing " + existingElement);
+						if (existingElement instanceof DynamicPaletteElement) {
+							((DynamicPaletteElement) existingElement).updateDiagramElements(diagramGRs.get(key));
+						}
+					}
+					else {
+						existingElement = makePaletteElement((ShapeGraphicalRepresentation) key, diagramGRs.get(key));
+						elementsToAdd.add(existingElement);
 					}
 				}
-				if (existingElement != null) {
-					// Fine, nothing to do for this one
-					elementsToRemove.remove(existingElement);
-					// System.out.println("Found existing " + existingElement);
-					if (existingElement instanceof DynamicPaletteElement) {
-						((DynamicPaletteElement) existingElement).updateDiagramElements(diagramGRs.get(key));
+			}
+
+			for (PaletteElement e : elementsToRemove) {
+				// System.out.println("Removing: " + e);
+				removeElement(e);
+			}
+			for (PaletteElement e : elementsToAdd) {
+				// System.out.println("Adding: " + e);
+				addElement(e);
+			}
+
+			for (PaletteElement e : getElements()) {
+				int px, py;
+				int index = getElements().indexOf(e);
+
+				px = index % 3;
+				py = index / 3;
+
+				if (e.getGraphicalRepresentation() != null) {
+					if (e.getGraphicalRepresentation().getShapeSpecification() != null
+							&& (e.getGraphicalRepresentation().getShapeSpecification().getShapeType() == ShapeType.SQUARE
+									|| e.getGraphicalRepresentation().getShapeSpecification().getShapeType() == ShapeType.CIRCLE)) {
+						e.getGraphicalRepresentation().setX(px * GRID_WIDTH + 15);
+						e.getGraphicalRepresentation().setY(py * GRID_HEIGHT + 10);
+						e.getGraphicalRepresentation().setWidth(30);
+						e.getGraphicalRepresentation().setHeight(30);
+					}
+					else {
+						e.getGraphicalRepresentation().setX(px * GRID_WIDTH + 10);
+						e.getGraphicalRepresentation().setY(py * GRID_HEIGHT + 10);
+						e.getGraphicalRepresentation().setWidth(40);
+						e.getGraphicalRepresentation().setHeight(30);
 					}
 				}
-				else {
-					existingElement = makePaletteElement((ShapeGraphicalRepresentation) key, diagramGRs.get(key));
-					elementsToAdd.add(existingElement);
-				}
 			}
-		}
-
-		for (PaletteElement e : elementsToRemove) {
-			// System.out.println("Removing: " + e);
-			removeElement(e);
-		}
-		for (PaletteElement e : elementsToAdd) {
-			// System.out.println("Adding: " + e);
-			addElement(e);
-		}
-
-		for (PaletteElement e : getElements()) {
-			int px, py;
-			int index = getElements().indexOf(e);
-
-			px = index % 3;
-			py = index / 3;
-
-			if (e.getGraphicalRepresentation() != null) {
-				if (e.getGraphicalRepresentation().getShapeSpecification() != null
-						&& (e.getGraphicalRepresentation().getShapeSpecification().getShapeType() == ShapeType.SQUARE
-								|| e.getGraphicalRepresentation().getShapeSpecification().getShapeType() == ShapeType.CIRCLE)) {
-					e.getGraphicalRepresentation().setX(px * GRID_WIDTH + 15);
-					e.getGraphicalRepresentation().setY(py * GRID_HEIGHT + 10);
-					e.getGraphicalRepresentation().setWidth(30);
-					e.getGraphicalRepresentation().setHeight(30);
-				}
-				else {
-					e.getGraphicalRepresentation().setX(px * GRID_WIDTH + 10);
-					e.getGraphicalRepresentation().setY(py * GRID_HEIGHT + 10);
-					e.getGraphicalRepresentation().setWidth(40);
-					e.getGraphicalRepresentation().setHeight(30);
-				}
-			}
+		} finally {
+			isUpdating = false;
 		}
 
 	}
@@ -477,7 +485,9 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 
 			// System.out.println("An observed DiagramElement GR has changed: " + event + " property " + event.getPropertyName());
 
-			update();
+			if (!isUpdating) {
+				update();
+			}
 		}
 
 		public FlexoConcept getFlexoConcept() {

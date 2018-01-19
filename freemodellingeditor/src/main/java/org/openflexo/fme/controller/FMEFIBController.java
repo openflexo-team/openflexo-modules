@@ -46,7 +46,7 @@ import org.openflexo.fme.FMEModule;
 import org.openflexo.fme.controller.editor.FreeModelDiagramEditor;
 import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.FreeModellingProjectNature;
-import org.openflexo.fme.view.FreeModelModuleView;
+import org.openflexo.fme.view.FMEDiagramFreeModelModuleView;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.FlexoConceptInstanceRole;
 import org.openflexo.gina.model.FIBComponent;
@@ -90,8 +90,8 @@ public class FMEFIBController extends FlexoFIBController {
 	}
 
 	public FreeModelDiagramEditor getDiagramEditor() {
-		if (getFlexoController().getCurrentModuleView() instanceof FreeModelModuleView) {
-			return ((FreeModelModuleView) getFlexoController().getCurrentModuleView()).getEditor();
+		if (getFlexoController().getCurrentModuleView() instanceof FMEDiagramFreeModelModuleView) {
+			return ((FMEDiagramFreeModelModuleView) getFlexoController().getCurrentModuleView()).getEditor();
 		}
 		return null;
 	}

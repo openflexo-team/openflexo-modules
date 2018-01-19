@@ -171,7 +171,7 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 	 * @throws FlexoException
 	 */
 	public FlexoConcept getGRFlexoConcept(FlexoConcept concept, FlexoConcept containerConceptGR, FlexoEditor editor,
-			FlexoAction<?, ?, ?> ownerAction);
+			FlexoAction<?, ?, ?> ownerAction, boolean createWhenNotExistant);
 
 	@DeserializationFinalizer
 	public void finalizeDeserialization();
@@ -214,7 +214,7 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 
 		@Override
 		public FlexoConcept getNoneFlexoConcept(FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction) {
-			return getGRFlexoConcept(null, null, editor, ownerAction);
+			return getGRFlexoConcept(null, null, editor, ownerAction, true);
 		}
 
 		/**
@@ -228,12 +228,12 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 		 */
 		@Override
 		public FlexoConcept getGRFlexoConcept(FlexoConcept concept, FlexoConcept containerConceptGR, FlexoEditor editor,
-				FlexoAction<?, ?, ?> ownerAction) {
+				FlexoAction<?, ?, ?> ownerAction, boolean createWhenNotExistant) {
 
 			FlexoConcept returned = getAccessedVirtualModel()
 					.getFlexoConcept(concept != null ? concept.getName() + "GR" : NONE_FLEXO_CONCEPT_NAME);
 
-			if (returned == null) {
+			if (returned == null && createWhenNotExistant) {
 
 				// Creates the concept
 				CreateFlexoConcept action;

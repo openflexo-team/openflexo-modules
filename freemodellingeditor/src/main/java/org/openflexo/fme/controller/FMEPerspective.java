@@ -54,7 +54,7 @@ import org.openflexo.fme.view.ConvertToFMEProjectView;
 import org.openflexo.fme.view.FMEFreeModelModuleView;
 import org.openflexo.fme.view.FMEProjectNatureModuleView;
 import org.openflexo.fme.view.FMEWelcomePanelModuleView;
-import org.openflexo.fme.view.FreeModelModuleView;
+import org.openflexo.fme.view.FMEDiagramFreeModelModuleView;
 import org.openflexo.fme.widget.FIBConceptBrowser;
 import org.openflexo.fme.widget.FIBFreeModellingProjectBrowser;
 import org.openflexo.fme.widget.FIBRepresentedConceptBrowser;
@@ -250,7 +250,7 @@ public class FMEPerspective extends NaturePerspective<FreeModellingProjectNature
 				// Make this edit not-undoable
 				edit.die();
 			}
-			return new FreeModelModuleView(editor, this);
+			return new FMEDiagramFreeModelModuleView(editor, this);
 		}
 		return super.createModuleViewForObject(object);
 	}

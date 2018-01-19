@@ -116,7 +116,7 @@ public class CreateNewConcept extends FMEAction<CreateNewConcept, FMEFreeModel, 
 				this);
 
 		// Now we create the new concept GR
-		newGRFlexoConcept = getFocusedObject().getGRFlexoConcept(newFlexoConcept, getContainerGRConcept(), getEditor(), this);
+		newGRFlexoConcept = getFocusedObject().getGRFlexoConcept(newFlexoConcept, getContainerGRConcept(), getEditor(), this, true);
 	}
 
 	public String getNewConceptName() {

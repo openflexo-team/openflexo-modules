@@ -114,6 +114,7 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 	public abstract class FMEFreeModelInstanceImpl extends VirtualModelInstanceBasedNatureObjectImpl<FreeModellingProjectNature>
 			implements FMEFreeModelInstance {
 
+		@SuppressWarnings("unused")
 		private static final Logger logger = FlexoLogger.getLogger(FMEFreeModel.class.getPackage().getName());
 
 		private FMLRTVirtualModelInstance virtualModelInstance = null;
@@ -173,9 +174,25 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 					if (concept.getAccessibleProperty(FMEFreeModel.CONCEPT_ROLE_NAME) instanceof FlexoConceptInstanceRole) {
 						FlexoConcept conceptualConcept = ((FlexoConceptInstanceRole) concept
 								.getAccessibleProperty(FMEFreeModel.CONCEPT_ROLE_NAME)).getFlexoConceptType();
-						if (conceptualConcept != null && conceptualConcept.getContainerFlexoConcept() == null) {
-							returned.add(concept);
+
+						// First we try to access conceptual layer
+						if (conceptualConcept != null) {
+							// In conceptual layer, concept is contained in another one
+							if (conceptualConcept.getContainerFlexoConcept() != null) {
+								// Lets look if some conceptual container is represented in this FreeModel
+								FlexoConcept containerGR = getFreeModel().getGRFlexoConcept(conceptualConcept.getContainerFlexoConcept(),
+										null, null, null, false);
+								if (containerGR == null) {
+									// Container is not represented in this FreeModel, then we have to display the concept
+									returned.add(concept);
+								}
+							}
+							else {
+								// Concept is at top level, we have to represent it
+								returned.add(concept);
+							}
 						}
+
 					}
 				}
 			}

@@ -58,17 +58,17 @@ import org.openflexo.view.controller.TechnologyAdapterControllerService;
 import org.openflexo.view.controller.model.FlexoPerspective;
 
 @SuppressWarnings("serial")
-public class FreeModelModuleView extends JPanel implements ModuleView<FMEFreeModelInstance>, PropertyChangeListener {
+public class FMEDiagramFreeModelModuleView extends JPanel implements ModuleView<FMEFreeModelInstance>, PropertyChangeListener {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger.getLogger(FreeModelModuleView.class.getPackage().getName());
+	private static final Logger logger = Logger.getLogger(FMEDiagramFreeModelModuleView.class.getPackage().getName());
 
 	private final FreeModelDiagramEditor editor;
 	private final FMEPerspective perspective;
 
 	private final JPanel bottomPanel;
 
-	public FreeModelModuleView(FreeModelDiagramEditor editor, FMEPerspective perspective) {
+	public FMEDiagramFreeModelModuleView(FreeModelDiagramEditor editor, FMEPerspective perspective) {
 		super();
 		setLayout(new BorderLayout());
 		this.editor = editor;

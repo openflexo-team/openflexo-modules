@@ -283,7 +283,7 @@ public class GivesFMENatureWizard extends FlexoWizard {
 			return action.getExistingSampleDataResource();
 		}
 
-		public void setExistingConceptualModelResource(FMLRTVirtualModelInstanceResource existingSampleDataResource) {
+		public void setExistingSampleDataResource(FMLRTVirtualModelInstanceResource existingSampleDataResource) {
 			if (existingSampleDataResource != getExistingSampleDataResource()) {
 				FMLRTVirtualModelInstanceResource oldValue = getExistingSampleDataResource();
 				action.setExistingSampleDataResource(existingSampleDataResource);
