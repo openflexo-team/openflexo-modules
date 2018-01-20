@@ -1,4 +1,3 @@
-Panel=Panel
 a_diagram_with_that_name_already_exists=A diagram with that name already exists
 a_free_model_instance_with_that_name_already_exists=A free model instance with that name already exists
 a_property_with_that_name_already_exists=A property with that name already exists
@@ -49,6 +48,7 @@ please_select_a_free_model=Please select a free model
 please_select_a_virtual_model=Please select a virtual model
 please_select_a_virtual_model_instance=Please select a virtual model instance
 remove_free_model=Remove free model
+represented_concept=Represented concept
 sample_data=Sample data
 select_default_object=Select default object
 unclassified=Unclassified
