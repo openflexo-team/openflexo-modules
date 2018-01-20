@@ -141,8 +141,7 @@ public class FMEDiagramFreeModelModuleView extends JPanel implements ModuleView<
 				BorderLayout.EAST);
 
 		perspective.setTopRightView(getEditor().getPaletteView());
-		perspective.setBottomRightView(
-				getDiagramTechnologyAdapterController(getEditor().getFlexoController()).getInspectors().getPanelGroup());
+		perspective.setBottomRightView(getPerspective().getInspectorPanelGroup());
 		getEditor().getFlexoController().getControllerModel().setRightViewVisible(true);
 
 		getPerspective().focusOnObject(getRepresentedObject());
@@ -168,7 +167,7 @@ public class FMEDiagramFreeModelModuleView extends JPanel implements ModuleView<
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBorder(null);*/
 
-		perspective.setBottomRightView(getDiagramTechnologyAdapterController(controller).getInspectors().getPanelGroup());
+		perspective.setBottomRightView(getPerspective().getInspectorPanelGroup());
 
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override

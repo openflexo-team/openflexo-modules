@@ -51,10 +51,10 @@ import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.fme.view.ConvertToFMEProjectView;
+import org.openflexo.fme.view.FMEDiagramFreeModelModuleView;
 import org.openflexo.fme.view.FMEFreeModelModuleView;
 import org.openflexo.fme.view.FMEProjectNatureModuleView;
 import org.openflexo.fme.view.FMEWelcomePanelModuleView;
-import org.openflexo.fme.view.FMEDiagramFreeModelModuleView;
 import org.openflexo.fme.widget.FIBConceptBrowser;
 import org.openflexo.fme.widget.FIBFreeModellingProjectBrowser;
 import org.openflexo.fme.widget.FIBRepresentedConceptBrowser;
@@ -63,9 +63,11 @@ import org.openflexo.foundation.FlexoProject;
 import org.openflexo.inspector.FIBFlexoConceptInstanceInspectorPanel;
 import org.openflexo.model.undo.CompoundEdit;
 import org.openflexo.module.FlexoModule.WelcomePanel;
+import org.openflexo.swing.FlexoCollabsiblePanelGroup;
 import org.openflexo.technologyadapter.diagram.controller.DiagramTechnologyAdapterController;
 import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.FlexoController;
+import org.openflexo.view.controller.TechnologyAdapterControllerService;
 import org.openflexo.view.controller.model.NaturePerspective;
 
 public class FMEPerspective extends NaturePerspective<FreeModellingProjectNature> {
@@ -75,6 +77,9 @@ public class FMEPerspective extends NaturePerspective<FreeModellingProjectNature
 	private FIBFreeModellingProjectBrowser freeModellingProjectBrowser = null;
 	private final FIBRepresentedConceptBrowser representedConceptBrowser;
 	private final FIBConceptBrowser conceptBrowser;
+
+	private FlexoCollabsiblePanelGroup inspectorPanelGroup;
+	private FIBFlexoConceptInstanceInspectorPanel inspectorPanel;
 
 	/**
 	 * Default constructor taking controller as argument
@@ -90,11 +95,23 @@ public class FMEPerspective extends NaturePerspective<FreeModellingProjectNature
 		conceptBrowser = new FIBConceptBrowser(null, controller);
 
 		inspectorPanel = new FIBFlexoConceptInstanceInspectorPanel(getController().getModuleInspectorController());
-		inspectorPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
+		inspectorPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 10));
 
 	}
 
-	private FIBFlexoConceptInstanceInspectorPanel inspectorPanel;
+	public FlexoCollabsiblePanelGroup getInspectorPanelGroup() {
+		if (inspectorPanelGroup == null) {
+			inspectorPanelGroup = getDiagramTechnologyAdapterController(getController()).getInspectors().getPanelGroup();
+			inspectorPanelGroup.insertContentsAtIndex(getController().getModuleLocales().localizedForKey("represented_concept"),
+					inspectorPanel, 0);
+		}
+		return inspectorPanelGroup;
+	}
+
+	public DiagramTechnologyAdapterController getDiagramTechnologyAdapterController(FlexoController controller) {
+		TechnologyAdapterControllerService tacService = controller.getApplicationContext().getTechnologyAdapterControllerService();
+		return tacService.getTechnologyAdapterController(DiagramTechnologyAdapterController.class);
+	}
 
 	@Override
 	public Class<FreeModellingProjectNature> getNatureClass() {
@@ -124,7 +141,7 @@ public class FMEPerspective extends NaturePerspective<FreeModellingProjectNature
 		setMiddleLeftView(representedConceptBrowser);
 		setBottomLeftView(conceptBrowser);
 
-		setMiddleRightView(inspectorPanel);
+		// setMiddleRightView(inspectorPanel);
 
 	}
 
