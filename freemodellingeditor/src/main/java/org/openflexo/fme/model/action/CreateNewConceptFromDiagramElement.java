@@ -92,7 +92,7 @@ public class CreateNewConceptFromDiagramElement extends AbstractInstantiateConce
 	};
 
 	static {
-		FlexoObjectImpl.addActionForClass(CreateNewConceptFromDiagramElement.actionType, DiagramElement.class);
+		FlexoObjectImpl.addActionForClass(CreateNewConceptFromDiagramElement.actionType, DiagramShape.class);
 	}
 
 	CreateNewConceptFromDiagramElement(DiagramElement<?> focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {

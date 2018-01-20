@@ -106,7 +106,7 @@ public class DeclareInstanceOfExistingConceptFromDiagramElement
 	};
 
 	static {
-		FlexoObjectImpl.addActionForClass(DeclareInstanceOfExistingConceptFromDiagramElement.actionType, DiagramElement.class);
+		FlexoObjectImpl.addActionForClass(DeclareInstanceOfExistingConceptFromDiagramElement.actionType, DiagramShape.class);
 	}
 
 	private FlexoConceptInstance flexoConceptInstance;

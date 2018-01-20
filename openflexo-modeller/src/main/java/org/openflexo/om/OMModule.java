@@ -44,9 +44,9 @@ import java.util.logging.Logger;
 import org.openflexo.ApplicationContext;
 import org.openflexo.fge.swing.JDianaInteractiveEditor;
 import org.openflexo.fge.swing.view.JDrawingView;
-import org.openflexo.fml.controller.FMLTechnologyAdapterController;
 import org.openflexo.foundation.fml.FMLTechnologyAdapter;
 import org.openflexo.foundation.fml.rt.FMLRTTechnologyAdapter;
+import org.openflexo.foundation.technologyadapter.TechnologyAdapter;
 import org.openflexo.foundation.technologyadapter.TechnologyAdapterService;
 import org.openflexo.module.FlexoModule;
 import org.openflexo.om.controller.OMController;
@@ -86,9 +86,21 @@ public class OMModule extends FlexoModule<OMModule> {
 		taService.activateTechnologyAdapter(taService.getTechnologyAdapter(FMLTechnologyAdapter.class), true);
 		taService.activateTechnologyAdapter(taService.getTechnologyAdapter(FMLRTTechnologyAdapter.class), true);
 
-		FMLTechnologyAdapterController fmlTAC = getApplicationContext().getTechnologyAdapterControllerService()
+		/*FMLTechnologyAdapterController fmlTAC = getApplicationContext().getTechnologyAdapterControllerService()
 				.getTechnologyAdapterController(FMLTechnologyAdapterController.class);
-		fmlTAC.initializeAdvancedActions(getFlexoController().getControllerActionInitializer());
+		fmlTAC.initializeAdvancedActions(getFlexoController().getControllerActionInitializer());*/
+	}
+
+	/**
+	 * Hooks used to handle the fact that a module should activate or not advanced actions of a {@link TechnologyAdapter}<br>
+	 * Overrides when required. Default behaviour returns null.
+	 * 
+	 * @param technologyAdapter
+	 * @return
+	 */
+	@Override
+	public boolean activateAdvancedActions(TechnologyAdapter technologyAdapter) {
+		return true;
 	}
 
 	@Override
