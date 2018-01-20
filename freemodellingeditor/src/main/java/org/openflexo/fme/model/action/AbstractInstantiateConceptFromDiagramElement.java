@@ -45,6 +45,7 @@ import org.openflexo.fme.model.FMEDiagramFreeModel;
 import org.openflexo.fme.model.FMEDiagramFreeModelInstance;
 import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.FMEFreeModelInstance;
+import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFactory;
@@ -107,6 +108,36 @@ public abstract class AbstractInstantiateConceptFromDiagramElement<A extends Abs
 		PrimitiveRole<String> nameRole = (PrimitiveRole<String>) none.getAccessibleProperty(FMEFreeModel.NAME_ROLE_NAME);
 		newFlexoConceptInstance.setFlexoActor(diagramElement.getName(), nameRole);
 		return newFlexoConceptInstance;
+	}
+
+	public FMEDiagramFreeModel getFMEFreeModel() {
+		if (getFMEFreeModelInstance() != null) {
+			return getFMEFreeModelInstance().getFreeModel();
+		}
+		return null;
+	}
+
+	public FMEDiagramFreeModelInstance getFMEFreeModelInstance() {
+		FreeModellingProjectNature nature = getFreeModellingProjectNature();
+		if (nature != null) {
+			for (FMEFreeModel freeModel : nature.getFreeModels()) {
+				if (freeModel instanceof FMEDiagramFreeModel) {
+					for (FMEFreeModelInstance freeModelInstance : freeModel.getFreeModelInstances()) {
+						if (freeModelInstance instanceof FMEDiagramFreeModelInstance) {
+							if (getFocusedObject().getDiagram() == ((FMEDiagramFreeModelInstance) freeModelInstance).getDiagram()) {
+								return (FMEDiagramFreeModelInstance) freeModelInstance;
+							}
+						}
+					}
+				}
+			}
+			return null;
+		}
+		else {
+			logger.warning("Sorry, project does not have FreeModellingProjectNature");
+			return null;
+		}
+
 	}
 
 }

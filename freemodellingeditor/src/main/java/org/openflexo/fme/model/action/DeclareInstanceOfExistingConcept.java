@@ -164,6 +164,18 @@ public class DeclareInstanceOfExistingConcept extends AbstractInstantiateConcept
 		getPropertyChangeSupport().firePropertyChange("isValid", wasValid, isValid());
 	}
 
+	public FlexoConceptInstance getContainer() {
+		return container;
+	}
+
+	public void setContainer(FlexoConceptInstance container) {
+		if ((container == null && this.container != null) || (container != null && !container.equals(this.container))) {
+			FlexoConceptInstance oldValue = this.container;
+			this.container = container;
+			getPropertyChangeSupport().firePropertyChange("container", oldValue, container);
+		}
+	}
+
 	@Override
 	protected void doAction(Object context) throws FlexoException {
 
@@ -287,18 +299,6 @@ public class DeclareInstanceOfExistingConcept extends AbstractInstantiateConcept
 		}
 
 		return true;
-	}
-
-	public FlexoConceptInstance getContainer() {
-		return container;
-	}
-
-	public void setContainer(FlexoConceptInstance container) {
-		if ((container == null && this.container != null) || (container != null && !container.equals(this.container))) {
-			FlexoConceptInstance oldValue = this.container;
-			this.container = container;
-			getPropertyChangeSupport().firePropertyChange("container", oldValue, container);
-		}
 	}
 
 }

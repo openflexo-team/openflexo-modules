@@ -263,7 +263,7 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 			}
 
 			// Init a default GR
-			DiagramShape newShape = createShape("Prout", editor, ownerAction);
+			DiagramShape newShape = createShape(returned.getName(), editor, ownerAction);
 			role.setMetamodelElement(newShape);
 
 			// Create new DropScheme
