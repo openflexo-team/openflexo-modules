@@ -85,6 +85,7 @@ public class FMEControllerActionInitializer extends ControllerActionInitializer 
 		// Actions applied on Diagram Elements(not currently associated with flexo concept)
 		new CreateNewConceptFromDiagramElementInitializer(this);
 		new DeclareInstanceOfExistingConceptFromDiagramElementInitializer(this);
+		new CreateNewFMEPropertyFromDiagramConnectorInitializer(this);
 
 		new DeleteFreeModelInitializer(this);
 		new DeleteFreeModelInstanceInitializer(this);

@@ -38,8 +38,6 @@
 
 package org.openflexo.fme.model;
 
-import static org.junit.Assert.assertTrue;
-
 import java.awt.Font;
 import java.io.FileNotFoundException;
 import java.util.logging.Logger;
@@ -165,7 +163,6 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 			shapeGR.setShapeSpecification(rectangleShape);
 			addShapeAction.setGraphicalRepresentation(shapeGR);
 			addShapeAction.doAction();
-			assertTrue(addShapeAction.hasActionExecutionSucceeded());
 			return addShapeAction.getNewShape();
 		}
 
