@@ -291,13 +291,13 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 			else {
 				createDropSchemeParameter = CreateGenericBehaviourParameter.actionType.makeNewAction(dropScheme, null, editor);
 			}
-			createDropSchemeParameter.setParameterName("conceptName");
+			createDropSchemeParameter.setParameterName(FMEConceptualModel.CONCEPT_NAME_PARAMETER);
 			createDropSchemeParameter.setParameterType(String.class);
 			createDropSchemeParameter.setWidgetType(WidgetType.TEXT_FIELD);
 
 			createDropSchemeParameter.doAction();
 			FlexoBehaviourParameter parameter = createDropSchemeParameter.getNewParameter();
-			parameter.setDefaultValue(new DataBinding<String>("\"" + parameter.getName() + "\""));
+			parameter.setDefaultValue(new DataBinding<String>("\"" + concept.getName() + "\""));
 
 			if (concept != null) {
 
