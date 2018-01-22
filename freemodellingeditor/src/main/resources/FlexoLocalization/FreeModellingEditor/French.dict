@@ -55,4 +55,4 @@ unclassified=Non classifi\u00E9
 would_you_really_like_to_delete_this_concept_and_all_existing_instances_of_that_concept_(($0)_instances_found)_?=Voulez vous vraiment supprimer ce concept (($0) instancesexistent) ?
 would_you_really_like_to_delete_this_free_model_instance=Voulez vous vraiment supprimer cette instance de FreeModel ?
 you_cannot_specialize_sample_data_if_conceptual_model_is_not_specialized=Vous ne pouvez pas sp\u00E9cialiser le jeu de donn\u00E9es si le mod\u00E8le conceptuel n'est pas sp\u00E9cialis\u00E9
-you_cannot_use_general_sample_data_as_you_specialized_conceptual_model=Vous ne pouvez pas utiliser le jeu de donn\u00E9es g\u00E9n\u00E9ral si vous sp\u00E9cialiser le mod\u00E8le conceptuel
+you_cannot_use_general_sample_data_as_you_specialized_conceptual_model=Vous ne pouvez pas utiliser le jeu de donn\u00E9es g\u00E9n\u00E9ral si vous sp\u00E9cialisez le mod\u00E8le conceptuel
