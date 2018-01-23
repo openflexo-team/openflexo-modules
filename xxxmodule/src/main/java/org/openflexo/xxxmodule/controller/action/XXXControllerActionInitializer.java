@@ -53,6 +53,7 @@ import org.openflexo.xxxmodule.controller.XXXSelectionManager;
  */
 public class XXXControllerActionInitializer extends ControllerActionInitializer {
 
+	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
 	public XXXControllerActionInitializer(XXXController controller) {
@@ -71,6 +72,8 @@ public class XXXControllerActionInitializer extends ControllerActionInitializer 
 	public void initializeActions() {
 
 		super.initializeActions();
+
+		new GivesXXXNatureInitializer(this);
 
 		new XXXSetPropertyInitializer(this);
 

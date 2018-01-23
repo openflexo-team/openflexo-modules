@@ -1,8 +1,25 @@
 dependencies {
-  // openflexo dep
+   
   compile flexoFoundation()
   compile flexoUi()
-  // external dep
+  compile flexoUtils()
+  compile flexoGraphicUtils()
+  //compile flexoDiagram()
+  //compile flexoDiagramUi()
+  compile ginaConnector()
+  compile ginaConnectorUi()
+    
+  runtime flexoGraphicUtils()
+  
+   // external dep
+  
   // testing dep
+  testCompile testUtils()
+  testCompile ginaTest()
+  testCompile ginaSwingEditorTest()
+  testCompile flexoFoundationTest()
   testCompile flexoUiTest()
+  
+  testRuntime flexoTestResources()
+  
 }

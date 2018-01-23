@@ -46,10 +46,12 @@ import org.openflexo.xxxmodule.controller.XXXController;
 /**
  * 'File' menu for ViewEditor Module
  * 
- * @author sylvain
+ * @author yourname
  */
+@SuppressWarnings("serial")
 public class XXXFileMenu extends FileMenu {
 
+	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(XXXFileMenu.class.getPackage().getName());
 
 	// ==========================================================================

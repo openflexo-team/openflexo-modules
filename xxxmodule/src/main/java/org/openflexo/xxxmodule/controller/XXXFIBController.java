@@ -2,7 +2,7 @@
  * 
  * Copyright (c) 2014, Openflexo
  * 
- * This file is part of Flexovieweditor, a component of the software infrastructure 
+ * This file is part of Freemodellingeditor, a component of the software infrastructure 
  * developed at Openflexo.
  * 
  * 
@@ -36,44 +36,53 @@
  * 
  */
 
-package org.openflexo.xxxmodule.view.menu;
+package org.openflexo.xxxmodule.controller;
 
 import java.util.logging.Logger;
 
-import org.openflexo.view.menu.WindowMenu;
-import org.openflexo.xxxmodule.XXX;
-import org.openflexo.xxxmodule.controller.XXXController;
+import javax.swing.ImageIcon;
+
+import org.openflexo.gina.model.FIBComponent;
+import org.openflexo.gina.swing.view.SwingViewFactory;
+import org.openflexo.localization.FlexoLocalization;
+import org.openflexo.view.controller.FlexoFIBController;
+import org.openflexo.xxxmodule.model.XXXProjectNature;
 
 /**
- * 'Window' menu for this Module
+ * Represents the controller of a FIBComponent in XXX prototype
+ * 
  * 
  * @author yourname
  */
-@SuppressWarnings("serial")
-public class XXXWindowMenu extends WindowMenu {
+public class XXXFIBController extends FlexoFIBController {
 
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger.getLogger(XXXWindowMenu.class.getPackage().getName());
+	private static final Logger logger = Logger.getLogger(XXXFIBController.class.getPackage().getName());
 
-	// ==========================================================================
-	// ============================= Instance Variables
-	// =========================
-	// ==========================================================================
-
-	protected XXXController xxxController;
-
-	// ==========================================================================
-	// ============================= Constructor
-	// ================================
-	// ==========================================================================
-
-	public XXXWindowMenu(XXXController controller) {
-		super(controller, controller.getApplicationContext().getModuleLoader().getModule(XXX.class));
-		xxxController = controller;
-		// Put your actions here
+	public XXXFIBController(FIBComponent component) {
+		super(component, SwingViewFactory.INSTANCE);
+		// Default parent localizer is the main localizer
+		setParentLocalizer(FlexoLocalization.getMainLocalizer());
 	}
 
-	public XXXController getXXXController() {
-		return xxxController;
+	@Override
+	public XXXController getFlexoController() {
+		return (XXXController) super.getFlexoController();
 	}
+
+	public XXXProjectNature getXXXNature() {
+		if (getFlexoController() != null) {
+			return getFlexoController().getXXXNature();
+		}
+		return null;
+	}
+
+	@Override
+	public ImageIcon retrieveIconForObject(Object object) {
+		if (getFlexoController() != null) {
+			return getFlexoController().iconForObject(object);
+		}
+		return super.retrieveIconForObject(object);
+	}
+
 }

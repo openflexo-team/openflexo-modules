@@ -42,11 +42,6 @@ package org.openflexo.xxxmodule;
 import java.util.logging.Logger;
 
 import org.openflexo.ApplicationContext;
-import org.openflexo.components.ProgressWindow;
-import org.openflexo.fge.swing.JDianaInteractiveEditor;
-import org.openflexo.fge.swing.view.JDrawingView;
-import org.openflexo.foundation.FlexoObject;
-import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.module.FlexoModule;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.xxxmodule.controller.XXXController;
@@ -54,27 +49,28 @@ import org.openflexo.xxxmodule.controller.XXXController;
 /**
  * XXX module
  * 
- * @author sylvain
+ * @author yourname
  */
 public class XXXModule extends FlexoModule<XXXModule> {
+
+	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(XXXModule.class.getPackage().getName());
 
 	public static final String XXX_MODULE_SHORT_NAME = "XXX";
 	public static final String XXX_MODULE_NAME = "xxx_module_name";
 
-	private JDianaInteractiveEditor<?> screenshotController;
+	/*private JDianaInteractiveEditor<?> screenshotController;
 	private JDrawingView<?> screenshot = null;
 	private boolean drawWorkingArea;
-	private FlexoObject screenshotObject;
+	private FlexoObject screenshotObject;*/
 
 	public XXXModule(ApplicationContext applicationContext) throws Exception {
 		super(applicationContext);
-		ProgressWindow.setProgressInstance(FlexoLocalization.getMainLocalizer().localizedForKey("build_editor"));
 	}
 
 	@Override
 	public String getLocalizationDirectory() {
-		return "FlexoLocalization/InformationSpaceModule";
+		return "FlexoLocalization/XXXModule";
 	}
 
 	@Override

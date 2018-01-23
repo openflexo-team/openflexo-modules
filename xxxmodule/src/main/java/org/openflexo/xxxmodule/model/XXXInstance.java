@@ -2,7 +2,7 @@
  * 
  * Copyright (c) 2014, Openflexo
  * 
- * This file is part of Flexovieweditor, a component of the software infrastructure 
+ * This file is part of Freemodellingeditor, a component of the software infrastructure 
  * developed at Openflexo.
  * 
  * 
@@ -36,44 +36,34 @@
  * 
  */
 
-package org.openflexo.xxxmodule.view.menu;
+package org.openflexo.xxxmodule.model;
 
 import java.util.logging.Logger;
 
-import org.openflexo.view.menu.WindowMenu;
-import org.openflexo.xxxmodule.XXX;
-import org.openflexo.xxxmodule.controller.XXXController;
+import org.openflexo.foundation.fml.VirtualModel;
+import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
+import org.openflexo.foundation.nature.VirtualModelInstanceBasedNatureObject;
+import org.openflexo.logging.FlexoLogger;
+import org.openflexo.model.annotations.ImplementationClass;
+import org.openflexo.model.annotations.ModelEntity;
+import org.openflexo.model.annotations.XMLElement;
 
 /**
- * 'Window' menu for this Module
+ * Represents instance of XXX {@link VirtualModel} in the context of a {@link XXXProjectNature}<br>
+ * From a technical point of view, a {@link XXXInstance} is just a wrapper above a {@link FMLRTVirtualModelInstance}
  * 
  * @author yourname
+ * 
  */
-@SuppressWarnings("serial")
-public class XXXWindowMenu extends WindowMenu {
+@ModelEntity
+@XMLElement
+@ImplementationClass(XXXInstance.XXXInstanceImpl.class)
+public interface XXXInstance extends VirtualModelInstanceBasedNatureObject<XXXProjectNature> {
 
-	@SuppressWarnings("unused")
-	private static final Logger logger = Logger.getLogger(XXXWindowMenu.class.getPackage().getName());
+	public abstract class XXXInstanceImpl extends VirtualModelInstanceBasedNatureObjectImpl<XXXProjectNature> implements XXXInstance {
 
-	// ==========================================================================
-	// ============================= Instance Variables
-	// =========================
-	// ==========================================================================
+		@SuppressWarnings("unused")
+		private static final Logger logger = FlexoLogger.getLogger(XXXInstance.class.getPackage().getName());
 
-	protected XXXController xxxController;
-
-	// ==========================================================================
-	// ============================= Constructor
-	// ================================
-	// ==========================================================================
-
-	public XXXWindowMenu(XXXController controller) {
-		super(controller, controller.getApplicationContext().getModuleLoader().getModule(XXX.class));
-		xxxController = controller;
-		// Put your actions here
-	}
-
-	public XXXController getXXXController() {
-		return xxxController;
 	}
 }

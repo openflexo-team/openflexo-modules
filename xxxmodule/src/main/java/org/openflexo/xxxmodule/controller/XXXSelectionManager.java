@@ -48,7 +48,7 @@ import org.openflexo.xxxmodule.view.menu.XXXMenuBar;
 /**
  * This is the selection manager responsible for selection in ViewEditor module
  * 
- * @author sylvain
+ * @author yourname
  */
 public class XXXSelectionManager extends MouseSelectionManager {
 

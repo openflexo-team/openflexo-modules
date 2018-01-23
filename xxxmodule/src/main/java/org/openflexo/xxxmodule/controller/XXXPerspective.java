@@ -41,21 +41,31 @@ package org.openflexo.xxxmodule.controller;
 import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
-import org.openflexo.components.widget.FIBInformationSpaceBrowser;
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.foundation.technologyadapter.TechnologyAdapter;
-import org.openflexo.foundation.technologyadapter.TechnologyObject;
-import org.openflexo.icon.FMLIconLibrary;
+import org.openflexo.foundation.FlexoProject;
+import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
+import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
+import org.openflexo.technologyadapter.gina.fml.FMLControlledFIBFlexoConceptInstanceNature;
+import org.openflexo.technologyadapter.gina.fml.FMLControlledFIBVirtualModelInstanceNature;
+import org.openflexo.technologyadapter.gina.view.FMLControlledFIBFlexoConceptInstanceModuleView;
+import org.openflexo.technologyadapter.gina.view.FMLControlledFIBVirtualModelInstanceModuleView;
+import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.FlexoController;
-import org.openflexo.view.controller.TechnologyAdapterController;
 import org.openflexo.view.controller.model.FlexoPerspective;
+import org.openflexo.xxxmodule.XXXIconLibrary;
+import org.openflexo.xxxmodule.model.XXXProjectNature;
+import org.openflexo.xxxmodule.view.XXXProjectNatureModuleView;
+import org.openflexo.xxxmodule.widget.GenericProjectBrowser;
+import org.openflexo.xxxmodule.widget.XXXProjectBrowser;
 
 public class XXXPerspective extends FlexoPerspective {
 
 	static final Logger logger = Logger.getLogger(XXXPerspective.class.getPackage().getName());
 
-	private final FIBInformationSpaceBrowser informationSpaceBrowser;
+	private XXXProjectBrowser browser;
+	private GenericProjectBrowser genericBrowser;
 
 	/**
 	 * @param controller
@@ -64,36 +74,146 @@ public class XXXPerspective extends FlexoPerspective {
 	public XXXPerspective(FlexoController controller) {
 		super("xxx_perspective", controller);
 
-		informationSpaceBrowser = new FIBInformationSpaceBrowser(controller.getApplicationContext().getResourceManager(), controller,
-				controller.getModuleLocales());
+		// browser = new XXXProjectBrowser(controller);
 
-		setTopLeftView(informationSpaceBrowser);
+		// setTopLeftView(browser);
 
+		if (controller.getProject() != null) {
+			setProject(controller.getProject());
+		}
 	}
 
-	/**
-	 * Overrides getIcon
-	 * 
-	 * @see org.openflexo.view.controller.model.FlexoPerspective#getActiveIcon()
-	 */
+	public Class<XXXProjectNature> getNatureClass() {
+		return XXXProjectNature.class;
+	}
+
+	@Override
+	public void willShow() {
+		super.willShow();
+		updateBrowser(getController().getProject(), false);
+	}
+
+	public void setProject(final FlexoProject<?> project) {
+
+		updateBrowser(project, true);
+	}
+
+	public void updateBrowser(final FlexoProject<?> project, boolean rebuildBrowser) {
+
+		// System.out.println("updating browser " + projectBrowser + " with " + project);
+
+		if (project != null) {
+			if (project.hasNature(XXXProjectNature.class)) {
+				if (browser == null || rebuildBrowser || browser.getDataObject().getProject() != project) {
+					browser = new XXXProjectBrowser(getController());
+				}
+				if (browser != null) {
+					browser.setRootObject(project.getNature(XXXProjectNature.class));
+				}
+				setTopLeftView(browser);
+			}
+			else {
+				if (genericBrowser == null || rebuildBrowser || genericBrowser.getDataObject() != project) {
+					genericBrowser = new GenericProjectBrowser(getController());
+				}
+				if (genericBrowser != null) {
+					genericBrowser.setRootObject(project);
+				}
+				setTopLeftView(genericBrowser);
+			}
+		}
+		else {
+			setTopLeftView(new JPanel());
+		}
+	}
+
+	public XXXProjectBrowser getBrowser() {
+		return browser;
+	}
+
+	public GenericProjectBrowser getGenericBrowser() {
+		return genericBrowser;
+	}
+
+	@Override
+	public String getWindowTitleforObject(final FlexoObject object, final FlexoController controller) {
+		if (object instanceof FlexoProject) {
+			return ((FlexoProject<?>) object).getName();
+		}
+		else if (object instanceof XXXProjectNature) {
+			if (((XXXProjectNature) object).getOwner() != null) {
+				return ((XXXProjectNature) object).getOwner().getName();
+			}
+			return null;
+		}
+		else if (object instanceof FMLRTVirtualModelInstance) {
+			return ((FMLRTVirtualModelInstance) object).getTitle();
+		}
+		else if (object instanceof FlexoConceptInstance) {
+			return ((FlexoConceptInstance) object).getStringRepresentation();
+		}
+		else {
+			return "Object has no title";
+		}
+	}
+
 	@Override
 	public ImageIcon getActiveIcon() {
-		return FMLIconLibrary.INFORMATION_SPACE_ICON;
+		return XXXIconLibrary.XXX_SMALL_ICON;
 	}
 
 	@Override
-	public String getWindowTitleforObject(FlexoObject object, FlexoController controller) {
-		if (object instanceof TechnologyObject) {
-			TechnologyAdapter ta = ((TechnologyObject) object).getTechnologyAdapter();
-			TechnologyAdapterController<?> tac = controller.getApplicationContext().getTechnologyAdapterControllerService()
-					.getTechnologyAdapterController(ta);
-			return tac.getWindowTitleforObject((TechnologyObject) object, controller);
+	public ModuleView<?> createModuleViewForObject(FlexoObject object) {
+
+		if (object instanceof XXXProjectNature) {
+			return new XXXProjectNatureModuleView((XXXProjectNature) object, getController(), this);
 		}
-		if (object != null) {
-			return object.toString();
+
+		if (object instanceof FMLRTVirtualModelInstance) {
+			if (((FMLRTVirtualModelInstance) object).hasNature(FMLControlledFIBVirtualModelInstanceNature.INSTANCE)) {
+				return new FMLControlledFIBVirtualModelInstanceModuleView((FMLRTVirtualModelInstance) object, getController(), this,
+						getController().getModuleLocales());
+			}
 		}
-		logger.warning("Unexpected null object here");
-		return null;
+
+		if (object instanceof FlexoConceptInstance) {
+			if (((FlexoConceptInstance) object).hasNature(FMLControlledFIBFlexoConceptInstanceNature.INSTANCE)) {
+				return new FMLControlledFIBFlexoConceptInstanceModuleView((FlexoConceptInstance) object, getController(), this,
+						getController().getModuleLocales());
+			}
+		}
+
+		// In all other cases...
+		return super.createModuleViewForObject(object);
+
+	}
+
+	@Override
+	public boolean hasModuleViewForObject(FlexoObject object) {
+		if (object instanceof XXXProjectNature) {
+			return true;
+		}
+		if (object instanceof FMLRTVirtualModelInstance) {
+			if (((FMLRTVirtualModelInstance) object).hasNature(FMLControlledFIBVirtualModelInstanceNature.INSTANCE)) {
+				return true;
+			}
+			return false;
+		}
+		if (object instanceof FlexoConceptInstance) {
+			if (((FlexoConceptInstance) object).hasNature(FMLControlledFIBFlexoConceptInstanceNature.INSTANCE)) {
+				return true;
+			}
+		}
+		return super.hasModuleViewForObject(object);
+	}
+
+	@Override
+	public FlexoObject getDefaultObject(FlexoObject proposedObject) {
+		if (proposedObject instanceof FlexoProject && ((FlexoProject<?>) proposedObject).hasNature(XXXProjectNature.class)) {
+			return ((FlexoProject<?>) proposedObject).getNature(XXXProjectNature.class);
+		}
+
+		return super.getDefaultObject(proposedObject);
 	}
 
 }

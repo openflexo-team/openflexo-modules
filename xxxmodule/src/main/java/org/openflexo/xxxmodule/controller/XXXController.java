@@ -43,24 +43,33 @@ import java.util.logging.Logger;
 
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
+import org.openflexo.module.FlexoModule.WelcomePanel;
 import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.view.FlexoMainPane;
+import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
+import org.openflexo.view.controller.model.FlexoPerspective;
 import org.openflexo.view.menu.FlexoMenuBar;
 import org.openflexo.xxxmodule.XXXModule;
 import org.openflexo.xxxmodule.controller.action.XXXControllerActionInitializer;
+import org.openflexo.xxxmodule.model.XXXProjectNature;
+import org.openflexo.xxxmodule.view.ConvertToXXXProjectView;
 import org.openflexo.xxxmodule.view.XXXMainPane;
+import org.openflexo.xxxmodule.view.XXXWelcomePanelModuleView;
 import org.openflexo.xxxmodule.view.menu.XXXMenuBar;
 
 /**
  * Controller for XXX module
  * 
- * @author sylvain
+ * @author yourname
  */
 public class XXXController extends FlexoController {
 
+	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(XXXController.class.getPackage().getName());
+
+	private XXXPerspective xxxPerspective;
 
 	/**
 	 * Default constructor
@@ -71,9 +80,11 @@ public class XXXController extends FlexoController {
 
 	@Override
 	protected void initializePerspectives() {
-		initializeFMLTechnologyPerspective();
-		initializeFMLRTTechnologyPerspective();
-		initializeAllAvailableTechnologyPerspectives(false, false);
+		this.addToPerspectives(xxxPerspective = new XXXPerspective(this));
+	}
+
+	public XXXPerspective getXXXPerspective() {
+		return xxxPerspective;
 	}
 
 	@Override
@@ -97,13 +108,34 @@ public class XXXController extends FlexoController {
 	}
 
 	@Override
-	public FlexoObject getDefaultObjectToSelect(FlexoProject project) {
+	public FlexoObject getDefaultObjectToSelect(FlexoProject<?> project) {
+		if (project != null && project.hasNature(XXXProjectNature.class)) {
+			return project.getNature(XXXProjectNature.class);
+		}
 		return project;
 	}
 
 	@Override
 	protected FlexoMainPane createMainPane() {
 		return new XXXMainPane(this);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ModuleView<?> makeWelcomePanel(WelcomePanel<?> welcomePanel, FlexoPerspective perspective) {
+		return new XXXWelcomePanelModuleView((WelcomePanel<XXXModule>) welcomePanel, this, perspective);
+	}
+
+	@Override
+	public ModuleView<?> makeDefaultProjectView(FlexoProject<?> project, FlexoPerspective perspective) {
+		return new ConvertToXXXProjectView(project, this, perspective);
+	}
+
+	public XXXProjectNature getXXXNature() {
+		if (getProject() != null) {
+			return getProject().getNature(XXXProjectNature.class);
+		}
+		return null;
 	}
 
 }

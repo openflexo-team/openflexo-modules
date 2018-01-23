@@ -43,10 +43,11 @@ import org.openflexo.view.FlexoMainPane;
 import org.openflexo.xxxmodule.controller.XXXController;
 
 /**
- * Represents the main pane for ViewEditor module
+ * Represents the main pane for XXX module
  * 
- * @author sylvain
+ * @author yourname
  */
+@SuppressWarnings("serial")
 public class XXXMainPane extends FlexoMainPane {
 
 	public XXXMainPane(XXXController controller) {

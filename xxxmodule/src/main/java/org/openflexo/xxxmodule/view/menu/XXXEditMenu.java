@@ -48,8 +48,10 @@ import org.openflexo.xxxmodule.controller.XXXController;
  * 
  * @author yourname
  */
+@SuppressWarnings("serial")
 public class XXXEditMenu extends EditMenu {
 
+	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(XXXEditMenu.class.getPackage().getName());
 
 	// ==========================================================================

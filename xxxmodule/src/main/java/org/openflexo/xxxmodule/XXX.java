@@ -46,7 +46,7 @@ import org.openflexo.module.Module;
  * You should never instantiate this class (never invoke constructor of this class): this will be done by the ModuleLoader during dynamic
  * service discovering
  * 
- * @author sylvain
+ * @author yourname
  */
 public class XXX extends Module<XXXModule> {
 
@@ -65,9 +65,7 @@ public class XXX extends Module<XXXModule> {
 
 	@Override
 	public String getHTMLDescription() {
-		return "<html><b>Information Space Module</b> allows you to browse your information sources.<br>"
-				+ "This module presents, for all loaded technologies, all interpretable resources present in all resource centers."
-				+ "Those sources of information might be read and/or edited using that module.</html>";
+		return "<html>Describe <b>XX Module</b> here</html>";
 	}
 
 }

@@ -43,17 +43,19 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 import org.openflexo.icon.IconLibrary;
+import org.openflexo.icon.IconMarker;
 import org.openflexo.icon.ImageIconResource;
 import org.openflexo.rm.ResourceLocator;
 
 /**
  * Utility class containing all icons used in context of XXXModule
  * 
- * @author sylvain
+ * @author yourname
  * 
  */
 public class XXXIconLibrary extends IconLibrary {
 
+	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(XXXIconLibrary.class.getPackage().getName());
 
 	// Module icons
@@ -62,5 +64,7 @@ public class XXXIconLibrary extends IconLibrary {
 	public static final ImageIcon XXX_MEDIUM_ICON_WITH_HOVER = new ImageIconResource(
 			ResourceLocator.locateResource("Icons/XXX/module-xxx-hover-32.png"));
 	public static final ImageIcon XXX_BIG_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/XXX/module-xxx-hover-64.png"));
+
+	public static final IconMarker XXX_BIG_MARKER = new IconMarker(XXX_MEDIUM_ICON, 32, 0);
 
 }

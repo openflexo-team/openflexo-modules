@@ -49,7 +49,7 @@ import org.openflexo.prefs.ModulePreferences;
 /**
  * Contains preferences for XXX module
  * 
- * @author sylvain
+ * @author yourname
  * 
  */
 @ModelEntity

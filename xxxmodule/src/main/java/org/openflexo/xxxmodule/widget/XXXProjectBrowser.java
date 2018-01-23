@@ -2,7 +2,7 @@
  * 
  * Copyright (c) 2014, Openflexo
  * 
- * This file is part of Flexovieweditor, a component of the software infrastructure 
+ * This file is part of Formose prototype, a component of the software infrastructure 
  * developed at Openflexo.
  * 
  * 
@@ -36,44 +36,24 @@
  * 
  */
 
-package org.openflexo.xxxmodule.view.menu;
+package org.openflexo.xxxmodule.widget;
 
-import java.util.logging.Logger;
-
-import org.openflexo.view.menu.WindowMenu;
-import org.openflexo.xxxmodule.XXX;
-import org.openflexo.xxxmodule.controller.XXXController;
+import org.openflexo.rm.Resource;
+import org.openflexo.rm.ResourceLocator;
+import org.openflexo.view.controller.FlexoController;
 
 /**
- * 'Window' menu for this Module
+ * A browser that present a XXX project<br>
  * 
  * @author yourname
  */
 @SuppressWarnings("serial")
-public class XXXWindowMenu extends WindowMenu {
+public class XXXProjectBrowser extends AbstractXXXProjectBrowser {
 
-	@SuppressWarnings("unused")
-	private static final Logger logger = Logger.getLogger(XXXWindowMenu.class.getPackage().getName());
+	private static final Resource BROWSER_FIB = ResourceLocator.locateResource("Fib/XXXProjectBrowser.fib");
 
-	// ==========================================================================
-	// ============================= Instance Variables
-	// =========================
-	// ==========================================================================
-
-	protected XXXController xxxController;
-
-	// ==========================================================================
-	// ============================= Constructor
-	// ================================
-	// ==========================================================================
-
-	public XXXWindowMenu(XXXController controller) {
-		super(controller, controller.getApplicationContext().getModuleLoader().getModule(XXX.class));
-		xxxController = controller;
-		// Put your actions here
+	public XXXProjectBrowser(final FlexoController controller) {
+		super(controller, BROWSER_FIB);
 	}
 
-	public XXXController getXXXController() {
-		return xxxController;
-	}
 }

@@ -53,11 +53,12 @@ import org.openflexo.xxxmodule.controller.XXXController;
  * 
  * @author yourname
  */
+@SuppressWarnings("serial")
 public class XXXMenuBar extends FlexoMenuBar {
 
-	private XXXFileMenu _fileMenu;
-	private XXXEditMenu _editMenu;
-	private XXXToolsMenu _toolsMenu;
+	private XXXFileMenu fileMenu;
+	private XXXEditMenu editMenu;
+	private XXXToolsMenu toolsMenu;
 
 	public XXXMenuBar(XXXController controller) {
 		super(controller, controller.getApplicationContext().getModuleLoader().getModule(XXX.class));
@@ -71,10 +72,10 @@ public class XXXMenuBar extends FlexoMenuBar {
 	 */
 	@Override
 	public FileMenu getFileMenu(FlexoController controller) {
-		if (_fileMenu == null) {
-			_fileMenu = new XXXFileMenu((XXXController) controller);
+		if (fileMenu == null) {
+			fileMenu = new XXXFileMenu((XXXController) controller);
 		}
-		return _fileMenu;
+		return fileMenu;
 	}
 
 	/**
@@ -85,10 +86,10 @@ public class XXXMenuBar extends FlexoMenuBar {
 	 */
 	@Override
 	public EditMenu getEditMenu(FlexoController controller) {
-		if (_editMenu == null) {
-			_editMenu = new XXXEditMenu((XXXController) controller);
+		if (editMenu == null) {
+			editMenu = new XXXEditMenu((XXXController) controller);
 		}
-		return _editMenu;
+		return editMenu;
 	}
 
 	/**
@@ -98,11 +99,11 @@ public class XXXMenuBar extends FlexoMenuBar {
 	 * @return a XXXWindowMenu instance
 	 */
 	@Override
-	public WindowMenu getWindowMenu(FlexoController controller, Module module) {
-		if (_windowMenu == null) {
-			_windowMenu = new XXXWindowMenu((XXXController) controller);
+	public WindowMenu getWindowMenu(FlexoController controller, Module<?> module) {
+		if (windowMenu == null) {
+			windowMenu = new XXXWindowMenu((XXXController) controller);
 		}
-		return _windowMenu;
+		return windowMenu;
 	}
 
 	/**
@@ -111,11 +112,11 @@ public class XXXMenuBar extends FlexoMenuBar {
 	 * @param controller
 	 * @return a XXXToolsMenu instance
 	 */
-	public ToolsMenu getToolsMenu(FlexoController controller, Module module) {
-		if (_toolsMenu == null) {
-			_toolsMenu = new XXXToolsMenu((XXXController) controller);
+	public ToolsMenu getToolsMenu(FlexoController controller, Module<?> module) {
+		if (toolsMenu == null) {
+			toolsMenu = new XXXToolsMenu((XXXController) controller);
 		}
-		return _toolsMenu;
+		return toolsMenu;
 	}
 
 }

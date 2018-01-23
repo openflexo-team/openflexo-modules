@@ -1,8 +1,8 @@
 /**
  * 
- * Copyright (c) 2014, Openflexo
+ * Copyright (c) 2014-2015, Openflexo
  * 
- * This file is part of Flexovieweditor, a component of the software infrastructure 
+ * This file is part of Formose prototype, a component of the software infrastructure 
  * developed at Openflexo.
  * 
  * 
@@ -36,44 +36,35 @@
  * 
  */
 
-package org.openflexo.xxxmodule.view.menu;
+package org.openflexo.xxxmodule.model;
 
 import java.util.logging.Logger;
 
-import org.openflexo.view.menu.WindowMenu;
-import org.openflexo.xxxmodule.XXX;
-import org.openflexo.xxxmodule.controller.XXXController;
+import org.openflexo.foundation.FlexoEditor;
+import org.openflexo.foundation.FlexoProject;
+import org.openflexo.foundation.nature.DefaultProjectNatureFactoryImpl;
+import org.openflexo.logging.FlexoLogger;
+import org.openflexo.xxxmodule.model.action.GivesXXXNature;
 
 /**
- * 'Window' menu for this Module
+ * This class is used to interpret a {@link FlexoProject} as a {@link XXXProject}<br>
  * 
  * @author yourname
  */
-@SuppressWarnings("serial")
-public class XXXWindowMenu extends WindowMenu {
+public class XXXProjectNatureFactory extends DefaultProjectNatureFactoryImpl<XXXProjectNature> {
 
-	@SuppressWarnings("unused")
-	private static final Logger logger = Logger.getLogger(XXXWindowMenu.class.getPackage().getName());
+	static final Logger logger = FlexoLogger.getLogger(XXXProjectNatureFactory.class.getPackage().getName());
 
-	// ==========================================================================
-	// ============================= Instance Variables
-	// =========================
-	// ==========================================================================
-
-	protected XXXController xxxController;
-
-	// ==========================================================================
-	// ============================= Constructor
-	// ================================
-	// ==========================================================================
-
-	public XXXWindowMenu(XXXController controller) {
-		super(controller, controller.getApplicationContext().getModuleLoader().getModule(XXX.class));
-		xxxController = controller;
-		// Put your actions here
+	public XXXProjectNatureFactory() {
+		super(XXXProjectNature.class);
 	}
 
-	public XXXController getXXXController() {
-		return xxxController;
+	@Override
+	public XXXProjectNature givesNature(FlexoProject<?> project, FlexoEditor editor) {
+		GivesXXXNature givesXXXNature = GivesXXXNature.actionType.makeNewAction(project, null, editor);
+		givesXXXNature.doAction();
+
+		return givesXXXNature.getNewNature();
 	}
+
 }

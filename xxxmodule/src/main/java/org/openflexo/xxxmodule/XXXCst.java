@@ -42,8 +42,12 @@ package org.openflexo.xxxmodule;
 /**
  * Constants used by the XXX module.
  * 
- * @author sylvain
+ * @author yourname
  */
 public class XXXCst {
+
+	public static final String XXX_VIEWPOINT_URI = "http://openflexo.org/XXX.fml";
+
+	public static final String XXX_VIEW_NAME = "XXXView";
 
 }
