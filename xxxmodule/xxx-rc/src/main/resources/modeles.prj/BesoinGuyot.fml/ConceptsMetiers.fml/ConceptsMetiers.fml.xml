@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VirtualModel id="0" modelVersion="1.0" version="0.1" name="ConceptsMetiers" userID="FLX" flexoID="2">
+  <FlexoConcept id="1" name="Flux" userID="FLX" flexoID="16">
+    <FlexoConceptInstanceRole id="2" virtualModelInstance="virtualModelInstance" flexoConceptTypeURI="http://www.guyot-environnement.fr/Caracterisations/ConceptsMetiers#Matiere" cloningStrategy="Reference" cardinality="ZeroOne" name="matiere" userID="FLX" flexoID="68" />
+    <FlexoConceptInstanceRole id="3" virtualModelInstance="virtualModelInstance" flexoConceptTypeURI="http://www.guyot-environnement.fr/Caracterisations/ConceptsMetiers#Tiers" cloningStrategy="Reference" cardinality="ZeroOne" name="tiers" userID="FLX" description="" flexoID="148" />
+    <CreationScheme id="4" name="create" width="800" label="create" height="600" userID="FLX" flexoID="12">
+      <BehaviourControlGraph_EmptyControlGraph id="5" userID="FLX" flexoID="11" />
+    </CreationScheme>
+    <DeletionScheme id="6" name="delete" width="800" label="delete" height="600" userID="FLX" flexoID="14">
+      <BehaviourControlGraph_EmptyControlGraph id="7" userID="FLX" flexoID="13" />
+    </DeletionScheme>
+    <Inspector id="8" inspectorTitle="Flux" userID="FLX" flexoID="15" />
+  </FlexoConcept>
+  <FlexoConcept id="9" name="Tiers" userID="FLX" flexoID="22">
+    <CreationScheme id="10" name="create" width="800" label="create" height="600" userID="FLX" flexoID="18">
+      <BehaviourControlGraph_EmptyControlGraph id="11" userID="FLX" flexoID="17" />
+    </CreationScheme>
+    <DeletionScheme id="12" name="delete" width="800" label="delete" height="600" userID="FLX" flexoID="20">
+      <BehaviourControlGraph_EmptyControlGraph id="13" userID="FLX" flexoID="19" />
+    </DeletionScheme>
+    <Inspector id="14" inspectorTitle="Tiers" userID="FLX" flexoID="21" />
+  </FlexoConcept>
+  <FlexoConcept id="15" name="Refus" userID="FLX" flexoID="34">
+    <FlexoConceptInstanceRole id="16" virtualModelInstance="virtualModelInstance" flexoConceptTypeURI="http://www.guyot-environnement.fr/Caracterisations/ConceptsMetiers#Matiere" cloningStrategy="Reference" cardinality="ZeroOne" name="role" userID="FLX" flexoID="67" />
+    <CreationScheme id="17" name="create" width="800" label="create" height="600" userID="FLX" flexoID="30">
+      <BehaviourControlGraph_EmptyControlGraph id="18" userID="FLX" flexoID="29" />
+    </CreationScheme>
+    <DeletionScheme id="19" name="delete" width="800" label="delete" height="600" userID="FLX" flexoID="32">
+      <BehaviourControlGraph_EmptyControlGraph id="20" userID="FLX" flexoID="31" />
+    </DeletionScheme>
+    <Inspector id="21" inspectorTitle="Refus" userID="FLX" flexoID="33" />
+  </FlexoConcept>
+  <FlexoConcept id="22" name="Stock" userID="FLX" flexoID="56">
+    <FlexoConceptInstanceRole id="23" virtualModelInstance="virtualModelInstance" flexoConceptTypeURI="http://www.guyot-environnement.fr/Caracterisations/ConceptsMetiers#Matiere" cloningStrategy="Reference" cardinality="ZeroOne" name="matiere" userID="FLX" flexoID="57" />
+    <CreationScheme id="24" name="create" width="800" label="create" height="600" userID="FLX" flexoID="52">
+      <BehaviourControlGraph_EmptyControlGraph id="25" userID="FLX" flexoID="51" />
+    </CreationScheme>
+    <DeletionScheme id="26" name="delete" width="800" label="delete" height="600" userID="FLX" flexoID="54">
+      <BehaviourControlGraph_EmptyControlGraph id="27" userID="FLX" flexoID="53" />
+    </DeletionScheme>
+    <Inspector id="28" inspectorTitle="Stock" userID="FLX" flexoID="55" />
+  </FlexoConcept>
+  <FlexoConcept id="29" name="Matiere" userID="FLX" flexoID="60">
+    <PrimitiveRole id="30" primitiveType="String" cloningStrategy="Clone" cardinality="ZeroOne" name="nom" userID="FLX" flexoID="79" />
+    <CreationScheme id="31" name="create" width="800" label="create" height="600" userID="FLX" flexoID="49">
+      <BehaviourControlGraph_EmptyControlGraph id="32" userID="FLX" flexoID="58" />
+    </CreationScheme>
+    <DeletionScheme id="33" name="delete" width="800" label="delete" height="600" userID="FLX" flexoID="50">
+      <BehaviourControlGraph_EmptyControlGraph id="34" userID="FLX" flexoID="59" />
+    </DeletionScheme>
+    <Inspector id="35" inspectorTitle="Matiere" userID="FLX" flexoID="46" />
+  </FlexoConcept>
+  <FlexoConcept id="36" name="Pesée" userID="FLX" flexoID="85">
+    <PrimitiveRole id="37" primitiveType="String" cloningStrategy="Clone" cardinality="ZeroOne" name="date" userID="FLX" flexoID="81" />
+    <PrimitiveRole id="38" primitiveType="Double" cloningStrategy="Clone" cardinality="ZeroOne" name="valeur" userID="FLX" description="" flexoID="82" />
+    <FlexoConceptInstanceRole id="39" virtualModelInstance="virtualModelInstance" flexoConceptTypeURI="http://www.guyot-environnement.fr/Caracterisations/ConceptsMetiers#Flux" cloningStrategy="Reference" cardinality="ZeroOne" name="flux" userID="FLX" flexoID="142" />
+    <CreationScheme id="40" name="create" width="800" label="create" height="600" userID="FLX" flexoID="77">
+      <BehaviourControlGraph_EmptyControlGraph id="41" userID="FLX" flexoID="83" />
+    </CreationScheme>
+    <DeletionScheme id="42" name="delete" width="800" label="delete" height="600" userID="FLX" flexoID="78">
+      <BehaviourControlGraph_EmptyControlGraph id="43" userID="FLX" flexoID="84" />
+    </DeletionScheme>
+    <Inspector id="44" inspectorTitle="Pesée" userID="FLX" flexoID="74" />
+  </FlexoConcept>
+  <FlexoConcept id="45" name="CaracterisationFlux" userID="FLX" flexoID="94">
+    <EmbeddedFlexoConcept id="46" name="poidsMatiere" userID="FLX" flexoID="104">
+      <FlexoConceptInstanceRole id="47" virtualModelInstance="virtualModelInstance" flexoConceptTypeURI="http://www.guyot-environnement.fr/Caracterisations/ConceptsMetiers#Matiere" cloningStrategy="Reference" cardinality="ZeroOne" name="matiere" userID="FLX" flexoID="100" />
+      <PrimitiveRole id="48" primitiveType="Float" cloningStrategy="Clone" cardinality="ZeroOne" name="poids" userID="FLX" flexoID="101" />
+      <CreationScheme id="49" name="create" width="800" label="create" height="600" userID="FLX" flexoID="98">
+        <BehaviourControlGraph_EmptyControlGraph id="50" userID="FLX" flexoID="102" />
+      </CreationScheme>
+      <DeletionScheme id="51" name="delete" width="800" label="delete" height="600" userID="FLX" flexoID="99">
+        <BehaviourControlGraph_EmptyControlGraph id="52" userID="FLX" flexoID="103" />
+      </DeletionScheme>
+      <Inspector id="53" inspectorTitle="tauxMatiere" userID="FLX" flexoID="95" />
+    </EmbeddedFlexoConcept>
+    <FlexoConceptInstanceRole id="54" virtualModelInstance="virtualModelInstance" flexoConceptTypeURI="http://www.guyot-environnement.fr/Caracterisations/ConceptsMetiers#Flux" cloningStrategy="Reference" cardinality="ZeroOne" name="flux" userID="FLX" flexoID="91" />
+    <CreationScheme id="55" name="create" width="800" label="create" height="600" userID="FLX" flexoID="89">
+      <BehaviourControlGraph_EmptyControlGraph id="56" userID="FLX" flexoID="92" />
+    </CreationScheme>
+    <DeletionScheme id="57" name="delete" width="800" label="delete" height="600" userID="FLX" flexoID="90">
+      <BehaviourControlGraph_EmptyControlGraph id="58" userID="FLX" flexoID="93" />
+    </DeletionScheme>
+    <Inspector id="59" inspectorTitle="CaracterisationFlux" userID="FLX" flexoID="86" />
+  </FlexoConcept>
+  <FlexoConcept idref="46" />
+  <FlexoConcept id="60" parentFlexoConceptsList="http://www.guyot-environnement.fr/Caracterisations/ConceptsMetiers#CompositionFlux" name="ReferenceContractuelle" userID="FLX" flexoID="112">
+    <CreationScheme id="61" name="create" width="800" label="create" height="600" userID="FLX" flexoID="108">
+      <BehaviourControlGraph_EmptyControlGraph id="62" userID="FLX" flexoID="110" />
+    </CreationScheme>
+    <DeletionScheme id="63" name="delete" width="800" label="delete" height="600" userID="FLX" flexoID="109">
+      <BehaviourControlGraph_EmptyControlGraph id="64" userID="FLX" flexoID="111" />
+    </DeletionScheme>
+    <Inspector id="65" inspectorTitle="ReferenceContractuelle" userID="FLX" flexoID="105" />
+  </FlexoConcept>
+  <FlexoConcept id="66" name="CompositionFlux" userID="FLX" flexoID="120">
+    <EmbeddedFlexoConcept id="67" name="tauxMatiere" userID="FLX" flexoID="138">
+      <FlexoConceptInstanceRole id="68" virtualModelInstance="virtualModelInstance" flexoConceptTypeURI="http://www.guyot-environnement.fr/Caracterisations/ConceptsMetiers#Matiere" cloningStrategy="Reference" cardinality="ZeroOne" name="matiere" userID="FLX" flexoID="125" />
+      <PrimitiveRole id="69" primitiveType="Float" cloningStrategy="Clone" cardinality="ZeroOne" name="taux" userID="FLX" flexoID="126" />
+      <CreationScheme id="70" name="create" width="800" label="create" height="600" userID="FLX" flexoID="134">
+        <BehaviourControlGraph_Sequence id="71" userID="FLX" flexoID="131">
+          <ControlGraph2_AssignationAction id="72" assign="taux" ownerContext="controlGraph2" userID="FLX" flexoID="128">
+            <AssignableAction_ExpressionAction id="73" expression="parameters.aTaux" userID="FLX" flexoID="127" />
+          </ControlGraph2_AssignationAction>
+          <ControlGraph1_AssignationAction id="74" assign="matiere" ownerContext="controlGraph1" userID="FLX" flexoID="130">
+            <AssignableAction_ExpressionAction id="75" expression="parameters.aMatiere" userID="FLX" flexoID="129" />
+          </ControlGraph1_AssignationAction>
+        </BehaviourControlGraph_Sequence>
+        <GenericBehaviourParameter id="76" container="virtualModelInstance" isRequired="true" widget="CUSTOM_WIDGET" name="aMatiere" type="org.openflexo.foundation.fml.FlexoConceptInstanceType&lt;http://www.guyot-environnement.fr/Caracterisations/ConceptsMetiers#Matiere&gt;" userID="FLX" flexoID="132" />
+        <GenericBehaviourParameter id="77" isRequired="true" widget="FLOAT" name="aTaux" type="java.lang.Float" userID="FLX" flexoID="133" />
+      </CreationScheme>
+      <DeletionScheme id="78" name="delete" width="800" label="delete" height="600" userID="FLX" flexoID="136">
+        <BehaviourControlGraph_DeleteAction id="79" object="taux" userID="FLX" flexoID="135" />
+      </DeletionScheme>
+      <Inspector id="80" inspectorTitle="tauxMatiere" userID="FLX" flexoID="137" />
+    </EmbeddedFlexoConcept>
+    <FlexoConceptInstanceRole id="81" virtualModelInstance="virtualModelInstance" flexoConceptTypeURI="http://www.guyot-environnement.fr/Caracterisations/ConceptsMetiers#Flux" cloningStrategy="Reference" cardinality="ZeroOne" name="flux" userID="FLX" flexoID="139" />
+    <CreationScheme id="82" name="create" width="800" label="create" height="600" userID="FLX" flexoID="116">
+      <BehaviourControlGraph_EmptyControlGraph id="83" userID="FLX" flexoID="118" />
+    </CreationScheme>
+    <DeletionScheme id="84" name="delete" width="800" label="delete" height="600" userID="FLX" flexoID="117">
+      <BehaviourControlGraph_EmptyControlGraph id="85" userID="FLX" flexoID="119" />
+    </DeletionScheme>
+    <Inspector id="86" inspectorTitle="CompositionProbable" userID="FLX" flexoID="113" />
+  </FlexoConcept>
+  <FlexoConcept idref="67" />
+  <Inspector id="87" inspectorTitle="ConceptsMetiers" userID="FLX" flexoID="1" />
+</VirtualModel>

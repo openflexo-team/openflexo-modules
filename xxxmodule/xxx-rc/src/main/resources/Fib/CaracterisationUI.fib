@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GINAFIBComponent id="0" userID="FLX" flexoID="1">
+  <Panel id="1" align="left" borderTop="10" borderLeft="10" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="0" border="empty" sizeAdjustment="OriginalSize" layout="border" borderRight="10" controllerClassName="org.openflexo.technologyadapter.gina.controller.FMLControlledFIBController">
+    <Panel id="2" align="left" borderTop="0" borderLeft="0" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="0" border="rounded3d" sizeAdjustment="OriginalSize" layout="border" borderRight="0" constraints="border(location=north)" height="100" width="100" name="FIBPanel">
+      <Image id="3" imageWidth="80" sizeAdjustment="OriginalSize" imageFile="../Icons/Caracterisation_64x64.png" align="left" imageHeight="46" constraints="border(location=east)" name="Image" />
+      <Label id="4" label="" align="left" data="data.typeDeFlux.nom" constraints="border(location=center)" font="SansSerif,0,18" name="Label" />
+    </Panel>
+    <Panel id="5" align="left" borderTop="0" borderLeft="0" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="10" border="empty" sizeAdjustment="OriginalSize" layout="twocols" borderRight="0" constraints="border(location=center)" name="FIBPanel2">
+      <Panel id="6" align="left" borderTop="10" borderLeft="0" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="0" border="rounded3d" sizeAdjustment="OriginalSize" layout="twocols" borderRight="0" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=center)" name="FIBPanel3">
+        <Label id="7" label="Echantillon" align="left" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=left)" name="Label4" />
+        <Panel id="8" align="left" borderTop="0" borderTitle="Panel" flowAlignment="LEADING" borderLeft="0" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="0" border="empty" sizeAdjustment="OriginalSize" layout="flow" borderRight="0" vGap="0" hGap="1" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=right)" name="FIBPanel4">
+          <Number id="9" minValue="0" numberType="FloatType" numberFormat="#0.00" maxValue="65535" columns="4" increment="1.0" data="data.caracterisation.tonnage" constraints="flow(expandHorizontally=false;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=center)" name="Integer" />
+          <Label id="10" label="kg" align="left" constraints="flow()" name="Label6" />
+          <Label id="11" label="Saisi" align="left" constraints="flow()" name="Label5" />
+          <Number id="12" minValue="0" numberType="FloatType" numberFormat="#0.00" maxValue="65535" columns="4" increment="1.0" data="data.tonnageTotal" constraints="flow()" name="Integer" />
+          <Label id="13" label="kg" align="left" constraints="flow()" name="Label7" />
+        </Panel>
+        <Label id="14" label="Date" align="left" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=left)" name="Label2" />
+        <Date id="15" columns="13" data="data.caracterisation.date" constraints="twocols(expandHorizontally=false;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=right)" name="DateSelector" />
+        <Label id="16" label="Operateur" align="left" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=left)" name="Label3" />
+        <TextField id="17" columns="14" data="data.caracterisation.operator" constraints="twocols(expandHorizontally=false;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=right)" name="TextField2" />
+      </Panel>
+      <Table id="18" visibleRowCount="5" backgroundNonSelectionColor="255,255,255" iteratorClassName="org.openflexo.foundation.fml.FlexoConceptInstanceType&lt;http://geve.guyotenvironnement.com/GeveExploitation.viewpoint/Caracterisations.fml#CaracterisationMatiere&gt;" backgroundSecondarySelectionColor="178,215,255" lookAndFeel="Classic" selectionMode="MultipleIntervalSelection" rowHeight="18" manageDynamicModel="true" data="data.caracterisationsMatieres" constraints="twocols(expandHorizontally=true;expandVertically=true;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=10;location=left)" name="Table2">
+        <IconColumn id="19" data="controller.iconForObject(iterator)" resizable="false" title="icon" displayTitle="false" columnWidth="20" showIcon="false" name="icon" />
+        <TextFieldColumn id="20" data="iterator.matiere.nom" resizable="true" title="nom" displayTitle="true" columnWidth="150" showIcon="false" name="textfield" />
+        <NumberColumn id="21" numberType="FloatType" numberFormat="####0.00" data="iterator.tonnageMatiere" resizable="true" title="Poids (kg)" displayTitle="true" columnWidth="60" showIcon="false" name="poids" />
+        <NumberColumn id="22" numberType="FloatType" numberFormat="####0.00" data="iterator.pourcentage" resizable="true" title="Val (%)" displayTitle="true" columnWidth="60" showIcon="false" name="pourcentage" />
+        <NumberColumn id="23" numberType="FloatType" numberFormat="####0.00" data="iterator.pourcentageReferentiel" resizable="true" title="Ref (%)" displayTitle="true" columnWidth="60" showIcon="false" name="number" />
+      </Table>
+      <FIBDiscreteSimpleFunctionGraph id="24" values="data.container.container.donneesReferentiel.matieres" labels="matiere.nom.substring(0,4)" parameterOrientation="VERTICAL" parameterName="matiere" borderBottom="30" constraints="twocols(expandHorizontally=true;expandVertically=true;insetsBottom=0;insetsLeft=10;insetsRight=0;insetsTop=10;location=right)" name="Graph">
+        <FIBNumericFunction id="25" stepsNumber="5" minValue="0" maxValue="100" majorTickSpacing="20" expression="data.getCaracterisationMatiere(matiere).pourcentage" graphType="BAR_GRAPH" backgroundColor1="51,102,255" foregroundColor="0,0,255" backgroundColor2="255,255,255" backgroundType="GRADIENT" name="caracterisation" />
+        <FIBNumericFunction id="26" stepsNumber="5" minValue="0" maxValue="100" majorTickSpacing="20" expression="data.getCaracterisationMatiere(matiere).pourcentageReferentiel" graphType="BAR_GRAPH" backgroundColor1="255,255,0" foregroundColor="255,153,0" backgroundColor2="255,255,255" backgroundType="GRADIENT" name="referentiel" />
+      </FIBDiscreteSimpleFunctionGraph>
+    </Panel>
+    <LocalizedDictionary id="27" />
+    <FIBVariable id="28" type="org.openflexo.foundation.fml.FlexoConceptInstanceType&lt;http://geve.guyotenvironnement.com/GeveExploitation.viewpoint/Caracterisations.fml#Caracterisation&gt;" name="data" />
+  </Panel>
+</GINAFIBComponent>

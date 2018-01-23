@@ -1,0 +1,4 @@
+include 'xxx-app',
+        'xxx-module',
+        'xxx-rc'
+

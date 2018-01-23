@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GINAFIBComponent id="0" userID="FLX" flexoID="1">
+  <Panel id="1" align="left" borderTop="10" borderLeft="10" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="10" border="empty" sizeAdjustment="OriginalSize" layout="border" borderRight="10" controllerClassName="org.openflexo.gevemodule.controller.GEVEFIBController">
+    <Panel id="2" align="left" borderTop="0" borderLeft="0" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="0" border="rounded3d" sizeAdjustment="OriginalSize" layout="border" borderRight="0" constraints="border(location=north)" height="100" width="100" name="FIBPanel">
+      <Image id="3" imageWidth="80" sizeAdjustment="OriginalSize" imageFile="../Icons/Caracterisations_64x64.png" align="left" imageHeight="46" constraints="border(location=east)" name="Image" />
+      <Label id="4" label="" align="left" data="&quot;Caractérisations&quot;" constraints="border(location=center)" font="SansSerif,0,18" name="Label" />
+    </Panel>
+    <Panel id="5" align="left" borderTop="0" borderLeft="10" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="10" border="empty" sizeAdjustment="OriginalSize" layout="twocols" borderRight="0" constraints="border(location=center)" name="FIBPanel2">
+      <Table id="6" visibleRowCount="5" backgroundNonSelectionColor="255,255,255" iteratorClassName="org.openflexo.foundation.fml.FlexoConceptInstanceType&lt;http://geve.guyotenvironnement.com/GeveExploitation.viewpoint/Caracterisations.fml#Caracterisation&gt;" backgroundSecondarySelectionColor="178,215,255" lookAndFeel="Classic" selectionMode="MultipleIntervalSelection" rowHeight="18" manageDynamicModel="true" data="data.caracterisations" constraints="twocols(expandHorizontally=true;expandVertically=true;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=10;location=right)" name="Table">
+        <IconColumn id="7" data="controller.iconForObject(iterator.typeDeFlux)" resizable="false" title="icon" displayTitle="false" columnWidth="20" showIcon="false" name="icon" />
+        <TextFieldColumn id="8" data="iterator.tiers.nom" resizable="true" title="Tiers" displayTitle="true" columnWidth="200" showIcon="false" name="tiers" />
+        <TextFieldColumn id="9" data="iterator.typeDeFlux.nom" resizable="true" title="Type de flux" displayTitle="true" columnWidth="100" showIcon="false" name="typeDeFlux" />
+        <LabelColumn id="10" data="iterator.date" resizable="true" title="Date" displayTitle="true" columnWidth="100" showIcon="false" name="date" />
+        <LabelColumn id="11" data="iterator.operateur" resizable="true" title="Opérateur" displayTitle="true" columnWidth="100" showIcon="false" name="operateur" />
+        <LabelColumn id="12" data="iterator.tonnage" resizable="true" title="tonnage" displayTitle="true" columnWidth="100" showIcon="false" name="tonnage" />
+        <AddAction id="13" method="controller.newCaracterisation()" name="nouvelle_caracterisation" />
+      </Table>
+    </Panel>
+    <LocalizedDictionary id="14" />
+    <FIBVariable id="15" type="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://geve.guyotenvironnement.com/GeveExploitation.viewpoint/Caracterisations.fml&gt;" name="data" />
+  </Panel>
+</GINAFIBComponent>

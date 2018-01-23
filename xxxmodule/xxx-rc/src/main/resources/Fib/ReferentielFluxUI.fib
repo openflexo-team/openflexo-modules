@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GINAFIBComponent id="0" userID="FLX" flexoID="1">
+  <Panel id="1" align="left" borderTop="10" borderLeft="10" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="0" border="empty" sizeAdjustment="OriginalSize" layout="border" borderRight="10" controllerClassName="org.openflexo.technologyadapter.gina.controller.FMLControlledFIBController">
+    <Panel id="2" align="left" borderTop="0" borderLeft="0" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="0" border="rounded3d" sizeAdjustment="OriginalSize" layout="border" borderRight="0" constraints="border(location=north)" height="100" width="100" name="FIBPanel">
+      <Image id="3" imageWidth="80" sizeAdjustment="OriginalSize" align="left" imageHeight="46" constraints="border(location=east)" name="Image" />
+      <Label id="4" label="" align="left" data="(((&quot;Referentiel &quot; + data.tiers.nom) + &quot; - &quot;) + data.typeDeFlux.nom)" constraints="border(location=center)" font="SansSerif,0,18" name="Label" />
+    </Panel>
+    <Panel id="5" align="left" borderTop="0" borderLeft="0" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="10" border="empty" sizeAdjustment="OriginalSize" layout="twocols" borderRight="0" constraints="border(location=center)" name="FIBPanel2">
+      <Panel id="6" align="left" borderTop="10" borderLeft="0" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="0" border="rounded3d" sizeAdjustment="OriginalSize" layout="twocols" borderRight="0" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=center)" name="FIBPanel3">
+        <Label id="7" label="Tonnage annuel" align="left" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=left)" name="Label4" />
+        <Number id="8" minValue="0" numberType="FloatType" maxValue="65535" columns="8" increment="1.0" data="data.baseTonnageAnnuel" constraints="twocols(expandHorizontally=false;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=right)" name="Integer" />
+        <Label id="9" label="Activité" align="left" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=left)" name="Label2" />
+        <TextField id="10" columns="15" data="data.typeDeFlux.typeActivite" constraints="twocols(expandHorizontally=false;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=right)" name="TextField" />
+        <Label id="11" label="total (%)" align="left" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=left)" name="Label3" />
+        <Number id="12" minValue="0" numberType="FloatType" numberFormat="####0.00" maxValue="100" columns="8" increment="1.0" data="data.totalPourcentage" constraints="twocols(expandHorizontally=false;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=right)" name="Integer" />
+      </Panel>
+      <Table id="13" visibleRowCount="5" backgroundNonSelectionColor="255,255,255" iteratorClassName="org.openflexo.foundation.fml.FlexoConceptInstanceType&lt;http://geve.guyotenvironnement.com/GeveExploitation.viewpoint/ReferentielTiers.fml#ReferentielMatiere&gt;" backgroundSecondarySelectionColor="178,215,255" lookAndFeel="Classic" selectionMode="MultipleIntervalSelection" rowHeight="18" manageDynamicModel="true" data="data.referentielsMatiere" constraints="twocols(expandHorizontally=true;expandVertically=true;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=10;location=left)" name="Table2">
+        <IconColumn id="14" data="controller.iconForObject(iterator)" resizable="false" title="icon" displayTitle="false" columnWidth="20" showIcon="false" name="icon" />
+        <TextFieldColumn id="15" data="iterator.matiere.nom" resizable="true" title="nom" displayTitle="true" columnWidth="150" showIcon="false" name="textfield" />
+        <NumberColumn id="16" numberType="FloatType" numberFormat="####0.00" data="iterator.pourcentage" resizable="true" title="%" displayTitle="true" columnWidth="80" showIcon="false" name="number" />
+      </Table>
+        <FIBDiscretePolarFunctionGraph id="17" values="data.referentielsMatiere" labels="matiere.matiere.nom" parameterName="matiere" constraints="twocols(expandHorizontally=true;expandVertically=true;insetsBottom=0;insetsLeft=10;insetsRight=0;insetsTop=10;location=right)" height="100" width="100" name="Graph">
+        <FIBNumericFunction id="18" stepsNumber="100" minValue="0.0" maxValue="200.0" majorTickSpacing="20.0" minorTickSpacing="5.0" expression="matiere.pourcentage" graphType="SECTORS" backgroundColor1="51,51,255" foregroundColor="0,0,255" backgroundColor2="255,255,255" backgroundType="COLORED" name="function0" />
+      </FIBDiscretePolarFunctionGraph>
+    </Panel>
+    <LocalizedDictionary id="19" />
+    <FIBVariable id="20" type="org.openflexo.foundation.fml.FlexoConceptInstanceType&lt;http://geve.guyotenvironnement.com/GeveExploitation.viewpoint/ReferentielTiers.fml#ReferentielFlux&gt;" name="data" />
+  </Panel>
+</GINAFIBComponent>

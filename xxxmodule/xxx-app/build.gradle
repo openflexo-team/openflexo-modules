@@ -1,0 +1,16 @@
+dependencies {
+
+  compile project(':xxx-module')
+  compile project(':xxx-rc')
+  //compile 'org.openflexo:xxx-module:1.9.0-SNAPSHOT' 
+
+  //testCompile testUtils()
+  //testCompile ginaTest()
+  //testCompile ginaSwingEditorTest()
+  testCompile flexoFoundationTest()
+  testCompile flexoUiTest()
+  //testRuntime flexoTestResources()
+
+  //testCompile "org.openflexo.module:xxx-module:1.9.0-SNAPSHOT"
+
+}

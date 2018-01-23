@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GINAFIBComponent id="0" userID="FLX" flexoID="1">
+  <Panel id="1" align="left" borderTop="10" borderLeft="10" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="10" border="empty" sizeAdjustment="OriginalSize" layout="border" borderRight="10" controllerClassName="org.openflexo.gevemodule.controller.GEVEFIBController">
+    <Panel id="2" align="left" borderTop="0" borderLeft="0" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="0" border="rounded3d" sizeAdjustment="OriginalSize" layout="border" borderRight="0" constraints="border(location=north)" height="100" width="100" name="FIBPanel">
+      <Image id="3" imageWidth="80" sizeAdjustment="OriginalSize" imageFile="../Icons/Tiers_64x64.png" align="left" imageHeight="46" constraints="border(location=east)" name="Image" />
+      <Label id="4" label="  Tiers référencés" align="left" constraints="border(location=center)" font="SansSerif,0,18" name="Label" />
+    </Panel>
+    <Panel id="5" align="left" borderTop="10" borderLeft="5" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="0" border="empty" sizeAdjustment="OriginalSize" layout="border" borderRight="0" constraints="border(location=center)" name="FIBPanel2">
+      <Table id="6" visibleRowCount="3" boundToSelectionManager="true" backgroundNonSelectionColor="255,255,255" iteratorClassName="org.openflexo.foundation.fml.FlexoConceptInstanceType&lt;http://geve.guyotenvironnement.com/GeveExploitation.viewpoint/DonneesReferentiel.fml#Tiers&gt;" backgroundSecondarySelectionColor="178,215,255" lookAndFeel="Classic" selectionMode="MultipleIntervalSelection" rowHeight="18" manageDynamicModel="true" data="data.tiers" constraints="border(location=west)" name="TiersTable">
+        <IconColumn id="7" data="controller.iconForObject(iterator)" resizable="false" title="icon" displayTitle="false" columnWidth="20" showIcon="false" name="icon" />
+        <TextFieldColumn id="8" data="iterator.nom" resizable="true" title="tiers" displayTitle="true" columnWidth="200" showIcon="false" name="textfield" />
+        <AddAction id="9" method="data.identifyNewTiers(null)" name="add_action" />
+      </Table>
+      <Panel id="10" align="left" borderTop="0" borderLeft="5" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="0" border="rounded3d" sizeAdjustment="OriginalSize" layout="twocols" borderRight="0" constraints="border(location=center)" name="FIBPanel3">
+        <Label id="11" label="Code tiers" align="left" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=left)" name="Label2" />
+        <TextField id="12" columns="7" data="TiersTable.selected.dbTiers.tiers_code" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=right)" name="TextField" />
+        <Label id="13" label="Nom tiers" align="left" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=left)" name="Label3" />
+        <TextField id="14" columns="7" data="TiersTable.selected.dbTiers.nom_recherche" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=right)" name="TextField2" />
+        <Label id="15" label="Raison sociale" align="left" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=left)" name="Label4" />
+        <TextField id="16" columns="7" data="TiersTable.selected.dbTiers.raison_sociale" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=right)" name="TextField3" />
+        <Label id="17" label="Adresse" align="left" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=left)" name="Label5" />
+        <TextField id="18" columns="7" data="TiersTable.selected.dbTiers.adresse1" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=right)" name="TextField4" />
+        <Label id="19" label="Code postal" align="left" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=left)" name="Label6" />
+        <TextField id="20" columns="7" data="TiersTable.selected.dbTiers.code_postal" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=right)" name="TextField5" />
+        <Label id="21" label="Ville" align="left" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=left)" name="Label7" />
+        <TextField id="22" columns="7" data="TiersTable.selected.dbTiers.ville" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=right)" name="TextField6" />
+        <Label id="23" label="Pays" align="left" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=left)" name="Label8" />
+        <TextField id="24" columns="7" data="TiersTable.selected.dbTiers.pays_code" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=right)" name="TextField7" />
+        <Label id="25" label="Téléphone" align="left" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=left)" name="Label9" />
+        <TextField id="26" columns="7" data="TiersTable.selected.dbTiers.telephone1" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=right)" name="TextField8" />
+        <Label id="27" label="Fax" align="left" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=left)" name="Label10" />
+        <TextField id="28" columns="7" data="TiersTable.selected.dbTiers.fax1" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=right)" name="TextField9" />
+        <Label id="29" label="Portable" align="left" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=left)" name="Label11" />
+        <TextField id="30" columns="7" data="TiersTable.selected.dbTiers.portable" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=right)" name="TextField10" />
+        <Label id="31" label="Email" align="left" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=left)" name="Label12" />
+        <TextField id="32" columns="7" data="TiersTable.selected.dbTiers.email1" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=right)" name="TextField11" />
+      </Panel>
+    </Panel>
+    <LocalizedDictionary id="33" />
+    <FIBVariable id="34" type="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://geve.guyotenvironnement.com/GeveExploitation.viewpoint/DonneesReferentiel.fml&gt;" name="data" />
+  </Panel>
+</GINAFIBComponent>

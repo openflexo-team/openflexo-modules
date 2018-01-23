@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GINAFIBComponent id="0" userID="FLX" flexoID="-1">
+  <Panel id="1" align="left" borderTop="0" flowAlignment="LEFT" borderLeft="0" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="0" cols="1" border="empty" sizeAdjustment="OriginalSize" rows="2" layout="grid" borderRight="0" vGap="5" hGap="5" controllerClassName="org.openflexo.gina.controller.FIBController">
+    <Button id="2" buttonType="Trigger" label="Début de caractérisation" constraints="grid(location=center;x=0;y=0)" name="StartOp" />
+    <Button id="3" buttonType="Trigger" label="Fin de caractérisation" constraints="grid(x=0;y=1)" name="StopOp" description="" />
+  </Panel>
+</GINAFIBComponent>

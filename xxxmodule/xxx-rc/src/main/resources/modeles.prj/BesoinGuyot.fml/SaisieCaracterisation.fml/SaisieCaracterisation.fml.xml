@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VirtualModel id="0" modelVersion="1.0" version="0.1" name="SaisieCaracterisation" userID="FLX" flexoID="2">
+  <UseModelSlotDeclaration id="1" modelSlotClass="org.openflexo.technologyadapter.gina.FIBComponentModelSlot" userID="FLX" flexoID="-1" />
+  <UseModelSlotDeclaration id="2" modelSlotClass="org.openflexo.foundation.fml.rt.VirtualModelInstanceModelSlot" userID="FLX" flexoID="-1" />
+  <FIBComponentModelSlot id="3" templateComponentURI="http://www.openflexo.org/projects/2017/5/modeles_1496224298970/fibs/formulaireSaisieCaracterisation.fib" isRequired="true" cloningStrategy="Reference" cardinality="ZeroOne" name="ui" userID="FLX" flexoID="7">
+    <VariableAssignment id="4" variableType="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://www.guyot-environnement.fr/Caracterisations/OperationsCaracterisation&gt;" variable="data" value="operation" userID="FLX" flexoID="11" />
+  </FIBComponentModelSlot>
+  <VirtualModelInstanceModelSlot id="5" virtualModelURI="http://www.guyot-environnement.fr/Caracterisations/OperationsCaracterisation" isRequired="true" cloningStrategy="Reference" cardinality="ZeroOne" name="operation" userID="FLX" flexoID="10" />
+  <CreationScheme id="6" width="800" name="init" label="init" height="600" userID="FLX" flexoID="5">
+    <BehaviourControlGraph_AssignationAction id="7" assign="ui" userID="FLX" flexoID="6">
+      <AssignableAction_ConfigureGINAFIBComponent id="8" receiver="ui" userID="FLX" flexoID="8" />
+    </BehaviourControlGraph_AssignationAction>
+  </CreationScheme>
+  <Inspector id="9" inspectorTitle="SaisieCaracterisation" userID="FLX" flexoID="1" />
+</VirtualModel>

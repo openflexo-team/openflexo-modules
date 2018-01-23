@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GINAFIBComponent id="0" userID="FLX" flexoID="1">
+  <Panel id="1" align="left" borderTop="10" borderLeft="10" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="10" border="empty" sizeAdjustment="OriginalSize" layout="border" borderRight="10" controllerClassName="org.openflexo.gevemodule.controller.GEVEFIBController">
+    <Panel id="2" align="left" borderTop="0" borderLeft="0" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="0" border="rounded3d" sizeAdjustment="OriginalSize" layout="border" borderRight="0" constraints="border(location=north)" height="100" width="100" name="FIBPanel">
+      <Image id="3" imageWidth="80" sizeAdjustment="OriginalSize" imageFile="../Icons/Matiere_64x64.png" align="left" imageHeight="46" constraints="border(location=east)" name="Image" />
+      <Label id="4" label="  Matières référencées" align="left" constraints="border(location=center)" font="SansSerif,0,18" name="Label" />
+    </Panel>
+    <Panel id="5" align="left" borderTop="10" borderLeft="5" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="0" border="empty" sizeAdjustment="OriginalSize" layout="border" borderRight="0" constraints="border(location=center)" name="FIBPanel2">
+      <Label id="6" label="Matieres" align="left" constraints="border(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=10;location=left)" name="Label2" />
+      <Table id="7" visibleRowCount="5" backgroundNonSelectionColor="255,255,255" iteratorClassName="org.openflexo.foundation.fml.FlexoConceptInstanceType&lt;http://geve.guyotenvironnement.com/GeveExploitation.viewpoint/DonneesReferentiel.fml#Matiere&gt;" backgroundSecondarySelectionColor="178,215,255" lookAndFeel="Classic" selectionMode="MultipleIntervalSelection" rowHeight="18" manageDynamicModel="true" data="data.matieres" constraints="border(location=west)" name="MatiereTable">
+        <IconColumn id="8" data="controller.iconForObject(iterator)" resizable="false" title="icon" displayTitle="false" columnWidth="20" showIcon="false" name="icon" />
+        <TextFieldColumn id="9" data="iterator.nom" resizable="true" title="Nom" displayTitle="true" columnWidth="200" showIcon="false" name="nom" />
+        <AddAction id="10" method="data.identifyNewMatiere(null)" name="add_action" />
+        <RemoveAction method="MatiereTable.selected.delete()" name="delete_action" />
+      </Table>
+      <Panel id="11" align="left" borderTop="0" borderLeft="5" trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="0" border="rounded3d" sizeAdjustment="OriginalSize" layout="twocols" borderRight="0" constraints="border(location=center)" name="FIBPanel3">
+        <Label id="12" label="Id Produit" align="left" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=left)" name="Label2" />
+        <TextField id="13" columns="7" data="MatiereTable.selected.dbProduit.idproduit.toString" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=right)" name="TextField" />
+        <Label id="14" label="Code produit" align="left" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=left)" name="Label3" />
+        <TextField id="15" columns="7" data="MatiereTable.selected.dbProduit.produit_code" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=right)" name="TextField2" />
+        <Label id="16" label="Libelle" align="left" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=left)" name="Label4" />
+        <TextField id="17" columns="7" data="MatiereTable.selected.dbProduit.libelle" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=right)" name="TextField3" />
+        <Label id="18" label="Produit genre" align="left" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=left)" name="Label5" />
+        <TextField id="19" columns="7" data="MatiereTable.selected.dbProduit.produit_genre.toString" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=right)" name="TextField4" />
+        <Label id="20" label="Consistance" align="left" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=left)" name="Label6" />
+        <TextField id="21" columns="7" data="MatiereTable.selected.dbProduit.consistance.toString" constraints="twocols(expandHorizontally=true;expandVertically=false;insetsBottom=0;insetsLeft=0;insetsRight=0;insetsTop=0;location=right)" name="TextField5" />
+      </Panel>
+    </Panel>
+    <LocalizedDictionary id="22" />
+    <FIBVariable id="23" type="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://geve.guyotenvironnement.com/GeveExploitation.viewpoint/DonneesReferentiel.fml&gt;" name="data" />
+  </Panel>
+</GINAFIBComponent>

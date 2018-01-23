@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VirtualModel id="0" modelVersion="1.0" version="0.1" name="IHMdebutCaracterisation" userID="FLX" flexoID="2">
+  <UseModelSlotDeclaration id="1" modelSlotClass="org.openflexo.technologyadapter.gina.FIBComponentModelSlot" userID="FLX" flexoID="-1" />
+  <FIBComponentModelSlot id="2" templateComponentURI="http://www.openflexo.org/projects/2017/5/modeles_1496224298970/fibs/OpCaracStep1.fib" isRequired="true" cloningStrategy="Reference" cardinality="ZeroOne" name="ui" userID="FLX" flexoID="3" />
+  <CreationScheme id="3" width="800" name="init" label="init" height="600" userID="FLX" flexoID="6">
+    <BehaviourControlGraph_AssignationAction id="4" assign="ui" userID="FLX" flexoID="5">
+      <AssignableAction_ConfigureGINAFIBComponent id="5" receiver="ui" userID="FLX" flexoID="4" />
+    </BehaviourControlGraph_AssignationAction>
+  </CreationScheme>
+  <Inspector id="6" inspectorTitle="IHMdebutCaracterisation" userID="FLX" flexoID="1" />
+</VirtualModel>

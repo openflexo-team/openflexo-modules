@@ -1,25 +1,12 @@
-dependencies {
-   
-  compile flexoFoundation()
-  compile flexoUi()
-  compile flexoUtils()
-  compile flexoGraphicUtils()
-  //compile flexoDiagram()
-  //compile flexoDiagramUi()
-  compile ginaConnector()
-  compile ginaConnectorUi()
-    
-  runtime flexoGraphicUtils()
-  
-   // external dep
-  
-  // testing dep
-  testCompile testUtils()
-  testCompile ginaTest()
-  testCompile ginaSwingEditorTest()
-  testCompile flexoFoundationTest()
-  testCompile flexoUiTest()
-  
-  testRuntime flexoTestResources()
-  
+buildscript {
+  repositories {
+    maven { url uri('https://maven.openflexo.org/artifactory/openflexo-deps/') }
+  }
+  dependencies {
+    classpath group: 'org.openflexo', name: 'buildplugin', version: '+'
+    classpath group: 'org.openflexo', name: 'buildconfig', version: '1.9.0-SNAPSHOT'
+  }
 }
+
+apply plugin: 'org.openflexo.buildconfig'
+project.allprojects { version = "1.9.0-SNAPSHOT" }
