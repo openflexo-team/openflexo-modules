@@ -412,8 +412,9 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 		@Override
 		public void setConceptualModel(FMEConceptualModel conceptualModel) {
 			performSuperSetter(CONCEPTUAL_MODEL, conceptualModel);
-			System.out.println("hop1, nature=" + getNature());
-			conceptualModel.setNature(getNature());
+			if (conceptualModel != null) {
+				conceptualModel.setNature(getNature());
+			}
 		}
 
 		@Override
@@ -423,7 +424,6 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 				return returned;
 			}
 			if (getNature() != null) {
-				System.out.println("hop2, nature=" + getNature());
 				return getNature().getSampleData();
 			}
 			return null;
@@ -432,7 +432,9 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 		@Override
 		public void setSampleData(FMESampleData sampleData) {
 			performSuperSetter(SAMPLE_DATA, sampleData);
-			sampleData.setNature(getNature());
+			if (sampleData != null) {
+				sampleData.setNature(getNature());
+			}
 		}
 
 		@Override
