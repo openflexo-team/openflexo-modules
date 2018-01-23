@@ -47,6 +47,7 @@ import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.fml.DeletionScheme;
+import org.openflexo.foundation.fml.FlexoBehaviour.Visibility;
 import org.openflexo.foundation.fml.FlexoBehaviourParameter.WidgetType;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.VirtualModel;
@@ -288,6 +289,7 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 				createDeletionScheme.doAction();
 				DeletionScheme deletionScheme = (DeletionScheme) createDeletionScheme.getNewFlexoBehaviour();
 				deletionScheme.setSkipConfirmationPanel(true);
+				deletionScheme.setVisibility(Visibility.Public);
 
 				if (concept != null) {
 					CreateEditionAction deleteConceptAction = null;
