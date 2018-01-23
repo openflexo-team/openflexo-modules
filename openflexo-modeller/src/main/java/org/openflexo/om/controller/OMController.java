@@ -48,6 +48,7 @@ import org.openflexo.foundation.fml.FMLObject;
 import org.openflexo.foundation.fml.FlexoConceptObject;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.VirtualModelLibrary;
+import org.openflexo.foundation.nature.FlexoNature;
 import org.openflexo.foundation.technologyadapter.TechnologyAdapter;
 import org.openflexo.foundation.validation.FlexoValidationModel;
 import org.openflexo.module.FlexoModule.WelcomePanel;
@@ -61,6 +62,7 @@ import org.openflexo.om.view.menu.OMMenuBar;
 import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.technologyadapter.diagram.controller.FMLControlledDiagramNaturePerspective;
+import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelInstanceNature;
 import org.openflexo.technologyadapter.gina.GINATechnologyAdapter;
 import org.openflexo.technologyadapter.gina.controller.FMLControlledFIBNaturePerspective;
 import org.openflexo.view.FlexoMainPane;
@@ -99,6 +101,13 @@ public class OMController extends FlexoController {
 		addToPerspectives(fmlPerspective = new FMLTechnologyPerspective(this));
 		addToPerspectives(diagramPerspective = new FMLControlledDiagramNaturePerspective(this));
 		addToPerspectives(ginaPerspective = new FMLControlledFIBNaturePerspective(this));
+	}
+
+	@Override
+	public void switchToPerspective(FlexoNature<?> nature) {
+		if (nature == FMLControlledDiagramVirtualModelInstanceNature.INSTANCE) {
+			switchToPerspective(diagramPerspective);
+		}
 	}
 
 	@Override
