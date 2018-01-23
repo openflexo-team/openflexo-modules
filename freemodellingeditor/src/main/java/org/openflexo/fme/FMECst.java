@@ -38,9 +38,6 @@
 
 package org.openflexo.fme;
 
-import org.openflexo.rm.Resource;
-import org.openflexo.rm.ResourceLocator;
-
 /**
  * Constants used by the FreeModellingEditor
  * 
@@ -67,16 +64,5 @@ public class FMECst {
 	public static int DEFAULT_MAINFRAME_WIDTH = 850;
 
 	public static int DEFAULT_MAINFRAME_HEIGHT = 600;
-
-	// public static Resource CREATE_FREE_MODEL_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateFreeModelDialog.fib");
-	// public static Resource CREATE_FREE_MODEL_DIAGRAM_DIALOG_FIB =
-	// ResourceLocator.locateResource("Fib/Dialog/CreateFreeModelDiagramDialog.fib");
-	// public static Resource CREATE_NEW_CONCEPT_FROM_NONE_DIALOG_FIB = ResourceLocator
-	// .locateResource("Fib/Dialog/CreateNewConceptFromNoneDialog.fib");
-	// public static Resource CREATE_NEW_CONCEPT_DIALOG_FIB = ResourceLocator.locateResource("Fib/Dialog/CreateNewConceptDialog.fib");
-	// public static Resource DECLARE_INSTANCE_OF_EXISTING_CONCEPT_DIALOG_FIB = ResourceLocator
-	// .locateResource("Fib/Dialog/DeclareInstanceOfExistingConceptDialog.fib");
-	public static Resource DECLARE_INSTANCE_OF_EXISTING_CONCEPT_FROM_DIAGRAM_ELEMENT_DIALOG_FIB = ResourceLocator
-			.locateResource("Fib/Dialog/DeclareInstanceOfExistingConceptFromDiagramElementDialog.fib");
 
 }
