@@ -134,13 +134,13 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 
 	protected VirtualModel createVirtualModel(String metaModelName, VirtualModelResource conceptualVM) {
 		// Now we create the VirtualModel
-		//System.out.println("Creating VirtualModel...");
+		// System.out.println("Creating VirtualModel...");
 		CreateTopLevelVirtualModel action = CreateTopLevelVirtualModel.actionType
 				.makeNewEmbeddedAction(getFocusedObject().getOwner().getVirtualModelRepository().getRootFolder(), null, this);
 		action.setNewVirtualModelName(metaModelName);
 		action.doAction();
 		VirtualModel newVirtualModel = action.getNewVirtualModel();
-		//System.out.println("VirtualModel has been created: " + newVirtualModel);
+		// System.out.println("VirtualModel has been created: " + newVirtualModel);
 
 		// Now we create the sample data model slot
 		CreateModelSlot createMS = CreateModelSlot.actionType.makeNewEmbeddedAction(newVirtualModel, null, this);
@@ -150,7 +150,8 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 		createMS.setVmRes(conceptualVM);
 
 		createMS.doAction();
-		FMLRTVirtualModelInstanceModelSlot sampleDataModelSlot = (FMLRTVirtualModelInstanceModelSlot) createMS.getNewModelSlot();
+		// Unused FMLRTVirtualModelInstanceModelSlot sampleDataModelSlot = (FMLRTVirtualModelInstanceModelSlot)
+		createMS.getNewModelSlot();
 
 		// CreationScheme
 		CreateFlexoBehaviour createCreationScheme = CreateFlexoBehaviour.actionType.makeNewEmbeddedAction(newVirtualModel, null, this);

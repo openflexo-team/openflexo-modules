@@ -42,7 +42,6 @@ import java.util.logging.Logger;
 
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.selection.MouseSelectionManager;
-import org.openflexo.view.menu.FlexoMenuBar;
 
 /**
  * Selection manager dedicated to this module
@@ -53,7 +52,7 @@ public class FMESelectionManager extends MouseSelectionManager {
 
 	public FMESelectionManager(FMEController controller) {
 		super(controller);
-		FlexoMenuBar menuBar = controller.getMenuBar();
+		// Unused FlexoMenuBar menuBar = controller.getMenuBar();
 		/*_clipboard = new FMEClipboard(this, menuBar.getEditMenu(controller).copyItem, menuBar.getEditMenu(controller).pasteItem,
 				menuBar.getEditMenu(controller).cutItem);*/
 		_contextualMenuManager = new FMEContextualMenuManager(this, controller);

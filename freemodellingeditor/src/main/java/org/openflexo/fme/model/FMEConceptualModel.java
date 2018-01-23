@@ -256,7 +256,7 @@ public interface FMEConceptualModel extends VirtualModelBasedNatureObject<FreeMo
 				createNameEntry.setData(new DataBinding<String>("name"));
 
 				createNameEntry.doAction();
-				InspectorEntry nameEntry = createNameEntry.getNewEntry();
+				// Unused InspectorEntry nameEntry = createNameEntry.getNewEntry();
 
 				// Create inspector description entry
 				CreateInspectorEntry createDescriptionEntry = null;
