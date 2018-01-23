@@ -60,7 +60,6 @@ import org.openflexo.foundation.fml.rt.action.CreateFlexoConceptInstance;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
 import org.openflexo.technologyadapter.diagram.fml.FMLDiagramPaletteElementBinding;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
-import org.openflexo.technologyadapter.diagram.metamodel.DiagramPalette;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramPaletteElement;
 import org.openflexo.technologyadapter.diagram.model.DiagramElement;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
@@ -297,7 +296,8 @@ public class DeclareInstanceOfExistingConceptFromDiagramElement
 
 			// This was the first time such an instance of this concept is used
 			// This might be a good idea to add a palette element (when non existant)
-			DiagramPalette palette = getFMEFreeModel().getConceptsPalette();
+			// Unused DiagramPalette palette =
+			getFMEFreeModel().getConceptsPalette();
 			DiagramPaletteElement existingElement = null;
 			TypedDiagramModelSlot ms = freeModelInstance.getFreeModel().getTypedDiagramModelSlot();
 			for (FMLDiagramPaletteElementBinding b : ms.getPaletteElementBindings()) {

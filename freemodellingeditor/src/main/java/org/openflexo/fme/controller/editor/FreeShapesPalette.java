@@ -241,7 +241,7 @@ public class FreeShapesPalette extends CommonPalette {
 		action.setCompoundEdit(edit);
 		action.doAction();
 
-		DiagramShape newShape = action.getNewShape();
+		// Unused DiagramShape newShape = action.getNewShape();
 
 		/*DropShape action = DropShape.actionType.makeNewAction(container, null, getEditor().getFlexoController().getEditor());
 		action.setDiagramFreeModelInstance(getEditor().getDiagramFreeModelInstance());

@@ -60,8 +60,6 @@ import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
 import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.fml.FlexoConcept;
-import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
-import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.logging.FlexoLogger;
 import org.openflexo.model.factory.AccessibleProxyObject;
 import org.openflexo.model.factory.ProxyMethodHandler;
@@ -341,7 +339,8 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 		if (paletteElement.getFlexoConcept() != null) {
 
 			DiagramContainerElement<?> rootContainer = (DiagramContainerElement<?>) target.getDrawable();
-			FMLRTVirtualModelInstance vmi = getEditor().getVirtualModelInstance();
+			// Unused FMLRTVirtualModelInstance vmi =
+			getEditor().getVirtualModelInstance();
 			DropShape action = DropShape.actionType.makeNewAction(rootContainer, null, getEditor().getFlexoController().getEditor());
 			action.setDiagramFreeModelInstance(getEditor().getDiagramFreeModelInstance());
 			action.setGRConcept(paletteElement.getFlexoConcept());
@@ -357,7 +356,8 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 			// sure that the Drawing can discover that the new shape is FML-controlled
 			rootContainer.getPropertyChangeSupport().firePropertyChange(DiagramElement.INVALIDATE, null, rootContainer);
 
-			FlexoConceptInstance newFlexoConceptInstance = action.getNewFlexoConceptInstance();
+			// Unused FlexoConceptInstance newFlexoConceptInstance =
+			action.getNewFlexoConceptInstance();
 			return action.hasActionExecutionSucceeded();
 		}
 

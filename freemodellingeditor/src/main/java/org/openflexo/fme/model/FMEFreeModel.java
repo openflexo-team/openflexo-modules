@@ -326,7 +326,8 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 				}
 				createTypeEntry.setIsReadOnly(true);
 				createTypeEntry.doAction();
-				InspectorEntry typeEntry = createTypeEntry.getNewEntry();
+				// Unused InspectorEntry typeEntry =
+				createTypeEntry.getNewEntry();
 
 				// Create inspector name entry
 				CreateInspectorEntry createNameEntry = null;
@@ -347,7 +348,7 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 				}
 
 				createNameEntry.doAction();
-				InspectorEntry nameEntry = createNameEntry.getNewEntry();
+				// Unused InspectorEntry nameEntry = createNameEntry.getNewEntry();
 
 				// Create inspector description entry
 				CreateInspectorEntry createDescriptionEntry = null;

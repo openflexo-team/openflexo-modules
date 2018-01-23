@@ -187,22 +187,20 @@ public class CreateFMEDiagramFreeModel extends CreateFMEFreeModel<CreateFMEDiagr
 		}
 
 		CreateExampleDiagram createExampleDiagram = CreateExampleDiagram.actionType.makeNewEmbeddedAction(diagramSpecification, null, this);
+		if (createExampleDiagram == null) {
+			return null;
+		}
 		createExampleDiagram.setNewDiagramName("Default");
 		createExampleDiagram.setNewDiagramTitle("Default example diagram");
 		createExampleDiagram.doAction();
 
-		if (createExampleDiagram == null) {
-			return null;
-		}
-
 		CreateDiagramPalette createPalette = CreateDiagramPalette.actionType.makeNewEmbeddedAction(diagramSpecification, null, this);
-		createPalette.setNewPaletteName(FMEDiagramFreeModel.PALETTE_NAME);
-		createPalette.doAction();
-		//System.out.println("Palette has been created: " + createPalette.getNewPalette());
-
 		if (createPalette == null) {
 			return null;
 		}
+		createPalette.setNewPaletteName(FMEDiagramFreeModel.PALETTE_NAME);
+		createPalette.doAction();
+		// System.out.println("Palette has been created: " + createPalette.getNewPalette());
 
 		// Now we create the VirtualModel
 		VirtualModel newVirtualModel = createVirtualModel(metaModelName, conceptualModel.getAccessedVirtualModelResource());
