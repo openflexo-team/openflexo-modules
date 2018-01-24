@@ -100,7 +100,7 @@ public class XXXPerspective extends FlexoPerspective {
 
 	public void updateBrowser(final FlexoProject<?> project, boolean rebuildBrowser) {
 
-		// System.out.println("updating browser " + projectBrowser + " with " + project);
+		System.out.println("updating browser " + browser + " with " + project);
 
 		if (project != null) {
 			if (project.hasNature(XXXProjectNature.class)) {

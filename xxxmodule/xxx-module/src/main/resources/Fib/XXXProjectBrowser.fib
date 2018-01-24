@@ -20,65 +20,18 @@
 			dataClassName="org.openflexo.xxxmodule.model.XXXProjectNature"
 			icon="controller.iconForObject(xxxView)" label="nature.owner.name"
 			isEditable="false" defaultVisible="false" name="nature">
-			<Children id="3" data="xxxView.donneesReferentiel" name="rootElement" />
-			<Children id="4" data="xxxView.referentielsTiers" name="referentielsTiers" />
-			<Children id="5" data="xxxView.caracterisations" name="caracterisations" />
+			<Children id="3" data="xxxView.test" name="test" />
 		</BrowserElement>
 		<BrowserElement id="15"
-			dataClassName="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://xxx.guyotenvironnement.com/GeveExploitation.viewpoint/DonneesReferentiel.fml&gt;"
-			icon="controller.iconForObject(donneesReferentiel)" label="&quot;Données d'exploitation&quot;"
+			dataClassName="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://openflexo.org/xxxmodule/XXX.fml/TestVM.fml&gt;"
+			icon="controller.iconForObject(donneesReferentiel)" label="&quot;Test&quot;"
 			isEditable="false" name="donneesReferentiel">
-			<Children id="16" data="donneesReferentiel.tiersReferentielUI"
-				name="tiersReferentielUI" />
-			<Children id="17" data="donneesReferentiel.typeDeFluxReferentielUI"
-				name="typeDeFluxReferentielUI" />
-			<Children id="18" data="donneesReferentiel.matiereReferentielUI"
-				name="matiereReferentielUI" />
-		</BrowserElement>
-		<BrowserElement id="34"
-			dataClassName="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://xxx.guyotenvironnement.com/GeveExploitation.viewpoint/DonneesReferentiel.fml/TiersReferentielUI.fml&gt;"
-			icon="controller.iconForObject(allTiers)" label="&quot;Tiers&quot;"
-			isEditable="false" name="allTiers">
-		</BrowserElement>
-		<BrowserElement id="50"
-			dataClassName="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://xxx.guyotenvironnement.com/GeveExploitation.viewpoint/DonneesReferentiel.fml/TypeDeFluxReferentielUI.fml&gt;"
-			icon="controller.iconForObject(allTiers)" label="&quot;Types de flux&quot;"
-			isEditable="false" name="allTiers">
-		</BrowserElement>
-		<BrowserElement id="66"
-			dataClassName="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://xxx.guyotenvironnement.com/GeveExploitation.viewpoint/DonneesReferentiel.fml/MatiereReferentielUI.fml&gt;"
-			icon="controller.iconForObject(allTiers)" label="&quot;Matieres&quot;"
-			isEditable="false" name="allTiers">
-		</BrowserElement>
-		<BrowserElement id="82"
-			dataClassName="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://xxx.guyotenvironnement.com/GeveExploitation.viewpoint/ReferentielTiers.fml&gt;"
-			icon="controller.iconForObject(referentielTiers)" label="(&quot;Referentiel &quot; + referentielTiers.tiers.nom)"
-			isEditable="false" name="referentielTiers">
-			<Children id="83" data="referentielTiers.referentielsFlux"
-				name="referentielsFlux" />
-		</BrowserElement>
-		<BrowserElement id="99"
-			dataClassName="org.openflexo.foundation.fml.FlexoConceptInstanceType&lt;http://xxx.guyotenvironnement.com/GeveExploitation.viewpoint/ReferentielTiers#ReferentielFlux&gt;"
-			icon="controller.iconForObject(referentielFlux.typeDeFlux)" label="referentielFlux.typeDeFlux.nom"
-			isEditable="false" name="referentielFlux">
-		</BrowserElement>
-		<BrowserElement id="110"
-			dataClassName="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://xxx.guyotenvironnement.com/GeveExploitation.viewpoint/Caracterisations.fml&gt;"
-			icon="controller.iconForObject(caracterisations)" label="&quot;Caractérisations&quot;"
-			isEditable="false" name="caracterisations">
-			<Children id="111" data="caracterisations.caracterisations"
-				name="caracterisations" />
-		</BrowserElement>
-		<BrowserElement id="127"
-			dataClassName="org.openflexo.foundation.fml.FlexoConceptInstanceType&lt;http://xxx.guyotenvironnement.com/GeveExploitation.viewpoint/Caracterisations#Caracterisation&gt;"
-			icon="controller.iconForObject(caracterisation)" label="caracterisation.toString"
-			isEditable="false" name="caracterisation">
 		</BrowserElement>
 	</Browser>
 	<LocalizedDictionary id="138" />
 	<FIBVariable id="139"
 		type="org.openflexo.xxxmodule.model.XXXProjectNature" name="data" />
 	<FIBVariable id="140"
-		type="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://xxx.guyotenvironnement.com/GeveExploitation.viewpoint&gt;"
+		type="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://openflexo.org/xxxmodule/XXX.fml&gt;"
 		value="data.XXXInstance.accessedVirtualModelInstance" name="xxxView" />
 </Panel>

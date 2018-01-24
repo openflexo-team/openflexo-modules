@@ -46,7 +46,7 @@ package org.openflexo.xxxmodule;
  */
 public class XXXCst {
 
-	public static final String XXX_VIEWPOINT_URI = "http://openflexo.org/XXX.fml";
+	public static final String XXX_VIEWPOINT_URI = "http://openflexo.org/xxxmodule/XXX.fml";
 
 	public static final String XXX_VIEW_NAME = "XXXView";
 

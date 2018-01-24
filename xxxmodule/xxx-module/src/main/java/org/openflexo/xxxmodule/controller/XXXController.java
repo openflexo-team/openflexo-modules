@@ -41,6 +41,9 @@ package org.openflexo.xxxmodule.controller;
 
 import java.util.logging.Logger;
 
+import javax.swing.ImageIcon;
+
+import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.module.FlexoModule.WelcomePanel;
@@ -51,6 +54,7 @@ import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
 import org.openflexo.view.controller.model.FlexoPerspective;
 import org.openflexo.view.menu.FlexoMenuBar;
+import org.openflexo.xxxmodule.XXXIconLibrary;
 import org.openflexo.xxxmodule.XXXModule;
 import org.openflexo.xxxmodule.controller.action.XXXControllerActionInitializer;
 import org.openflexo.xxxmodule.model.XXXProjectNature;
@@ -136,6 +140,21 @@ public class XXXController extends FlexoController {
 			return getProject().getNature(XXXProjectNature.class);
 		}
 		return null;
+	}
+
+	@Override
+	protected void updateEditor(final FlexoEditor from, final FlexoEditor to) {
+		super.updateEditor(from, to);
+		FlexoProject<?> project = (to != null ? to.getProject() : null);
+		xxxPerspective.setProject(project);
+	}
+
+	@Override
+	public ImageIcon iconForObject(final Object object) {
+		if (object instanceof XXXProjectNature) {
+			return XXXIconLibrary.XXX_SMALL_ICON;
+		}
+		return super.iconForObject(object);
 	}
 
 }

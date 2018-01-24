@@ -28,6 +28,6 @@
 	<FIBVariable id="55"
 		type="org.openflexo.xxxmodule.model.XXXProjectNature" name="data" />
 	<FIBVariable id="56"
-		type="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://xxx.guyotenvironnement.com/GeveExploitation.viewpoint&gt;"
+		type="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://openflexo.org/xxxmodule/XXX.fml&gt;"
 		value="data.XXXInstance.accessedVirtualModelInstance" name="xxxView" />
 </Panel>

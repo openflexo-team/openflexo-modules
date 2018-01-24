@@ -1,0 +1,19 @@
+use org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstanceModelSlot;
+
+/**
+ * 
+ * @author sylvain
+ * @version 0.1
+ */
+@VirtualModel(uri="http://openflexo.org/xxxmodule/XXX.fml")
+public class XXX {
+
+  @FMLRTVirtualModelInstanceModelSlot(cardinality=ZeroOne,readOnly=false)  
+  public VirtualModelInstanceType<TestVM> test;
+
+  @CreationScheme  
+  XXX:create() {  
+    test = TestVM.create();  
+  }  
+
+}
