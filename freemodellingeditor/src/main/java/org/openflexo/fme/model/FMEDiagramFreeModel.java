@@ -146,7 +146,8 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 			return createShapeInDiagram(getDiagramSpecification().getDefaultExampleDiagram(), name, editor, ownerAction);
 		}
 
-		private DiagramShape createShapeInDiagram(Diagram diagram, String name, FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction) {
+		private static DiagramShape createShapeInDiagram(Diagram diagram, String name, FlexoEditor editor,
+				FlexoAction<?, ?, ?> ownerAction) {
 			org.openflexo.technologyadapter.diagram.model.action.AddShape addShapeAction;
 			if (ownerAction != null) {
 				addShapeAction = org.openflexo.technologyadapter.diagram.model.action.AddShape.actionType.makeNewEmbeddedAction(diagram,
