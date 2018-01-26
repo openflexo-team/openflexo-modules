@@ -59,8 +59,9 @@ import org.openflexo.xxxmodule.model.XXXProjectNature;
 import org.openflexo.xxxmodule.view.XXXProjectNatureModuleView;
 import org.openflexo.xxxmodule.widget.GenericProjectBrowser;
 import org.openflexo.xxxmodule.widget.XXXProjectBrowser;
+import org.openflexo.module.FlexoModule.WelcomePanel;
 
-public class XXXPerspective extends FlexoPerspective {
+public class XXXPerspective extends NaturePerspective<XXXProjectNature> {
 
 	static final Logger logger = Logger.getLogger(XXXPerspective.class.getPackage().getName());
 
@@ -190,6 +191,12 @@ public class XXXPerspective extends FlexoPerspective {
 
 	@Override
 	public boolean hasModuleViewForObject(FlexoObject object) {
+		if (object instanceof WelcomePanel) {
+			return true;
+		}
+		if (object instanceof FlexoProject) {
+			return true;
+		}
 		if (object instanceof XXXProjectNature) {
 			return true;
 		}

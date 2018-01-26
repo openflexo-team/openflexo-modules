@@ -38,8 +38,6 @@
 
 package org.openflexo.fme.model.action;
 
-import static org.junit.Assert.assertTrue;
-
 import java.util.Vector;
 import java.util.logging.Logger;
 
@@ -155,7 +153,6 @@ public class InstantiateFMEDiagramFreeModel extends InstantiateFMEFreeModel<Inst
 		System.out.println("avec " + action.getCreationSchemeAction().getParametersValues());
 
 		action.doAction();
-		assertTrue(action.hasActionExecutionSucceeded());
 
 		FMLRTVirtualModelInstance newVirtualModelInstance = action.getNewVirtualModelInstance();
 
