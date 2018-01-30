@@ -63,7 +63,7 @@ import org.openflexo.technologyadapter.diagram.metamodel.DiagramPaletteElement;
 import org.openflexo.technologyadapter.diagram.model.DiagramContainerElement;
 import org.openflexo.technologyadapter.diagram.model.DiagramElement;
 
-public class ConceptsPalette extends ContextualPalette implements PropertyChangeListener {
+public class ConceptsPalette extends ContextualPalette {
 
 	private static final Logger logger = Logger.getLogger(ConceptsPalette.class.getPackage().getName());
 

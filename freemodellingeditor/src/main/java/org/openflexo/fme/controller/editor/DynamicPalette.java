@@ -209,7 +209,7 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 					}
 				}
 			}
-			list = new ArrayList<T>();
+			list = new ArrayList<>();
 			put(key, list);
 			list.add(value);
 			return value;
@@ -217,7 +217,7 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 
 	}
 
-	private final GraphicalRepresentationSet<DiagramElement<?>> representedElements = new GraphicalRepresentationSet<DiagramElement<?>>();
+	private final GraphicalRepresentationSet<DiagramElement<?>> representedElements = new GraphicalRepresentationSet<>();
 
 	@Override
 	public void addElement(PaletteElement element) {
@@ -237,7 +237,7 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 		isUpdating = true;
 
 		try {
-			GraphicalRepresentationSet<DiagramElement<?>> diagramGRs = new GraphicalRepresentationSet<DiagramElement<?>>();
+			GraphicalRepresentationSet<DiagramElement<?>> diagramGRs = new GraphicalRepresentationSet<>();
 
 			// For each existing DiagramElement which is not deleted:
 			for (DiagramElement<?> e : getEditor().getDiagramFreeModelInstance().getDiagram().getDescendants()) {
@@ -246,8 +246,8 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 				}
 			}
 
-			List<PaletteElement> elementsToAdd = new ArrayList<PaletteElement>();
-			List<PaletteElement> elementsToRemove = new ArrayList<PaletteElement>(getElements());
+			List<PaletteElement> elementsToAdd = new ArrayList<>();
+			List<PaletteElement> elementsToRemove = new ArrayList<>(getElements());
 
 			for (GraphicalRepresentation key : diagramGRs.keySet()) {
 				// We iterate here on each different Shape GR
@@ -376,7 +376,7 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 
 		public DynamicPaletteElement(ShapeGraphicalRepresentation gr, List<DiagramElement<?>> diagramElements) {
 			this.gr = gr;
-			this.diagramElements = new ArrayList<DiagramElement<?>>(diagramElements);
+			this.diagramElements = new ArrayList<>(diagramElements);
 			for (DiagramElement<?> el : diagramElements) {
 				if (el.getGraphicalRepresentation() != null && el.getGraphicalRepresentation().getPropertyChangeSupport() != null) {
 					el.getGraphicalRepresentation().getPropertyChangeSupport().addPropertyChangeListener(this);
@@ -433,8 +433,8 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 		 */
 		private void updateDiagramElements(List<DiagramElement<?>> updatedElements) {
 
-			List<DiagramElement<?>> elementsToAdd = new ArrayList<DiagramElement<?>>();
-			List<DiagramElement<?>> elementsToRemove = new ArrayList<DiagramElement<?>>(diagramElements);
+			List<DiagramElement<?>> elementsToAdd = new ArrayList<>();
+			List<DiagramElement<?>> elementsToRemove = new ArrayList<>(diagramElements);
 
 			for (DiagramElement<?> e : updatedElements) {
 				if (diagramElements.contains(e)) {

@@ -171,7 +171,7 @@ public class CreateNewFMEProperty extends FMEAction<CreateNewFMEProperty, FlexoC
 						.makeNewEmbeddedAction(getGRConcept().getInspector(), null, this);
 				createInspectorEntry.setEntryName(getPropertyName());
 				createInspectorEntry.setEntryType(getFMEType().getType());
-				createInspectorEntry.setData(new DataBinding<Object>(FMEFreeModel.CONCEPT_ROLE_NAME + "." + propertyName));
+				createInspectorEntry.setData(new DataBinding<>(FMEFreeModel.CONCEPT_ROLE_NAME + "." + propertyName));
 				createInspectorEntry.setIndex(getGRConcept().getInspector().getEntries().size() - 1);
 				createInspectorEntry.doAction();
 			}

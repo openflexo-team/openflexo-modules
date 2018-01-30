@@ -214,7 +214,7 @@ public class CreateNewFMEPropertyFromDiagramConnector
 					.makeNewEmbeddedAction(fromFlexoConceptGR.getInspector(), null, this);
 			createInspectorEntry.setEntryName(getPropertyName());
 			createInspectorEntry.setEntryType(getToFlexoConcept().getInstanceType());
-			createInspectorEntry.setData(new DataBinding<Object>(FMEFreeModel.CONCEPT_ROLE_NAME + "." + propertyName));
+			createInspectorEntry.setData(new DataBinding<>(FMEFreeModel.CONCEPT_ROLE_NAME + "." + propertyName));
 			createInspectorEntry.setIndex(fromFlexoConceptGR.getInspector().getEntries().size() - 1);
 			createInspectorEntry.doAction();
 		}

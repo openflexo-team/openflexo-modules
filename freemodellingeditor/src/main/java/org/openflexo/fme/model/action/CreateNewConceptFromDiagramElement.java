@@ -105,7 +105,7 @@ public class CreateNewConceptFromDiagramElement extends AbstractInstantiateConce
 	@Override
 	protected void doAction(Object context) throws InvalidArgumentException {
 
-		FlexoConcept containerConcept = null;
+		// Unused FlexoConcept containerConcept = null;
 		if (getFocusedObject().getParent() != null) {
 			System.out.println("Attention, y'a un parent");
 			ObjectLookupResult lookup = getFreeModelInstance().getAccessedVirtualModelInstance().lookup(getFocusedObject().getParent());
@@ -115,7 +115,7 @@ public class CreateNewConceptFromDiagramElement extends AbstractInstantiateConce
 				FlexoProperty<?> p = containerConceptGR.getAccessibleProperty(FMEFreeModel.CONCEPT_ROLE_NAME);
 				if (p instanceof FlexoConceptInstanceRole) {
 					FlexoConceptInstanceRole fciRole = (FlexoConceptInstanceRole) p;
-					containerConcept = fciRole.getFlexoConceptType();
+					// Unused containerConcept = fciRole.getFlexoConceptType();
 				}
 			}
 		}
