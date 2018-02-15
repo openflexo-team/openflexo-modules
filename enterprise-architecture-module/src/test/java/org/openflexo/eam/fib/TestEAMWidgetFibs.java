@@ -82,7 +82,7 @@ public class TestEAMWidgetFibs extends OpenflexoFIBTestCase {
 
 	@Test
 	@TestOrder(2)
-	public void testFIBEAMProjectBrowser() throws InterruptedException {
+	public void testFIBEAMProjectBrowser() {
 		validateFIB("Fib/Widget/FIBEAMProjectBrowser.fib");
 	}
 

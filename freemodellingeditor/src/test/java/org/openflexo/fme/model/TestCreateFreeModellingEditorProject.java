@@ -84,7 +84,7 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 	@Test
 	@TestOrder(1)
 	@SuppressWarnings("unchecked")
-	public void createFreeModellingEditorProject() throws FlexoException {
+	public void createFreeModellingEditorProject() {
 
 		instanciateTestServiceManager(DiagramTechnologyAdapter.class);
 
@@ -98,7 +98,7 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 
 	@Test
 	@TestOrder(2)
-	public void checkFreeModellingNature() throws FlexoException {
+	public void checkFreeModellingNature() {
 
 		assertNotNull(nature = project.getNature(FreeModellingProjectNature.class));
 
@@ -130,7 +130,7 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 
 	@Test
 	@TestOrder(5)
-	public void createAndCheckNewFMEDiagramFreeModel() throws FlexoException {
+	public void createAndCheckNewFMEDiagramFreeModel() {
 
 		CreateFMEDiagramFreeModel action = CreateFMEDiagramFreeModel.actionType.makeNewAction(nature, null, editor);
 		action.setFreeModelName("DiagramModel1");

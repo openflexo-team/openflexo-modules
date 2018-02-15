@@ -129,7 +129,7 @@ public class TestCreateFreeModelWithInstances extends OpenflexoProjectAtRunTimeT
 
 	@Test
 	@TestOrder(5)
-	public void testCreateInstance() throws SaveResourceException {
+	public void testCreateInstance() {
 		DropShape action = DropShape.actionType.makeNewAction(freeModelInstance.getDiagram(), null, editor);
 		action.setDiagramFreeModelInstance(freeModelInstance);
 		action.setDropLocation(new FGEPoint(12, 34));
