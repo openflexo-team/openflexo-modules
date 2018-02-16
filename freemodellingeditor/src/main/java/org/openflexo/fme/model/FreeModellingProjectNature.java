@@ -47,6 +47,7 @@ import org.openflexo.foundation.fml.FlexoRole;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.rm.VirtualModelResourceFactory;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
+import org.openflexo.foundation.nature.NatureObject;
 import org.openflexo.foundation.nature.ProjectNature;
 import org.openflexo.localization.LocalizedDelegate;
 import org.openflexo.logging.FlexoLogger;
@@ -74,7 +75,7 @@ import org.openflexo.model.annotations.XMLElement;
 @ModelEntity
 @XMLElement
 @ImplementationClass(FreeModellingProjectNature.FreeModellingProjectNatureImpl.class)
-public interface FreeModellingProjectNature extends ProjectNature<FreeModellingProjectNature> {
+public interface FreeModellingProjectNature extends ProjectNature<FreeModellingProjectNature>, NatureObject<FreeModellingProjectNature> {
 
 	@PropertyIdentifier(type = FMEConceptualModel.class)
 	public static final String CONCEPTUAL_MODEL = "conceptualModel";
