@@ -350,21 +350,24 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 				createNameEntry.doAction();
 				// Unused InspectorEntry nameEntry = createNameEntry.getNewEntry();
 
-				// Create inspector description entry
-				CreateInspectorEntry createDescriptionEntry = null;
-				if (ownerAction != null) {
-					createDescriptionEntry = CreateInspectorEntry.actionType.makeNewEmbeddedAction(returned.getInspector(), null,
-							ownerAction);
+				// Create inspector description entry if concept is not null
+				if (concept != null) {
+					CreateInspectorEntry createDescriptionEntry = null;
+					if (ownerAction != null) {
+						createDescriptionEntry = CreateInspectorEntry.actionType.makeNewEmbeddedAction(returned.getInspector(), null,
+								ownerAction);
+					}
+					else {
+						createDescriptionEntry = CreateInspectorEntry.actionType.makeNewAction(returned.getInspector(), null, editor);
+					}
+					createDescriptionEntry.setEntryName(FMEConceptualModel.DESCRIPTION_ROLE_NAME);
+					createDescriptionEntry.setEntryType(String.class);
+					createDescriptionEntry.setWidgetType(WidgetType.TEXT_AREA);
+					createDescriptionEntry.setData(new DataBinding<String>(CONCEPT_ROLE_NAME + ".description"));
+
+					createDescriptionEntry.doAction();
+					InspectorEntry descriptionEntry = createDescriptionEntry.getNewEntry();
 				}
-				else {
-					createDescriptionEntry = CreateInspectorEntry.actionType.makeNewAction(returned.getInspector(), null, editor);
-				}
-				createDescriptionEntry.setEntryName(FMEConceptualModel.DESCRIPTION_ROLE_NAME);
-				createDescriptionEntry.setEntryType(String.class);
-				createDescriptionEntry.setWidgetType(WidgetType.TEXT_AREA);
-				createDescriptionEntry.setData(new DataBinding<String>(CONCEPT_ROLE_NAME + ".description"));
-				createDescriptionEntry.doAction();
-				InspectorEntry descriptionEntry = createDescriptionEntry.getNewEntry();
 
 				// Bind shapes's label to name property
 				if (concept != null) {
