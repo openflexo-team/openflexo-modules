@@ -114,7 +114,7 @@ public class DeclareInstanceOfExistingConceptFromDiagramElement
 	private FlexoConceptInstance container;
 	private FlexoConceptInstance containerGRInstance;
 
-	DeclareInstanceOfExistingConceptFromDiagramElement(DiagramElement<?> focusedObject, Vector<FlexoObject> globalSelection,
+	private DeclareInstanceOfExistingConceptFromDiagramElement(DiagramElement<?> focusedObject, Vector<FlexoObject> globalSelection,
 			FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 

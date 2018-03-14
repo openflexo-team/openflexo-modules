@@ -79,7 +79,7 @@ public abstract class InstantiateFMEFreeModel<A extends InstantiateFMEFreeModel<
 
 	private FM existingFreeModel;
 
-	InstantiateFMEFreeModel(FlexoActionFactory<A, NatureObject<FreeModellingProjectNature>, FlexoObject> actionType,
+	protected InstantiateFMEFreeModel(FlexoActionFactory<A, NatureObject<FreeModellingProjectNature>, FlexoObject> actionType,
 			NatureObject<FreeModellingProjectNature> focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 

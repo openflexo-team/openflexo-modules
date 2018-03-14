@@ -112,7 +112,7 @@ public class CreateNewFMEProperty extends FMEAction<CreateNewFMEProperty, FlexoC
 
 	// private FlexoConceptInstance newFlexoConceptInstance;
 
-	CreateNewFMEProperty(FlexoConcept focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+	private CreateNewFMEProperty(FlexoConcept focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 

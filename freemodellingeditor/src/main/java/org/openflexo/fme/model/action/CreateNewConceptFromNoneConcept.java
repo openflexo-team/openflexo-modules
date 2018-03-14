@@ -109,7 +109,7 @@ public class CreateNewConceptFromNoneConcept extends AbstractInstantiateConcept<
 	private FlexoConcept newFlexoConcept;
 	private FlexoConcept newGRFlexoConcept;
 
-	CreateNewConceptFromNoneConcept(FlexoConceptInstance focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+	private CreateNewConceptFromNoneConcept(FlexoConceptInstance focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 

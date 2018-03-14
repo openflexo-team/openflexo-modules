@@ -121,7 +121,7 @@ public class GivesFMENature extends GivesNatureAction<GivesFMENature, FreeModell
 	private String sampleDataRelativePath;
 	private FMLRTVirtualModelInstanceResource existingSampleDataResource;
 
-	GivesFMENature(FlexoProject<?> focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+	private GivesFMENature(FlexoProject<?> focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 

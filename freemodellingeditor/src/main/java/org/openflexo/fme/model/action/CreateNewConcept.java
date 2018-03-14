@@ -99,7 +99,7 @@ public class CreateNewConcept extends FMEAction<CreateNewConcept, FMEFreeModel, 
 
 	// private FlexoConceptInstance newFlexoConceptInstance;
 
-	CreateNewConcept(FMEFreeModel focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+	private CreateNewConcept(FMEFreeModel focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 

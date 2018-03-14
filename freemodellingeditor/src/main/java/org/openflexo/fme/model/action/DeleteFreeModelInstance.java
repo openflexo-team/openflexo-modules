@@ -87,7 +87,7 @@ public class DeleteFreeModelInstance extends FMEAction<DeleteFreeModelInstance, 
 		FlexoObjectImpl.addActionForClass(DeleteFreeModelInstance.actionType, FMEFreeModelInstance.class);
 	}
 
-	DeleteFreeModelInstance(FMEFreeModelInstance focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+	private DeleteFreeModelInstance(FMEFreeModelInstance focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 

@@ -102,8 +102,8 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 		UseGeneralSampleData, CreateNewVirtualModelInstance, SelectExistingVirtualModelInstance
 	}
 
-	CreateFMEFreeModel(FlexoActionFactory<A, FreeModellingProjectNature, FlexoObject> actionType, FreeModellingProjectNature focusedObject,
-			Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+	protected CreateFMEFreeModel(FlexoActionFactory<A, FreeModellingProjectNature, FlexoObject> actionType,
+			FreeModellingProjectNature focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 
