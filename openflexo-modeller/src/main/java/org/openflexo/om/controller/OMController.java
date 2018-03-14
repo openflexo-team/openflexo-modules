@@ -157,7 +157,7 @@ public class OMController extends FlexoController {
 	}
 
 	@Override
-	public FlexoObject getDefaultObjectToSelect(FlexoProject project) {
+	public FlexoObject getDefaultObjectToSelect(FlexoProject<?> project) {
 		return project;
 	}
 

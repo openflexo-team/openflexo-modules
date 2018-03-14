@@ -133,11 +133,7 @@ public abstract class AbstractInstantiateConceptFromDiagramElement<A extends Abs
 			}
 			return null;
 		}
-		else {
-			logger.warning("Sorry, project does not have FreeModellingProjectNature");
-			return null;
-		}
-
+		logger.warning("Sorry, project does not have FreeModellingProjectNature");
+		return null;
 	}
-
 }

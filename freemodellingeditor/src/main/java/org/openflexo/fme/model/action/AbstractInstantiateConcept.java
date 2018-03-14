@@ -80,6 +80,7 @@ public abstract class AbstractInstantiateConcept<A extends AbstractInstantiateCo
 		super(actionFactory, focusedObject, globalSelection, editor);
 	}
 
+	@Override
 	public FreeModellingProjectNature getFreeModellingProjectNature() {
 		FlexoProject<?> project = null;
 		if (getFocusedObject().getResourceCenter() instanceof FlexoProject) {
@@ -102,11 +103,8 @@ public abstract class AbstractInstantiateConcept<A extends AbstractInstantiateCo
 			VirtualModel vm = vmi.getVirtualModel();
 			return (FMEDiagramFreeModel) nature.getFreeModel(vm.getName());
 		}
-		else {
-			logger.warning("Sorry, project does not have FreeModellingProjectNature");
-			return null;
-		}
-
+		logger.warning("Sorry, project does not have FreeModellingProjectNature");
+		return null;
 	}
 
 	public FMEDiagramFreeModelInstance getFMEFreeModelInstance() {
