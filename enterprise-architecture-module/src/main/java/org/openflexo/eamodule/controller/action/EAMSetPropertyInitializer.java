@@ -62,8 +62,8 @@ public class EAMSetPropertyInitializer extends ActionInitializer<SetPropertyActi
 	}
 
 	@Override
-	protected FlexoActionInitializer<SetPropertyAction> getDefaultInitializer() {
-		return new FlexoActionInitializer<SetPropertyAction>() {
+	protected FlexoActionInitializer<SetPropertyAction, FlexoObject, FlexoObject> getDefaultInitializer() {
+		return new FlexoActionInitializer<SetPropertyAction, FlexoObject, FlexoObject>() {
 			@Override
 			public boolean run(EventObject e, SetPropertyAction action) {
 				return action.getFocusedObject() != null;
@@ -72,13 +72,8 @@ public class EAMSetPropertyInitializer extends ActionInitializer<SetPropertyActi
 	}
 
 	@Override
-	protected FlexoActionFinalizer<SetPropertyAction> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<SetPropertyAction>() {
-			@Override
-			public boolean run(EventObject e, SetPropertyAction action) {
-				return true;
-			}
-		};
+	protected FlexoActionFinalizer<SetPropertyAction, FlexoObject, FlexoObject> getDefaultFinalizer() {
+		return (e, action) -> true;
 	}
 
 	@Override
@@ -93,7 +88,8 @@ public class EAMSetPropertyInitializer extends ActionInitializer<SetPropertyActi
 						+ (action.getValue() == null || action.getValue().equals("") ? action.getLocales().localizedForKey("empty_value")
 								: action.getValue())
 						+ (exception.getLocalizedMessage() != null
-								? "\n(" + action.getLocales().localizedForKey("details: ") + exception.getLocalizedMessage() + ")" : ""));
+								? "\n(" + action.getLocales().localizedForKey("details: ") + exception.getLocalizedMessage() + ")"
+								: ""));
 				return true;
 			}
 		};

@@ -39,7 +39,6 @@
 
 package org.openflexo.om.controller.action;
 
-import java.util.EventObject;
 import java.util.logging.Logger;
 
 import org.openflexo.foundation.FlexoException;
@@ -62,23 +61,13 @@ public class OMSetPropertyInitializer extends ActionInitializer<SetPropertyActio
 	}
 
 	@Override
-	protected FlexoActionInitializer<SetPropertyAction> getDefaultInitializer() {
-		return new FlexoActionInitializer<SetPropertyAction>() {
-			@Override
-			public boolean run(EventObject e, SetPropertyAction action) {
-				return action.getFocusedObject() != null;
-			}
-		};
+	protected FlexoActionInitializer<SetPropertyAction, FlexoObject, FlexoObject> getDefaultInitializer() {
+		return (e, action) -> action.getFocusedObject() != null;
 	}
 
 	@Override
-	protected FlexoActionFinalizer<SetPropertyAction> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<SetPropertyAction>() {
-			@Override
-			public boolean run(EventObject e, SetPropertyAction action) {
-				return true;
-			}
-		};
+	protected FlexoActionFinalizer<SetPropertyAction, FlexoObject, FlexoObject> getDefaultFinalizer() {
+		return (e, action) -> true;
 	}
 
 	@Override
@@ -93,7 +82,8 @@ public class OMSetPropertyInitializer extends ActionInitializer<SetPropertyActio
 						+ (action.getValue() == null || action.getValue().equals("") ? action.getLocales().localizedForKey("empty_value")
 								: action.getValue())
 						+ (exception.getLocalizedMessage() != null
-								? "\n(" + action.getLocales().localizedForKey("details: ") + exception.getLocalizedMessage() + ")" : ""));
+								? "\n(" + action.getLocales().localizedForKey("details: ") + exception.getLocalizedMessage() + ")"
+								: ""));
 				return true;
 			}
 		};

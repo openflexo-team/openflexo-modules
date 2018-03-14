@@ -38,7 +38,6 @@
 
 package org.openflexo.fme.controller.action;
 
-import java.util.EventObject;
 import java.util.logging.Logger;
 
 import org.openflexo.fme.model.action.DropShape;
@@ -58,31 +57,24 @@ public class DropFreeShapeInitializer extends ActionInitializer<DropShape, Diagr
 	}
 
 	@Override
-	protected FlexoActionInitializer<DropShape> getDefaultInitializer() {
-		return new FlexoActionInitializer<DropShape>() {
-			@Override
-			public boolean run(EventObject e, DropShape action) {
-				logger.info("DropShape initializer");
-				return true;
-			}
+	protected FlexoActionInitializer<DropShape, DiagramContainerElement<?>, FlexoObject> getDefaultInitializer() {
+		return (e, action) -> {
+			logger.info("DropShape initializer");
+			return true;
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<DropShape> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<DropShape>() {
-			@Override
-			public boolean run(EventObject e, DropShape action) {
-				logger.info("DropShape finalizer");
-				// System.out.println("On selectionne: " + action.getNewFlexoConceptInstance());
-				// System.out.println("Of " + action.getNewFlexoConceptInstance().getFlexoConcept());
-				/*if (action.getNewFlexoConceptInstance() != null) {
-					System.out.println("vmi: " + action.getNewFlexoConceptInstance().getVirtualModelInstance());
-				}*/
-				getController().selectAndFocusObject(action.getNewFlexoConceptInstance());
-				return true;
-			}
+	protected FlexoActionFinalizer<DropShape, DiagramContainerElement<?>, FlexoObject> getDefaultFinalizer() {
+		return (e, action) -> {
+			logger.info("DropShape finalizer");
+			// System.out.println("On selectionne: " + action.getNewFlexoConceptInstance());
+			// System.out.println("Of " + action.getNewFlexoConceptInstance().getFlexoConcept());
+			/*if (action.getNewFlexoConceptInstance() != null) {
+				System.out.println("vmi: " + action.getNewFlexoConceptInstance().getVirtualModelInstance());
+			}*/
+			getController().selectAndFocusObject(action.getNewFlexoConceptInstance());
+			return true;
 		};
 	}
-
 }

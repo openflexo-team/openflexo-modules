@@ -38,7 +38,6 @@
 
 package org.openflexo.fme.controller.action;
 
-import java.util.EventObject;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
@@ -69,35 +68,28 @@ public class DeleteFreeModelInitializer extends ActionInitializer<DeleteFreeMode
 	}
 
 	@Override
-	protected FlexoActionInitializer<DeleteFreeModel> getDefaultInitializer() {
-		return new FlexoActionInitializer<DeleteFreeModel>() {
-			@Override
-			public boolean run(EventObject e, DeleteFreeModel action) {
-				return FlexoController.confirm(action.getLocales().localizedForKey("would_you_really_like_to_delete_this_free_model"));
+	protected FlexoActionInitializer<DeleteFreeModel, FMEFreeModel, FlexoObject> getDefaultInitializer() {
+		return (e, action) -> FlexoController
+				.confirm(action.getLocales().localizedForKey("would_you_really_like_to_delete_this_free_model"));
+	}
+
+	@Override
+	protected FlexoActionFinalizer<DeleteFreeModel, FMEFreeModel, FlexoObject> getDefaultFinalizer() {
+		return (e, action) -> {
+			FMEController fmeController = (FMEController) getController();
+			if (action.getFocusedObject().getNature().getFreeModels().size() > 0) {
+				fmeController.selectAndFocusObject(action.getFocusedObject().getNature().getFreeModels().get(0));
 			}
+			else {
+				fmeController.selectAndFocusObject(action.getFocusedObject().getNature());
+				// fmeController.FREE_MODELLING_PERSPECTIVE.closeFreeModelBrowsers();
+			}
+			return true;
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<DeleteFreeModel> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<DeleteFreeModel>() {
-			@Override
-			public boolean run(EventObject e, DeleteFreeModel action) {
-				FMEController fmeController = (FMEController) getController();
-				if (action.getFocusedObject().getNature().getFreeModels().size() > 0) {
-					fmeController.selectAndFocusObject(action.getFocusedObject().getNature().getFreeModels().get(0));
-				}
-				else {
-					fmeController.selectAndFocusObject(action.getFocusedObject().getNature());
-					// fmeController.FREE_MODELLING_PERSPECTIVE.closeFreeModelBrowsers();
-				}
-				return true;
-			}
-		};
-	}
-
-	@Override
-	protected Icon getEnabledIcon(FlexoActionFactory actionType) {
+	protected Icon getEnabledIcon(FlexoActionFactory<DeleteFreeModel, FMEFreeModel, FlexoObject> actionType) {
 		return IconLibrary.DELETE_ICON;
 	}
 

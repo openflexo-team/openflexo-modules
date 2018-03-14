@@ -38,7 +38,6 @@
 
 package org.openflexo.fme.controller.action;
 
-import java.util.EventObject;
 import java.util.logging.Logger;
 
 import org.openflexo.components.wizard.Wizard;
@@ -62,31 +61,25 @@ public class CreateNewConceptFromNoneInitializer
 	}
 
 	@Override
-	protected FlexoActionInitializer<CreateNewConceptFromNoneConcept> getDefaultInitializer() {
-		return new FlexoActionInitializer<CreateNewConceptFromNoneConcept>() {
-			@Override
-			public boolean run(EventObject e, CreateNewConceptFromNoneConcept action) {
-				Wizard wizard = new CreateNewConceptFromNoneConceptWizard(action, getController());
-				WizardDialog dialog = new WizardDialog(wizard, getController());
-				dialog.showDialog();
-				if (dialog.getStatus() != Status.VALIDATED) {
-					// Operation cancelled
-					return false;
-				}
-				return true;
+	protected FlexoActionInitializer<CreateNewConceptFromNoneConcept, FlexoConceptInstance, FlexoObject> getDefaultInitializer() {
+		return (e, action) -> {
+			Wizard wizard = new CreateNewConceptFromNoneConceptWizard(action, getController());
+			WizardDialog dialog = new WizardDialog(wizard, getController());
+			dialog.showDialog();
+			if (dialog.getStatus() != Status.VALIDATED) {
+				// Operation cancelled
+				return false;
 			}
+			return true;
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<CreateNewConceptFromNoneConcept> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<CreateNewConceptFromNoneConcept>() {
-			@Override
-			public boolean run(EventObject e, CreateNewConceptFromNoneConcept action) {
-				logger.info("CreateNewConceptFromNoneConcept finalizer");
-				getController().selectAndFocusObject(action.getFocusedObject());
-				return true;
-			}
+	protected FlexoActionFinalizer<CreateNewConceptFromNoneConcept, FlexoConceptInstance, FlexoObject> getDefaultFinalizer() {
+		return (e, action) -> {
+			logger.info("CreateNewConceptFromNoneConcept finalizer");
+			getController().selectAndFocusObject(action.getFocusedObject());
+			return true;
 		};
 	}
 

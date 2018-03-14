@@ -38,7 +38,6 @@
 
 package org.openflexo.fme.controller.action;
 
-import java.util.EventObject;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
@@ -74,35 +73,30 @@ public class InstantiateFMEDiagramFreeModelInitializer
 	}
 
 	@Override
-	protected FlexoActionInitializer<InstantiateFMEDiagramFreeModel> getDefaultInitializer() {
-		return new FlexoActionInitializer<InstantiateFMEDiagramFreeModel>() {
-			@Override
-			public boolean run(EventObject e, InstantiateFMEDiagramFreeModel action) {
-				Wizard wizard = new InstantiateFMEDiagramFreeModelWizard(action, getController());
-				WizardDialog dialog = new WizardDialog(wizard, getController());
-				dialog.showDialog();
-				if (dialog.getStatus() != Status.VALIDATED) {
-					// Operation cancelled
-					return false;
-				}
-				return true;
+	protected FlexoActionInitializer<InstantiateFMEDiagramFreeModel, NatureObject<FreeModellingProjectNature>, FlexoObject> getDefaultInitializer() {
+		return (e, action) -> {
+			Wizard wizard = new InstantiateFMEDiagramFreeModelWizard(action, getController());
+			WizardDialog dialog = new WizardDialog(wizard, getController());
+			dialog.showDialog();
+			if (dialog.getStatus() != Status.VALIDATED) {
+				// Operation cancelled
+				return false;
 			}
+			return true;
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<InstantiateFMEDiagramFreeModel> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<InstantiateFMEDiagramFreeModel>() {
-			@Override
-			public boolean run(EventObject e, InstantiateFMEDiagramFreeModel action) {
-				getController().selectAndFocusObject(action.getNewFreeModelInstance());
-				return true;
-			}
+	protected FlexoActionFinalizer<InstantiateFMEDiagramFreeModel, NatureObject<FreeModellingProjectNature>, FlexoObject> getDefaultFinalizer() {
+		return (e, action) -> {
+			getController().selectAndFocusObject(action.getNewFreeModelInstance());
+			return true;
 		};
 	}
 
 	@Override
-	protected Icon getEnabledIcon(FlexoActionFactory actionType) {
+	protected Icon getEnabledIcon(
+			FlexoActionFactory<InstantiateFMEDiagramFreeModel, NatureObject<FreeModellingProjectNature>, FlexoObject> actionType) {
 		return IconFactory.getImageIcon(FMEIconLibrary.DIAGRAM_ICON, IconLibrary.NEW_MARKER);
 	}
 

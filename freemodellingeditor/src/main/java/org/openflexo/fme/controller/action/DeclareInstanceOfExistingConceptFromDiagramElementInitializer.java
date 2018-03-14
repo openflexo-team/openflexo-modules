@@ -38,7 +38,6 @@
 
 package org.openflexo.fme.controller.action;
 
-import java.util.EventObject;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
@@ -71,35 +70,30 @@ public class DeclareInstanceOfExistingConceptFromDiagramElementInitializer
 	}
 
 	@Override
-	protected FlexoActionInitializer<DeclareInstanceOfExistingConceptFromDiagramElement> getDefaultInitializer() {
-		return new FlexoActionInitializer<DeclareInstanceOfExistingConceptFromDiagramElement>() {
-			@Override
-			public boolean run(EventObject e, DeclareInstanceOfExistingConceptFromDiagramElement action) {
-				Wizard wizard = new DeclareInstanceOfExistingConceptFromDiagramElementWizard(action, getController());
-				WizardDialog dialog = new WizardDialog(wizard, getController());
-				dialog.showDialog();
-				if (dialog.getStatus() != Status.VALIDATED) {
-					// Operation cancelled
-					return false;
-				}
-				return true;
+	protected FlexoActionInitializer<DeclareInstanceOfExistingConceptFromDiagramElement, DiagramElement<?>, FlexoObject> getDefaultInitializer() {
+		return (e, action) -> {
+			Wizard wizard = new DeclareInstanceOfExistingConceptFromDiagramElementWizard(action, getController());
+			WizardDialog dialog = new WizardDialog(wizard, getController());
+			dialog.showDialog();
+			if (dialog.getStatus() != Status.VALIDATED) {
+				// Operation cancelled
+				return false;
 			}
+			return true;
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<DeclareInstanceOfExistingConceptFromDiagramElement> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<DeclareInstanceOfExistingConceptFromDiagramElement>() {
-			@Override
-			public boolean run(EventObject e, DeclareInstanceOfExistingConceptFromDiagramElement action) {
-				getController().selectAndFocusObject(action.getFocusedObject());
-				return true;
-			}
+	protected FlexoActionFinalizer<DeclareInstanceOfExistingConceptFromDiagramElement, DiagramElement<?>, FlexoObject> getDefaultFinalizer() {
+		return (e, action) -> {
+			getController().selectAndFocusObject(action.getFocusedObject());
+			return true;
 		};
 	}
 
 	@Override
-	protected Icon getEnabledIcon(FlexoActionFactory actionType) {
+	protected Icon getEnabledIcon(
+			FlexoActionFactory<DeclareInstanceOfExistingConceptFromDiagramElement, DiagramElement<?>, FlexoObject> actionType) {
 		return FMEIconLibrary.FME_SMALL_ICON;
 	}
 

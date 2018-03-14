@@ -61,7 +61,7 @@ public class CreateBPMNVirtualModelInstanceInitializer
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
-	CreateBPMNVirtualModelInstanceInitializer(EAMControllerActionInitializer actionInitializer) {
+	protected CreateBPMNVirtualModelInstanceInitializer(EAMControllerActionInitializer actionInitializer) {
 		super(CreateBPMNVirtualModelInstance.actionType, actionInitializer);
 	}
 
@@ -71,8 +71,8 @@ public class CreateBPMNVirtualModelInstanceInitializer
 	}
 
 	@Override
-	protected FlexoActionInitializer<CreateBPMNVirtualModelInstance> getDefaultInitializer() {
-		return new FlexoActionInitializer<CreateBPMNVirtualModelInstance>() {
+	protected FlexoActionInitializer<CreateBPMNVirtualModelInstance, EAProjectNature, FlexoObject> getDefaultInitializer() {
+		return new FlexoActionInitializer<CreateBPMNVirtualModelInstance, EAProjectNature, FlexoObject>() {
 			@Override
 			public boolean run(EventObject e, CreateBPMNVirtualModelInstance action) {
 				Wizard wizard = new CreateBPMNVirtualModelInstanceWizard(action, getController());
@@ -88,18 +88,15 @@ public class CreateBPMNVirtualModelInstanceInitializer
 	}
 
 	@Override
-	protected FlexoActionFinalizer<CreateBPMNVirtualModelInstance> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<CreateBPMNVirtualModelInstance>() {
-			@Override
-			public boolean run(EventObject e, CreateBPMNVirtualModelInstance action) {
-				getController().selectAndFocusObject(action.getBPMNVirtualModelInstance());
-				return true;
-			}
+	protected FlexoActionFinalizer<CreateBPMNVirtualModelInstance, EAProjectNature, FlexoObject> getDefaultFinalizer() {
+		return (e, action) -> {
+			getController().selectAndFocusObject(action.getBPMNVirtualModelInstance());
+			return true;
 		};
 	}
 
 	@Override
-	protected Icon getEnabledIcon(FlexoActionFactory actionType) {
+	protected Icon getEnabledIcon(FlexoActionFactory<CreateBPMNVirtualModelInstance, EAProjectNature, FlexoObject> actionType) {
 		return EAMIconLibrary.BPMN_SMALL_ICON;
 	}
 

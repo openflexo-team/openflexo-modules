@@ -38,7 +38,6 @@
 
 package org.openflexo.fme.controller.action;
 
-import java.util.EventObject;
 import java.util.logging.Logger;
 
 import org.openflexo.components.wizard.Wizard;
@@ -62,31 +61,24 @@ public class DeclareInstanceOfExistingConceptInitializer
 	}
 
 	@Override
-	protected FlexoActionInitializer<DeclareInstanceOfExistingConcept> getDefaultInitializer() {
-		return new FlexoActionInitializer<DeclareInstanceOfExistingConcept>() {
-			@Override
-			public boolean run(EventObject e, DeclareInstanceOfExistingConcept action) {
-				Wizard wizard = new DeclareInstanceOfExistingConceptWizard(action, getController());
-				WizardDialog dialog = new WizardDialog(wizard, getController());
-				dialog.showDialog();
-				if (dialog.getStatus() != Status.VALIDATED) {
-					// Operation cancelled
-					return false;
-				}
-				return true;
+	protected FlexoActionInitializer<DeclareInstanceOfExistingConcept, FlexoConceptInstance, FlexoObject> getDefaultInitializer() {
+		return (e, action) -> {
+			Wizard wizard = new DeclareInstanceOfExistingConceptWizard(action, getController());
+			WizardDialog dialog = new WizardDialog(wizard, getController());
+			dialog.showDialog();
+			if (dialog.getStatus() != Status.VALIDATED) {
+				// Operation cancelled
+				return false;
 			}
+			return true;
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<DeclareInstanceOfExistingConcept> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<DeclareInstanceOfExistingConcept>() {
-			@Override
-			public boolean run(EventObject e, DeclareInstanceOfExistingConcept action) {
-				getController().selectAndFocusObject(action.getFocusedObject());
-				return true;
-			}
+	protected FlexoActionFinalizer<DeclareInstanceOfExistingConcept, FlexoConceptInstance, FlexoObject> getDefaultFinalizer() {
+		return (e, action) -> {
+			getController().selectAndFocusObject(action.getFocusedObject());
+			return true;
 		};
 	}
-
 }

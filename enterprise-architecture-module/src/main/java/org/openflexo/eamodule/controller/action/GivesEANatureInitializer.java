@@ -72,8 +72,8 @@ public class GivesEANatureInitializer extends ActionInitializer<GivesEANature, F
 	}
 
 	@Override
-	protected FlexoActionInitializer<GivesEANature> getDefaultInitializer() {
-		return new FlexoActionInitializer<GivesEANature>() {
+	protected FlexoActionInitializer<GivesEANature, FlexoProject<?>, FlexoObject> getDefaultInitializer() {
+		return new FlexoActionInitializer<GivesEANature, FlexoProject<?>, FlexoObject>() {
 			@Override
 			public boolean run(EventObject e, GivesEANature action) {
 				Progress.forceHideTaskBar();
@@ -91,27 +91,24 @@ public class GivesEANatureInitializer extends ActionInitializer<GivesEANature, F
 	}
 
 	@Override
-	protected FlexoActionFinalizer<GivesEANature> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<GivesEANature>() {
-			@Override
-			public boolean run(EventObject e, GivesEANature action) {
-				// We store the eventual ModuleView to remove, but we must remove it AFTER selection of new object
-				// Otherwise, focus on FlexoProject will be lost
-				ConvertToEAMProjectView viewToRemove = null;
-				if (getController().getCurrentModuleView() instanceof ConvertToEAMProjectView) {
-					viewToRemove = (ConvertToEAMProjectView) getController().getCurrentModuleView();
-				}
-				getController().selectAndFocusObject(action.getNewNature());
-				if (viewToRemove != null) {
-					viewToRemove.deleteModuleView();
-				}
-				return true;
+	protected FlexoActionFinalizer<GivesEANature, FlexoProject<?>, FlexoObject> getDefaultFinalizer() {
+		return (e, action) -> {
+			// We store the eventual ModuleView to remove, but we must remove it AFTER selection of new object
+			// Otherwise, focus on FlexoProject will be lost
+			ConvertToEAMProjectView viewToRemove = null;
+			if (getController().getCurrentModuleView() instanceof ConvertToEAMProjectView) {
+				viewToRemove = (ConvertToEAMProjectView) getController().getCurrentModuleView();
 			}
+			getController().selectAndFocusObject(action.getNewNature());
+			if (viewToRemove != null) {
+				viewToRemove.deleteModuleView();
+			}
+			return true;
 		};
 	}
 
 	@Override
-	protected Icon getEnabledIcon(FlexoActionFactory actionType) {
+	protected Icon getEnabledIcon(FlexoActionFactory<GivesEANature, FlexoProject<?>, FlexoObject> actionType) {
 		return EAMIconLibrary.EAM_SMALL_ICON;
 	}
 

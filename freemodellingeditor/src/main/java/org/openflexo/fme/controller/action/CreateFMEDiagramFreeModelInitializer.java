@@ -38,7 +38,6 @@
 
 package org.openflexo.fme.controller.action;
 
-import java.util.EventObject;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
@@ -72,35 +71,29 @@ public class CreateFMEDiagramFreeModelInitializer
 	}
 
 	@Override
-	protected FlexoActionInitializer<CreateFMEDiagramFreeModel> getDefaultInitializer() {
-		return new FlexoActionInitializer<CreateFMEDiagramFreeModel>() {
-			@Override
-			public boolean run(EventObject e, CreateFMEDiagramFreeModel action) {
-				Wizard wizard = new CreateFMEDiagramFreeModelWizard(action, getController());
-				WizardDialog dialog = new WizardDialog(wizard, getController());
-				dialog.showDialog();
-				if (dialog.getStatus() != Status.VALIDATED) {
-					// Operation cancelled
-					return false;
-				}
-				return true;
+	protected FlexoActionInitializer<CreateFMEDiagramFreeModel, FreeModellingProjectNature, FlexoObject> getDefaultInitializer() {
+		return (e, action) -> {
+			Wizard wizard = new CreateFMEDiagramFreeModelWizard(action, getController());
+			WizardDialog dialog = new WizardDialog(wizard, getController());
+			dialog.showDialog();
+			if (dialog.getStatus() != Status.VALIDATED) {
+				// Operation cancelled
+				return false;
 			}
+			return true;
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<CreateFMEDiagramFreeModel> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<CreateFMEDiagramFreeModel>() {
-			@Override
-			public boolean run(EventObject e, CreateFMEDiagramFreeModel action) {
-				getController().selectAndFocusObject(action.getNewFreeModel());
-				return true;
-			}
+	protected FlexoActionFinalizer<CreateFMEDiagramFreeModel, FreeModellingProjectNature, FlexoObject> getDefaultFinalizer() {
+		return (e, action) -> {
+			getController().selectAndFocusObject(action.getNewFreeModel());
+			return true;
 		};
 	}
 
 	@Override
-	protected Icon getEnabledIcon(FlexoActionFactory actionType) {
+	protected Icon getEnabledIcon(FlexoActionFactory<CreateFMEDiagramFreeModel, FreeModellingProjectNature, FlexoObject> actionType) {
 		return IconFactory.getImageIcon(FMEIconLibrary.DIAGRAM_ICON, FMEIconLibrary.FME_MARKER);
 	}
 

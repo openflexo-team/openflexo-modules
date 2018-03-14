@@ -38,7 +38,6 @@
 
 package org.openflexo.fme.controller.action;
 
-import java.util.EventObject;
 import java.util.logging.Logger;
 
 import org.openflexo.components.wizard.Wizard;
@@ -61,33 +60,26 @@ public class InstantiateNewFMEPropertyInitializer extends ActionInitializer<Inst
 	}
 
 	@Override
-	protected FlexoActionInitializer<InstantiateNewFMEProperty> getDefaultInitializer() {
-		return new FlexoActionInitializer<InstantiateNewFMEProperty>() {
-			@Override
-			public boolean run(EventObject e, InstantiateNewFMEProperty action) {
-				Wizard wizard = new InstantiateNewFMEPropertyWizard(action, getController());
-				WizardDialog dialog = new WizardDialog(wizard, getController());
-				dialog.showDialog();
-				if (dialog.getStatus() != Status.VALIDATED) {
-					// Operation cancelled
-					return false;
-				}
-				return true;
-				// return instanciateAndShowDialog(action, FMECst.CREATE_NEW_CONCEPT_DIALOG_FIB);
+	protected FlexoActionInitializer<InstantiateNewFMEProperty, FlexoConceptInstance, FlexoObject> getDefaultInitializer() {
+		return (e, action) -> {
+			Wizard wizard = new InstantiateNewFMEPropertyWizard(action, getController());
+			WizardDialog dialog = new WizardDialog(wizard, getController());
+			dialog.showDialog();
+			if (dialog.getStatus() != Status.VALIDATED) {
+				// Operation cancelled
+				return false;
 			}
+			return true;
+			// return instanciateAndShowDialog(action, FMECst.CREATE_NEW_CONCEPT_DIALOG_FIB);
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<InstantiateNewFMEProperty> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<InstantiateNewFMEProperty>() {
-			@Override
-			public boolean run(EventObject e, InstantiateNewFMEProperty action) {
-				logger.info("CreateNewConcept finalizer");
-				getController().selectAndFocusObject(action.getFocusedObject());
-				return true;
-			}
+	protected FlexoActionFinalizer<InstantiateNewFMEProperty, FlexoConceptInstance, FlexoObject> getDefaultFinalizer() {
+		return (e, action) -> {
+			logger.info("CreateNewConcept finalizer");
+			getController().selectAndFocusObject(action.getFocusedObject());
+			return true;
 		};
 	}
-
 }

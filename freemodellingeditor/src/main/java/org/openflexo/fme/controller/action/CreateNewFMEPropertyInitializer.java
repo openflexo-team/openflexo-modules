@@ -38,7 +38,6 @@
 
 package org.openflexo.fme.controller.action;
 
-import java.util.EventObject;
 import java.util.logging.Logger;
 
 import org.openflexo.components.wizard.Wizard;
@@ -61,33 +60,26 @@ public class CreateNewFMEPropertyInitializer extends ActionInitializer<CreateNew
 	}
 
 	@Override
-	protected FlexoActionInitializer<CreateNewFMEProperty> getDefaultInitializer() {
-		return new FlexoActionInitializer<CreateNewFMEProperty>() {
-			@Override
-			public boolean run(EventObject e, CreateNewFMEProperty action) {
-				Wizard wizard = new CreateNewFMEPropertyWizard(action, getController());
-				WizardDialog dialog = new WizardDialog(wizard, getController());
-				dialog.showDialog();
-				if (dialog.getStatus() != Status.VALIDATED) {
-					// Operation cancelled
-					return false;
-				}
-				return true;
-				// return instanciateAndShowDialog(action, FMECst.CREATE_NEW_CONCEPT_DIALOG_FIB);
+	protected FlexoActionInitializer<CreateNewFMEProperty, FlexoConcept, FlexoObject> getDefaultInitializer() {
+		return (e, action) -> {
+			Wizard wizard = new CreateNewFMEPropertyWizard(action, getController());
+			WizardDialog dialog = new WizardDialog(wizard, getController());
+			dialog.showDialog();
+			if (dialog.getStatus() != Status.VALIDATED) {
+				// Operation cancelled
+				return false;
 			}
+			return true;
+			// return instanciateAndShowDialog(action, FMECst.CREATE_NEW_CONCEPT_DIALOG_FIB);
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<CreateNewFMEProperty> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<CreateNewFMEProperty>() {
-			@Override
-			public boolean run(EventObject e, CreateNewFMEProperty action) {
-				logger.info("CreateNewConcept finalizer");
-				getController().selectAndFocusObject(action.getFocusedObject());
-				return true;
-			}
+	protected FlexoActionFinalizer<CreateNewFMEProperty, FlexoConcept, FlexoObject> getDefaultFinalizer() {
+		return (e, action) -> {
+			logger.info("CreateNewConcept finalizer");
+			getController().selectAndFocusObject(action.getFocusedObject());
+			return true;
 		};
 	}
-
 }
