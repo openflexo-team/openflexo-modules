@@ -53,6 +53,7 @@ import org.openflexo.icon.IconLibrary;
 import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramSpecification;
 import org.openflexo.technologyadapter.diagram.model.Diagram;
+import org.openflexo.technologyadapter.diagram.rm.DiagramResource;
 import org.openflexo.view.controller.FlexoController;
 
 public class InstantiateFMEDiagramFreeModelWizard
@@ -161,7 +162,7 @@ public class InstantiateFMEDiagramFreeModelWizard
 			return getAction().getDiagramFolder();
 		}
 
-		public void setDiagramFolder(RepositoryFolder<?, ?> diagramFolder) {
+		public void setDiagramFolder(RepositoryFolder<DiagramResource, ?> diagramFolder) {
 			if ((diagramFolder == null && getDiagramFolder() != null)
 					|| (diagramFolder != null && !diagramFolder.equals(getDiagramFolder()))) {
 				RepositoryFolder<?, ?> oldValue = getDiagramFolder();

@@ -100,7 +100,7 @@ public class InstantiateFMEDiagramFreeModel extends InstantiateFMEFreeModel<Inst
 	}
 
 	private String diagramName;
-	private RepositoryFolder<?, ?> diagramFolder;
+	private RepositoryFolder<DiagramResource, ?> diagramFolder;
 
 	InstantiateFMEDiagramFreeModel(NatureObject<FreeModellingProjectNature> focusedObject, Vector<FlexoObject> globalSelection,
 			FlexoEditor editor) {
@@ -194,7 +194,7 @@ public class InstantiateFMEDiagramFreeModel extends InstantiateFMEFreeModel<Inst
 		}
 	}
 
-	public RepositoryFolder<?, ?> getDiagramFolder() {
+	public RepositoryFolder<DiagramResource, ?> getDiagramFolder() {
 		if (diagramFolder == null && StringUtils.isNotEmpty(getDiagramFolderName())) {
 			DiagramTechnologyAdapter diagramTechnologyAdapter = getServiceManager().getTechnologyAdapterService()
 					.getTechnologyAdapter(DiagramTechnologyAdapter.class);
@@ -208,7 +208,7 @@ public class InstantiateFMEDiagramFreeModel extends InstantiateFMEFreeModel<Inst
 		return diagramFolder;
 	}
 
-	public void setDiagramFolder(RepositoryFolder<?, ?> diagramFolder) {
+	public void setDiagramFolder(RepositoryFolder<DiagramResource, ?> diagramFolder) {
 		if ((diagramFolder == null && this.diagramFolder != null) || (diagramFolder != null && !diagramFolder.equals(this.diagramFolder))) {
 			RepositoryFolder<?, ?> oldValue = this.diagramFolder;
 			this.diagramFolder = diagramFolder;
