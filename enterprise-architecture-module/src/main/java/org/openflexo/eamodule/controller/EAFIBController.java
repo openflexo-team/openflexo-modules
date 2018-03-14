@@ -45,6 +45,7 @@ import javax.swing.ImageIcon;
 
 import org.openflexo.eamodule.EAModule;
 import org.openflexo.eamodule.model.EAProjectNature;
+import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.gina.model.FIBComponent;
@@ -95,8 +96,10 @@ public class EAFIBController extends FMLControlledFIBController {
 	}
 
 	public EAProjectNature getEAProjectNature() {
-		if (getEditor() != null && getEditor().getProject() != null) {
-			return getEditor().getProject().getNature(EAProjectNature.class);
+		if (getEditor() != null) {
+			FlexoProject<?> project = getEditor().getProject();
+			if (project != null)
+				return project.getNature(EAProjectNature.class);
 		}
 		return null;
 	}

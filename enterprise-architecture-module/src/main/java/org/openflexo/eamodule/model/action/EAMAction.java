@@ -47,6 +47,7 @@ import org.openflexo.eamodule.EnterpriseArchitectureModule;
 import org.openflexo.eamodule.model.EAProjectNature;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
+import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.localization.LocalizedDelegate;
@@ -101,8 +102,10 @@ public abstract class EAMAction<A extends EAMAction<A, T1, T2>, T1 extends Flexo
 
 	public EAProjectNature getEANature() {
 
-		if (getEditor() != null && getEditor().getProject() != null && getEditor().getProject().hasNature(EAProjectNature.class)) {
-			return getEditor().getProject().getNature(EAProjectNature.class);
+		if (getEditor() != null) {
+			FlexoProject<?> project = getEditor().getProject();
+			if (project != null && project.hasNature(EAProjectNature.class))
+				return project.getNature(EAProjectNature.class);
 		}
 		return null;
 	}

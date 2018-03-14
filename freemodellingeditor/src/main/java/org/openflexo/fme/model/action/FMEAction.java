@@ -46,6 +46,7 @@ import org.openflexo.fme.FMEModule;
 import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
+import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.action.FlexoAction;
 import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.localization.LocalizedDelegate;
@@ -99,10 +100,10 @@ public abstract class FMEAction<A extends FMEAction<A, T1, T2>, T1 extends Flexo
 	}
 
 	public FreeModellingProjectNature getFreeModellingProjectNature() {
-
-		if (getEditor() != null && getEditor().getProject() != null
-				&& getEditor().getProject().hasNature(FreeModellingProjectNature.class)) {
-			return getEditor().getProject().getNature(FreeModellingProjectNature.class);
+		if (getEditor() != null) {
+			FlexoProject<?> project = getEditor().getProject();
+			if (project != null && project.hasNature(FreeModellingProjectNature.class))
+				return project.getNature(FreeModellingProjectNature.class);
 		}
 		return null;
 	}
