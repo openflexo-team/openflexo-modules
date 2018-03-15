@@ -44,8 +44,7 @@ import org.openflexo.components.wizard.Wizard;
 import org.openflexo.components.wizard.WizardDialog;
 import org.openflexo.fme.model.action.CreateNewFMEProperty;
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.view.controller.ActionInitializer;
@@ -60,7 +59,7 @@ public class CreateNewFMEPropertyInitializer extends ActionInitializer<CreateNew
 	}
 
 	@Override
-	protected FlexoActionInitializer<CreateNewFMEProperty, FlexoConcept, FlexoObject> getDefaultInitializer() {
+	protected FlexoActionRunnable<CreateNewFMEProperty, FlexoConcept, FlexoObject> getDefaultInitializer() {
 		return (e, action) -> {
 			Wizard wizard = new CreateNewFMEPropertyWizard(action, getController());
 			WizardDialog dialog = new WizardDialog(wizard, getController());
@@ -75,7 +74,7 @@ public class CreateNewFMEPropertyInitializer extends ActionInitializer<CreateNew
 	}
 
 	@Override
-	protected FlexoActionFinalizer<CreateNewFMEProperty, FlexoConcept, FlexoObject> getDefaultFinalizer() {
+	protected FlexoActionRunnable<CreateNewFMEProperty, FlexoConcept, FlexoObject> getDefaultFinalizer() {
 		return (e, action) -> {
 			logger.info("CreateNewConcept finalizer");
 			getController().selectAndFocusObject(action.getFocusedObject());

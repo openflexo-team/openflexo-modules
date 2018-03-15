@@ -38,9 +38,6 @@
 
 package org.openflexo.eamodule.controller.action;
 
-import java.util.EventObject;
-import java.util.logging.Logger;
-
 import javax.swing.Icon;
 
 import org.openflexo.components.wizard.Wizard;
@@ -51,17 +48,12 @@ import org.openflexo.eamodule.view.ConvertToEAMProjectView;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.action.FlexoActionFactory;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.foundation.task.Progress;
 import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.view.controller.ActionInitializer;
-import org.openflexo.view.controller.ControllerActionInitializer;
 
 public class GivesEANatureInitializer extends ActionInitializer<GivesEANature, FlexoProject<?>, FlexoObject> {
-
-	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
-
 	GivesEANatureInitializer(EAMControllerActionInitializer actionInitializer) {
 		super(GivesEANature.actionType, actionInitializer);
 	}
@@ -72,26 +64,23 @@ public class GivesEANatureInitializer extends ActionInitializer<GivesEANature, F
 	}
 
 	@Override
-	protected FlexoActionInitializer<GivesEANature, FlexoProject<?>, FlexoObject> getDefaultInitializer() {
-		return new FlexoActionInitializer<GivesEANature, FlexoProject<?>, FlexoObject>() {
-			@Override
-			public boolean run(EventObject e, GivesEANature action) {
-				Progress.forceHideTaskBar();
-				Wizard wizard = new GivesEANatureWizard(action, getController());
-				WizardDialog dialog = new WizardDialog(wizard, getController());
-				dialog.showDialog();
-				Progress.stopForceHideTaskBar();
-				if (dialog.getStatus() != Status.VALIDATED) {
-					// Operation cancelled
-					return false;
-				}
-				return true;
+	protected FlexoActionRunnable<GivesEANature, FlexoProject<?>, FlexoObject> getDefaultInitializer() {
+		return (e, action) -> {
+			Progress.forceHideTaskBar();
+			Wizard wizard = new GivesEANatureWizard(action, getController());
+			WizardDialog dialog = new WizardDialog(wizard, getController());
+			dialog.showDialog();
+			Progress.stopForceHideTaskBar();
+			if (dialog.getStatus() != Status.VALIDATED) {
+				// Operation cancelled
+				return false;
 			}
+			return true;
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<GivesEANature, FlexoProject<?>, FlexoObject> getDefaultFinalizer() {
+	protected FlexoActionRunnable<GivesEANature, FlexoProject<?>, FlexoObject> getDefaultFinalizer() {
 		return (e, action) -> {
 			// We store the eventual ModuleView to remove, but we must remove it AFTER selection of new object
 			// Otherwise, focus on FlexoProject will be lost

@@ -38,8 +38,6 @@
 
 package org.openflexo.fme.controller.action;
 
-import java.util.logging.Logger;
-
 import javax.swing.Icon;
 
 import org.openflexo.components.wizard.Wizard;
@@ -49,20 +47,15 @@ import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.fme.model.action.InstantiateFMEDiagramFreeModel;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFactory;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.foundation.nature.NatureObject;
 import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.icon.IconFactory;
 import org.openflexo.icon.IconLibrary;
 import org.openflexo.view.controller.ActionInitializer;
-import org.openflexo.view.controller.ControllerActionInitializer;
 
 public class InstantiateFMEDiagramFreeModelInitializer
 		extends ActionInitializer<InstantiateFMEDiagramFreeModel, NatureObject<FreeModellingProjectNature>, FlexoObject> {
-
-	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
-
 	InstantiateFMEDiagramFreeModelInitializer(FMEControllerActionInitializer actionInitializer) {
 		super(InstantiateFMEDiagramFreeModel.actionType, actionInitializer);
 	}
@@ -73,7 +66,7 @@ public class InstantiateFMEDiagramFreeModelInitializer
 	}
 
 	@Override
-	protected FlexoActionInitializer<InstantiateFMEDiagramFreeModel, NatureObject<FreeModellingProjectNature>, FlexoObject> getDefaultInitializer() {
+	protected FlexoActionRunnable<InstantiateFMEDiagramFreeModel, NatureObject<FreeModellingProjectNature>, FlexoObject> getDefaultInitializer() {
 		return (e, action) -> {
 			Wizard wizard = new InstantiateFMEDiagramFreeModelWizard(action, getController());
 			WizardDialog dialog = new WizardDialog(wizard, getController());
@@ -87,7 +80,7 @@ public class InstantiateFMEDiagramFreeModelInitializer
 	}
 
 	@Override
-	protected FlexoActionFinalizer<InstantiateFMEDiagramFreeModel, NatureObject<FreeModellingProjectNature>, FlexoObject> getDefaultFinalizer() {
+	protected FlexoActionRunnable<InstantiateFMEDiagramFreeModel, NatureObject<FreeModellingProjectNature>, FlexoObject> getDefaultFinalizer() {
 		return (e, action) -> {
 			getController().selectAndFocusObject(action.getNewFreeModelInstance());
 			return true;

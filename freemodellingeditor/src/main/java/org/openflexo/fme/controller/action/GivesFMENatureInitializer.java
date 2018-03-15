@@ -38,8 +38,6 @@
 
 package org.openflexo.fme.controller.action;
 
-import java.util.logging.Logger;
-
 import javax.swing.Icon;
 
 import org.openflexo.components.wizard.Wizard;
@@ -50,17 +48,12 @@ import org.openflexo.fme.view.ConvertToFMEProjectView;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.action.FlexoActionFactory;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.foundation.task.Progress;
 import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.view.controller.ActionInitializer;
-import org.openflexo.view.controller.ControllerActionInitializer;
 
 public class GivesFMENatureInitializer extends ActionInitializer<GivesFMENature, FlexoProject<?>, FlexoObject> {
-
-	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
-
 	GivesFMENatureInitializer(FMEControllerActionInitializer actionInitializer) {
 		super(GivesFMENature.actionType, actionInitializer);
 	}
@@ -71,7 +64,7 @@ public class GivesFMENatureInitializer extends ActionInitializer<GivesFMENature,
 	}
 
 	@Override
-	protected FlexoActionInitializer<GivesFMENature, FlexoProject<?>, FlexoObject> getDefaultInitializer() {
+	protected FlexoActionRunnable<GivesFMENature, FlexoProject<?>, FlexoObject> getDefaultInitializer() {
 		return (e, action) -> {
 			Progress.forceHideTaskBar();
 			Wizard wizard = new GivesFMENatureWizard(action, getController());
@@ -87,7 +80,7 @@ public class GivesFMENatureInitializer extends ActionInitializer<GivesFMENature,
 	}
 
 	@Override
-	protected FlexoActionFinalizer<GivesFMENature, FlexoProject<?>, FlexoObject> getDefaultFinalizer() {
+	protected FlexoActionRunnable<GivesFMENature, FlexoProject<?>, FlexoObject> getDefaultFinalizer() {
 		return (e, action) -> {
 			// We store the eventual ModuleView to remove, but we must remove it AFTER selection of new object
 			// Otherwise, focus on FlexoProject will be lost

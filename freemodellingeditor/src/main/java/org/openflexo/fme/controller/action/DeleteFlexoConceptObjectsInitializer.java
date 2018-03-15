@@ -41,7 +41,6 @@ package org.openflexo.fme.controller.action;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.swing.Icon;
 import javax.swing.KeyStroke;
@@ -51,8 +50,7 @@ import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.action.FlexoActionFactory;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.FlexoConceptObject;
 import org.openflexo.foundation.fml.VirtualModel;
@@ -65,15 +63,12 @@ import org.openflexo.view.controller.FlexoController;
 
 public class DeleteFlexoConceptObjectsInitializer
 		extends ActionInitializer<DeleteFlexoConceptObjects, FlexoConceptObject, FlexoConceptObject> {
-
-	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
-
 	public DeleteFlexoConceptObjectsInitializer(ControllerActionInitializer actionInitializer) {
 		super(DeleteFlexoConceptObjects.actionType, actionInitializer);
 	}
 
 	@Override
-	protected FlexoActionInitializer<DeleteFlexoConceptObjects, FlexoConceptObject, FlexoConceptObject> getDefaultInitializer() {
+	protected FlexoActionRunnable<DeleteFlexoConceptObjects, FlexoConceptObject, FlexoConceptObject> getDefaultInitializer() {
 		return (e, action) -> {
 			if (action == null)
 				return false;
@@ -129,7 +124,7 @@ public class DeleteFlexoConceptObjectsInitializer
 	}
 
 	@Override
-	protected FlexoActionFinalizer<DeleteFlexoConceptObjects, FlexoConceptObject, FlexoConceptObject> getDefaultFinalizer() {
+	protected FlexoActionRunnable<DeleteFlexoConceptObjects, FlexoConceptObject, FlexoConceptObject> getDefaultFinalizer() {
 		return (e, action) -> {
 			/*if (action.getGlobalSelection().size() >= 1) {
 				if (action.getFocusedObject() instanceof FlexoConcept) {

@@ -38,8 +38,6 @@
 
 package org.openflexo.fme.controller.action;
 
-import java.util.logging.Logger;
-
 import javax.swing.Icon;
 
 import org.openflexo.fme.controller.FMEController;
@@ -47,17 +45,12 @@ import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.action.DeleteFreeModel;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFactory;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.icon.IconLibrary;
 import org.openflexo.view.controller.ActionInitializer;
-import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
 
 public class DeleteFreeModelInitializer extends ActionInitializer<DeleteFreeModel, FMEFreeModel, FlexoObject> {
-
-	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
-
 	DeleteFreeModelInitializer(FMEControllerActionInitializer actionInitializer) {
 		super(DeleteFreeModel.actionType, actionInitializer);
 	}
@@ -68,13 +61,13 @@ public class DeleteFreeModelInitializer extends ActionInitializer<DeleteFreeMode
 	}
 
 	@Override
-	protected FlexoActionInitializer<DeleteFreeModel, FMEFreeModel, FlexoObject> getDefaultInitializer() {
+	protected FlexoActionRunnable<DeleteFreeModel, FMEFreeModel, FlexoObject> getDefaultInitializer() {
 		return (e, action) -> FlexoController
 				.confirm(action.getLocales().localizedForKey("would_you_really_like_to_delete_this_free_model"));
 	}
 
 	@Override
-	protected FlexoActionFinalizer<DeleteFreeModel, FMEFreeModel, FlexoObject> getDefaultFinalizer() {
+	protected FlexoActionRunnable<DeleteFreeModel, FMEFreeModel, FlexoObject> getDefaultFinalizer() {
 		return (e, action) -> {
 			FMEController fmeController = (FMEController) getController();
 			if (action.getFocusedObject().getNature().getFreeModels().size() > 0) {

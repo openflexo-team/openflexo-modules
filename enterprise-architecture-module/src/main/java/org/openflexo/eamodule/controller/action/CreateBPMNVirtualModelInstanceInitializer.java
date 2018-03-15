@@ -38,9 +38,6 @@
 
 package org.openflexo.eamodule.controller.action;
 
-import java.util.EventObject;
-import java.util.logging.Logger;
-
 import javax.swing.Icon;
 
 import org.openflexo.components.wizard.Wizard;
@@ -50,17 +47,12 @@ import org.openflexo.eamodule.model.EAProjectNature;
 import org.openflexo.eamodule.model.action.CreateBPMNVirtualModelInstance;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFactory;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.view.controller.ActionInitializer;
-import org.openflexo.view.controller.ControllerActionInitializer;
 
 public class CreateBPMNVirtualModelInstanceInitializer
 		extends ActionInitializer<CreateBPMNVirtualModelInstance, EAProjectNature, FlexoObject> {
-
-	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
-
 	protected CreateBPMNVirtualModelInstanceInitializer(EAMControllerActionInitializer actionInitializer) {
 		super(CreateBPMNVirtualModelInstance.actionType, actionInitializer);
 	}
@@ -71,24 +63,21 @@ public class CreateBPMNVirtualModelInstanceInitializer
 	}
 
 	@Override
-	protected FlexoActionInitializer<CreateBPMNVirtualModelInstance, EAProjectNature, FlexoObject> getDefaultInitializer() {
-		return new FlexoActionInitializer<CreateBPMNVirtualModelInstance, EAProjectNature, FlexoObject>() {
-			@Override
-			public boolean run(EventObject e, CreateBPMNVirtualModelInstance action) {
-				Wizard wizard = new CreateBPMNVirtualModelInstanceWizard(action, getController());
-				WizardDialog dialog = new WizardDialog(wizard, getController());
-				dialog.showDialog();
-				if (dialog.getStatus() != Status.VALIDATED) {
-					// Operation cancelled
-					return false;
-				}
-				return true;
+	protected FlexoActionRunnable<CreateBPMNVirtualModelInstance, EAProjectNature, FlexoObject> getDefaultInitializer() {
+		return (e, action) -> {
+			Wizard wizard = new CreateBPMNVirtualModelInstanceWizard(action, getController());
+			WizardDialog dialog = new WizardDialog(wizard, getController());
+			dialog.showDialog();
+			if (dialog.getStatus() != Status.VALIDATED) {
+				// Operation cancelled
+				return false;
 			}
+			return true;
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<CreateBPMNVirtualModelInstance, EAProjectNature, FlexoObject> getDefaultFinalizer() {
+	protected FlexoActionRunnable<CreateBPMNVirtualModelInstance, EAProjectNature, FlexoObject> getDefaultFinalizer() {
 		return (e, action) -> {
 			getController().selectAndFocusObject(action.getBPMNVirtualModelInstance());
 			return true;

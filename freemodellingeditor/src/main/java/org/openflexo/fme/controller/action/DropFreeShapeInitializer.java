@@ -42,8 +42,7 @@ import java.util.logging.Logger;
 
 import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.technologyadapter.diagram.model.DiagramContainerElement;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
@@ -57,7 +56,7 @@ public class DropFreeShapeInitializer extends ActionInitializer<DropShape, Diagr
 	}
 
 	@Override
-	protected FlexoActionInitializer<DropShape, DiagramContainerElement<?>, FlexoObject> getDefaultInitializer() {
+	protected FlexoActionRunnable<DropShape, DiagramContainerElement<?>, FlexoObject> getDefaultInitializer() {
 		return (e, action) -> {
 			logger.info("DropShape initializer");
 			return true;
@@ -65,7 +64,7 @@ public class DropFreeShapeInitializer extends ActionInitializer<DropShape, Diagr
 	}
 
 	@Override
-	protected FlexoActionFinalizer<DropShape, DiagramContainerElement<?>, FlexoObject> getDefaultFinalizer() {
+	protected FlexoActionRunnable<DropShape, DiagramContainerElement<?>, FlexoObject> getDefaultFinalizer() {
 		return (e, action) -> {
 			logger.info("DropShape finalizer");
 			// System.out.println("On selectionne: " + action.getNewFlexoConceptInstance());

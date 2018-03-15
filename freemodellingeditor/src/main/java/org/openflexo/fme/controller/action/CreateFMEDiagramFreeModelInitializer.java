@@ -38,8 +38,6 @@
 
 package org.openflexo.fme.controller.action;
 
-import java.util.logging.Logger;
-
 import javax.swing.Icon;
 
 import org.openflexo.components.wizard.Wizard;
@@ -49,18 +47,13 @@ import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.fme.model.action.CreateFMEDiagramFreeModel;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFactory;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.icon.IconFactory;
 import org.openflexo.view.controller.ActionInitializer;
-import org.openflexo.view.controller.ControllerActionInitializer;
 
 public class CreateFMEDiagramFreeModelInitializer
 		extends ActionInitializer<CreateFMEDiagramFreeModel, FreeModellingProjectNature, FlexoObject> {
-
-	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
-
 	CreateFMEDiagramFreeModelInitializer(FMEControllerActionInitializer actionInitializer) {
 		super(CreateFMEDiagramFreeModel.actionType, actionInitializer);
 	}
@@ -71,7 +64,7 @@ public class CreateFMEDiagramFreeModelInitializer
 	}
 
 	@Override
-	protected FlexoActionInitializer<CreateFMEDiagramFreeModel, FreeModellingProjectNature, FlexoObject> getDefaultInitializer() {
+	protected FlexoActionRunnable<CreateFMEDiagramFreeModel, FreeModellingProjectNature, FlexoObject> getDefaultInitializer() {
 		return (e, action) -> {
 			Wizard wizard = new CreateFMEDiagramFreeModelWizard(action, getController());
 			WizardDialog dialog = new WizardDialog(wizard, getController());
@@ -85,7 +78,7 @@ public class CreateFMEDiagramFreeModelInitializer
 	}
 
 	@Override
-	protected FlexoActionFinalizer<CreateFMEDiagramFreeModel, FreeModellingProjectNature, FlexoObject> getDefaultFinalizer() {
+	protected FlexoActionRunnable<CreateFMEDiagramFreeModel, FreeModellingProjectNature, FlexoObject> getDefaultFinalizer() {
 		return (e, action) -> {
 			getController().selectAndFocusObject(action.getNewFreeModel());
 			return true;

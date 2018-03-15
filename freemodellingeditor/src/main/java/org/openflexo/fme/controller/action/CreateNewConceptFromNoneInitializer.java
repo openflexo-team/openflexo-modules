@@ -44,8 +44,7 @@ import org.openflexo.components.wizard.Wizard;
 import org.openflexo.components.wizard.WizardDialog;
 import org.openflexo.fme.model.action.CreateNewConceptFromNoneConcept;
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.view.controller.ActionInitializer;
@@ -61,7 +60,7 @@ public class CreateNewConceptFromNoneInitializer
 	}
 
 	@Override
-	protected FlexoActionInitializer<CreateNewConceptFromNoneConcept, FlexoConceptInstance, FlexoObject> getDefaultInitializer() {
+	protected FlexoActionRunnable<CreateNewConceptFromNoneConcept, FlexoConceptInstance, FlexoObject> getDefaultInitializer() {
 		return (e, action) -> {
 			Wizard wizard = new CreateNewConceptFromNoneConceptWizard(action, getController());
 			WizardDialog dialog = new WizardDialog(wizard, getController());
@@ -75,7 +74,7 @@ public class CreateNewConceptFromNoneInitializer
 	}
 
 	@Override
-	protected FlexoActionFinalizer<CreateNewConceptFromNoneConcept, FlexoConceptInstance, FlexoObject> getDefaultFinalizer() {
+	protected FlexoActionRunnable<CreateNewConceptFromNoneConcept, FlexoConceptInstance, FlexoObject> getDefaultFinalizer() {
 		return (e, action) -> {
 			logger.info("CreateNewConceptFromNoneConcept finalizer");
 			getController().selectAndFocusObject(action.getFocusedObject());

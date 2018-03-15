@@ -44,8 +44,7 @@ import org.openflexo.components.wizard.Wizard;
 import org.openflexo.components.wizard.WizardDialog;
 import org.openflexo.fme.model.action.CreateNewFMEPropertyFromDiagramConnector;
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.technologyadapter.diagram.model.DiagramConnector;
 import org.openflexo.view.controller.ActionInitializer;
@@ -61,7 +60,7 @@ public class CreateNewFMEPropertyFromDiagramConnectorInitializer
 	}
 
 	@Override
-	protected FlexoActionInitializer<CreateNewFMEPropertyFromDiagramConnector, DiagramConnector, FlexoObject> getDefaultInitializer() {
+	protected FlexoActionRunnable<CreateNewFMEPropertyFromDiagramConnector, DiagramConnector, FlexoObject> getDefaultInitializer() {
 		return (e, action) -> {
 			Wizard wizard = new CreateNewFMEPropertyFromDiagramConnectorWizard(action, getController());
 			WizardDialog dialog = new WizardDialog(wizard, getController());
@@ -76,7 +75,7 @@ public class CreateNewFMEPropertyFromDiagramConnectorInitializer
 	}
 
 	@Override
-	protected FlexoActionFinalizer<CreateNewFMEPropertyFromDiagramConnector, DiagramConnector, FlexoObject> getDefaultFinalizer() {
+	protected FlexoActionRunnable<CreateNewFMEPropertyFromDiagramConnector, DiagramConnector, FlexoObject> getDefaultFinalizer() {
 		return (e, action) -> {
 			logger.info("CreateNewConcept finalizer");
 			getController().selectAndFocusObject(action.getFocusedObject());

@@ -45,8 +45,7 @@ import org.openflexo.components.wizard.WizardDialog;
 import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.action.CreateNewConcept;
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
@@ -60,7 +59,7 @@ public class CreateNewConceptInitializer extends ActionInitializer<CreateNewConc
 	}
 
 	@Override
-	protected FlexoActionInitializer<CreateNewConcept, FMEFreeModel, FlexoObject> getDefaultInitializer() {
+	protected FlexoActionRunnable<CreateNewConcept, FMEFreeModel, FlexoObject> getDefaultInitializer() {
 		return (e, action) -> {
 			logger.info("CreateNewConcept initializer");
 			Wizard wizard = new CreateNewConceptWizard(action, getController());
@@ -76,7 +75,7 @@ public class CreateNewConceptInitializer extends ActionInitializer<CreateNewConc
 	}
 
 	@Override
-	protected FlexoActionFinalizer<CreateNewConcept, FMEFreeModel, FlexoObject> getDefaultFinalizer() {
+	protected FlexoActionRunnable<CreateNewConcept, FMEFreeModel, FlexoObject> getDefaultFinalizer() {
 		return (e, action) -> {
 			logger.info("CreateNewConcept finalizer");
 			getController().selectAndFocusObject(action.getFocusedObject());
