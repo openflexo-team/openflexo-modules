@@ -43,9 +43,9 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import org.openflexo.fge.ShapeGraphicalRepresentation;
-import org.openflexo.fge.ShapeGraphicalRepresentation.LocationConstraints;
-import org.openflexo.fge.geom.FGEPoint;
+import org.openflexo.diana.ShapeGraphicalRepresentation;
+import org.openflexo.diana.ShapeGraphicalRepresentation.LocationConstraints;
+import org.openflexo.diana.geom.FGEPoint;
 import org.openflexo.fme.model.FMEDiagramFreeModel;
 import org.openflexo.fme.model.FMEDiagramFreeModelInstance;
 import org.openflexo.fme.model.FMEFreeModel;

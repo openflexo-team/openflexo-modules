@@ -42,13 +42,13 @@ import java.util.logging.Logger;
 
 import javax.swing.JTabbedPane;
 
-import org.openflexo.fge.Drawing.ContainerNode;
-import org.openflexo.fge.ShapeGraphicalRepresentation;
-import org.openflexo.fge.ShapeGraphicalRepresentation.LocationConstraints;
-import org.openflexo.fge.geom.FGEPoint;
-import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
-import org.openflexo.fge.swing.control.SwingToolFactory;
-import org.openflexo.fge.swing.control.tools.JDianaPalette;
+import org.openflexo.diana.ShapeGraphicalRepresentation;
+import org.openflexo.diana.Drawing.ContainerNode;
+import org.openflexo.diana.ShapeGraphicalRepresentation.LocationConstraints;
+import org.openflexo.diana.geom.FGEPoint;
+import org.openflexo.diana.shapes.ShapeSpecification.ShapeType;
+import org.openflexo.diana.swing.control.SwingToolFactory;
+import org.openflexo.diana.swing.control.tools.JDianaPalette;
 import org.openflexo.fme.controller.FreeModelPasteHandler;
 import org.openflexo.fme.model.FMEDiagramFreeModelInstance;
 import org.openflexo.fme.model.action.DropShape;

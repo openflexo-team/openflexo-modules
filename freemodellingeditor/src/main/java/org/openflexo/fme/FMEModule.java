@@ -42,8 +42,8 @@ import java.util.logging.Logger;
 
 import org.openflexo.ApplicationContext;
 import org.openflexo.components.ProgressWindow;
-import org.openflexo.fge.swing.JDianaInteractiveEditor;
-import org.openflexo.fge.swing.view.JDrawingView;
+import org.openflexo.diana.swing.JDianaInteractiveEditor;
+import org.openflexo.diana.swing.view.JDrawingView;
 import org.openflexo.fme.controller.FMEController;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.fml.FMLTechnologyAdapter;

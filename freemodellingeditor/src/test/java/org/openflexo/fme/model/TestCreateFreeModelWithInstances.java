@@ -48,7 +48,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.openflexo.fge.geom.FGEPoint;
+import org.openflexo.diana.geom.FGEPoint;
 import org.openflexo.fme.model.action.CreateFMEDiagramFreeModel;
 import org.openflexo.fme.model.action.CreateNewConceptFromNoneConcept;
 import org.openflexo.fme.model.action.DeclareInstanceOfExistingConcept;

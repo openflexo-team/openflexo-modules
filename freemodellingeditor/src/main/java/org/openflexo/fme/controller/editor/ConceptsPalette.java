@@ -42,8 +42,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.logging.Logger;
 
-import org.openflexo.fge.Drawing.DrawingTreeNode;
-import org.openflexo.fge.geom.FGEPoint;
+import org.openflexo.diana.Drawing.DrawingTreeNode;
+import org.openflexo.diana.geom.FGEPoint;
 import org.openflexo.fme.controller.editor.DynamicPalette.GraphicalRepresentationSet;
 import org.openflexo.fme.model.FMEDiagramFreeModel;
 import org.openflexo.fme.model.FMEDiagramFreeModelInstance;

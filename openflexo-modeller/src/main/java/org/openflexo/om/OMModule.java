@@ -42,8 +42,8 @@ package org.openflexo.om;
 import java.util.logging.Logger;
 
 import org.openflexo.ApplicationContext;
-import org.openflexo.fge.swing.JDianaInteractiveEditor;
-import org.openflexo.fge.swing.view.JDrawingView;
+import org.openflexo.diana.swing.JDianaInteractiveEditor;
+import org.openflexo.diana.swing.view.JDrawingView;
 import org.openflexo.foundation.fml.FMLTechnologyAdapter;
 import org.openflexo.foundation.fml.rt.FMLRTTechnologyAdapter;
 import org.openflexo.foundation.technologyadapter.TechnologyAdapter;
