@@ -121,7 +121,7 @@ public class OMSelectionManager extends MouseSelectionManager {
 			pgc.precisePastingLocation = controller.getLastClickedPoint();
 			pgc.pastingLocation = new Point((int) pgc.precisePastingLocation.getX(), (int) pgc.precisePastingLocation.getY());
 		} else {
-			pgc.precisePastingLocation = new FGEPoint(0, 0);
+			pgc.precisePastingLocation = new DianaPoint(0, 0);
 			pgc.pastingLocation = new Point(0, 0);
 		}
 	}*/

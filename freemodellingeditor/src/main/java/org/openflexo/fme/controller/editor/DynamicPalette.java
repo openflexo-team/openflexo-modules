@@ -55,7 +55,7 @@ import org.openflexo.diana.ShapeGraphicalRepresentation;
 import org.openflexo.diana.Drawing.ContainerNode;
 import org.openflexo.diana.Drawing.DrawingTreeNode;
 import org.openflexo.diana.control.PaletteElement;
-import org.openflexo.diana.geom.FGEPoint;
+import org.openflexo.diana.geom.DianaPoint;
 import org.openflexo.diana.shapes.ShapeSpecification.ShapeType;
 import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.FlexoObject;
@@ -331,7 +331,7 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 		return new DynamicPaletteElement(gr, diagramElements);
 	}
 
-	private boolean handleDrop(DrawingTreeNode<?, ?> target, DynamicPaletteElement paletteElement, FGEPoint dropLocation) {
+	private boolean handleDrop(DrawingTreeNode<?, ?> target, DynamicPaletteElement paletteElement, DianaPoint dropLocation) {
 		if (getEditor() == null) {
 			return false;
 		}
@@ -401,7 +401,7 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 		}
 
 		@Override
-		public boolean elementDragged(DrawingTreeNode<?, ?> target, FGEPoint dropLocation) {
+		public boolean elementDragged(DrawingTreeNode<?, ?> target, DianaPoint dropLocation) {
 			return handleDrop(target, this, dropLocation);
 		}
 

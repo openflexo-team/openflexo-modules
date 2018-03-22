@@ -43,7 +43,7 @@ import java.beans.PropertyChangeListener;
 import java.util.logging.Logger;
 
 import org.openflexo.diana.Drawing.DrawingTreeNode;
-import org.openflexo.diana.geom.FGEPoint;
+import org.openflexo.diana.geom.DianaPoint;
 import org.openflexo.fme.controller.editor.DynamicPalette.GraphicalRepresentationSet;
 import org.openflexo.fme.model.FMEDiagramFreeModel;
 import org.openflexo.fme.model.FMEDiagramFreeModelInstance;
@@ -98,7 +98,7 @@ public class ConceptsPalette extends ContextualPalette {
 	}
 
 	@Override
-	public boolean handleFMLControlledDrop(DrawingTreeNode<?, ?> target, DiagramPaletteElement paletteElement, FGEPoint dropLocation,
+	public boolean handleFMLControlledDrop(DrawingTreeNode<?, ?> target, DiagramPaletteElement paletteElement, DianaPoint dropLocation,
 			FMLControlledDiagramEditor editor) {
 
 		if (getEditor() == null) {
@@ -122,7 +122,7 @@ public class ConceptsPalette extends ContextualPalette {
 	}
 
 	private boolean handleFMLControlledDropInDiagramContainerElement(DiagramContainerElement<?> rootContainer,
-			DiagramPaletteElement paletteElement, FGEPoint dropLocation, FMLControlledDiagramEditor editor) {
+			DiagramPaletteElement paletteElement, DianaPoint dropLocation, FMLControlledDiagramEditor editor) {
 
 		FMLRTVirtualModelInstance vmi = editor.getVirtualModelInstance();
 		TypedDiagramModelSlot ms = FMLControlledDiagramVirtualModelNature.getTypedDiagramModelSlot(vmi.getVirtualModel());
@@ -150,7 +150,7 @@ public class ConceptsPalette extends ContextualPalette {
 	}
 
 	private boolean handleFMLControlledDropInFMLControlledDiagramShape(FMLControlledDiagramShape container,
-			DiagramPaletteElement paletteElement, FGEPoint dropLocation, FMLControlledDiagramEditor editor) {
+			DiagramPaletteElement paletteElement, DianaPoint dropLocation, FMLControlledDiagramEditor editor) {
 
 		FMLRTVirtualModelInstance vmi = editor.getVirtualModelInstance();
 		TypedDiagramModelSlot ms = FMLControlledDiagramVirtualModelNature.getTypedDiagramModelSlot(vmi.getVirtualModel());

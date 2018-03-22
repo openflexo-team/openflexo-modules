@@ -48,7 +48,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.openflexo.diana.geom.FGEPoint;
+import org.openflexo.diana.geom.DianaPoint;
 import org.openflexo.fme.model.action.CreateFMEDiagramFreeModel;
 import org.openflexo.fme.model.action.CreateNewConceptFromNoneConcept;
 import org.openflexo.fme.model.action.DeclareInstanceOfExistingConcept;
@@ -132,7 +132,7 @@ public class TestCreateFreeModelWithInstances extends OpenflexoProjectAtRunTimeT
 	public void testCreateInstance() {
 		DropShape action = DropShape.actionType.makeNewAction(freeModelInstance.getDiagram(), null, editor);
 		action.setDiagramFreeModelInstance(freeModelInstance);
-		action.setDropLocation(new FGEPoint(12, 34));
+		action.setDropLocation(new DianaPoint(12, 34));
 		action.doAction();
 		assertTrue(action.hasActionExecutionSucceeded());
 		List<FlexoConceptInstance> result = freeModelInstance
@@ -201,7 +201,7 @@ public class TestCreateFreeModelWithInstances extends OpenflexoProjectAtRunTimeT
 		// Create the shape as an instance of NoneGR
 		DropShape action = DropShape.actionType.makeNewAction(freeModelInstance.getDiagram(), null, editor);
 		action.setDiagramFreeModelInstance(freeModelInstance);
-		action.setDropLocation(new FGEPoint(56, 78));
+		action.setDropLocation(new DianaPoint(56, 78));
 		action.doAction();
 		assertTrue(action.hasActionExecutionSucceeded());
 		tutu2 = action.getNewFlexoConceptInstance();
