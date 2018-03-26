@@ -99,7 +99,7 @@ public class OMModule extends FlexoModule<OMModule> {
 	 * @return
 	 */
 	@Override
-	public boolean activateAdvancedActions(TechnologyAdapter technologyAdapter) {
+	public boolean activateAdvancedActions(TechnologyAdapter<?> technologyAdapter) {
 		return true;
 	}
 

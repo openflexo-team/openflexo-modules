@@ -111,7 +111,7 @@ public class OMController extends FlexoController {
 	}
 
 	@Override
-	public void focusOnTechnologyAdapter(TechnologyAdapter technologyAdapter) {
+	public void focusOnTechnologyAdapter(TechnologyAdapter<?> technologyAdapter) {
 		if (technologyAdapter instanceof DiagramTechnologyAdapter) {
 			switchToPerspective(getDiagramPerspective());
 		}
