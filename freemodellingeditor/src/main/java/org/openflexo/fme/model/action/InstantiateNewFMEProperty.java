@@ -104,7 +104,7 @@ public class InstantiateNewFMEProperty extends FMEAction<InstantiateNewFMEProper
 
 	private CreateNewFMEProperty createPropertyAction;
 
-	InstantiateNewFMEProperty(FlexoConceptInstance focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+	private InstantiateNewFMEProperty(FlexoConceptInstance focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 		createPropertyAction = CreateNewFMEProperty.actionType.makeNewEmbeddedAction(focusedObject.getFlexoConcept(), null, this);
 

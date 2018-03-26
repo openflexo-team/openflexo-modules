@@ -95,7 +95,7 @@ public class CreateBPMNVirtualModelInstance extends EAMAction<CreateBPMNVirtualM
 		FlexoObjectImpl.addActionForClass(CreateBPMNVirtualModelInstance.actionType, EAProjectNature.class);
 	}
 
-	CreateBPMNVirtualModelInstance(EAProjectNature focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+	private CreateBPMNVirtualModelInstance(EAProjectNature focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 

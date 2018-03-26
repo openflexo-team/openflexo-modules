@@ -112,7 +112,7 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 
 	private FlexoConceptInstance newFlexoConceptInstance;
 
-	DropShape(DiagramContainerElement<?> focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+	private DropShape(DiagramContainerElement<?> focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 

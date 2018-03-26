@@ -105,14 +105,14 @@ public class CreateFMEDiagramFreeModel extends CreateFMEFreeModel<CreateFMEDiagr
 		FlexoObjectImpl.addActionForClass(CreateFMEDiagramFreeModel.actionType, FreeModellingProjectNature.class);
 	}
 
-	CreateFMEDiagramFreeModel(FreeModellingProjectNature focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+	private CreateFMEDiagramFreeModel(FreeModellingProjectNature focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 
 	private String diagramSpecificationFolderName;
 	private RepositoryFolder<?, ?> diagramSpecificationFolder;
 
-	CreateFMEDiagramFreeModel(FlexoActionFactory<CreateFMEDiagramFreeModel, FreeModellingProjectNature, FlexoObject> actionType,
+	private CreateFMEDiagramFreeModel(FlexoActionFactory<CreateFMEDiagramFreeModel, FreeModellingProjectNature, FlexoObject> actionType,
 			FreeModellingProjectNature focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}

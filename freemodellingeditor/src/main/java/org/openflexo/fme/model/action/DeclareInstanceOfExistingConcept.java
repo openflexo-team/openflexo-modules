@@ -112,7 +112,7 @@ public class DeclareInstanceOfExistingConcept extends AbstractInstantiateConcept
 
 	private FlexoConceptInstance container;
 
-	DeclareInstanceOfExistingConcept(FlexoConceptInstance focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+	private DeclareInstanceOfExistingConcept(FlexoConceptInstance focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 	}
 

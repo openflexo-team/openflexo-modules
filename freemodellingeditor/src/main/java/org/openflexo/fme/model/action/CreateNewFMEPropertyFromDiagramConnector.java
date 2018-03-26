@@ -132,7 +132,8 @@ public class CreateNewFMEPropertyFromDiagramConnector
 	private FlexoConceptInstance fromFlexoConceptInstance;
 	private FlexoConceptInstance toFlexoConceptInstance;
 
-	CreateNewFMEPropertyFromDiagramConnector(DiagramConnector focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
+	private CreateNewFMEPropertyFromDiagramConnector(DiagramConnector focusedObject, Vector<FlexoObject> globalSelection,
+			FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
 		System.out.println("Coucou j'instancie CreateNewFMEPropertyFromDiagramConnector pour " + focusedObject);
 
