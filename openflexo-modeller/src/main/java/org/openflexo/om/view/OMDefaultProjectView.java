@@ -105,7 +105,7 @@ public class OMDefaultProjectView extends FIBModuleView<FlexoProject<?>> {
 
 		public void openVirtualModel() {
 			try {
-				getFlexoController().selectAndFocusObject(getSelectedVirtualModelResource().getResourceData(null));
+				getFlexoController().selectAndFocusObject(getSelectedVirtualModelResource().getResourceData());
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -126,7 +126,7 @@ public class OMDefaultProjectView extends FIBModuleView<FlexoProject<?>> {
 
 		public void openVirtualModelInstance() {
 			try {
-				getFlexoController().selectAndFocusObject(getSelectedVirtualModelInstanceResource().getResourceData(null));
+				getFlexoController().selectAndFocusObject(getSelectedVirtualModelInstanceResource().getResourceData());
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

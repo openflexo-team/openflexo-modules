@@ -41,7 +41,6 @@ package org.openflexo.fme;
 import java.util.logging.Logger;
 
 import org.openflexo.ApplicationContext;
-import org.openflexo.components.ProgressWindow;
 import org.openflexo.diana.swing.JDianaInteractiveEditor;
 import org.openflexo.diana.swing.view.JDrawingView;
 import org.openflexo.fme.controller.FMEController;
@@ -49,7 +48,6 @@ import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.fml.FMLTechnologyAdapter;
 import org.openflexo.foundation.fml.rt.FMLRTTechnologyAdapter;
 import org.openflexo.foundation.technologyadapter.TechnologyAdapterService;
-import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.module.FlexoModule;
 import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.view.controller.FlexoController;
@@ -73,12 +71,7 @@ public class FMEModule extends FlexoModule<FMEModule> {
 
 	public FMEModule(ApplicationContext applicationContext) throws Exception {
 		super(applicationContext);
-		// UGLIEST HACK EVER TO BE REMOVED ASAP:
-		// DiagramPalette.setModuleLoader(applicationContext.getModuleLoader());
-		// Hack removed : guillaume, what about that ?
-		// VPMPreferences.init();
-		ProgressWindow.setProgressInstance(FlexoLocalization.getMainLocalizer().localizedForKey("build_editor"));
-
+		// ProgressWindow.setProgressInstance(FlexoLocalization.getMainLocalizer().localizedForKey("build_editor"));
 	}
 
 	@Override

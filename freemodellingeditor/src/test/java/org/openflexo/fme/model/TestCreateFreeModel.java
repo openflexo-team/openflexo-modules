@@ -102,7 +102,7 @@ public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 		assertTrue(action.hasActionExecutionSucceeded());
 		freeModel = action.getNewFreeModel();
 		assertNotNull(freeModel);
-		freeModel.getAccessedVirtualModelResource().save(null);
+		freeModel.getAccessedVirtualModelResource().save();
 	}
 
 	@Test
@@ -126,7 +126,7 @@ public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 		assertNotNull(freeModelInstance1);
 		assertSame(freeModel.getFreeModelInstances().get(0), freeModelInstance1);
 
-		freeModelInstance1.getAccessedVirtualModelInstance().getResource().save(null);
+		freeModelInstance1.getAccessedVirtualModelInstance().getResource().save();
 	}
 
 	@Test
@@ -141,10 +141,10 @@ public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 		assertNotNull(freeModelInstance2);
 		assertSame(freeModel.getFreeModelInstances().get(1), freeModelInstance2);
 
-		freeModelInstance2.getAccessedVirtualModelInstance().getResource().save(null);
+		freeModelInstance2.getAccessedVirtualModelInstance().getResource().save();
 
 		project.save();
-		project.saveModifiedResources(null);
+		project.saveModifiedResources();
 	}
 
 	/**

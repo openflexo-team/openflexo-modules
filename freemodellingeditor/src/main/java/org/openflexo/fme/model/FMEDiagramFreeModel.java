@@ -128,7 +128,7 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 		@Override
 		public DiagramSpecification getDiagramSpecification() {
 			try {
-				return getTypedDiagramModelSlot().getMetaModelResource().getResourceData(null);
+				return getTypedDiagramModelSlot().getMetaModelResource().getResourceData();
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

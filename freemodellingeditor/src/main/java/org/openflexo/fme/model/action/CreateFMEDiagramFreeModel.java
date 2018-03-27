@@ -236,7 +236,7 @@ public class CreateFMEDiagramFreeModel extends CreateFMEFreeModel<CreateFMEDiagr
 
 		// Save
 		try {
-			newVirtualModel.getResource().save(null);
+			newVirtualModel.getResource().save();
 		} catch (SaveResourceException e1) {
 			e1.printStackTrace();
 		}

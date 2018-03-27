@@ -167,7 +167,7 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 		assertNotNull(instance1);
 
 		project.save();
-		project.saveModifiedResources(null);
+		project.saveModifiedResources();
 
 		assertEquals(sampleData.getAccessedVirtualModelInstance(), instance1.getAccessedVirtualModelInstance().execute("sampleData"));
 
@@ -196,7 +196,7 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 		assertNotNull(instance2);
 
 		project.save();
-		project.saveModifiedResources(null);
+		project.saveModifiedResources();
 
 		assertEquals(sampleData.getAccessedVirtualModelInstance(), instance2.getAccessedVirtualModelInstance().execute("sampleData"));
 
