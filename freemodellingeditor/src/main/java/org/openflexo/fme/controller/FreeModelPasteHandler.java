@@ -61,8 +61,6 @@ public class FreeModelPasteHandler extends FMLControlledDiagramPasteHandler {
 
 	private static final Logger logger = Logger.getLogger(FreeModelPasteHandler.class.getPackage().getName());
 
-	public static final String COPY_SUFFIX = "-copy";
-
 	private final FMEFreeModelInstance freeModelInstance;
 
 	public FreeModelPasteHandler(FMEFreeModelInstance freeModelInstance, FreeModelDiagramEditor editor) {
