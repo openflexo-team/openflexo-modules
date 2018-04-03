@@ -38,20 +38,29 @@
 
 package org.openflexo.fme.model.action;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Vector;
 import java.util.logging.Logger;
 
+import org.openflexo.connie.exception.InvalidBindingException;
+import org.openflexo.connie.exception.NullReferenceException;
+import org.openflexo.connie.exception.TypeMismatchException;
+import org.openflexo.fme.model.FMEDiagramFreeModel;
 import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoActionFactory;
+import org.openflexo.foundation.fml.CreationScheme;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.FlexoConceptInstanceRole;
 import org.openflexo.foundation.fml.FlexoProperty;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.fml.rt.VirtualModelInstance.ObjectLookupResult;
+import org.openflexo.foundation.fml.rt.action.CreateFlexoConceptInstance;
+import org.openflexo.technologyadapter.diagram.fml.ConnectorRole;
+import org.openflexo.technologyadapter.diagram.model.DiagramConnector;
 import org.openflexo.technologyadapter.diagram.model.DiagramElement;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 
@@ -79,20 +88,19 @@ public class CreateNewConceptFromDiagramElement extends AbstractInstantiateConce
 
 		@Override
 		public boolean isVisibleForSelection(DiagramElement<?> object, Vector<FlexoObject> globalSelection) {
-			// TODO: handle other kind of elements
-			return object instanceof DiagramShape;
+			return object instanceof DiagramShape || object instanceof DiagramConnector;
 		}
 
 		@Override
 		public boolean isEnabledForSelection(DiagramElement<?> object, Vector<FlexoObject> globalSelection) {
-			// TODO: handle other kind of elements
-			return object instanceof DiagramShape;
+			return object instanceof DiagramShape || object instanceof DiagramConnector;
 		}
 
 	};
 
 	static {
 		FlexoObjectImpl.addActionForClass(CreateNewConceptFromDiagramElement.actionType, DiagramShape.class);
+		FlexoObjectImpl.addActionForClass(CreateNewConceptFromDiagramElement.actionType, DiagramConnector.class);
 	}
 
 	private CreateNewConceptFromDiagramElement(DiagramElement<?> focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
@@ -107,10 +115,9 @@ public class CreateNewConceptFromDiagramElement extends AbstractInstantiateConce
 
 		// Unused FlexoConcept containerConcept = null;
 		if (getFocusedObject().getParent() != null) {
-			System.out.println("Attention, y'a un parent");
 			ObjectLookupResult lookup = getFreeModelInstance().getAccessedVirtualModelInstance().lookup(getFocusedObject().getParent());
 			if (lookup != null) {
-				System.out.println("lookup: " + lookup.flexoConceptInstance + " pty=" + lookup.property);
+				// System.out.println("lookup: " + lookup.flexoConceptInstance + " pty=" + lookup.property);
 				FlexoConcept containerConceptGR = lookup.flexoConceptInstance.getFlexoConcept();
 				FlexoProperty<?> p = containerConceptGR.getAccessibleProperty(FMEFreeModel.CONCEPT_ROLE_NAME);
 				if (p instanceof FlexoConceptInstanceRole) {
@@ -122,13 +129,121 @@ public class CreateNewConceptFromDiagramElement extends AbstractInstantiateConce
 
 		logger.info("Create new instance of created concept from diagram element ");
 		getNoneFlexoConcept();
-		flexoConceptInstance = createFlexoConceptInstanceFromDiagramShape(getFocusedObject());
 
-		logger.info("Create new concept from diagram element ");
-		CreateNewConceptFromNoneConcept actionCreateNewConcept = CreateNewConceptFromNoneConcept.actionType
-				.makeNewEmbeddedAction(flexoConceptInstance, null, this);
-		actionCreateNewConcept.doAction();
-		flexoConcept = actionCreateNewConcept.getNewFlexoConcept();
+		if (getFocusedObject() instanceof DiagramShape) {
+			logger.info("Create new concept from shape element ");
+			flexoConceptInstance = createFlexoConceptInstanceFromDiagramShape((DiagramShape) getFocusedObject());
+			CreateNewConceptFromNoneConcept actionCreateNewConcept = CreateNewConceptFromNoneConcept.actionType
+					.makeNewEmbeddedAction(flexoConceptInstance, null, this);
+			actionCreateNewConcept.doAction();
+			flexoConcept = actionCreateNewConcept.getNewFlexoConcept();
+		}
+		else if (getFocusedObject() instanceof DiagramConnector) {
+			logger.info("Create new concept from connector element ");
+
+			DiagramShape fromShape = ((DiagramConnector) getFocusedObject()).getStartShape();
+			DiagramShape toShape = ((DiagramConnector) getFocusedObject()).getEndShape();
+
+			FlexoConcept fromConcept = null, toConcept = null;
+			FlexoConcept fromConceptGR = null, toConceptGR = null;
+
+			FlexoConceptInstance fromFCIGR = null;
+			FlexoConceptInstance toFCIGR = null;
+
+			ObjectLookupResult fromLookup = getFreeModelInstance().getAccessedVirtualModelInstance().lookup(fromShape);
+			if (fromLookup != null) {
+				fromFCIGR = fromLookup.flexoConceptInstance;
+				fromConceptGR = fromFCIGR.getFlexoConcept();
+				FlexoProperty<?> p = fromConceptGR.getAccessibleProperty(FMEFreeModel.CONCEPT_ROLE_NAME);
+				if (p instanceof FlexoConceptInstanceRole) {
+					FlexoConceptInstanceRole fciRole = (FlexoConceptInstanceRole) p;
+					fromConcept = fciRole.getFlexoConceptType();
+				}
+			}
+			ObjectLookupResult toLookup = getFreeModelInstance().getAccessedVirtualModelInstance().lookup(toShape);
+			if (toLookup != null) {
+				toFCIGR = toLookup.flexoConceptInstance;
+				toConceptGR = toFCIGR.getFlexoConcept();
+				FlexoProperty<?> p = toConceptGR.getAccessibleProperty(FMEFreeModel.CONCEPT_ROLE_NAME);
+				if (p instanceof FlexoConceptInstanceRole) {
+					FlexoConceptInstanceRole fciRole = (FlexoConceptInstanceRole) p;
+					toConcept = fciRole.getFlexoConceptType();
+				}
+			}
+
+			System.out.println("From " + fromConcept + " gr=" + fromConceptGR);
+			System.out.println("To " + toConcept + " gr=" + toConceptGR);
+
+			// Now we create the new conceptual concept
+			CreateNewRelationalConcept createNewConcept = CreateNewRelationalConcept.actionType.makeNewEmbeddedAction(getFMEFreeModel(),
+					null, this);
+			createNewConcept.setFromConcept(fromConcept);
+			createNewConcept.setToConcept(toConcept);
+			createNewConcept.setFromGRConcept(fromConceptGR);
+			createNewConcept.setToGRConcept(toConceptGR);
+			createNewConcept.doAction();
+			FlexoConcept newFlexoConcept = createNewConcept.getNewFlexoConcept();
+			FlexoConcept newGRFlexoConcept = createNewConcept.getNewGRFlexoConcept();
+
+			// Now we instantiate that concept
+			try {
+				CreateFlexoConceptInstance instantiateConcept = CreateFlexoConceptInstance.actionType
+						.makeNewEmbeddedAction(getFMEFreeModel().getSampleData().getAccessedVirtualModelInstance(), null, this);
+				instantiateConcept.setFlexoConcept(newFlexoConcept);
+				CreationScheme cs = newFlexoConcept.getCreationSchemes().get(0);
+				instantiateConcept.setCreationScheme(cs);
+				String name = newFlexoConcept.getName();
+				FlexoConceptInstance fromFCI = fromFCIGR.execute("fmeConcept");
+				FlexoConceptInstance toFCI = toFCIGR.execute("fmeConcept");
+
+				if (fromFCIGR != null && toFCIGR != null) {
+					name = newFlexoConcept.getName() + " " + fromFCIGR.execute("fmeConcept.name") + "-"
+							+ toFCIGR.execute("fmeConcept.name");
+				}
+				instantiateConcept.setParameterValue(cs.getParameters().get(0), name);
+				instantiateConcept.setParameterValue(cs.getParameters().get(1), fromFCI);
+				instantiateConcept.setParameterValue(cs.getParameters().get(2), toFCI);
+				instantiateConcept.doAction();
+				FlexoConceptInstance conceptInstance = instantiateConcept.getNewFlexoConceptInstance();
+
+				FlexoConceptInstance newFlexoConceptInstanceGR = getFreeModelInstance().getAccessedVirtualModelInstance()
+						.makeNewFlexoConceptInstance(newGRFlexoConcept);
+				ConnectorRole geRole = (ConnectorRole) newGRFlexoConcept.getAccessibleProperty(FMEDiagramFreeModel.CONNECTOR_ROLE_NAME);
+				newFlexoConceptInstanceGR.setFlexoActor((DiagramConnector) getFocusedObject(), geRole);
+				FlexoConceptInstanceRole fciRole = (FlexoConceptInstanceRole) newGRFlexoConcept
+						.getAccessibleProperty(FMEFreeModel.CONCEPT_ROLE_NAME);
+				newFlexoConceptInstanceGR.setFlexoActor(conceptInstance, fciRole);
+				// return newFlexoConceptInstance;
+
+			} catch (TypeMismatchException e) {
+				e.printStackTrace();
+			} catch (NullReferenceException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			} catch (InvalidBindingException e) {
+				e.printStackTrace();
+			}
+
+			// We should notify the creation of a new FlexoConcept
+			getFreeModelInstance().getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null, newFlexoConcept);
+			getFreeModelInstance().getPropertyChangeSupport().firePropertyChange("usedTopLevelFlexoConcepts", null, newFlexoConcept);
+
+			// This is used to notify the adding of a new instance of a flexo concept
+			getFreeModelInstance().getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", null, getFocusedObject());
+			getFreeModelInstance().getPropertyChangeSupport().firePropertyChange("getEmbeddedInstances(FlexoConceptInstance)", null,
+					getFocusedObject());
+
+			// The new shape has well be added to the diagram, and the drawing (which listen to the diagram) has well received the event
+			// The drawing is now up-to-date... but there is something wrong if we are in FML-controlled mode.
+			// Since the shape has been added BEFORE the FlexoConceptInstance has been set, the drawing only knows about the DiagamShape,
+			// and not about an FMLControlledDiagramShape. That's why we need to notify again the new diagram element's parent, to be
+			// sure that the Drawing can discover that the new shape is FML-controlled
+			getFocusedObject().getParent().getPropertyChangeSupport().firePropertyChange(DiagramElement.INVALIDATE, null,
+					getFocusedObject().getParent());
+
+		}
+
 	}
 
 	public FlexoConcept getFlexoConcept() {

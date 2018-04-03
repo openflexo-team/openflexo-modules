@@ -52,9 +52,9 @@ import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.PrimitiveRole;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
-import org.openflexo.technologyadapter.diagram.fml.GraphicalElementRole;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
 import org.openflexo.technologyadapter.diagram.model.DiagramElement;
+import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 
 /**
  * Abstract action is used to identify an instance of NoneGR as a conceptual instance<br>
@@ -100,13 +100,14 @@ public abstract class AbstractInstantiateConceptFromDiagramElement<A extends Abs
 		return none;
 	}
 
-	protected FlexoConceptInstance createFlexoConceptInstanceFromDiagramShape(DiagramElement<?> diagramElement) {
+	@SuppressWarnings("unchecked")
+	protected FlexoConceptInstance createFlexoConceptInstanceFromDiagramShape(DiagramShape diagramShape) {
 		FlexoConceptInstance newFlexoConceptInstance = getFreeModelInstance().getAccessedVirtualModelInstance()
 				.makeNewFlexoConceptInstance(none);
-		GraphicalElementRole geRole = (ShapeRole) none.getAccessibleProperty(FMEDiagramFreeModel.SHAPE_ROLE_NAME);
-		newFlexoConceptInstance.setFlexoActor(diagramElement, geRole);
+		ShapeRole geRole = (ShapeRole) none.getAccessibleProperty(FMEDiagramFreeModel.SHAPE_ROLE_NAME);
+		newFlexoConceptInstance.setFlexoActor(diagramShape, geRole);
 		PrimitiveRole<String> nameRole = (PrimitiveRole<String>) none.getAccessibleProperty(FMEFreeModel.NAME_ROLE_NAME);
-		newFlexoConceptInstance.setFlexoActor(diagramElement.getName(), nameRole);
+		newFlexoConceptInstance.setFlexoActor(diagramShape.getName(), nameRole);
 		return newFlexoConceptInstance;
 	}
 
