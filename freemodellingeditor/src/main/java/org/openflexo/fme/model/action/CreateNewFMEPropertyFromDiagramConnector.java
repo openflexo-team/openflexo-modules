@@ -135,14 +135,13 @@ public class CreateNewFMEPropertyFromDiagramConnector
 	private CreateNewFMEPropertyFromDiagramConnector(DiagramConnector focusedObject, Vector<FlexoObject> globalSelection,
 			FlexoEditor editor) {
 		super(actionType, focusedObject, globalSelection, editor);
-		System.out.println("Coucou j'instancie CreateNewFMEPropertyFromDiagramConnector pour " + focusedObject);
 
 		ObjectLookupResult startConceptLookup = getFreeModelInstance().getAccessedVirtualModelInstance()
 				.lookup(getFocusedObject().getStartShape());
 		if (startConceptLookup != null) {
 			fromGRFlexoConceptInstance = startConceptLookup.flexoConceptInstance;
 			fromFlexoConceptGR = fromGRFlexoConceptInstance.getFlexoConcept();
-			System.out.println("START lookup: " + startConceptLookup.flexoConceptInstance + " of=" + fromFlexoConceptGR);
+			// System.out.println("START lookup: " + startConceptLookup.flexoConceptInstance + " of=" + fromFlexoConceptGR);
 			FlexoProperty<?> p = fromFlexoConceptGR.getAccessibleProperty(FMEFreeModel.CONCEPT_ROLE_NAME);
 			if (p instanceof FlexoConceptInstanceRole) {
 				FlexoConceptInstanceRole fciRole = (FlexoConceptInstanceRole) p;
@@ -156,7 +155,7 @@ public class CreateNewFMEPropertyFromDiagramConnector
 		if (endConceptLookup != null) {
 			toGRFlexoConceptInstance = endConceptLookup.flexoConceptInstance;
 			toFlexoConceptGR = toGRFlexoConceptInstance.getFlexoConcept();
-			System.out.println("END lookup: " + endConceptLookup.flexoConceptInstance + " of=" + toFlexoConceptGR);
+			// System.out.println("END lookup: " + endConceptLookup.flexoConceptInstance + " of=" + toFlexoConceptGR);
 			FlexoProperty<?> p = toFlexoConceptGR.getAccessibleProperty(FMEFreeModel.CONCEPT_ROLE_NAME);
 			if (p instanceof FlexoConceptInstanceRole) {
 				FlexoConceptInstanceRole fciRole = (FlexoConceptInstanceRole) p;
@@ -199,9 +198,6 @@ public class CreateNewFMEPropertyFromDiagramConnector
 	@Override
 	protected void doAction(Object context) throws FlexoException {
 
-		System.out.println("OK on cree la propriete dans " + getFromFlexoConcept());
-		System.out.println("Pour " + fromFlexoConceptGR);
-
 		CreateFlexoConceptInstanceRole createPropertyAction = CreateFlexoConceptInstanceRole.actionType
 				.makeNewEmbeddedAction(getFromFlexoConcept(), null, this);
 		createPropertyAction.setRoleName(getPropertyName());
@@ -222,11 +218,7 @@ public class CreateNewFMEPropertyFromDiagramConnector
 
 		FlexoConcept connectorGR = buildConnectorGRFlexoConcept();
 
-		System.out.println("Build new: " + connectorGR.getFMLRepresentation());
-
-		System.out.println("On sette " + getPropertyName() + " pour " + fromFlexoConceptInstance + " avec " + toFlexoConceptInstance);
 		fromFlexoConceptInstance.setFlexoPropertyValue(getPropertyName(), toFlexoConceptInstance);
-		System.out.println("Done");
 
 	}
 

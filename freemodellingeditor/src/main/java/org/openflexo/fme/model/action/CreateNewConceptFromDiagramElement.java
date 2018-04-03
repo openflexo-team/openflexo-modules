@@ -38,28 +38,20 @@
 
 package org.openflexo.fme.model.action;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import org.openflexo.connie.exception.InvalidBindingException;
-import org.openflexo.connie.exception.NullReferenceException;
-import org.openflexo.connie.exception.TypeMismatchException;
-import org.openflexo.fme.model.FMEDiagramFreeModel;
 import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.InvalidArgumentException;
 import org.openflexo.foundation.action.FlexoActionFactory;
-import org.openflexo.foundation.fml.CreationScheme;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.FlexoConceptInstanceRole;
 import org.openflexo.foundation.fml.FlexoProperty;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.fml.rt.VirtualModelInstance.ObjectLookupResult;
-import org.openflexo.foundation.fml.rt.action.CreateFlexoConceptInstance;
-import org.openflexo.technologyadapter.diagram.fml.ConnectorRole;
 import org.openflexo.technologyadapter.diagram.model.DiagramConnector;
 import org.openflexo.technologyadapter.diagram.model.DiagramElement;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
@@ -141,15 +133,21 @@ public class CreateNewConceptFromDiagramElement extends AbstractInstantiateConce
 		else if (getFocusedObject() instanceof DiagramConnector) {
 			logger.info("Create new concept from connector element ");
 
-			DiagramShape fromShape = ((DiagramConnector) getFocusedObject()).getStartShape();
-			DiagramShape toShape = ((DiagramConnector) getFocusedObject()).getEndShape();
+			CreateNewConceptFromDiagramConnector actionCreateNewConcept = CreateNewConceptFromDiagramConnector.actionType
+					.makeNewEmbeddedAction((DiagramConnector) getFocusedObject(), null, this);
+			actionCreateNewConcept.doAction();
+			flexoConceptInstance = actionCreateNewConcept.getNewFlexoConceptInstance();
+			flexoConcept = flexoConceptInstance.getFlexoConcept();
 
+			/*DiagramShape fromShape = ((DiagramConnector) getFocusedObject()).getStartShape();
+			DiagramShape toShape = ((DiagramConnector) getFocusedObject()).getEndShape();
+			
 			FlexoConcept fromConcept = null, toConcept = null;
 			FlexoConcept fromConceptGR = null, toConceptGR = null;
-
+			
 			FlexoConceptInstance fromFCIGR = null;
 			FlexoConceptInstance toFCIGR = null;
-
+			
 			ObjectLookupResult fromLookup = getFreeModelInstance().getAccessedVirtualModelInstance().lookup(fromShape);
 			if (fromLookup != null) {
 				fromFCIGR = fromLookup.flexoConceptInstance;
@@ -170,10 +168,10 @@ public class CreateNewConceptFromDiagramElement extends AbstractInstantiateConce
 					toConcept = fciRole.getFlexoConceptType();
 				}
 			}
-
+			
 			System.out.println("From " + fromConcept + " gr=" + fromConceptGR);
 			System.out.println("To " + toConcept + " gr=" + toConceptGR);
-
+			
 			// Now we create the new conceptual concept
 			CreateNewRelationalConcept createNewConcept = CreateNewRelationalConcept.actionType.makeNewEmbeddedAction(getFMEFreeModel(),
 					null, this);
@@ -184,7 +182,7 @@ public class CreateNewConceptFromDiagramElement extends AbstractInstantiateConce
 			createNewConcept.doAction();
 			FlexoConcept newFlexoConcept = createNewConcept.getNewFlexoConcept();
 			FlexoConcept newGRFlexoConcept = createNewConcept.getNewGRFlexoConcept();
-
+			
 			// Now we instantiate that concept
 			try {
 				CreateFlexoConceptInstance instantiateConcept = CreateFlexoConceptInstance.actionType
@@ -195,7 +193,7 @@ public class CreateNewConceptFromDiagramElement extends AbstractInstantiateConce
 				String name = newFlexoConcept.getName();
 				FlexoConceptInstance fromFCI = fromFCIGR.execute("fmeConcept");
 				FlexoConceptInstance toFCI = toFCIGR.execute("fmeConcept");
-
+			
 				if (fromFCIGR != null && toFCIGR != null) {
 					name = newFlexoConcept.getName() + " " + fromFCIGR.execute("fmeConcept.name") + "-"
 							+ toFCIGR.execute("fmeConcept.name");
@@ -205,7 +203,7 @@ public class CreateNewConceptFromDiagramElement extends AbstractInstantiateConce
 				instantiateConcept.setParameterValue(cs.getParameters().get(2), toFCI);
 				instantiateConcept.doAction();
 				FlexoConceptInstance conceptInstance = instantiateConcept.getNewFlexoConceptInstance();
-
+			
 				FlexoConceptInstance newFlexoConceptInstanceGR = getFreeModelInstance().getAccessedVirtualModelInstance()
 						.makeNewFlexoConceptInstance(newGRFlexoConcept);
 				ConnectorRole geRole = (ConnectorRole) newGRFlexoConcept.getAccessibleProperty(FMEDiagramFreeModel.CONNECTOR_ROLE_NAME);
@@ -214,7 +212,7 @@ public class CreateNewConceptFromDiagramElement extends AbstractInstantiateConce
 						.getAccessibleProperty(FMEFreeModel.CONCEPT_ROLE_NAME);
 				newFlexoConceptInstanceGR.setFlexoActor(conceptInstance, fciRole);
 				// return newFlexoConceptInstance;
-
+			
 			} catch (TypeMismatchException e) {
 				e.printStackTrace();
 			} catch (NullReferenceException e) {
@@ -224,16 +222,16 @@ public class CreateNewConceptFromDiagramElement extends AbstractInstantiateConce
 			} catch (InvalidBindingException e) {
 				e.printStackTrace();
 			}
-
+			
 			// We should notify the creation of a new FlexoConcept
 			getFreeModelInstance().getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null, newFlexoConcept);
 			getFreeModelInstance().getPropertyChangeSupport().firePropertyChange("usedTopLevelFlexoConcepts", null, newFlexoConcept);
-
+			
 			// This is used to notify the adding of a new instance of a flexo concept
 			getFreeModelInstance().getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", null, getFocusedObject());
 			getFreeModelInstance().getPropertyChangeSupport().firePropertyChange("getEmbeddedInstances(FlexoConceptInstance)", null,
 					getFocusedObject());
-
+			
 			// The new shape has well be added to the diagram, and the drawing (which listen to the diagram) has well received the event
 			// The drawing is now up-to-date... but there is something wrong if we are in FML-controlled mode.
 			// Since the shape has been added BEFORE the FlexoConceptInstance has been set, the drawing only knows about the DiagamShape,
@@ -241,7 +239,7 @@ public class CreateNewConceptFromDiagramElement extends AbstractInstantiateConce
 			// sure that the Drawing can discover that the new shape is FML-controlled
 			getFocusedObject().getParent().getPropertyChangeSupport().firePropertyChange(DiagramElement.INVALIDATE, null,
 					getFocusedObject().getParent());
-
+			*/
 		}
 
 	}
