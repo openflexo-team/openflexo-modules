@@ -264,7 +264,6 @@ public class CreateNewConceptFromDiagramConnector extends FMEAction<CreateNewCon
 			FlexoConceptInstanceRole fciRole = (FlexoConceptInstanceRole) newGRFlexoConcept
 					.getAccessibleProperty(FMEFreeModel.CONCEPT_ROLE_NAME);
 			newFlexoConceptInstance.setFlexoActor(conceptInstance, fciRole);
-			// return newFlexoConceptInstance;
 
 		} catch (TypeMismatchException e) {
 			e.printStackTrace();
@@ -285,11 +284,11 @@ public class CreateNewConceptFromDiagramConnector extends FMEAction<CreateNewCon
 		getFreeModelInstance().getPropertyChangeSupport().firePropertyChange("getEmbeddedInstances(FlexoConceptInstance)", null,
 				getFocusedObject());
 
-		// The new shape has well be added to the diagram, and the drawing (which listen to the diagram) has well received the event
+		// The new connector has well be added to the diagram, and the drawing (which listen to the diagram) has well received the event
 		// The drawing is now up-to-date... but there is something wrong if we are in FML-controlled mode.
-		// Since the shape has been added BEFORE the FlexoConceptInstance has been set, the drawing only knows about the DiagamShape,
-		// and not about an FMLControlledDiagramShape. That's why we need to notify again the new diagram element's parent, to be
-		// sure that the Drawing can discover that the new shape is FML-controlled
+		// Since the connector has been added BEFORE the FlexoConceptInstance has been set, the drawing only knows about the DiagamShape,
+		// and not about an FMLControlledDiagramConnector. That's why we need to notify again the new diagram element's parent, to be
+		// sure that the Drawing can discover that the new connector is FML-controlled
 		getFocusedObject().getParent().getPropertyChangeSupport().firePropertyChange(DiagramElement.INVALIDATE, null,
 				getFocusedObject().getParent());
 

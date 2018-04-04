@@ -466,7 +466,7 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 			createLinkScheme.setFlexoBehaviourClass(LinkScheme.class);
 			createLinkScheme.doAction();
 			LinkScheme linkScheme = (LinkScheme) createLinkScheme.getNewFlexoBehaviour();
-			linkScheme.setSkipConfirmationPanel(false);
+			linkScheme.setSkipConfirmationPanel(true);
 			linkScheme.setFromTargetFlexoConcept(fromConceptGR);
 			linkScheme.setToTargetFlexoConcept(toConceptGR);
 
