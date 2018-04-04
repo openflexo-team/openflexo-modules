@@ -236,6 +236,10 @@ public class CreateNewConceptFromDiagramConnector extends FMEAction<CreateNewCon
 		FlexoConcept newFlexoConcept = createNewConcept.getNewFlexoConcept();
 		FlexoConcept newGRFlexoConcept = createNewConcept.getNewGRFlexoConcept();
 
+		// Sets new concept GR with actual connector GR
+		ConnectorRole connectorRole = (ConnectorRole) newGRFlexoConcept.getAccessibleProperty(FMEDiagramFreeModel.CONNECTOR_ROLE_NAME);
+		connectorRole.getGraphicalRepresentation().setsWith(getFocusedObject().getGraphicalRepresentation());
+
 		// Now we instantiate that concept
 		try {
 			CreateFlexoConceptInstance instantiateConcept = CreateFlexoConceptInstance.actionType
