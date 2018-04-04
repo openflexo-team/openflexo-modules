@@ -41,6 +41,12 @@ package org.openflexo.fme.model.action;
 import java.util.Vector;
 import java.util.logging.Logger;
 
+import org.openflexo.connie.Bindable;
+import org.openflexo.connie.BindingFactory;
+import org.openflexo.connie.BindingModel;
+import org.openflexo.connie.BindingVariable;
+import org.openflexo.connie.DataBinding;
+import org.openflexo.fme.model.FMEConceptualModel;
 import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.foundation.FlexoEditor;
@@ -49,6 +55,7 @@ import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.FlexoConcept;
+import org.openflexo.foundation.fml.FlexoConceptInstanceType;
 import org.openflexo.toolbox.StringUtils;
 
 /**
@@ -57,7 +64,7 @@ import org.openflexo.toolbox.StringUtils;
  * @author sylvain
  * 
  */
-public class CreateNewRelationalConcept extends FMEAction<CreateNewRelationalConcept, FMEFreeModel, FlexoObject> {
+public class CreateNewRelationalConcept extends FMEAction<CreateNewRelationalConcept, FMEFreeModel, FlexoObject> implements Bindable {
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(CreateNewRelationalConcept.class.getPackage().getName());
@@ -117,6 +124,7 @@ public class CreateNewRelationalConcept extends FMEAction<CreateNewRelationalCon
 		// Now we create the new concept
 		newFlexoConcept = getFocusedObject().getConceptualModel().getRelationalFlexoConcept(getNewConceptName(), getFromConcept(),
 				getToConcept(), getEditor(), this);
+		newFlexoConcept.getInspector().setRenderer(getRenderer());
 
 		// Now we create the new concept GR
 		newGRFlexoConcept = getFocusedObject().getGRRelationalFlexoConcept(newFlexoConcept, getFromGRConcept(), getToGRConcept(),
@@ -214,6 +222,99 @@ public class CreateNewRelationalConcept extends FMEAction<CreateNewRelationalCon
 		}
 
 		return true;
+	}
+
+	private DataBinding<String> renderer;
+	private DataBinding<String> defaultRenderer;
+	private RendererBindingModel rendererBM;
+
+	private String getDefaultRendererAsString() {
+		return "\"" + getNewConceptName() + " \"+sourceConcept.name+\" - \"+destinationConcept.name";
+	}
+
+	public DataBinding<String> getDefaultRenderer() {
+		if (defaultRenderer == null) {
+			defaultRenderer = new DataBinding<String>(this, String.class, DataBinding.BindingDefinitionType.GET);
+			defaultRenderer.setBindingName("renderer");
+			defaultRenderer.setMandatory(true);
+		}
+		if (StringUtils.isNotEmpty(getNewConceptName())) {
+			defaultRenderer.setUnparsedBinding(getDefaultRendererAsString());
+		}
+		return defaultRenderer;
+	}
+
+	public DataBinding<String> getRenderer() {
+		if (renderer == null) {
+			renderer = new DataBinding<String>(this, String.class, DataBinding.BindingDefinitionType.GET);
+			renderer.setBindingName("renderer");
+			renderer.setMandatory(true);
+		}
+		if (!renderer.isSet()) {
+			return getDefaultRenderer();
+		}
+		return renderer;
+	}
+
+	public void setRenderer(DataBinding<?> renderer) {
+		if (renderer != null) {
+			this.renderer = new DataBinding<String>(renderer.toString(), this, String.class, DataBinding.BindingDefinitionType.GET);
+			renderer.setBindingName("renderer");
+			renderer.setMandatory(true);
+		}
+		notifiedBindingChanged(this.renderer);
+	}
+
+	@Override
+	public BindingFactory getBindingFactory() {
+		return getFocusedObject().getAccessedVirtualModel().getBindingFactory();
+	}
+
+	@Override
+	public BindingModel getBindingModel() {
+		if (rendererBM == null) {
+			rendererBM = new RendererBindingModel();
+		}
+		return rendererBM;
+	}
+
+	@Override
+	public void notifiedBindingChanged(org.openflexo.connie.DataBinding<?> dataBinding) {
+		if (dataBinding.isSet()) {
+			if (!dataBinding.toString().equals(getDefaultRendererAsString())) {
+				renderer.setUnparsedBinding(dataBinding.toString());
+			}
+		}
+	}
+
+	@Override
+	public void notifiedBindingDecoded(org.openflexo.connie.DataBinding<?> dataBinding) {
+		// TODO
+	}
+
+	/**
+	 * This is the {@link BindingModel} used to define the renderer
+	 * 
+	 * @author sylvain
+	 * 
+	 */
+	public class RendererBindingModel extends BindingModel {
+
+		private RendererBindingModel() {
+			super(getFocusedObject().getAccessedVirtualModel() != null ? getFocusedObject().getAccessedVirtualModel().getBindingModel()
+					: null);
+
+			BindingVariable fromConceptBV = new BindingVariable(FMEConceptualModel.FROM_CONCEPT_ROLE_NAME,
+					FlexoConceptInstanceType.getFlexoConceptInstanceType(getFromConcept()));
+			fromConceptBV.setCacheable(false);
+			addToBindingVariables(fromConceptBV);
+
+			BindingVariable toConceptBV = new BindingVariable(FMEConceptualModel.TO_CONCEPT_ROLE_NAME,
+					FlexoConceptInstanceType.getFlexoConceptInstanceType(getToConcept()));
+			toConceptBV.setCacheable(false);
+			addToBindingVariables(toConceptBV);
+		}
+
 	}
 
 }

@@ -50,6 +50,7 @@ import org.openflexo.foundation.fml.DeletionScheme;
 import org.openflexo.foundation.fml.FlexoBehaviour.Visibility;
 import org.openflexo.foundation.fml.FlexoBehaviourParameter.WidgetType;
 import org.openflexo.foundation.fml.FlexoConcept;
+import org.openflexo.foundation.fml.FlexoConceptInstanceType;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.fml.action.CreateEditionAction;
 import org.openflexo.foundation.fml.action.CreateFlexoBehaviour;
@@ -418,8 +419,7 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 		public FlexoConcept getGRRelationalFlexoConcept(FlexoConcept concept, FlexoConcept fromConceptGR, FlexoConcept toConceptGR,
 				FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction, boolean createWhenNotExistant) {
 
-			FlexoConcept returned = getAccessedVirtualModel()
-					.getFlexoConcept(concept != null ? concept.getName() + "GR" : NONE_FLEXO_CONCEPT_NAME);
+			FlexoConcept returned = getAccessedVirtualModel().getFlexoConcept(concept.getName() + "GR");
 
 			if (returned == null && createWhenNotExistant) {
 
@@ -431,37 +431,22 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 				else {
 					action = CreateFlexoConcept.actionType.makeNewAction(getAccessedVirtualModel(), null, editor);
 				}
-				action.setNewFlexoConceptName(concept != null ? concept.getName() + "GR" : NONE_FLEXO_CONCEPT_NAME);
+				action.setNewFlexoConceptName(concept.getName() + "GR");
 				action.doAction();
 				returned = action.getNewFlexoConcept();
 
-				if (concept != null) {
-					// Create new FlexoConceptInstanceRole to store the concept
-					CreateFlexoConceptInstanceRole createConceptRole = null;
-					if (ownerAction != null) {
-						createConceptRole = CreateFlexoConceptInstanceRole.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
-					}
-					else {
-						createConceptRole = CreateFlexoConceptInstanceRole.actionType.makeNewAction(returned, null, editor);
-					}
-					createConceptRole.setRoleName(CONCEPT_ROLE_NAME);
-					createConceptRole.setFlexoConceptInstanceType(concept);
-					createConceptRole.setVirtualModelInstance(new DataBinding<VirtualModelInstance<?, ?>>(SAMPLE_DATA_MODEL_SLOT_NAME));
-					createConceptRole.doAction();
+				// Create new FlexoConceptInstanceRole to store the concept
+				CreateFlexoConceptInstanceRole createConceptRole = null;
+				if (ownerAction != null) {
+					createConceptRole = CreateFlexoConceptInstanceRole.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
 				}
 				else {
-					// Create new PrimitiveRole (String type) to store the name of this instance
-					CreatePrimitiveRole createNameRole = null;
-					if (ownerAction != null) {
-						createNameRole = CreatePrimitiveRole.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
-					}
-					else {
-						createNameRole = CreatePrimitiveRole.actionType.makeNewAction(returned, null, editor);
-					}
-					createNameRole.setRoleName(NAME_ROLE_NAME);
-					createNameRole.setPrimitiveType(PrimitiveType.String);
-					createNameRole.doAction();
+					createConceptRole = CreateFlexoConceptInstanceRole.actionType.makeNewAction(returned, null, editor);
 				}
+				createConceptRole.setRoleName(CONCEPT_ROLE_NAME);
+				createConceptRole.setFlexoConceptInstanceType(concept);
+				createConceptRole.setVirtualModelInstance(new DataBinding<VirtualModelInstance<?, ?>>(SAMPLE_DATA_MODEL_SLOT_NAME));
+				createConceptRole.doAction();
 
 				// Create new DeletionScheme
 				CreateFlexoBehaviour createDeletionScheme = null;
@@ -478,21 +463,19 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 				deletionScheme.setSkipConfirmationPanel(true);
 				deletionScheme.setVisibility(Visibility.Public);
 
-				if (concept != null) {
-					CreateEditionAction deleteConceptAction = null;
-					if (ownerAction != null) {
-						deleteConceptAction = CreateEditionAction.actionType.makeNewEmbeddedAction(deletionScheme.getControlGraph(), null,
-								ownerAction);
-					}
-					else {
-						deleteConceptAction = CreateEditionAction.actionType.makeNewAction(deletionScheme.getControlGraph(), null, editor);
-					}
-					deleteConceptAction.setEditionActionClass(DeleteFlexoConceptInstance.class);
-					deleteConceptAction.doAction();
-
-					DeleteFlexoConceptInstance<?> deleteConcept = (DeleteFlexoConceptInstance<?>) deleteConceptAction.getNewEditionAction();
-					deleteConcept.setObject(new DataBinding<>(CONCEPT_ROLE_NAME));
+				CreateEditionAction deleteConceptAction = null;
+				if (ownerAction != null) {
+					deleteConceptAction = CreateEditionAction.actionType.makeNewEmbeddedAction(deletionScheme.getControlGraph(), null,
+							ownerAction);
 				}
+				else {
+					deleteConceptAction = CreateEditionAction.actionType.makeNewAction(deletionScheme.getControlGraph(), null, editor);
+				}
+				deleteConceptAction.setEditionActionClass(DeleteFlexoConceptInstance.class);
+				deleteConceptAction.doAction();
+
+				DeleteFlexoConceptInstance<?> deleteConcept = (DeleteFlexoConceptInstance<?>) deleteConceptAction.getNewEditionAction();
+				deleteConcept.setObject(new DataBinding<>(CONCEPT_ROLE_NAME));
 
 				// Create inspector type entry
 				CreateInspectorEntry createTypeEntry = null;
@@ -502,69 +485,46 @@ public interface FMEFreeModel extends VirtualModelBasedNatureObject<FreeModellin
 				else {
 					createTypeEntry = CreateInspectorEntry.actionType.makeNewAction(returned.getInspector(), null, editor);
 				}
-				createTypeEntry.setEntryName("Type");
+				createTypeEntry.setEntryName("Relationship");
 				createTypeEntry.setEntryType(String.class);
 				createTypeEntry.setWidgetType(WidgetType.TEXT_FIELD);
-				if (concept == null) {
-					createTypeEntry.setData(new DataBinding<String>('"' + getLocales().localizedForKey("unclassified") + '"'));
-				}
-				else {
-					createTypeEntry.setData(new DataBinding<String>(CONCEPT_ROLE_NAME + ".concept.name"));
-				}
+				createTypeEntry.setData(new DataBinding<String>(CONCEPT_ROLE_NAME + ".render"));
 				createTypeEntry.setIsReadOnly(true);
 				createTypeEntry.doAction();
-				// Unused InspectorEntry typeEntry =
 				createTypeEntry.getNewEntry();
 
-				// Create inspector name entry
-				CreateInspectorEntry createNameEntry = null;
+				// Create inspector source entry
+				CreateInspectorEntry createSourceEntry = null;
 				if (ownerAction != null) {
-					createNameEntry = CreateInspectorEntry.actionType.makeNewEmbeddedAction(returned.getInspector(), null, ownerAction);
+					createSourceEntry = CreateInspectorEntry.actionType.makeNewEmbeddedAction(returned.getInspector(), null, ownerAction);
 				}
 				else {
-					createNameEntry = CreateInspectorEntry.actionType.makeNewAction(returned.getInspector(), null, editor);
+					createSourceEntry = CreateInspectorEntry.actionType.makeNewAction(returned.getInspector(), null, editor);
 				}
-				createNameEntry.setEntryName(FMEConceptualModel.NAME_ROLE_NAME);
-				createNameEntry.setEntryType(String.class);
-				createNameEntry.setWidgetType(WidgetType.TEXT_FIELD);
-				if (concept == null) {
-					createNameEntry.setData(new DataBinding<String>(FMEConceptualModel.NAME_ROLE_NAME));
+				createSourceEntry.setEntryName(FMEConceptualModel.FROM_CONCEPT_ROLE_NAME);
+				createSourceEntry.setEntryType(FlexoConceptInstanceType.UNDEFINED_FLEXO_CONCEPT_INSTANCE_TYPE);
+				createSourceEntry.setWidgetType(WidgetType.CUSTOM_WIDGET);
+				createSourceEntry.setData(new DataBinding<String>(CONCEPT_ROLE_NAME + "." + FMEConceptualModel.FROM_CONCEPT_ROLE_NAME));
+				createSourceEntry.doAction();
+
+				// Create inspector destination entry
+				CreateInspectorEntry createDestinationEntry = null;
+				if (ownerAction != null) {
+					createDestinationEntry = CreateInspectorEntry.actionType.makeNewEmbeddedAction(returned.getInspector(), null,
+							ownerAction);
 				}
 				else {
-					createNameEntry.setData(new DataBinding<String>(CONCEPT_ROLE_NAME + ".name"));
+					createDestinationEntry = CreateInspectorEntry.actionType.makeNewAction(returned.getInspector(), null, editor);
 				}
-
-				createNameEntry.doAction();
-				// Unused InspectorEntry nameEntry = createNameEntry.getNewEntry();
-
-				// Create inspector description entry if concept is not null
-				if (concept != null) {
-					CreateInspectorEntry createDescriptionEntry = null;
-					if (ownerAction != null) {
-						createDescriptionEntry = CreateInspectorEntry.actionType.makeNewEmbeddedAction(returned.getInspector(), null,
-								ownerAction);
-					}
-					else {
-						createDescriptionEntry = CreateInspectorEntry.actionType.makeNewAction(returned.getInspector(), null, editor);
-					}
-					createDescriptionEntry.setEntryName(FMEConceptualModel.DESCRIPTION_ROLE_NAME);
-					createDescriptionEntry.setEntryType(String.class);
-					createDescriptionEntry.setWidgetType(WidgetType.TEXT_AREA);
-					createDescriptionEntry.setData(new DataBinding<String>(CONCEPT_ROLE_NAME + ".description"));
-
-					createDescriptionEntry.doAction();
-					InspectorEntry descriptionEntry = createDescriptionEntry.getNewEntry();
-				}
+				createDestinationEntry.setEntryName(FMEConceptualModel.TO_CONCEPT_ROLE_NAME);
+				createDestinationEntry.setEntryType(FlexoConceptInstanceType.UNDEFINED_FLEXO_CONCEPT_INSTANCE_TYPE);
+				createDestinationEntry.setWidgetType(WidgetType.CUSTOM_WIDGET);
+				createDestinationEntry.setData(new DataBinding<String>(CONCEPT_ROLE_NAME + "." + FMEConceptualModel.TO_CONCEPT_ROLE_NAME));
+				createDestinationEntry.doAction();
 
 				// Bind shapes's label to name property
-				if (concept != null) {
-					// If we are bound to a concept instance, use name of concept
-					returned.getInspector().setRenderer(new DataBinding<String>("instance." + CONCEPT_ROLE_NAME + ".name"));
-				}
-				else {
-					// Otherwise, this is the NoneGR, use primitive name
-					returned.getInspector().setRenderer(new DataBinding<String>("instance.name"));
-				}
+				// If we are bound to a concept instance, use name of concept
+				returned.getInspector().setRenderer(new DataBinding<String>("instance." + CONCEPT_ROLE_NAME + ".render"));
 
 				configureGRRelationalFlexoConcept(returned, concept, fromConceptGR, toConceptGR, editor, ownerAction);
 			}

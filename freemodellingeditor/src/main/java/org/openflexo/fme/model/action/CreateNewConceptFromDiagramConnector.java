@@ -45,6 +45,7 @@ import java.util.logging.Logger;
 import org.openflexo.connie.exception.InvalidBindingException;
 import org.openflexo.connie.exception.NullReferenceException;
 import org.openflexo.connie.exception.TypeMismatchException;
+import org.openflexo.fge.GraphicalRepresentation.VerticalTextAlignment;
 import org.openflexo.fme.model.FMEDiagramFreeModel;
 import org.openflexo.fme.model.FMEDiagramFreeModelInstance;
 import org.openflexo.fme.model.FMEFreeModel;
@@ -233,12 +234,20 @@ public class CreateNewConceptFromDiagramConnector extends FMEAction<CreateNewCon
 		createNewConcept.setFromGRConcept(fromFlexoConceptGR);
 		createNewConcept.setToGRConcept(toFlexoConceptGR);
 		createNewConcept.doAction();
+
+		if (!createNewConcept.hasActionExecutionSucceeded()) {
+			return;
+		}
+
 		FlexoConcept newFlexoConcept = createNewConcept.getNewFlexoConcept();
 		FlexoConcept newGRFlexoConcept = createNewConcept.getNewGRFlexoConcept();
 
 		// Sets new concept GR with actual connector GR
 		ConnectorRole connectorRole = (ConnectorRole) newGRFlexoConcept.getAccessibleProperty(FMEDiagramFreeModel.CONNECTOR_ROLE_NAME);
 		connectorRole.getGraphicalRepresentation().setsWith(getFocusedObject().getGraphicalRepresentation());
+		// Default align on bottom
+		getFocusedObject().getGraphicalRepresentation().setVerticalTextAlignment(VerticalTextAlignment.BOTTOM);
+		connectorRole.getGraphicalRepresentation().setVerticalTextAlignment(VerticalTextAlignment.BOTTOM);
 
 		// Now we instantiate that concept
 		try {
@@ -247,17 +256,11 @@ public class CreateNewConceptFromDiagramConnector extends FMEAction<CreateNewCon
 			instantiateConcept.setFlexoConcept(newFlexoConcept);
 			CreationScheme cs = newFlexoConcept.getCreationSchemes().get(0);
 			instantiateConcept.setCreationScheme(cs);
-			String name = newFlexoConcept.getName();
 			FlexoConceptInstance fromFCI = fromGRFlexoConceptInstance.execute("fmeConcept");
 			FlexoConceptInstance toFCI = toGRFlexoConceptInstance.execute("fmeConcept");
 
-			if (fromGRFlexoConceptInstance != null && toGRFlexoConceptInstance != null) {
-				name = newFlexoConcept.getName() + " " + fromGRFlexoConceptInstance.execute("fmeConcept.name") + "-"
-						+ toGRFlexoConceptInstance.execute("fmeConcept.name");
-			}
-			instantiateConcept.setParameterValue(cs.getParameters().get(0), name);
-			instantiateConcept.setParameterValue(cs.getParameters().get(1), fromFCI);
-			instantiateConcept.setParameterValue(cs.getParameters().get(2), toFCI);
+			instantiateConcept.setParameterValue(cs.getParameters().get(0), fromFCI);
+			instantiateConcept.setParameterValue(cs.getParameters().get(1), toFCI);
 			instantiateConcept.doAction();
 			FlexoConceptInstance conceptInstance = instantiateConcept.getNewFlexoConceptInstance();
 

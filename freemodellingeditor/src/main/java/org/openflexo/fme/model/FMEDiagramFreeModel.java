@@ -435,15 +435,9 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 			createConnectorRole.doAction();
 			ConnectorRole role = (ConnectorRole) createConnectorRole.getNewFlexoRole();
 
-			// Bind shapes's label to name property
-			if (concept != null) {
-				// If we are bound to a concept instance, use that name
-				role.setLabel(new DataBinding<>(CONCEPT_ROLE_NAME + ".name"));
-			}
-			else {
-				// Otherwise, this is the NoneGR, use primitive name
-				role.setLabel(new DataBinding<>("name"));
-			}
+			// Bind shapes's label to renderer
+			role.setReadOnlyLabel(true);
+			role.setLabel(new DataBinding<>(CONCEPT_ROLE_NAME + ".render"));
 
 			// Sets connector
 			ShapeRole fromShapeRole = (ShapeRole) fromConceptGR.getAccessibleProperty(SHAPE_ROLE_NAME);
@@ -484,10 +478,6 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 			createAddFlexoConceptInstance.doAction();
 			AddFlexoConceptInstance<?> addFCI = (AddFlexoConceptInstance<?>) createAddFlexoConceptInstance.getBaseEditionAction();
 			addFCI.setCreationScheme(concept.getCreationSchemes().get(0));
-			AddFlexoConceptInstanceParameter addFCINameParam = addFCI.getParameter(FMEConceptualModel.CONCEPT_NAME_PARAMETER);
-			addFCINameParam.setValue(new DataBinding<>('"' + concept.getName() + " " + '"' + "+" + LinkScheme.FROM_TARGET_KEY + "."
-					+ FMEFreeModel.CONCEPT_ROLE_NAME + "." + FMEConceptualModel.NAME_ROLE_NAME + "+\"-\"+" + LinkScheme.TO_TARGET_KEY + "."
-					+ FMEFreeModel.CONCEPT_ROLE_NAME + "." + FMEConceptualModel.NAME_ROLE_NAME));
 			AddFlexoConceptInstanceParameter addFCISourceConceptParam = addFCI.getParameter(FMEConceptualModel.FROM_CONCEPT_ROLE_NAME);
 			addFCISourceConceptParam.setValue(new DataBinding<>(LinkScheme.FROM_TARGET_KEY + "." + FMEFreeModel.CONCEPT_ROLE_NAME));
 			AddFlexoConceptInstanceParameter addFCIDestinationConceptParam = addFCI.getParameter(FMEConceptualModel.TO_CONCEPT_ROLE_NAME);

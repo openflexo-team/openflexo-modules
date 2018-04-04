@@ -44,6 +44,7 @@ import java.util.logging.Logger;
 import org.openflexo.ApplicationContext;
 import org.openflexo.components.wizard.FlexoWizard;
 import org.openflexo.components.wizard.WizardStep;
+import org.openflexo.connie.DataBinding;
 import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.action.CreateNewRelationalConcept;
 import org.openflexo.foundation.fml.FlexoConcept;
@@ -124,6 +125,11 @@ public class CreateNewRelationalConceptWizard extends FlexoWizard {
 				return false;
 			}
 
+			/*if (!getRenderer().isSet() || !getRenderer().isValid()) {
+				setIssueMessage(action.getLocales().localizedForKey("please_set_a_valid_renderer"), IssueMessageType.ERROR);
+				return false;
+			}*/
+
 			return true;
 
 		}
@@ -137,8 +143,13 @@ public class CreateNewRelationalConceptWizard extends FlexoWizard {
 				String oldValue = getNewConceptName();
 				action.setNewConceptName(newConceptName);
 				getPropertyChangeSupport().firePropertyChange("newConceptName", oldValue, newConceptName);
+				getPropertyChangeSupport().firePropertyChange("renderer", null, getRenderer());
 				checkValidity();
 			}
+		}
+
+		public DataBinding<String> getRenderer() {
+			return action.getRenderer();
 		}
 
 		public FlexoConcept getFromConcept() {

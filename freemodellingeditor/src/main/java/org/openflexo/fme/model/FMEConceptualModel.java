@@ -328,7 +328,46 @@ public interface FMEConceptualModel extends VirtualModelBasedNatureObject<FreeMo
 			FlexoConcept returned = getAccessedVirtualModel().getFlexoConcept(conceptName);
 
 			if (returned == null) {
-				returned = getFlexoConcept(conceptName, null, editor, ownerAction);
+
+				// Creates the concept
+				CreateFlexoConcept action;
+				if (ownerAction != null) {
+					action = CreateFlexoConcept.actionType.makeNewEmbeddedAction(getAccessedVirtualModel(), null, ownerAction);
+				}
+				else {
+					action = CreateFlexoConcept.actionType.makeNewAction(getAccessedVirtualModel(), null, editor);
+				}
+				action.setNewFlexoConceptName(conceptName);
+				action.doAction();
+				returned = action.getNewFlexoConcept();
+
+				// Create new CreationScheme
+				CreateFlexoBehaviour createCreationScheme = null;
+				if (ownerAction != null) {
+					createCreationScheme = CreateFlexoBehaviour.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
+				}
+				else {
+					createCreationScheme = CreateFlexoBehaviour.actionType.makeNewAction(returned, null, editor);
+				}
+				createCreationScheme.setFlexoBehaviourName("create");
+				createCreationScheme.setFlexoBehaviourClass(CreationScheme.class);
+				createCreationScheme.doAction();
+				CreationScheme creationScheme = (CreationScheme) createCreationScheme.getNewFlexoBehaviour();
+				creationScheme.setSkipConfirmationPanel(true);
+
+				// Create new DeletionScheme
+				CreateFlexoBehaviour createDeletionScheme = null;
+				if (ownerAction != null) {
+					createDeletionScheme = CreateFlexoBehaviour.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
+				}
+				else {
+					createDeletionScheme = CreateFlexoBehaviour.actionType.makeNewAction(returned, null, editor);
+				}
+				createDeletionScheme.setFlexoBehaviourName("delete");
+				createDeletionScheme.setFlexoBehaviourClass(DeletionScheme.class);
+				createDeletionScheme.doAction();
+				DeletionScheme deletionScheme = (DeletionScheme) createDeletionScheme.getNewFlexoBehaviour();
+				deletionScheme.setSkipConfirmationPanel(true);
 
 				// Create new FlexoConceptInstanceRole to store the source concept
 				CreateFlexoConceptInstanceRole fromConceptRoleAction = null;
@@ -355,8 +394,6 @@ public interface FMEConceptualModel extends VirtualModelBasedNatureObject<FreeMo
 				toConceptRoleAction.setFlexoConceptInstanceType(toConcept);
 				toConceptRoleAction.setVirtualModelInstance(new DataBinding<VirtualModelInstance<?, ?>>("container"));
 				toConceptRoleAction.doAction();
-
-				CreationScheme creationScheme = returned.getCreationSchemes().get(0);
 
 				// Create and set source concept parameter for CreationScheme
 				CreateGenericBehaviourParameter createSourceConceptParameter = null;
@@ -399,7 +436,7 @@ public interface FMEConceptualModel extends VirtualModelBasedNatureObject<FreeMo
 							editor);
 				}
 				createDestinationConceptParameter.setParameterName(TO_CONCEPT_ROLE_NAME);
-				createDestinationConceptParameter.setParameterType(fromConcept.getInstanceType());
+				createDestinationConceptParameter.setParameterType(toConcept.getInstanceType());
 				createDestinationConceptParameter.setWidgetType(WidgetType.CUSTOM_WIDGET);
 				createDestinationConceptParameter.doAction();
 
@@ -419,6 +456,35 @@ public interface FMEConceptualModel extends VirtualModelBasedNatureObject<FreeMo
 				AssignationAction<?> destinationConceptAssignation = (AssignationAction<?>) setsToConceptAction.getNewEditionAction();
 				((ExpressionAction<?>) destinationConceptAssignation.getAssignableAction())
 						.setExpression(new DataBinding<>("parameters." + TO_CONCEPT_ROLE_NAME));
+
+				// Create inspector source entry
+				CreateInspectorEntry createSourceEntry = null;
+				if (ownerAction != null) {
+					createSourceEntry = CreateInspectorEntry.actionType.makeNewEmbeddedAction(returned.getInspector(), null, ownerAction);
+				}
+				else {
+					createSourceEntry = CreateInspectorEntry.actionType.makeNewAction(returned.getInspector(), null, editor);
+				}
+				createSourceEntry.setEntryName(FROM_CONCEPT_ROLE_NAME);
+				createSourceEntry.setEntryType(fromConcept.getInstanceType());
+				createSourceEntry.setWidgetType(WidgetType.CUSTOM_WIDGET);
+				createSourceEntry.setData(new DataBinding<String>(FROM_CONCEPT_ROLE_NAME));
+				createSourceEntry.doAction();
+
+				// Create inspector destination entry
+				CreateInspectorEntry createDestinationEntry = null;
+				if (ownerAction != null) {
+					createDestinationEntry = CreateInspectorEntry.actionType.makeNewEmbeddedAction(returned.getInspector(), null,
+							ownerAction);
+				}
+				else {
+					createDestinationEntry = CreateInspectorEntry.actionType.makeNewAction(returned.getInspector(), null, editor);
+				}
+				createDestinationEntry.setEntryName(TO_CONCEPT_ROLE_NAME);
+				createDestinationEntry.setEntryType(toConcept.getInstanceType());
+				createDestinationEntry.setWidgetType(WidgetType.CUSTOM_WIDGET);
+				createDestinationEntry.setData(new DataBinding<String>(TO_CONCEPT_ROLE_NAME));
+				createDestinationEntry.doAction();
 
 			}
 			return returned;
