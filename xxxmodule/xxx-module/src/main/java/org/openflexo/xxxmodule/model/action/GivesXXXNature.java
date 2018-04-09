@@ -124,13 +124,10 @@ public class GivesXXXNature extends GivesNatureAction<GivesXXXNature, XXXProject
 			try {
 				return getServiceManager().getVirtualModelLibrary().getVirtualModel(XXXCst.XXX_VIEWPOINT_URI);
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ResourceLoadingCancelledException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (FlexoException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -167,13 +164,10 @@ public class GivesXXXNature extends GivesNatureAction<GivesXXXNature, XXXProject
 					newXXXVMI.setAccessedVirtualModelInstance(viewResource.getResourceData(null));
 					return newXXXVMI;
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (ResourceLoadingCancelledException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (FlexoException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

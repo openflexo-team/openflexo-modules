@@ -130,13 +130,10 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 			try {
 				return getTypedDiagramModelSlot().getMetaModelResource().getResourceData();
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ResourceLoadingCancelledException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (FlexoException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;

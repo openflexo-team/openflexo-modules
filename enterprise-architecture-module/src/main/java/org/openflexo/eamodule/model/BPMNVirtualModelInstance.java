@@ -85,16 +85,12 @@ public interface BPMNVirtualModelInstance extends VirtualModelInstanceBasedNatur
 			try {
 				return getAccessedVirtualModelInstance().execute("model.rootProcesses");
 			} catch (TypeMismatchException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (NullReferenceException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InvalidBindingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;

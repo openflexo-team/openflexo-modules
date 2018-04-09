@@ -80,7 +80,6 @@ public interface EAProjectNature extends ProjectNature<EAProjectNature> {
 
 		@Override
 		public List<VirtualModelInstanceBasedNatureObject<?>> getModels() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 	}

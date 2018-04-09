@@ -152,16 +152,12 @@ public class InstantiateNewFMEProperty extends FMEAction<InstantiateNewFMEProper
 			try {
 				return getFocusedObject().execute(FMEFreeModel.CONCEPT_ROLE_NAME);
 			} catch (TypeMismatchException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (NullReferenceException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InvalidBindingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

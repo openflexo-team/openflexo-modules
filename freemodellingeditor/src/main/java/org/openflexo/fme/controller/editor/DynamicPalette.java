@@ -153,13 +153,10 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 									return false;
 								}
 							} catch (TypeMismatchException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							} catch (NullReferenceException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							} catch (InvocationTargetException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}*/
@@ -190,7 +187,6 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 						return true;
 					}
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
