@@ -69,16 +69,20 @@ import org.openflexo.model.annotations.ImplementationClass;
 import org.openflexo.model.annotations.ModelEntity;
 import org.openflexo.model.annotations.XMLElement;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
+import org.openflexo.technologyadapter.diagram.fml.ConnectorRole;
 import org.openflexo.technologyadapter.diagram.fml.DropScheme;
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelNature;
+import org.openflexo.technologyadapter.diagram.fml.LinkScheme;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
 import org.openflexo.technologyadapter.diagram.fml.action.CreateDiagramPalette;
 import org.openflexo.technologyadapter.diagram.fml.action.CreateFMLControlledDiagramPaletteElement;
+import org.openflexo.technologyadapter.diagram.fml.editionaction.AddConnector;
 import org.openflexo.technologyadapter.diagram.fml.editionaction.AddShape;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramPalette;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramPaletteElement;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramSpecification;
 import org.openflexo.technologyadapter.diagram.model.Diagram;
+import org.openflexo.technologyadapter.diagram.model.DiagramConnector;
 import org.openflexo.technologyadapter.diagram.model.DiagramFactory;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 import org.openflexo.technologyadapter.diagram.rm.DiagramResource;
@@ -100,6 +104,7 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 
 	public static final String DIAGRAM_MODEL_SLOT_NAME = "diagram";
 	public static final String SHAPE_ROLE_NAME = "shape";
+	public static final String CONNECTOR_ROLE_NAME = "connector";
 	public static final String PALETTE_NAME = "Concepts";
 	public static final int PALETTE_GRID_WIDTH = 50;
 	public static final int PALETTE_GRID_HEIGHT = 40;
@@ -162,6 +167,24 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 			addShapeAction.setGraphicalRepresentation(shapeGR);
 			addShapeAction.doAction();
 			return addShapeAction.getNewShape();
+		}
+
+		private static DiagramConnector createConnectorInDiagram(DiagramShape fromShape, DiagramShape toShape, String name,
+				FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction) {
+			org.openflexo.technologyadapter.diagram.model.action.AddConnector addConnectorAction;
+			if (ownerAction != null) {
+				addConnectorAction = org.openflexo.technologyadapter.diagram.model.action.AddConnector.actionType
+						.makeNewEmbeddedAction(fromShape, null, ownerAction);
+			}
+			else {
+				addConnectorAction = org.openflexo.technologyadapter.diagram.model.action.AddConnector.actionType.makeNewAction(fromShape,
+						null, editor);
+			}
+			addConnectorAction.setFromShape(fromShape);
+			addConnectorAction.setToShape(toShape);
+			addConnectorAction.setNewConnectorName(name);
+			addConnectorAction.doAction();
+			return addConnectorAction.getNewConnector();
 		}
 
 		@Override
@@ -388,6 +411,109 @@ public interface FMEDiagramFreeModel extends FMEFreeModel {
 
 			DeleteAction<?> deleteShape = (DeleteAction<?>) createDeleteShape.getNewEditionAction();
 			deleteShape.setObject(new DataBinding<>(SHAPE_ROLE_NAME));
+
+		}
+
+		@Override
+		protected void configureGRRelationalFlexoConcept(FlexoConcept returned, FlexoConcept concept, FlexoConcept fromConceptGR,
+				FlexoConcept toConceptGR, FlexoEditor editor, FlexoAction<?, ?, ?> ownerAction) {
+
+			// Creates connector property
+			CreateTechnologyRole createConnectorRole = null;
+			if (ownerAction != null) {
+				createConnectorRole = CreateTechnologyRole.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
+			}
+			else {
+				createConnectorRole = CreateTechnologyRole.actionType.makeNewAction(returned, null, editor);
+			}
+			createConnectorRole.setModelSlot(getTypedDiagramModelSlot());
+			createConnectorRole.setRoleName(CONNECTOR_ROLE_NAME);
+			createConnectorRole.setFlexoRoleClass(ConnectorRole.class);
+			createConnectorRole.doAction();
+			ConnectorRole role = (ConnectorRole) createConnectorRole.getNewFlexoRole();
+
+			// Bind shapes's label to renderer
+			role.setReadOnlyLabel(true);
+			role.setLabel(new DataBinding<>(CONCEPT_ROLE_NAME + ".render"));
+
+			// Sets connector
+			ShapeRole fromShapeRole = (ShapeRole) fromConceptGR.getAccessibleProperty(SHAPE_ROLE_NAME);
+			DiagramShape fromShape = fromShapeRole.getMetamodelElement();
+			ShapeRole toShapeRole = (ShapeRole) toConceptGR.getAccessibleProperty(SHAPE_ROLE_NAME);
+			DiagramShape toShape = toShapeRole.getMetamodelElement();
+
+			DiagramConnector newConnector = createConnectorInDiagram(fromShape, toShape, returned.getName(), editor, ownerAction);
+			role.setMetamodelElement(newConnector);
+
+			// Create new LinkScheme
+			CreateFlexoBehaviour createLinkScheme = null;
+			if (ownerAction != null) {
+				createLinkScheme = CreateFlexoBehaviour.actionType.makeNewEmbeddedAction(returned, null, ownerAction);
+			}
+			else {
+				createLinkScheme = CreateFlexoBehaviour.actionType.makeNewAction(returned, null, editor);
+			}
+			createLinkScheme.setFlexoBehaviourName("link");
+			createLinkScheme.setFlexoBehaviourClass(LinkScheme.class);
+			createLinkScheme.doAction();
+			LinkScheme linkScheme = (LinkScheme) createLinkScheme.getNewFlexoBehaviour();
+			linkScheme.setSkipConfirmationPanel(true);
+			linkScheme.setFromTargetFlexoConcept(fromConceptGR);
+			linkScheme.setToTargetFlexoConcept(toConceptGR);
+
+			CreateEditionAction createAddFlexoConceptInstance = null;
+			if (ownerAction != null) {
+				createAddFlexoConceptInstance = CreateEditionAction.actionType.makeNewEmbeddedAction(linkScheme.getControlGraph(), null,
+						ownerAction);
+			}
+			else {
+				createAddFlexoConceptInstance = CreateEditionAction.actionType.makeNewAction(linkScheme.getControlGraph(), null, editor);
+			}
+			createAddFlexoConceptInstance.setModelSlot(getSampleDataModelSlot());
+			createAddFlexoConceptInstance.setEditionActionClass(AddFlexoConceptInstance.class);
+			createAddFlexoConceptInstance.setAssignation(new DataBinding<>(CONCEPT_ROLE_NAME));
+			createAddFlexoConceptInstance.doAction();
+			AddFlexoConceptInstance<?> addFCI = (AddFlexoConceptInstance<?>) createAddFlexoConceptInstance.getBaseEditionAction();
+			addFCI.setCreationScheme(concept.getCreationSchemes().get(0));
+			AddFlexoConceptInstanceParameter addFCISourceConceptParam = addFCI.getParameter(FMEConceptualModel.FROM_CONCEPT_ROLE_NAME);
+			addFCISourceConceptParam.setValue(new DataBinding<>(LinkScheme.FROM_TARGET_KEY + "." + FMEFreeModel.CONCEPT_ROLE_NAME));
+			AddFlexoConceptInstanceParameter addFCIDestinationConceptParam = addFCI.getParameter(FMEConceptualModel.TO_CONCEPT_ROLE_NAME);
+			addFCIDestinationConceptParam.setValue(new DataBinding<>(LinkScheme.TO_TARGET_KEY + "." + FMEFreeModel.CONCEPT_ROLE_NAME));
+			addFCI.setReceiver(new DataBinding<>(SAMPLE_DATA_MODEL_SLOT_NAME));
+
+			CreateEditionAction createAddConnector = null;
+			if (ownerAction != null) {
+				createAddConnector = CreateEditionAction.actionType.makeNewEmbeddedAction(linkScheme.getControlGraph(), null, ownerAction);
+			}
+			else {
+				createAddConnector = CreateEditionAction.actionType.makeNewAction(linkScheme.getControlGraph(), null, editor);
+			}
+			// createAddShape.actionChoice = CreateEditionActionChoice.ModelSlotSpecificAction;
+			createAddConnector.setModelSlot(getTypedDiagramModelSlot());
+			createAddConnector.setEditionActionClass(AddConnector.class);
+			createAddConnector.setAssignation(new DataBinding<>(CONNECTOR_ROLE_NAME));
+			createAddConnector.doAction();
+
+			AddConnector addConnector = (AddConnector) createAddConnector.getBaseEditionAction();
+
+			addConnector.setFromShape(new DataBinding<>(LinkScheme.FROM_TARGET_KEY + "." + FMEDiagramFreeModel.SHAPE_ROLE_NAME));
+			addConnector.setToShape(new DataBinding<>(LinkScheme.TO_TARGET_KEY + "." + FMEDiagramFreeModel.SHAPE_ROLE_NAME));
+
+			DeletionScheme deletionScheme = returned.getDefaultDeletionScheme();
+
+			CreateEditionAction createDeleteConnector = null;
+			if (ownerAction != null) {
+				createDeleteConnector = CreateEditionAction.actionType.makeNewEmbeddedAction(deletionScheme.getControlGraph(), null,
+						ownerAction);
+			}
+			else {
+				createDeleteConnector = CreateEditionAction.actionType.makeNewAction(deletionScheme.getControlGraph(), null, editor);
+			}
+			createDeleteConnector.setEditionActionClass(DeleteAction.class);
+			createDeleteConnector.doAction();
+
+			DeleteAction<?> deleteConnector = (DeleteAction<?>) createDeleteConnector.getNewEditionAction();
+			deleteConnector.setObject(new DataBinding<>(CONNECTOR_ROLE_NAME));
 
 		}
 

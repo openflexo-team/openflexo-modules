@@ -52,6 +52,7 @@ import org.openflexo.foundation.fml.FlexoConceptInstanceRole;
 import org.openflexo.foundation.fml.FlexoProperty;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.fml.rt.VirtualModelInstance.ObjectLookupResult;
+import org.openflexo.technologyadapter.diagram.model.DiagramConnector;
 import org.openflexo.technologyadapter.diagram.model.DiagramElement;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 
@@ -79,20 +80,19 @@ public class CreateNewConceptFromDiagramElement extends AbstractInstantiateConce
 
 		@Override
 		public boolean isVisibleForSelection(DiagramElement<?> object, Vector<FlexoObject> globalSelection) {
-			// TODO: handle other kind of elements
-			return object instanceof DiagramShape;
+			return object instanceof DiagramShape || object instanceof DiagramConnector;
 		}
 
 		@Override
 		public boolean isEnabledForSelection(DiagramElement<?> object, Vector<FlexoObject> globalSelection) {
-			// TODO: handle other kind of elements
-			return object instanceof DiagramShape;
+			return object instanceof DiagramShape || object instanceof DiagramConnector;
 		}
 
 	};
 
 	static {
 		FlexoObjectImpl.addActionForClass(CreateNewConceptFromDiagramElement.actionType, DiagramShape.class);
+		FlexoObjectImpl.addActionForClass(CreateNewConceptFromDiagramElement.actionType, DiagramConnector.class);
 	}
 
 	private CreateNewConceptFromDiagramElement(DiagramElement<?> focusedObject, Vector<FlexoObject> globalSelection, FlexoEditor editor) {
@@ -107,10 +107,9 @@ public class CreateNewConceptFromDiagramElement extends AbstractInstantiateConce
 
 		// Unused FlexoConcept containerConcept = null;
 		if (getFocusedObject().getParent() != null) {
-			System.out.println("Attention, y'a un parent");
 			ObjectLookupResult lookup = getFreeModelInstance().getAccessedVirtualModelInstance().lookup(getFocusedObject().getParent());
 			if (lookup != null) {
-				System.out.println("lookup: " + lookup.flexoConceptInstance + " pty=" + lookup.property);
+				// System.out.println("lookup: " + lookup.flexoConceptInstance + " pty=" + lookup.property);
 				FlexoConcept containerConceptGR = lookup.flexoConceptInstance.getFlexoConcept();
 				FlexoProperty<?> p = containerConceptGR.getAccessibleProperty(FMEFreeModel.CONCEPT_ROLE_NAME);
 				if (p instanceof FlexoConceptInstanceRole) {
@@ -122,13 +121,36 @@ public class CreateNewConceptFromDiagramElement extends AbstractInstantiateConce
 
 		logger.info("Create new instance of created concept from diagram element ");
 		getNoneFlexoConcept();
-		flexoConceptInstance = createFlexoConceptInstanceFromDiagramShape(getFocusedObject());
 
-		logger.info("Create new concept from diagram element ");
-		CreateNewConceptFromNoneConcept actionCreateNewConcept = CreateNewConceptFromNoneConcept.actionType
-				.makeNewEmbeddedAction(flexoConceptInstance, null, this);
-		actionCreateNewConcept.doAction();
-		flexoConcept = actionCreateNewConcept.getNewFlexoConcept();
+		if (getFocusedObject() instanceof DiagramShape) {
+			logger.info("Create new concept from shape element ");
+			flexoConceptInstance = createFlexoConceptInstanceFromDiagramShape((DiagramShape) getFocusedObject());
+			CreateNewConceptFromNoneConcept actionCreateNewConcept = CreateNewConceptFromNoneConcept.actionType
+					.makeNewEmbeddedAction(flexoConceptInstance, null, this);
+			actionCreateNewConcept.doAction();
+			flexoConcept = actionCreateNewConcept.getNewFlexoConcept();
+		}
+		else if (getFocusedObject() instanceof DiagramConnector) {
+			logger.info("Create new concept from connector element ");
+
+			CreateNewConceptFromDiagramConnector actionCreateNewConcept = CreateNewConceptFromDiagramConnector.actionType
+					.makeNewEmbeddedAction((DiagramConnector) getFocusedObject(), null, this);
+			actionCreateNewConcept.doAction();
+
+			if (!actionCreateNewConcept.hasActionExecutionSucceeded()) {
+				return;
+			}
+
+			flexoConceptInstance = actionCreateNewConcept.getNewFlexoConceptInstance();
+
+			if (flexoConceptInstance == null) {
+				return;
+			}
+
+			flexoConcept = flexoConceptInstance.getFlexoConcept();
+
+		}
+
 	}
 
 	public FlexoConcept getFlexoConcept() {

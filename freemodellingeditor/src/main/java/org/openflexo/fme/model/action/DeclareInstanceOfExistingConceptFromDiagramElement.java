@@ -61,6 +61,7 @@ import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
 import org.openflexo.technologyadapter.diagram.fml.FMLDiagramPaletteElementBinding;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramPaletteElement;
+import org.openflexo.technologyadapter.diagram.model.DiagramConnector;
 import org.openflexo.technologyadapter.diagram.model.DiagramElement;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 
@@ -106,6 +107,7 @@ public class DeclareInstanceOfExistingConceptFromDiagramElement
 
 	static {
 		FlexoObjectImpl.addActionForClass(DeclareInstanceOfExistingConceptFromDiagramElement.actionType, DiagramShape.class);
+		FlexoObjectImpl.addActionForClass(DeclareInstanceOfExistingConceptFromDiagramElement.actionType, DiagramConnector.class);
 	}
 
 	private FlexoConceptInstance flexoConceptInstance;
@@ -198,9 +200,13 @@ public class DeclareInstanceOfExistingConceptFromDiagramElement
 
 		logger.info("Create new instance of existing concept from diagram element ");
 		getNoneFlexoConcept();
-		flexoConceptInstance = createFlexoConceptInstanceFromDiagramShape(getFocusedObject());
-
-		declareInstanceOfExistingConcept();
+		if (getFocusedObject() instanceof DiagramShape) {
+			flexoConceptInstance = createFlexoConceptInstanceFromDiagramShape((DiagramShape) getFocusedObject());
+			declareInstanceOfExistingConcept();
+		}
+		else {
+			System.out.println("Not implemented for " + getFocusedObject());
+		}
 
 	}
 

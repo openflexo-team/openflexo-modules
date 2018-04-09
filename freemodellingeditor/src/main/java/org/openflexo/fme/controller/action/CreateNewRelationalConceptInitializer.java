@@ -40,61 +40,45 @@ package org.openflexo.fme.controller.action;
 
 import java.util.logging.Logger;
 
-import org.openflexo.fme.controller.FMEController;
-import org.openflexo.selection.SelectionManager;
+import org.openflexo.components.wizard.Wizard;
+import org.openflexo.components.wizard.WizardDialog;
+import org.openflexo.fme.model.FMEFreeModel;
+import org.openflexo.fme.model.action.CreateNewRelationalConcept;
+import org.openflexo.foundation.FlexoObject;
+import org.openflexo.foundation.action.FlexoActionRunnable;
+import org.openflexo.gina.controller.FIBController.Status;
+import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 
-/**
- * 
- * Action initializing for this module
- * 
- * @author yourname
- */
-public class FMEControllerActionInitializer extends ControllerActionInitializer {
+public class CreateNewRelationalConceptInitializer extends ActionInitializer<CreateNewRelationalConcept, FMEFreeModel, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
-	public FMEControllerActionInitializer(FMEController controller) {
-		super(controller);
-	}
-
-	protected FMEController getFMEController() {
-		return (FMEController) getController();
-	}
-
-	protected SelectionManager getFMESelectionManager() {
-		return getFMEController().getSelectionManager();
+	public CreateNewRelationalConceptInitializer(ControllerActionInitializer actionInitializer) {
+		super(CreateNewRelationalConcept.actionType, actionInitializer);
 	}
 
 	@Override
-	public void initializeActions() {
-		super.initializeActions();
-
-		new GivesFMENatureInitializer(this);
-
-		new CreateFMEDiagramFreeModelInitializer(this);
-		new InstantiateFMEDiagramFreeModelInitializer(this);
-		// new CreateFreeModelFromPPTInitializer(this);
-		new DropFreeShapeInitializer(this);
-		new CreateNewConceptInitializer(this);
-		new CreateNewRelationalConceptInitializer(this);
-		new CreateNewConceptFromNoneInitializer(this);
-		new DeclareInstanceOfExistingConceptInitializer(this);
-		// new CreateFreeModelDiagramInitializer(this);
-		// new CreateFreeModelDiagramFromPPTInitializer(this);
-
-		// Actions applied on Diagram Elements(not currently associated with flexo concept)
-		new CreateNewConceptFromDiagramElementInitializer(this);
-		new DeclareInstanceOfExistingConceptFromDiagramElementInitializer(this);
-		new CreateNewFMEPropertyFromDiagramConnectorInitializer(this);
-
-		new DeleteFreeModelInitializer(this);
-		new DeleteFreeModelInstanceInitializer(this);
-
-		new DeleteFlexoConceptObjectsInitializer(this);
-
-		new CreateNewFMEPropertyInitializer(this);
-		new InstantiateNewFMEPropertyInitializer(this);
+	protected FlexoActionRunnable<CreateNewRelationalConcept, FMEFreeModel, FlexoObject> getDefaultInitializer() {
+		return (e, action) -> {
+			logger.info("CreateNewRelationalConcept initializer");
+			Wizard wizard = new CreateNewRelationalConceptWizard(action, getController());
+			WizardDialog dialog = new WizardDialog(wizard, getController());
+			dialog.showDialog();
+			if (dialog.getStatus() != Status.VALIDATED) {
+				// Operation cancelled
+				return false;
+			}
+			return true;
+		};
 	}
 
+	@Override
+	protected FlexoActionRunnable<CreateNewRelationalConcept, FMEFreeModel, FlexoObject> getDefaultFinalizer() {
+		return (e, action) -> {
+			logger.info("CreateNewConcept finalizer");
+			getController().selectAndFocusObject(action.getFocusedObject());
+			return true;
+		};
+	}
 }
