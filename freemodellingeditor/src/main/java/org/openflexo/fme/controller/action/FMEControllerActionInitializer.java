@@ -75,6 +75,9 @@ public class FMEControllerActionInitializer extends ControllerActionInitializer 
 		new CreateFMEDiagramFreeModelInitializer(this);
 		new InstantiateFMEDiagramFreeModelInitializer(this);
 		// new CreateFreeModelFromPPTInitializer(this);
+
+		new CreateFMEPPTFreeModelInitializer(this);
+
 		new DropFreeShapeInitializer(this);
 		new CreateNewConceptInitializer(this);
 		new CreateNewRelationalConceptInitializer(this);
