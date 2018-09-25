@@ -30,8 +30,9 @@
   </scm>
 	<modules>
 		<module>openflexo-modeller</module>
-		<module>freemodellingeditor</module>
-		<module>openflexo-module-archetype</module>
+		<module>free-modelling-editor</module>
+		<module>enterprise-architecture-module</module>
+		<!--  <module>openflexo-module-archetype</module> -->
 	</modules>
 	<dependencyManagement>
 		<dependencies>
