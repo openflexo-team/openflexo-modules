@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<parent>
 		<groupId>org.openflexo</groupId>
 		<artifactId>openflexo-component</artifactId>
-        <version>0.4</version>
+		<version>0.4</version>
 	</parent>
-		<version>1.9.0-SNAPSHOT</version>
+	<version>1.9.0-SNAPSHOT</version>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>openflexo-modules</artifactId>
 	<name>Openflexo-Modules</name>
@@ -21,24 +22,29 @@
 		<flexodocresourcemanager.version>1.8.0</flexodocresourcemanager.version>
 		<flexocore.version>1.8.0</flexocore.version>
 		<modules.logo>https://media.openflexo.org/images/modules_logo64x64.png</modules.logo>
-	    <sitedeploy.dir>/home/www/sites/openflexo-modules</sitedeploy.dir>
+		<sitedeploy.dir>/home/www/sites/openflexo-modules</sitedeploy.dir>
 	</properties>
 	<scm>
 		<connection>scm:git:ssh://git@github.com/openflexo-team/openflexo-modules.git</connection>
 		<url>https://github.com/openflexo-team/openflexo-core</url>
-	  <tag>1.9.0</tag>
-  </scm>
+		<tag>1.9.0</tag>
+	</scm>
 	<modules>
 		<module>openflexo-modeller</module>
 		<module>freemodellingeditor</module>
 		<module>enterprise-architecture-module</module>
-		<!--  <module>openflexo-module-archetype</module> -->
+		<!-- <module>openflexo-module-archetype</module> -->
 	</modules>
 	<dependencyManagement>
 		<dependencies>
 
 			<dependency>
 				<groupId>org.openflexo</groupId>
+				<artifactId>testutils</artifactId>
+				<version>${flexocore.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.openflexo</groupId>
 				<artifactId>flexo-foundation</artifactId>
 				<version>${flexocore.version}</version>
 			</dependency>
@@ -48,7 +54,7 @@
 				<version>${flexocore.version}</version>
 				<classifier>tests</classifier>
 			</dependency>
-		
+
 			<dependency>
 				<groupId>org.openflexo</groupId>
 				<artifactId>flexo-ui</artifactId>
@@ -60,7 +66,7 @@
 				<version>${flexocore.version}</version>
 				<classifier>tests</classifier>
 			</dependency>
-		
+
 			<dependency>
 				<groupId>org.openflexo</groupId>
 				<artifactId>fml-technologyadapter-ui</artifactId>
@@ -79,7 +85,7 @@
 				<classifier>resources</classifier>
 				<type>zip</type>
 			</dependency>
-		
+
 			<dependency>
 				<groupId>org.openflexo</groupId>
 				<artifactId>fml-rt-technologyadapter-ui</artifactId>
@@ -98,7 +104,7 @@
 				<classifier>resources</classifier>
 				<type>zip</type>
 			</dependency>
-		
+
 			<dependency>
 				<groupId>org.openflexo</groupId>
 				<artifactId>flexoutils</artifactId>
@@ -110,12 +116,12 @@
 				<version>${connie.version}</version>
 				<classifier>tests</classifier>
 			</dependency>
-		   <dependency>
+			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>4.10</version>
 			</dependency>
-		  <dependency>
+			<dependency>
 				<groupId>org.openflexo</groupId>
 				<artifactId>gina-core</artifactId>
 				<version>${gina.version}</version>
@@ -135,7 +141,7 @@
 				<artifactId>gina-swing-editor</artifactId>
 				<version>${gina.version}</version>
 				<classifier>tests</classifier>
-			</dependency>		
+			</dependency>
 			<dependency>
 				<groupId>org.openflexo</groupId>
 				<artifactId>diana-geom</artifactId>
@@ -179,9 +185,9 @@
 				<artifactId>diana-drawing-editor</artifactId>
 				<version>${diana.version}</version>
 			</dependency>
-			
+
 			<!-- Openflexo utils -->
-			
+
 			<dependency>
 				<groupId>org.openflexo</groupId>
 				<artifactId>jiraclient</artifactId>
@@ -202,9 +208,9 @@
 				<artifactId>flexodocresourcemanager</artifactId>
 				<version>${flexodocresourcemanager.version}</version>
 			</dependency>
-	
+
 		</dependencies>
-  	</dependencyManagement>
+	</dependencyManagement>
 	<build>
 		<resources>
 			<resource>
@@ -233,12 +239,12 @@
 					<artifactId>maven-jar-plugin</artifactId>
 					<executions>
 						<execution>
-						    <id>default-jar</id>
+							<id>default-jar</id>
 							<goals>
 								<goal>jar</goal>
 							</goals>
 							<configuration>
-							     <skipIfEmpty>true</skipIfEmpty>
+								<skipIfEmpty>true</skipIfEmpty>
 							</configuration>
 						</execution>
 						<execution>
@@ -246,7 +252,7 @@
 								<goal>test-jar</goal>
 							</goals>
 							<configuration>
-							     <skipIfEmpty>true</skipIfEmpty>
+								<skipIfEmpty>true</skipIfEmpty>
 							</configuration>
 						</execution>
 					</executions>
@@ -254,62 +260,55 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-	
-	  <!-- ************
-   Specific profiles used to differentiate between snapshot release and release-candidates and official-releases
-   -->
-    <profiles>
-        <profile>
-            <id>snapshot-profile</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <!-- ************
-   		Places where to upload files for component Maven site
-   		-->
-            <distributionManagement>
-                <site>
-                    <id>openflexo-modules.website</id>
-                    <url>scp://server-one.openflexo.org${sitedeploy.dir}/SNAPSHOT/</url>
-                </site>
-            </distributionManagement>
-        </profile>
-        <profile>
-            <id>RC-profile</id>
-            <activation>
-                <property>
-                    <name>performRC</name>
-                </property>
-            </activation>
-            <!-- ************
-   		Places where to upload files for component Maven site
-		   -->
-            <distributionManagement>
-                <site>
-                    <id>openflexo-modules.website</id>
-                    <url>scp://server-one.openflexo.org${sitedeploy.dir}/SNAPSHOT/</url>
-                </site>
-            </distributionManagement>
-        </profile>
-        <profile>
-            <id>release-profile</id>
-            <activation>
-                <property>
-                    <name>performRelease</name>
-                </property>
-            </activation>
-            <!-- ************
-   		Places where to upload files for component Maven site
-		   -->
-            <distributionManagement>
-                <site>
-                    <id>openflexo-modules.website</id>
-                    <url>scp://server-one.openflexo.org${sitedeploy.dir}/${project.version}/</url>
-                </site>
-            </distributionManagement>
-        </profile>
-    </profiles>
-	
-	
+
+	<!-- ************ Specific profiles used to differentiate between snapshot 
+		release and release-candidates and official-releases -->
+	<profiles>
+		<profile>
+			<id>snapshot-profile</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<!-- ************ Places where to upload files for component Maven site -->
+			<distributionManagement>
+				<site>
+					<id>openflexo-modules.website</id>
+					<url>scp://server-one.openflexo.org${sitedeploy.dir}/SNAPSHOT/</url>
+				</site>
+			</distributionManagement>
+		</profile>
+		<profile>
+			<id>RC-profile</id>
+			<activation>
+				<property>
+					<name>performRC</name>
+				</property>
+			</activation>
+			<!-- ************ Places where to upload files for component Maven site -->
+			<distributionManagement>
+				<site>
+					<id>openflexo-modules.website</id>
+					<url>scp://server-one.openflexo.org${sitedeploy.dir}/SNAPSHOT/</url>
+				</site>
+			</distributionManagement>
+		</profile>
+		<profile>
+			<id>release-profile</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+				</property>
+			</activation>
+			<!-- ************ Places where to upload files for component Maven site -->
+			<distributionManagement>
+				<site>
+					<id>openflexo-modules.website</id>
+					<url>scp://server-one.openflexo.org${sitedeploy.dir}/${project.version}/</url>
+				</site>
+			</distributionManagement>
+		</profile>
+	</profiles>
+
+
 </project>
 
