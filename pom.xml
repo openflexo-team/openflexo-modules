@@ -30,7 +30,7 @@
   </scm>
 	<modules>
 		<module>openflexo-modeller</module>
-		<module>free-modelling-editor</module>
+		<module>freemodellingeditor</module>
 		<module>enterprise-architecture-module</module>
 		<!--  <module>openflexo-module-archetype</module> -->
 	</modules>
