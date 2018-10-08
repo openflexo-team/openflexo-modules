@@ -60,7 +60,7 @@ import org.openflexo.gina.swing.utils.JFIBDialog;
 import org.openflexo.gina.swing.view.SwingViewFactory;
 import org.openflexo.technologyadapter.diagram.controller.DiagramCst;
 import org.openflexo.technologyadapter.diagram.controller.action.FMLControlledDiagramPasteHandler;
-import org.openflexo.technologyadapter.diagram.controller.diagrameditor.AbstractDiagramPalette;
+import org.openflexo.technologyadapter.diagram.controller.diagrameditor.DiagramEditorPaletteModel;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.ContextualPalette;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.FMLControlledDiagramEditor;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramPalette;
@@ -131,7 +131,7 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 	}
 
 	@Override
-	public AbstractDiagramPalette makeCommonPalette() {
+	public DiagramEditorPaletteModel makeCommonPalette() {
 		return new FreeShapesPalette(this);
 	}
 
