@@ -224,7 +224,7 @@ public class CreateFMEPPTFreeModel extends CreateFMEFreeModel<CreateFMEPPTFreeMo
 
 		// Save
 		try {
-			newVirtualModel.getResource().save(null);
+			newVirtualModel.getResource().save();
 		} catch (SaveResourceException e1) {
 			e1.printStackTrace();
 		}

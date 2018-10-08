@@ -38,7 +38,6 @@
 
 package org.openflexo.fme.controller.action;
 
-import java.util.EventObject;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
@@ -50,8 +49,7 @@ import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.fme.model.action.CreateFMEPPTFreeModel;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFactory;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.icon.IconFactory;
 import org.openflexo.technologyadapter.powerpoint.gui.PowerpointIconLibrary;
@@ -72,30 +70,24 @@ public class CreateFMEPPTFreeModelInitializer extends ActionInitializer<CreateFM
 	}
 
 	@Override
-	protected FlexoActionInitializer<CreateFMEPPTFreeModel> getDefaultInitializer() {
-		return new FlexoActionInitializer<CreateFMEPPTFreeModel>() {
-			@Override
-			public boolean run(EventObject e, CreateFMEPPTFreeModel action) {
-				Wizard wizard = new CreateFMEPPTFreeModelWizard(action, getController());
-				WizardDialog dialog = new WizardDialog(wizard, getController());
-				dialog.showDialog();
-				if (dialog.getStatus() != Status.VALIDATED) {
-					// Operation cancelled
-					return false;
-				}
-				return true;
+	protected FlexoActionRunnable<CreateFMEPPTFreeModel, FreeModellingProjectNature, FlexoObject> getDefaultInitializer() {
+		return (e, action) -> {
+			Wizard wizard = new CreateFMEPPTFreeModelWizard(action, getController());
+			WizardDialog dialog = new WizardDialog(wizard, getController());
+			dialog.showDialog();
+			if (dialog.getStatus() != Status.VALIDATED) {
+				// Operation cancelled
+				return false;
 			}
+			return true;
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<CreateFMEPPTFreeModel> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<CreateFMEPPTFreeModel>() {
-			@Override
-			public boolean run(EventObject e, CreateFMEPPTFreeModel action) {
-				getController().selectAndFocusObject(action.getNewFreeModel());
-				return true;
-			}
+	protected FlexoActionRunnable<CreateFMEPPTFreeModel, FreeModellingProjectNature, FlexoObject> getDefaultFinalizer() {
+		return (e, action) -> {
+			getController().selectAndFocusObject(action.getNewFreeModel());
+			return true;
 		};
 	}
 

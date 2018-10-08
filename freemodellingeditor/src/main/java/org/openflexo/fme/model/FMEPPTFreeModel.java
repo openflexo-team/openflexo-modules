@@ -43,9 +43,9 @@ import java.io.FileNotFoundException;
 import java.util.logging.Logger;
 
 import org.openflexo.connie.DataBinding;
-import org.openflexo.fge.ShapeGraphicalRepresentation;
-import org.openflexo.fge.shapes.Rectangle;
-import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
+import org.openflexo.diana.ShapeGraphicalRepresentation;
+import org.openflexo.diana.shapes.Rectangle;
+import org.openflexo.diana.shapes.ShapeSpecification.ShapeType;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.action.FlexoAction;
@@ -133,7 +133,7 @@ public interface FMEPPTFreeModel extends FMEFreeModel {
 		@Override
 		public DiagramSpecification getDiagramSpecification() {
 			try {
-				return getTypedDiagramModelSlot().getMetaModelResource().getResourceData(null);
+				return getTypedDiagramModelSlot().getMetaModelResource().getResourceData();
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
