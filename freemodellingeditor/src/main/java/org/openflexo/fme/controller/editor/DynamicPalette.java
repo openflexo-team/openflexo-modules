@@ -49,11 +49,12 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.openflexo.diana.BackgroundImageBackgroundStyle;
-import org.openflexo.diana.GRProperty;
-import org.openflexo.diana.GraphicalRepresentation;
-import org.openflexo.diana.ShapeGraphicalRepresentation;
 import org.openflexo.diana.Drawing.ContainerNode;
 import org.openflexo.diana.Drawing.DrawingTreeNode;
+import org.openflexo.diana.GRProperty;
+import org.openflexo.diana.GraphicalRepresentation;
+import org.openflexo.diana.PaletteElementSpecification;
+import org.openflexo.diana.ShapeGraphicalRepresentation;
 import org.openflexo.diana.control.PaletteElement;
 import org.openflexo.diana.geom.DianaPoint;
 import org.openflexo.diana.shapes.ShapeSpecification.ShapeType;
@@ -63,13 +64,13 @@ import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.logging.FlexoLogger;
 import org.openflexo.model.factory.AccessibleProxyObject;
 import org.openflexo.model.factory.ProxyMethodHandler;
-import org.openflexo.technologyadapter.diagram.controller.diagrameditor.AbstractDiagramPalette;
+import org.openflexo.technologyadapter.diagram.controller.diagrameditor.DiagramEditorPaletteModel;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.FMLControlledDiagramShape;
 import org.openflexo.technologyadapter.diagram.model.DiagramContainerElement;
 import org.openflexo.technologyadapter.diagram.model.DiagramElement;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 
-public class DynamicPalette extends AbstractDiagramPalette implements PropertyChangeListener {
+public class DynamicPalette extends DiagramEditorPaletteModel implements PropertyChangeListener {
 
 	private static final Logger logger = FlexoLogger.getLogger(DynamicPalette.class.getPackage().getName());
 
@@ -86,7 +87,8 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 	// private final Hashtable<ConceptGRAssociation, PaletteElement> elementsForAssociations;
 
 	public DynamicPalette(FreeModelDiagramEditor editor) {
-		super(editor, 200, 200, "dynamic_palette");
+		super(editor, "dynamic_palette", 200, 200, 40, 30, 10, 10);
+		// super(editor, 200, 200, "dynamic_palette");
 		getEditor().getDiagram().getPropertyChangeSupport().addPropertyChangeListener(this);
 		// elementsForAssociations = new Hashtable<ConceptGRAssociation, PaletteElement>();
 		update();
@@ -226,6 +228,17 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 		element.delete();
 	};
 
+	/*private PaletteElement makePaletteElement(final ShapeGraphicalRepresentation prototypeGR, List<DiagramElement<?>> diagramElements) {
+	
+		final ShapeGraphicalRepresentation gr = (ShapeGraphicalRepresentation) prototypeGR.cloneObject();
+		return new DynamicPaletteElement(gr, diagramElements);
+	}*/
+
+	@Override
+	protected DynamicPaletteElement makePaletteElement(PaletteElementSpecification paletteElement) {
+		return (DynamicPaletteElement) super.makePaletteElement(paletteElement);
+	}
+
 	private boolean isUpdating = false;
 
 	public void update() {
@@ -248,10 +261,10 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 			for (GraphicalRepresentation key : diagramGRs.keySet()) {
 				// We iterate here on each different Shape GR
 				if (key instanceof ShapeGraphicalRepresentation) {
-					PaletteElement existingElement = null;
+					DynamicPaletteElement existingElement = null;
 					for (PaletteElement e : getElements()) {
 						if (GraphicalRepresentationSet.equals(e.getGraphicalRepresentation(), key)) {
-							existingElement = e;
+							existingElement = (DynamicPaletteElement) e;
 							break;
 						}
 					}
@@ -260,11 +273,17 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 						elementsToRemove.remove(existingElement);
 						// System.out.println("Found existing " + existingElement);
 						if (existingElement instanceof DynamicPaletteElement) {
-							((DynamicPaletteElement) existingElement).updateDiagramElements(diagramGRs.get(key));
+							existingElement.updateDiagramElements(diagramGRs.get(key));
 						}
 					}
 					else {
-						existingElement = makePaletteElement((ShapeGraphicalRepresentation) key, diagramGRs.get(key));
+
+						PaletteElementSpecification newSpec = getEditor().getFactory().newInstance(PaletteElementSpecification.class);
+						newSpec.setGraphicalRepresentation(
+								(ShapeGraphicalRepresentation) ((ShapeGraphicalRepresentation) key).cloneObject());
+						existingElement = makePaletteElement(newSpec);
+						existingElement.setDiagramElements(diagramGRs.get(key));
+						// existingElement = makePaletteElement((ShapeGraphicalRepresentation) key, diagramGRs.get(key));
 						elementsToAdd.add(existingElement);
 					}
 				}
@@ -321,10 +340,9 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 		}
 	}
 
-	private PaletteElement makePaletteElement(final ShapeGraphicalRepresentation prototypeGR, List<DiagramElement<?>> diagramElements) {
-
-		final ShapeGraphicalRepresentation gr = (ShapeGraphicalRepresentation) prototypeGR.cloneObject();
-		return new DynamicPaletteElement(gr, diagramElements);
+	@Override
+	protected PaletteElement buildPaletteElement(PaletteElementSpecification paletteElement) {
+		return new DynamicPaletteElement(paletteElement.getGraphicalRepresentation());
 	}
 
 	private boolean handleDrop(DrawingTreeNode<?, ?> target, DynamicPaletteElement paletteElement, DianaPoint dropLocation) {
@@ -370,20 +388,24 @@ public class DynamicPalette extends AbstractDiagramPalette implements PropertyCh
 		private final ShapeGraphicalRepresentation gr;
 		private final Dimension initialDimensions;
 
-		public DynamicPaletteElement(ShapeGraphicalRepresentation gr, List<DiagramElement<?>> diagramElements) {
+		public DynamicPaletteElement(ShapeGraphicalRepresentation gr) {
 			this.gr = gr;
-			this.diagramElements = new ArrayList<>(diagramElements);
-			for (DiagramElement<?> el : diagramElements) {
-				if (el.getGraphicalRepresentation() != null && el.getGraphicalRepresentation().getPropertyChangeSupport() != null) {
-					el.getGraphicalRepresentation().getPropertyChangeSupport().addPropertyChangeListener(this);
-				}
-			}
+			this.diagramElements = new ArrayList<>();
 			// If this is an image, fit the shape for a better rendering
 			if (gr.getBackground() instanceof BackgroundImageBackgroundStyle) {
 				((BackgroundImageBackgroundStyle) gr.getBackground()).setFitToShape(true);
 			}
 			// Store initial gr dimensions
 			initialDimensions = new Dimension((int) gr.getWidth(), (int) gr.getHeight());
+		}
+
+		public void setDiagramElements(List<DiagramElement<?>> diagramElements) {
+			this.diagramElements.addAll(diagramElements);
+			for (DiagramElement<?> el : diagramElements) {
+				if (el.getGraphicalRepresentation() != null && el.getGraphicalRepresentation().getPropertyChangeSupport() != null) {
+					el.getGraphicalRepresentation().getPropertyChangeSupport().addPropertyChangeListener(this);
+				}
+			}
 		}
 
 		@Override
