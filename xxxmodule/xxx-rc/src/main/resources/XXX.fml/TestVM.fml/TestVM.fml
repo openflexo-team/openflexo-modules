@@ -1,0 +1,15 @@
+
+/**
+ * 
+ * @author sylvain
+ * @version 0.1
+ */
+@VirtualModel(uri="http://openflexo.org/xxxmodule/XXX.fml/TestVM.fml")
+public class TestVM {
+
+  @CreationScheme  
+  TestVM:create() {  
+  
+  }  
+
+}

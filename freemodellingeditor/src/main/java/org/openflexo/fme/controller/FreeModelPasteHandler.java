@@ -41,10 +41,10 @@ package org.openflexo.fme.controller;
 import java.util.logging.Logger;
 
 import org.openflexo.fme.controller.editor.FreeModelDiagramEditor;
-import org.openflexo.fme.model.FreeModel;
+import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.model.FreeModellingProjectNature;
-import org.openflexo.foundation.action.FlexoClipboard;
-import org.openflexo.foundation.action.PasteAction.PastingContext;
+import org.openflexo.foundation.action.copypaste.FlexoClipboard;
+import org.openflexo.foundation.action.copypaste.PastingContext;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.fml.rt.VirtualModelInstance;
 import org.openflexo.model.factory.Clipboard;
@@ -63,23 +63,23 @@ public class FreeModelPasteHandler extends FMLControlledDiagramPasteHandler {
 
 	public static final String COPY_SUFFIX = "-copy";
 
-	private final FreeModel freeModel;
+	private final FMEFreeModelInstance freeModelInstance;
 
-	public FreeModelPasteHandler(FreeModel freeModel, FreeModelDiagramEditor editor) {
-		super(freeModel.getVirtualModelInstance(), editor);
-		this.freeModel = freeModel;
+	public FreeModelPasteHandler(FMEFreeModelInstance freeModelInstance, FreeModelDiagramEditor editor) {
+		super(freeModelInstance.getAccessedVirtualModelInstance(), editor);
+		this.freeModelInstance = freeModelInstance;
 	}
 
-	public FreeModel getFreeModel() {
-		return freeModel;
+	public FMEFreeModelInstance getFreeModelInstance() {
+		return freeModelInstance;
 	}
 
 	public FreeModellingProjectNature getProjectNature() {
-		return freeModel.getProjectNature();
+		return freeModelInstance.getNature();
 	}
 
 	@Override
-	public void prepareClipboardForPasting(FlexoClipboard clipboard, PastingContext<VirtualModelInstance> pastingContext) {
+	public void prepareClipboardForPasting(FlexoClipboard clipboard, PastingContext<VirtualModelInstance<?, ?>> pastingContext) {
 
 		super.prepareClipboardForPasting(clipboard, pastingContext);
 
@@ -90,7 +90,8 @@ public class FreeModelPasteHandler extends FMLControlledDiagramPasteHandler {
 			if (leaderClipboard.getSingleContents() instanceof FlexoConceptInstance) {
 				translateName((FlexoConceptInstance) leaderClipboard.getSingleContents());
 			}
-		} else {
+		}
+		else {
 			for (Object o : leaderClipboard.getMultipleContents()) {
 				if (o instanceof FlexoConceptInstance) {
 					translateName((FlexoConceptInstance) o);
@@ -111,7 +112,8 @@ public class FreeModelPasteHandler extends FMLControlledDiagramPasteHandler {
 		String newName;
 		if (oldName.endsWith(COPY_SUFFIX)) {
 			newName = oldName + "2";
-		} else if (oldName.contains(COPY_SUFFIX)) {
+		}
+		else if (oldName.contains(COPY_SUFFIX)) {
 			try {
 				int currentIndex = Integer.parseInt(oldName.substring(oldName.lastIndexOf(COPY_SUFFIX) + COPY_SUFFIX.length()));
 				newName = oldName.substring(0, oldName.lastIndexOf(COPY_SUFFIX)) + COPY_SUFFIX + (currentIndex + 1);
@@ -119,7 +121,8 @@ public class FreeModelPasteHandler extends FMLControlledDiagramPasteHandler {
 				logger.warning("Could not parse as int " + oldName.substring(oldName.lastIndexOf(COPY_SUFFIX)));
 				newName = oldName + COPY_SUFFIX;
 			}
-		} else {
+		}
+		else {
 			newName = oldName + COPY_SUFFIX;
 		}
 		System.out.println("translating name from " + oldName + " to " + newName);

@@ -39,7 +39,7 @@
 package org.openflexo.fme.fib;
 
 import org.junit.Test;
-import org.openflexo.fib.utils.GenericFIBInspectorTestCase;
+import org.openflexo.gina.test.GenericFIBInspectorTestCase;
 import org.openflexo.rm.FileResourceImpl;
 import org.openflexo.rm.ResourceLocator;
 
@@ -57,7 +57,7 @@ public class TestFMEInspectors extends GenericFIBInspectorTestCase {
 
 	@Test
 	public void testFreeModelInspector() {
-		validateFIB("Inspectors/FME/FreeModel.inspector");
+		validateFIB("Inspectors/FME/FMEFreeModel.inspector");
 	}
 
 }

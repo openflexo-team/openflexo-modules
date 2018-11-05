@@ -70,23 +70,34 @@ public class FMEControllerActionInitializer extends ControllerActionInitializer 
 	public void initializeActions() {
 		super.initializeActions();
 
-		new ConvertToFreeModellingEditorProjectInitializer(this);
+		new GivesFMENatureInitializer(this);
 
-		new CreateFreeModelInitializer(this);
-		new CreateFreeModelFromPPTInitializer(this);
-		new RemoveFreeModelInitializer(this);
+		new CreateFMEDiagramFreeModelInitializer(this);
+		new InstantiateFMEDiagramFreeModelInitializer(this);
+		// new CreateFreeModelFromPPTInitializer(this);
+
+		new CreateFMEPPTFreeModelInitializer(this);
+
 		new DropFreeShapeInitializer(this);
 		new CreateNewConceptInitializer(this);
+		new CreateNewRelationalConceptInitializer(this);
 		new CreateNewConceptFromNoneInitializer(this);
 		new DeclareInstanceOfExistingConceptInitializer(this);
-		new CreateFreeModelDiagramInitializer(this);
-		new CreateFreeModelDiagramFromPPTInitializer(this);
-		
+		// new CreateFreeModelDiagramInitializer(this);
+		// new CreateFreeModelDiagramFromPPTInitializer(this);
+
 		// Actions applied on Diagram Elements(not currently associated with flexo concept)
 		new CreateNewConceptFromDiagramElementInitializer(this);
 		new DeclareInstanceOfExistingConceptFromDiagramElementInitializer(this);
+		new CreateNewFMEPropertyFromDiagramConnectorInitializer(this);
 
-		new DeleteFMEFlexoConceptInstanceActionInitializer(this);
+		new DeleteFreeModelInitializer(this);
+		new DeleteFreeModelInstanceInitializer(this);
+
+		new DeleteFlexoConceptObjectsInitializer(this);
+
+		new CreateNewFMEPropertyInitializer(this);
+		new InstantiateNewFMEPropertyInitializer(this);
 	}
 
 }

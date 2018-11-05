@@ -50,24 +50,35 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 import org.openflexo.fme.FMEIconLibrary;
+import org.openflexo.fme.FMEModule;
 import org.openflexo.fme.controller.action.FMEControllerActionInitializer;
-import org.openflexo.fme.model.FreeMetaModel;
-import org.openflexo.fme.model.FreeModel;
-import org.openflexo.fme.model.FreeModellingProject;
+import org.openflexo.fme.model.FMEConceptualModel;
+import org.openflexo.fme.model.FMEDiagramFreeModel;
+import org.openflexo.fme.model.FMEDiagramFreeModelInstance;
+import org.openflexo.fme.model.FMEFreeModel;
+import org.openflexo.fme.model.FMEFreeModelInstance;
+import org.openflexo.fme.model.FMESampleData;
+import org.openflexo.fme.model.FreeModellingProjectNature;
+import org.openflexo.fme.view.ConvertToFMEProjectView;
+import org.openflexo.fme.view.FMEWelcomePanelModuleView;
 import org.openflexo.fme.view.menu.FMEMenuBar;
 import org.openflexo.foundation.FlexoEditor;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
-import org.openflexo.foundation.fml.ViewPoint;
 import org.openflexo.foundation.fml.FMLObject;
+import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.validation.FlexoValidationModel;
-import org.openflexo.icon.IconLibrary;
 import org.openflexo.icon.FMLIconLibrary;
-import org.openflexo.module.FlexoModule;
+import org.openflexo.icon.FMLRTIconLibrary;
+import org.openflexo.icon.IconFactory;
+import org.openflexo.icon.IconLibrary;
+import org.openflexo.module.FlexoModule.WelcomePanel;
 import org.openflexo.selection.MouseSelectionManager;
 import org.openflexo.view.FlexoMainPane;
+import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
+import org.openflexo.view.controller.model.FlexoPerspective;
 import org.openflexo.view.menu.FlexoMenuBar;
 
 /**
@@ -84,21 +95,18 @@ public class FMEController extends FlexoController {
 	/**
 	 * Default constructor
 	 */
-	public FMEController(FlexoModule module) {
+	public FMEController(FMEModule module) {
 		super(module);
-
-		/*SwingUtilities.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-				setCurrentEditedObjectAsModuleView(getApplicationContext().getViewPointLibrary(), FREE_MODELLING_PERSPECTIVE);
-			}
-		});*/
 	}
 
 	@Override
 	protected void initializePerspectives() {
 		addToPerspectives(FREE_MODELLING_PERSPECTIVE = new FMEPerspective(this));
+	}
+
+	@Override
+	public FlexoPerspective getDefaultPerspective() {
+		return FREE_MODELLING_PERSPECTIVE;
 	}
 
 	@Override
@@ -127,8 +135,6 @@ public class FMEController extends FlexoController {
 	@Override
 	public void initInspectors() {
 		super.initInspectors();
-		loadInspectorGroup("IFlexoOntology");
-
 	}
 
 	@Override
@@ -137,7 +143,10 @@ public class FMEController extends FlexoController {
 	}
 
 	@Override
-	public FlexoObject getDefaultObjectToSelect(FlexoProject project) {
+	public FlexoObject getDefaultObjectToSelect(FlexoProject<?> project) {
+		if (project != null && project.hasNature(FreeModellingProjectNature.class)) {
+			return project.getNature(FreeModellingProjectNature.class);
+		}
 		return project;
 	}
 
@@ -152,23 +161,33 @@ public class FMEController extends FlexoController {
 	public void selectAndFocusObject(FlexoObject object) {
 		if (object != null) {
 			logger.info("selectAndFocusObject " + object + "of " + object.getClass().getSimpleName());
-			if (object instanceof FreeModel) {
+			if (object instanceof FlexoProject) {
+				setCurrentEditedObjectAsModuleView(object);
+			}
+			else if (object instanceof FreeModellingProjectNature) {
+				setCurrentEditedObjectAsModuleView(object);
+			}
+			if (object instanceof FMEFreeModel) {
+				setCurrentEditedObjectAsModuleView(object);
+			}
+			if (object instanceof FMEFreeModelInstance) {
 				setCurrentEditedObjectAsModuleView(object);
 			}
 			if (getCurrentPerspective() == FREE_MODELLING_PERSPECTIVE) {
-				if (object instanceof FreeModel) {
-					FREE_MODELLING_PERSPECTIVE.focusOnFreeModel((FreeModel) object);
+				if (object instanceof FMEFreeModelInstance) {
+					FREE_MODELLING_PERSPECTIVE.focusOnFreeModel((FMEFreeModelInstance) object);
 				}
 			}
 			getSelectionManager().setSelectedObject(object);
-		} else {
+		}
+		else {
 			logger.warning("Cannot set focus on a NULL object");
 		}
 	}
 
-	public ViewPoint getCurrentViewPoint() {
+	public VirtualModel getCurrentVirtualModel() {
 		if (getCurrentDisplayedObjectAsModuleView() instanceof FMLObject) {
-			return ((FMLObject) getCurrentDisplayedObjectAsModuleView()).getViewPoint();
+			return ((FMLObject) getCurrentDisplayedObjectAsModuleView()).getDeclaringVirtualModel();
 		}
 		return null;
 	}
@@ -176,7 +195,7 @@ public class FMEController extends FlexoController {
 	@Override
 	public FlexoValidationModel getValidationModelForObject(FlexoObject object) {
 		if (object instanceof FMLObject) {
-			return getApplicationContext().getViewPointLibrary().getViewPointValidationModel();
+			return getApplicationContext().getVirtualModelLibrary().getFMLValidationModel();
 		}
 		return super.getValidationModelForObject(object);
 	}
@@ -184,20 +203,38 @@ public class FMEController extends FlexoController {
 	@Override
 	public void updateEditor(FlexoEditor from, FlexoEditor to) {
 		super.updateEditor(from, to);
-		FlexoProject project = (to != null ? to.getProject() : null);
+		FlexoProject<?> project = (to != null ? to.getProject() : null);
 		FREE_MODELLING_PERSPECTIVE.setProject(project);
 	}
 
 	@Override
 	public ImageIcon iconForObject(Object object) {
-		if (object instanceof FreeModellingProject) {
-			return IconLibrary.OPENFLEXO_NOTEXT_16;
-		} else if (object instanceof FreeModel) {
+		if (object instanceof FreeModellingProjectNature) {
+			return IconFactory.getImageIcon(IconLibrary.OPENFLEXO_NOTEXT_16, FMEIconLibrary.FME_MARKER);
+		}
+		else if (object instanceof FMEConceptualModel) {
+			return FMLIconLibrary.VIRTUAL_MODEL_ICON;
+		}
+		else if (object instanceof FMESampleData) {
+			return FMLRTIconLibrary.VIRTUAL_MODEL_INSTANCE_ICON;
+		}
+		else if (object instanceof FMEDiagramFreeModelInstance) {
 			return FMEIconLibrary.DIAGRAM_ICON;
-		} else if (object instanceof FreeMetaModel) {
-			return FMEIconLibrary.FME_SMALL_ICON;
+		}
+		else if (object instanceof FMEDiagramFreeModel) {
+			return IconFactory.getImageIcon(FMEIconLibrary.DIAGRAM_ICON, FMEIconLibrary.FME_MARKER);
 		}
 		return super.iconForObject(object);
+	}
+
+	@Override
+	public ModuleView<?> makeWelcomePanel(WelcomePanel<?> welcomePanel, FlexoPerspective perspective) {
+		return new FMEWelcomePanelModuleView((WelcomePanel<FMEModule>) welcomePanel, this, perspective);
+	}
+
+	@Override
+	public ModuleView<?> makeDefaultProjectView(FlexoProject<?> project, FlexoPerspective perspective) {
+		return new ConvertToFMEProjectView(project, this, perspective);
 	}
 
 }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.openflexo</groupId>
+		<artifactId>openflexo-modules</artifactId>
+		<version>1.9.0</version>
+	</parent>
+	<artifactId>enterprise-architecture-module</artifactId>
+	<name>Enterprise Architecture Module</name>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>org.openflexo</groupId>
+			<artifactId>flexo-foundation</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.openflexo</groupId>
+			<artifactId>flexo-ui</artifactId>
+		</dependency>
+		<!-- <dependency> <groupId>org.openflexo</groupId> <artifactId>flexo-foundation</artifactId> 
+			<classifier>tests</classifier> <scope>test</scope> </dependency> <dependency> 
+			<groupId>org.openflexo</groupId> <artifactId>flexo-ui</artifactId> <classifier>tests</classifier> 
+			<scope>test</scope> </dependency> -->
+
+		<dependency>
+			<groupId>org.openflexo</groupId>
+			<artifactId>fml-rt-technologyadapter-ui</artifactId>
+		</dependency>
+		<!-- <dependency> <groupId>org.openflexo</groupId> <artifactId>fml-rt-technologyadapter-ui</artifactId> 
+			<classifier>tests</classifier> <scope>test</scope> </dependency> -->
+
+
+	</dependencies>
+	<description>Enterprise Architecture Module allows you to design a particular business using a wide range of formal and informal notations and graphical languages</description>
+	<url>https://openflexo-modules.openflexo.org/SNAPSHOT/enterprise-architecture-module/index.html</url>
+</project>
+

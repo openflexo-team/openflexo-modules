@@ -39,15 +39,25 @@
 package org.openflexo.fme.fib;
 
 import org.junit.Test;
-import org.openflexo.fib.utils.GenericFIBTestCase;
+import org.openflexo.gina.test.GenericFIBTestCase;
 import org.openflexo.rm.FileResourceImpl;
 import org.openflexo.rm.ResourceLocator;
 
 public class TestFMEWizardFibs extends GenericFIBTestCase {
 
 	public static void main(String[] args) {
-		System.out.println(generateFIBTestCaseClass(((FileResourceImpl) ResourceLocator.locateResource("Fib/Wizard")).getFile(),
-				"Fib/Wizard/"));
+		System.out.println(
+				generateFIBTestCaseClass(((FileResourceImpl) ResourceLocator.locateResource("Fib/Wizard")).getFile(), "Fib/Wizard/"));
+	}
+
+	@Test
+	public void testChooseDiagramFreeModel() {
+		validateFIB("Fib/Wizard/ChooseDiagramFreeModel.fib");
+	}
+
+	@Test
+	public void testConfigureConceptualModel() {
+		validateFIB("Fib/Wizard/ConfigureConceptualModel.fib");
 	}
 
 	@Test
@@ -61,13 +71,18 @@ public class TestFMEWizardFibs extends GenericFIBTestCase {
 	}
 
 	@Test
-	public void testDescribeFreeModel() {
-		validateFIB("Fib/Wizard/DescribeFreeModel.fib");
+	public void testConfigureSampleData() {
+		validateFIB("Fib/Wizard/ConfigureSampleData.fib");
 	}
 
 	@Test
-	public void testDescribeFreeModelDiagram() {
-		validateFIB("Fib/Wizard/DescribeFreeModelDiagram.fib");
+	public void testDescribeDiagramFreeModel() {
+		validateFIB("Fib/Wizard/DescribeDiagramFreeModel.fib");
+	}
+
+	@Test
+	public void testDescribeDiagramFreeModelInstance() {
+		validateFIB("Fib/Wizard/DescribeDiagramFreeModelInstance.fib");
 	}
 
 }

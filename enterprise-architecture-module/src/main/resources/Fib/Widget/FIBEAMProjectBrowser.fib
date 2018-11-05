@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Panel layout="twocols" darkLevel="0" data="" dataClassName="org.openflexo.foundation.FlexoProject"
+       controllerClassName="org.openflexo.eamodule.controller.EAFIBController" visible="">
+	<Browser root="data" iteratorClassName="java.lang.Object" visibleRowCount="5" rowHeight="18" boundToSelectionManager="true"
+	         selectionMode="DiscontiguousTreeSelection" selected="" showFooter="true" rootVisible="true" showRootsHandle="true"
+	         localize="true" manageDynamicModel="true" clickAction="controller.singleClick(ProjectBrowser.selected)"
+	         doubleClickAction="controller.doubleClick(ProjectBrowser.selected)"
+	         rightClickAction="controller.rightClick(ProjectBrowser.selected,event)" name="ProjectBrowser" index="0"
+	         constraints="twocols(expandHorizontally=true;expandVertically=true;index=0;insetsBottom=0;insetsLeft=2;insetsRight=2;insetsTop=0;location=center)"
+	         visible="!data.hasNature('org.openflexo.eamodule.model.EAProjectNature')">
+		<BrowserElement dataClassName="org.openflexo.foundation.FlexoProject" label="project.name" icon="controller.iconForObject(project)"
+		                isEditable="false" filtered="false" defaultVisible="true" name="project">
+		</BrowserElement>
+	</Browser>
+	<Browser root="data.getNature('org.openflexo.eamodule.model.EAProjectNature')" iteratorClassName="java.lang.Object"
+	         visibleRowCount="5" rowHeight="18" boundToSelectionManager="true" selectionMode="DiscontiguousTreeSelection" selected=""
+	         showFooter="true" rootVisible="true" showRootsHandle="true" localize="true" manageDynamicModel="true"
+	         clickAction="controller.singleClick(EAProjectBrowser.selected)"
+	         doubleClickAction="controller.doubleClick(EAProjectBrowser.selected)"
+	         rightClickAction="controller.rightClick(EAProjectBrowser.selected,event)" name="EAProjectBrowser"
+	         index="0"
+	         constraints="twocols(expandHorizontally=true;expandVertically=true;index=0;insetsBottom=0;insetsLeft=2;insetsRight=2;insetsTop=0;location=center)"
+	         visible="data.hasNature('org.openflexo.eamodule.model.EAProjectNature')">
+		<BrowserElement dataClassName="org.openflexo.eamodule.model.EAProjectNature" label="nature.owner.name"
+		                icon="controller.iconForObject(nature)" isEditable="false" filtered="false" defaultVisible="true" name="nature">
+			<Children data="nature.BPMNVirtualModelInstance" name="conceptualModel"/>
+		</BrowserElement>
+		<BrowserElement dataClassName="org.openflexo.eamodule.model.BPMNVirtualModelInstance" label="bpmnVMI.name" icon="controller.iconForObject(bpmnVMI)"
+		                isEditable="false" filtered="false" defaultVisible="true" name="bpmnVMI">
+			<Children data="bpmnVMI.rootProcesses" name="rootProcesses"/>
+		</BrowserElement>
+     <BrowserElement dataClassName="org.openflexo.foundation.fml.FlexoConceptInstanceType&lt;http://openflexo.org/modellers/resources/BPMN/FML/BPMNEditor.fml/BPMNModel.fml#Process&gt;" icon="controller.iconForObject(process)" label="controller.getProcessName(process)" isEditable="false" name="process">
+        <Children data="controller.getChildProcesses(process)" name="children" />
+      </BrowserElement>
+	</Browser>
+	<LocalizedDictionary/>
+</Panel>

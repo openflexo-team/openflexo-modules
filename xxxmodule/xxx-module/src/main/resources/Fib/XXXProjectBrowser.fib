@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Panel id="0" align="left" borderTop="0" borderLeft="0"
+	trackViewPortHeight="true" trackViewPortWidth="true" borderBottom="0"
+	border="empty" sizeAdjustment="OriginalSize" layout="twocols"
+	borderRight="0"
+	controllerClassName="org.openflexo.xxxmodule.widget.AbstractXXXProjectBrowser$XXXProjectBrowserFIBController">
+	<Browser id="1" backgroundSelectionColor="9,80,208"
+		visibleRowCount="5" backgroundNonSelectionColor="255,255,255"
+		boundToSelectionManager="true" backgroundSecondarySelectionColor="178,215,255"
+		textSelectionColor="255,255,255" iteratorClassName="java.lang.Object"
+		showRootsHandle="true" showFooter="true" textNonSelectionColor="0,0,0"
+		root="data" selectionMode="DiscontiguousTreeSelection" rowHeight="18"
+		localize="true" manageDynamicModel="true"
+		rightClickAction="controller.rightClick(XXXProjectBrowser.selected,event)"
+		doubleClickAction="controller.doubleClick(XXXProjectBrowser.selected)"
+		clickAction="controller.singleClick(XXXProjectBrowser.selected)"
+		constraints="twocols(expandHorizontally=true;expandVertically=true;index=0;insetsBottom=0;insetsLeft=2;insetsRight=2;insetsTop=0;location=center)"
+		index="0" name="XXXProjectBrowser">
+		<BrowserElement id="2"
+			dataClassName="org.openflexo.xxxmodule.model.XXXProjectNature"
+			icon="controller.iconForObject(xxxView)" label="nature.owner.name"
+			isEditable="false" defaultVisible="false" name="nature">
+			<Children id="3" data="xxxView.test" name="test" />
+		</BrowserElement>
+		<BrowserElement id="15"
+			dataClassName="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://openflexo.org/xxxmodule/XXX.fml/TestVM.fml&gt;"
+			icon="controller.iconForObject(donneesReferentiel)" label="&quot;Test&quot;"
+			isEditable="false" name="donneesReferentiel">
+		</BrowserElement>
+	</Browser>
+	<LocalizedDictionary id="138" />
+	<FIBVariable id="139"
+		type="org.openflexo.xxxmodule.model.XXXProjectNature" name="data" />
+	<FIBVariable id="140"
+		type="org.openflexo.foundation.fml.VirtualModelInstanceType&lt;http://openflexo.org/xxxmodule/XXX.fml&gt;"
+		value="data.XXXInstance.accessedVirtualModelInstance" name="xxxView" />
+</Panel>

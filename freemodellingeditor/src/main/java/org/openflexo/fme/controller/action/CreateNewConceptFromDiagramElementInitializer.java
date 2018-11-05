@@ -48,6 +48,7 @@ import org.openflexo.fme.model.action.CreateNewConceptFromDiagramElement;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.technologyadapter.diagram.model.DiagramElement;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
@@ -88,7 +89,7 @@ public class CreateNewConceptFromDiagramElementInitializer extends
 	}
 
 	@Override
-	protected Icon getEnabledIcon() {
+	protected Icon getEnabledIcon(FlexoActionFactory actionType) {
 		return FMEIconLibrary.FME_SMALL_ICON;
 	}
 

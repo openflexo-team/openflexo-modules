@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VirtualModel id="SYL-4" virtualModelClass="org.openflexo.foundation.fml.VirtualModel" modelVersion="2.0" uri="http://openflexo.org/xxxmodule/XXX.fml" version="0.1" name="XXX" author="sylvain" description="" userID="SYL" flexoID="4">
+  <FMLLocalizedDictionary id="SYL-5" userID="SYL" flexoID="5">
+    <Localized id="SYL-7" lang="English" value="Behaviour" key="behaviour" userID="SYL" flexoID="7" />
+    <Localized id="SYL-8" lang="French" value="behaviour" key="behaviour" userID="SYL" flexoID="8" />
+    <Localized id="SYL-9" lang="Dutch" value="behaviour" key="behaviour" userID="SYL" flexoID="9" />
+  </FMLLocalizedDictionary>
+  <UseModelSlotDeclaration id="0" modelSlotClass="org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstanceModelSlot" userID="SYL" flexoID="-1" />
+  <Inspector id="SYL-6" inspectorTitle="XXX" userID="SYL" flexoID="6" />
+  <FMLRTVirtualModelInstanceModelSlot id="SYL-13" virtualModelURI="http://openflexo.org/xxxmodule/XXX.fml/TestVM.fml" isRequired="true" cloningStrategy="Reference" cardinality="ZeroOne" name="test" userID="SYL" flexoID="13" />
+  <CreationScheme id="SYL-14" name="create" width="800" label="create" height="600" userID="SYL" flexoID="14">
+    <BehaviourControlGraph_AssignationAction id="SYL-17" assign="test" userID="SYL" flexoID="17">
+      <AssignableAction_AddVirtualModelInstance id="SYL-16" virtualModelInstanceName="&quot;Test&quot;" creationSchemeURI="http://openflexo.org/xxxmodule/XXX.fml/TestVM.fml.create" receiver="this" userID="SYL" flexoID="16" />
+    </BehaviourControlGraph_AssignationAction>
+  </CreationScheme>
+</VirtualModel>

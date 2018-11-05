@@ -49,17 +49,18 @@ import org.openflexo.fge.geom.FGEPoint;
 import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
 import org.openflexo.fge.swing.control.SwingToolFactory;
 import org.openflexo.fge.swing.control.tools.JDianaPalette;
-import org.openflexo.fib.FIBLibrary;
-import org.openflexo.fib.controller.FIBDialog;
-import org.openflexo.fib.model.FIBComponent;
 import org.openflexo.fme.controller.FreeModelPasteHandler;
-import org.openflexo.fme.model.FreeModel;
+import org.openflexo.fme.model.FMEDiagramFreeModelInstance;
 import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.action.FlexoUndoManager.FlexoActionCompoundEdit;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
+import org.openflexo.gina.controller.FIBController.Status;
+import org.openflexo.gina.model.FIBComponent;
+import org.openflexo.gina.swing.utils.JFIBDialog;
+import org.openflexo.gina.swing.view.SwingViewFactory;
 import org.openflexo.technologyadapter.diagram.controller.DiagramCst;
 import org.openflexo.technologyadapter.diagram.controller.action.FMLControlledDiagramPasteHandler;
-import org.openflexo.technologyadapter.diagram.controller.diagrameditor.AbstractDiagramPalette;
+import org.openflexo.technologyadapter.diagram.controller.diagrameditor.DiagramEditorPaletteModel;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.ContextualPalette;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.FMLControlledDiagramEditor;
 import org.openflexo.technologyadapter.diagram.metamodel.DiagramPalette;
@@ -79,7 +80,7 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 
 	private static final Logger logger = Logger.getLogger(FreeModelDiagramEditor.class.getPackage().getName());
 
-	private final FreeModel freeModel;
+	private final FMEDiagramFreeModelInstance diagramFreeModelInstance;
 
 	private String conceptFilter;
 
@@ -88,16 +89,25 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 	private final DynamicPalette dynamicPalette;
 	private final JDianaPalette dynamicPaletteComponent;
 
-	public FreeModelDiagramEditor(FreeModel freeModel, boolean readOnly, FlexoController controller, SwingToolFactory swingToolFactory) {
-		super(freeModel.getVirtualModelInstance(), readOnly, controller, swingToolFactory);
-		this.freeModel = freeModel;
+	public FreeModelDiagramEditor(FMEDiagramFreeModelInstance diagramFreeModelInstance, boolean readOnly, FlexoController controller,
+			SwingToolFactory swingToolFactory) {
+		super(diagramFreeModelInstance.getAccessedVirtualModelInstance(), readOnly, controller, swingToolFactory);
+		this.diagramFreeModelInstance = diagramFreeModelInstance;
 		dynamicPalette = new DynamicPalette(this);
 		dynamicPaletteComponent = swingToolFactory.makeDianaPalette(dynamicPalette);
 		dynamicPaletteComponent.attachToEditor(this);
+
+		for (ContextualPalette contextualPalette : getContextualPalettes()) {
+			if (contextualPalette instanceof ConceptsPalette) {
+				((ConceptsPalette) contextualPalette).setFreeModelInstance(diagramFreeModelInstance);
+			}
+
+		}
+
 		conceptFilter = "*";
 		// We have to switch properly between those paste handlers
 		// AND do not forget to destroy them
-		freeModelPasteHandler = new FreeModelPasteHandler(freeModel, this);
+		freeModelPasteHandler = new FreeModelPasteHandler(diagramFreeModelInstance, this);
 	}
 
 	@Override
@@ -111,8 +121,8 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 		super.delete();
 	}
 
-	public FreeModel getFreeModel() {
-		return freeModel;
+	public FMEDiagramFreeModelInstance getDiagramFreeModelInstance() {
+		return diagramFreeModelInstance;
 	}
 
 	@Override
@@ -121,13 +131,13 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 	}
 
 	@Override
-	public AbstractDiagramPalette makeCommonPalette() {
+	public DiagramEditorPaletteModel makeCommonPalette() {
 		return new FreeShapesPalette(this);
 	}
 
 	@Override
 	public ContextualPalette makeContextualPalette(DiagramPalette palette) {
-		return new ConceptsPalette(palette, this);
+		return new ConceptsPalette(palette, this, getDiagramFreeModelInstance());
 	}
 
 	@Override
@@ -138,15 +148,17 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 		returned.add(dynamicPaletteComponent.getPaletteViewInScrollPane(), "Used shapes", 0);
 
 		if (getDiagram().getShapes().size() > 0) {
-			if (getFreeModel().getVirtualModel().getFlexoConcepts().size() > 1) {
+			if (getDiagramFreeModelInstance().getAccessedVirtualModelInstance().getVirtualModel().getFlexoConcepts().size() > 1) {
 				// In this case, we should activate the concept palette (the second one)
 				returned.setSelectedIndex(1);
-			} else {
+			}
+			else {
 				// In this case, activate used shape palette
 				returned.setSelectedIndex(0);
 				activatePalette(dynamicPaletteComponent);
 			}
-		} else {
+		}
+		else {
 			// Empty diagram, activate free shapes
 			returned.setSelectedIndex(2);
 			activatePalette(getCommonPalette());
@@ -188,7 +200,8 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 					|| shapeGR.getShapeSpecification().getShapeType() == ShapeType.CIRCLE) {
 				shapeGR.setWidth(50);
 				shapeGR.setHeight(50);
-			} else {
+			}
+			else {
 				shapeGR.setWidth(60);
 				shapeGR.setHeight(45);
 			}
@@ -210,13 +223,16 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 		// shapeGR.setY(dropLocation.y);
 
 		if (isImage) {
-			FIBComponent fibComponent = FIBLibrary.instance().retrieveFIBComponent(DiagramCst.IMPORT_IMAGE_FILE_DIALOG_FIB);
-			FIBDialog dialog = FIBDialog.instanciateAndShowDialog(fibComponent, shapeGR, FlexoFrame.getActiveFrame(), true,
-					new FlexoFIBController(fibComponent, getFlexoController()));
+			FIBComponent fibComponent = getFIBLibrary().retrieveFIBComponent(DiagramCst.IMPORT_IMAGE_FILE_DIALOG_FIB);
+			JFIBDialog dialog = JFIBDialog.instanciateAndShowDialog(fibComponent, shapeGR, FlexoFrame.getActiveFrame(), true,
+					new FlexoFIBController(fibComponent, SwingViewFactory.INSTANCE, getFlexoController()));
+			if (dialog.getStatus() == Status.CANCELED) {
+				return false;
+			}
 		}
 
 		DropShape action = DropShape.actionType.makeNewAction(container, null, getFlexoController().getEditor());
-		action.setFreeModel(getFreeModel());
+		action.setDiagramFreeModelInstance(getDiagramFreeModelInstance());
 		action.setGraphicalRepresentation(shapeGR);
 		action.setDropLocation(dropLocation);
 

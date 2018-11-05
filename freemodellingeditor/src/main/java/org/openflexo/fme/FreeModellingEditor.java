@@ -52,7 +52,7 @@ public class FreeModellingEditor extends NatureSpecificModule<FMEModule, FreeMod
 
 	public FreeModellingEditor() {
 		super(FMEModule.FME_MODULE_NAME, FMEModule.FME_MODULE_SHORT_NAME, FMEModule.class, FMEPreferences.class,
-				"modules/freemodellingeditor", "10400", "fme", FMEIconLibrary.FME_SMALL_ICON, FMEIconLibrary.FME_MEDIUM_ICON,
+				"modules/freemodellingeditor", "10801", "fme", FMEIconLibrary.FME_SMALL_ICON, FMEIconLibrary.FME_MEDIUM_ICON,
 				FMEIconLibrary.FME_MEDIUM_ICON_WITH_HOVER, FMEIconLibrary.FME_BIG_ICON, FreeModellingProjectNature.class);
 		// WE set it now, because we are sure the ServiceManager did this call first
 		// WE want to avoid twice defined objects

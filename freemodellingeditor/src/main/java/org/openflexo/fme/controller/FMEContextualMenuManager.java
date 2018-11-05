@@ -38,10 +38,6 @@
 
 package org.openflexo.fme.controller;
 
-import java.awt.Component;
-import java.awt.event.MouseEvent;
-
-import org.openflexo.foundation.FlexoObject;
 import org.openflexo.selection.ContextualMenuManager;
 
 /**

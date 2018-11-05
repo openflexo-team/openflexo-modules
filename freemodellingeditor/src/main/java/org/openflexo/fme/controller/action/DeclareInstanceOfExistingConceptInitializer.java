@@ -41,17 +41,19 @@ package org.openflexo.fme.controller.action;
 import java.util.EventObject;
 import java.util.logging.Logger;
 
-import org.openflexo.fme.FMECst;
+import org.openflexo.components.wizard.Wizard;
+import org.openflexo.components.wizard.WizardDialog;
 import org.openflexo.fme.model.action.DeclareInstanceOfExistingConcept;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFinalizer;
 import org.openflexo.foundation.action.FlexoActionInitializer;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
+import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
 
-public class DeclareInstanceOfExistingConceptInitializer extends
-		ActionInitializer<DeclareInstanceOfExistingConcept, FlexoConceptInstance, FlexoObject> {
+public class DeclareInstanceOfExistingConceptInitializer
+		extends ActionInitializer<DeclareInstanceOfExistingConcept, FlexoConceptInstance, FlexoObject> {
 
 	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
 
@@ -64,7 +66,14 @@ public class DeclareInstanceOfExistingConceptInitializer extends
 		return new FlexoActionInitializer<DeclareInstanceOfExistingConcept>() {
 			@Override
 			public boolean run(EventObject e, DeclareInstanceOfExistingConcept action) {
-				return instanciateAndShowDialog(action, FMECst.DECLARE_INSTANCE_OF_EXISTING_CONCEPT_DIALOG_FIB);
+				Wizard wizard = new DeclareInstanceOfExistingConceptWizard(action, getController());
+				WizardDialog dialog = new WizardDialog(wizard, getController());
+				dialog.showDialog();
+				if (dialog.getStatus() != Status.VALIDATED) {
+					// Operation cancelled
+					return false;
+				}
+				return true;
 			}
 		};
 	}

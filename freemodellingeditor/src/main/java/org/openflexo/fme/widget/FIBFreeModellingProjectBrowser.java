@@ -40,10 +40,10 @@ package org.openflexo.fme.widget;
 
 import java.util.logging.Logger;
 
-import org.openflexo.fib.model.FIBBrowser;
-import org.openflexo.fib.model.FIBContainer;
 import org.openflexo.fme.controller.FMEController;
 import org.openflexo.foundation.FlexoProject;
+import org.openflexo.gina.model.FIBContainer;
+import org.openflexo.gina.model.widget.FIBBrowser;
 import org.openflexo.rm.Resource;
 import org.openflexo.rm.ResourceLocator;
 import org.openflexo.view.FIBBrowserView;
@@ -55,13 +55,13 @@ import org.openflexo.view.FIBBrowserView;
  * 
  */
 @SuppressWarnings("serial")
-public class FIBFreeModellingProjectBrowser extends FIBBrowserView<FlexoProject> {
+public class FIBFreeModellingProjectBrowser extends FIBBrowserView<FlexoProject<?>> {
 	static final Logger logger = Logger.getLogger(FIBFreeModellingProjectBrowser.class.getPackage().getName());
 
 	public static final Resource FIB_FILE = ResourceLocator.locateResource("Fib/Widget/FIBFreeModellingProjectBrowser.fib");
 
-	public FIBFreeModellingProjectBrowser(FlexoProject project, FMEController controller) {
-		super(project, controller, FIB_FILE);
+	public FIBFreeModellingProjectBrowser(FlexoProject<?> project, FMEController controller) {
+		super(project, controller, FIB_FILE, controller.getModuleLocales());
 		// System.out.println("Showing browser with " + project);
 	}
 

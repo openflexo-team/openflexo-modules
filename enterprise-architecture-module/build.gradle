@@ -1,0 +1,17 @@
+dependencies {
+  // openflexo dep
+  compile flexoFoundation()
+  compile flexoUi()
+  compile flexoDiagram()
+  compile flexoDiagramUi()
+  compile ginaConnector()
+  compile ginaConnectorUi()
+  compile openflexo("modelers-api")
+  
+  // This resource center must always be present at run-time
+  runtime openflexo("modelers-rc")
+  
+  // external dep
+  // testing dep
+  testCompile flexoUiTest()
+}

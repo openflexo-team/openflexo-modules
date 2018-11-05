@@ -45,14 +45,16 @@ import java.util.logging.Logger;
 import org.openflexo.fge.Drawing.DrawingTreeNode;
 import org.openflexo.fge.geom.FGEPoint;
 import org.openflexo.fme.controller.editor.DynamicPalette.GraphicalRepresentationSet;
-import org.openflexo.fme.model.FreeMetaModel;
+import org.openflexo.fme.model.FMEDiagramFreeModel;
+import org.openflexo.fme.model.FMEDiagramFreeModelInstance;
 import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.fml.FlexoConcept;
-import org.openflexo.foundation.fml.rt.VirtualModelInstance;
+import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.technologyadapter.diagram.TypedDiagramModelSlot;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.ContextualPalette;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.DiagramEditor;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.FMLControlledDiagramEditor;
+import org.openflexo.technologyadapter.diagram.controller.diagrameditor.FMLControlledDiagramShape;
 import org.openflexo.technologyadapter.diagram.fml.FMLControlledDiagramVirtualModelNature;
 import org.openflexo.technologyadapter.diagram.fml.FMLDiagramPaletteElementBinding;
 import org.openflexo.technologyadapter.diagram.fml.ShapeRole;
@@ -61,12 +63,28 @@ import org.openflexo.technologyadapter.diagram.metamodel.DiagramPaletteElement;
 import org.openflexo.technologyadapter.diagram.model.DiagramContainerElement;
 import org.openflexo.technologyadapter.diagram.model.DiagramElement;
 
-public class ConceptsPalette extends ContextualPalette implements PropertyChangeListener {
+public class ConceptsPalette extends ContextualPalette {
 
 	private static final Logger logger = Logger.getLogger(ConceptsPalette.class.getPackage().getName());
 
-	public ConceptsPalette(DiagramPalette diagramPalette, FreeModelDiagramEditor editor) {
+	private FMEDiagramFreeModelInstance freeModelInstance;
+
+	public ConceptsPalette(DiagramPalette diagramPalette, FreeModelDiagramEditor editor, FMEDiagramFreeModelInstance freeModelInstance) {
 		super(diagramPalette, editor);
+		this.freeModelInstance = freeModelInstance;
+	}
+
+	public FMEDiagramFreeModelInstance getFreeModelInstance() {
+		return freeModelInstance;
+	}
+
+	public void setFreeModelInstance(FMEDiagramFreeModelInstance freeModelInstance) {
+		if ((freeModelInstance == null && this.freeModelInstance != null)
+				|| (freeModelInstance != null && !freeModelInstance.equals(this.freeModelInstance))) {
+			FMEDiagramFreeModelInstance oldValue = this.freeModelInstance;
+			this.freeModelInstance = freeModelInstance;
+			getPropertyChangeSupport().firePropertyChange("freeModelInstance", oldValue, freeModelInstance);
+		}
 	}
 
 	@Override
@@ -87,15 +105,33 @@ public class ConceptsPalette extends ContextualPalette implements PropertyChange
 			return false;
 		}
 
-		DiagramContainerElement<?> rootContainer = (DiagramContainerElement<?>) target.getDrawable();
-		VirtualModelInstance vmi = editor.getVirtualModelInstance();
+		Object targetObject = target.getDrawable();
+
+		if (targetObject instanceof DiagramContainerElement) {
+			DiagramContainerElement<?> rootContainer = (DiagramContainerElement<?>) target.getDrawable();
+			return handleFMLControlledDropInDiagramContainerElement(rootContainer, paletteElement, dropLocation, editor);
+		}
+
+		if (targetObject instanceof FMLControlledDiagramShape) {
+			FMLControlledDiagramShape container = (FMLControlledDiagramShape) target.getDrawable();
+			return handleFMLControlledDropInFMLControlledDiagramShape(container, paletteElement, dropLocation, editor);
+		}
+
+		return false;
+
+	}
+
+	private boolean handleFMLControlledDropInDiagramContainerElement(DiagramContainerElement<?> rootContainer,
+			DiagramPaletteElement paletteElement, FGEPoint dropLocation, FMLControlledDiagramEditor editor) {
+
+		FMLRTVirtualModelInstance vmi = editor.getVirtualModelInstance();
 		TypedDiagramModelSlot ms = FMLControlledDiagramVirtualModelNature.getTypedDiagramModelSlot(vmi.getVirtualModel());
 		FMLDiagramPaletteElementBinding binding = ms.getPaletteElementBinding(paletteElement);
 		// DropScheme dropScheme = binding.getDropScheme();
 
 		DropShape action = DropShape.actionType.makeNewAction(rootContainer, null, getEditor().getFlexoController().getEditor());
-		action.setFreeModel(getEditor().getFreeModel());
-		action.setConcept(binding.getBoundFlexoConcept());
+		action.setDiagramFreeModelInstance(getEditor().getDiagramFreeModelInstance());
+		action.setGRConcept(binding.getBoundFlexoConcept());
 		action.setDropLocation(dropLocation);
 
 		action.doAction();
@@ -113,16 +149,50 @@ public class ConceptsPalette extends ContextualPalette implements PropertyChange
 
 	}
 
+	private boolean handleFMLControlledDropInFMLControlledDiagramShape(FMLControlledDiagramShape container,
+			DiagramPaletteElement paletteElement, FGEPoint dropLocation, FMLControlledDiagramEditor editor) {
+
+		FMLRTVirtualModelInstance vmi = editor.getVirtualModelInstance();
+		TypedDiagramModelSlot ms = FMLControlledDiagramVirtualModelNature.getTypedDiagramModelSlot(vmi.getVirtualModel());
+		FMLDiagramPaletteElementBinding binding = ms.getPaletteElementBinding(paletteElement);
+		// DropScheme dropScheme = binding.getDropScheme();
+
+		DropShape action = DropShape.actionType.makeNewAction(container.getDiagramElement(), null,
+				getEditor().getFlexoController().getEditor());
+		action.setDiagramFreeModelInstance(getEditor().getDiagramFreeModelInstance());
+		action.setGRConcept(binding.getBoundFlexoConcept());
+		action.setDropLocation(dropLocation);
+		action.setContainer(container.getFlexoConceptInstance());
+
+		action.doAction();
+
+		freeModelInstance.getPropertyChangeSupport().firePropertyChange("getInstances(FlexoConcept)", false, true);
+		freeModelInstance.getPropertyChangeSupport().firePropertyChange("getEmbeddedInstances(FlexoConceptInstance)", false, true);
+
+		// The new shape has well be added to the diagram, and the drawing (which listen to the diagram) has well received the event
+		// The drawing is now up-to-date... but there is something wrong if we are in FML-controlled mode.
+		// Since the shape has been added BEFORE the FlexoConceptInstance has been set, the drawing only knows about the DiagamShape,
+		// and not about an FMLControlledDiagramShape. That's why we need to notify again the new diagram element's parent, to be
+		// sure that the Drawing can discover that the new shape is FML-controlled
+		container.getDiagramElement().getPropertyChangeSupport().firePropertyChange(DiagramElement.INVALIDATE, null,
+				container.getDiagramElement());
+		// FlexoConceptInstance newFlexoConceptInstance = action.getNewFlexoConceptInstance();
+		// System.out.println("Created newFlexoConceptInstance:" + newFlexoConceptInstance);
+
+		return action.hasActionExecutionSucceeded();
+
+	}
+
 	@Override
 	protected ContextualPaletteElement makePaletteElement(final DiagramPaletteElement element, DiagramEditor editor) {
 		if (editor instanceof FMLControlledDiagramEditor) {
-			VirtualModelInstance vmi = ((FMLControlledDiagramEditor) editor).getVirtualModelInstance();
+			FMLRTVirtualModelInstance vmi = ((FMLControlledDiagramEditor) editor).getVirtualModelInstance();
 			TypedDiagramModelSlot ms = FMLControlledDiagramVirtualModelNature.getTypedDiagramModelSlot(vmi.getVirtualModel());
 			if (ms != null) {
 				FMLDiagramPaletteElementBinding binding = ms.getPaletteElementBinding(element);
 				if (binding != null) {
 					FlexoConcept concept = binding.getBoundFlexoConcept();
-					final ShapeRole conceptShapeRole = (ShapeRole) concept.getAccessibleProperty(FreeMetaModel.SHAPE_ROLE_NAME);
+					final ShapeRole conceptShapeRole = (ShapeRole) concept.getAccessibleProperty(FMEDiagramFreeModel.SHAPE_ROLE_NAME);
 					if (conceptShapeRole != null) {
 						conceptShapeRole.getGraphicalRepresentation().getPropertyChangeSupport()
 								.addPropertyChangeListener(new PropertyChangeListener() {

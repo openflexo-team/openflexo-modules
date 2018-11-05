@@ -1,0 +1,18 @@
+dependencies {
+  // openflexo dep
+  compile flexoFoundation()
+  compile flexoUi()
+  compile flexoDiagram()
+  compile flexoDiagramUi()
+  compile powerpointConnector()
+  compile powerpointConnectorUi()
+  runtime flexoOntology()
+  runtime flexoOntologyUi()
+  // external dep
+  // testing dep
+  testCompile testUtils()
+  testCompile ginaTest()
+  testCompile flexoFoundationTest()
+  testCompile flexoUiTest()
+  testRuntime flexoTestResources()
+}

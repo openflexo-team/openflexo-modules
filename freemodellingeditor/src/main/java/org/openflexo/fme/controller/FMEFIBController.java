@@ -40,11 +40,22 @@ package org.openflexo.fme.controller;
 
 import java.util.logging.Logger;
 
-import org.openflexo.fib.model.FIBComponent;
+import javax.swing.ImageIcon;
+
+import org.openflexo.fme.FMEModule;
 import org.openflexo.fme.controller.editor.FreeModelDiagramEditor;
-import org.openflexo.fme.view.FreeModelModuleView;
+import org.openflexo.fme.model.FMEFreeModel;
+import org.openflexo.fme.model.FreeModellingProjectNature;
+import org.openflexo.fme.view.FMEDiagramFreeModelModuleView;
+import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.fml.FlexoConcept;
+import org.openflexo.foundation.fml.FlexoConceptInstanceRole;
+import org.openflexo.gina.model.FIBComponent;
+import org.openflexo.gina.view.GinaViewFactory;
+import org.openflexo.icon.FMLIconLibrary;
 import org.openflexo.localization.FlexoLocalization;
+import org.openflexo.localization.LocalizedDelegate;
+import org.openflexo.module.ModuleLoadingException;
 import org.openflexo.view.controller.FlexoFIBController;
 
 /**
@@ -59,10 +70,19 @@ public class FMEFIBController extends FlexoFIBController {
 
 	private static final Logger logger = Logger.getLogger(FMEFIBController.class.getPackage().getName());
 
-	public FMEFIBController(FIBComponent component) {
-		super(component);
+	public FMEFIBController(FIBComponent component, GinaViewFactory<?> viewFactory) {
+		super(component, viewFactory);
 		// Default parent localizer is the main localizer
 		setParentLocalizer(FlexoLocalization.getMainLocalizer());
+	}
+
+	public final LocalizedDelegate getLocales() {
+		try {
+			return getServiceManager().getModuleLoader().getModuleInstance(FMEModule.class).getLocales();
+		} catch (ModuleLoadingException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
@@ -71,10 +91,40 @@ public class FMEFIBController extends FlexoFIBController {
 	}
 
 	public FreeModelDiagramEditor getDiagramEditor() {
-		if (getFlexoController().getCurrentModuleView() instanceof FreeModelModuleView) {
-			return ((FreeModelModuleView) getFlexoController().getCurrentModuleView()).getEditor();
+		if (getFlexoController().getCurrentModuleView() instanceof FMEDiagramFreeModelModuleView) {
+			return ((FMEDiagramFreeModelModuleView) getFlexoController().getCurrentModuleView()).getEditor();
 		}
 		return null;
+	}
+
+	public FreeModellingProjectNature getFreeModellingProjectNature() {
+		if (getEditor() != null) {
+			FlexoProject<?> project = getEditor().getProject();
+			if (project != null)
+				return project.getNature(FreeModellingProjectNature.class);
+		}
+		return null;
+	}
+
+	public String getFlexoConceptName(FlexoConcept concept) {
+		if (getFreeModellingProjectNature() != null) {
+			if (concept.getName().equals(FMEFreeModel.NONE_FLEXO_CONCEPT_NAME)) {
+				return getLocales().localizedForKey("unclassified");
+			}
+			FlexoConceptInstanceRole conceptRole = (FlexoConceptInstanceRole) concept.getAccessibleRole(FMEFreeModel.CONCEPT_ROLE_NAME);
+			if (conceptRole != null && conceptRole.getFlexoConceptType() != null) {
+				return conceptRole.getFlexoConceptType().getName();
+			}
+		}
+		return concept.getName();
+	}
+
+	@Override
+	protected ImageIcon retrieveIconForObject(Object object) {
+		if (object instanceof FlexoConcept && ((FlexoConcept) object).getName().equals(FMEFreeModel.NONE_FLEXO_CONCEPT_NAME)) {
+			return FMLIconLibrary.UNKNOWN_ICON;
+		}
+		return super.retrieveIconForObject(object);
 	}
 
 	public void createConcept(String name) {

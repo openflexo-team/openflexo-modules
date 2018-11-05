@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VirtualModel id="SYL-4" virtualModelClass="org.openflexo.foundation.fml.VirtualModel" modelVersion="2.0" uri="http://openflexo.org/xxxmodule/XXX.fml/TestVM.fml" version="0.1" name="TestVM" author="sylvain" userID="SYL" flexoID="4">
+  <FMLLocalizedDictionary id="SYL-5" userID="SYL" flexoID="5" />
+  <Inspector id="SYL-6" inspectorTitle="TestVM" userID="SYL" flexoID="6" />
+  <CreationScheme id="SYL-7" name="create" width="800" label="create" height="600" userID="SYL" flexoID="7">
+    <BehaviourControlGraph_EmptyControlGraph id="SYL-8" userID="SYL" flexoID="8" />
+  </CreationScheme>
+</VirtualModel>

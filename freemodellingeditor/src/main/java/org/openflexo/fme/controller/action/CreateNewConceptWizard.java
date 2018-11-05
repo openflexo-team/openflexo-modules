@@ -44,15 +44,14 @@ import java.util.logging.Logger;
 import org.openflexo.ApplicationContext;
 import org.openflexo.components.wizard.FlexoWizard;
 import org.openflexo.components.wizard.WizardStep;
-import org.openflexo.fib.annotation.FIBPanel;
-import org.openflexo.fme.model.FreeMetaModel;
+import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.action.CreateNewConcept;
 import org.openflexo.foundation.fml.VirtualModel;
-import org.openflexo.foundation.fml.rt.VirtualModelInstance;
+import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
+import org.openflexo.gina.annotation.FIBPanel;
+import org.openflexo.icon.FMLIconLibrary;
 import org.openflexo.icon.IconFactory;
 import org.openflexo.icon.IconLibrary;
-import org.openflexo.icon.FMLIconLibrary;
-import org.openflexo.localization.FlexoLocalization;
 import org.openflexo.toolbox.StringUtils;
 import org.openflexo.view.controller.FlexoController;
 
@@ -73,7 +72,7 @@ public class CreateNewConceptWizard extends FlexoWizard {
 
 	@Override
 	public String getWizardTitle() {
-		return FlexoLocalization.localizedForKey("create_new_concept");
+		return action.getLocales().localizedForKey("create_new_concept");
 	}
 
 	@Override
@@ -86,7 +85,7 @@ public class CreateNewConceptWizard extends FlexoWizard {
 	}
 
 	/**
-	 * This step is used to set {@link VirtualModel} to be used, as well as name and title of the {@link VirtualModelInstance}
+	 * This step is used to set {@link VirtualModel} to be used, as well as name and title of the {@link FMLRTVirtualModelInstance}
 	 * 
 	 * @author sylvain
 	 *
@@ -102,25 +101,25 @@ public class CreateNewConceptWizard extends FlexoWizard {
 			return action;
 		}
 
-		public FreeMetaModel getFreeMetaModel() {
+		public FMEFreeModel getFreeModel() {
 			return getAction().getFocusedObject();
 		}
 
 		@Override
 		public String getTitle() {
-			return FlexoLocalization.localizedForKey("configure_new_concept");
+			return action.getLocales().localizedForKey("configure_new_concept");
 		}
 
 		@Override
 		public boolean isValid() {
 
 			if (StringUtils.isEmpty(getNewConceptName())) {
-				setIssueMessage(FlexoLocalization.localizedForKey("no_concept_name_defined"), IssueMessageType.ERROR);
+				setIssueMessage(action.getLocales().localizedForKey("no_concept_name_defined"), IssueMessageType.ERROR);
 				return false;
 			}
 
-			if (getFreeMetaModel().getVirtualModel().getFlexoConcept(getNewConceptName()) != null) {
-				setIssueMessage(FlexoLocalization.localizedForKey("a_concept_with_that_name_already_exists"), IssueMessageType.ERROR);
+			if (getFreeModel().getAccessedVirtualModel().getFlexoConcept(getNewConceptName()) != null) {
+				setIssueMessage(action.getLocales().localizedForKey("a_concept_with_that_name_already_exists"), IssueMessageType.ERROR);
 				return false;
 			}
 

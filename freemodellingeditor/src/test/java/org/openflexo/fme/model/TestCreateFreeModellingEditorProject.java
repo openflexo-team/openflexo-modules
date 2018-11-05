@@ -38,13 +38,29 @@
 
 package org.openflexo.fme.model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.openflexo.connie.exception.InvalidBindingException;
+import org.openflexo.connie.exception.NullReferenceException;
+import org.openflexo.connie.exception.TypeMismatchException;
+import org.openflexo.fme.model.action.CreateFMEDiagramFreeModel;
+import org.openflexo.fme.model.action.InstantiateFMEDiagramFreeModel;
 import org.openflexo.foundation.FlexoEditor;
+import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.FlexoProject;
-import org.openflexo.foundation.OpenflexoProjectAtRunTimeTestCase;
+import org.openflexo.foundation.fml.FlexoConcept;
+import org.openflexo.foundation.test.OpenflexoProjectAtRunTimeTestCase;
+import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
+import org.openflexo.technologyadapter.diagram.model.Diagram;
+import org.openflexo.test.OrderedRunner;
 import org.openflexo.test.TestOrder;
 
 /**
@@ -53,24 +69,141 @@ import org.openflexo.test.TestOrder;
  * @author sylvain
  * 
  */
+@RunWith(OrderedRunner.class)
 public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunTimeTestCase {
+
+	private static FlexoEditor editor;
+	private static FlexoProject<File> project;
+	private static FreeModellingProjectNature nature;
+	private static FMEConceptualModel conceptualModel;
+	private static FMESampleData sampleData;
+	private static FlexoConcept conceptA, conceptB;
+	private static FMEDiagramFreeModel diagramModel1;
+	private static FMEDiagramFreeModel diagramModel2;
 
 	@Test
 	@TestOrder(1)
-	public void testCreateFreeModellingEditorProject() {
+	@SuppressWarnings("unchecked")
+	public void createFreeModellingEditorProject() {
 
-		instanciateTestServiceManager();
+		instanciateTestServiceManager(DiagramTechnologyAdapter.class);
 
-		FreeModellingProjectNature FREE_MODELLING_NATURE = serviceManager.getProjectNatureService().getProjectNature(
-				FreeModellingProjectNature.class);
-		assertNotNull(FREE_MODELLING_NATURE);
+		editor = createStandaloneProject("TestFMEProject", FreeModellingProjectNature.class);
 
-		FlexoEditor editor = createProject("TestFMEProject", FREE_MODELLING_NATURE);
-		FlexoProject project = editor.getProject();
-		System.out.println("Created project " + project.getProjectDirectory());
+		project = (FlexoProject<File>) editor.getProject();
+
 		assertTrue(project.getProjectDirectory().exists());
-		assertTrue(project.getProjectDataResource().getFlexoIODelegate().exists());
-		assertTrue(project.hasNature(FREE_MODELLING_NATURE));
+		assertTrue(project.hasNature(FreeModellingProjectNature.class));
+	}
+
+	@Test
+	@TestOrder(2)
+	public void checkFreeModellingNature() {
+
+		assertNotNull(nature = project.getNature(FreeModellingProjectNature.class));
+
+		conceptualModel = nature.getConceptualModel();
+		assertNotNull(conceptualModel);
+
+		sampleData = nature.getSampleData();
+		assertNotNull(sampleData);
+	}
+
+	@Test
+	@TestOrder(3)
+	public void checkConceptualModelEditing() throws FlexoException {
+
+		conceptA = conceptualModel.getFlexoConcept("ConceptA", null, editor, null);
+		assertNotNull(conceptA);
+
+		conceptB = conceptualModel.getFlexoConcept("ConceptB", null, editor, null);
+		assertNotNull(conceptB);
+
+		FlexoConcept conceptAbis = conceptualModel.getFlexoConcept("ConceptA", null, editor, null);
+		assertNotNull(conceptAbis);
+		assertSame(conceptA, conceptAbis);
+
+		System.out.println(conceptualModel.getAccessedVirtualModel().getFMLRepresentation());
+
+		assertVirtualModelIsValid(conceptualModel.getAccessedVirtualModel());
+	}
+
+	@Test
+	@TestOrder(5)
+	public void createAndCheckNewFMEDiagramFreeModel() {
+
+		CreateFMEDiagramFreeModel action = CreateFMEDiagramFreeModel.actionType.makeNewAction(nature, null, editor);
+		action.setFreeModelName("DiagramModel1");
+		action.setFreeModelDescription("A description");
+		action.doAction();
+
+		diagramModel1 = action.getNewFreeModel();
+		assertNotNull(diagramModel1);
+
+		FlexoConcept conceptAGR = diagramModel1.getGRFlexoConcept(conceptA, null, editor, null, true);
+		assertNotNull(conceptAGR);
+
+		System.out.println(diagramModel1.getAccessedVirtualModel().getFMLRepresentation());
+
+		FlexoConcept noneFlexoConceptGR = diagramModel1.getNoneFlexoConcept(editor, null);
+		assertNotNull(noneFlexoConceptGR);
+
+		System.out.println(diagramModel1.getAccessedVirtualModel().getFMLRepresentation());
+		assertVirtualModelIsValid(diagramModel1.getAccessedVirtualModel());
+
+	}
+
+	@Test
+	@TestOrder(6)
+	public void instantiateNewFMEDiagramFreeModel()
+			throws FlexoException, TypeMismatchException, NullReferenceException, InvocationTargetException, InvalidBindingException {
+
+		InstantiateFMEDiagramFreeModel action = InstantiateFMEDiagramFreeModel.actionType.makeNewAction(diagramModel1, null, editor);
+		action.setFreeModelInstanceName("Instance1");
+		action.setFreeModelInstanceDescription("A description");
+		action.doAction();
+
+		FMEDiagramFreeModelInstance instance1 = action.getNewFreeModelInstance();
+		assertNotNull(instance1);
+
+		project.save();
+		project.saveModifiedResources(null);
+
+		assertEquals(sampleData.getAccessedVirtualModelInstance(), instance1.getAccessedVirtualModelInstance().execute("sampleData"));
+
+		Diagram newDiagram = instance1.getAccessedVirtualModelInstance().execute("diagram");
+		assertNotNull(newDiagram);
+		assertEquals(diagramModel1.getDiagramSpecification(), newDiagram.getDiagramSpecification());
+
+	}
+
+	@Test
+	@TestOrder(7)
+	public void instantiateNewFMEDiagramFreeModelWhileCreatingNewFreeModel()
+			throws FlexoException, TypeMismatchException, NullReferenceException, InvocationTargetException, InvalidBindingException {
+
+		InstantiateFMEDiagramFreeModel action = InstantiateFMEDiagramFreeModel.actionType.makeNewAction(nature, null, editor);
+		action.setFreeModelInstanceName("Instance2");
+		action.setFreeModelInstanceDescription("A description");
+		action.getCreateFreeModelAction().setFreeModelName("DiagramModel2");
+
+		action.doAction();
+
+		diagramModel2 = action.getFreeModel();
+		assertNotNull(diagramModel2);
+
+		FMEDiagramFreeModelInstance instance2 = action.getNewFreeModelInstance();
+		assertNotNull(instance2);
+
+		project.save();
+		project.saveModifiedResources(null);
+
+		assertEquals(sampleData.getAccessedVirtualModelInstance(), instance2.getAccessedVirtualModelInstance().execute("sampleData"));
+
+		Diagram newDiagram2 = instance2.getAccessedVirtualModelInstance().execute("diagram");
+		assertNotNull(newDiagram2);
+		assertEquals(diagramModel2.getDiagramSpecification(), newDiagram2.getDiagramSpecification());
+
 	}
 
 }

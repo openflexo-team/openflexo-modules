@@ -67,6 +67,11 @@ public class SMPModule extends FlexoModule<SMPModule> {
 	}
 
 	@Override
+	public String getLocalizationDirectory() {
+		return "FlexoLocalization/SMP";
+	}
+
+	@Override
 	public Module<SMPModule> getModule() {
 		// TODO Auto-generated method stub
 		return sample.INSTANCE;
