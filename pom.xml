@@ -6,21 +6,21 @@
 		<artifactId>openflexo-component</artifactId>
 		<version>0.5-SNAPSHOT</version>
 	</parent>
-	<version>1.9.0-SNAPSHOT</version>
+	<version>1.9.1-SNAPSHOT</version>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>openflexo-modules</artifactId>
 	<name>Openflexo-Modules</name>
 	<packaging>pom</packaging>
 	<properties>
-		<gina.version>2.1.1-SNAPSHOT</gina.version>
-		<connie.version>1.4.1-SNAPSHOT</connie.version>
-		<pamela.version>1.4.1-SNAPSHOT</pamela.version>
-		<diana.version>1.4.1-SNAPSHOT</diana.version>
-		<jiraclient.version>1.4.1-SNAPSHOT</jiraclient.version>
-		<flexohelp.version>1.4.1-SNAPSHOT</flexohelp.version>
-		<flexodocresourcecenter.version>1.9.0-SNAPSHOT</flexodocresourcecenter.version>
-		<flexodocresourcemanager.version>1.9.0-SNAPSHOT</flexodocresourcemanager.version>
-		<flexocore.version>1.9.0-SNAPSHOT</flexocore.version>
+		<gina.version>2.1.2-SNAPSHOT</gina.version>
+		<connie.version>1.4.2-SNAPSHOT</connie.version>
+		<pamela.version>1.4.2-SNAPSHOT</pamela.version>
+		<diana.version>1.4.2-SNAPSHOT</diana.version>
+		<jiraclient.version>1.4.2-SNAPSHOT</jiraclient.version>
+		<flexohelp.version>1.4.2-SNAPSHOT</flexohelp.version>
+		<flexodocresourcecenter.version>1.9.1-SNAPSHOT</flexodocresourcecenter.version>
+		<flexodocresourcemanager.version>1.9.1-SNAPSHOT</flexodocresourcemanager.version>
+		<flexocore.version>1.9.1-SNAPSHOT</flexocore.version>
 		<modules.logo>https://media.openflexo.org/images/modules_logo64x64.png</modules.logo>
 		<sitedeploy.dir>/home/www/sites/openflexo-modules</sitedeploy.dir>
 	</properties>
