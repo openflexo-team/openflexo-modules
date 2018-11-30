@@ -1,6 +1,8 @@
 GUI_perspective=Perspective "IHM"
 Generic=G\u00E9n\u00E9rique
+check_viewpoint_consistency=check_viewpoint_consistency
 diagram_perspective=Perspective "Diagramme"
+localization=localization
 opening_module_view_for_object=Ouverture de la vue module pour l'objet
 select_default_object=select_default_object
 textual_FML_perspective=Perspective textuelle FML
