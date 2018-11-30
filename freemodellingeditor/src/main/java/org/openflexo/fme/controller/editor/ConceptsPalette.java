@@ -192,19 +192,21 @@ public class ConceptsPalette extends ContextualPalette {
 				FMLDiagramPaletteElementBinding binding = ms.getPaletteElementBinding(element);
 				if (binding != null) {
 					FlexoConcept concept = binding.getBoundFlexoConcept();
-					final ShapeRole conceptShapeRole = (ShapeRole) concept.getAccessibleProperty(FMEDiagramFreeModel.SHAPE_ROLE_NAME);
-					if (conceptShapeRole != null) {
-						conceptShapeRole.getGraphicalRepresentation().getPropertyChangeSupport()
-								.addPropertyChangeListener(new PropertyChangeListener() {
-									@Override
-									public void propertyChange(PropertyChangeEvent event) {
-										if (element.getGraphicalRepresentation() != null && conceptShapeRole != null
-												&& conceptShapeRole.getGraphicalRepresentation() != null) {
-											element.getGraphicalRepresentation().setsWith(conceptShapeRole.getGraphicalRepresentation(),
-													GraphicalRepresentationSet.IGNORED_PROPERTIES);
+					if (concept != null) {
+						final ShapeRole conceptShapeRole = (ShapeRole) concept.getAccessibleProperty(FMEDiagramFreeModel.SHAPE_ROLE_NAME);
+						if (conceptShapeRole != null) {
+							conceptShapeRole.getGraphicalRepresentation().getPropertyChangeSupport()
+									.addPropertyChangeListener(new PropertyChangeListener() {
+										@Override
+										public void propertyChange(PropertyChangeEvent event) {
+											if (element.getGraphicalRepresentation() != null && conceptShapeRole != null
+													&& conceptShapeRole.getGraphicalRepresentation() != null) {
+												element.getGraphicalRepresentation().setsWith(conceptShapeRole.getGraphicalRepresentation(),
+														GraphicalRepresentationSet.IGNORED_PROPERTIES);
+											}
 										}
-									}
-								});
+									});
+						}
 					}
 				}
 			}
