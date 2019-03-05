@@ -161,7 +161,7 @@ public class GivesXXXNature extends GivesNatureAction<GivesXXXNature, XXXProject
 				try {
 
 					XXXInstance newXXXVMI = getFocusedObject().getModelFactory().newInstance(XXXInstance.class);
-					newXXXVMI.setAccessedVirtualModelInstance(viewResource.getResourceData(null));
+					newXXXVMI.setAccessedVirtualModelInstance(viewResource.getResourceData());
 					return newXXXVMI;
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();

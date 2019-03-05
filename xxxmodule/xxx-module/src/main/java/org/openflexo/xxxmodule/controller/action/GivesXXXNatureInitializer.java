@@ -38,7 +38,6 @@
 
 package org.openflexo.xxxmodule.controller.action;
 
-import java.util.EventObject;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
@@ -48,8 +47,7 @@ import org.openflexo.components.wizard.WizardDialog;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.action.FlexoActionFactory;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.foundation.task.Progress;
 import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.view.controller.ActionInitializer;
@@ -73,10 +71,8 @@ public class GivesXXXNatureInitializer extends ActionInitializer<GivesXXXNature,
 	}
 
 	@Override
-	protected FlexoActionInitializer<GivesXXXNature> getDefaultInitializer() {
-		return new FlexoActionInitializer<GivesXXXNature>() {
-			@Override
-			public boolean run(EventObject e, GivesXXXNature action) {
+	protected FlexoActionRunnable<GivesXXXNature, FlexoProject<?>, FlexoObject> getDefaultInitializer() {
+ 		return (e, action) -> {
 				Progress.forceHideTaskBar();
 				Wizard wizard = new GivesXXXNatureWizard(action, getController());
 				WizardDialog dialog = new WizardDialog(wizard, getController());
@@ -87,15 +83,12 @@ public class GivesXXXNatureInitializer extends ActionInitializer<GivesXXXNature,
 					return false;
 				}
 				return true;
-			}
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<GivesXXXNature> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<GivesXXXNature>() {
-			@Override
-			public boolean run(EventObject e, GivesXXXNature action) {
+        protected FlexoActionRunnable<GivesXXXNature, FlexoProject<?>, FlexoObject> getDefaultFinalizer() {
+ 		return (e, action) -> {
 				// We store the eventual ModuleView to remove, but we must remove it AFTER selection of new object
 				// Otherwise, focus on FlexoProject will be lost
 				ConvertToXXXProjectView viewToRemove = null;
@@ -107,12 +100,11 @@ public class GivesXXXNatureInitializer extends ActionInitializer<GivesXXXNature,
 					viewToRemove.deleteModuleView();
 				}
 				return true;
-			}
 		};
 	}
 
 	@Override
-	protected Icon getEnabledIcon(FlexoActionFactory<?, ?, ?> actionType) {
+	protected Icon getEnabledIcon(FlexoActionFactory<GivesXXXNature, FlexoProject<?>, FlexoObject> actionType) {
 		return XXXIconLibrary.XXX_SMALL_ICON;
 	}
 
