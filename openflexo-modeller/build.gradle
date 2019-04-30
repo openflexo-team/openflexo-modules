@@ -4,8 +4,8 @@ dependencies {
   compile flexoUi()
   compile fmlTechnologyAdapterUi()
   compile fmlRtTechnologyAdapterUi()
-  compile flexoDiagram()
-  compile flexoDiagramUi()
+  compile diagramConnector()
+  compile diagramConnectorUi()
   compile ginaConnector()
   compile ginaConnectorUi()
    

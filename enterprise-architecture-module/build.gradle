@@ -2,8 +2,8 @@ dependencies {
   // openflexo dep
   compile flexoFoundation()
   compile flexoUi()
-  compile flexoDiagram()
-  compile flexoDiagramUi()
+  compile diagramConnector()
+  compile diagramConnectorUi()
   compile ginaConnector()
   compile ginaConnectorUi()
   compile openflexo("modelers-api")
