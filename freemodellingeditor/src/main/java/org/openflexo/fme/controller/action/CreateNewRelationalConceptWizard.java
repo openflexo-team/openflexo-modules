@@ -42,7 +42,7 @@ import java.awt.Image;
 import java.util.logging.Logger;
 
 import org.openflexo.ApplicationContext;
-import org.openflexo.components.wizard.FlexoWizard;
+import org.openflexo.components.wizard.FlexoActionWizard;
 import org.openflexo.components.wizard.WizardStep;
 import org.openflexo.connie.DataBinding;
 import org.openflexo.fme.model.FMEFreeModel;
@@ -57,24 +57,21 @@ import org.openflexo.icon.IconLibrary;
 import org.openflexo.toolbox.StringUtils;
 import org.openflexo.view.controller.FlexoController;
 
-public class CreateNewRelationalConceptWizard extends FlexoWizard {
+public class CreateNewRelationalConceptWizard extends FlexoActionWizard<CreateNewRelationalConcept> {
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(CreateNewRelationalConceptWizard.class.getPackage().getName());
 
-	private final CreateNewRelationalConcept action;
-
 	private final ConfigureNewRelationalConcept configureNewConcept;
 
 	public CreateNewRelationalConceptWizard(CreateNewRelationalConcept action, FlexoController controller) {
-		super(controller);
-		this.action = action;
+		super(action, controller);
 		addStep(configureNewConcept = new ConfigureNewRelationalConcept());
 	}
 
 	@Override
 	public String getWizardTitle() {
-		return action.getLocales().localizedForKey("create_new_relational_concept");
+		return getAction().getLocales().localizedForKey("create_new_relational_concept");
 	}
 
 	@Override
@@ -100,7 +97,7 @@ public class CreateNewRelationalConceptWizard extends FlexoWizard {
 		}
 
 		public CreateNewRelationalConcept getAction() {
-			return action;
+			return CreateNewRelationalConceptWizard.this.getAction();
 		}
 
 		public FMEFreeModel getFreeModel() {
@@ -109,24 +106,25 @@ public class CreateNewRelationalConceptWizard extends FlexoWizard {
 
 		@Override
 		public String getTitle() {
-			return action.getLocales().localizedForKey("configure_new_relational_concept");
+			return getAction().getLocales().localizedForKey("configure_new_relational_concept");
 		}
 
 		@Override
 		public boolean isValid() {
 
 			if (StringUtils.isEmpty(getNewConceptName())) {
-				setIssueMessage(action.getLocales().localizedForKey("no_concept_name_defined"), IssueMessageType.ERROR);
+				setIssueMessage(getAction().getLocales().localizedForKey("no_concept_name_defined"), IssueMessageType.ERROR);
 				return false;
 			}
 
 			if (getFreeModel().getAccessedVirtualModel().getFlexoConcept(getNewConceptName()) != null) {
-				setIssueMessage(action.getLocales().localizedForKey("a_concept_with_that_name_already_exists"), IssueMessageType.ERROR);
+				setIssueMessage(getAction().getLocales().localizedForKey("a_concept_with_that_name_already_exists"),
+						IssueMessageType.ERROR);
 				return false;
 			}
 
 			/*if (!getRenderer().isSet() || !getRenderer().isValid()) {
-				setIssueMessage(action.getLocales().localizedForKey("please_set_a_valid_renderer"), IssueMessageType.ERROR);
+				setIssueMessage(getAction().getLocales().localizedForKey("please_set_a_valid_renderer"), IssueMessageType.ERROR);
 				return false;
 			}*/
 
@@ -135,13 +133,13 @@ public class CreateNewRelationalConceptWizard extends FlexoWizard {
 		}
 
 		public String getNewConceptName() {
-			return action.getNewConceptName();
+			return getAction().getNewConceptName();
 		}
 
 		public void setNewConceptName(String newConceptName) {
 			if (!newConceptName.equals(getNewConceptName())) {
 				String oldValue = getNewConceptName();
-				action.setNewConceptName(newConceptName);
+				getAction().setNewConceptName(newConceptName);
 				getPropertyChangeSupport().firePropertyChange("newConceptName", oldValue, newConceptName);
 				getPropertyChangeSupport().firePropertyChange("renderer", null, getRenderer());
 				checkValidity();
@@ -149,43 +147,43 @@ public class CreateNewRelationalConceptWizard extends FlexoWizard {
 		}
 
 		public DataBinding<String> getRenderer() {
-			return action.getRenderer();
+			return getAction().getRenderer();
 		}
 
 		public FlexoConcept getFromConcept() {
-			return action.getFromConcept();
+			return getAction().getFromConcept();
 		}
 
 		public void setFromConcept(FlexoConcept concept) {
 			if (!concept.equals(getFromConcept())) {
 				FlexoConcept oldValue = getFromConcept();
-				action.setFromConcept(concept);
+				getAction().setFromConcept(concept);
 				getPropertyChangeSupport().firePropertyChange("fromConcept", oldValue, concept);
 				checkValidity();
 			}
 		}
 
 		public FlexoConcept getToConcept() {
-			return action.getToConcept();
+			return getAction().getToConcept();
 		}
 
 		public void setToConcept(FlexoConcept concept) {
 			if (!concept.equals(getToConcept())) {
 				FlexoConcept oldValue = getToConcept();
-				action.setToConcept(concept);
+				getAction().setToConcept(concept);
 				getPropertyChangeSupport().firePropertyChange("toConcept", oldValue, concept);
 				checkValidity();
 			}
 		}
 
 		public String getNewConceptDescription() {
-			return action.getNewConceptDescription();
+			return getAction().getNewConceptDescription();
 		}
 
 		public void setNewConceptDescription(String newConceptDescription) {
 			if (!newConceptDescription.equals(getNewConceptDescription())) {
 				String oldValue = getNewConceptDescription();
-				action.setNewConceptDescription(newConceptDescription);
+				getAction().setNewConceptDescription(newConceptDescription);
 				getPropertyChangeSupport().firePropertyChange("newConceptDescription", oldValue, newConceptDescription);
 				checkValidity();
 			}

@@ -43,7 +43,7 @@ import java.awt.Image;
 import java.util.logging.Logger;
 
 import org.openflexo.ApplicationContext;
-import org.openflexo.components.wizard.FlexoWizard;
+import org.openflexo.components.wizard.FlexoActionWizard;
 import org.openflexo.components.wizard.WizardStep;
 import org.openflexo.fme.model.action.CreateNewFMEPropertyFromDiagramConnector;
 import org.openflexo.foundation.fml.FlexoConcept;
@@ -56,26 +56,23 @@ import org.openflexo.icon.IconLibrary;
 import org.openflexo.toolbox.StringUtils;
 import org.openflexo.view.controller.FlexoController;
 
-public class CreateNewFMEPropertyFromDiagramConnectorWizard extends FlexoWizard {
+public class CreateNewFMEPropertyFromDiagramConnectorWizard extends FlexoActionWizard<CreateNewFMEPropertyFromDiagramConnector> {
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(CreateNewFMEPropertyFromDiagramConnectorWizard.class.getPackage().getName());
 
 	private static final Dimension DIMENSIONS = new Dimension(600, 400);
 
-	private final CreateNewFMEPropertyFromDiagramConnector action;
-
 	private final ConfigureNewFMEPropertyFromDiagramConnector configureNewFMEProperty;
 
 	public CreateNewFMEPropertyFromDiagramConnectorWizard(CreateNewFMEPropertyFromDiagramConnector action, FlexoController controller) {
-		super(controller);
-		this.action = action;
+		super(action, controller);
 		addStep(configureNewFMEProperty = new ConfigureNewFMEPropertyFromDiagramConnector());
 	}
 
 	@Override
 	public String getWizardTitle() {
-		return action.getLocales().localizedForKey("create_new_property");
+		return getAction().getLocales().localizedForKey("create_new_property");
 	}
 
 	@Override
@@ -106,41 +103,41 @@ public class CreateNewFMEPropertyFromDiagramConnectorWizard extends FlexoWizard 
 		}
 
 		public CreateNewFMEPropertyFromDiagramConnector getAction() {
-			return action;
+			return CreateNewFMEPropertyFromDiagramConnectorWizard.this.getAction();
 		}
 
 		@Override
 		public String getTitle() {
-			return action.getLocales().localizedForKey("configure_new_property");
+			return getAction().getLocales().localizedForKey("configure_new_property");
 		}
 
 		@Override
 		public boolean isValid() {
 
 			if (StringUtils.isEmpty(getPropertyName())) {
-				setIssueMessage(action.getLocales().localizedForKey("no_property_name_defined"), IssueMessageType.ERROR);
+				setIssueMessage(getAction().getLocales().localizedForKey("no_property_name_defined"), IssueMessageType.ERROR);
 				return false;
 			}
 
 			/*if (getAction().getConcept().getAccessibleProperty(getPropertyName()) != null) {
-				setIssueMessage(action.getLocales().localizedForKey("a_property_with_that_name_already_exists"), IssueMessageType.ERROR);
+				setIssueMessage(getAction().getLocales().localizedForKey("a_property_with_that_name_already_exists"), IssueMessageType.ERROR);
 				return false;
 			}*/
 
 			if (getFromFlexoConcept() == null) {
-				setIssueMessage(action.getLocales().localizedForKey("please_choose_a_concept_as_source_for_property"),
+				setIssueMessage(getAction().getLocales().localizedForKey("please_choose_a_concept_as_source_for_property"),
 						IssueMessageType.ERROR);
 				return false;
 			}
 
 			if (getToFlexoConcept() == null) {
-				setIssueMessage(action.getLocales().localizedForKey("please_choose_a_concept_as_type_for_property"),
+				setIssueMessage(getAction().getLocales().localizedForKey("please_choose_a_concept_as_type_for_property"),
 						IssueMessageType.ERROR);
 				return false;
 			}
 
 			if (StringUtils.isEmpty(getDescription())) {
-				setIssueMessage(action.getLocales().localizedForKey("it_is_recommanded_to_describe_the_new_property"),
+				setIssueMessage(getAction().getLocales().localizedForKey("it_is_recommanded_to_describe_the_new_property"),
 						IssueMessageType.WARNING);
 			}
 
@@ -149,52 +146,52 @@ public class CreateNewFMEPropertyFromDiagramConnectorWizard extends FlexoWizard 
 		}
 
 		public String getPropertyName() {
-			return action.getPropertyName();
+			return getAction().getPropertyName();
 		}
 
 		public void setPropertyName(String propertyName) {
 			if ((propertyName == null && getPropertyName() != null) || (propertyName != null && !propertyName.equals(getPropertyName()))) {
 				String oldValue = getPropertyName();
-				action.setPropertyName(propertyName);
+				getAction().setPropertyName(propertyName);
 				getPropertyChangeSupport().firePropertyChange("propertyName", oldValue, propertyName);
 				checkValidity();
 			}
 		}
 
 		public FlexoConcept getFromFlexoConcept() {
-			return action.getFromFlexoConcept();
+			return getAction().getFromFlexoConcept();
 		}
 
 		public void setFromFlexoConcept(FlexoConcept fromFlexoConcept) {
 			if (fromFlexoConcept != getFromFlexoConcept()) {
 				FlexoConcept oldValue = getFromFlexoConcept();
-				action.setFromFlexoConcept(fromFlexoConcept);
+				getAction().setFromFlexoConcept(fromFlexoConcept);
 				getPropertyChangeSupport().firePropertyChange("fromFlexoConcept", oldValue, fromFlexoConcept);
 				checkValidity();
 			}
 		}
 
 		public FlexoConcept getToFlexoConcept() {
-			return action.getToFlexoConcept();
+			return getAction().getToFlexoConcept();
 		}
 
 		public void setToFlexoConcept(FlexoConcept toFlexoConcept) {
 			if (toFlexoConcept != getToFlexoConcept()) {
 				FlexoConcept oldValue = getToFlexoConcept();
-				action.setToFlexoConcept(toFlexoConcept);
+				getAction().setToFlexoConcept(toFlexoConcept);
 				getPropertyChangeSupport().firePropertyChange("toFlexoConcept", oldValue, toFlexoConcept);
 				checkValidity();
 			}
 		}
 
 		public String getDescription() {
-			return action.getDescription();
+			return getAction().getDescription();
 		}
 
 		public void setDescription(String description) {
 			if ((description == null && getDescription() != null) || (description != null && !description.equals(getDescription()))) {
 				String oldValue = getDescription();
-				action.setDescription(description);
+				getAction().setDescription(description);
 				getPropertyChangeSupport().firePropertyChange("description", oldValue, description);
 				checkValidity();
 			}

@@ -43,7 +43,7 @@ import java.awt.Image;
 import java.util.logging.Logger;
 
 import org.openflexo.ApplicationContext;
-import org.openflexo.components.wizard.FlexoWizard;
+import org.openflexo.components.wizard.FlexoActionWizard;
 import org.openflexo.components.wizard.WizardStep;
 import org.openflexo.fme.model.action.DeclareInstanceOfExistingConcept;
 import org.openflexo.fme.model.action.DeclareInstanceOfExistingConcept.GRStrategy;
@@ -58,20 +58,17 @@ import org.openflexo.icon.IconFactory;
 import org.openflexo.icon.IconLibrary;
 import org.openflexo.view.controller.FlexoController;
 
-public class DeclareInstanceOfExistingConceptWizard extends FlexoWizard {
+public class DeclareInstanceOfExistingConceptWizard extends FlexoActionWizard<DeclareInstanceOfExistingConcept> {
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(DeclareInstanceOfExistingConceptWizard.class.getPackage().getName());
-
-	private final DeclareInstanceOfExistingConcept action;
 
 	private final ConfigureNewInstanceOfExistingConcept configureNewInstanceOfExistingConcept;
 
 	private static final Dimension DIMENSIONS = new Dimension(600, 400);
 
 	public DeclareInstanceOfExistingConceptWizard(DeclareInstanceOfExistingConcept action, FlexoController controller) {
-		super(controller);
-		this.action = action;
+		super(action, controller);
 		addStep(configureNewInstanceOfExistingConcept = new ConfigureNewInstanceOfExistingConcept());
 	}
 
@@ -82,7 +79,7 @@ public class DeclareInstanceOfExistingConceptWizard extends FlexoWizard {
 
 	@Override
 	public String getWizardTitle() {
-		return action.getLocales().localizedForKey("declare_instance_of_existing_concept");
+		return getAction().getLocales().localizedForKey("declare_instance_of_existing_concept");
 	}
 
 	@Override
@@ -108,7 +105,7 @@ public class DeclareInstanceOfExistingConceptWizard extends FlexoWizard {
 		}
 
 		public DeclareInstanceOfExistingConcept getAction() {
-			return action;
+			return DeclareInstanceOfExistingConceptWizard.this.getAction();
 		}
 
 		public FlexoConceptInstance getFlexoConceptInstance() {
@@ -117,31 +114,31 @@ public class DeclareInstanceOfExistingConceptWizard extends FlexoWizard {
 
 		@Override
 		public String getTitle() {
-			return action.getLocales().localizedForKey("configure_new_instance");
+			return getAction().getLocales().localizedForKey("configure_new_instance");
 		}
 
 		@Override
 		public boolean isValid() {
 
 			if (getConcept() == null) {
-				setIssueMessage(action.getLocales().localizedForKey("please_choose_a_concept"), IssueMessageType.ERROR);
+				setIssueMessage(getAction().getLocales().localizedForKey("please_choose_a_concept"), IssueMessageType.ERROR);
 				return false;
 			}
 
 			if (getConcept().getContainerFlexoConcept() != null) {
 				if (getContainer() == null) {
-					setIssueMessage(action.getLocales().localizedForKey("please_select_a_container_for_new_concept_instance"),
+					setIssueMessage(getAction().getLocales().localizedForKey("please_select_a_container_for_new_concept_instance"),
 							IssueMessageType.ERROR);
 					return false;
 				}
 				if (!getConcept().getContainerFlexoConcept().isAssignableFrom(getContainer().getFlexoConcept())) {
-					setIssueMessage(action.getLocales().localizedForKey("container_is_not_of_right_type"), IssueMessageType.ERROR);
+					setIssueMessage(getAction().getLocales().localizedForKey("container_is_not_of_right_type"), IssueMessageType.ERROR);
 					return false;
 				}
 			}
 
 			if (getGrStrategy() == null) {
-				setIssueMessage(action.getLocales().localizedForKey("please_choose_a_strategy_for_graphical_representation"),
+				setIssueMessage(getAction().getLocales().localizedForKey("please_choose_a_strategy_for_graphical_representation"),
 						IssueMessageType.ERROR);
 				return false;
 			}
@@ -151,13 +148,13 @@ public class DeclareInstanceOfExistingConceptWizard extends FlexoWizard {
 		}
 
 		public FlexoConcept getConcept() {
-			return action.getConcept();
+			return getAction().getConcept();
 		}
 
 		public void setConcept(FlexoConcept concept) {
 			if (concept != getConcept()) {
 				FlexoConcept oldValue = getConcept();
-				action.setConcept(concept);
+				getAction().setConcept(concept);
 				getPropertyChangeSupport().firePropertyChange("concept", oldValue, concept);
 				getPropertyChangeSupport().firePropertyChange("expectedContainerType", null, getExpectedContainerType());
 				checkValidity();
@@ -165,26 +162,26 @@ public class DeclareInstanceOfExistingConceptWizard extends FlexoWizard {
 		}
 
 		public GRStrategy getGrStrategy() {
-			return action.getGrStrategy();
+			return getAction().getGrStrategy();
 		}
 
 		public void setGrStrategy(GRStrategy strategy) {
 			if (strategy != getGrStrategy()) {
 				GRStrategy oldValue = getGrStrategy();
-				action.setGrStrategy(strategy);
+				getAction().setGrStrategy(strategy);
 				getPropertyChangeSupport().firePropertyChange("grStrategy", oldValue, strategy);
 				checkValidity();
 			}
 		}
 
 		public FlexoConceptInstance getContainer() {
-			return action.getContainer();
+			return getAction().getContainer();
 		}
 
 		public void setContainer(FlexoConceptInstance container) {
 			if ((container == null && getContainer() != null) || (container != null && !container.equals(getContainer()))) {
 				FlexoConceptInstance oldValue = getContainer();
-				action.setContainer(container);
+				getAction().setContainer(container);
 				getPropertyChangeSupport().firePropertyChange("container", oldValue, container);
 				checkValidity();
 			}

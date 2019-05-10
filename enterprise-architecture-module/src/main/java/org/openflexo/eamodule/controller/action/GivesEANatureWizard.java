@@ -43,7 +43,7 @@ import java.awt.Image;
 import java.util.logging.Logger;
 
 import org.openflexo.ApplicationContext;
-import org.openflexo.components.wizard.FlexoWizard;
+import org.openflexo.components.wizard.FlexoActionWizard;
 import org.openflexo.components.wizard.WizardStep;
 import org.openflexo.eamodule.EAMIconLibrary;
 import org.openflexo.eamodule.model.action.GivesEANature;
@@ -54,26 +54,23 @@ import org.openflexo.icon.IconFactory;
 import org.openflexo.icon.IconLibrary;
 import org.openflexo.view.controller.FlexoController;
 
-public class GivesEANatureWizard extends FlexoWizard {
+public class GivesEANatureWizard extends FlexoActionWizard<GivesEANature> {
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(GivesEANatureWizard.class.getPackage().getName());
-
-	private final GivesEANature action;
 
 	private final ConfigureEANature configureEANature;
 
 	private static final Dimension DIMENSIONS = new Dimension(750, 500);
 
 	public GivesEANatureWizard(GivesEANature action, FlexoController controller) {
-		super(controller);
-		this.action = action;
+		super(action, controller);
 		addStep(configureEANature = new ConfigureEANature());
 	}
 
 	@Override
 	public String getWizardTitle() {
-		return action.getLocales().localizedForKey("gives_project_enterprise_architecture_nature");
+		return getAction().getLocales().localizedForKey("gives_project_enterprise_architecture_nature");
 	}
 
 	@Override
@@ -104,12 +101,12 @@ public class GivesEANatureWizard extends FlexoWizard {
 		}
 
 		public GivesEANature getAction() {
-			return action;
+			return GivesEANatureWizard.this.getAction();
 		}
 
 		@Override
 		public String getTitle() {
-			return action.getLocales().localizedForKey("configure_enterprise_architecture_nature");
+			return getAction().getLocales().localizedForKey("configure_enterprise_architecture_nature");
 		}
 
 		@Override

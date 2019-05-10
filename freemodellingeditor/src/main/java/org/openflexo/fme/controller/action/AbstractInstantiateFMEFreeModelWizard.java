@@ -42,7 +42,7 @@ import java.awt.Dimension;
 import java.util.logging.Logger;
 
 import org.openflexo.ApplicationContext;
-import org.openflexo.components.wizard.FlexoWizard;
+import org.openflexo.components.wizard.FlexoActionWizard;
 import org.openflexo.components.wizard.WizardStep;
 import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.FreeModellingProjectNature;
@@ -52,28 +52,22 @@ import org.openflexo.toolbox.StringUtils;
 import org.openflexo.view.controller.FlexoController;
 
 public abstract class AbstractInstantiateFMEFreeModelWizard<A extends InstantiateFMEFreeModel<A, FM>, FM extends FMEFreeModel>
-		extends FlexoWizard {
+		extends FlexoActionWizard<A> {
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(AbstractInstantiateFMEFreeModelWizard.class.getPackage().getName());
 
-	private final A action;
 	private ChooseFreeModel chooseFreeModel;
 	private DescribeFreeModelInstance describeFreeModelInstance;
 
 	private static final Dimension DIMENSIONS = new Dimension(750, 500);
 
 	public AbstractInstantiateFMEFreeModelWizard(A action, FlexoController controller) {
-		super(controller);
-		this.action = action;
+		super(action, controller);
 		if (!(action.getFocusedObject() instanceof FMEFreeModel)) {
 			addStep(chooseFreeModel = makeChooseFreeModel());
 		}
 		addStep(describeFreeModelInstance = makeDescribeFreeModelInstance());
-	}
-
-	public A getAction() {
-		return action;
 	}
 
 	@Override
@@ -105,7 +99,7 @@ public abstract class AbstractInstantiateFMEFreeModelWizard<A extends Instantiat
 
 		@Override
 		public String getTitle() {
-			return action.getLocales().localizedForKey("choose_free_model_to_instantiate_or_create_new_one");
+			return getAction().getLocales().localizedForKey("choose_free_model_to_instantiate_or_create_new_one");
 		}
 
 		public FreeModellingProjectNature getFreeModellingProjectNature() {
@@ -116,31 +110,31 @@ public abstract class AbstractInstantiateFMEFreeModelWizard<A extends Instantiat
 		public boolean isValid() {
 
 			if (getFreeModelChoice() == null) {
-				setIssueMessage(action.getLocales().localizedForKey("please_choose_an_option"), IssueMessageType.ERROR);
+				setIssueMessage(getAction().getLocales().localizedForKey("please_choose_an_option"), IssueMessageType.ERROR);
 				return false;
 			}
 
 			switch (getFreeModelChoice()) {
 				case CreateNewFreeModel:
 					if (StringUtils.isEmpty(getFreeModelName())) {
-						setIssueMessage(action.getLocales().localizedForKey("no_free_model_name_defined"), IssueMessageType.ERROR);
+						setIssueMessage(getAction().getLocales().localizedForKey("no_free_model_name_defined"), IssueMessageType.ERROR);
 						return false;
 					}
 
 					else if (getFreeModellingProjectNature().getFreeModel(getFreeModelName()) != null) {
-						setIssueMessage(action.getLocales().localizedForKey("a_free_model_with_that_name_already_exists"),
+						setIssueMessage(getAction().getLocales().localizedForKey("a_free_model_with_that_name_already_exists"),
 								IssueMessageType.ERROR);
 						return false;
 					}
 
 					else if (StringUtils.isEmpty(getFreeModelDescription())) {
-						setIssueMessage(action.getLocales().localizedForKey("it_is_recommanded_to_describe_free_model"),
+						setIssueMessage(getAction().getLocales().localizedForKey("it_is_recommanded_to_describe_free_model"),
 								IssueMessageType.WARNING);
 					}
 					break;
 				case SelectExistingFreeModel:
 					if (getExistingFreeModel() == null) {
-						setIssueMessage(action.getLocales().localizedForKey("please_select_a_free_model"), IssueMessageType.ERROR);
+						setIssueMessage(getAction().getLocales().localizedForKey("please_select_a_free_model"), IssueMessageType.ERROR);
 						return false;
 					}
 				default:
@@ -251,7 +245,7 @@ public abstract class AbstractInstantiateFMEFreeModelWizard<A extends Instantiat
 
 		@Override
 		public String getTitle() {
-			return action.getLocales().localizedForKey("describe_free_model_instance_beeing_created");
+			return getAction().getLocales().localizedForKey("describe_free_model_instance_beeing_created");
 		}
 
 		public FreeModellingProjectNature getFreeModellingProjectNature() {
@@ -262,23 +256,23 @@ public abstract class AbstractInstantiateFMEFreeModelWizard<A extends Instantiat
 		public boolean isValid() {
 
 			if (StringUtils.isEmpty(getFreeModelInstanceName())) {
-				setIssueMessage(action.getLocales().localizedForKey("no_free_model_name_defined"), IssueMessageType.ERROR);
+				setIssueMessage(getAction().getLocales().localizedForKey("no_free_model_name_defined"), IssueMessageType.ERROR);
 				return false;
 			}
 
 			/*if (getAction().getFreeModel() == null) {
-				setIssueMessage(action.getLocales().localizedForKey("no_free_model_defined"), IssueMessageType.ERROR);
+				setIssueMessage(getAction().getLocales().localizedForKey("no_free_model_defined"), IssueMessageType.ERROR);
 				return false;
 			}*/
 
 			if (getAction().getFreeModel() != null && getAction().getFreeModel().getFreeModelInstance(getFreeModelInstanceName()) != null) {
-				setIssueMessage(action.getLocales().localizedForKey("a_free_model_instance_with_that_name_already_exists"),
+				setIssueMessage(getAction().getLocales().localizedForKey("a_free_model_instance_with_that_name_already_exists"),
 						IssueMessageType.ERROR);
 				return false;
 			}
 
 			if (StringUtils.isEmpty(getFreeModelInstanceDescription())) {
-				setIssueMessage(action.getLocales().localizedForKey("it_is_recommanded_to_describe_free_model_instance"),
+				setIssueMessage(getAction().getLocales().localizedForKey("it_is_recommanded_to_describe_free_model_instance"),
 						IssueMessageType.WARNING);
 			}
 

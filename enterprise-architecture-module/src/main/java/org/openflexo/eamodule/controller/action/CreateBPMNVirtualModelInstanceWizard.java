@@ -43,7 +43,7 @@ import java.awt.Image;
 import java.util.logging.Logger;
 
 import org.openflexo.ApplicationContext;
-import org.openflexo.components.wizard.FlexoWizard;
+import org.openflexo.components.wizard.FlexoActionWizard;
 import org.openflexo.components.wizard.WizardStep;
 import org.openflexo.eamodule.EAMIconLibrary;
 import org.openflexo.eamodule.model.action.CreateBPMNVirtualModelInstance;
@@ -55,26 +55,23 @@ import org.openflexo.icon.IconLibrary;
 import org.openflexo.toolbox.StringUtils;
 import org.openflexo.view.controller.FlexoController;
 
-public class CreateBPMNVirtualModelInstanceWizard extends FlexoWizard {
+public class CreateBPMNVirtualModelInstanceWizard extends FlexoActionWizard<CreateBPMNVirtualModelInstance> {
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(CreateBPMNVirtualModelInstanceWizard.class.getPackage().getName());
-
-	private final CreateBPMNVirtualModelInstance action;
 
 	private final ConfigureBPMN configureConceptualModel;
 
 	private static final Dimension DIMENSIONS = new Dimension(750, 500);
 
 	public CreateBPMNVirtualModelInstanceWizard(CreateBPMNVirtualModelInstance action, FlexoController controller) {
-		super(controller);
-		this.action = action;
+		super(action, controller);
 		addStep(configureConceptualModel = new ConfigureBPMN());
 	}
 
 	@Override
 	public String getWizardTitle() {
-		return action.getLocales().localizedForKey("starting_bpmn_modelling");
+		return getAction().getLocales().localizedForKey("starting_bpmn_modelling");
 	}
 
 	@Override
@@ -105,35 +102,37 @@ public class CreateBPMNVirtualModelInstanceWizard extends FlexoWizard {
 		}
 
 		public CreateBPMNVirtualModelInstance getAction() {
-			return action;
+			return CreateBPMNVirtualModelInstanceWizard.this.getAction();
 		}
 
 		@Override
 		public String getTitle() {
-			return action.getLocales().localizedForKey("configure_bpmn_modelling");
+			return getAction().getLocales().localizedForKey("configure_bpmn_modelling");
 		}
 
 		@Override
 		public boolean isValid() {
 
 			if (getAction().getBPMNVirtualModelResource() == null) {
-				setIssueMessage(action.getLocales().localizedForKey("cannot_find_bpmn_modelling_virtual_model"), IssueMessageType.ERROR);
+				setIssueMessage(getAction().getLocales().localizedForKey("cannot_find_bpmn_modelling_virtual_model"),
+						IssueMessageType.ERROR);
 				return false;
 			}
 
 			if (StringUtils.isEmpty(getBPMNModelName())) {
-				setIssueMessage(action.getLocales().localizedForKey("please_choose_a_name_for_bpmn_modelling"), IssueMessageType.ERROR);
+				setIssueMessage(getAction().getLocales().localizedForKey("please_choose_a_name_for_bpmn_modelling"),
+						IssueMessageType.ERROR);
 				return false;
 			}
 
 			if (getAction().getFocusedObject().getProject().getVirtualModelInstanceRepository()
 					.getVirtualModelInstanceResourceNamed(getBPMNModelName()) != null) {
-				setIssueMessage(action.getLocales().localizedForKey("duplicated_name_for_bpmn_modelling"), IssueMessageType.ERROR);
+				setIssueMessage(getAction().getLocales().localizedForKey("duplicated_name_for_bpmn_modelling"), IssueMessageType.ERROR);
 				return false;
 			}
 
 			if (StringUtils.isEmpty(getBPMNModelDescription())) {
-				setIssueMessage(action.getLocales().localizedForKey("it_is_recommanded_to_provide_a_description"),
+				setIssueMessage(getAction().getLocales().localizedForKey("it_is_recommanded_to_provide_a_description"),
 						IssueMessageType.WARNING);
 			}
 
@@ -142,28 +141,28 @@ public class CreateBPMNVirtualModelInstanceWizard extends FlexoWizard {
 		}
 
 		public String getBPMNModelName() {
-			return action.getBPMNModelName();
+			return getAction().getBPMNModelName();
 		}
 
 		public void setBPMNModelName(String bpmnModelName) {
 			if ((bpmnModelName == null && getBPMNModelName() != null)
 					|| (bpmnModelName != null && !bpmnModelName.equals(getBPMNModelName()))) {
 				String oldValue = getBPMNModelName();
-				action.setBPMNModelName(bpmnModelName);
+				getAction().setBPMNModelName(bpmnModelName);
 				getPropertyChangeSupport().firePropertyChange("BPMNModelName", oldValue, bpmnModelName);
 				checkValidity();
 			}
 		}
 
 		public String getBPMNModelDescription() {
-			return action.getBPMNModelDescription();
+			return getAction().getBPMNModelDescription();
 		}
 
 		public void setBPMNModelDescription(String bpmnModelDescription) {
 			if ((bpmnModelDescription == null && getBPMNModelDescription() != null)
 					|| (bpmnModelDescription != null && !bpmnModelDescription.equals(getBPMNModelDescription()))) {
 				String oldValue = getBPMNModelDescription();
-				action.setBPMNModelDescription(bpmnModelDescription);
+				getAction().setBPMNModelDescription(bpmnModelDescription);
 				getPropertyChangeSupport().firePropertyChange("BPMNModelDescription", oldValue, bpmnModelDescription);
 				checkValidity();
 			}

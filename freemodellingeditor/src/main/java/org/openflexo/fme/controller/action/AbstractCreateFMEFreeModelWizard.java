@@ -42,7 +42,7 @@ import java.awt.Dimension;
 import java.util.logging.Logger;
 
 import org.openflexo.ApplicationContext;
-import org.openflexo.components.wizard.FlexoWizard;
+import org.openflexo.components.wizard.FlexoActionWizard;
 import org.openflexo.components.wizard.WizardStep;
 import org.openflexo.fme.model.FreeModellingProjectNature;
 import org.openflexo.fme.model.action.CreateFMEFreeModel;
@@ -57,12 +57,11 @@ import org.openflexo.gina.annotation.FIBPanel;
 import org.openflexo.toolbox.StringUtils;
 import org.openflexo.view.controller.FlexoController;
 
-public abstract class AbstractCreateFMEFreeModelWizard<A extends CreateFMEFreeModel<A>> extends FlexoWizard {
+public abstract class AbstractCreateFMEFreeModelWizard<A extends CreateFMEFreeModel<A>> extends FlexoActionWizard<A> {
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(AbstractCreateFMEFreeModelWizard.class.getPackage().getName());
 
-	private final A action;
 	private final DescribeFreeModel describeFreeModel;
 
 	private static final Dimension DIMENSIONS = new Dimension(750, 500);
@@ -71,15 +70,10 @@ public abstract class AbstractCreateFMEFreeModelWizard<A extends CreateFMEFreeMo
 	private final ConfigureFreeModelSampleData configureSampleData;
 
 	public AbstractCreateFMEFreeModelWizard(A action, FlexoController controller) {
-		super(controller);
-		this.action = action;
+		super(action, controller);
 		addStep(describeFreeModel = makeDescribeFreeModel());
 		addStep(configureConceptualModel = new ConfigureFreeModelConceptualModel());
 		addStep(configureSampleData = new ConfigureFreeModelSampleData());
-	}
-
-	public A getAction() {
-		return action;
 	}
 
 	@Override
@@ -113,7 +107,7 @@ public abstract class AbstractCreateFMEFreeModelWizard<A extends CreateFMEFreeMo
 
 		@Override
 		public String getTitle() {
-			return action.getLocales().localizedForKey("describe_free_model");
+			return getAction().getLocales().localizedForKey("describe_free_model");
 		}
 
 		public FreeModellingProjectNature getFreeModellingProjectNature() {
@@ -124,17 +118,19 @@ public abstract class AbstractCreateFMEFreeModelWizard<A extends CreateFMEFreeMo
 		public boolean isValid() {
 
 			if (StringUtils.isEmpty(getFreeModelName())) {
-				setIssueMessage(action.getLocales().localizedForKey("no_free_model_name_defined"), IssueMessageType.ERROR);
+				setIssueMessage(getAction().getLocales().localizedForKey("no_free_model_name_defined"), IssueMessageType.ERROR);
 				return false;
 			}
 
 			else if (getFreeModellingProjectNature().getFreeModel(getFreeModelName()) != null) {
-				setIssueMessage(action.getLocales().localizedForKey("a_free_model_with_that_name_already_exists"), IssueMessageType.ERROR);
+				setIssueMessage(getAction().getLocales().localizedForKey("a_free_model_with_that_name_already_exists"),
+						IssueMessageType.ERROR);
 				return false;
 			}
 
 			else if (StringUtils.isEmpty(getFreeModelDescription())) {
-				setIssueMessage(action.getLocales().localizedForKey("it_is_recommanded_to_describe_free_model"), IssueMessageType.WARNING);
+				setIssueMessage(getAction().getLocales().localizedForKey("it_is_recommanded_to_describe_free_model"),
+						IssueMessageType.WARNING);
 			}
 
 			return true;
@@ -182,38 +178,40 @@ public abstract class AbstractCreateFMEFreeModelWizard<A extends CreateFMEFreeMo
 		}
 
 		public A getAction() {
-			return action;
+			return AbstractCreateFMEFreeModelWizard.this.getAction();
 		}
 
 		@Override
 		public String getTitle() {
-			return action.getLocales().localizedForKey("configure_conceptual_model");
+			return getAction().getLocales().localizedForKey("configure_conceptual_model");
 		}
 
 		@Override
 		public boolean isValid() {
 
 			if (getConceptualModelChoice() == null) {
-				setIssueMessage(action.getLocales().localizedForKey("please_chose_an_option"), IssueMessageType.ERROR);
+				setIssueMessage(getAction().getLocales().localizedForKey("please_chose_an_option"), IssueMessageType.ERROR);
 				return false;
 			}
 
 			switch (getConceptualModelChoice()) {
 				case CreateNewTopLevelVirtualModel:
 					if (StringUtils.isEmpty(getNewConceptualModelName())) {
-						setIssueMessage(action.getLocales().localizedForKey("no_conceptual_model_name_defined"), IssueMessageType.ERROR);
+						setIssueMessage(getAction().getLocales().localizedForKey("no_conceptual_model_name_defined"),
+								IssueMessageType.ERROR);
 						return false;
 					}
 					break;
 				case CreateContainedVirtualModel:
 					if (StringUtils.isEmpty(getNewConceptualModelName())) {
-						setIssueMessage(action.getLocales().localizedForKey("no_conceptual_model_name_defined"), IssueMessageType.ERROR);
+						setIssueMessage(getAction().getLocales().localizedForKey("no_conceptual_model_name_defined"),
+								IssueMessageType.ERROR);
 						return false;
 					}
 					break;
 				case SelectExistingVirtualModel:
 					if (getExistingConceptualModelResource() == null) {
-						setIssueMessage(action.getLocales().localizedForKey("please_select_a_virtual_model"), IssueMessageType.ERROR);
+						setIssueMessage(getAction().getLocales().localizedForKey("please_select_a_virtual_model"), IssueMessageType.ERROR);
 						return false;
 					}
 					break;
@@ -224,47 +222,47 @@ public abstract class AbstractCreateFMEFreeModelWizard<A extends CreateFMEFreeMo
 		}
 
 		public ConceptualModelChoice getConceptualModelChoice() {
-			return action.getConceptualModelChoice();
+			return getAction().getConceptualModelChoice();
 		}
 
 		public void setConceptualModelChoice(ConceptualModelChoice conceptualModelChoice) {
 			if (conceptualModelChoice != getConceptualModelChoice()) {
 				ConceptualModelChoice oldValue = getConceptualModelChoice();
-				action.setConceptualModelChoice(conceptualModelChoice);
+				getAction().setConceptualModelChoice(conceptualModelChoice);
 				getPropertyChangeSupport().firePropertyChange("conceptualModelChoice", oldValue, conceptualModelChoice);
 				checkValidity();
 			}
 		}
 
 		public VirtualModelResource getExistingConceptualModelResource() {
-			return action.getExistingConceptualModelResource();
+			return getAction().getExistingConceptualModelResource();
 		}
 
 		public void setExistingConceptualModelResource(VirtualModelResource existingConceptualModelResource) {
 			if (existingConceptualModelResource != getExistingConceptualModelResource()) {
 				VirtualModelResource oldValue = getExistingConceptualModelResource();
-				action.setExistingConceptualModelResource(existingConceptualModelResource);
+				getAction().setExistingConceptualModelResource(existingConceptualModelResource);
 				getPropertyChangeSupport().firePropertyChange("existingConceptualModelResource", oldValue, existingConceptualModelResource);
 				checkValidity();
 			}
 		}
 
 		public String getNewConceptualModelName() {
-			return action.getNewConceptualModelName();
+			return getAction().getNewConceptualModelName();
 		}
 
 		public void setNewConceptualModelName(String newConceptualModelName) {
 			if ((newConceptualModelName == null && getNewConceptualModelName() != null)
 					|| (newConceptualModelName != null && !newConceptualModelName.equals(getNewConceptualModelName()))) {
 				String oldValue = getNewConceptualModelName();
-				action.setNewConceptualModelName(newConceptualModelName);
+				getAction().setNewConceptualModelName(newConceptualModelName);
 				getPropertyChangeSupport().firePropertyChange("newConceptualModelName", oldValue, newConceptualModelName);
 				checkValidity();
 			}
 		}
 
 		public String getNewConceptualModelRelativePath() {
-			return action.getNewConceptualModelRelativePath();
+			return getAction().getNewConceptualModelRelativePath();
 		}
 
 		public void setNewConceptualModelRelativePath(String newConceptualModelRelativePath) {
@@ -272,7 +270,7 @@ public abstract class AbstractCreateFMEFreeModelWizard<A extends CreateFMEFreeMo
 					|| (newConceptualModelRelativePath != null
 							&& !newConceptualModelRelativePath.equals(getNewConceptualModelRelativePath()))) {
 				String oldValue = getNewConceptualModelRelativePath();
-				action.setNewConceptualModelRelativePath(newConceptualModelRelativePath);
+				getAction().setNewConceptualModelRelativePath(newConceptualModelRelativePath);
 				getPropertyChangeSupport().firePropertyChange("newConceptualModelRelativePath", oldValue, newConceptualModelRelativePath);
 				checkValidity();
 			}
@@ -294,27 +292,26 @@ public abstract class AbstractCreateFMEFreeModelWizard<A extends CreateFMEFreeMo
 		}
 
 		public A getAction() {
-			return action;
+			return AbstractCreateFMEFreeModelWizard.this.getAction();
 		}
 
 		@Override
 		public String getTitle() {
-			return action.getLocales().localizedForKey("configure_sample_data");
+			return getAction().getLocales().localizedForKey("configure_sample_data");
 		}
 
 		@Override
 		public boolean isValid() {
 
 			if (getSampleDataChoice() == null) {
-				setIssueMessage(action.getLocales().localizedForKey("please_chose_an_option"), IssueMessageType.ERROR);
+				setIssueMessage(getAction().getLocales().localizedForKey("please_chose_an_option"), IssueMessageType.ERROR);
 				return false;
 			}
 
 			if (getConfigureConceptualModel().getConceptualModelChoice() == ConceptualModelChoice.UseGeneralConceptualModel) {
 				if (getSampleDataChoice() != SampleDataChoice.UseGeneralSampleData) {
-					setIssueMessage(
-							action.getLocales().localizedForKey("you_cannot_specialize_sample_data_if_conceptual_model_is_not_specialized"),
-							IssueMessageType.ERROR);
+					setIssueMessage(getAction().getLocales().localizedForKey(
+							"you_cannot_specialize_sample_data_if_conceptual_model_is_not_specialized"), IssueMessageType.ERROR);
 					return false;
 				}
 			}
@@ -322,20 +319,20 @@ public abstract class AbstractCreateFMEFreeModelWizard<A extends CreateFMEFreeMo
 			switch (getSampleDataChoice()) {
 				case UseGeneralSampleData:
 					if (getConfigureConceptualModel().getConceptualModelChoice() != ConceptualModelChoice.UseGeneralConceptualModel) {
-						setIssueMessage(action.getLocales().localizedForKey(
+						setIssueMessage(getAction().getLocales().localizedForKey(
 								"you_cannot_use_general_sample_data_as_you_specialized_conceptual_model"), IssueMessageType.ERROR);
 						return false;
 					}
 				case CreateNewVirtualModelInstance:
 					if (StringUtils.isEmpty(getSampleDataName())) {
-						setIssueMessage(action.getLocales().localizedForKey("no_virtual_model_instance_name_defined"),
+						setIssueMessage(getAction().getLocales().localizedForKey("no_virtual_model_instance_name_defined"),
 								IssueMessageType.ERROR);
 						return false;
 					}
 					break;
 				case SelectExistingVirtualModelInstance:
 					if (getExistingSampleDataResource() == null) {
-						setIssueMessage(action.getLocales().localizedForKey("please_select_a_virtual_model_instance"),
+						setIssueMessage(getAction().getLocales().localizedForKey("please_select_a_virtual_model_instance"),
 								IssueMessageType.ERROR);
 						return false;
 					}
@@ -347,26 +344,26 @@ public abstract class AbstractCreateFMEFreeModelWizard<A extends CreateFMEFreeMo
 		}
 
 		public SampleDataChoice getSampleDataChoice() {
-			return action.getSampleDataChoice();
+			return getAction().getSampleDataChoice();
 		}
 
 		public void setSampleDataChoice(SampleDataChoice sampleDataChoice) {
 			if (sampleDataChoice != getSampleDataChoice()) {
 				SampleDataChoice oldValue = getSampleDataChoice();
-				action.setSampleDataChoice(sampleDataChoice);
+				getAction().setSampleDataChoice(sampleDataChoice);
 				getPropertyChangeSupport().firePropertyChange("sampleDataChoice", oldValue, sampleDataChoice);
 				checkValidity();
 			}
 		}
 
 		public FMLRTVirtualModelInstanceResource getExistingSampleDataResource() {
-			return action.getExistingSampleDataResource();
+			return getAction().getExistingSampleDataResource();
 		}
 
 		public void setExistingSampleDataResource(FMLRTVirtualModelInstanceResource existingSampleDataResource) {
 			if (existingSampleDataResource != getExistingSampleDataResource()) {
 				FMLRTVirtualModelInstanceResource oldValue = getExistingSampleDataResource();
-				action.setExistingSampleDataResource(existingSampleDataResource);
+				getAction().setExistingSampleDataResource(existingSampleDataResource);
 				getPropertyChangeSupport().firePropertyChange("existingSampleDataResource", oldValue, existingSampleDataResource);
 				checkValidity();
 			}
@@ -380,28 +377,28 @@ public abstract class AbstractCreateFMEFreeModelWizard<A extends CreateFMEFreeMo
 		}
 
 		public String getSampleDataName() {
-			return action.getSampleDataName();
+			return getAction().getSampleDataName();
 		}
 
 		public void setSampleDataName(String sampleDataName) {
 			if ((sampleDataName == null && getSampleDataName() != null)
 					|| (sampleDataName != null && !sampleDataName.equals(getSampleDataName()))) {
 				String oldValue = getSampleDataName();
-				action.setSampleDataName(sampleDataName);
+				getAction().setSampleDataName(sampleDataName);
 				getPropertyChangeSupport().firePropertyChange("sampleDataName", oldValue, sampleDataName);
 				checkValidity();
 			}
 		}
 
 		public String getSampleDataRelativePath() {
-			return action.getSampleDataRelativePath();
+			return getAction().getSampleDataRelativePath();
 		}
 
 		public void setSampleDataRelativePath(String sampleDataRelativePath) {
 			if ((sampleDataRelativePath == null && getSampleDataRelativePath() != null)
 					|| (sampleDataRelativePath != null && !sampleDataRelativePath.equals(getSampleDataRelativePath()))) {
 				String oldValue = getSampleDataRelativePath();
-				action.setSampleDataRelativePath(sampleDataRelativePath);
+				getAction().setSampleDataRelativePath(sampleDataRelativePath);
 				getPropertyChangeSupport().firePropertyChange("sampleDataRelativePath", oldValue, sampleDataRelativePath);
 				checkValidity();
 			}
