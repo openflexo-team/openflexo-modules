@@ -8,6 +8,7 @@ dependencies {
   compile diagramConnectorUi()
   compile ginaConnector()
   compile ginaConnectorUi()
+  compile group: 'org.openflexo', name: 'fml-diagramming-extension', version: '2.0.0-SNAPSHOT'
    
   // external dep
 
