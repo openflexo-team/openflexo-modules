@@ -188,7 +188,10 @@ public class DeclareInstanceOfExistingConceptWizard extends FlexoActionWizard<De
 		}
 
 		public FlexoConceptInstanceType getExpectedContainerType() {
-			return getConcept().getContainerFlexoConcept().getInstanceType();
+			if (getConcept() != null && getConcept().getContainerFlexoConcept() != null) {
+				return getConcept().getContainerFlexoConcept().getInstanceType();
+			}
+			return null;
 		}
 
 	}
