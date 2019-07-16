@@ -62,8 +62,8 @@ import org.openflexo.prefs.Preferences;
 		shortName = "Free Modelling Editor",
 		longName = "Free Modelling Editor Preferences",
 		FIBPanel = "Fib/Prefs/FMEPreferences.fib",
-		smallIcon = "Icons/OM/module-fme-16.png",
-		bigIcon = "Icons/OM/module-fme-64.png")
+		smallIcon = "Icons/FME/module-fme-16.png",
+		bigIcon = "Icons/FME/module-fme-64.png")
 public interface FMEPreferences extends ModulePreferences<FMEModule> {
 
 	public static final String SCREENSHOT_QUALITY_KEY = "screenshotQuality";

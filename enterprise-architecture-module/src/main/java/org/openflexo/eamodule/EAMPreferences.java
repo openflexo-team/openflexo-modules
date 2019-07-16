@@ -63,8 +63,8 @@ import org.openflexo.prefs.Preferences;
 		shortName = "Enterprise Architecture Editor",
 		longName = "Enterprise Architecture Editor Preferences",
 		FIBPanel = "Fib/Prefs/EAMPreferences.fib",
-		smallIcon = "Icons/OM/module-eam-16.png",
-		bigIcon = "Icons/OM/module-eam-64.png")
+		smallIcon = "Icons/EAM/module-eam-16.png",
+		bigIcon = "Icons/EAM/module-eam-64.png")
 public interface EAMPreferences extends ModulePreferences<EAModule> {
 
 	public static final String SCREENSHOT_QUALITY_KEY = "screenshotQuality";
