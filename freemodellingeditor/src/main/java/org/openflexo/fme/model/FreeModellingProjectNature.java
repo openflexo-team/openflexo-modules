@@ -45,7 +45,7 @@ import org.openflexo.ApplicationContext;
 import org.openflexo.fme.FreeModellingEditor;
 import org.openflexo.foundation.fml.FlexoRole;
 import org.openflexo.foundation.fml.VirtualModel;
-import org.openflexo.foundation.fml.rm.VirtualModelResourceFactory;
+import org.openflexo.foundation.fml.rm.CompilationUnitResourceFactory;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.nature.NatureObject;
 import org.openflexo.foundation.nature.ProjectNature;
@@ -137,7 +137,7 @@ public interface FreeModellingProjectNature extends ProjectNature<FreeModellingP
 				if (freeModel.getName().equals(freeModelName)) {
 					return freeModel;
 				}
-				if (freeModel.getName().equals(freeModelName + VirtualModelResourceFactory.FML_SUFFIX)) {
+				if (freeModel.getName().equals(freeModelName + CompilationUnitResourceFactory.FML_SUFFIX)) {
 					return freeModel;
 				}
 			}

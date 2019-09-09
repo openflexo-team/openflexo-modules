@@ -63,7 +63,7 @@ import org.openflexo.foundation.fml.action.CreatePrimitiveRole;
 import org.openflexo.foundation.fml.editionaction.AssignationAction;
 import org.openflexo.foundation.fml.editionaction.ExpressionAction;
 import org.openflexo.foundation.fml.inspector.InspectorEntry;
-import org.openflexo.foundation.fml.rm.VirtualModelResourceFactory;
+import org.openflexo.foundation.fml.rm.CompilationUnitResourceFactory;
 import org.openflexo.foundation.fml.rt.VirtualModelInstance;
 import org.openflexo.foundation.nature.NatureObject;
 import org.openflexo.foundation.nature.VirtualModelBasedNatureObject;
@@ -150,7 +150,7 @@ public interface FMEConceptualModel extends VirtualModelBasedNatureObject<FreeMo
 		@Override
 		public String getName() {
 			if (getAccessedVirtualModel() != null) {
-				return getAccessedVirtualModel().getName() + VirtualModelResourceFactory.FML_SUFFIX;
+				return getAccessedVirtualModel().getName() + CompilationUnitResourceFactory.FML_SUFFIX;
 			}
 			return null;
 		}

@@ -54,7 +54,7 @@ import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.action.CreateTopLevelVirtualModel;
-import org.openflexo.foundation.fml.rm.VirtualModelResource;
+import org.openflexo.foundation.fml.rm.CompilationUnitResource;
 import org.openflexo.foundation.fml.rt.action.CreateBasicVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.rm.FMLRTVirtualModelInstanceResource;
 import org.openflexo.foundation.nature.GivesNatureAction;
@@ -107,7 +107,7 @@ public class GivesFMENature extends GivesNatureAction<GivesFMENature, FreeModell
 	}
 
 	private ConceptualModelChoice conceptualModelChoice = ConceptualModelChoice.CreateNewVirtualModel;
-	private VirtualModelResource existingConceptualModelResource;
+	private CompilationUnitResource existingConceptualModelResource;
 	private String newConceptualModelName;
 	private String newConceptualModelRelativePath;
 	private FlexoResourceCenter<?> conceptualModelRC;
@@ -212,7 +212,7 @@ public class GivesFMENature extends GivesNatureAction<GivesFMENature, FreeModell
 				action.setNewVirtualModelName(getNewConceptualModelName());
 				action.setNewVirtualModelDescription("Conceptual model for " + getFocusedObject().getDisplayableName());
 				action.doAction();
-				VirtualModelResource newVirtualModelResource = (VirtualModelResource) action.getNewVirtualModel().getResource();
+				CompilationUnitResource newVirtualModelResource = (CompilationUnitResource) action.getNewVirtualModel().getResource();
 				conceptualModel.setAccessedVirtualModelResource(newVirtualModelResource);
 				break;
 			case SelectExistingVirtualModel:
@@ -241,15 +241,15 @@ public class GivesFMENature extends GivesNatureAction<GivesFMENature, FreeModell
 		}
 	}
 
-	public VirtualModelResource getExistingConceptualModelResource() {
+	public CompilationUnitResource getExistingConceptualModelResource() {
 		return existingConceptualModelResource;
 	}
 
-	public void setExistingConceptualModelResource(VirtualModelResource existingConceptualModelResource) {
+	public void setExistingConceptualModelResource(CompilationUnitResource existingConceptualModelResource) {
 		if ((existingConceptualModelResource == null && this.existingConceptualModelResource != null)
 				|| (existingConceptualModelResource != null
 						&& !existingConceptualModelResource.equals(this.existingConceptualModelResource))) {
-			VirtualModelResource oldValue = this.existingConceptualModelResource;
+			CompilationUnitResource oldValue = this.existingConceptualModelResource;
 			this.existingConceptualModelResource = existingConceptualModelResource;
 			getPropertyChangeSupport().firePropertyChange("existingConceptualModelResource", oldValue, existingConceptualModelResource);
 		}

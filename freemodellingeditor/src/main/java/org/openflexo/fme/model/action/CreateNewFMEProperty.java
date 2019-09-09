@@ -133,7 +133,7 @@ public class CreateNewFMEProperty extends FMEAction<CreateNewFMEProperty, FlexoC
 			}
 			else if (getFMEType() == FMEType.Enumeration) {
 
-				CreateFlexoEnum createEnumAction = CreateFlexoEnum.actionType.makeNewEmbeddedAction(getConcept().getDeclaringVirtualModel(),
+				CreateFlexoEnum createEnumAction = CreateFlexoEnum.actionType.makeNewEmbeddedAction(getConcept().getDeclaringCompilationUnit(),
 						null, this);
 				createEnumAction.setNewFlexoEnumName(getPropertyName().substring(0, 1).toUpperCase() + getPropertyName().substring(1));
 				createEnumAction.setNewFlexoEnumDescription(getDescription());

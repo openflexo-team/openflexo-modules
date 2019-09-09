@@ -48,7 +48,7 @@ import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoObject.FlexoObjectImpl;
 import org.openflexo.foundation.action.FlexoActionFactory;
 import org.openflexo.foundation.fml.CreationScheme;
-import org.openflexo.foundation.fml.rm.VirtualModelResource;
+import org.openflexo.foundation.fml.rm.CompilationUnitResource;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.action.CreateBasicVirtualModelInstance;
 import org.openflexo.foundation.resource.SaveResourceException;
@@ -119,8 +119,8 @@ public class CreateBPMNVirtualModelInstance extends EAMAction<CreateBPMNVirtualM
 				.makeNewEmbeddedAction(getFocusedObject().getOwner().getVirtualModelInstanceRepository().getRootFolder(), null, this);
 		action.setNewVirtualModelInstanceName(getBPMNModelName());
 		action.setNewVirtualModelInstanceTitle(getBPMNModelName());
-		action.setVirtualModel(getBPMNVirtualModelResource().getVirtualModel());
-		CreationScheme creationScheme = getBPMNVirtualModelResource().getVirtualModel().getCreationSchemes().get(0);
+		action.setVirtualModel(getBPMNVirtualModelResource().getCompilationUnit());
+		CreationScheme creationScheme = getBPMNVirtualModelResource().getCompilationUnit().getCreationSchemes().get(0);
 		action.setCreationScheme(creationScheme);
 		action.doAction();
 
@@ -132,8 +132,8 @@ public class CreateBPMNVirtualModelInstance extends EAMAction<CreateBPMNVirtualM
 
 	}
 
-	public VirtualModelResource getBPMNVirtualModelResource() {
-		return getServiceManager().getVirtualModelLibrary().getVirtualModelResource(ModelersConstants.BPMN_EDITOR_URI);
+	public CompilationUnitResource getBPMNVirtualModelResource() {
+		return getServiceManager().getVirtualModelLibrary().getCompilationUnitResource(ModelersConstants.BPMN_EDITOR_URI);
 	}
 
 	@Override

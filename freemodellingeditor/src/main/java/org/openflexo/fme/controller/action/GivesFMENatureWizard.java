@@ -50,7 +50,7 @@ import org.openflexo.fme.model.action.GivesFMENature;
 import org.openflexo.fme.model.action.GivesFMENature.ConceptualModelChoice;
 import org.openflexo.fme.model.action.GivesFMENature.SampleDataChoice;
 import org.openflexo.foundation.fml.VirtualModel;
-import org.openflexo.foundation.fml.rm.VirtualModelResource;
+import org.openflexo.foundation.fml.rm.CompilationUnitResource;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.rm.FMLRTVirtualModelInstanceResource;
 import org.openflexo.gina.annotation.FIBPanel;
@@ -165,13 +165,13 @@ public class GivesFMENatureWizard extends FlexoActionWizard<GivesFMENature> {
 			}
 		}
 
-		public VirtualModelResource getExistingConceptualModelResource() {
+		public CompilationUnitResource getExistingConceptualModelResource() {
 			return getAction().getExistingConceptualModelResource();
 		}
 
-		public void setExistingConceptualModelResource(VirtualModelResource existingConceptualModelResource) {
+		public void setExistingConceptualModelResource(CompilationUnitResource existingConceptualModelResource) {
 			if (existingConceptualModelResource != getExistingConceptualModelResource()) {
-				VirtualModelResource oldValue = getExistingConceptualModelResource();
+				CompilationUnitResource oldValue = getExistingConceptualModelResource();
 				getAction().setExistingConceptualModelResource(existingConceptualModelResource);
 				getPropertyChangeSupport().firePropertyChange("existingConceptualModelResource", oldValue, existingConceptualModelResource);
 				checkValidity();

@@ -210,7 +210,7 @@ public class OMController extends FlexoController {
 
 	public VirtualModel getCurrentVirtualModel() {
 		if (getCurrentDisplayedObjectAsModuleView() instanceof FMLObject) {
-			return ((FMLObject) getCurrentDisplayedObjectAsModuleView()).getDeclaringVirtualModel();
+			return ((FMLObject) getCurrentDisplayedObjectAsModuleView()).getDeclaringCompilationUnit();
 		}
 		return null;
 	}

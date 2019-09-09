@@ -25,7 +25,7 @@ import java.io.FileNotFoundException;
 import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.fml.action.CreateTopLevelVirtualModel;
-import org.openflexo.foundation.fml.rm.VirtualModelResource;
+import org.openflexo.foundation.fml.rm.CompilationUnitResource;
 import org.openflexo.foundation.fml.rt.action.CreateBasicVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.rm.FMLRTVirtualModelInstanceResource;
 import org.openflexo.foundation.resource.ResourceLoadingCancelledException;
@@ -60,7 +60,7 @@ public class OMDefaultProjectView extends FIBModuleView<FlexoProject<?>> {
 
 	public static class OMDefaultProjectViewFIBController extends FlexoFIBController {
 
-		private VirtualModelResource selectedVirtualModelResource;
+		private CompilationUnitResource selectedVirtualModelResource;
 		private FMLRTVirtualModelInstanceResource selectedVirtualModelInstanceResource;
 
 		public OMDefaultProjectViewFIBController(FIBComponent component, GinaViewFactory<?> viewFactory) {
@@ -71,14 +71,14 @@ public class OMDefaultProjectView extends FIBModuleView<FlexoProject<?>> {
 			super(component, viewFactory, controller);
 		}
 
-		public VirtualModelResource getSelectedVirtualModelResource() {
+		public CompilationUnitResource getSelectedVirtualModelResource() {
 			return selectedVirtualModelResource;
 		}
 
-		public void setSelectedVirtualModelResource(VirtualModelResource selectedVirtualModelResource) {
+		public void setSelectedVirtualModelResource(CompilationUnitResource selectedVirtualModelResource) {
 			if ((selectedVirtualModelResource == null && this.selectedVirtualModelResource != null)
 					|| (selectedVirtualModelResource != null && !selectedVirtualModelResource.equals(this.selectedVirtualModelResource))) {
-				VirtualModelResource oldValue = this.selectedVirtualModelResource;
+				CompilationUnitResource oldValue = this.selectedVirtualModelResource;
 				this.selectedVirtualModelResource = selectedVirtualModelResource;
 				getPropertyChangeSupport().firePropertyChange("selectedVirtualModelResource", oldValue, selectedVirtualModelResource);
 			}

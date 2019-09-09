@@ -50,7 +50,7 @@ import org.openflexo.fme.model.action.CreateFMEFreeModel.ConceptualModelChoice;
 import org.openflexo.fme.model.action.CreateFMEFreeModel.SampleDataChoice;
 import org.openflexo.foundation.fml.FlexoConceptInstanceType;
 import org.openflexo.foundation.fml.VirtualModel;
-import org.openflexo.foundation.fml.rm.VirtualModelResource;
+import org.openflexo.foundation.fml.rm.CompilationUnitResource;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.rm.FMLRTVirtualModelInstanceResource;
 import org.openflexo.gina.annotation.FIBPanel;
@@ -234,13 +234,13 @@ public abstract class AbstractCreateFMEFreeModelWizard<A extends CreateFMEFreeMo
 			}
 		}
 
-		public VirtualModelResource getExistingConceptualModelResource() {
+		public CompilationUnitResource getExistingConceptualModelResource() {
 			return getAction().getExistingConceptualModelResource();
 		}
 
-		public void setExistingConceptualModelResource(VirtualModelResource existingConceptualModelResource) {
+		public void setExistingConceptualModelResource(CompilationUnitResource existingConceptualModelResource) {
 			if (existingConceptualModelResource != getExistingConceptualModelResource()) {
-				VirtualModelResource oldValue = getExistingConceptualModelResource();
+				CompilationUnitResource oldValue = getExistingConceptualModelResource();
 				getAction().setExistingConceptualModelResource(existingConceptualModelResource);
 				getPropertyChangeSupport().firePropertyChange("existingConceptualModelResource", oldValue, existingConceptualModelResource);
 				checkValidity();
@@ -371,7 +371,7 @@ public abstract class AbstractCreateFMEFreeModelWizard<A extends CreateFMEFreeMo
 
 		public FlexoConceptInstanceType getExpectedType() {
 			if (getConfigureConceptualModel().getConceptualModelChoice() == ConceptualModelChoice.SelectExistingVirtualModel) {
-				return getConfigureConceptualModel().getExistingConceptualModelResource().getVirtualModel().getInstanceType();
+				return getConfigureConceptualModel().getExistingConceptualModelResource().getCompilationUnit().getInstanceType();
 			}
 			return null;
 		}

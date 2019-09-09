@@ -58,7 +58,7 @@ import org.openflexo.foundation.fml.action.CreateGenericBehaviourParameter;
 import org.openflexo.foundation.fml.action.CreateModelSlot;
 import org.openflexo.foundation.fml.action.CreateTopLevelVirtualModel;
 import org.openflexo.foundation.fml.editionaction.ExpressionAction;
-import org.openflexo.foundation.fml.rm.VirtualModelResource;
+import org.openflexo.foundation.fml.rm.CompilationUnitResource;
 import org.openflexo.foundation.fml.rt.FMLRTTechnologyAdapter;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstanceModelSlot;
 import org.openflexo.foundation.fml.rt.action.CreateBasicVirtualModelInstance;
@@ -84,7 +84,7 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 	private String freeModelDescription;
 
 	private ConceptualModelChoice conceptualModelChoice = ConceptualModelChoice.UseGeneralConceptualModel;
-	private VirtualModelResource existingConceptualModelResource;
+	private CompilationUnitResource existingConceptualModelResource;
 	private String newConceptualModelName;
 	private String newConceptualModelRelativePath;
 	private FlexoResourceCenter<?> conceptualModelRC;
@@ -132,7 +132,7 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 		getFocusedObject().getOwner().setIsModified();
 	}
 
-	protected VirtualModel createVirtualModel(String metaModelName, VirtualModelResource conceptualVM) {
+	protected VirtualModel createVirtualModel(String metaModelName, CompilationUnitResource conceptualVM) {
 		// Now we create the VirtualModel
 		// System.out.println("Creating VirtualModel...");
 		CreateTopLevelVirtualModel action = CreateTopLevelVirtualModel.actionType
@@ -162,7 +162,7 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 		CreateGenericBehaviourParameter createSampleDataParameter = CreateGenericBehaviourParameter.actionType
 				.makeNewEmbeddedAction(creationScheme, null, this);
 		createSampleDataParameter.setParameterName("sampleData");
-		createSampleDataParameter.setParameterType(conceptualVM.getVirtualModel().getInstanceType());
+		createSampleDataParameter.setParameterType(conceptualVM.getCompilationUnit().getInstanceType());
 
 		createSampleDataParameter.doAction();
 
@@ -260,7 +260,7 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 				action.setNewVirtualModelName(getNewConceptualModelName());
 				action.setNewVirtualModelDescription("Conceptual model for " + getFreeModelName());
 				action.doAction();
-				VirtualModelResource newTopLevelVirtualModelResource = (VirtualModelResource) action.getNewVirtualModel().getResource();
+				CompilationUnitResource newTopLevelVirtualModelResource = (CompilationUnitResource) action.getNewVirtualModel().getResource();
 				conceptualModel.setAccessedVirtualModelResource(newTopLevelVirtualModelResource);
 				break;
 			case CreateContainedVirtualModel:
@@ -270,7 +270,7 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 				action2.setNewVirtualModelName(getNewConceptualModelName());
 				action2.setNewVirtualModelDescription("Conceptual model for " + getFreeModelName());
 				action2.doAction();
-				VirtualModelResource newContainedVirtualModelResource = (VirtualModelResource) action2.getNewVirtualModel().getResource();
+				CompilationUnitResource newContainedVirtualModelResource = (CompilationUnitResource) action2.getNewVirtualModel().getResource();
 				conceptualModel.setAccessedVirtualModelResource(newContainedVirtualModelResource);
 				break;
 			case SelectExistingVirtualModel:
@@ -299,15 +299,15 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 		}
 	}
 
-	public VirtualModelResource getExistingConceptualModelResource() {
+	public CompilationUnitResource getExistingConceptualModelResource() {
 		return existingConceptualModelResource;
 	}
 
-	public void setExistingConceptualModelResource(VirtualModelResource existingConceptualModelResource) {
+	public void setExistingConceptualModelResource(CompilationUnitResource existingConceptualModelResource) {
 		if ((existingConceptualModelResource == null && this.existingConceptualModelResource != null)
 				|| (existingConceptualModelResource != null
 						&& !existingConceptualModelResource.equals(this.existingConceptualModelResource))) {
-			VirtualModelResource oldValue = this.existingConceptualModelResource;
+			CompilationUnitResource oldValue = this.existingConceptualModelResource;
 			this.existingConceptualModelResource = existingConceptualModelResource;
 			getPropertyChangeSupport().firePropertyChange("existingConceptualModelResource", oldValue, existingConceptualModelResource);
 		}

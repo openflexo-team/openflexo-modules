@@ -44,7 +44,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openflexo.OpenflexoProjectAtRunTimeTestCaseWithGUI;
 import org.openflexo.foundation.fml.VirtualModel;
-import org.openflexo.foundation.fml.rm.VirtualModelResource;
+import org.openflexo.foundation.fml.rm.CompilationUnitResource;
 import org.openflexo.modelers.ModelersConstants;
 import org.openflexo.test.OrderedRunner;
 import org.openflexo.test.TestOrder;
@@ -80,16 +80,16 @@ public class TestBPMNEditorVirtualModel extends OpenflexoProjectAtRunTimeTestCas
 
 		log("testBPMNEditorVirtualModel");
 
-		VirtualModelResource bmpnVirtualModelResource = serviceManager.getVirtualModelLibrary()
-				.getVirtualModelResource(ModelersConstants.BPMN_EDITOR_URI);
+		CompilationUnitResource bmpnVirtualModelResource = serviceManager.getVirtualModelLibrary()
+				.getCompilationUnitResource(ModelersConstants.BPMN_EDITOR_URI);
 		assertNotNull(bmpnVirtualModelResource);
 
 		VirtualModel bpmnVP;
 
-		assertNotNull(bpmnVP = bmpnVirtualModelResource.getVirtualModel());
+		assertNotNull(bpmnVP = bmpnVirtualModelResource.getCompilationUnit());
 
 		assertNotNull(bpmnVP);
-		System.out.println("Found view point in " + ((VirtualModelResource) bpmnVP.getResource()).getIODelegate().toString());
+		System.out.println("Found view point in " + ((CompilationUnitResource) bpmnVP.getResource()).getIODelegate().toString());
 		assertVirtualModelIsValid(bpmnVP);
 
 		for (VirtualModel vm : bpmnVP.getVirtualModels()) {
