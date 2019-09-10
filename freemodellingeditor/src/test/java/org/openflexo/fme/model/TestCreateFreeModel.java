@@ -48,6 +48,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.openflexo.fme.model.action.CreateFMEDiagramFreeModel;
 import org.openflexo.fme.model.action.InstantiateFMEDiagramFreeModel;
@@ -60,6 +61,7 @@ import org.openflexo.foundation.test.OpenflexoProjectAtRunTimeTestCase;
 import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.test.OrderedRunner;
 import org.openflexo.test.TestOrder;
+import org.openflexo.test.UITest;
 
 /**
  * This unit test is intented to test project creation in the context of FreeModellingProjectNature
@@ -79,6 +81,7 @@ public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 
 	@Test
 	@TestOrder(1)
+	@Category(UITest.class)
 	public void testCreateFreeModellingEditorProject() {
 
 		instanciateTestServiceManager(DiagramTechnologyAdapter.class);
@@ -93,6 +96,7 @@ public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 
 	@Test
 	@TestOrder(2)
+	@Category(UITest.class)
 	public void testCreateFreeModel() throws SaveResourceException {
 
 		CreateFMEDiagramFreeModel action = CreateFMEDiagramFreeModel.actionType.makeNewAction(nature, null, editor);
@@ -107,6 +111,7 @@ public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 
 	@Test
 	@TestOrder(3)
+	@Category(UITest.class)
 	public void testAvoidDuplicatedFreeModel() {
 		CreateFMEDiagramFreeModel action = CreateFMEDiagramFreeModel.actionType.makeNewAction(nature, null, editor);
 		action.setFreeModelName("FreeModel");
@@ -115,6 +120,7 @@ public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 
 	@Test
 	@TestOrder(4)
+	@Category(UITest.class)
 	public void testInstantiateFreeModel1() throws SaveResourceException {
 
 		InstantiateFMEDiagramFreeModel action = InstantiateFMEDiagramFreeModel.actionType.makeNewAction(freeModel, null, editor);
@@ -131,6 +137,7 @@ public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 
 	@Test
 	@TestOrder(5)
+	@Category(UITest.class)
 	public void testInstantiateFreeModel2() throws SaveResourceException {
 		InstantiateFMEDiagramFreeModel action = InstantiateFMEDiagramFreeModel.actionType.makeNewAction(freeModel, null, editor);
 		action.setFreeModelInstanceName("FreeModelInstance2");
@@ -156,6 +163,7 @@ public class TestCreateFreeModel extends OpenflexoProjectAtRunTimeTestCase {
 	 */
 	@Test
 	@TestOrder(5)
+	@Category(UITest.class)
 	public void testReloadProject() throws FileNotFoundException, ResourceLoadingCancelledException, FlexoException {
 
 		instanciateTestServiceManager(DiagramTechnologyAdapter.class);

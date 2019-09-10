@@ -39,6 +39,7 @@
 package org.openflexo.eam.fib;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.openflexo.foundation.fml.FMLTechnologyAdapter;
 import org.openflexo.gina.test.OpenflexoFIBTestCase;
@@ -46,6 +47,7 @@ import org.openflexo.rm.FileResourceImpl;
 import org.openflexo.rm.ResourceLocator;
 import org.openflexo.test.OrderedRunner;
 import org.openflexo.test.TestOrder;
+import org.openflexo.test.UITest;
 
 @RunWith(OrderedRunner.class)
 public class TestEAMWidgetFibs extends OpenflexoFIBTestCase {
@@ -55,6 +57,7 @@ public class TestEAMWidgetFibs extends OpenflexoFIBTestCase {
 	 */
 	@Test
 	@TestOrder(1)
+	@Category(UITest.class)
 	public void instantiateServiceManager() {
 
 		log("testInstantiateResourceCenter()");
@@ -82,6 +85,7 @@ public class TestEAMWidgetFibs extends OpenflexoFIBTestCase {
 
 	@Test
 	@TestOrder(2)
+	@Category(UITest.class)
 	public void testFIBEAMProjectBrowser() {
 		validateFIB("Fib/Widget/FIBEAMProjectBrowser.fib");
 	}

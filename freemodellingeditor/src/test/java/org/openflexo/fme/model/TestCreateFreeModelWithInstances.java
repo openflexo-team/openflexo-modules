@@ -47,6 +47,7 @@ import java.io.File;
 import java.util.List;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.openflexo.diana.geom.DianaPoint;
 import org.openflexo.fme.model.action.CreateFMEDiagramFreeModel;
@@ -64,6 +65,7 @@ import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.technologyadapter.diagram.model.DiagramShape;
 import org.openflexo.test.OrderedRunner;
 import org.openflexo.test.TestOrder;
+import org.openflexo.test.UITest;
 
 /**
  * This unit test is intented to test project creation in the context of FreeModellingProjectNature
@@ -85,6 +87,7 @@ public class TestCreateFreeModelWithInstances extends OpenflexoProjectAtRunTimeT
 
 	@Test
 	@TestOrder(1)
+	@Category(UITest.class)
 	public void testCreateFreeModellingEditorProject() {
 
 		instanciateTestServiceManager(DiagramTechnologyAdapter.class);
@@ -99,6 +102,7 @@ public class TestCreateFreeModelWithInstances extends OpenflexoProjectAtRunTimeT
 
 	@Test
 	@TestOrder(2)
+	@Category(UITest.class)
 	public void testCreateFreeModel() throws SaveResourceException {
 
 		CreateFMEDiagramFreeModel action = CreateFMEDiagramFreeModel.actionType.makeNewAction(nature, null, editor);
@@ -113,6 +117,7 @@ public class TestCreateFreeModelWithInstances extends OpenflexoProjectAtRunTimeT
 
 	@Test
 	@TestOrder(4)
+	@Category(UITest.class)
 	public void testInstantiateFreeModel() throws SaveResourceException {
 
 		InstantiateFMEDiagramFreeModel action = InstantiateFMEDiagramFreeModel.actionType.makeNewAction(freeModel, null, editor);
@@ -129,6 +134,7 @@ public class TestCreateFreeModelWithInstances extends OpenflexoProjectAtRunTimeT
 
 	@Test
 	@TestOrder(5)
+	@Category(UITest.class)
 	public void testCreateInstance() {
 		DropShape action = DropShape.actionType.makeNewAction(freeModelInstance.getDiagram(), null, editor);
 		action.setDiagramFreeModelInstance(freeModelInstance);
@@ -155,6 +161,7 @@ public class TestCreateFreeModelWithInstances extends OpenflexoProjectAtRunTimeT
 
 	@Test
 	@TestOrder(6)
+	@Category(UITest.class)
 	public void testMakeNewConceptFromTutu() throws SaveResourceException {
 
 		assertEquals(1, freeModelInstance.getInstances(freeModelInstance.getFreeModel().getNoneFlexoConcept(editor, null)).size());
@@ -194,6 +201,7 @@ public class TestCreateFreeModelWithInstances extends OpenflexoProjectAtRunTimeT
 
 	@Test
 	@TestOrder(7)
+	@Category(UITest.class)
 	public void testCreateTutu2Instance() throws SaveResourceException {
 
 		assertEquals(0, freeModelInstance.getInstances(freeModelInstance.getFreeModel().getNoneFlexoConcept(editor, null)).size());
