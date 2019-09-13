@@ -41,6 +41,7 @@ package org.openflexo.eam.model;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.openflexo.OpenflexoProjectAtRunTimeTestCaseWithGUI;
 import org.openflexo.foundation.fml.VirtualModel;
@@ -48,6 +49,7 @@ import org.openflexo.foundation.fml.rm.CompilationUnitResource;
 import org.openflexo.modelers.ModelersConstants;
 import org.openflexo.test.OrderedRunner;
 import org.openflexo.test.TestOrder;
+import org.openflexo.test.UITest;
 
 /**
  * We test here Formose viewpoints
@@ -66,6 +68,7 @@ public class TestBPMNEditorVirtualModel extends OpenflexoProjectAtRunTimeTestCas
 	 */
 	@Test
 	@TestOrder(1)
+	@Category(UITest.class)
 	public void instantiateResourceCenter() {
 
 		log("testInstantiateResourceCenter()");
@@ -76,6 +79,7 @@ public class TestBPMNEditorVirtualModel extends OpenflexoProjectAtRunTimeTestCas
 
 	@Test
 	@TestOrder(10)
+	@Category(UITest.class)
 	public void testBPMNEditorVirtualModel() {
 
 		log("testBPMNEditorVirtualModel");
