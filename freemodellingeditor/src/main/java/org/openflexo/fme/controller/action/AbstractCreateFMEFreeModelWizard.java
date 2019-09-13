@@ -371,7 +371,8 @@ public abstract class AbstractCreateFMEFreeModelWizard<A extends CreateFMEFreeMo
 
 		public FlexoConceptInstanceType getExpectedType() {
 			if (getConfigureConceptualModel().getConceptualModelChoice() == ConceptualModelChoice.SelectExistingVirtualModel) {
-				return getConfigureConceptualModel().getExistingConceptualModelResource().getCompilationUnit().getInstanceType();
+				return getConfigureConceptualModel().getExistingConceptualModelResource().getCompilationUnit().getVirtualModel()
+						.getInstanceType();
 			}
 			return null;
 		}

@@ -319,8 +319,8 @@ public class CreateNewFMEPropertyFromDiagramConnector
 	private FlexoConcept buildConnectorGRFlexoConcept() {
 
 		// Creates the concept
-		CreateFlexoConcept action = CreateFlexoConcept.actionType.makeNewEmbeddedAction(fromFlexoConceptGR.getDeclaringCompilationUnit(), null,
-				this);
+		CreateFlexoConcept action = CreateFlexoConcept.actionType
+				.makeNewEmbeddedAction(fromFlexoConceptGR.getDeclaringCompilationUnit().getVirtualModel(), null, this);
 		String conceptName = getPropertyName().substring(0, 1).toUpperCase() + getPropertyName().substring(1) + "ConnectorGR";
 		action.setNewFlexoConceptName(conceptName);
 		action.doAction();

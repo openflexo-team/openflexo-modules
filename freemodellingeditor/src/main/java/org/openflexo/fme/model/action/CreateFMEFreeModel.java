@@ -162,7 +162,7 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 		CreateGenericBehaviourParameter createSampleDataParameter = CreateGenericBehaviourParameter.actionType
 				.makeNewEmbeddedAction(creationScheme, null, this);
 		createSampleDataParameter.setParameterName("sampleData");
-		createSampleDataParameter.setParameterType(conceptualVM.getCompilationUnit().getInstanceType());
+		createSampleDataParameter.setParameterType(conceptualVM.getCompilationUnit().getVirtualModel().getInstanceType());
 
 		createSampleDataParameter.doAction();
 
@@ -260,7 +260,7 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 				action.setNewVirtualModelName(getNewConceptualModelName());
 				action.setNewVirtualModelDescription("Conceptual model for " + getFreeModelName());
 				action.doAction();
-				CompilationUnitResource newTopLevelVirtualModelResource = (CompilationUnitResource) action.getNewVirtualModel().getResource();
+				CompilationUnitResource newTopLevelVirtualModelResource = action.getNewVirtualModel().getResource();
 				conceptualModel.setAccessedVirtualModelResource(newTopLevelVirtualModelResource);
 				break;
 			case CreateContainedVirtualModel:
@@ -270,7 +270,7 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 				action2.setNewVirtualModelName(getNewConceptualModelName());
 				action2.setNewVirtualModelDescription("Conceptual model for " + getFreeModelName());
 				action2.doAction();
-				CompilationUnitResource newContainedVirtualModelResource = (CompilationUnitResource) action2.getNewVirtualModel().getResource();
+				CompilationUnitResource newContainedVirtualModelResource = action2.getNewVirtualModel().getResource();
 				conceptualModel.setAccessedVirtualModelResource(newContainedVirtualModelResource);
 				break;
 			case SelectExistingVirtualModel:

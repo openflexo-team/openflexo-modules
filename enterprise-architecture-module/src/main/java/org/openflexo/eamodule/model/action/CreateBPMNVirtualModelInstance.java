@@ -119,8 +119,8 @@ public class CreateBPMNVirtualModelInstance extends EAMAction<CreateBPMNVirtualM
 				.makeNewEmbeddedAction(getFocusedObject().getOwner().getVirtualModelInstanceRepository().getRootFolder(), null, this);
 		action.setNewVirtualModelInstanceName(getBPMNModelName());
 		action.setNewVirtualModelInstanceTitle(getBPMNModelName());
-		action.setVirtualModel(getBPMNVirtualModelResource().getCompilationUnit());
-		CreationScheme creationScheme = getBPMNVirtualModelResource().getCompilationUnit().getCreationSchemes().get(0);
+		action.setVirtualModel(getBPMNVirtualModelResource().getCompilationUnit().getVirtualModel());
+		CreationScheme creationScheme = getBPMNVirtualModelResource().getCompilationUnit().getVirtualModel().getCreationSchemes().get(0);
 		action.setCreationScheme(creationScheme);
 		action.doAction();
 

@@ -86,10 +86,10 @@ public class TestBPMNEditorVirtualModel extends OpenflexoProjectAtRunTimeTestCas
 
 		VirtualModel bpmnVP;
 
-		assertNotNull(bpmnVP = bmpnVirtualModelResource.getCompilationUnit());
+		assertNotNull(bpmnVP = bmpnVirtualModelResource.getCompilationUnit().getVirtualModel());
 
 		assertNotNull(bpmnVP);
-		System.out.println("Found view point in " + ((CompilationUnitResource) bpmnVP.getResource()).getIODelegate().toString());
+		System.out.println("Found view point in " + bpmnVP.getResource().getIODelegate().toString());
 		assertVirtualModelIsValid(bpmnVP);
 
 		for (VirtualModel vm : bpmnVP.getVirtualModels()) {
