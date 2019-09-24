@@ -2,6 +2,7 @@ GUI_perspective=Perspective "IHM"
 Generic=G\u00E9n\u00E9rique
 check_viewpoint_consistency=V\u00E9rifier le ViewPoint
 diagram_perspective=Perspective "Diagramme"
+export=Exporter
 localization=Locales
 new=Nouveau
 new_behaviour=Nouveau comportement

@@ -2,6 +2,7 @@ GUI_perspective=GUI_perspective
 Generic=Generic
 check_viewpoint_consistency=check_viewpoint_consistency
 diagram_perspective=diagram_perspective
+export=export
 localization=localization
 new=new
 new_behaviour=new_behaviour
