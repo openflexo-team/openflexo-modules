@@ -74,7 +74,7 @@ public class CreateNewConceptWizard extends FlexoActionWizard<CreateNewConcept> 
 
 	@Override
 	public Image getDefaultPageImage() {
-		return IconFactory.getImageIcon(FMLIconLibrary.FLEXO_CONCEPT_BIG_ICON, IconLibrary.NEW_32_32).getImage();
+		return IconFactory.getImageIcon(FMLIconLibrary.FLEXO_CONCEPT_BIG_ICON, IconLibrary.BIG_NEW_MARKER).getImage();
 	}
 
 	public ConfigureNewConcept getConfigureNewConcept() {
