@@ -76,7 +76,7 @@ public class CreateBPMNVirtualModelInstanceWizard extends FlexoActionWizard<Crea
 
 	@Override
 	public Image getDefaultPageImage() {
-		return IconFactory.getImageIcon(EAMIconLibrary.BPMN_BIG_ICON, IconLibrary.NEW_32_32).getImage();
+		return IconFactory.getImageIcon(EAMIconLibrary.BPMN_BIG_ICON, IconLibrary.BIG_NEW_MARKER).getImage();
 	}
 
 	@Override
