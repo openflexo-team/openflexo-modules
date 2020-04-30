@@ -128,7 +128,7 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 		assertNotNull(conceptAbis);
 		assertSame(conceptA, conceptAbis);
 
-		System.out.println(conceptualModel.getAccessedVirtualModel().getFMLRepresentation());
+		System.out.println(conceptualModel.getAccessedVirtualModel().getFMLPrettyPrint());
 
 		assertVirtualModelIsValid(conceptualModel.getAccessedVirtualModel());
 	}
@@ -149,12 +149,12 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 		FlexoConcept conceptAGR = diagramModel1.getGRFlexoConcept(conceptA, null, editor, null, true);
 		assertNotNull(conceptAGR);
 
-		System.out.println(diagramModel1.getAccessedVirtualModel().getFMLRepresentation());
+		System.out.println(diagramModel1.getAccessedVirtualModel().getFMLPrettyPrint());
 
 		FlexoConcept noneFlexoConceptGR = diagramModel1.getNoneFlexoConcept(editor, null);
 		assertNotNull(noneFlexoConceptGR);
 
-		System.out.println(diagramModel1.getAccessedVirtualModel().getFMLRepresentation());
+		System.out.println(diagramModel1.getAccessedVirtualModel().getFMLPrettyPrint());
 		assertVirtualModelIsValid(diagramModel1.getAccessedVirtualModel());
 
 	}

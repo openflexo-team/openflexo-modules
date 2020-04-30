@@ -97,7 +97,7 @@ public class TestBPMNEditorVirtualModel extends OpenflexoProjectAtRunTimeTestCas
 		assertVirtualModelIsValid(bpmnVP);
 
 		for (VirtualModel vm : bpmnVP.getVirtualModels()) {
-			System.out.println(vm.getFMLRepresentation());
+			System.out.println(vm.getFMLPrettyPrint());
 			assertObjectIsValid(vm);
 		}
 
