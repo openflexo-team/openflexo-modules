@@ -38,6 +38,7 @@
 
 package org.openflexo.om.fib;
 
+import org.junit.Test;
 import org.openflexo.gina.test.GenericFIBTestCase;
 import org.openflexo.rm.FileResourceImpl;
 import org.openflexo.rm.ResourceLocator;
@@ -47,6 +48,21 @@ public class TestOMFibs extends GenericFIBTestCase {
 	public static void main(String[] args) {
 		System.out.println(generateFIBTestCaseClass(((FileResourceImpl) ResourceLocator.locateResource("Fib")).getFile(), "Fib/"));
 		// System.out.println(generateFIBTestCaseClass(new File(System.getProperty("user.dir") + "/src/main/resources/Fib"), "Fib/"));
+	}
+
+	@Test
+	public void testOMPreferences() {
+		validateFIB("Fib/Prefs/OMPreferences.fib");
+	}
+
+	@Test
+	public void testDefaultProjectPanel() {
+		validateFIB("Fib/DefaultProjectPanel.fib");
+	}
+
+	@Test
+	public void testOMWelcomePanel() {
+		validateFIB("Fib/OMWelcomePanel.fib");
 	}
 
 }
