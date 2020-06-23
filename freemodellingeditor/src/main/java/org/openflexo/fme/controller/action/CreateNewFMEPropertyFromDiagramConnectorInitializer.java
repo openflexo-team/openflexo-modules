@@ -38,15 +38,13 @@
 
 package org.openflexo.fme.controller.action;
 
-import java.util.EventObject;
 import java.util.logging.Logger;
 
 import org.openflexo.components.wizard.Wizard;
 import org.openflexo.components.wizard.WizardDialog;
 import org.openflexo.fme.model.action.CreateNewFMEPropertyFromDiagramConnector;
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.technologyadapter.diagram.model.DiagramConnector;
 import org.openflexo.view.controller.ActionInitializer;
@@ -62,33 +60,26 @@ public class CreateNewFMEPropertyFromDiagramConnectorInitializer
 	}
 
 	@Override
-	protected FlexoActionInitializer<CreateNewFMEPropertyFromDiagramConnector> getDefaultInitializer() {
-		return new FlexoActionInitializer<CreateNewFMEPropertyFromDiagramConnector>() {
-			@Override
-			public boolean run(EventObject e, CreateNewFMEPropertyFromDiagramConnector action) {
-				Wizard wizard = new CreateNewFMEPropertyFromDiagramConnectorWizard(action, getController());
-				WizardDialog dialog = new WizardDialog(wizard, getController());
-				dialog.showDialog();
-				if (dialog.getStatus() != Status.VALIDATED) {
-					// Operation cancelled
-					return false;
-				}
-				return true;
-				// return instanciateAndShowDialog(action, FMECst.CREATE_NEW_CONCEPT_DIALOG_FIB);
+	protected FlexoActionRunnable<CreateNewFMEPropertyFromDiagramConnector, DiagramConnector, FlexoObject> getDefaultInitializer() {
+		return (e, action) -> {
+			Wizard wizard = new CreateNewFMEPropertyFromDiagramConnectorWizard(action, getController());
+			WizardDialog dialog = new WizardDialog(wizard, getController());
+			dialog.showDialog();
+			if (dialog.getStatus() != Status.VALIDATED) {
+				// Operation cancelled
+				return false;
 			}
+			return true;
+			// return instanciateAndShowDialog(action, FMECst.CREATE_NEW_CONCEPT_DIALOG_FIB);
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<CreateNewFMEPropertyFromDiagramConnector> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<CreateNewFMEPropertyFromDiagramConnector>() {
-			@Override
-			public boolean run(EventObject e, CreateNewFMEPropertyFromDiagramConnector action) {
-				logger.info("CreateNewConcept finalizer");
-				getController().selectAndFocusObject(action.getFocusedObject());
-				return true;
-			}
+	protected FlexoActionRunnable<CreateNewFMEPropertyFromDiagramConnector, DiagramConnector, FlexoObject> getDefaultFinalizer() {
+		return (e, action) -> {
+			logger.info("CreateNewConcept finalizer");
+			getController().selectAndFocusObject(action.getFocusedObject());
+			return true;
 		};
 	}
-
 }

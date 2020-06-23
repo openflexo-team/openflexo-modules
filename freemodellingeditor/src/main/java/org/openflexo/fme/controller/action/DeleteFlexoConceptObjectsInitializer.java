@@ -40,9 +40,7 @@ package org.openflexo.fme.controller.action;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.EventObject;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.swing.Icon;
 import javax.swing.KeyStroke;
@@ -50,9 +48,9 @@ import javax.swing.KeyStroke;
 import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.model.FreeModellingProjectNature;
+import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.action.FlexoActionFactory;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.foundation.fml.FlexoConceptObject;
 import org.openflexo.foundation.fml.VirtualModel;
@@ -65,98 +63,89 @@ import org.openflexo.view.controller.FlexoController;
 
 public class DeleteFlexoConceptObjectsInitializer
 		extends ActionInitializer<DeleteFlexoConceptObjects, FlexoConceptObject, FlexoConceptObject> {
-
-	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
-
 	public DeleteFlexoConceptObjectsInitializer(ControllerActionInitializer actionInitializer) {
 		super(DeleteFlexoConceptObjects.actionType, actionInitializer);
 	}
 
 	@Override
-	protected FlexoActionInitializer<DeleteFlexoConceptObjects> getDefaultInitializer() {
-		return new FlexoActionInitializer<DeleteFlexoConceptObjects>() {
-			@Override
-			public boolean run(EventObject e, DeleteFlexoConceptObjects action) {
+	protected FlexoActionRunnable<DeleteFlexoConceptObjects, FlexoConceptObject, FlexoConceptObject> getDefaultInitializer() {
+		return (e, action) -> {
+			if (action == null)
+				return false;
+			if (action.getEditor() == null)
+				return false;
+			FlexoProject<?> project = action.getEditor().getProject();
+			if (project == null)
+				return false;
 
-				if (action.getEditor() == null || action.getEditor().getProject() == null) {
-					return false;
-				}
-
-				if (!(action.getEditor().getProject().hasNature(FreeModellingProjectNature.class))) {
-					return false;
-				}
-
-				if (action.getGlobalSelection().size() >= 1) {
-					if (action.getFocusedObject() instanceof FlexoConcept) {
-						FlexoConcept concept = (FlexoConcept) action.getFocusedObject();
-						VirtualModel vm = concept.getOwner();
-						FreeModellingProjectNature fmeNature = action.getEditor().getProject().getNature(FreeModellingProjectNature.class);
-						FMEFreeModel freeModel = fmeNature.getFreeModel(vm);
-						if (freeModel == null) {
-							// this concept belongs to a VirtualModel which is not a FreeModel
-							// abort
-							return false;
-						}
-						if (concept == freeModel.getNoneFlexoConcept(getEditor(), action)) {
-							FlexoController.showError(getModuleLocales(action).localizedForKey("none_concept_cannot_be_deleted"));
-							return false;
-						}
-						// Lets see if there are instances of this concept in the project
-						List<FlexoConceptInstance> fciToBeDeleted = new ArrayList<>();
-						for (FMEFreeModelInstance freeModelInstance : freeModel.getFreeModelInstances()) {
-							fciToBeDeleted.addAll(freeModelInstance.getInstances(concept));
-						}
-
-						if (fciToBeDeleted.size() > 0) {
-							if (FlexoController.confirm(getModuleLocales(action).localizedForKeyWithParams(
-									"would_you_really_like_to_delete_this_concept_and_all_existing_instances_of_that_concept_(($0)_instances_found)_?",
-									fciToBeDeleted.size()))) {
-								for (FlexoConceptInstance fci : fciToBeDeleted) {
-									fci.delete();
-								}
-								return true;
-							}
-							return false;
-						}
-
-						else {
-							return FlexoController
-									.confirm(getModuleLocales(action).localizedForKey("would_you_really_like_to_delete_this_concept_?"));
-						}
-					}
-				}
-
+			if (!(project.hasNature(FreeModellingProjectNature.class))) {
 				return false;
 			}
-		};
-	}
 
-	@Override
-	protected FlexoActionFinalizer<DeleteFlexoConceptObjects> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<DeleteFlexoConceptObjects>() {
-			@Override
-			public boolean run(EventObject e, DeleteFlexoConceptObjects action) {
-				/*if (action.getGlobalSelection().size() >= 1) {
-					if (action.getFocusedObject() instanceof FlexoConcept) {
-						// FlexoConcept concept = (FlexoConcept) action.getFocusedObject();
-						FreeModellingProjectNature fmeNature = action.getServiceManager().getProjectNatureService()
-								.getProjectNature(FreeModellingProjectNature.class);
-						FreeModellingProject fmeProject = getProject().asNature(fmeNature);
-						// This concept has been deleted
-						for (FMEFreeModelInstance freeModel : fmeProject.getFreeModels()) {
-							freeModel.getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null,
-									freeModel.getUsedFlexoConcepts());
-						}
-						return true;
+			if (action.getGlobalSelection().size() >= 1) {
+				if (action.getFocusedObject() instanceof FlexoConcept) {
+					FlexoConcept concept = (FlexoConcept) action.getFocusedObject();
+					VirtualModel vm = concept.getOwner();
+					FreeModellingProjectNature fmeNature = project.getNature(FreeModellingProjectNature.class);
+					FMEFreeModel freeModel = fmeNature.getFreeModel(vm);
+					if (freeModel == null) {
+						// this concept belongs to a VirtualModel which is not a FreeModel
+						// abort
+						return false;
 					}
-				}*/
-				return true;
+					if (concept == freeModel.getNoneFlexoConcept(getEditor(), action)) {
+						FlexoController.showError(getModuleLocales(action).localizedForKey("none_concept_cannot_be_deleted"));
+						return false;
+					}
+					// Lets see if there are instances of this concept in the project
+					List<FlexoConceptInstance> fciToBeDeleted = new ArrayList<>();
+					for (FMEFreeModelInstance freeModelInstance : freeModel.getFreeModelInstances()) {
+						fciToBeDeleted.addAll(freeModelInstance.getInstances(concept));
+					}
+
+					if (fciToBeDeleted.size() > 0) {
+						if (FlexoController.confirm(getModuleLocales(action).localizedForKeyWithParams(
+								"would_you_really_like_to_delete_this_concept_and_all_existing_instances_of_that_concept_(($0)_instances_found)_?",
+								fciToBeDeleted.size()))) {
+							for (FlexoConceptInstance fci : fciToBeDeleted) {
+								fci.delete();
+							}
+							return true;
+						}
+						return false;
+					}
+					return FlexoController
+							.confirm(getModuleLocales(action).localizedForKey("would_you_really_like_to_delete_this_concept_?"));
+				}
 			}
+
+			return false;
 		};
 	}
 
 	@Override
-	protected Icon getEnabledIcon(FlexoActionFactory actionType) {
+	protected FlexoActionRunnable<DeleteFlexoConceptObjects, FlexoConceptObject, FlexoConceptObject> getDefaultFinalizer() {
+		return (e, action) -> {
+			/*if (action.getGlobalSelection().size() >= 1) {
+				if (action.getFocusedObject() instanceof FlexoConcept) {
+					// FlexoConcept concept = (FlexoConcept) action.getFocusedObject();
+					FreeModellingProjectNature fmeNature = action.getServiceManager().getProjectNatureService()
+							.getProjectNature(FreeModellingProjectNature.class);
+					FreeModellingProject fmeProject = getProject().asNature(fmeNature);
+					// This concept has been deleted
+					for (FMEFreeModelInstance freeModel : fmeProject.getFreeModels()) {
+						freeModel.getPropertyChangeSupport().firePropertyChange("usedFlexoConcepts", null,
+								freeModel.getUsedFlexoConcepts());
+					}
+					return true;
+				}
+			}*/
+			return true;
+		};
+	}
+
+	@Override
+	protected Icon getEnabledIcon(FlexoActionFactory<DeleteFlexoConceptObjects, FlexoConceptObject, FlexoConceptObject> actionType) {
 		return IconLibrary.DELETE_ICON;
 	}
 

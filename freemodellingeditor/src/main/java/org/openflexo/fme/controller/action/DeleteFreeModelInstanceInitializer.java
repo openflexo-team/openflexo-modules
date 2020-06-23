@@ -38,9 +38,6 @@
 
 package org.openflexo.fme.controller.action;
 
-import java.util.EventObject;
-import java.util.logging.Logger;
-
 import javax.swing.Icon;
 
 import org.openflexo.fme.controller.FMEController;
@@ -48,17 +45,12 @@ import org.openflexo.fme.model.FMEFreeModelInstance;
 import org.openflexo.fme.model.action.DeleteFreeModelInstance;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.action.FlexoActionFactory;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.icon.IconLibrary;
 import org.openflexo.view.controller.ActionInitializer;
-import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
 
 public class DeleteFreeModelInstanceInitializer extends ActionInitializer<DeleteFreeModelInstance, FMEFreeModelInstance, FlexoObject> {
-
-	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
-
 	DeleteFreeModelInstanceInitializer(FMEControllerActionInitializer actionInitializer) {
 		super(DeleteFreeModelInstance.actionType, actionInitializer);
 	}
@@ -69,32 +61,24 @@ public class DeleteFreeModelInstanceInitializer extends ActionInitializer<Delete
 	}
 
 	@Override
-	protected FlexoActionInitializer<DeleteFreeModelInstance> getDefaultInitializer() {
-		return new FlexoActionInitializer<DeleteFreeModelInstance>() {
-			@Override
-			public boolean run(EventObject e, DeleteFreeModelInstance action) {
-				return FlexoController
-						.confirm(action.getLocales().localizedForKey("would_you_really_like_to_delete_this_free_model_instance"));
+	protected FlexoActionRunnable<DeleteFreeModelInstance, FMEFreeModelInstance, FlexoObject> getDefaultInitializer() {
+		return (e, action) -> FlexoController
+				.confirm(action.getLocales().localizedForKey("would_you_really_like_to_delete_this_free_model_instance"));
+	}
+
+	@Override
+	protected FlexoActionRunnable<DeleteFreeModelInstance, FMEFreeModelInstance, FlexoObject> getDefaultFinalizer() {
+		return (e, action) -> {
+			FMEController fmeController = (FMEController) getController();
+			if (action.getFocusedObject() != null && action.getFocusedObject().getFreeModel() != null) {
+				fmeController.selectAndFocusObject(action.getFocusedObject().getFreeModel());
 			}
+			return true;
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<DeleteFreeModelInstance> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<DeleteFreeModelInstance>() {
-			@Override
-			public boolean run(EventObject e, DeleteFreeModelInstance action) {
-				FMEController fmeController = (FMEController) getController();
-				if (action.getFocusedObject() != null && action.getFocusedObject().getFreeModel() != null) {
-					fmeController.selectAndFocusObject(action.getFocusedObject().getFreeModel());
-				}
-				return true;
-			}
-		};
-	}
-
-	@Override
-	protected Icon getEnabledIcon(FlexoActionFactory actionType) {
+	protected Icon getEnabledIcon(FlexoActionFactory<DeleteFreeModelInstance, FMEFreeModelInstance, FlexoObject> actionType) {
 		return IconLibrary.DELETE_ICON;
 	}
 

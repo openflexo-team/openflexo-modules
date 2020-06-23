@@ -39,8 +39,8 @@
 
 package org.openflexo.module.sample;
 
-import org.openflexo.model.annotations.ModelEntity;
-import org.openflexo.model.annotations.XMLElement;
+import org.openflexo.pamela.annotations.ModelEntity;
+import org.openflexo.pamela.annotations.XMLElement;
 import org.openflexo.prefs.ModulePreferences;
 
 @ModelEntity

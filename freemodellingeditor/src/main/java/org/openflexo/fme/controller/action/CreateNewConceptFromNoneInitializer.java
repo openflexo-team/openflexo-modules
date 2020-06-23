@@ -38,15 +38,13 @@
 
 package org.openflexo.fme.controller.action;
 
-import java.util.EventObject;
 import java.util.logging.Logger;
 
 import org.openflexo.components.wizard.Wizard;
 import org.openflexo.components.wizard.WizardDialog;
 import org.openflexo.fme.model.action.CreateNewConceptFromNoneConcept;
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.view.controller.ActionInitializer;
@@ -62,31 +60,25 @@ public class CreateNewConceptFromNoneInitializer
 	}
 
 	@Override
-	protected FlexoActionInitializer<CreateNewConceptFromNoneConcept> getDefaultInitializer() {
-		return new FlexoActionInitializer<CreateNewConceptFromNoneConcept>() {
-			@Override
-			public boolean run(EventObject e, CreateNewConceptFromNoneConcept action) {
-				Wizard wizard = new CreateNewConceptFromNoneConceptWizard(action, getController());
-				WizardDialog dialog = new WizardDialog(wizard, getController());
-				dialog.showDialog();
-				if (dialog.getStatus() != Status.VALIDATED) {
-					// Operation cancelled
-					return false;
-				}
-				return true;
+	protected FlexoActionRunnable<CreateNewConceptFromNoneConcept, FlexoConceptInstance, FlexoObject> getDefaultInitializer() {
+		return (e, action) -> {
+			Wizard wizard = new CreateNewConceptFromNoneConceptWizard(action, getController());
+			WizardDialog dialog = new WizardDialog(wizard, getController());
+			dialog.showDialog();
+			if (dialog.getStatus() != Status.VALIDATED) {
+				// Operation cancelled
+				return false;
 			}
+			return true;
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<CreateNewConceptFromNoneConcept> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<CreateNewConceptFromNoneConcept>() {
-			@Override
-			public boolean run(EventObject e, CreateNewConceptFromNoneConcept action) {
-				logger.info("CreateNewConceptFromNoneConcept finalizer");
-				getController().selectAndFocusObject(action.getFocusedObject());
-				return true;
-			}
+	protected FlexoActionRunnable<CreateNewConceptFromNoneConcept, FlexoConceptInstance, FlexoObject> getDefaultFinalizer() {
+		return (e, action) -> {
+			logger.info("CreateNewConceptFromNoneConcept finalizer");
+			getController().selectAndFocusObject(action.getFocusedObject());
+			return true;
 		};
 	}
 

@@ -38,7 +38,6 @@
 
 package org.openflexo.fme.controller.action;
 
-import java.util.EventObject;
 import java.util.logging.Logger;
 
 import org.openflexo.components.wizard.Wizard;
@@ -46,8 +45,7 @@ import org.openflexo.components.wizard.WizardDialog;
 import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.action.CreateNewConcept;
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
@@ -61,33 +59,27 @@ public class CreateNewConceptInitializer extends ActionInitializer<CreateNewConc
 	}
 
 	@Override
-	protected FlexoActionInitializer<CreateNewConcept> getDefaultInitializer() {
-		return new FlexoActionInitializer<CreateNewConcept>() {
-			@Override
-			public boolean run(EventObject e, CreateNewConcept action) {
-				logger.info("CreateNewConcept initializer");
-				Wizard wizard = new CreateNewConceptWizard(action, getController());
-				WizardDialog dialog = new WizardDialog(wizard, getController());
-				dialog.showDialog();
-				if (dialog.getStatus() != Status.VALIDATED) {
-					// Operation cancelled
-					return false;
-				}
-				return true;
-				// return instanciateAndShowDialog(action, FMECst.CREATE_NEW_CONCEPT_DIALOG_FIB);
+	protected FlexoActionRunnable<CreateNewConcept, FMEFreeModel, FlexoObject> getDefaultInitializer() {
+		return (e, action) -> {
+			logger.info("CreateNewConcept initializer");
+			Wizard wizard = new CreateNewConceptWizard(action, getController());
+			WizardDialog dialog = new WizardDialog(wizard, getController());
+			dialog.showDialog();
+			if (dialog.getStatus() != Status.VALIDATED) {
+				// Operation cancelled
+				return false;
 			}
+			return true;
+			// return instanciateAndShowDialog(action, FMECst.CREATE_NEW_CONCEPT_DIALOG_FIB);
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<CreateNewConcept> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<CreateNewConcept>() {
-			@Override
-			public boolean run(EventObject e, CreateNewConcept action) {
-				logger.info("CreateNewConcept finalizer");
-				getController().selectAndFocusObject(action.getFocusedObject());
-				return true;
-			}
+	protected FlexoActionRunnable<CreateNewConcept, FMEFreeModel, FlexoObject> getDefaultFinalizer() {
+		return (e, action) -> {
+			logger.info("CreateNewConcept finalizer");
+			getController().selectAndFocusObject(action.getFocusedObject());
+			return true;
 		};
 	}
 

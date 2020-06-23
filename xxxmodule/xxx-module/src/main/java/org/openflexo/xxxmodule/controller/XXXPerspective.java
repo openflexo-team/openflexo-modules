@@ -47,19 +47,19 @@ import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
+import org.openflexo.module.FlexoModule.WelcomePanel;
 import org.openflexo.technologyadapter.gina.fml.FMLControlledFIBFlexoConceptInstanceNature;
 import org.openflexo.technologyadapter.gina.fml.FMLControlledFIBVirtualModelInstanceNature;
 import org.openflexo.technologyadapter.gina.view.FMLControlledFIBFlexoConceptInstanceModuleView;
 import org.openflexo.technologyadapter.gina.view.FMLControlledFIBVirtualModelInstanceModuleView;
 import org.openflexo.view.ModuleView;
 import org.openflexo.view.controller.FlexoController;
-import org.openflexo.view.controller.model.FlexoPerspective;
+import org.openflexo.view.controller.model.NaturePerspective;
 import org.openflexo.xxxmodule.XXXIconLibrary;
 import org.openflexo.xxxmodule.model.XXXProjectNature;
 import org.openflexo.xxxmodule.view.XXXProjectNatureModuleView;
 import org.openflexo.xxxmodule.widget.GenericProjectBrowser;
 import org.openflexo.xxxmodule.widget.XXXProjectBrowser;
-import org.openflexo.module.FlexoModule.WelcomePanel;
 
 public class XXXPerspective extends NaturePerspective<XXXProjectNature> {
 
@@ -84,6 +84,7 @@ public class XXXPerspective extends NaturePerspective<XXXProjectNature> {
 		}
 	}
 
+	@Override
 	public Class<XXXProjectNature> getNatureClass() {
 		return XXXProjectNature.class;
 	}

@@ -38,15 +38,11 @@
 
 package org.openflexo.fme.controller.action;
 
-import java.util.EventObject;
-import java.util.logging.Logger;
-
 import org.openflexo.components.wizard.Wizard;
 import org.openflexo.components.wizard.WizardDialog;
 import org.openflexo.fme.model.action.DeclareInstanceOfExistingConcept;
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.view.controller.ActionInitializer;
@@ -54,39 +50,29 @@ import org.openflexo.view.controller.ControllerActionInitializer;
 
 public class DeclareInstanceOfExistingConceptInitializer
 		extends ActionInitializer<DeclareInstanceOfExistingConcept, FlexoConceptInstance, FlexoObject> {
-
-	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
-
 	public DeclareInstanceOfExistingConceptInitializer(ControllerActionInitializer actionInitializer) {
 		super(DeclareInstanceOfExistingConcept.actionType, actionInitializer);
 	}
 
 	@Override
-	protected FlexoActionInitializer<DeclareInstanceOfExistingConcept> getDefaultInitializer() {
-		return new FlexoActionInitializer<DeclareInstanceOfExistingConcept>() {
-			@Override
-			public boolean run(EventObject e, DeclareInstanceOfExistingConcept action) {
-				Wizard wizard = new DeclareInstanceOfExistingConceptWizard(action, getController());
-				WizardDialog dialog = new WizardDialog(wizard, getController());
-				dialog.showDialog();
-				if (dialog.getStatus() != Status.VALIDATED) {
-					// Operation cancelled
-					return false;
-				}
-				return true;
+	protected FlexoActionRunnable<DeclareInstanceOfExistingConcept, FlexoConceptInstance, FlexoObject> getDefaultInitializer() {
+		return (e, action) -> {
+			Wizard wizard = new DeclareInstanceOfExistingConceptWizard(action, getController());
+			WizardDialog dialog = new WizardDialog(wizard, getController());
+			dialog.showDialog();
+			if (dialog.getStatus() != Status.VALIDATED) {
+				// Operation cancelled
+				return false;
 			}
+			return true;
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<DeclareInstanceOfExistingConcept> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<DeclareInstanceOfExistingConcept>() {
-			@Override
-			public boolean run(EventObject e, DeclareInstanceOfExistingConcept action) {
-				getController().selectAndFocusObject(action.getFocusedObject());
-				return true;
-			}
+	protected FlexoActionRunnable<DeclareInstanceOfExistingConcept, FlexoConceptInstance, FlexoObject> getDefaultFinalizer() {
+		return (e, action) -> {
+			getController().selectAndFocusObject(action.getFocusedObject());
+			return true;
 		};
 	}
-
 }

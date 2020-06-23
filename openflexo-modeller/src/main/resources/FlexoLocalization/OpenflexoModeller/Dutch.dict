@@ -1,6 +1,17 @@
 GUI_perspective=GUI_perspective
 Generic=Generic
+check_viewpoint_consistency=check_viewpoint_consistency
 diagram_perspective=diagram_perspective
+export=export
+generate=Generate
+localization=localization
+new=new
+new_behaviour=new_behaviour
+new_property=new_property
+new_virtual_model=new_virtual_model
 opening_module_view_for_object=opening_module_view_for_object
+property=property
+refactor=refactor
 select_default_object=select_default_object
 textual_FML_perspective=textual_FML_perspective
+title=title

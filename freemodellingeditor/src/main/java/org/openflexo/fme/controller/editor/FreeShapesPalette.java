@@ -40,14 +40,14 @@ package org.openflexo.fme.controller.editor;
 
 import java.util.logging.Logger;
 
-import org.openflexo.fge.BackgroundImageBackgroundStyle;
-import org.openflexo.fge.Drawing.ContainerNode;
-import org.openflexo.fge.Drawing.DrawingTreeNode;
-import org.openflexo.fge.ShapeGraphicalRepresentation;
-import org.openflexo.fge.ShapeGraphicalRepresentation.LocationConstraints;
-import org.openflexo.fge.control.DianaInteractiveEditor.EditorTool;
-import org.openflexo.fge.geom.FGEPoint;
-import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
+import org.openflexo.diana.BackgroundImageBackgroundStyle;
+import org.openflexo.diana.ShapeGraphicalRepresentation;
+import org.openflexo.diana.Drawing.ContainerNode;
+import org.openflexo.diana.Drawing.DrawingTreeNode;
+import org.openflexo.diana.ShapeGraphicalRepresentation.LocationConstraints;
+import org.openflexo.diana.control.DianaInteractiveEditor.EditorTool;
+import org.openflexo.diana.geom.DianaPoint;
+import org.openflexo.diana.shapes.ShapeSpecification.ShapeType;
 import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.action.FlexoUndoManager.FlexoActionCompoundEdit;
@@ -90,7 +90,7 @@ public class FreeShapesPalette extends CommonPalette {
 
 	@Override
 	public boolean handleBasicGraphicalRepresentationDrop(DrawingTreeNode<?, ?> target, ShapeGraphicalRepresentation gr,
-			FGEPoint dropLocation, boolean applyCurrentForeground, boolean applyCurrentBackground, boolean applyCurrentTextStyle,
+			DianaPoint dropLocation, boolean applyCurrentForeground, boolean applyCurrentBackground, boolean applyCurrentTextStyle,
 			boolean applyCurrentShadowStyle, boolean isImage, boolean resize) {
 
 		if (getEditor() == null) {
@@ -130,7 +130,7 @@ public class FreeShapesPalette extends CommonPalette {
 		return false;
 	}
 
-	private ShapeGraphicalRepresentation prepareGR(ShapeGraphicalRepresentation gr, FGEPoint dropLocation, boolean applyCurrentForeground,
+	private ShapeGraphicalRepresentation prepareGR(ShapeGraphicalRepresentation gr, DianaPoint dropLocation, boolean applyCurrentForeground,
 			boolean applyCurrentBackground, boolean applyCurrentTextStyle, boolean applyCurrentShadowStyle, boolean isImage,
 			boolean resize) {
 
@@ -169,7 +169,7 @@ public class FreeShapesPalette extends CommonPalette {
 	}
 
 	private boolean handleDropInDiagramContainerElement(DiagramContainerElement<?> container, ShapeGraphicalRepresentation gr,
-			FGEPoint dropLocation, boolean applyCurrentForeground, boolean applyCurrentBackground, boolean applyCurrentTextStyle,
+			DianaPoint dropLocation, boolean applyCurrentForeground, boolean applyCurrentBackground, boolean applyCurrentTextStyle,
 			boolean applyCurrentShadowStyle, boolean isImage, boolean resize) {
 
 		logger.info("drop " + this + " in " + container);
@@ -205,7 +205,7 @@ public class FreeShapesPalette extends CommonPalette {
 	}
 
 	private boolean handleDropInFMLControlledDiagramShape(FMLControlledDiagramShape container, ShapeGraphicalRepresentation gr,
-			FGEPoint dropLocation, boolean applyCurrentForeground, boolean applyCurrentBackground, boolean applyCurrentTextStyle,
+			DianaPoint dropLocation, boolean applyCurrentForeground, boolean applyCurrentBackground, boolean applyCurrentTextStyle,
 			boolean applyCurrentShadowStyle, boolean isImage, boolean resize) {
 
 		logger.info("drop " + this + " in " + container);

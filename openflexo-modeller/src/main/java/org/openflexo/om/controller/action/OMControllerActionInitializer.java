@@ -39,11 +39,8 @@
 
 package org.openflexo.om.controller.action;
 
-import java.util.logging.Logger;
-
 import org.openflexo.om.OpenflexoModeller;
 import org.openflexo.om.controller.OMController;
-import org.openflexo.om.controller.OMSelectionManager;
 import org.openflexo.view.controller.ControllerActionInitializer;
 
 /**
@@ -53,29 +50,13 @@ import org.openflexo.view.controller.ControllerActionInitializer;
  * @author sylvain
  */
 public class OMControllerActionInitializer extends ControllerActionInitializer {
-
-	@SuppressWarnings("unused")
-	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
-
 	public OMControllerActionInitializer(OMController controller) {
 		super(controller);
 	}
 
-	protected OMController getOMController() {
-		return (OMController) getController();
-	}
-
-	protected OMSelectionManager getOMSelectionManager() {
-		return (OMSelectionManager) getOMController().getSelectionManager();
-	}
-
 	@Override
 	public void initializeActions() {
-
 		super.initializeActions();
-
 		new OMSetPropertyInitializer(this);
-
 	}
-
 }

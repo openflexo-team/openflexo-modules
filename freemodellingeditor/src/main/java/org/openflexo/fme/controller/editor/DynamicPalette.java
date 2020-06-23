@@ -48,22 +48,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.openflexo.fge.BackgroundImageBackgroundStyle;
-import org.openflexo.fge.Drawing.ContainerNode;
-import org.openflexo.fge.Drawing.DrawingTreeNode;
-import org.openflexo.fge.GRProperty;
-import org.openflexo.fge.GraphicalRepresentation;
-import org.openflexo.fge.PaletteElementSpecification;
-import org.openflexo.fge.ShapeGraphicalRepresentation;
-import org.openflexo.fge.control.PaletteElement;
-import org.openflexo.fge.geom.FGEPoint;
-import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
+import org.openflexo.diana.BackgroundImageBackgroundStyle;
+import org.openflexo.diana.Drawing.ContainerNode;
+import org.openflexo.diana.Drawing.DrawingTreeNode;
+import org.openflexo.diana.GRProperty;
+import org.openflexo.diana.GraphicalRepresentation;
+import org.openflexo.diana.PaletteElementSpecification;
+import org.openflexo.diana.ShapeGraphicalRepresentation;
+import org.openflexo.diana.control.PaletteElement;
+import org.openflexo.diana.geom.DianaPoint;
+import org.openflexo.diana.shapes.ShapeSpecification.ShapeType;
 import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.logging.FlexoLogger;
-import org.openflexo.model.factory.AccessibleProxyObject;
-import org.openflexo.model.factory.ProxyMethodHandler;
+import org.openflexo.pamela.factory.AccessibleProxyObject;
+import org.openflexo.pamela.factory.ProxyMethodHandler;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.DiagramEditorPaletteModel;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.FMLControlledDiagramShape;
 import org.openflexo.technologyadapter.diagram.model.DiagramContainerElement;
@@ -155,13 +155,10 @@ public class DynamicPalette extends DiagramEditorPaletteModel implements Propert
 									return false;
 								}
 							} catch (TypeMismatchException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							} catch (NullReferenceException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							} catch (InvocationTargetException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}*/
@@ -192,7 +189,6 @@ public class DynamicPalette extends DiagramEditorPaletteModel implements Propert
 						return true;
 					}
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -349,7 +345,7 @@ public class DynamicPalette extends DiagramEditorPaletteModel implements Propert
 		return new DynamicPaletteElement(paletteElement.getGraphicalRepresentation());
 	}
 
-	private boolean handleDrop(DrawingTreeNode<?, ?> target, DynamicPaletteElement paletteElement, FGEPoint dropLocation) {
+	private boolean handleDrop(DrawingTreeNode<?, ?> target, DynamicPaletteElement paletteElement, DianaPoint dropLocation) {
 		if (getEditor() == null) {
 			return false;
 		}
@@ -423,7 +419,7 @@ public class DynamicPalette extends DiagramEditorPaletteModel implements Propert
 		}
 
 		@Override
-		public boolean elementDragged(DrawingTreeNode<?, ?> target, FGEPoint dropLocation) {
+		public boolean elementDragged(DrawingTreeNode<?, ?> target, DianaPoint dropLocation) {
 			return handleDrop(target, this, dropLocation);
 		}
 

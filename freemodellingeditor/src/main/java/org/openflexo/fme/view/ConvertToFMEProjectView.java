@@ -51,12 +51,6 @@ public class ConvertToFMEProjectView extends FIBModuleView<FlexoProject<?>> {
 		return perspective;
 	}
 
-	/*@Override
-	protected ConvertToFMEProjectViewFIBController createFibController(FIBComponent fibComponent, FlexoController controller, LocalizedDelegate locales) {
-		// TODO Auto-generated method stub
-		return (ConvertToFMEProjectViewFIBController)super.createFibController(fibComponent, controller, locales);
-	}*/
-
 	public static class ConvertToFMEProjectViewFIBController extends FlexoFIBController {
 		public ConvertToFMEProjectViewFIBController(FIBComponent component, GinaViewFactory<?> viewFactory) {
 			super(component, viewFactory);

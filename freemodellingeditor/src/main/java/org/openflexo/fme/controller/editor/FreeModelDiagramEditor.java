@@ -42,13 +42,13 @@ import java.util.logging.Logger;
 
 import javax.swing.JTabbedPane;
 
-import org.openflexo.fge.Drawing.ContainerNode;
-import org.openflexo.fge.ShapeGraphicalRepresentation;
-import org.openflexo.fge.ShapeGraphicalRepresentation.LocationConstraints;
-import org.openflexo.fge.geom.FGEPoint;
-import org.openflexo.fge.shapes.ShapeSpecification.ShapeType;
-import org.openflexo.fge.swing.control.SwingToolFactory;
-import org.openflexo.fge.swing.control.tools.JDianaPalette;
+import org.openflexo.diana.ShapeGraphicalRepresentation;
+import org.openflexo.diana.Drawing.ContainerNode;
+import org.openflexo.diana.ShapeGraphicalRepresentation.LocationConstraints;
+import org.openflexo.diana.geom.DianaPoint;
+import org.openflexo.diana.shapes.ShapeSpecification.ShapeType;
+import org.openflexo.diana.swing.control.SwingToolFactory;
+import org.openflexo.diana.swing.control.tools.JDianaPalette;
 import org.openflexo.fme.controller.FreeModelPasteHandler;
 import org.openflexo.fme.model.FMEDiagramFreeModelInstance;
 import org.openflexo.fme.model.action.DropShape;
@@ -175,7 +175,7 @@ public class FreeModelDiagramEditor extends FMLControlledDiagramEditor {
 	}
 
 	@Override
-	public boolean handleNewShapeCreation(ShapeGraphicalRepresentation shapeGR, ContainerNode<?, ?> parentNode, FGEPoint dropLocation,
+	public boolean handleNewShapeCreation(ShapeGraphicalRepresentation shapeGR, ContainerNode<?, ?> parentNode, DianaPoint dropLocation,
 			boolean applyCurrentForeground, boolean applyCurrentBackground, boolean applyCurrentTextStyle, boolean applyCurrentShadowStyle,
 			boolean isImage, boolean resize) {
 

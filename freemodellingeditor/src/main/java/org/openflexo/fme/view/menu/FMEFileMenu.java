@@ -38,12 +38,6 @@
 
 package org.openflexo.fme.view.menu;
 
-/*
- * Created on <date> by <yourname>
- *
- * Flexo Application Suite
- * (c) Denali 2003-2006
- */
 import java.util.logging.Logger;
 
 import org.openflexo.fme.controller.FMEController;
@@ -76,7 +70,8 @@ public class FMEFileMenu extends FileMenu {
 	public void quit() {
 		if (getFMEController().getApplicationContext().getResourceManager().getUnsavedResources().size() == 0) {
 			super.quit();
-		} else if (getFMEController().reviewModifiedResources()) {
+		}
+		else if (getFMEController().reviewModifiedResources()) {
 			super.quit();
 		}
 
@@ -89,12 +84,12 @@ public class FMEFileMenu extends FileMenu {
 			setIcon(IconLibrary.SAVE_ICON);
 		}
 	}
-
+	
 	public class SaveModifiedAction extends AbstractAction {
 		public SaveModifiedAction() {
 			super();
 		}
-
+	
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			getFMEController().reviewModifiedResources();

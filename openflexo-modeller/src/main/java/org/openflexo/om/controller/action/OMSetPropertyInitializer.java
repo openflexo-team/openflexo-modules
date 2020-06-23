@@ -39,13 +39,8 @@
 
 package org.openflexo.om.controller.action;
 
-import java.util.EventObject;
-import java.util.logging.Logger;
-
-import org.openflexo.foundation.FlexoException;
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.foundation.action.FlexoExceptionHandler;
 import org.openflexo.foundation.action.SetPropertyAction;
 import org.openflexo.view.controller.ActionInitializer;
@@ -53,50 +48,28 @@ import org.openflexo.view.controller.ControllerActionInitializer;
 import org.openflexo.view.controller.FlexoController;
 
 public class OMSetPropertyInitializer extends ActionInitializer<SetPropertyAction, FlexoObject, FlexoObject> {
-
-	@SuppressWarnings("unused")
-	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
-
 	public OMSetPropertyInitializer(ControllerActionInitializer actionInitializer) {
 		super(SetPropertyAction.actionType, actionInitializer);
 	}
 
 	@Override
-	protected FlexoActionInitializer<SetPropertyAction> getDefaultInitializer() {
-		return new FlexoActionInitializer<SetPropertyAction>() {
-			@Override
-			public boolean run(EventObject e, SetPropertyAction action) {
-				return action.getFocusedObject() != null;
-			}
-		};
+	protected FlexoActionRunnable<SetPropertyAction, FlexoObject, FlexoObject> getDefaultInitializer() {
+		return (e, action) -> action.getFocusedObject() != null;
 	}
 
 	@Override
-	protected FlexoActionFinalizer<SetPropertyAction> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<SetPropertyAction>() {
-			@Override
-			public boolean run(EventObject e, SetPropertyAction action) {
-				return true;
-			}
+	protected FlexoExceptionHandler<SetPropertyAction, FlexoObject, FlexoObject> getDefaultExceptionHandler() {
+		return (exception, action) -> {
+			exception.printStackTrace();
+			FlexoController.notify(action.getLocales().localizedForKey("could_not_set_property") + " "
+					+ (action.getLocalizedPropertyName() != null ? "'" + action.getLocalizedPropertyName() + "' " : "")
+					+ action.getLocales().localizedForKey("to") + " "
+					+ (action.getValue() == null || action.getValue().equals("") ? action.getLocales().localizedForKey("empty_value")
+							: action.getValue())
+					+ (exception.getLocalizedMessage() != null
+							? "\n(" + action.getLocales().localizedForKey("details: ") + exception.getLocalizedMessage() + ")"
+							: ""));
+			return true;
 		};
 	}
-
-	@Override
-	protected FlexoExceptionHandler<SetPropertyAction> getDefaultExceptionHandler() {
-		return new FlexoExceptionHandler<SetPropertyAction>() {
-			@Override
-			public boolean handleException(FlexoException exception, SetPropertyAction action) {
-				exception.printStackTrace();
-				FlexoController.notify(action.getLocales().localizedForKey("could_not_set_property") + " "
-						+ (action.getLocalizedPropertyName() != null ? "'" + action.getLocalizedPropertyName() + "' " : "")
-						+ action.getLocales().localizedForKey("to") + " "
-						+ (action.getValue() == null || action.getValue().equals("") ? action.getLocales().localizedForKey("empty_value")
-								: action.getValue())
-						+ (exception.getLocalizedMessage() != null
-								? "\n(" + action.getLocales().localizedForKey("details: ") + exception.getLocalizedMessage() + ")" : ""));
-				return true;
-			}
-		};
-	}
-
 }

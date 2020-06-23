@@ -44,12 +44,12 @@ import java.util.logging.Logger;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.nature.ProjectNature;
 import org.openflexo.foundation.nature.VirtualModelInstanceBasedNatureObject;
-import org.openflexo.model.annotations.Getter;
-import org.openflexo.model.annotations.ImplementationClass;
-import org.openflexo.model.annotations.ModelEntity;
-import org.openflexo.model.annotations.PropertyIdentifier;
-import org.openflexo.model.annotations.Setter;
-import org.openflexo.model.annotations.XMLElement;
+import org.openflexo.pamela.annotations.Getter;
+import org.openflexo.pamela.annotations.ImplementationClass;
+import org.openflexo.pamela.annotations.ModelEntity;
+import org.openflexo.pamela.annotations.PropertyIdentifier;
+import org.openflexo.pamela.annotations.Setter;
+import org.openflexo.pamela.annotations.XMLElement;
 
 /**
  * This class is used to interpret a {@link FlexoProject} as a {@link EAProject}<br>
@@ -80,7 +80,6 @@ public interface EAProjectNature extends ProjectNature<EAProjectNature> {
 
 		@Override
 		public List<VirtualModelInstanceBasedNatureObject<?>> getModels() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 	}

@@ -38,26 +38,18 @@
 
 package org.openflexo.fme.controller.action;
 
-import java.util.EventObject;
-import java.util.logging.Logger;
-
 import javax.swing.Icon;
 
 import org.openflexo.fme.FMEIconLibrary;
 import org.openflexo.fme.model.action.CreateNewConceptFromDiagramElement;
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
 import org.openflexo.foundation.action.FlexoActionFactory;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.technologyadapter.diagram.model.DiagramElement;
 import org.openflexo.view.controller.ActionInitializer;
-import org.openflexo.view.controller.ControllerActionInitializer;
 
-public class CreateNewConceptFromDiagramElementInitializer extends
-		ActionInitializer<CreateNewConceptFromDiagramElement, DiagramElement<?>, FlexoObject> {
-
-	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
-
+public class CreateNewConceptFromDiagramElementInitializer
+		extends ActionInitializer<CreateNewConceptFromDiagramElement, DiagramElement<?>, FlexoObject> {
 	CreateNewConceptFromDiagramElementInitializer(FMEControllerActionInitializer actionInitializer) {
 		super(CreateNewConceptFromDiagramElement.actionType, actionInitializer);
 	}
@@ -68,28 +60,15 @@ public class CreateNewConceptFromDiagramElementInitializer extends
 	}
 
 	@Override
-	protected FlexoActionInitializer<CreateNewConceptFromDiagramElement> getDefaultInitializer() {
-		return new FlexoActionInitializer<CreateNewConceptFromDiagramElement>() {
-			@Override
-			public boolean run(EventObject e, CreateNewConceptFromDiagramElement action) {
-				return true;
-			}
+	protected FlexoActionRunnable<CreateNewConceptFromDiagramElement, DiagramElement<?>, FlexoObject> getDefaultFinalizer() {
+		return (e, action) -> {
+			getController().selectAndFocusObject(action.getFocusedObject());
+			return true;
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<CreateNewConceptFromDiagramElement> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<CreateNewConceptFromDiagramElement>() {
-			@Override
-			public boolean run(EventObject e, CreateNewConceptFromDiagramElement action) {
-				getController().selectAndFocusObject(action.getFocusedObject());
-				return true;
-			}
-		};
-	}
-
-	@Override
-	protected Icon getEnabledIcon(FlexoActionFactory actionType) {
+	protected Icon getEnabledIcon(FlexoActionFactory<CreateNewConceptFromDiagramElement, DiagramElement<?>, FlexoObject> actionType) {
 		return FMEIconLibrary.FME_SMALL_ICON;
 	}
 

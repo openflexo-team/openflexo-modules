@@ -42,8 +42,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.logging.Logger;
 
-import org.openflexo.fge.Drawing.DrawingTreeNode;
-import org.openflexo.fge.geom.FGEPoint;
+import org.openflexo.diana.Drawing.DrawingTreeNode;
+import org.openflexo.diana.geom.DianaPoint;
 import org.openflexo.fme.controller.editor.DynamicPalette.GraphicalRepresentationSet;
 import org.openflexo.fme.model.FMEDiagramFreeModel;
 import org.openflexo.fme.model.FMEDiagramFreeModelInstance;
@@ -98,7 +98,7 @@ public class ConceptsPalette extends ContextualPalette {
 	}
 
 	@Override
-	public boolean handleFMLControlledDrop(DrawingTreeNode<?, ?> target, DiagramPaletteElement paletteElement, FGEPoint dropLocation,
+	public boolean handleFMLControlledDrop(DrawingTreeNode<?, ?> target, DiagramPaletteElement paletteElement, DianaPoint dropLocation,
 			FMLControlledDiagramEditor editor) {
 
 		if (getEditor() == null) {
@@ -122,7 +122,7 @@ public class ConceptsPalette extends ContextualPalette {
 	}
 
 	private boolean handleFMLControlledDropInDiagramContainerElement(DiagramContainerElement<?> rootContainer,
-			DiagramPaletteElement paletteElement, FGEPoint dropLocation, FMLControlledDiagramEditor editor) {
+			DiagramPaletteElement paletteElement, DianaPoint dropLocation, FMLControlledDiagramEditor editor) {
 
 		FMLRTVirtualModelInstance vmi = editor.getVirtualModelInstance();
 		TypedDiagramModelSlot ms = FMLControlledDiagramVirtualModelNature.getTypedDiagramModelSlot(vmi.getVirtualModel());
@@ -150,7 +150,7 @@ public class ConceptsPalette extends ContextualPalette {
 	}
 
 	private boolean handleFMLControlledDropInFMLControlledDiagramShape(FMLControlledDiagramShape container,
-			DiagramPaletteElement paletteElement, FGEPoint dropLocation, FMLControlledDiagramEditor editor) {
+			DiagramPaletteElement paletteElement, DianaPoint dropLocation, FMLControlledDiagramEditor editor) {
 
 		FMLRTVirtualModelInstance vmi = editor.getVirtualModelInstance();
 		TypedDiagramModelSlot ms = FMLControlledDiagramVirtualModelNature.getTypedDiagramModelSlot(vmi.getVirtualModel());
@@ -192,19 +192,21 @@ public class ConceptsPalette extends ContextualPalette {
 				FMLDiagramPaletteElementBinding binding = ms.getPaletteElementBinding(element);
 				if (binding != null) {
 					FlexoConcept concept = binding.getBoundFlexoConcept();
-					final ShapeRole conceptShapeRole = (ShapeRole) concept.getAccessibleProperty(FMEDiagramFreeModel.SHAPE_ROLE_NAME);
-					if (conceptShapeRole != null) {
-						conceptShapeRole.getGraphicalRepresentation().getPropertyChangeSupport()
-								.addPropertyChangeListener(new PropertyChangeListener() {
-									@Override
-									public void propertyChange(PropertyChangeEvent event) {
-										if (element.getGraphicalRepresentation() != null && conceptShapeRole != null
-												&& conceptShapeRole.getGraphicalRepresentation() != null) {
-											element.getGraphicalRepresentation().setsWith(conceptShapeRole.getGraphicalRepresentation(),
-													GraphicalRepresentationSet.IGNORED_PROPERTIES);
+					if (concept != null) {
+						final ShapeRole conceptShapeRole = (ShapeRole) concept.getAccessibleProperty(FMEDiagramFreeModel.SHAPE_ROLE_NAME);
+						if (conceptShapeRole != null) {
+							conceptShapeRole.getGraphicalRepresentation().getPropertyChangeSupport()
+									.addPropertyChangeListener(new PropertyChangeListener() {
+										@Override
+										public void propertyChange(PropertyChangeEvent event) {
+											if (element.getGraphicalRepresentation() != null && conceptShapeRole != null
+													&& conceptShapeRole.getGraphicalRepresentation() != null) {
+												element.getGraphicalRepresentation().setsWith(conceptShapeRole.getGraphicalRepresentation(),
+														GraphicalRepresentationSet.IGNORED_PROPERTIES);
+											}
 										}
-									}
-								});
+									});
+						}
 					}
 				}
 			}

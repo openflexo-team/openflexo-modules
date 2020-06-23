@@ -43,7 +43,7 @@ import java.awt.Image;
 import java.util.logging.Logger;
 
 import org.openflexo.ApplicationContext;
-import org.openflexo.components.wizard.FlexoWizard;
+import org.openflexo.components.wizard.FlexoActionWizard;
 import org.openflexo.components.wizard.WizardStep;
 import org.openflexo.fme.model.FMEType;
 import org.openflexo.fme.model.action.CreateNewFMEProperty;
@@ -57,26 +57,23 @@ import org.openflexo.icon.IconLibrary;
 import org.openflexo.toolbox.StringUtils;
 import org.openflexo.view.controller.FlexoController;
 
-public class CreateNewFMEPropertyWizard extends FlexoWizard {
+public class CreateNewFMEPropertyWizard extends FlexoActionWizard<CreateNewFMEProperty> {
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(CreateNewFMEPropertyWizard.class.getPackage().getName());
 
 	private static final Dimension DIMENSIONS = new Dimension(600, 400);
 
-	private final CreateNewFMEProperty action;
-
 	private final ConfigureNewFMEProperty configureNewFMEProperty;
 
 	public CreateNewFMEPropertyWizard(CreateNewFMEProperty action, FlexoController controller) {
-		super(controller);
-		this.action = action;
+		super(action, controller);
 		addStep(configureNewFMEProperty = new ConfigureNewFMEProperty());
 	}
 
 	@Override
 	public String getWizardTitle() {
-		return action.getLocales().localizedForKey("create_new_property");
+		return getAction().getLocales().localizedForKey("create_new_property");
 	}
 
 	@Override
@@ -86,7 +83,7 @@ public class CreateNewFMEPropertyWizard extends FlexoWizard {
 
 	@Override
 	public Image getDefaultPageImage() {
-		return IconFactory.getImageIcon(FMLIconLibrary.FLEXO_ROLE_BIG_ICON, IconLibrary.NEW_32_32).getImage();
+		return IconFactory.getImageIcon(FMLIconLibrary.FLEXO_ROLE_BIG_ICON, IconLibrary.BIG_NEW_MARKER).getImage();
 	}
 
 	public ConfigureNewFMEProperty getConfigureNewPrimitiveProperty() {
@@ -107,45 +104,46 @@ public class CreateNewFMEPropertyWizard extends FlexoWizard {
 		}
 
 		public CreateNewFMEProperty getAction() {
-			return action;
+			return CreateNewFMEPropertyWizard.this.getAction();
 		}
 
 		@Override
 		public String getTitle() {
-			return action.getLocales().localizedForKey("configure_new_property");
+			return getAction().getLocales().localizedForKey("configure_new_property");
 		}
 
 		@Override
 		public boolean isValid() {
 
 			if (StringUtils.isEmpty(getPropertyName())) {
-				setIssueMessage(action.getLocales().localizedForKey("no_property_name_defined"), IssueMessageType.ERROR);
+				setIssueMessage(getAction().getLocales().localizedForKey("no_property_name_defined"), IssueMessageType.ERROR);
 				return false;
 			}
 
 			if (getFMEType() == null) {
-				setIssueMessage(action.getLocales().localizedForKey("no_property_type_defined"), IssueMessageType.ERROR);
+				setIssueMessage(getAction().getLocales().localizedForKey("no_property_type_defined"), IssueMessageType.ERROR);
 				return false;
 			}
 
 			if (getAction().getConcept().getAccessibleProperty(getPropertyName()) != null) {
-				setIssueMessage(action.getLocales().localizedForKey("a_property_with_that_name_already_exists"), IssueMessageType.ERROR);
+				setIssueMessage(getAction().getLocales().localizedForKey("a_property_with_that_name_already_exists"),
+						IssueMessageType.ERROR);
 				return false;
 			}
 
 			if (getFMEType() == FMEType.Enumeration && StringUtils.isEmpty(getEnumValues())) {
-				setIssueMessage(action.getLocales().localizedForKey("no_enum_values_defined"), IssueMessageType.ERROR);
+				setIssueMessage(getAction().getLocales().localizedForKey("no_enum_values_defined"), IssueMessageType.ERROR);
 				return false;
 			}
 
 			if (getFMEType() == FMEType.Reference && getReferenceType() == null) {
-				setIssueMessage(action.getLocales().localizedForKey("please_choose_a_concept_as_type_for_property"),
+				setIssueMessage(getAction().getLocales().localizedForKey("please_choose_a_concept_as_type_for_property"),
 						IssueMessageType.ERROR);
 				return false;
 			}
 
 			if (StringUtils.isEmpty(getDescription())) {
-				setIssueMessage(action.getLocales().localizedForKey("it_is_recommanded_to_describe_the_new_property"),
+				setIssueMessage(getAction().getLocales().localizedForKey("it_is_recommanded_to_describe_the_new_property"),
 						IssueMessageType.WARNING);
 			}
 
@@ -154,65 +152,65 @@ public class CreateNewFMEPropertyWizard extends FlexoWizard {
 		}
 
 		public String getPropertyName() {
-			return action.getPropertyName();
+			return getAction().getPropertyName();
 		}
 
 		public void setPropertyName(String propertyName) {
 			if ((propertyName == null && getPropertyName() != null) || (propertyName != null && !propertyName.equals(getPropertyName()))) {
 				String oldValue = getPropertyName();
-				action.setPropertyName(propertyName);
+				getAction().setPropertyName(propertyName);
 				getPropertyChangeSupport().firePropertyChange("propertyName", oldValue, propertyName);
 				checkValidity();
 			}
 		}
 
 		public FMEType getFMEType() {
-			return action.getFMEType();
+			return getAction().getFMEType();
 		}
 
 		public void setFMEType(FMEType fmeType) {
 			if (fmeType != getFMEType()) {
 				FMEType oldValue = getFMEType();
-				action.setFMEType(fmeType);
+				getAction().setFMEType(fmeType);
 				getPropertyChangeSupport().firePropertyChange("FMEType", oldValue, fmeType);
 				checkValidity();
 			}
 		}
 
 		public String getEnumValues() {
-			return action.getEnumValues();
+			return getAction().getEnumValues();
 		}
 
 		public void setEnumValues(String enumValues) {
 			if ((enumValues == null && getEnumValues() != null) || (enumValues != null && !enumValues.equals(getEnumValues()))) {
 				String oldValue = getEnumValues();
-				action.setEnumValues(enumValues);
+				getAction().setEnumValues(enumValues);
 				getPropertyChangeSupport().firePropertyChange("enumValues", oldValue, enumValues);
 				checkValidity();
 			}
 		}
 
 		public FlexoConcept getReferenceType() {
-			return action.getReferenceType();
+			return getAction().getReferenceType();
 		}
 
 		public void setReferenceType(FlexoConcept referenceType) {
 			if (referenceType != getReferenceType()) {
 				FlexoConcept oldValue = getReferenceType();
-				action.setReferenceType(referenceType);
+				getAction().setReferenceType(referenceType);
 				getPropertyChangeSupport().firePropertyChange("referenceType", oldValue, referenceType);
 				checkValidity();
 			}
 		}
 
 		public String getDescription() {
-			return action.getDescription();
+			return getAction().getDescription();
 		}
 
 		public void setDescription(String description) {
 			if ((description == null && getDescription() != null) || (description != null && !description.equals(getDescription()))) {
 				String oldValue = getDescription();
-				action.setDescription(description);
+				getAction().setDescription(description);
 				getPropertyChangeSupport().firePropertyChange("description", oldValue, description);
 				checkValidity();
 			}

@@ -252,7 +252,7 @@ public class CreateNewFMEProperty extends FMEAction<CreateNewFMEProperty, FlexoC
 		}
 	}
 
-	private List<String> enumValuesAsList = new ArrayList();
+	private List<String> enumValuesAsList = new ArrayList<>();
 
 	public List<String> getEnumValuesAsList() {
 		if (enumValuesAsList == null) {

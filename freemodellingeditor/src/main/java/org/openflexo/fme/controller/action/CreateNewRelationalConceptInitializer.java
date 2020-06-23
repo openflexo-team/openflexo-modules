@@ -38,7 +38,6 @@
 
 package org.openflexo.fme.controller.action;
 
-import java.util.EventObject;
 import java.util.logging.Logger;
 
 import org.openflexo.components.wizard.Wizard;
@@ -46,8 +45,7 @@ import org.openflexo.components.wizard.WizardDialog;
 import org.openflexo.fme.model.FMEFreeModel;
 import org.openflexo.fme.model.action.CreateNewRelationalConcept;
 import org.openflexo.foundation.FlexoObject;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.view.controller.ActionInitializer;
 import org.openflexo.view.controller.ControllerActionInitializer;
@@ -61,33 +59,26 @@ public class CreateNewRelationalConceptInitializer extends ActionInitializer<Cre
 	}
 
 	@Override
-	protected FlexoActionInitializer<CreateNewRelationalConcept> getDefaultInitializer() {
-		return new FlexoActionInitializer<CreateNewRelationalConcept>() {
-			@Override
-			public boolean run(EventObject e, CreateNewRelationalConcept action) {
-				logger.info("CreateNewRelationalConcept initializer");
-				Wizard wizard = new CreateNewRelationalConceptWizard(action, getController());
-				WizardDialog dialog = new WizardDialog(wizard, getController());
-				dialog.showDialog();
-				if (dialog.getStatus() != Status.VALIDATED) {
-					// Operation cancelled
-					return false;
-				}
-				return true;
+	protected FlexoActionRunnable<CreateNewRelationalConcept, FMEFreeModel, FlexoObject> getDefaultInitializer() {
+		return (e, action) -> {
+			logger.info("CreateNewRelationalConcept initializer");
+			Wizard wizard = new CreateNewRelationalConceptWizard(action, getController());
+			WizardDialog dialog = new WizardDialog(wizard, getController());
+			dialog.showDialog();
+			if (dialog.getStatus() != Status.VALIDATED) {
+				// Operation cancelled
+				return false;
 			}
+			return true;
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<CreateNewRelationalConcept> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<CreateNewRelationalConcept>() {
-			@Override
-			public boolean run(EventObject e, CreateNewRelationalConcept action) {
-				logger.info("CreateNewConcept finalizer");
-				getController().selectAndFocusObject(action.getFocusedObject());
-				return true;
-			}
+	protected FlexoActionRunnable<CreateNewRelationalConcept, FMEFreeModel, FlexoObject> getDefaultFinalizer() {
+		return (e, action) -> {
+			logger.info("CreateNewConcept finalizer");
+			getController().selectAndFocusObject(action.getFocusedObject());
+			return true;
 		};
 	}
-
 }

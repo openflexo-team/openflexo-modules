@@ -38,12 +38,16 @@
 
 package org.openflexo.fme;
 
-import org.openflexo.model.annotations.Getter;
-import org.openflexo.model.annotations.ModelEntity;
-import org.openflexo.model.annotations.Setter;
-import org.openflexo.model.annotations.XMLAttribute;
-import org.openflexo.model.annotations.XMLElement;
+import java.util.logging.Logger;
+
+import org.openflexo.pamela.annotations.Getter;
+import org.openflexo.pamela.annotations.ImplementationClass;
+import org.openflexo.pamela.annotations.ModelEntity;
+import org.openflexo.pamela.annotations.Setter;
+import org.openflexo.pamela.annotations.XMLAttribute;
+import org.openflexo.pamela.annotations.XMLElement;
 import org.openflexo.prefs.ModulePreferences;
+import org.openflexo.prefs.Preferences;
 
 /**
  * Contains preferences for ViewPointModeller module
@@ -52,10 +56,26 @@ import org.openflexo.prefs.ModulePreferences;
  * 
  */
 @ModelEntity
+@ImplementationClass(FMEPreferences.FMEPreferencesImpl.class)
 @XMLElement(xmlTag = "FMEPreferences")
+@Preferences(
+		shortName = "Free Modelling Editor",
+		longName = "Free Modelling Editor Preferences",
+		FIBPanel = "Fib/Prefs/FMEPreferences.fib",
+		smallIcon = "Icons/FME/module-fme-16.png",
+		bigIcon = "Icons/FME/module-fme-64.png")
 public interface FMEPreferences extends ModulePreferences<FMEModule> {
 
 	public static final String SCREENSHOT_QUALITY_KEY = "screenshotQuality";
+
+	/*public static final String PROPERTY_KEY = "property";
+	
+	@Getter(value = PROPERTY_KEY)
+	@XMLAttribute
+	public Object getProperty();
+	
+	@Setter(PROPERTY_KEY)
+	public void setProperty(Object object);*/
 
 	@Getter(value = SCREENSHOT_QUALITY_KEY, defaultValue = "100")
 	@XMLAttribute
@@ -63,5 +83,26 @@ public interface FMEPreferences extends ModulePreferences<FMEModule> {
 
 	@Setter(SCREENSHOT_QUALITY_KEY)
 	public void setScreenshotQuality(int limit);
+
+	public abstract class FMEPreferencesImpl extends PreferencesContainerImpl implements FMEPreferences {
+
+		@SuppressWarnings("unused")
+		private static final Logger logger = Logger.getLogger(FMEPreferences.class.getPackage().getName());
+
+		/*@Override
+		public Object getProperty() {
+			return null;
+		}
+		
+		@Override
+		public void setProperty(Object property) {
+			if ((property == null && getProperty() != null) || (property != null && !property.equals(getProperty()))) {
+				Object oldValue = getProperty();
+				// this.property = property;
+				getPropertyChangeSupport().firePropertyChange("property", oldValue, property);
+			}
+		}*/
+
+	}
 
 }

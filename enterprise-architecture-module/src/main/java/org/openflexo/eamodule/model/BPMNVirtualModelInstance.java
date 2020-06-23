@@ -50,9 +50,9 @@ import org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstance;
 import org.openflexo.foundation.fml.rt.FlexoConceptInstance;
 import org.openflexo.foundation.nature.VirtualModelInstanceBasedNatureObject;
 import org.openflexo.logging.FlexoLogger;
-import org.openflexo.model.annotations.ImplementationClass;
-import org.openflexo.model.annotations.ModelEntity;
-import org.openflexo.model.annotations.XMLElement;
+import org.openflexo.pamela.annotations.ImplementationClass;
+import org.openflexo.pamela.annotations.ModelEntity;
+import org.openflexo.pamela.annotations.XMLElement;
 
 /**
  * Represents instance of BPMN {@link VirtualModel} in the context of a {@link EAProjectNature} From a technical point of view, a
@@ -85,16 +85,12 @@ public interface BPMNVirtualModelInstance extends VirtualModelInstanceBasedNatur
 			try {
 				return getAccessedVirtualModelInstance().execute("model.rootProcesses");
 			} catch (TypeMismatchException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (NullReferenceException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InvalidBindingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;

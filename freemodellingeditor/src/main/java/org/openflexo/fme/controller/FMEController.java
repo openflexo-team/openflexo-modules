@@ -38,13 +38,6 @@
 
 package org.openflexo.fme.controller;
 
-/*
- * Created on <date> by <yourname>
- *
- * Flexo Application Suite
- * (c) Denali 2003-2006
- */
-
 import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;

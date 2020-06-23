@@ -169,12 +169,9 @@ public class FMEDiagramFreeModelModuleView extends JPanel implements ModuleView<
 
 		perspective.setBottomRightView(getPerspective().getInspectorPanelGroup());
 
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				// Force right view to be visible
-				controller.getControllerModel().setRightViewVisible(true);
-			}
+		SwingUtilities.invokeLater(() -> {
+			// Force right view to be visible
+			controller.getControllerModel().setRightViewVisible(true);
 		});
 
 		controller.getControllerModel().setRightViewVisible(true);

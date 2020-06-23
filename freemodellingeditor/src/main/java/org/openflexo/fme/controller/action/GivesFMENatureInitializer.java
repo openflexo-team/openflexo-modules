@@ -38,9 +38,6 @@
 
 package org.openflexo.fme.controller.action;
 
-import java.util.EventObject;
-import java.util.logging.Logger;
-
 import javax.swing.Icon;
 
 import org.openflexo.components.wizard.Wizard;
@@ -51,17 +48,12 @@ import org.openflexo.fme.view.ConvertToFMEProjectView;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.action.FlexoActionFactory;
-import org.openflexo.foundation.action.FlexoActionFinalizer;
-import org.openflexo.foundation.action.FlexoActionInitializer;
+import org.openflexo.foundation.action.FlexoActionRunnable;
 import org.openflexo.foundation.task.Progress;
 import org.openflexo.gina.controller.FIBController.Status;
 import org.openflexo.view.controller.ActionInitializer;
-import org.openflexo.view.controller.ControllerActionInitializer;
 
 public class GivesFMENatureInitializer extends ActionInitializer<GivesFMENature, FlexoProject<?>, FlexoObject> {
-
-	private static final Logger logger = Logger.getLogger(ControllerActionInitializer.class.getPackage().getName());
-
 	GivesFMENatureInitializer(FMEControllerActionInitializer actionInitializer) {
 		super(GivesFMENature.actionType, actionInitializer);
 	}
@@ -72,46 +64,40 @@ public class GivesFMENatureInitializer extends ActionInitializer<GivesFMENature,
 	}
 
 	@Override
-	protected FlexoActionInitializer<GivesFMENature> getDefaultInitializer() {
-		return new FlexoActionInitializer<GivesFMENature>() {
-			@Override
-			public boolean run(EventObject e, GivesFMENature action) {
-				Progress.forceHideTaskBar();
-				Wizard wizard = new GivesFMENatureWizard(action, getController());
-				WizardDialog dialog = new WizardDialog(wizard, getController());
-				dialog.showDialog();
-				Progress.stopForceHideTaskBar();
-				if (dialog.getStatus() != Status.VALIDATED) {
-					// Operation cancelled
-					return false;
-				}
-				return true;
+	protected FlexoActionRunnable<GivesFMENature, FlexoProject<?>, FlexoObject> getDefaultInitializer() {
+		return (e, action) -> {
+			Progress.forceHideTaskBar();
+			Wizard wizard = new GivesFMENatureWizard(action, getController());
+			WizardDialog dialog = new WizardDialog(wizard, getController());
+			dialog.showDialog();
+			Progress.stopForceHideTaskBar();
+			if (dialog.getStatus() != Status.VALIDATED) {
+				// Operation cancelled
+				return false;
 			}
+			return true;
 		};
 	}
 
 	@Override
-	protected FlexoActionFinalizer<GivesFMENature> getDefaultFinalizer() {
-		return new FlexoActionFinalizer<GivesFMENature>() {
-			@Override
-			public boolean run(EventObject e, GivesFMENature action) {
-				// We store the eventual ModuleView to remove, but we must remove it AFTER selection of new object
-				// Otherwise, focus on FlexoProject will be lost
-				ConvertToFMEProjectView viewToRemove = null;
-				if (getController().getCurrentModuleView() instanceof ConvertToFMEProjectView) {
-					viewToRemove = (ConvertToFMEProjectView) getController().getCurrentModuleView();
-				}
-				getController().selectAndFocusObject(action.getNewNature());
-				if (viewToRemove != null) {
-					viewToRemove.deleteModuleView();
-				}
-				return true;
+	protected FlexoActionRunnable<GivesFMENature, FlexoProject<?>, FlexoObject> getDefaultFinalizer() {
+		return (e, action) -> {
+			// We store the eventual ModuleView to remove, but we must remove it AFTER selection of new object
+			// Otherwise, focus on FlexoProject will be lost
+			ConvertToFMEProjectView viewToRemove = null;
+			if (getController().getCurrentModuleView() instanceof ConvertToFMEProjectView) {
+				viewToRemove = (ConvertToFMEProjectView) getController().getCurrentModuleView();
 			}
+			getController().selectAndFocusObject(action.getNewNature());
+			if (viewToRemove != null) {
+				viewToRemove.deleteModuleView();
+			}
+			return true;
 		};
 	}
 
 	@Override
-	protected Icon getEnabledIcon(FlexoActionFactory actionType) {
+	protected Icon getEnabledIcon(FlexoActionFactory<GivesFMENature, FlexoProject<?>, FlexoObject> actionType) {
 		return FMEIconLibrary.FME_SMALL_ICON;
 	}
 

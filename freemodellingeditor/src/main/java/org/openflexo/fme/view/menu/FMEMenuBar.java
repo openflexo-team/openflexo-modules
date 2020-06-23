@@ -38,12 +38,6 @@
 
 package org.openflexo.fme.view.menu;
 
-/*
- * Created on <date> by <yourname>
- *
- * Flexo Application Suite
- * (c) Denali 2003-2006
- */
 import org.openflexo.fme.FreeModellingEditor;
 import org.openflexo.fme.controller.FMEController;
 import org.openflexo.module.Module;

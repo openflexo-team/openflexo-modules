@@ -47,6 +47,7 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.openflexo.connie.exception.InvalidBindingException;
 import org.openflexo.connie.exception.NullReferenceException;
@@ -62,6 +63,7 @@ import org.openflexo.technologyadapter.diagram.DiagramTechnologyAdapter;
 import org.openflexo.technologyadapter.diagram.model.Diagram;
 import org.openflexo.test.OrderedRunner;
 import org.openflexo.test.TestOrder;
+import org.openflexo.test.UITest;
 
 /**
  * This unit test is intented to test project creation in the context of FreeModellingProjectNature
@@ -84,6 +86,7 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 	@Test
 	@TestOrder(1)
 	@SuppressWarnings("unchecked")
+	@Category(UITest.class)
 	public void createFreeModellingEditorProject() {
 
 		instanciateTestServiceManager(DiagramTechnologyAdapter.class);
@@ -98,6 +101,7 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 
 	@Test
 	@TestOrder(2)
+	@Category(UITest.class)
 	public void checkFreeModellingNature() {
 
 		assertNotNull(nature = project.getNature(FreeModellingProjectNature.class));
@@ -111,6 +115,7 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 
 	@Test
 	@TestOrder(3)
+	@Category(UITest.class)
 	public void checkConceptualModelEditing() throws FlexoException {
 
 		conceptA = conceptualModel.getFlexoConcept("ConceptA", null, editor, null);
@@ -130,6 +135,7 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 
 	@Test
 	@TestOrder(5)
+	@Category(UITest.class)
 	public void createAndCheckNewFMEDiagramFreeModel() {
 
 		CreateFMEDiagramFreeModel action = CreateFMEDiagramFreeModel.actionType.makeNewAction(nature, null, editor);
@@ -155,6 +161,7 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 
 	@Test
 	@TestOrder(6)
+	@Category(UITest.class)
 	public void instantiateNewFMEDiagramFreeModel()
 			throws FlexoException, TypeMismatchException, NullReferenceException, InvocationTargetException, InvalidBindingException {
 
@@ -167,7 +174,7 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 		assertNotNull(instance1);
 
 		project.save();
-		project.saveModifiedResources(null);
+		project.saveModifiedResources();
 
 		assertEquals(sampleData.getAccessedVirtualModelInstance(), instance1.getAccessedVirtualModelInstance().execute("sampleData"));
 
@@ -179,6 +186,7 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 
 	@Test
 	@TestOrder(7)
+	@Category(UITest.class)
 	public void instantiateNewFMEDiagramFreeModelWhileCreatingNewFreeModel()
 			throws FlexoException, TypeMismatchException, NullReferenceException, InvocationTargetException, InvalidBindingException {
 
@@ -196,7 +204,7 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 		assertNotNull(instance2);
 
 		project.save();
-		project.saveModifiedResources(null);
+		project.saveModifiedResources();
 
 		assertEquals(sampleData.getAccessedVirtualModelInstance(), instance2.getAccessedVirtualModelInstance().execute("sampleData"));
 

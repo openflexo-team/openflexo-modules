@@ -39,12 +39,16 @@
 
 package org.openflexo.eamodule;
 
-import org.openflexo.model.annotations.Getter;
-import org.openflexo.model.annotations.ModelEntity;
-import org.openflexo.model.annotations.Setter;
-import org.openflexo.model.annotations.XMLAttribute;
-import org.openflexo.model.annotations.XMLElement;
+import java.util.logging.Logger;
+
+import org.openflexo.pamela.annotations.Getter;
+import org.openflexo.pamela.annotations.ImplementationClass;
+import org.openflexo.pamela.annotations.ModelEntity;
+import org.openflexo.pamela.annotations.Setter;
+import org.openflexo.pamela.annotations.XMLAttribute;
+import org.openflexo.pamela.annotations.XMLElement;
 import org.openflexo.prefs.ModulePreferences;
+import org.openflexo.prefs.Preferences;
 
 /**
  * Contains preferences for {@link EnterpriseArchitectureModule} module
@@ -53,16 +57,53 @@ import org.openflexo.prefs.ModulePreferences;
  * 
  */
 @ModelEntity
+@ImplementationClass(EAMPreferences.EAMPreferencesImpl.class)
 @XMLElement(xmlTag = "EAMPreferences")
+@Preferences(
+		shortName = "Enterprise Architecture Editor",
+		longName = "Enterprise Architecture Editor Preferences",
+		FIBPanel = "Fib/Prefs/EAMPreferences.fib",
+		smallIcon = "Icons/EAM/module-eam-16.png",
+		bigIcon = "Icons/EAM/module-eam-64.png")
 public interface EAMPreferences extends ModulePreferences<EAModule> {
 
-	public static final String PROPERTY_KEY = "property";
+	public static final String SCREENSHOT_QUALITY_KEY = "screenshotQuality";
 
+	/*public static final String PROPERTY_KEY = "property";
+	
 	@Getter(value = PROPERTY_KEY)
 	@XMLAttribute
-	public String getProperty();
-
+	public Object getProperty();
+	
 	@Setter(PROPERTY_KEY)
-	public void setProperty(String value);
+	public void setProperty(Object object);*/
+
+	@Getter(value = SCREENSHOT_QUALITY_KEY, defaultValue = "100")
+	@XMLAttribute
+	public int getScreenshotQuality();
+
+	@Setter(SCREENSHOT_QUALITY_KEY)
+	public void setScreenshotQuality(int limit);
+
+	public abstract class EAMPreferencesImpl extends PreferencesContainerImpl implements EAMPreferences {
+
+		@SuppressWarnings("unused")
+		private static final Logger logger = Logger.getLogger(EAMPreferences.class.getPackage().getName());
+
+		/*@Override
+		public Object getProperty() {
+			return null;
+		}
+		
+		@Override
+		public void setProperty(Object property) {
+			if ((property == null && getProperty() != null) || (property != null && !property.equals(getProperty()))) {
+				Object oldValue = getProperty();
+				// this.property = property;
+				getPropertyChangeSupport().firePropertyChange("property", oldValue, property);
+			}
+		}*/
+
+	}
 
 }

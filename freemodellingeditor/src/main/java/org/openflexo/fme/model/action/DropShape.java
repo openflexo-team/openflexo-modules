@@ -43,9 +43,9 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.Logger;
 
-import org.openflexo.fge.ShapeGraphicalRepresentation;
-import org.openflexo.fge.ShapeGraphicalRepresentation.LocationConstraints;
-import org.openflexo.fge.geom.FGEPoint;
+import org.openflexo.diana.ShapeGraphicalRepresentation;
+import org.openflexo.diana.ShapeGraphicalRepresentation.LocationConstraints;
+import org.openflexo.diana.geom.DianaPoint;
 import org.openflexo.fme.model.FMEDiagramFreeModel;
 import org.openflexo.fme.model.FMEDiagramFreeModelInstance;
 import org.openflexo.fme.model.FMEFreeModel;
@@ -106,7 +106,7 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 	private DiagramContainerElement<?> parent;
 	private ShapeGraphicalRepresentation graphicalRepresentation;
 	private FlexoConcept grConcept;
-	private FGEPoint dropLocation;
+	private DianaPoint dropLocation;
 	private Dimension targetSize;
 	private FlexoConceptInstance container;
 
@@ -230,11 +230,11 @@ public class DropShape extends FMEAction<DropShape, DiagramContainerElement<?>, 
 		return null;
 	}
 
-	public FGEPoint getDropLocation() {
+	public DianaPoint getDropLocation() {
 		return dropLocation;
 	}
 
-	public void setDropLocation(FGEPoint dropLocation) {
+	public void setDropLocation(DianaPoint dropLocation) {
 		this.dropLocation = dropLocation;
 	}
 
