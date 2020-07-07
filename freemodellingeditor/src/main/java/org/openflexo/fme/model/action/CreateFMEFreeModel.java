@@ -265,8 +265,8 @@ public abstract class CreateFMEFreeModel<A extends CreateFMEFreeModel<A>> extend
 				break;
 			case CreateContainedVirtualModel:
 				// RepositoryFolder<?, ?> folder = getFocusedObject().getVirtualModelRepository().get
-				CreateContainedVirtualModel action2 = CreateContainedVirtualModel.actionType
-						.makeNewEmbeddedAction(getFocusedObject().getConceptualModel().getAccessedVirtualModel(), null, this);
+				CreateContainedVirtualModel action2 = CreateContainedVirtualModel.actionType.makeNewEmbeddedAction(
+						getFocusedObject().getConceptualModel().getAccessedVirtualModel().getCompilationUnit(), null, this);
 				action2.setNewVirtualModelName(getNewConceptualModelName());
 				action2.setNewVirtualModelDescription("Conceptual model for " + getFreeModelName());
 				action2.doAction();

@@ -62,7 +62,7 @@ import org.openflexo.fme.model.action.DropShape;
 import org.openflexo.foundation.FlexoObject;
 import org.openflexo.foundation.fml.FlexoConcept;
 import org.openflexo.logging.FlexoLogger;
-import org.openflexo.pamela.factory.AccessibleProxyObject;
+import org.openflexo.pamela.AccessibleProxyObject;
 import org.openflexo.pamela.factory.ProxyMethodHandler;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.DiagramEditorPaletteModel;
 import org.openflexo.technologyadapter.diagram.controller.diagrameditor.FMLControlledDiagramShape;
