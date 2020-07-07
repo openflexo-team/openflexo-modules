@@ -5,6 +5,7 @@ diagram_perspective=Diagram perspective
 export=Export
 generate=Generate
 localization=Localization
+move_to=Move to
 new=New
 new_behaviour=New behaviour
 new_property=New property
