@@ -1,16 +1,16 @@
 dependencies {
 
-  compile project(':xxx-module')
-  compile project(':xxx-rc')
-  //compile 'org.openflexo:xxx-module:1.9.0-SNAPSHOT' 
+  implementation project(':xxx-module')
+  implementation project(':xxx-rc')
+  //implementation 'org.openflexo:xxx-module:1.9.0-SNAPSHOT' 
 
-  //testCompile testUtils()
-  //testCompile ginaTest()
-  //testCompile ginaSwingEditorTest()
-  testCompile flexoFoundationTest()
-  testCompile flexoUiTest()
-  //testRuntime flexoTestResources()
+  //testImplementation testUtils()
+  //testImplementation ginaTest()
+  //testImplementation ginaSwingEditorTest()
+  testImplementation flexoFoundationTest()
+  testImplementation flexoUiTest()
+  //testRuntimeOnly flexoTestResources()
 
-  //testCompile "org.openflexo.module:xxx-module:1.9.0-SNAPSHOT"
+  //testImplementation "org.openflexo.module:xxx-module:1.9.0-SNAPSHOT"
 
 }

@@ -1,18 +1,19 @@
 dependencies {
   // openflexo dep
-  compile flexoFoundation()
-  compile flexoUi()
-  compile diagramConnector()
-  compile diagramConnectorUi()
-  compile powerpointConnector()
-  compile powerpointConnectorUi()
-  runtime flexoOntology()
-  runtime flexoOntologyUi()
+  implementation flexoFoundation()
+  implementation flexoUi()
+  implementation fmlRtTechnologyAdapterUi()
+  implementation diagramConnector()
+  implementation diagramConnectorUi()
+  implementation powerpointConnector()
+  implementation powerpointConnectorUi()
+  runtimeOnly flexoOntology()
+  runtimeOnly flexoOntologyUi()
   // external dep
   // testing dep
-  testCompile testUtils()
-  testCompile ginaTest()
-  testCompile flexoFoundationTest()
-  testCompile flexoUiTest()
-  testRuntime flexoTestResources()
+  testImplementation testUtils()
+  testImplementation ginaTest()
+  testImplementation flexoFoundationTest()
+  testImplementation flexoUiTest()
+  testRuntimeOnly flexoTestResources()
 }

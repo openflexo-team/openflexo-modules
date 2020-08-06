@@ -1,25 +1,24 @@
 dependencies {
-   
-  compile flexoFoundation()
-  compile flexoUi()
-  compile flexoUtils()
-  compile flexoGraphicUtils()
-  //compile diagramConnector()
-  //compile diagramConnectorUi()
-  compile ginaConnector()
-  compile ginaConnectorUi()
-    
-  runtime flexoGraphicUtils()
-  
+
+  implementation flexoFoundation()
+  implementation flexoUi()
+  implementation flexoUtils()
+  implementation flexoGraphicUtils()
+  //implementation diagramConnector()
+  //implementation diagramConnectorUi()
+  implementation ginaConnector()
+  implementation ginaConnectorUi()
+
+  runtimeOnly flexoGraphicUtils()
+
    // external dep
-  
+
   // testing dep
-  testCompile testUtils()
-  testCompile ginaTest()
-  testCompile ginaSwingEditorTest()
-  testCompile flexoFoundationTest()
-  testCompile flexoUiTest()
-  
-  testRuntime flexoTestResources()
-  
+  testImplementation testUtils()
+  testImplementation ginaTest()
+  testImplementation ginaSwingEditorTest()
+  testImplementation flexoFoundationTest()
+  testImplementation flexoUiTest()
+
+  testRuntimeOnly flexoTestResources()
 }

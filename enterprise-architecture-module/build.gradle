@@ -1,17 +1,18 @@
 dependencies {
   // openflexo dep
-  compile flexoFoundation()
-  compile flexoUi()
-  compile diagramConnector()
-  compile diagramConnectorUi()
-  compile ginaConnector()
-  compile ginaConnectorUi()
-  compile openflexo("modelers-api")
-  
+  implementation flexoFoundation()
+  implementation flexoUi()
+  implementation diagramConnector()
+  implementation diagramConnectorUi()
+  implementation ginaConnector()
+  implementation ginaConnectorUi()
+  implementation openflexo("modelers-api")
+
   // This resource center must always be present at run-time
-  runtime openflexo("modelers-rc")
-  
+  runtimeOnly openflexo("modelers-rc")
+
   // external dep
   // testing dep
-  testCompile flexoUiTest()
+  testImplementation flexoUiTest()
+  testImplementation flexoFoundationTest()
 }
