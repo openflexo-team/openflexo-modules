@@ -44,7 +44,6 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -163,7 +162,7 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 	@TestOrder(6)
 	@Category(UITest.class)
 	public void instantiateNewFMEDiagramFreeModel()
-			throws FlexoException, TypeMismatchException, NullReferenceException, InvocationTargetException, InvalidBindingException {
+			throws FlexoException, TypeMismatchException, NullReferenceException, ReflectiveOperationException, InvalidBindingException {
 
 		InstantiateFMEDiagramFreeModel action = InstantiateFMEDiagramFreeModel.actionType.makeNewAction(diagramModel1, null, editor);
 		action.setFreeModelInstanceName("Instance1");
@@ -188,7 +187,7 @@ public class TestCreateFreeModellingEditorProject extends OpenflexoProjectAtRunT
 	@TestOrder(7)
 	@Category(UITest.class)
 	public void instantiateNewFMEDiagramFreeModelWhileCreatingNewFreeModel()
-			throws FlexoException, TypeMismatchException, NullReferenceException, InvocationTargetException, InvalidBindingException {
+			throws FlexoException, TypeMismatchException, NullReferenceException, ReflectiveOperationException, InvalidBindingException {
 
 		InstantiateFMEDiagramFreeModel action = InstantiateFMEDiagramFreeModel.actionType.makeNewAction(nature, null, editor);
 		action.setFreeModelInstanceName("Instance2");
