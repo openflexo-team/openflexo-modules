@@ -38,7 +38,6 @@
 
 package org.openflexo.fme.model.action;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Vector;
 import java.util.logging.Logger;
 
@@ -276,7 +275,7 @@ public class CreateNewConceptFromDiagramConnector extends FMEAction<CreateNewCon
 			e.printStackTrace();
 		} catch (NullReferenceException e) {
 			e.printStackTrace();
-		} catch (InvocationTargetException e) {
+		} catch (ReflectiveOperationException e) {
 			e.printStackTrace();
 		} catch (InvalidBindingException e) {
 			e.printStackTrace();

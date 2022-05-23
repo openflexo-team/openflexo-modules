@@ -38,7 +38,6 @@
 
 package org.openflexo.eamodule.model;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -88,7 +87,7 @@ public interface BPMNVirtualModelInstance extends VirtualModelInstanceBasedNatur
 				e.printStackTrace();
 			} catch (NullReferenceException e) {
 				e.printStackTrace();
-			} catch (InvocationTargetException e) {
+			} catch (ReflectiveOperationException e) {
 				e.printStackTrace();
 			} catch (InvalidBindingException e) {
 				e.printStackTrace();

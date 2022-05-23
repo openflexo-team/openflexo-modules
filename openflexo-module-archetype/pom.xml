@@ -38,7 +38,7 @@
             <distributionManagement>
                 <site>
                     <id>openflexo-module-archetype.website</id>
-                    <url>scp://server-one.openflexo.org${sitedeploy.dir}/SNAPSHOT/</url>
+                    <url>scp://openflexo.org${sitedeploy.dir}/SNAPSHOT/</url>
                 </site>
             </distributionManagement>
         </profile>
@@ -55,7 +55,7 @@
             <distributionManagement>
                 <site>
                     <id>openflexo-module-archetype.website</id>
-                    <url>scp://server-one.openflexo.org${sitedeploy.dir}/SNAPSHOT/</url>
+                    <url>scp://openflexo.org${sitedeploy.dir}/SNAPSHOT/</url>
                 </site>
             </distributionManagement>
         </profile>
@@ -72,7 +72,7 @@
             <distributionManagement>
                 <site>
                     <id>&gt;openflexo-module-archetype</id>
-                    <url>scp://server-one.openflexo.org${sitedeploy.dir}/${project.version}/</url>
+                    <url>scp://openflexo.org${sitedeploy.dir}/${project.version}/</url>
                 </site>
             </distributionManagement>
         </profile>

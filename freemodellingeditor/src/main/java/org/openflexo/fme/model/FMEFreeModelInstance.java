@@ -40,7 +40,6 @@ package org.openflexo.fme.model;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -300,7 +299,7 @@ public interface FMEFreeModelInstance extends VirtualModelInstanceBasedNatureObj
 					e.printStackTrace();
 				} catch (NullReferenceException e) {
 					e.printStackTrace();
-				} catch (InvocationTargetException e) {
+				} catch (ReflectiveOperationException e) {
 					e.printStackTrace();
 				} catch (InvalidBindingException e) {
 					e.printStackTrace();
