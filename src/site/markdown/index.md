@@ -1,8 +1,3 @@
- -----
- Openflexo Modules
- -----
- The Openflexo team
- -----
+# Openflexo Modules
 
 This package contains the Openflexo Modules developed by Openflexo.
-
