@@ -65,11 +65,11 @@ public class EAMIconLibrary extends IconLibrary {
 			ResourceLocator.locateResource("Icons/EAM/module-eam-hover-32.png"));
 	public static final ImageIcon EAM_BIG_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/EAM/module-eam-hover-64.png"));
 
-	public static final ImageIcon BPMN_SMALL_ICON = new ImageIconResource(ResourceLocator.locateResource("BPMN/Icons/BPMN_16x16.png"));
-	public static final ImageIcon BPMN_MEDIUM_ICON = new ImageIconResource(ResourceLocator.locateResource("BPMN/Icons/BPMN_32x32.png"));
-	public static final ImageIcon BPMN_BIG_ICON = new ImageIconResource(ResourceLocator.locateResource("BPMN/Icons/BPMN_64x64.png"));
+	public static final ImageIcon BPMN_SMALL_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/EAM/BPMN/BPMN_16x16.png"));
+	public static final ImageIcon BPMN_MEDIUM_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/EAM/BPMN/BPMN_32x32.png"));
+	public static final ImageIcon BPMN_BIG_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/EAM/BPMN/BPMN_64x64.png"));
 
-	public static final ImageIcon BPMN_PROCESS_ICON = new ImageIconResource(ResourceLocator.locateResource("BPMN/Icons/Process.png"));
+	public static final ImageIcon BPMN_PROCESS_ICON = new ImageIconResource(ResourceLocator.locateResource("Icons/EAM/BPMN/Process.png"));
 
 	public static final IconMarker EAM_MARKER = new IconMarker(
 			new ImageIconResource(ResourceLocator.locateResource("Icons/EAM/EAMarker.png")), 8, 0);
