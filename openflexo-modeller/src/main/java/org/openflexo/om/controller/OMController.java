@@ -99,8 +99,8 @@ public class OMController extends FlexoController {
 	@Override
 	protected void initializePerspectives() {
 
-		addToPerspectives(genericPerspective = new GenericPerspective(this));
 		addToPerspectives(fmlPerspective = new FMLTechnologyPerspective(this));
+		addToPerspectives(genericPerspective = new GenericPerspective(this));
 		addToPerspectives(diagramPerspective = new FMLControlledDiagramNaturePerspective(this));
 		addToPerspectives(ginaPerspective = new FMLControlledFIBNaturePerspective(this));
 		addToPerspectives(localesPerspective = new LocalizationPerspective(this));
