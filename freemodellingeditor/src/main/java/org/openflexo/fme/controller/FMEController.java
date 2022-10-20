@@ -155,16 +155,16 @@ public class FMEController extends FlexoController {
 		if (object != null) {
 			logger.info("selectAndFocusObject " + object + "of " + object.getClass().getSimpleName());
 			if (object instanceof FlexoProject) {
-				setCurrentEditedObjectAsModuleView(object);
+				setCurrentEditedObject(object);
 			}
 			else if (object instanceof FreeModellingProjectNature) {
-				setCurrentEditedObjectAsModuleView(object);
+				setCurrentEditedObject(object);
 			}
 			if (object instanceof FMEFreeModel) {
-				setCurrentEditedObjectAsModuleView(object);
+				setCurrentEditedObject(object);
 			}
 			if (object instanceof FMEFreeModelInstance) {
-				setCurrentEditedObjectAsModuleView(object);
+				setCurrentEditedObject(object);
 			}
 			if (getCurrentPerspective() == FREE_MODELLING_PERSPECTIVE) {
 				if (object instanceof FMEFreeModelInstance) {

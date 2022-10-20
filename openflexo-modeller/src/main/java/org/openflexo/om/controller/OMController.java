@@ -182,6 +182,19 @@ public class OMController extends FlexoController {
 		return getApplicationContext().getService(VirtualModelLibrary.class);
 	}
 
+	
+	
+	/**
+	 * Return boolean indicating if there is a {@link ModuleView} which can represent supplied object in supplied perspective
+	 * @param object
+	 * @param perspective
+	 * @return
+	 */
+	/*public boolean mayRepresent(FlexoObject object, FlexoPerspective perspective) {
+		fdssdf
+	}*/
+	
+	
 	/**
 	 * Select the view representing supplied object, if this view exists. Try all to really display supplied object, even if required view
 	 * is not the current displayed view
@@ -194,11 +207,11 @@ public class OMController extends FlexoController {
 		if (object != null) {
 			logger.info("selectAndFocusObject " + object + "of " + object.getClass().getSimpleName());
 			if (object instanceof FlexoConceptObject) {
-				setCurrentEditedObjectAsModuleView(((FlexoConceptObject) object).getFlexoConcept());
+				setCurrentEditedObject(((FlexoConceptObject) object).getFlexoConcept());
 			}
 			else {
 				logger.info("setCurrentEditedObjectAsModuleView with " + object);
-				setCurrentEditedObjectAsModuleView(object);
+				setCurrentEditedObject(object);
 			}
 
 			getSelectionManager().setSelectedObject(object);

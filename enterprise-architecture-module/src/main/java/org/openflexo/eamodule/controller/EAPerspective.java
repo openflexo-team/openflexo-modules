@@ -106,15 +106,9 @@ public class EAPerspective extends NaturePerspective<EAProjectNature> {
 
 		browser.setRootObject(project);
 	}
-
+	
 	@Override
-	public boolean hasModuleViewForObject(FlexoObject object) {
-		if (object instanceof WelcomePanel) {
-			return true;
-		}
-		if (object instanceof FlexoProject) {
-			return true;
-		}
+	public boolean isRepresentableInModuleView(FlexoObject object) {
 		if (object instanceof EAProjectNature) {
 			return true;
 		}
@@ -141,10 +135,40 @@ public class EAPerspective extends NaturePerspective<EAProjectNature> {
 				}
 			}
 		}
-
-		return super.hasModuleViewForObject(object);
+		return super.isRepresentableInModuleView(object);
 	}
 
+	@Override
+	public FlexoObject getRepresentableMasterObject(FlexoObject object) {
+		if (object instanceof EAProjectNature) {
+			return object;
+		}
+		if (object instanceof BPMNVirtualModelInstance) {
+			return object;
+		}
+		if (object instanceof FMLRTVirtualModelInstance) {
+			if (((FMLRTVirtualModelInstance) object).hasNature(FMLControlledDiagramVirtualModelInstanceNature.INSTANCE)) {
+				return object;
+			}
+			if (((FMLRTVirtualModelInstance) object).hasNature(FMLControlledFIBVirtualModelInstanceNature.INSTANCE)) {
+				return object;
+			}
+			return null;
+		}
+		if (object instanceof FlexoConceptInstance) {
+			if (((FlexoConceptInstance) object).hasNature(FMLControlledFIBFlexoConceptInstanceNature.INSTANCE)) {
+				return object;
+			}
+			if (((FlexoConceptInstance) object).getFlexoConcept().getName().equals("Process")) {
+				FMLRTVirtualModelInstance processDiagram = getProcessDiagram((FlexoConceptInstance) object);
+				if (processDiagram != null) {
+					return object;
+				}
+			}
+		}
+		return super.getRepresentableMasterObject(object);
+	}
+	
 	public FMLRTVirtualModelInstance getProcessDiagram(FlexoConceptInstance process) {
 		try {
 			return (FMLRTVirtualModelInstance) process.execute("container.container.getProcessDiagram(this)");
@@ -193,7 +217,7 @@ public class EAPerspective extends NaturePerspective<EAProjectNature> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public ModuleView<?> createModuleViewForObject(FlexoObject object) {
+	public ModuleView<?> createModuleViewForMasterObject(FlexoObject object) {
 		if (object instanceof WelcomePanel) {
 			return new EAMWelcomePanelModuleView((WelcomePanel<EAModule>) object, getController(), this);
 		}
@@ -241,7 +265,7 @@ public class EAPerspective extends NaturePerspective<EAProjectNature> {
 			}
 		}
 
-		return super.createModuleViewForObject(object);
+		return super.createModuleViewForMasterObject(object);
 	}
 
 }

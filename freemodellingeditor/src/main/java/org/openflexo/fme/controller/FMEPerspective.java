@@ -180,13 +180,7 @@ public class FMEPerspective extends NaturePerspective<FreeModellingProjectNature
 	}
 
 	@Override
-	public boolean hasModuleViewForObject(FlexoObject object) {
-		if (object instanceof WelcomePanel) {
-			return true;
-		}
-		if (object instanceof FlexoProject) {
-			return true;
-		}
+	public boolean isRepresentableInModuleView(FlexoObject object) {
 		if (object instanceof FreeModellingProjectNature) {
 			return true;
 		}
@@ -196,9 +190,23 @@ public class FMEPerspective extends NaturePerspective<FreeModellingProjectNature
 		if (object instanceof FMEFreeModelInstance) {
 			return true;
 		}
-		return super.hasModuleViewForObject(object);
+		return super.isRepresentableInModuleView(object);
 	}
-
+	
+	@Override
+	public FlexoObject getRepresentableMasterObject(FlexoObject object) {
+		if (object instanceof FreeModellingProjectNature) {
+			return object;
+		}
+		if (object instanceof FMEFreeModel) {
+			return object;
+		}
+		if (object instanceof FMEFreeModelInstance) {
+			return object;
+		}
+		return super.getRepresentableMasterObject(object);
+	}
+	
 	@Override
 	public String getWindowTitleforObject(FlexoObject object, FlexoController controller) {
 		if (object instanceof WelcomePanel) {
@@ -237,7 +245,7 @@ public class FMEPerspective extends NaturePerspective<FreeModellingProjectNature
 	}
 
 	@Override
-	public ModuleView<?> createModuleViewForObject(FlexoObject object) {
+	public ModuleView<?> createModuleViewForMasterObject(FlexoObject object) {
 		if (object instanceof WelcomePanel) {
 			return new FMEWelcomePanelModuleView((WelcomePanel<FMEModule>) object, getController(), this);
 		}
@@ -269,6 +277,6 @@ public class FMEPerspective extends NaturePerspective<FreeModellingProjectNature
 			}
 			return new FMEDiagramFreeModelModuleView(editor, this);
 		}
-		return super.createModuleViewForObject(object);
+		return super.createModuleViewForMasterObject(object);
 	}
 }
