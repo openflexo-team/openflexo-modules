@@ -5,7 +5,7 @@
     <Localized id="SYL-8" lang="French" value="behaviour" key="behaviour" userID="SYL" flexoID="8" />
     <Localized id="SYL-9" lang="Dutch" value="behaviour" key="behaviour" userID="SYL" flexoID="9" />
   </FMLLocalizedDictionary>
-  <UseModelSlotDeclaration id="0" modelSlotClass="org.openflexo.foundation.fml.rt.FMLRTVirtualModelInstanceModelSlot" userID="SYL" flexoID="-1" />
+  <UseModelSlotDeclaration id="0" modelSlotClass="org.openflexo.foundation.fml.rt.FMLRTModelSlot" userID="SYL" flexoID="-1" />
   <Inspector id="SYL-6" inspectorTitle="XXX" userID="SYL" flexoID="6" />
   <FMLRTVirtualModelInstanceModelSlot id="SYL-13" virtualModelURI="http://openflexo.org/xxxmodule/XXX.fml/TestVM.fml" isRequired="true" cloningStrategy="Reference" cardinality="ZeroOne" name="test" userID="SYL" flexoID="13" />
   <CreationScheme id="SYL-14" name="create" width="800" label="create" height="600" userID="SYL" flexoID="14">
