@@ -1,10 +1,10 @@
 configure_xxx=configure_xxx
-convert_your_project=convert_your_project
-geve_perspective=geve_perspective
+convert_your_project=Convertir votre projet
+geve_perspective=Perspective GEVE
 gives_project_xxx_nature=gives_project_xxx_nature
 gives_xxx_nature=gives_xxx_nature
 gives_your_project_xxx_nature=gives_your_project_xxx_nature
-opening_module_view_for_object=opening_module_view_for_object
-select_default_object=select_default_object
-welcome_informations=welcome_informations
+opening_module_view_for_object=Ouverture de la vue du module pour l'objet
+select_default_object=S\u00e9lectionner l'objet par d\u00e9faut
+welcome_informations=Informations de bienvenue
 xxx_perspective=xxx_perspective
