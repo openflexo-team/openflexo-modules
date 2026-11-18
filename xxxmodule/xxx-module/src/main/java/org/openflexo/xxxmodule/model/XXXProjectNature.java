@@ -33,7 +33,7 @@ package org.openflexo.xxxmodule.model;
 import java.io.FileNotFoundException;
 import java.util.logging.Logger;
 
-import org.openflexo.foundation.FlexoException;
+import org.openflexo.foundation.OpenflexoRuntimeException;
 import org.openflexo.foundation.FlexoProject;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.nature.ProjectNature;
@@ -80,7 +80,7 @@ public interface XXXProjectNature extends ProjectNature<XXXProjectNature> {
 			if (xxxViewpoint == null && getServiceManager() != null) {
 				try {
 					xxxViewpoint = getServiceManager().getVirtualModelLibrary().getVirtualModel(XXXCst.XXX_VIEWPOINT_URI);
-				} catch (FileNotFoundException | ResourceLoadingCancelledException | FlexoException e) {
+				} catch (FileNotFoundException | ResourceLoadingCancelledException | OpenflexoRuntimeException e) {
 					e.printStackTrace();
 				}
 			}

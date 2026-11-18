@@ -40,7 +40,7 @@ package org.openflexo.xxxmodule.widget;
 
 import java.io.FileNotFoundException;
 
-import org.openflexo.foundation.FlexoException;
+import org.openflexo.foundation.OpenflexoRuntimeException;
 import org.openflexo.foundation.fml.VirtualModel;
 import org.openflexo.foundation.resource.ResourceLoadingCancelledException;
 import org.openflexo.gina.model.FIBComponent;
@@ -89,7 +89,7 @@ public abstract class AbstractXXXProjectBrowser extends FIBBrowserView<XXXProjec
 			try {
 				xxxViewpoint = getFlexoController().getApplicationContext().getVirtualModelLibrary()
 						.getVirtualModel(XXXCst.XXX_VIEWPOINT_URI);
-			} catch (FileNotFoundException | ResourceLoadingCancelledException | FlexoException e) {
+			} catch (FileNotFoundException | ResourceLoadingCancelledException | OpenflexoRuntimeException e) {
 				e.printStackTrace();
 			}
 		}
